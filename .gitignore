@@ -4,3 +4,4 @@ Infrastructure/*/obj/
 *.cache
 *.dll
 *.pdb
+Infrastructure/*/obj/*
