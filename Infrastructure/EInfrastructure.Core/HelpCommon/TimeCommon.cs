@@ -9,6 +9,17 @@ namespace EInfrastructure.Core.HelpCommon
     /// </summary>
     public static class TimeCommon
     {
+        public static string Format(this DateTime? time, string format = "yyyy-MM-dd")
+        {
+            if (time != null &&
+                time != DateTime.MinValue && time != DateTime.MaxValue)
+            {
+                return time.Value.ToString(format);
+            }
+
+            return "";
+        }
+
         #region 将时间格式化成 年月日 的形式,如果时间为null，返回当前系统时间
         /// <summary>
         /// 将时间格式化成 年月日 的形式,如果时间为null，返回当前系统时间
@@ -715,7 +726,7 @@ namespace EInfrastructure.Core.HelpCommon
         }
 
         #endregion
-        
+
         #region DateTime时间格式转换为10位不带毫秒的Unix时间戳
 
         /// <summary>

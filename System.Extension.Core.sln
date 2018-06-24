@@ -13,15 +13,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cache", "Cache", "{42612780
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sms", "Sms", "{6121A2AA-B395-4695-B209-8B1E8EAC2F83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AliYun.DaYu", "Infrastructure\EInfrastructure.Core.AliYun.DaYu\EInfrastructure.Core.AliYun.DaYu.csproj", "{EB989E23-4B7B-4D1D-BB81-DEAF94D74448}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.AliYun.DaYu", "Infrastructure\EInfrastructure.Core.AliYun.DaYu\EInfrastructure.Core.AliYun.DaYu.csproj", "{EB989E23-4B7B-4D1D-BB81-DEAF94D74448}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Storage", "Storage", "{9A0D3363-93C8-4B93-806D-45180B3EDF3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.QiNiu.Storage", "Infrastructure\EInfrastructure.Core.QiNiu.Storage\EInfrastructure.Core.QiNiu.Storage.csproj", "{7A407D74-6943-4DDE-B321-310A65700C04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.QiNiu.Storage", "Infrastructure\EInfrastructure.Core.QiNiu.Storage\EInfrastructure.Core.QiNiu.Storage.csproj", "{7A407D74-6943-4DDE-B321-310A65700C04}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{1A482526-7E29-4D16-9E1A-743770227F00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Web", "Infrastructure\EInfrastructure.Core.Web\EInfrastructure.Core.Web.csproj", "{34CF340E-7605-4BE2-8385-2970660BE66D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Web", "Infrastructure\EInfrastructure.Core.Web\EInfrastructure.Core.Web.csproj", "{34CF340E-7605-4BE2-8385-2970660BE66D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Marketing", "Marketing", "{D3E020E3-533B-4E69-BC1C-290FE14E7AA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AliYun.Tbk", "Infrastructure\EInfrastructure.Core.AliYun.Tbk\EInfrastructure.Core.AliYun.Tbk.csproj", "{58D07A15-8436-47E0-BA42-45D72607649B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +57,10 @@ Global
 		{34CF340E-7605-4BE2-8385-2970660BE66D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34CF340E-7605-4BE2-8385-2970660BE66D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34CF340E-7605-4BE2-8385-2970660BE66D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58D07A15-8436-47E0-BA42-45D72607649B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58D07A15-8436-47E0-BA42-45D72607649B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58D07A15-8436-47E0-BA42-45D72607649B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58D07A15-8436-47E0-BA42-45D72607649B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +71,7 @@ Global
 		{EB989E23-4B7B-4D1D-BB81-DEAF94D74448} = {6121A2AA-B395-4695-B209-8B1E8EAC2F83}
 		{7A407D74-6943-4DDE-B321-310A65700C04} = {9A0D3363-93C8-4B93-806D-45180B3EDF3A}
 		{34CF340E-7605-4BE2-8385-2970660BE66D} = {1A482526-7E29-4D16-9E1A-743770227F00}
+		{58D07A15-8436-47E0-BA42-45D72607649B} = {D3E020E3-533B-4E69-BC1C-290FE14E7AA1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41FDCFC5-66DA-415D-AA6C-38806CB952CD}
