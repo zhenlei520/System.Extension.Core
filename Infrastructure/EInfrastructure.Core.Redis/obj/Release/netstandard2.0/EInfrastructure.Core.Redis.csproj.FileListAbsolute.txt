@@ -1,0 +1,11 @@
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.Redis\bin\Release\netstandard2.0\EInfrastructure.Core.dll
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.Redis\obj\Release\netstandard2.0\EInfrastructure.Core.Redis.csproj.CoreCompileInputs.cache
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.Redis\obj\Release\netstandard2.0\EInfrastructure.Core.Redis.AssemblyInfoInputs.cache
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.Redis\obj\Release\netstandard2.0\EInfrastructure.Core.Redis.AssemblyInfo.cs
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.Redis\obj\Release\netstandard2.0\EInfrastructure.Core.Redis.csprojResolveAssemblyReference.cache
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.Redis\bin\Release\netstandard2.0\EInfrastructure.Core.Redis.deps.json
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.Redis\bin\Release\netstandard2.0\EInfrastructure.Core.Redis.dll
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.Redis\bin\Release\netstandard2.0\EInfrastructure.Core.Redis.pdb
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.Redis\bin\Release\netstandard2.0\EInfrastructure.Core.pdb
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.Redis\obj\Release\netstandard2.0\EInfrastructure.Core.Redis.dll
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.Redis\obj\Release\netstandard2.0\EInfrastructure.Core.Redis.pdb

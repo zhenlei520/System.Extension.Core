@@ -1,0 +1,11 @@
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.MemoryCache\bin\Release\netstandard2.0\EInfrastructure.Core.dll
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.MemoryCache\obj\Release\netstandard2.0\EInfrastructure.Core.MemoryCache.csproj.CoreCompileInputs.cache
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.MemoryCache\obj\Release\netstandard2.0\EInfrastructure.Core.MemoryCache.AssemblyInfoInputs.cache
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.MemoryCache\obj\Release\netstandard2.0\EInfrastructure.Core.MemoryCache.AssemblyInfo.cs
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.MemoryCache\obj\Release\netstandard2.0\EInfrastructure.Core.MemoryCache.csprojResolveAssemblyReference.cache
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.MemoryCache\bin\Release\netstandard2.0\EInfrastructure.Core.MemoryCache.deps.json
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.MemoryCache\bin\Release\netstandard2.0\EInfrastructure.Core.MemoryCache.dll
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.MemoryCache\bin\Release\netstandard2.0\EInfrastructure.Core.MemoryCache.pdb
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.MemoryCache\bin\Release\netstandard2.0\EInfrastructure.Core.pdb
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.MemoryCache\obj\Release\netstandard2.0\EInfrastructure.Core.MemoryCache.dll
+F:\zhenlei\Owner\Framework\System.Extension.Core\Infrastructure\EInfrastructure.Core.MemoryCache\obj\Release\netstandard2.0\EInfrastructure.Core.MemoryCache.pdb
