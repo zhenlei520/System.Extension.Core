@@ -2356,7 +2356,7 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
-      "EInfrastructure.Core/1.0.0": {
+      "EInfrastructure.Core/1.1.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -7082,7 +7082,7 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
-    "EInfrastructure.Core/1.0.0": {
+    "EInfrastructure.Core/1.1.0": {
       "type": "project",
       "path": "../EInfrastructure.Core/EInfrastructure.Core.csproj",
       "msbuildProject": "../EInfrastructure.Core/EInfrastructure.Core.csproj"
@@ -7090,7 +7090,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "EInfrastructure.Core >= 1.0.0",
+      "EInfrastructure.Core >= 1.1.0",
       "Microsoft.AspNetCore.Mvc >= 2.1.1",
       "Microsoft.Extensions.Configuration >= 2.1.1",
       "Microsoft.Extensions.Configuration.Json >= 2.1.1",

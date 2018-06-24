@@ -137,7 +137,7 @@
           "lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll": {}
         }
       },
-      "EInfrastructure.Core/1.0.0": {
+      "EInfrastructure.Core/1.1.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -494,7 +494,7 @@
         "version.txt"
       ]
     },
-    "EInfrastructure.Core/1.0.0": {
+    "EInfrastructure.Core/1.1.0": {
       "type": "project",
       "path": "../EInfrastructure.Core/EInfrastructure.Core.csproj",
       "msbuildProject": "../EInfrastructure.Core/EInfrastructure.Core.csproj"
@@ -502,7 +502,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "EInfrastructure.Core >= 1.0.0",
+      "EInfrastructure.Core >= 1.1.0",
       "Microsoft.Extensions.Caching.Memory >= 2.1.1",
       "NETStandard.Library >= 2.0.3"
     ]
@@ -512,10 +512,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
+    "version": "1.1.0",
     "restore": {
       "projectUniqueName": "F:\\zhenlei\\Owner\\Framework\\System.Extension.Core\\Infrastructure\\EInfrastructure.Core.MemoryCache\\EInfrastructure.Core.MemoryCache.csproj",
       "projectName": "EInfrastructure.Core.MemoryCache",
@@ -556,15 +553,15 @@
     "frameworks": {
       "netstandard2.0": {
         "dependencies": {
+          "Microsoft.Extensions.Caching.Memory": {
+            "target": "Package",
+            "version": "[2.1.1, )"
+          },
           "NETStandard.Library": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "2.0.3",
+            "version": "[2.0.3, )",
             "autoReferenced": true
-          },
-          "Microsoft.Extensions.Caching.Memory": {
-            "target": "Package",
-            "version": "2.1.1"
           }
         },
         "imports": [

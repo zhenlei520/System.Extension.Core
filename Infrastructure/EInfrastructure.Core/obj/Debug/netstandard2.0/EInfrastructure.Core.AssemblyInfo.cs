@@ -11,13 +11,15 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("EInfrastructure.Core")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("zhenlei520")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright ©zhenlei520 2018")]
+[assembly: System.Reflection.AssemblyDescriptionAttribute("dotnet core基础类库")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.1.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("EInfrastructure.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EInfrastructure.Core")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.1.0.0")]
 
 // 由 MSBuild WriteCodeFragment 类生成。
 

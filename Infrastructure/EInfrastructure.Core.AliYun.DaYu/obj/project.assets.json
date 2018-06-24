@@ -240,7 +240,7 @@
           "lib/netstandard2.0/System.Text.Encodings.Web.dll": {}
         }
       },
-      "EInfrastructure.Core/1.0.0": {
+      "EInfrastructure.Core/1.1.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -715,7 +715,7 @@
         "version.txt"
       ]
     },
-    "EInfrastructure.Core/1.0.0": {
+    "EInfrastructure.Core/1.1.0": {
       "type": "project",
       "path": "../EInfrastructure.Core/EInfrastructure.Core.csproj",
       "msbuildProject": "../EInfrastructure.Core/EInfrastructure.Core.csproj"
@@ -723,7 +723,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "EInfrastructure.Core >= 1.0.0",
+      "EInfrastructure.Core >= 1.1.0",
       "Microsoft.AspNetCore.Routing >= 2.1.1",
       "NETStandard.Library >= 2.0.3",
       "RestSharp >= 106.3.1"
@@ -734,10 +734,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
+    "version": "1.1.0",
     "restore": {
       "projectUniqueName": "F:\\zhenlei\\Owner\\Framework\\System.Extension.Core\\Infrastructure\\EInfrastructure.Core.AliYun.DaYu\\EInfrastructure.Core.AliYun.DaYu.csproj",
       "projectName": "EInfrastructure.Core.AliYun.DaYu",
@@ -778,19 +775,19 @@
     "frameworks": {
       "netstandard2.0": {
         "dependencies": {
-          "RestSharp": {
+          "Microsoft.AspNetCore.Routing": {
             "target": "Package",
-            "version": "106.3.1"
+            "version": "[2.1.1, )"
           },
           "NETStandard.Library": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "2.0.3",
+            "version": "[2.0.3, )",
             "autoReferenced": true
           },
-          "Microsoft.AspNetCore.Routing": {
+          "RestSharp": {
             "target": "Package",
-            "version": "2.1.1"
+            "version": "[106.3.1, )"
           }
         },
         "imports": [

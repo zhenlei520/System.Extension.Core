@@ -134,7 +134,7 @@
           "lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll": {}
         }
       },
-      "EInfrastructure.Core/1.0.0": {
+      "EInfrastructure.Core/1.1.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -546,7 +546,7 @@
         "version.txt"
       ]
     },
-    "EInfrastructure.Core/1.0.0": {
+    "EInfrastructure.Core/1.1.0": {
       "type": "project",
       "path": "../EInfrastructure.Core/EInfrastructure.Core.csproj",
       "msbuildProject": "../EInfrastructure.Core/EInfrastructure.Core.csproj"
@@ -554,7 +554,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "EInfrastructure.Core >= 1.0.0",
+      "EInfrastructure.Core >= 1.1.0",
       "Microsoft.CSharp >= 4.5.0",
       "NETStandard.Library >= 2.0.3",
       "Qiniu >= 7.3.1.1"
@@ -565,10 +565,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
+    "version": "1.1.0",
     "restore": {
       "projectUniqueName": "F:\\zhenlei\\Owner\\Framework\\System.Extension.Core\\Infrastructure\\EInfrastructure.Core.QiNiu.Storage\\EInfrastructure.Core.QiNiu.Storage.csproj",
       "projectName": "EInfrastructure.Core.QiNiu.Storage",
@@ -609,19 +606,19 @@
     "frameworks": {
       "netstandard2.0": {
         "dependencies": {
+          "Microsoft.CSharp": {
+            "target": "Package",
+            "version": "[4.5.0, )"
+          },
           "NETStandard.Library": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "2.0.3",
+            "version": "[2.0.3, )",
             "autoReferenced": true
           },
           "Qiniu": {
             "target": "Package",
-            "version": "7.3.1.1"
-          },
-          "Microsoft.CSharp": {
-            "target": "Package",
-            "version": "4.5.0"
+            "version": "[7.3.1.1, )"
           }
         },
         "imports": [
