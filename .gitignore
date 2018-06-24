@@ -1,0 +1,6 @@
+/.vs
+Infrastructure/*/bin/
+Infrastructure/*/obj/
+*.cache
+*.dll
+*.pdb
