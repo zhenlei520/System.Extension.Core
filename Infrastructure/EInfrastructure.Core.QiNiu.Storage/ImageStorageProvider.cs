@@ -15,7 +15,6 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// </summary>
     public partial class StorageService
     {
-
         #region 通过源图片地址上传
         /// <summary>
         /// 通过源图片地址上传
