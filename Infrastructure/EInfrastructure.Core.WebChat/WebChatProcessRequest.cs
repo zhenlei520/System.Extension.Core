@@ -34,7 +34,6 @@ namespace EInfrastructure.Core.WebChat
         {
           throw new BusinessException("参数错误");
         }
-        return refundReponse;
       }
       catch (System.Exception e)
       {
@@ -70,6 +69,8 @@ namespace EInfrastructure.Core.WebChat
 
     #endregion
 
+    #region Private Methods
+
     #region 验证微信签名
 
     /// <summary>
@@ -91,6 +92,8 @@ namespace EInfrastructure.Core.WebChat
 
       return false;
     }
+
+    #endregion
 
     #endregion
   }
