@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.MySql
 {
-  public class RepositoryBase<TEntity, T> : IRepository<TEntity, T> where TEntity : Entity<T>, IAggregateRoot<T>
+  public class RepositoryBase<TEntity, T> : IRepository<TEntity, T> where TEntity : Entity<T>, IAggregateRoot<T> where T : struct
   {
     protected DbContext Dbcontext;
 

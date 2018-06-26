@@ -6,7 +6,7 @@ using EInfrastructure.Core.Data;
 
 namespace EInfrastructure.Core.Ddd
 {
-  public interface IQuery<TEntity, T> where TEntity : IEntity<T>
+  public interface IQuery<TEntity, T> where TEntity : IEntity<T> where T : struct
   {
     TEntity GetOne(Expression<Func<TEntity, bool>> condition, bool isTracking = true);
 

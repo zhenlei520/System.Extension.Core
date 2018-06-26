@@ -33,6 +33,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.MySql", "Infrastructure\EInfrastructure.Core.MySql\EInfrastructure.Core.MySql.csproj", "{8AF96527-3E07-48BE-9D62-B3408D0C4B84}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ioc", "Ioc", "{FC7FF334-A079-4187-AB7A-0BB17A842B54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AutoFac", "Infrastructure\EInfrastructure.Core.AutoFac\EInfrastructure.Core.AutoFac.csproj", "{28331582-4200-48DD-8A91-CFD90C808363}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,10 @@ Global
 		{8AF96527-3E07-48BE-9D62-B3408D0C4B84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AF96527-3E07-48BE-9D62-B3408D0C4B84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AF96527-3E07-48BE-9D62-B3408D0C4B84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28331582-4200-48DD-8A91-CFD90C808363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28331582-4200-48DD-8A91-CFD90C808363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28331582-4200-48DD-8A91-CFD90C808363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28331582-4200-48DD-8A91-CFD90C808363}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +96,7 @@ Global
 		{58D07A15-8436-47E0-BA42-45D72607649B} = {D3E020E3-533B-4E69-BC1C-290FE14E7AA1}
 		{13C4BFD0-0B7C-4297-B8CE-45960A9B5B6A} = {1A482526-7E29-4D16-9E1A-743770227F00}
 		{8AF96527-3E07-48BE-9D62-B3408D0C4B84} = {D59B00A7-A8C4-4BFD-9825-00F8E0F8922E}
+		{28331582-4200-48DD-8A91-CFD90C808363} = {FC7FF334-A079-4187-AB7A-0BB17A842B54}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41FDCFC5-66DA-415D-AA6C-38806CB952CD}

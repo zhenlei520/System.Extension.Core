@@ -8,7 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.MySql
 {
-  public class QueryBase<TEntity, T> : IQuery<TEntity, T> where TEntity : class, IEntity<T>
+  public class QueryBase<TEntity, T>
+    : IQuery<TEntity, T> where TEntity : class, IEntity<T>
+    where T : struct
+
+    //IQuery<TEntity, T> where TEntity : class, IEntity<T>
   {
     protected DbContext Dbcontext;
 
@@ -21,18 +25,18 @@ namespace EInfrastructure.Core.MySql
     {
       if (isTracking)
       {
-        return Dbcontext.GetOne<TEntity,T>(exp);
+        return Dbcontext.GetOne<TEntity, T>(exp);
       }
       else
       {
         return Dbcontext.Set<TEntity>().AsNoTracking()
-        .FirstOrDefault(exp);
+          .FirstOrDefault(exp);
       }
     }
 
     public PageData<TEntity> GetList(Expression<Func<TEntity, bool>> exp, int pagesize, int pageindex, bool istotal)
     {
-      return Dbcontext.GetList<TEntity,T>(exp, pagesize, pageindex, istotal);
+      return Dbcontext.GetList<TEntity, T>(exp, pagesize, pageindex, istotal);
     }
 
     public List<TEntity> GetList(Expression<Func<TEntity, bool>> exp)
