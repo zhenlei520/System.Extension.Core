@@ -9,11 +9,10 @@ namespace EInfrastructure.Core.WebChat.Common
   /// </summary>
   public class WebChatXmlCommon
   {
-    public WebChatXmlCommon(string toUserName, string fromUserName, MsgTypeEnum msgType, string events = "")
+    public WebChatXmlCommon(string toUserName, string fromUserName, string events = "")
     {
       ToUserName = toUserName;
       FromUserName = fromUserName;
-      MsgType = msgType.GetDescription();
     }
 
     /// <summary>
@@ -45,6 +44,7 @@ namespace EInfrastructure.Core.WebChat.Common
     /// <returns></returns>
     public string GetText(string content)
     {
+      MsgType = "text";
       return $"<xml><ToUserName><![CDATA[{ToUserName}]]></ToUserName><FromUserName><![CDATA[{FromUserName}]]></FromUserName> <CreateTime>{CreateTime}</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[{content}]]></Content></xml>";
     }
 
