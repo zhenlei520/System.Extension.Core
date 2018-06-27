@@ -19,7 +19,7 @@ namespace EInfrastructure.Core.WebChat
     /// <param name="webChatAuthConfig"></param>
     /// <param name="wxConfig"></param>
     /// <param name="xml"></param>
-    private WebChatMessage ProcessRequest(WebChatAuthConfig webChatAuthConfig, WxConfig wxConfig, string xml)
+    public WebChatMessage ProcessRequest(WebChatAuthConfig webChatAuthConfig, WxConfig wxConfig, string xml)
     {
       WebChatMessage refundReponse = null;
       try
@@ -51,7 +51,7 @@ namespace EInfrastructure.Core.WebChat
     /// 授权认证
     /// </summary>
     /// <returns></returns>
-    public static string Auth(WebChatAuthConfig chatAuthConfig, WxConfig wxConfig)
+    public string Auth(WebChatAuthConfig chatAuthConfig, WxConfig wxConfig)
     {
       string encodingAesKey = wxConfig.EncodingAesKey; //根据自己后台的设置保持一致  
       string appId = wxConfig.AppId; //根据自己后台的设置保持一致  

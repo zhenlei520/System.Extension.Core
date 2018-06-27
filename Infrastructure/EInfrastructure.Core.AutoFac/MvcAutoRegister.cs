@@ -13,8 +13,8 @@ namespace EInfrastructure.Core.AutoFac
 {
   public class MvcAutoRegister
   {
-    public IServiceProvider Build<T>(IServiceCollection services,
-        Action<ContainerBuilder> action) where T : struct
+    public IServiceProvider Build(IServiceCollection services,
+        Action<ContainerBuilder> action)
     {
       services.AddMvc().AddControllersAsServices();
 
@@ -45,12 +45,11 @@ namespace EInfrastructure.Core.AutoFac
           .PropertiesAutowired()
           .AsImplementedInterfaces()
           .SingleInstance();
-
-      var temp = typeof(IQuery<IEntity<Guid>,Guid>);
-      builder.RegisterGeneric(typeof(QueryBase<Entity<T>, T>)).As(typeof(IQuery<IEntity<T>, T>)).PropertiesAutowired()
+        
+      builder.RegisterGeneric(typeof(QueryBase<, >)).As(typeof(IQuery<,>)).PropertiesAutowired()
           .InstancePerLifetimeScope();
 
-      builder.RegisterGeneric(typeof(RepositoryBase<AggregateRoot<T>, T>)).As(typeof(IRepository<IAggregateRoot<T>, T>)).PropertiesAutowired()
+      builder.RegisterGeneric(typeof(RepositoryBase<, >)).As(typeof(IRepository<,>)).PropertiesAutowired()
           .InstancePerLifetimeScope();
 
       action(builder);
