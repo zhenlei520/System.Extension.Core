@@ -67,11 +67,10 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
         /// <returns></returns>
         public static T Deserialize<T>(string xml)
         {
-            XmlSerializer xs = new XmlSerializer(typeof(T));
-            using (MemoryStream stream = new MemoryStream(EncodingFormat.GetBytes(xml)))
+            XmlSerializer xmldes = new XmlSerializer(typeof(T));
+            using (MemoryStream stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(xml.ToCharArray())))
             {
-                var r = (T)xs.Deserialize(stream);
-                return r;
+                return (T) xmldes.Deserialize(stream);
             }
         }
 
