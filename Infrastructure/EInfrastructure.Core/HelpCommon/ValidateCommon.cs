@@ -211,7 +211,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// </summary>
         /// <param name="webUrl">网址</param>
         /// <returns></returns>
-        public static bool IsWebSite(this string webUrl)
+        public static bool IsUrl(this string webUrl)
         {
             if (string.IsNullOrEmpty(webUrl))
                 return false;

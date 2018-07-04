@@ -21,6 +21,7 @@ namespace EInfrastructure.Core.HelpCommon
         }
 
         #region 将时间格式化成 年月日 的形式,如果时间为null，返回当前系统时间
+
         /// <summary>
         /// 将时间格式化成 年月日 的形式,如果时间为null，返回当前系统时间
         /// </summary>
@@ -32,21 +33,25 @@ namespace EInfrastructure.Core.HelpCommon
             string tem = $"yyyy{separator}MM{separator}dd";
             return dt.ToString(tem);
         }
+
         #endregion
 
         #region 把秒转换成分钟
+
         /// <summary>
         /// 把秒转换成分钟
         /// </summary>
         /// <returns></returns>
         public static int SecondToMinute(int second)
         {
-            decimal mm = (decimal)second / 60;
+            decimal mm = (decimal) second / 60;
             return Convert.ToInt32(Math.Ceiling(mm));
         }
+
         #endregion
 
         #region 返回某年某月最后一天
+
         /// <summary>
         /// 返回某年某月最后一天
         /// </summary>
@@ -59,9 +64,11 @@ namespace EInfrastructure.Core.HelpCommon
             int day = lastDay.Day;
             return day;
         }
+
         #endregion
 
         #region 返回时间差
+
         public static string DateDiff(this DateTime dateTime1, DateTime dateTime2)
         {
             string dateDiff = null;
@@ -88,11 +95,14 @@ namespace EInfrastructure.Core.HelpCommon
             {
                 // ignored
             }
+
             return dateDiff;
         }
+
         #endregion
 
         #region 获得两个日期的间隔
+
         /// <summary>
         /// 获得两个日期的间隔
         /// </summary>
@@ -106,9 +116,11 @@ namespace EInfrastructure.Core.HelpCommon
             TimeSpan ts = ts1.Subtract(ts2).Duration();
             return ts;
         }
+
         #endregion
 
         #region 格式化日期时间
+
         /// <summary>
         /// 格式化日期时间
         /// </summary>
@@ -143,9 +155,11 @@ namespace EInfrastructure.Core.HelpCommon
                     return dateTime1.ToString(CultureInfo.InvariantCulture);
             }
         }
+
         #endregion
 
         #region 得到随机日期
+
         /// <summary>
         /// 得到随机日期
         /// </summary>
@@ -173,7 +187,7 @@ namespace EInfrastructure.Core.HelpCommon
             }
             else
             {
-                iTotalSecontds = (int)dTotalSecontds;
+                iTotalSecontds = (int) dTotalSecontds;
             }
 
 
@@ -199,6 +213,7 @@ namespace EInfrastructure.Core.HelpCommon
 
             return minTime.AddSeconds(i);
         }
+
         #endregion
 
         #region 返回每月的第一天和最后一天
@@ -216,6 +231,7 @@ namespace EInfrastructure.Core.HelpCommon
             {
                 month = month % 12;
             }
+
             switch (month)
             {
                 case 1:
@@ -224,7 +240,9 @@ namespace EInfrastructure.Core.HelpCommon
                     break;
                 case 2:
                     firstDay = DateTime.Now.ToString(year + "-0" + month + "-01");
-                    lastDay = DateTime.IsLeapYear(DateTime.Now.Year) ? DateTime.Now.ToString(year + "-0" + month + "-29") : DateTime.Now.ToString(year + "-0" + month + "-28");
+                    lastDay = DateTime.IsLeapYear(DateTime.Now.Year)
+                        ? DateTime.Now.ToString(year + "-0" + month + "-29")
+                        : DateTime.Now.ToString(year + "-0" + month + "-28");
                     break;
                 case 3:
                     firstDay = DateTime.Now.ToString(year + "-0" + month + "-01");
@@ -268,9 +286,11 @@ namespace EInfrastructure.Core.HelpCommon
                     break;
             }
         }
+
         #endregion
 
         #region 得到月初与月末时间
+
         /// <summary>
         /// 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
         /// </summary>
@@ -278,25 +298,26 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static DateTime ReturnDateTime(TimeType timeKey)
         {
-            DateTime dateNow = DateTime.Now.Date;  //当前时间  
+            DateTime dateNow = DateTime.Now.Date; //当前时间  
             switch (timeKey)
             {
                 case TimeType.StartYear:
                     return new DateTime(dateNow.Year, 1, 1); //本年年初  
                 case TimeType.EndYear:
-                    return new DateTime(dateNow.Year, 12, 31);  //本年年末  
+                    return new DateTime(dateNow.Year, 12, 31); //本年年末  
                 case TimeType.StartQuarter:
-                    return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day);  //本季度初  ;
+                    return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day); //本季度初  ;
                 case TimeType.EndQuarter:
-                    return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day).AddMonths(3).AddDays(-1);  //本季度末  
+                    return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day).AddMonths(3)
+                        .AddDays(-1); //本季度末  
                 case TimeType.StartMonth:
-                    return dateNow.AddDays(1 - dateNow.Day);  //本月月初  
+                    return dateNow.AddDays(1 - dateNow.Day); //本月月初  
                 case TimeType.EndMonth:
-                    return dateNow.AddDays(1 - dateNow.Day).AddMonths(1).AddDays(-1);//本月月末  
+                    return dateNow.AddDays(1 - dateNow.Day).AddMonths(1).AddDays(-1); //本月月末  
                 case TimeType.StartWeek:
                     return dateNow.AddDays(1 - Convert.ToInt32(dateNow.DayOfWeek.ToString("d"))); //本周周一  
                 case TimeType.EndWeek:
-                    return dateNow.AddDays(1 - Convert.ToInt32(dateNow.DayOfWeek.ToString("d"))).AddDays(6);  //本周周日  
+                    return dateNow.AddDays(1 - Convert.ToInt32(dateNow.DayOfWeek.ToString("d"))).AddDays(6); //本周周日  
                 default:
                     return dateNow;
             }
@@ -305,6 +326,7 @@ namespace EInfrastructure.Core.HelpCommon
         #endregion
 
         #region 得到前N秒的时间
+
         /// <summary>
         /// 得到前N秒的时间
         /// </summary>
@@ -318,6 +340,7 @@ namespace EInfrastructure.Core.HelpCommon
         #endregion
 
         #region 得到距离当前多远时间
+
         /// <summary>
         /// 得到据当前多远时间
         /// </summary>
@@ -361,7 +384,7 @@ namespace EInfrastructure.Core.HelpCommon
         {
             if (date == null)
                 return "未知";
-            return GetAccordingToCurrent((DateTime)date);
+            return GetAccordingToCurrent((DateTime) date);
         }
 
         #endregion
@@ -373,8 +396,18 @@ namespace EInfrastructure.Core.HelpCommon
         private static readonly ChineseLunisolarCalendar China = new ChineseLunisolarCalendar();
         private static readonly Hashtable GHoliday = new Hashtable();
         private static readonly Hashtable NHoliday = new Hashtable();
-        private static readonly string[] Jq = { "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至" };
-        private static readonly int[] JqData = { 0, 21208, 43467, 63836, 85337, 107014, 128867, 150921, 173149, 195551, 218072, 240693, 263343, 285989, 308563, 331033, 353350, 375494, 397447, 419210, 440795, 462224, 483532, 504758 };
+
+        private static readonly string[] Jq =
+        {
+            "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分",
+            "寒露", "霜降", "立冬", "小雪", "大雪", "冬至"
+        };
+
+        private static readonly int[] JqData =
+        {
+            0, 21208, 43467, 63836, 85337, 107014, 128867, 150921, 173149, 195551, 218072, 240693, 263343, 285989,
+            308563, 331033, 353350, 375494, 397447, 419210, 440795, 462224, 483532, 504758
+        };
 
         public static void ChinaDate()
         {
@@ -404,9 +437,11 @@ namespace EInfrastructure.Core.HelpCommon
             NHoliday.Add("0909", "重阳节");
             NHoliday.Add("1208", "腊八节");
         }
+
         #endregion
 
         #region 阳历转阴历(农历)
+
         /// <summary>
         /// 阳历转阴历(农历)
         /// </summary>
@@ -420,27 +455,33 @@ namespace EInfrastructure.Core.HelpCommon
                 throw new System.Exception(
                     $"日期超出范围！必须在{China.MinSupportedDateTime.ToString("yyyy-MM-dd")}到{China.MaxSupportedDateTime.ToString("yyyy-MM-dd")}之间！");
             }
+
             string str = $"{GetYear(dt)} {GetMonth(dt)}{GetDay(dt)}";
             string strJq = GetSolarTerm(dt);
             if (strJq != "")
             {
                 str += " (" + strJq + ")";
             }
+
             string strHoliday = GetHoliday(dt);
             if (strHoliday != "")
             {
                 str += " " + strHoliday;
             }
+
             string strChinaHoliday = GetChinaHoliday(dt);
             if (strChinaHoliday != "")
             {
                 str += " " + strChinaHoliday;
             }
+
             return str;
         }
+
         #endregion
 
         #region 获取农历年份
+
         /// <summary>
         /// 获取农历年份
         /// </summary>
@@ -459,9 +500,11 @@ namespace EInfrastructure.Core.HelpCommon
             string str = string.Format("[{1}]{2}{3}{0}", year, yearSX[yDz], yearTG[yTg], yearDZ[yDz]);
             return str;
         }
+
         #endregion
 
         #region 获取农历月份
+
         /// <summary>
         /// 获取农历月份
         /// </summary>
@@ -492,11 +535,14 @@ namespace EInfrastructure.Core.HelpCommon
             {
                 strMonth += "腊";
             }
+
             return strMonth + "月";
         }
+
         #endregion
 
         #region 获取农历日期
+
         /// <summary>
         /// 获取农历日期
         /// </summary>
@@ -521,11 +567,14 @@ namespace EInfrastructure.Core.HelpCommon
                 strDay = szText1.Substring((iDay - 1) / 10, 1);
                 strDay = strDay + szText2.Substring((iDay - 1) % 10, 1);
             }
+
             return strDay;
         }
+
         #endregion
 
         #region 获取节气
+
         /// <summary>
         /// 获取节气
         /// </summary>
@@ -549,9 +598,11 @@ namespace EInfrastructure.Core.HelpCommon
 
             return strReturn;
         }
+
         #endregion
 
         #region 获取公历节日
+
         /// <summary>
         /// 获取公历节日
         /// </summary>
@@ -568,9 +619,11 @@ namespace EInfrastructure.Core.HelpCommon
 
             return strReturn;
         }
+
         #endregion
 
         #region 获取农历节日
+
         /// <summary>
         /// 获取农历节日
         /// </summary>
@@ -593,6 +646,7 @@ namespace EInfrastructure.Core.HelpCommon
                 {
                     iMonth--;
                 }
+
                 object n = NHoliday[iMonth.ToString("00") + iDay.ToString("00")];
                 if (n != null)
                 {
@@ -606,13 +660,16 @@ namespace EInfrastructure.Core.HelpCommon
                     }
                 }
             }
+
             return strReturn;
         }
+
         #endregion
 
         #region 阴历-阳历-转换
 
         #region 阴历转为阳历
+
         /// <summary>
         /// 阴历转为阳历
         /// </summary>
@@ -633,9 +690,11 @@ namespace EInfrastructure.Core.HelpCommon
             num1 = num1 - China.GetDayOfMonth(dt) + 1;
             return dt.AddDays(num1);
         }
+
         #endregion
 
         #region 阳历转为阴历
+
         /// <summary>
         /// 阳历转为阴历
         /// </summary>
@@ -651,6 +710,7 @@ namespace EInfrastructure.Core.HelpCommon
             {
                 iMonth--;
             }
+
             string str = $"{year}-{iMonth}-{iDay}";
             DateTime dtNew = DateTime.Now;
             try
@@ -661,8 +721,10 @@ namespace EInfrastructure.Core.HelpCommon
             {
                 // ignored
             }
+
             return dtNew;
         }
+
         #endregion
 
         #endregion
@@ -670,6 +732,7 @@ namespace EInfrastructure.Core.HelpCommon
         #endregion
 
         #region 时间类型
+
         /// <summary>
         /// 时间类型
         /// </summary>
@@ -679,38 +742,47 @@ namespace EInfrastructure.Core.HelpCommon
             /// 月初
             /// </summary>
             StartMonth = 1,
+
             /// <summary>
             /// 月末
             /// </summary>
             EndMonth = 2,
+
             /// <summary>
             /// 本周周一
             /// </summary>
             StartWeek = 3,
+
             /// <summary>
             /// 本周周日  
             /// </summary>
             EndWeek = 4,
+
             /// <summary>
             /// 本季初
             /// </summary>
             StartQuarter = 5,
+
             /// <summary>
             /// 本季末
             /// </summary>
             EndQuarter = 6,
+
             /// <summary>
             /// 年初
             /// </summary>
             StartYear = 7,
+
             /// <summary>
             /// 年末
             /// </summary>
             EndYear = 8
         }
+
         #endregion
 
         #region 得到13位时间戳
+
         /// <summary>
         /// 得到13位时间戳
         /// </summary>
@@ -721,7 +793,7 @@ namespace EInfrastructure.Core.HelpCommon
             if (time == null)
                 time = DateTime.Now;
             var startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0, 0));
-            long t = (time.Value.Ticks - startTime.Ticks) / 10000;   //除10000调整为13位      
+            long t = (time.Value.Ticks - startTime.Ticks) / 10000; //除10000调整为13位      
             return t;
         }
 
@@ -737,9 +809,29 @@ namespace EInfrastructure.Core.HelpCommon
         public static int ConvertDateTimeInt(DateTime time)
         {
             DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
-            return (int)(time - startTime).TotalSeconds;
+            return (int) (time - startTime).TotalSeconds;
         }
+
         #endregion
+
+        #region 获得总秒数
+
+        /// <summary>
+        /// 获得总秒数
+        /// </summary>
+        /// <param name="jan1St1970"></param>
+        /// <returns></returns>
+        public static long CurrentTimeMillis(DateTime? jan1St1970 = null)
+        {
+            if (jan1St1970 == null)
+            {
+                jan1St1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            }
+
+            return (long) ((DateTime.UtcNow - jan1St1970.Value).TotalMilliseconds);
+        }
+
+        #endregion
+        
     }
 }
-

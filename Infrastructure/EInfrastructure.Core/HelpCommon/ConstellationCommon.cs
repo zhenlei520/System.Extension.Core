@@ -6,7 +6,7 @@ namespace EInfrastructure.Core.HelpCommon
     /// <summary>
     /// 星座帮助类
     /// </summary>
-    public class ConstellationHelper
+    public class ConstellationCommon
     {
         #region 根据日期得到星座名称
         /// <summary>
@@ -14,9 +14,13 @@ namespace EInfrastructure.Core.HelpCommon
         /// </summary>
         /// <param name="birthday">日期</param>
         /// <returns></returns>
-        public static string GetConstellationFromBirthday(DateTime birthday)
+        public static string GetConstellationFromBirthday(DateTime? birthday)
         {
-            float fBirthDay = Convert.ToSingle(birthday.ToString("M.dd"));
+            if (birthday == null)
+            {
+                return "未知";
+            }
+            float fBirthDay = Convert.ToSingle(birthday.Value.ToString("M.dd"));
             float[] atomBound = { 1.20F, 2.20F, 3.21F, 4.21F, 5.21F, 6.22F, 7.23F, 8.23F, 9.23F, 10.23F, 11.21F, 12.22F, 13.20F };
             string[] atoms = { "水瓶座", "双鱼座", "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "魔羯座" };
             string ret = "";
@@ -38,8 +42,12 @@ namespace EInfrastructure.Core.HelpCommon
         /// </summary>
         /// <param name="birthday">日期</param>
         /// <returns></returns>
-        public static ConstellationEnum GetConstellationEnumFromBirthday(DateTime birthday)
+        public static ConstellationEnum GetConstellationEnumFromBirthday(DateTime? birthday)
         {
+            if (birthday == null)
+            {
+                return ConstellationEnum.Unknow;
+            }
             var name = GetConstellationFromBirthday(birthday);
             switch (name)
             {
@@ -68,7 +76,7 @@ namespace EInfrastructure.Core.HelpCommon
                 case "魔羯座":
                     return ConstellationEnum.Capricornus;
                 default:
-                    return 0;
+                    return ConstellationEnum.Unknow;
             }
         } 
         #endregion

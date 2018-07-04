@@ -168,8 +168,22 @@ namespace EInfrastructure.Core.AliYun.Tbk.Dto
             /// 优惠价价格
             /// </summary>
             [JsonProperty(PropertyName = "coupon_money")]
-            public string CouponMoney => CouponInfo.Substring(CouponInfo.IndexOf("减", StringComparison.Ordinal) + 1,
-                CouponInfo.LastIndexOf("元", StringComparison.Ordinal) - CouponInfo.LastIndexOf("减", StringComparison.Ordinal) - 1);
+            public string CouponMoney
+            {
+                get
+                {
+                    try
+                    {
+                        return CouponInfo.Substring(CouponInfo.IndexOf("减", StringComparison.Ordinal) + 1,
+                            CouponInfo.LastIndexOf("元", StringComparison.Ordinal) -
+                            CouponInfo.LastIndexOf("减", StringComparison.Ordinal) - 1);
+                    }
+                    catch
+                    {
+                        return "";
+                    }
+                }
+            }
 
             /// <summary>
             /// 佣金类型
@@ -188,13 +202,13 @@ namespace EInfrastructure.Core.AliYun.Tbk.Dto
             /// </summary>
             [JsonProperty(PropertyName = "shop_dsr")]
             public long ShopDsr { get; set; }
-            
+
             /// <summary>
             /// 券二合一页面链接
             /// </summary>
             [JsonProperty(PropertyName = "coupon_share_url")]
             public string CouponShareUrl { get; set; }
-            
+
             /// <summary>
             /// 商品淘客链接
             /// </summary>
