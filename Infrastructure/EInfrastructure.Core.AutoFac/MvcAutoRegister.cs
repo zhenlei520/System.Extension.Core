@@ -11,58 +11,56 @@ using EInfrastructure.Core.MySql;
 
 namespace EInfrastructure.Core.AutoFac
 {
-  public class MvcAutoRegister
-  {
-    public IServiceProvider Build(IServiceCollection services,
-        Action<ContainerBuilder> action)
+    public class MvcAutoRegister
     {
-      services.AddMvc().AddControllersAsServices();
+        public IServiceProvider Build(IServiceCollection services,
+            Action<ContainerBuilder> action)
+        {
+            services.AddMvc().AddControllersAsServices();
 
-      var builder = new ContainerBuilder();
+            var builder = new ContainerBuilder();
 
 
-      var assemblys = AppDomain.CurrentDomain.GetAssemblies().ToArray();
+            var assemblys = AppDomain.CurrentDomain.GetAssemblies().ToArray();
 
-      LogCommon.Debug("已加载程的序集", new JsonCommon().Serializer(assemblys.Select(t => t.FullName), true));
+            LogCommon.Debug("已加载程的序集", new JsonCommon().Serializer(assemblys.Select(t => t.FullName), true));
 
-      var perRequestType = typeof(IPerRequest);
-      builder.RegisterAssemblyTypes(assemblys)
-          .Where(t => perRequestType.IsAssignableFrom(t) && t != perRequestType)
-          .PropertiesAutowired()
-          .AsImplementedInterfaces()
-          .InstancePerLifetimeScope();
+            var perRequestType = typeof(IPerRequest);
+            builder.RegisterAssemblyTypes(assemblys)
+                .Where(t => perRequestType.IsAssignableFrom(t) && t != perRequestType)
+                .PropertiesAutowired()
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
 
-      var perDependencyType = typeof(IDependency);
-      builder.RegisterAssemblyTypes(assemblys)
-          .Where(t => perDependencyType.IsAssignableFrom(t) && t != perDependencyType)
-          .PropertiesAutowired()
-          .AsImplementedInterfaces()
-          .InstancePerDependency();
+            var perDependencyType = typeof(IDependency);
+            builder.RegisterAssemblyTypes(assemblys)
+                .Where(t => perDependencyType.IsAssignableFrom(t) && t != perDependencyType)
+                .PropertiesAutowired()
+                .AsImplementedInterfaces()
+                .InstancePerDependency();
 
-      var singleInstanceType = typeof(ISingleInstance);
-      builder.RegisterAssemblyTypes(assemblys)
-          .Where(t => singleInstanceType.IsAssignableFrom(t) && t != singleInstanceType)
-          .PropertiesAutowired()
-          .AsImplementedInterfaces()
-          .SingleInstance();
-        
-      builder.RegisterGeneric(typeof(QueryBase<, >)).As(typeof(IQuery<,>)).PropertiesAutowired()
-          .InstancePerLifetimeScope();
+            var singleInstanceType = typeof(ISingleInstance);
+            builder.RegisterAssemblyTypes(assemblys)
+                .Where(t => singleInstanceType.IsAssignableFrom(t) && t != singleInstanceType)
+                .PropertiesAutowired()
+                .AsImplementedInterfaces()
+                .SingleInstance();
 
-      builder.RegisterGeneric(typeof(RepositoryBase<, >)).As(typeof(IRepository<,>)).PropertiesAutowired()
-          .InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(QueryBase<,>)).As(typeof(IQuery<,>)).PropertiesAutowired()
+                .InstancePerLifetimeScope();
 
-      action(builder);
+            builder.RegisterGeneric(typeof(RepositoryBase<,>)).As(typeof(IRepository<,>)).PropertiesAutowired()
+                .InstancePerLifetimeScope();
 
-      builder.Populate(services);
+            action(builder);
 
-      var container = builder.Build();
+            builder.Populate(services);
 
-      var servicesProvider = new AutofacServiceProvider(container);
+            var container = builder.Build();
 
-      return servicesProvider;
+            var servicesProvider = new AutofacServiceProvider(container);
 
+            return servicesProvider;
+        }
     }
-  }
-
 }
