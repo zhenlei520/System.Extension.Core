@@ -22,14 +22,18 @@ namespace EInfrastructure.Core.Interface.Storage.Config
         /// <param name="model">缩放信息</param>
         /// <param name="waterMark">水印信息</param>
         /// <param name="thumOpsList">缩略图信息</param>
-        public ImgPersistentOps(string key, int width = 0, int height = 0, ImageModeEnum model = ImageModeEnum.Nothing, StorageWaterMark waterMark = null, List<ThumOps> thumOpsList = null)
+        public ImgPersistentOps(string key, int width = 0, int height = 0, ImageModeEnum model = ImageModeEnum.Nothing,
+            StorageWaterMark waterMark = null, List<ThumOps> thumOpsList = null)
         {
             Key = key;
             Width = width;
             Height = height;
             Mode = model;
             WaterMark = waterMark;
-            ThumOpsList = thumOpsList;
+            if (thumOpsList != null)
+            {
+                ThumOpsList = thumOpsList;
+            }
         }
 
         /// <summary>
