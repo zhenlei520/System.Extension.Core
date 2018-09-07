@@ -1,4 +1,6 @@
-﻿using EInfrastructure.Core.QiNiu.Storage.Enum;
+﻿using EInfrastructure.Core.Interface.Storage.Enum;
+using EInfrastructure.Core.QiNiu.Storage.Enum;
+using Qiniu.Storage;
 
 namespace EInfrastructure.Core.QiNiu.Storage.Config
 {
@@ -92,12 +94,30 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// <summary>
         /// 回调内容
         /// </summary>
-        public string CallbackBody { get; set; }
+        public string CallbackBody { get; set; } = "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsiz\":$(fsize),\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\"}";
 
         /// <summary>
         /// 回调内容类型
         /// </summary>
-        public string CallbackBodyType { get; set; } = "application/json";
-
+        public CallbackBodyTypeEnum CallbackBodyType { get; set; }
+        
+        /// <summary>
+        /// 得到空间
+        /// </summary>
+        /// <returns></returns>
+        public Zone GetZone()
+        {
+            switch (Zones)
+            {
+                default:
+                    return Zone.ZONE_CN_East;
+                case ZoneEnum.ZoneCnNorth:
+                    return Zone.ZONE_CN_North;
+                case ZoneEnum.ZoneCnSouth:
+                    return Zone.ZONE_CN_South;
+                case ZoneEnum.ZoneUsNorth:
+                    return Zone.ZONE_US_North;
+            }
+        }
     }
 }
