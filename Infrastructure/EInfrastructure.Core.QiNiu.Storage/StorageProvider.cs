@@ -1,5 +1,4 @@
-﻿using System.IO;
-using EInfrastructure.Core.Interface.IOC;
+﻿using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Storage;
 using EInfrastructure.Core.Interface.Storage.Param;
 using EInfrastructure.Core.QiNiu.Storage.Config;
@@ -34,7 +33,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             FormUploader target = new FormUploader(GetConfig(param.UploadPersistentOps));
             HttpResult result =
                 target.UploadStream(param.Stream, param.Key, token, GetPutExtra(param.UploadPersistentOps));
-            return result.Code == (int) HttpCode.OK;
+            return result.Code == (int)HttpCode.OK;
         }
 
         #endregion
@@ -55,7 +54,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             {
                 HttpResult result =
                     target.UploadStream(param.File.OpenReadStream(), param.Key, token, GetPutExtra(param.UploadPersistentOps));
-                return result.Code == (int) HttpCode.OK;
+                return result.Code == (int)HttpCode.OK;
             }
             return false;
         }
