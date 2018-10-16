@@ -11,6 +11,7 @@ namespace EInfrastructure.Core.HelpCommon
         #region Object转换类型
 
         #region obj转Guid
+
         /// <summary>
         /// obj转Guid
         /// </summary>
@@ -44,9 +45,11 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
+
         #endregion
 
         #region obj转Int
+
         /// <summary>
         /// obj转Int
         /// </summary>
@@ -63,7 +66,7 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
-        
+
         /// <summary>
         /// obj转Int
         /// </summary>
@@ -80,9 +83,11 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
+
         #endregion
 
         #region obj转Short
+
         /// <summary>
         /// obj转Short
         /// </summary>
@@ -99,7 +104,7 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
-        
+
         /// <summary>
         /// obj转Int
         /// </summary>
@@ -116,9 +121,11 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
+
         #endregion
 
         #region obj转decimal
+
         /// <summary>
         /// obj转decimal
         /// </summary>
@@ -135,7 +142,7 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
-        
+
         /// <summary>
         /// obj转Int
         /// </summary>
@@ -152,9 +159,11 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
+
         #endregion
 
         #region obj转double
+
         /// <summary>
         /// obj转double
         /// </summary>
@@ -171,7 +180,7 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
-        
+
         /// <summary>
         /// obj转Int
         /// </summary>
@@ -188,9 +197,11 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
+
         #endregion
 
         #region obj转float
+
         /// <summary>
         /// obj转float
         /// </summary>
@@ -207,7 +218,7 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
-        
+
         /// <summary>
         /// obj转Int
         /// </summary>
@@ -224,9 +235,11 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
+
         #endregion
 
         #region obj转datetime
+
         /// <summary>
         /// obj转datetime
         /// </summary>
@@ -243,7 +256,7 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
-        
+
         /// <summary>
         /// obj转Int
         /// </summary>
@@ -260,9 +273,11 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
+
         #endregion
 
         #region obj转byte
+
         /// <summary>
         /// obj转byte
         /// </summary>
@@ -279,7 +294,7 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
-        
+
         /// <summary>
         /// obj转Int
         /// </summary>
@@ -296,9 +311,11 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
+
         #endregion
 
         #region obj转bool
+
         /// <summary>
         /// obj转bool
         /// </summary>
@@ -315,7 +332,7 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
-        
+
         /// <summary>
         /// obj转Int
         /// </summary>
@@ -332,6 +349,7 @@ namespace EInfrastructure.Core.HelpCommon
                     return defaultVal;
             return defaultVal;
         }
+
         #endregion
 
         #endregion
@@ -339,8 +357,9 @@ namespace EInfrastructure.Core.HelpCommon
         #region 文件类型转换
 
         #region 转换为Byte数组
-        
+
         #region Stream转换为Byte数组
+
         /// <summary>
         /// Stream转换为Byte数组
         /// </summary>
@@ -354,9 +373,11 @@ namespace EInfrastructure.Core.HelpCommon
             stream.Seek(0, SeekOrigin.Begin);
             return bytes;
         }
+
         #endregion
 
         #region String转换为Byte数组
+
         /// <summary>
         /// String转换为Byte数组
         /// </summary>
@@ -375,6 +396,7 @@ namespace EInfrastructure.Core.HelpCommon
         #region 转换为Stream
 
         #region 将 byte[] 转成 Stream
+
         /// <summary>
         /// 将 byte[] 转成 Stream
         /// </summary>
@@ -385,6 +407,7 @@ namespace EInfrastructure.Core.HelpCommon
             Stream stream = new MemoryStream(bytes);
             return stream;
         }
+
         #endregion
 
         #endregion
@@ -392,6 +415,7 @@ namespace EInfrastructure.Core.HelpCommon
         #region 转换为String
 
         #region byte数组转换为string
+
         /// <summary>
         /// byte数组转换为string
         /// </summary>
@@ -401,14 +425,30 @@ namespace EInfrastructure.Core.HelpCommon
         {
             System.Text.UnicodeEncoding converter = new System.Text.UnicodeEncoding();
             return converter.GetString(bytes);
-        } 
+        }
+
         #endregion
+
+        #endregion
+
+        #region base64字符串转byte数组
+
+        /// <summary>
+        /// 图片base64转byte数组
+        /// </summary>
+        /// <param name="base64"></param>
+        /// <returns></returns>
+        public static byte[] ConvertToByte(this string base64)
+        {
+            return Convert.FromBase64String(base64);
+        }
 
         #endregion
 
         #endregion
 
         #region 清空小数点后0
+
         /// <summary>
         /// 清楚小数点后的0
         /// </summary>
@@ -423,12 +463,14 @@ namespace EInfrastructure.Core.HelpCommon
             {
                 return str.Substring(0, str.IndexOf(".", StringComparison.Ordinal));
             }
+
             return str;
         }
 
         #endregion
 
         #region 加密显示以*表示
+
         /// <summary>
         /// 加密显示以*表示
         /// </summary>
@@ -436,21 +478,25 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static string GetContentByEncryption(int number)
         {
-            int encryptionLength = 6;//默认加密后数据显示6位***
-            string result = "";//结果
+            int encryptionLength = 6; //默认加密后数据显示6位***
+            string result = ""; //结果
             if (number == -1 || number < 0)
             {
                 encryptionLength = 6;
             }
+
             for (int i = 0; i < encryptionLength; i++)
             {
                 result += "*";
             }
+
             return result;
         }
+
         #endregion
 
         #region 值互换(左边最小值,右边最大值)
+
         /// <summary>
         /// 值互换(左边最小值,右边最大值)
         /// </summary>
@@ -540,7 +586,7 @@ namespace EInfrastructure.Core.HelpCommon
                 minParameter = temp;
             }
         }
+
         #endregion
-        
     }
 }

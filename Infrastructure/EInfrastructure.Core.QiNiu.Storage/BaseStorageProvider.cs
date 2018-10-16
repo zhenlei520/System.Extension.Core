@@ -57,61 +57,6 @@ namespace EInfrastructure.Core.QiNiu.Storage
 
         #region 得到上传策略
 
-        #region 得到上传策略
-
-        /// <summary>
-        /// 得到上传策略
-        /// </summary>
-        /// <param name="persistentOps">图片上传策略</param>
-        /// <returns></returns>
-        private string GetPersistentOps(ImgPersistentOps persistentOps)
-        {
-            int length = persistentOps.ThumOpsList.Count;
-            var index = 0;
-            if (persistentOps.Mode != ImageModeEnum.Nothing)
-            {
-                length++;
-            }
-
-            string[] imageOpts = new string[length];
-            if (persistentOps.Mode != ImageModeEnum.Nothing)
-            {
-                imageOpts[index] = GetPersistentOps(persistentOps.Mode, persistentOps.Width,
-                    persistentOps.Height);
-                index++;
-            }
-
-            foreach (var thumOps in persistentOps.ThumOpsList)
-            {
-                string savekey = "saveas/" + Base64.UrlSafeBase64Encode(thumOps.Key);
-                imageOpts[index] = savekey + "|" + GetPersistentOps(thumOps.Mode, thumOps.Width,
-                                       thumOps.Height) + "/";
-                index++;
-            }
-
-            return string.Join(";", imageOpts);
-        }
-
-        /// <summary>
-        /// 得到上传策略 
-        /// </summary>
-        /// <param name="imageModel">图片缩放信息</param>
-        /// <param name="width">宽</param>
-        /// <param name="height">高</param>
-        /// <returns></returns>
-        private string GetPersistentOps(ImageModeEnum imageModel, int width, int height)
-        {
-            if (imageModel == ImageModeEnum.Hw)
-                return "imageMogr2/thumbnail/" + $"{width}x{height}!";
-            if (imageModel == ImageModeEnum.W)
-                return "imageMogr2/thumbnail/" + $"{width}x";
-            if (imageModel == ImageModeEnum.H)
-                return "imageMogr2/thumbnail/" + $"x{height}";
-            return "";
-        }
-
-        #endregion
-
         #region 设置上传策略
 
         /// <summary>

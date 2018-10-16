@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="99a4e9c0-8115-428c-83db-090f2e504254" name="Default Changelist" comment="" />
+    <list default="true" id="99a4e9c0-8115-428c-83db-090f2e504254" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/BaseStorageProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/BaseStorageProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/TypeConversionCommon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/TypeConversionCommon.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/ImgPersistentOps.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/StorageWaterMark.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/ThumOps.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/FileTypeEnum.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IStorageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IStorageService.cs" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,180 +50,217 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="711838357">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="cs" value="29" />
+          <entry key="csproj" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="C#" value="29" />
+          <entry key="Csproj" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="cs" value="269" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="C#" value="269" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.js.language.service.starts" />
+      <usages-collector id="statistics.vcs.git.usages" />
+    </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IPictureService.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="266">
+              <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+              <folding>
+                <marker date="1539669093801" expanded="true" signature="110:405" ph="{...}" />
+                <marker date="1539669093801" expanded="true" signature="117:160" ph="/// 图片 ... " />
+                <marker date="1539669093801" expanded="true" signature="197:403" ph="{...}" />
+                <marker date="1539669093801" expanded="true" signature="212:349" ph="/// 根据图片base64流上传图片 ... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/PictureService.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="532">
+              <caret line="36" column="51" selection-start-line="36" selection-start-column="51" selection-end-line="36" selection-end-column="51" />
+              <folding>
+                <marker date="1539672050550" expanded="false" signature="6:329" ph="..." />
+                <marker date="1539672050550" expanded="true" signature="375:1410" ph="{...}" />
+                <marker date="1539672050550" expanded="true" signature="382:427" ph="/// 图片服务 ... " />
+                <marker date="1539672050550" expanded="true" signature="515:1408" ph="{...}" />
+                <marker date="1539672050550" expanded="true" signature="630:650" ph="{...}" />
+                <marker date="1539672050550" expanded="true" signature="660:1402" ph="根据图片base64上传" />
+                <marker date="1539672050550" expanded="true" signature="690:824" ph="/// 根据图片base64上传 ... " />
+                <marker date="1539672050550" expanded="true" signature="878:1382" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/StorageProvider.cs">
+        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/TypeConversionCommon.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5">
-              <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+            <state relative-caret-position="532">
+              <caret line="442" column="44" selection-start-line="442" selection-start-column="19" selection-end-line="442" selection-end-column="44" />
               <folding>
-                <marker date="1536289886773" expanded="true" signature="6:298" ph="..." />
-                <marker date="1536289886773" expanded="true" signature="344:2242" ph="{...}" />
-                <marker date="1536289886773" expanded="true" signature="351:394" ph="/// 存储 ... " />
-                <marker date="1536289886773" expanded="true" signature="483:2240" ph="{...}" />
-                <marker date="1536289886773" expanded="true" signature="599:619" ph="{...}" />
-                <marker date="1536289886773" expanded="true" signature="629:1369" ph="根据文件流上传" />
-                <marker date="1536289886773" expanded="true" signature="654:783" ph="/// 根据文件流上传 ... " />
-                <marker date="1536289886773" expanded="true" signature="843:1349" ph="{...}" />
-                <marker date="1536289886773" expanded="true" signature="1379:2234" ph="根据文件上传" />
-                <marker date="1536289886773" expanded="true" signature="1403:1531" ph="/// 根据文件上传 ... " />
-                <marker date="1536289886773" expanded="true" signature="1591:2214" ph="{...}" />
-                <marker date="1536289886773" expanded="true" signature="1929:2178" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="6:30" ph="..." />
+                <marker date="1539672007375" expanded="true" signature="73:16749" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="80:125" ph="/// 类型转换 ... " />
+                <marker date="1539672007375" expanded="true" signature="170:16747" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="185:10290" ph="Object转换类型" />
+                <marker date="1539672007375" expanded="false" signature="213:1318" ph="obj转Guid" />
+                <marker date="1539672007375" expanded="true" signature="239:421" ph="/// obj转Guid ... " />
+                <marker date="1539672007375" expanded="true" signature="496:759" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="769:951" ph="/// obj转Guid ... " />
+                <marker date="1539672007375" expanded="true" signature="1035:1298" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="1328:2410" ph="obj转Int" />
+                <marker date="1539672007375" expanded="true" signature="1353:1529" ph="/// obj转Int ... " />
+                <marker date="1539672007375" expanded="true" signature="1601:1862" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="1872:2048" ph="/// obj转Int ... " />
+                <marker date="1539672007375" expanded="true" signature="2129:2390" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="2420:3526" ph="obj转Short" />
+                <marker date="1539672007375" expanded="true" signature="2447:2625" ph="/// obj转Short ... " />
+                <marker date="1539672007375" expanded="true" signature="2703:2968" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="2978:3154" ph="/// obj转Int ... " />
+                <marker date="1539672007375" expanded="true" signature="3241:3506" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="3536:4666" ph="obj转decimal" />
+                <marker date="1539672007375" expanded="true" signature="3565:3745" ph="/// obj转decimal ... " />
+                <marker date="1539672007375" expanded="true" signature="3829:4098" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="4108:4284" ph="/// obj转Int ... " />
+                <marker date="1539672007375" expanded="true" signature="4377:4646" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="4676:5794" ph="obj转double" />
+                <marker date="1539672007375" expanded="true" signature="4704:4883" ph="/// obj转double ... " />
+                <marker date="1539672007375" expanded="true" signature="4964:5231" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="5241:5417" ph="/// obj转Int ... " />
+                <marker date="1539672007375" expanded="true" signature="5507:5774" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="5804:6910" ph="obj转float" />
+                <marker date="1539672007375" expanded="true" signature="5831:6009" ph="/// obj转float ... " />
+                <marker date="1539672007375" expanded="true" signature="6087:6352" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="6362:6538" ph="/// obj转Int ... " />
+                <marker date="1539672007375" expanded="true" signature="6625:6890" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="6920:8062" ph="obj转datetime" />
+                <marker date="1539672007375" expanded="true" signature="6950:7131" ph="/// obj转datetime ... " />
+                <marker date="1539672007375" expanded="true" signature="7218:7489" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="7499:7675" ph="/// obj转Int ... " />
+                <marker date="1539672007375" expanded="true" signature="7771:8042" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="8072:9166" ph="obj转byte" />
+                <marker date="1539672007375" expanded="true" signature="8098:8275" ph="/// obj转byte ... " />
+                <marker date="1539672007375" expanded="true" signature="8350:8613" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="8623:8799" ph="/// obj转Int ... " />
+                <marker date="1539672007375" expanded="true" signature="8883:9146" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="9176:10270" ph="obj转bool" />
+                <marker date="1539672007375" expanded="true" signature="9202:9379" ph="/// obj转bool ... " />
+                <marker date="1539672007375" expanded="true" signature="9454:9717" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="9727:9903" ph="/// obj转Int ... " />
+                <marker date="1539672007375" expanded="true" signature="9987:10250" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="10300:12532" ph="文件类型转换" />
+                <marker date="1539672007375" expanded="false" signature="10324:11280" ph="转换为Byte数组" />
+                <marker date="1539672007375" expanded="false" signature="10351:10838" ph="Stream转换为Byte数组" />
+                <marker date="1539672007375" expanded="true" signature="10384:10528" ph="/// Stream转换为Byte数组 ... " />
+                <marker date="1539672007375" expanded="true" signature="10596:10818" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="10848:11260" ph="String转换为Byte数组" />
+                <marker date="1539672007375" expanded="true" signature="10881:11022" ph="/// String转换为Byte数组 ... " />
+                <marker date="1539672007375" expanded="true" signature="11088:11240" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="11290:11703" ph="转换为Stream" />
+                <marker date="1539672007375" expanded="false" signature="11317:11683" ph="将 byte[] 转成 Stream" />
+                <marker date="1539672007375" expanded="true" signature="11353:11499" ph="/// 将 byte[] 转成 Stream ... " />
+                <marker date="1539672007375" expanded="true" signature="11563:11663" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="11713:12174" ph="转换为String" />
+                <marker date="1539672007375" expanded="false" signature="11740:12154" ph="byte数组转换为string" />
+                <marker date="1539672007375" expanded="true" signature="11773:11916" ph="/// byte数组转换为string ... " />
+                <marker date="1539672007375" expanded="true" signature="11980:12134" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="12184:12512" ph="base64字符串转byte数组" />
+                <marker date="1539672007375" expanded="true" signature="12218:12356" ph="/// 图片base64转byte数组 ... " />
+                <marker date="1539672007375" expanded="true" signature="12419:12492" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="12542:13153" ph="清空小数点后0" />
+                <marker date="1539672007375" expanded="true" signature="12567:12695" ph="/// 清楚小数点后的0 ... " />
+                <marker date="1539672007375" expanded="true" signature="12754:13133" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="12985:13098" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="13163:13783" ph="加密显示以*表示" />
+                <marker date="1539672007375" expanded="true" signature="13189:13334" ph="/// 加密显示以*表示 ... " />
+                <marker date="1539672007375" expanded="true" signature="13398:13763" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="13544:13610" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="13666:13725" ph="{...}" />
+                <marker date="1539672007375" expanded="false" signature="13793:16741" ph="值互换(左边最小值,右边最大值)" />
+                <marker date="1539672007375" expanded="true" signature="13827:13994" ph="/// 值互换(左边最小值,右边最大值) ... " />
+                <marker date="1539672007375" expanded="true" signature="14080:14296" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="14135:14286" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="14306:14473" ph="/// 值互换(左边最小值,右边最大值) ... " />
+                <marker date="1539672007375" expanded="true" signature="14561:14777" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="14616:14767" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="14787:14954" ph="/// 值互换(左边最小值,右边最大值) ... " />
+                <marker date="1539672007375" expanded="true" signature="15044:15260" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="15099:15250" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="15270:15437" ph="/// 值互换(左边最小值,右边最大值) ... " />
+                <marker date="1539672007375" expanded="true" signature="15529:15745" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="15584:15735" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="15755:15922" ph="/// 值互换(左边最小值,右边最大值) ... " />
+                <marker date="1539672007375" expanded="true" signature="16016:16232" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="16071:16222" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="16242:16409" ph="/// 值互换(左边最小值,右边最大值) ... " />
+                <marker date="1539672007375" expanded="true" signature="16505:16721" ph="{...}" />
+                <marker date="1539672007375" expanded="true" signature="16560:16711" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IStorageService.cs">
+        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/Pictures/UploadByBase64Param.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="36" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="36" />
+            <state relative-caret-position="323">
+              <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
               <folding>
-                <marker date="1536284398801" expanded="true" signature="101:588" ph="{...}" />
-                <marker date="1536284398801" expanded="true" signature="108:153" ph="/// 文件存储 ... " />
-                <marker date="1536284398801" expanded="true" signature="190:586" ph="{...}" />
-                <marker date="1536284398801" expanded="true" signature="205:334" ph="/// 根据文件流上传 ... " />
-                <marker date="1536284398801" expanded="true" signature="398:526" ph="/// 根据文件上传 ... " />
+                <marker date="1539670852940" expanded="true" signature="126:478" ph="{...}" />
+                <marker date="1539670852940" expanded="true" signature="133:188" ph="/// 根据图片base64上传图片 ... " />
+                <marker date="1539670852940" expanded="true" signature="225:476" ph="{...}" />
+                <marker date="1539670852940" expanded="true" signature="240:299" ph="/// 图片Base64编码 ... " />
+                <marker date="1539670852940" expanded="true" signature="352:407" ph="/// 上传图片策略 ... " />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/BaseStorageProvider.cs">
+        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/ImgPersistentOps.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="125" column="22" selection-start-line="125" selection-start-column="18" selection-end-line="125" selection-end-column="22" />
+            <state relative-caret-position="133">
+              <caret line="58" column="5" selection-start-line="6" selection-start-column="4" selection-end-line="58" selection-end-column="5" />
               <folding>
-                <marker date="1536288573500" expanded="false" signature="6:266" ph="..." />
-                <marker date="1536288573500" expanded="true" signature="312:8356" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="351:8354" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="437:1310" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="582:1300" ph="上传策略" />
-                <marker date="1536288573500" expanded="true" signature="650:1276" ph="上传成功后通知" />
-                <marker date="1536288573500" expanded="true" signature="805:1073" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="1145:1252" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="1320:1375" ph="/// 存储配置文件 ... " />
-                <marker date="1536288573500" expanded="true" signature="1427:1476" ph="///  ... " />
-                <marker date="1536288573500" expanded="true" signature="1512:1565" ph="/// 上传策略 ... " />
-                <marker date="1536288573500" expanded="true" signature="1620:8348" ph="得到上传策略" />
-                <marker date="1536288573500" expanded="false" signature="1644:3542" ph="得到上传策略" />
-                <marker date="1536288573500" expanded="true" signature="1668:1810" ph="/// 得到上传策略 ... " />
-                <marker date="1536288573500" expanded="true" signature="1882:2817" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="2038:2092" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="2207:2396" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="2460:2758" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="2827:3052" ph="/// 得到上传策略  ... " />
-                <marker date="1536288573500" expanded="true" signature="3141:3522" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="3552:4837" ph="设置上传策略" />
-                <marker date="1536288573500" expanded="true" signature="3576:3939" ph="/// 设置上传策略 ... " />
-                <marker date="1536288573500" expanded="true" signature="4112:4817" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="4135:4397" ph="覆盖上传" />
-                <marker date="1536288573500" expanded="true" signature="4180:4262" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="4279:4373" ph="{...}" />
-                <marker date="1536288573500" expanded="false" signature="4411:4591" ph="带数据处理的凭证" />
-                <marker date="1536288573500" expanded="true" signature="4482:4567" ph="{...}" />
-                <marker date="1536288573500" expanded="false" signature="4605:4695" ph="设置过期时间" />
-                <marker date="1536288573500" expanded="false" signature="4709:4807" ph="多少天后自动删除" />
-                <marker date="1536288573500" expanded="false" signature="4847:7160" ph="得到文件上传额外参数" />
-                <marker date="1536288573500" expanded="true" signature="4875:5021" ph="/// 得到文件上传额外参数 ... " />
-                <marker date="1536288573500" expanded="true" signature="5108:7140" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="5211:7100" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="5306:5428" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="5525:5627" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="5701:5807" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="5872:6128" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="5978:6109" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="6195:6908" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="6390:6499" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="6569:6676" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="6701:6810" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="6970:7086" ph="{...}" />
-                <marker date="1536288573500" expanded="false" signature="7170:8328" ph="得到七牛配置文件" />
-                <marker date="1536288573500" expanded="true" signature="7196:7285" ph="/// 得到七牛配置文件 ... " />
-                <marker date="1536288573500" expanded="true" signature="7379:8308" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="7454:7515" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="7561:8093" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="7790:7904" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="7965:8079" ph="{...}" />
-                <marker date="1536288573500" expanded="true" signature="8145:8270" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByFormFileParam.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-              <folding>
-                <marker date="1536240145187" expanded="false" signature="6:85" ph="..." />
-                <marker date="1536240145187" expanded="true" signature="141:850" ph="{...}" />
-                <marker date="1536240145187" expanded="true" signature="148:195" ph="/// 根据文件上传 ... " />
-                <marker date="1536240145187" expanded="true" signature="234:848" ph="{...}" />
-                <marker date="1536240145187" expanded="true" signature="353:476" ph="{...}" />
-                <marker date="1536240145187" expanded="true" signature="486:540" ph="/// 文件key ... " />
-                <marker date="1536240145187" expanded="true" signature="598:650" ph="/// 文件流 ... " />
-                <marker date="1536240145187" expanded="true" signature="712:765" ph="/// 上传策略 ... " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Config/QiNiuConfig.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="73" column="21" selection-start-line="73" selection-start-column="21" selection-end-line="73" selection-end-column="21" />
-              <folding>
-                <marker date="1536200634630" expanded="false" signature="6:118" ph="..." />
-                <marker date="1536200634630" expanded="true" signature="171:3256" ph="{...}" />
-                <marker date="1536200634630" expanded="true" signature="178:223" ph="/// 七牛配置 ... " />
-                <marker date="1536200634630" expanded="true" signature="252:3254" ph="{...}" />
-                <marker date="1536200634630" expanded="true" signature="267:318" ph="/// 代理 ... " />
-                <marker date="1536200634630" expanded="true" signature="384:447" ph="/// 七牛提供的公钥，用于识别用户 ... " />
-                <marker date="1536200634630" expanded="true" signature="503:559" ph="/// 七牛提供的秘钥 ... " />
-                <marker date="1536200634630" expanded="true" signature="615:675" ph="/// 七牛资源管理服务器地址 ... " />
-                <marker date="1536200634630" expanded="true" signature="738:799" ph="/// 七牛资源上传服务器地址. ... " />
-                <marker date="1536200634630" expanded="true" signature="828:1421" ph="{...}" />
-                <marker date="1536200634630" expanded="true" signature="854:1411" ph="{...}" />
-                <marker date="1536200634630" expanded="true" signature="899:1397" ph="{...}" />
-                <marker date="1536200634630" expanded="true" signature="1431:1482" ph="/// 空间 ... " />
-                <marker date="1536200634630" expanded="true" signature="1536:1597" ph="/// 七牛资源列表服务器地址. ... " />
-                <marker date="1536200634630" expanded="true" signature="1661:1710" ph="///  ... " />
-                <marker date="1536200634630" expanded="true" signature="1779:1832" ph="/// Api域 ... " />
-                <marker date="1536200634630" expanded="true" signature="1896:1953" ph="/// 对外访问的主机名 ... " />
-                <marker date="1536200634630" expanded="true" signature="2004:2059" ph="/// 存储的空间名 ... " />
-                <marker date="1536200634630" expanded="true" signature="2112:2165" ph="/// 传输队列 ... " />
-                <marker date="1536200634630" expanded="true" signature="2230:2286" ph="/// 持久化结果通知 ... " />
-                <marker date="1536200634630" expanded="true" signature="2352:2405" ph="/// 回调内容 ... " />
-                <marker date="1536200634630" expanded="true" signature="2577:2632" ph="/// 回调内容类型 ... " />
-                <marker date="1536200634630" expanded="true" signature="2717:2802" ph="/// 得到空间 ... " />
-                <marker date="1536200634630" expanded="true" signature="2832:3248" ph="{...}" />
-                <marker date="1536200634630" expanded="true" signature="2869:3238" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByStreamParam.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="30" column="76" selection-start-line="10" selection-start-column="8" selection-end-line="30" selection-end-column="76" />
-              <folding>
-                <marker date="1536200099073" expanded="false" signature="6:69" ph="..." />
-                <marker date="1536200099073" expanded="true" signature="125:833" ph="{...}" />
-                <marker date="1536200099073" expanded="true" signature="132:180" ph="/// 根据文件流上传 ... " />
-                <marker date="1536200099073" expanded="true" signature="217:831" ph="{...}" />
-                <marker date="1536200099073" expanded="true" signature="333:460" ph="{...}" />
-                <marker date="1536200099073" expanded="true" signature="470:524" ph="/// 文件key ... " />
-                <marker date="1536200099073" expanded="true" signature="582:634" ph="/// 文件流 ... " />
-                <marker date="1536200099073" expanded="true" signature="695:748" ph="/// 上传策略 ... " />
+                <marker date="1539670900728" expanded="false" signature="6:123" ph="..." />
+                <marker date="1539670900728" expanded="true" signature="189:1605" ph="{...}" />
+                <marker date="1539670900728" expanded="true" signature="196:241" ph="/// 上传策略 ... " />
+                <marker date="1539670900728" expanded="false" signature="275:1603" ph="{...}" />
+                <marker date="1539670900728" expanded="true" signature="290:569" ph="/// 上传策略 ... " />
+                <marker date="1539670900728" expanded="true" signature="736:896" ph="{...}" />
+                <marker date="1539670900728" expanded="true" signature="906:961" ph="/// 图片缩放信息 ... " />
+                <marker date="1539670900728" expanded="true" signature="1044:1099" ph="/// 图片相对地址 ... " />
+                <marker date="1539670900728" expanded="true" signature="1149:1199" ph="/// 宽 ... " />
+                <marker date="1539670900728" expanded="true" signature="1253:1303" ph="/// 高 ... " />
+                <marker date="1539670900728" expanded="true" signature="1358:1413" ph="/// 是否覆盖上传 ... " />
+                <marker date="1539670900728" expanded="true" signature="1480:1533" ph="/// 水印信息 ... " />
               </folding>
             </state>
           </provider>
@@ -227,31 +274,34 @@
       <find>ResumeRecordFile</find>
       <find>UploadProgressHandler</find>
       <find>PutPolicy</find>
+      <find>UploadPersistentOps</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/UniqueCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/TypeConversionCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IStorageService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/BaseStorageProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Config/QiNiuConfig.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/StorageProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByStreamParam.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByFormFileParam.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/27/7fb3b670/PutPolicy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/CallbackBodyTypeEnum.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/16/2e48963d/PutExtra.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/BaseStorageProvider.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Handler/UploadControllerAction.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/StorageProvider.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/20/e1c4160b/UploadProgressHandler.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/UploadStateEnum.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/21/87f7d8ef/UploadController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/0c/a460078c/UploadControllerAction.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/ImgPersistentOps.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/f8/69b0ab2b/ChunkUnit.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Config/QiNiuConfig.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IStorageService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/3f/10d5bd6f/Config.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/UploadPersistentOps.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/ChunkUnitEnum.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/StringCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/CallbackBodyTypeEnum.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/UploadPersistentOps.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Handler/UploadControllerAction.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/UploadStateEnum.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IPictureService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PasswordCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/Pictures/UploadByBase64Param.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/StorageWaterMark.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/ImgPersistentOps.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/6c/824c88f2/FormUploader.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/PictureService.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -270,8 +320,14 @@
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/UploadByFormFileParam.cs" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByFormFileParam.cs" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IStorageService.cs" />
-        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/BaseStorageProvider.cs" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/StorageProvider.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/ThumOps.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/StorageWaterMark.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/Pictures/UploadByBase64Param.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/ImgPersistentOps.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/BaseStorageProvider.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/TypeConversionCommon.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/PictureService.cs" />
       </list>
     </option>
   </component>
@@ -281,10 +337,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="63" />
-    <option name="y" value="55" />
-    <option name="width" value="1914" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="528" />
+    <option name="width" value="1529" />
     <option name="height" value="1030" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -295,12 +350,24 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="FileSystemExplorer" />
       <pane id="SolutionExplorer">
         <subPane>
           <expand>
             <path>
               <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
               <item name="System.Extension.Core" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="System.Extension.Core" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Storage" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="System.Extension.Core" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Storage" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="EInfrastructure.Core.QiNiu.Storage" type="24d0babc:SolutionExplorerModelNode" />
             </path>
             <path>
               <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
@@ -325,7 +392,6 @@
         </subPane>
         <option name="show-all-files" value="false" />
       </pane>
-      <pane id="FileSystemExplorer" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -357,6 +423,7 @@
       <option name="presentableId" value="Default" />
       <updated>1536196048318</updated>
       <workItem from="1536196053488" duration="18095000" />
+      <workItem from="1539669345982" duration="2381000" />
     </task>
     <task id="LOCAL-00001" summary="更改七牛上传图片配置--目前只有最简单的上传，之后会重做图片上传">
       <created>1536284494110</created>
@@ -376,7 +443,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18095000" />
+    <option name="totallyTimeSpent" value="20476000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -388,39 +455,39 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="528" y="0" width="1529" height="1030" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21045576" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21238938" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="NuGet" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Unit Tests" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Build" weight="0.3286119" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.2181303" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.21800433" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Errors In Solution" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="Unit Tests Coverage" />
+      <window_info anchor="bottom" id="NuGet" order="7" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Unit Tests" order="11" />
+      <window_info anchor="bottom" id="Terminal" order="12" />
+      <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
+      <window_info anchor="bottom" id="Build" order="14" weight="0.3286119" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Errors In Solution" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="Unit Tests Coverage" order="5" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -454,169 +521,32 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/ImgPersistentOps.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="9" column="33" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="33" />
-          <folding>
-            <marker date="1536154274006" expanded="false" signature="6:123" ph="..." />
-            <marker date="1536154274006" expanded="true" signature="180:2470" ph="{...}" />
-            <marker date="1536154274006" expanded="true" signature="187:232" ph="/// 上传策略 ... " />
-            <marker date="1536154274006" expanded="true" signature="266:2468" ph="{...}" />
-            <marker date="1536154274006" expanded="true" signature="306:326" ph="{...}" />
-            <marker date="1536154274006" expanded="true" signature="336:667" ph="/// 上传策略 ... " />
-            <marker date="1536154274006" expanded="true" signature="868:1136" ph="{...}" />
-            <marker date="1536154274006" expanded="true" signature="1055:1126" ph="{...}" />
-            <marker date="1536154274006" expanded="true" signature="1146:1201" ph="/// 图片缩放信息 ... " />
-            <marker date="1536154274006" expanded="true" signature="1284:1339" ph="/// 图片相对地址 ... " />
-            <marker date="1536154274006" expanded="true" signature="1389:1440" ph="/// 扩展 ... " />
-            <marker date="1536154274006" expanded="true" signature="1500:1553" ph="/// 文件类型 ... " />
-            <marker date="1536154274006" expanded="true" signature="1646:1696" ph="/// 宽 ... " />
-            <marker date="1536154274006" expanded="true" signature="1750:1800" ph="/// 高 ... " />
-            <marker date="1536154274006" expanded="true" signature="1855:1908" ph="/// 水印信息 ... " />
-            <marker date="1536154274006" expanded="true" signature="1982:2038" ph="/// 图片缩略图信息 ... " />
-            <marker date="1536154274006" expanded="true" signature="2126:2267" ph="/// 存储配置信息 ... " />
-            <marker date="1536154274006" expanded="true" signature="2359:2462" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Old/ImageStorageProvider.cs">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/ImgPersistentOps.cs" />
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Old/ImageStorageProvider.cs" />
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/CallbackBodyTypeEnum.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="36" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="36" />
-          <folding>
-            <marker date="1536200582173" expanded="true" signature="83:476" ph="{...}" />
-            <marker date="1536200582173" expanded="true" signature="90:137" ph="/// 回调内容类型 ... " />
-            <marker date="1536200582173" expanded="true" signature="174:474" ph="{...}" />
-            <marker date="1536200582173" expanded="true" signature="189:254" ph="/// application/json ... " />
-            <marker date="1536200582173" expanded="true" signature="304:386" ph="/// application/x-www-form-urlencoded ... " />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/27/7fb3b670/PutPolicy.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="35" column="17" lean-forward="true" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
-          <folding>
-            <marker date="1536200437350" expanded="true" signature="0:281" ph="/* Decompiled with JetBrains decompiler ... */" />
-            <marker date="1536200437350" expanded="true" signature="330:3087" ph="{...}" />
-            <marker date="1536200437350" expanded="true" signature="357:3085" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/20/e1c4160b/UploadProgressHandler.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Handler/UploadProgressHandler.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="82" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/27/7fb3b670/PutPolicy.cs" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/20/e1c4160b/UploadProgressHandler.cs" />
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Handler/UploadProgressHandler.cs" />
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/UploadStateEnum.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="31" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="31" />
-          <folding>
-            <marker date="1536204223732" expanded="true" signature="83:442" ph="{...}" />
-            <marker date="1536204223732" expanded="true" signature="117:440" ph="{...}" />
-            <marker date="1536204223732" expanded="true" signature="132:188" ph="/// 任务状态:激活 ... " />
-            <marker date="1536204223732" expanded="true" signature="237:293" ph="/// 任务状态:暂停 ... " />
-            <marker date="1536204223732" expanded="true" signature="341:397" ph="/// 任务状态:退出 ... " />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/0c/a460078c/UploadControllerAction.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="36" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="36" />
-          <folding>
-            <marker date="1536204262949" expanded="true" signature="0:294" ph="/* Decompiled with JetBrains decompiler ... */" />
-            <marker date="1536204262949" expanded="true" signature="319:411" ph="{...}" />
-            <marker date="1536204262949" expanded="true" signature="358:409" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/21/87f7d8ef/UploadController.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
-          <folding>
-            <marker date="1536204255752" expanded="true" signature="0:288" ph="/* Decompiled with JetBrains decompiler ... */" />
-            <marker date="1536204255752" expanded="true" signature="313:378" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/16/2e48963d/PutExtra.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
-          <folding>
-            <marker date="1536201043578" expanded="true" signature="0:280" ph="/* Decompiled with JetBrains decompiler ... */" />
-            <marker date="1536201043578" expanded="true" signature="340:725" ph="{...}" />
-            <marker date="1536201043578" expanded="true" signature="366:723" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/0c/a460078c/UploadControllerAction.cs" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/21/87f7d8ef/UploadController.cs" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/16/2e48963d/PutExtra.cs" />
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Handler/UploadControllerAction.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
-          <folding>
-            <marker date="1536202338316" expanded="true" signature="56:574" ph="{...}" />
-            <marker date="1536202338316" expanded="true" signature="63:111" ph="/// 上传任务的状态 ... " />
-            <marker date="1536202338316" expanded="true" signature="150:424" ph="{...}" />
-            <marker date="1536202338316" expanded="true" signature="165:221" ph="/// 任务状态:激活 ... " />
-            <marker date="1536202338316" expanded="true" signature="259:315" ph="/// 任务状态:暂停 ... " />
-            <marker date="1536202338316" expanded="true" signature="345:401" ph="/// 任务状态:退出 ... " />
-            <marker date="1536202338316" expanded="true" signature="431:509" ph="/// 上传任务的控制函数 ... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/UploadPersistentOps.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="3" column="53" selection-start-line="3" selection-start-column="53" selection-end-line="3" selection-end-column="53" />
-          <folding>
-            <marker date="1536205005540" expanded="false" signature="6:152" ph="..." />
-            <marker date="1536205005540" expanded="true" signature="209:2718" ph="{...}" />
-            <marker date="1536205005540" expanded="true" signature="248:2716" ph="{...}" />
-            <marker date="1536205005540" expanded="true" signature="263:327" ph="/// [可选]是否使用Https域名 ... " />
-            <marker date="1536205005540" expanded="true" signature="391:451" ph="/// [可选]是否用Cdn域 ... " />
-            <marker date="1536205005540" expanded="true" signature="518:577" ph="/// [可选]是否覆盖上传 ... " />
-            <marker date="1536205005540" expanded="true" signature="645:707" ph="/// [可选]分片上传默认最大值 ... " />
-            <marker date="1536205005540" expanded="true" signature="794:860" ph="/// [可选]文件上传后多少天后自动删除 ... " />
-            <marker date="1536205005540" expanded="true" signature="928:996" ph="/// [可选]设置好上传凭证有效期,单位：秒 ... " />
-            <marker date="1536205005540" expanded="true" signature="1063:1141" ph="/// [可选]文件的存储类型，默认为普通存储，设置为1为低频存储 ... " />
-            <marker date="1536205005540" expanded="true" signature="1202:1268" ph="/// [可选]上传时是否自动检测MIME ... " />
-            <marker date="1536205005540" expanded="true" signature="1331:1394" ph="/// [可选]上传文件MIME限制 ... " />
-            <marker date="1536205005540" expanded="true" signature="1450:1515" ph="/// [可选]上传文件大小限制：最小值 ... " />
-            <marker date="1536205005540" expanded="true" signature="1576:1641" ph="/// [可选]上传文件大小限制：最大值 ... " />
-            <marker date="1536205005540" expanded="true" signature="1704:1761" ph="/// [可选]上传策略 ... " />
-            <marker date="1536205005540" expanded="false" signature="1821:2710" ph="上传进度相关" />
-            <marker date="1536205005540" expanded="true" signature="1845:1908" ph="/// 设置文件断点续传进度记录文件 ... " />
-            <marker date="1536205005540" expanded="true" signature="1971:2040" ph="/// 上传可选参数字典，参数名次以 x: 开头 ... " />
-            <marker date="1536205005540" expanded="true" signature="2113:2175" ph="/// 指定文件的MimeType ... " />
-            <marker date="1536205005540" expanded="true" signature="2230:2328" ph="/// 设置文件上传进度处理器 ... " />
-            <marker date="1536205005540" expanded="true" signature="2409:2503" ph="/// 设置文件上传的状态控制器 ... " />
-            <marker date="1536205005540" expanded="true" signature="2583:2638" ph="/// 最大重试次数 ... " />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -624,239 +554,584 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
-          <folding>
-            <marker date="1536196992094" expanded="true" signature="53:640" ph="{...}" />
-            <marker date="1536196992094" expanded="true" signature="60:101" ph="///  ... " />
-            <marker date="1536196992094" expanded="true" signature="131:638" ph="{...}" />
-            <marker date="1536196992094" expanded="true" signature="146:200" ph="/// 128KB ... " />
-            <marker date="1536196992094" expanded="true" signature="229:283" ph="/// 256KB ... " />
-            <marker date="1536196992094" expanded="true" signature="312:366" ph="/// 512KB ... " />
-            <marker date="1536196992094" expanded="true" signature="395:447" ph="/// 1MB ... " />
-            <marker date="1536196992094" expanded="true" signature="477:529" ph="/// 2MB ... " />
-            <marker date="1536196992094" expanded="true" signature="560:612" ph="/// 4MB ... " />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/f8/69b0ab2b/ChunkUnit.cs">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/f8/69b0ab2b/ChunkUnit.cs" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/3f/10d5bd6f/Config.cs" />
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Old/StorageServiceExt.cs" />
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Old/StorageService.cs" />
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/FetchFileFormModel.cs" />
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/FileFormModel.cs" />
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/UploadImgByBase64FormModel.cs" />
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/UploadImgByByteArrayFormModel.cs" />
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/UploadImgByOriginFormModel.cs" />
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/UploadImgByStreamFormModel.cs" />
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IStorageService.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/3f/10d5bd6f/Config.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
-          <folding>
-            <marker date="1536196549961" expanded="true" signature="0:278" ph="/* Decompiled with JetBrains decompiler ... */" />
-            <marker date="1536196549961" expanded="true" signature="303:874" ph="{...}" />
-            <marker date="1536196549961" expanded="true" signature="327:872" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Old/StorageServiceExt.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-134">
-          <caret line="62" column="4" lean-forward="true" selection-start-line="62" selection-start-column="4" selection-end-line="62" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByStreamParam.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="30" column="76" selection-start-line="10" selection-start-column="8" selection-end-line="30" selection-end-column="76" />
-          <folding>
-            <marker date="1536200099073" expanded="false" signature="6:69" ph="..." />
-            <marker date="1536200099073" expanded="true" signature="125:833" ph="{...}" />
-            <marker date="1536200099073" expanded="true" signature="132:180" ph="/// 根据文件流上传 ... " />
-            <marker date="1536200099073" expanded="true" signature="217:831" ph="{...}" />
-            <marker date="1536200099073" expanded="true" signature="333:460" ph="{...}" />
-            <marker date="1536200099073" expanded="true" signature="470:524" ph="/// 文件key ... " />
-            <marker date="1536200099073" expanded="true" signature="582:634" ph="/// 文件流 ... " />
-            <marker date="1536200099073" expanded="true" signature="695:748" ph="/// 上传策略 ... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Old/StorageService.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="624" column="22" selection-start-line="624" selection-start-column="22" selection-end-line="624" selection-end-column="22" />
+        <state relative-caret-position="133">
+          <caret line="7" column="36" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByFormFileParam.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
+        <state relative-caret-position="133">
           <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-          <folding>
-            <marker date="1536240145187" expanded="false" signature="6:85" ph="..." />
-            <marker date="1536240145187" expanded="true" signature="141:850" ph="{...}" />
-            <marker date="1536240145187" expanded="true" signature="148:195" ph="/// 根据文件上传 ... " />
-            <marker date="1536240145187" expanded="true" signature="234:848" ph="{...}" />
-            <marker date="1536240145187" expanded="true" signature="353:476" ph="{...}" />
-            <marker date="1536240145187" expanded="true" signature="486:540" ph="/// 文件key ... " />
-            <marker date="1536240145187" expanded="true" signature="598:650" ph="/// 文件流 ... " />
-            <marker date="1536240145187" expanded="true" signature="712:765" ph="/// 上传策略 ... " />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/FetchFileFormModel.cs">
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/EInfrastructure.Core.csproj">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/ThumOps.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+        <state relative-caret-position="95">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/FileFormModel.cs">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/UploadImgByBase64FormModel.cs">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/UploadImgByByteArrayFormModel.cs">
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/FileTypeEnum.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
+        <state relative-caret-position="133">
+          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/UploadImgByOriginFormModel.cs">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/UploadImgByStreamFormModel.cs">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Config/QiNiuConfig.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
+        <state relative-caret-position="855">
           <caret line="73" column="21" selection-start-line="73" selection-start-column="21" selection-end-line="73" selection-end-column="21" />
           <folding>
-            <marker date="1536200634630" expanded="false" signature="6:118" ph="..." />
-            <marker date="1536200634630" expanded="true" signature="171:3256" ph="{...}" />
-            <marker date="1536200634630" expanded="true" signature="178:223" ph="/// 七牛配置 ... " />
-            <marker date="1536200634630" expanded="true" signature="252:3254" ph="{...}" />
-            <marker date="1536200634630" expanded="true" signature="267:318" ph="/// 代理 ... " />
-            <marker date="1536200634630" expanded="true" signature="384:447" ph="/// 七牛提供的公钥，用于识别用户 ... " />
-            <marker date="1536200634630" expanded="true" signature="503:559" ph="/// 七牛提供的秘钥 ... " />
-            <marker date="1536200634630" expanded="true" signature="615:675" ph="/// 七牛资源管理服务器地址 ... " />
-            <marker date="1536200634630" expanded="true" signature="738:799" ph="/// 七牛资源上传服务器地址. ... " />
-            <marker date="1536200634630" expanded="true" signature="828:1421" ph="{...}" />
-            <marker date="1536200634630" expanded="true" signature="854:1411" ph="{...}" />
-            <marker date="1536200634630" expanded="true" signature="899:1397" ph="{...}" />
-            <marker date="1536200634630" expanded="true" signature="1431:1482" ph="/// 空间 ... " />
-            <marker date="1536200634630" expanded="true" signature="1536:1597" ph="/// 七牛资源列表服务器地址. ... " />
-            <marker date="1536200634630" expanded="true" signature="1661:1710" ph="///  ... " />
-            <marker date="1536200634630" expanded="true" signature="1779:1832" ph="/// Api域 ... " />
-            <marker date="1536200634630" expanded="true" signature="1896:1953" ph="/// 对外访问的主机名 ... " />
-            <marker date="1536200634630" expanded="true" signature="2004:2059" ph="/// 存储的空间名 ... " />
-            <marker date="1536200634630" expanded="true" signature="2112:2165" ph="/// 传输队列 ... " />
-            <marker date="1536200634630" expanded="true" signature="2230:2286" ph="/// 持久化结果通知 ... " />
-            <marker date="1536200634630" expanded="true" signature="2352:2405" ph="/// 回调内容 ... " />
-            <marker date="1536200634630" expanded="true" signature="2577:2632" ph="/// 回调内容类型 ... " />
-            <marker date="1536200634630" expanded="true" signature="2717:2802" ph="/// 得到空间 ... " />
-            <marker date="1536200634630" expanded="true" signature="2832:3248" ph="{...}" />
-            <marker date="1536200634630" expanded="true" signature="2869:3238" ph="{...}" />
+            <marker date="1539668415219" expanded="false" signature="6:118" ph="..." />
+            <marker date="1539668415219" expanded="true" signature="171:3256" ph="{...}" />
+            <marker date="1539668415219" expanded="true" signature="178:223" ph="/// 七牛配置 ... " />
+            <marker date="1539668415219" expanded="true" signature="252:3254" ph="{...}" />
+            <marker date="1539668415219" expanded="true" signature="267:318" ph="/// 代理 ... " />
+            <marker date="1539668415219" expanded="true" signature="384:447" ph="/// 七牛提供的公钥，用于识别用户 ... " />
+            <marker date="1539668415219" expanded="true" signature="503:559" ph="/// 七牛提供的秘钥 ... " />
+            <marker date="1539668415219" expanded="true" signature="615:675" ph="/// 七牛资源管理服务器地址 ... " />
+            <marker date="1539668415219" expanded="true" signature="738:799" ph="/// 七牛资源上传服务器地址. ... " />
+            <marker date="1539668415219" expanded="true" signature="828:1421" ph="{...}" />
+            <marker date="1539668415219" expanded="true" signature="854:1411" ph="{...}" />
+            <marker date="1539668415219" expanded="true" signature="899:1397" ph="{...}" />
+            <marker date="1539668415219" expanded="true" signature="1431:1482" ph="/// 空间 ... " />
+            <marker date="1539668415219" expanded="true" signature="1536:1597" ph="/// 七牛资源列表服务器地址. ... " />
+            <marker date="1539668415219" expanded="true" signature="1661:1710" ph="///  ... " />
+            <marker date="1539668415219" expanded="true" signature="1779:1832" ph="/// Api域 ... " />
+            <marker date="1539668415219" expanded="true" signature="1896:1953" ph="/// 对外访问的主机名 ... " />
+            <marker date="1539668415219" expanded="true" signature="2004:2059" ph="/// 存储的空间名 ... " />
+            <marker date="1539668415219" expanded="true" signature="2112:2165" ph="/// 传输队列 ... " />
+            <marker date="1539668415219" expanded="true" signature="2230:2286" ph="/// 持久化结果通知 ... " />
+            <marker date="1539668415219" expanded="true" signature="2352:2405" ph="/// 回调内容 ... " />
+            <marker date="1539668415219" expanded="true" signature="2577:2632" ph="/// 回调内容类型 ... " />
+            <marker date="1539668415219" expanded="true" signature="2717:2802" ph="/// 得到空间 ... " />
+            <marker date="1539668415219" expanded="true" signature="2832:3248" ph="{...}" />
+            <marker date="1539668415219" expanded="true" signature="2869:3238" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/BaseStorageProvider.cs">
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/StorageWaterMark.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="125" column="22" selection-start-line="125" selection-start-column="18" selection-end-line="125" selection-end-column="22" />
+        <state relative-caret-position="513">
+          <caret line="57" selection-start-line="57" selection-end-line="57" />
           <folding>
-            <marker date="1536288573500" expanded="false" signature="6:266" ph="..." />
-            <marker date="1536288573500" expanded="true" signature="312:8356" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="351:8354" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="437:1310" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="582:1300" ph="上传策略" />
-            <marker date="1536288573500" expanded="true" signature="650:1276" ph="上传成功后通知" />
-            <marker date="1536288573500" expanded="true" signature="805:1073" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="1145:1252" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="1320:1375" ph="/// 存储配置文件 ... " />
-            <marker date="1536288573500" expanded="true" signature="1427:1476" ph="///  ... " />
-            <marker date="1536288573500" expanded="true" signature="1512:1565" ph="/// 上传策略 ... " />
-            <marker date="1536288573500" expanded="true" signature="1620:8348" ph="得到上传策略" />
-            <marker date="1536288573500" expanded="false" signature="1644:3542" ph="得到上传策略" />
-            <marker date="1536288573500" expanded="true" signature="1668:1810" ph="/// 得到上传策略 ... " />
-            <marker date="1536288573500" expanded="true" signature="1882:2817" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="2038:2092" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="2207:2396" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="2460:2758" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="2827:3052" ph="/// 得到上传策略  ... " />
-            <marker date="1536288573500" expanded="true" signature="3141:3522" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="3552:4837" ph="设置上传策略" />
-            <marker date="1536288573500" expanded="true" signature="3576:3939" ph="/// 设置上传策略 ... " />
-            <marker date="1536288573500" expanded="true" signature="4112:4817" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="4135:4397" ph="覆盖上传" />
-            <marker date="1536288573500" expanded="true" signature="4180:4262" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="4279:4373" ph="{...}" />
-            <marker date="1536288573500" expanded="false" signature="4411:4591" ph="带数据处理的凭证" />
-            <marker date="1536288573500" expanded="true" signature="4482:4567" ph="{...}" />
-            <marker date="1536288573500" expanded="false" signature="4605:4695" ph="设置过期时间" />
-            <marker date="1536288573500" expanded="false" signature="4709:4807" ph="多少天后自动删除" />
-            <marker date="1536288573500" expanded="false" signature="4847:7160" ph="得到文件上传额外参数" />
-            <marker date="1536288573500" expanded="true" signature="4875:5021" ph="/// 得到文件上传额外参数 ... " />
-            <marker date="1536288573500" expanded="true" signature="5108:7140" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="5211:7100" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="5306:5428" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="5525:5627" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="5701:5807" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="5872:6128" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="5978:6109" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="6195:6908" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="6390:6499" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="6569:6676" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="6701:6810" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="6970:7086" ph="{...}" />
-            <marker date="1536288573500" expanded="false" signature="7170:8328" ph="得到七牛配置文件" />
-            <marker date="1536288573500" expanded="true" signature="7196:7285" ph="/// 得到七牛配置文件 ... " />
-            <marker date="1536288573500" expanded="true" signature="7379:8308" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="7454:7515" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="7561:8093" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="7790:7904" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="7965:8079" ph="{...}" />
-            <marker date="1536288573500" expanded="true" signature="8145:8270" ph="{...}" />
+            <marker date="1539669614221" expanded="true" signature="64:1379" ph="{...}" />
+            <marker date="1539669614221" expanded="true" signature="71:116" ph="/// 图片水印 ... " />
+            <marker date="1539669614221" expanded="true" signature="150:1377" ph="{...}" />
+            <marker date="1539669614221" expanded="false" signature="165:351" ph="类型  0表示关闭水印 1表示文字水印 2表示图片水印" />
+            <marker date="1539669614221" expanded="true" signature="209:285" ph="/// 类型  0表示关闭水印 1表示文字水印 2表示图片水印 ... " />
+            <marker date="1539669614221" expanded="false" signature="361:567" ph="0左上 1中上 2右上 3左中 4居中 5右中 6左下 7中下 8右下" />
+            <marker date="1539669614221" expanded="true" signature="413:497" ph="/// 0左上 1中上 2右上 3左中 4居中 5右中 6左下 7中下 8右下 ... " />
+            <marker date="1539669614221" expanded="false" signature="577:723" ph="图片水印地址" />
+            <marker date="1539669614221" expanded="true" signature="600:655" ph="/// 图片水印地址 ... " />
+            <marker date="1539669614221" expanded="false" signature="733:885" ph="水印的透明度" />
+            <marker date="1539669614221" expanded="true" signature="756:811" ph="/// 水印的透明度 ... " />
+            <marker date="1539669614221" expanded="false" signature="895:1048" ph="文字水印文字的名称" />
+            <marker date="1539669614221" expanded="true" signature="921:979" ph="/// 文字水印文字的名称 ... " />
+            <marker date="1539669614221" expanded="false" signature="1058:1207" ph="文字水印 字体" />
+            <marker date="1539669614221" expanded="true" signature="1082:1138" ph="/// 文字水印 字体 ... " />
+            <marker date="1539669614221" expanded="true" signature="1217:1371" ph="文字水印 字体大小" />
+            <marker date="1539669614221" expanded="true" signature="1243:1301" ph="/// 文字水印 字体大小 ... " />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IStorageService.cs">
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/UploadPersistentOps.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="36" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="36" />
+        <state relative-caret-position="-209">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
           <folding>
-            <marker date="1536284398801" expanded="true" signature="101:588" ph="{...}" />
-            <marker date="1536284398801" expanded="true" signature="108:153" ph="/// 文件存储 ... " />
-            <marker date="1536284398801" expanded="true" signature="190:586" ph="{...}" />
-            <marker date="1536284398801" expanded="true" signature="205:334" ph="/// 根据文件流上传 ... " />
-            <marker date="1536284398801" expanded="true" signature="398:526" ph="/// 根据文件上传 ... " />
+            <marker date="1539668415248" expanded="false" signature="6:152" ph="..." />
+            <marker date="1539668415248" expanded="true" signature="209:2718" ph="{...}" />
+            <marker date="1539668415248" expanded="true" signature="248:2716" ph="{...}" />
+            <marker date="1539668415248" expanded="true" signature="263:327" ph="/// [可选]是否使用Https域名 ... " />
+            <marker date="1539668415248" expanded="true" signature="391:451" ph="/// [可选]是否用Cdn域 ... " />
+            <marker date="1539668415248" expanded="true" signature="518:577" ph="/// [可选]是否覆盖上传 ... " />
+            <marker date="1539668415248" expanded="true" signature="645:707" ph="/// [可选]分片上传默认最大值 ... " />
+            <marker date="1539668415248" expanded="true" signature="794:860" ph="/// [可选]文件上传后多少天后自动删除 ... " />
+            <marker date="1539668415248" expanded="true" signature="928:996" ph="/// [可选]设置好上传凭证有效期,单位：秒 ... " />
+            <marker date="1539668415248" expanded="true" signature="1063:1141" ph="/// [可选]文件的存储类型，默认为普通存储，设置为1为低频存储 ... " />
+            <marker date="1539668415248" expanded="true" signature="1202:1268" ph="/// [可选]上传时是否自动检测MIME ... " />
+            <marker date="1539668415248" expanded="true" signature="1331:1394" ph="/// [可选]上传文件MIME限制 ... " />
+            <marker date="1539668415248" expanded="true" signature="1450:1515" ph="/// [可选]上传文件大小限制：最小值 ... " />
+            <marker date="1539668415248" expanded="true" signature="1576:1641" ph="/// [可选]上传文件大小限制：最大值 ... " />
+            <marker date="1539668415248" expanded="true" signature="1704:1761" ph="/// [可选]上传策略 ... " />
+            <marker date="1539668415248" expanded="false" signature="1821:2710" ph="上传进度相关" />
+            <marker date="1539668415248" expanded="true" signature="1845:1908" ph="/// 设置文件断点续传进度记录文件 ... " />
+            <marker date="1539668415248" expanded="true" signature="1971:2040" ph="/// 上传可选参数字典，参数名次以 x: 开头 ... " />
+            <marker date="1539668415248" expanded="true" signature="2113:2175" ph="/// 指定文件的MimeType ... " />
+            <marker date="1539668415248" expanded="true" signature="2230:2328" ph="/// 设置文件上传进度处理器 ... " />
+            <marker date="1539668415248" expanded="true" signature="2409:2503" ph="/// 设置文件上传的状态控制器 ... " />
+            <marker date="1539668415248" expanded="true" signature="2583:2638" ph="/// 最大重试次数 ... " />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/StorageProvider.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5">
-          <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+        <state relative-caret-position="587">
+          <caret line="34" column="76" selection-start-line="34" selection-start-column="76" selection-end-line="34" selection-end-column="76" />
           <folding>
-            <marker date="1536289886773" expanded="true" signature="6:298" ph="..." />
-            <marker date="1536289886773" expanded="true" signature="344:2242" ph="{...}" />
-            <marker date="1536289886773" expanded="true" signature="351:394" ph="/// 存储 ... " />
-            <marker date="1536289886773" expanded="true" signature="483:2240" ph="{...}" />
-            <marker date="1536289886773" expanded="true" signature="599:619" ph="{...}" />
-            <marker date="1536289886773" expanded="true" signature="629:1369" ph="根据文件流上传" />
-            <marker date="1536289886773" expanded="true" signature="654:783" ph="/// 根据文件流上传 ... " />
-            <marker date="1536289886773" expanded="true" signature="843:1349" ph="{...}" />
-            <marker date="1536289886773" expanded="true" signature="1379:2234" ph="根据文件上传" />
-            <marker date="1536289886773" expanded="true" signature="1403:1531" ph="/// 根据文件上传 ... " />
-            <marker date="1536289886773" expanded="true" signature="1591:2214" ph="{...}" />
-            <marker date="1536289886773" expanded="true" signature="1929:2178" ph="{...}" />
+            <marker date="1539669287811" expanded="true" signature="6:281" ph="..." />
+            <marker date="1539669287811" expanded="true" signature="327:2223" ph="{...}" />
+            <marker date="1539669287811" expanded="true" signature="334:377" ph="/// 存储 ... " />
+            <marker date="1539669287811" expanded="true" signature="466:2221" ph="{...}" />
+            <marker date="1539669287811" expanded="true" signature="582:602" ph="{...}" />
+            <marker date="1539669287811" expanded="true" signature="612:1351" ph="根据文件流上传" />
+            <marker date="1539669287811" expanded="true" signature="637:766" ph="/// 根据文件流上传 ... " />
+            <marker date="1539669287811" expanded="true" signature="826:1331" ph="{...}" />
+            <marker date="1539669287811" expanded="false" signature="1361:2215" ph="根据文件上传" />
+            <marker date="1539669287811" expanded="true" signature="1385:1513" ph="/// 根据文件上传 ... " />
+            <marker date="1539669287811" expanded="true" signature="1573:2195" ph="{...}" />
+            <marker date="1539669287811" expanded="true" signature="1911:2159" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/BaseStorageProvider.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="116" column="31" lean-forward="true" selection-start-line="116" selection-start-column="31" selection-end-line="116" selection-end-column="31" />
+          <folding>
+            <marker date="1539671120361" expanded="false" signature="6:266" ph="..." />
+            <marker date="1539671120361" expanded="true" signature="312:6448" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="351:6446" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="437:1310" ph="{...}" />
+            <marker date="1539671120361" expanded="false" signature="582:1300" ph="上传策略" />
+            <marker date="1539671120361" expanded="false" signature="650:1276" ph="上传成功后通知" />
+            <marker date="1539671120361" expanded="true" signature="805:1073" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="1145:1252" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="1320:1375" ph="/// 存储配置文件 ... " />
+            <marker date="1539671120361" expanded="true" signature="1427:1476" ph="///  ... " />
+            <marker date="1539671120361" expanded="true" signature="1512:1565" ph="/// 上传策略 ... " />
+            <marker date="1539671120361" expanded="true" signature="1620:6440" ph="得到上传策略" />
+            <marker date="1539671120361" expanded="false" signature="1644:2929" ph="设置上传策略" />
+            <marker date="1539671120361" expanded="true" signature="1668:2031" ph="/// 设置上传策略 ... " />
+            <marker date="1539671120361" expanded="true" signature="2204:2909" ph="{...}" />
+            <marker date="1539671120361" expanded="false" signature="2227:2489" ph="覆盖上传" />
+            <marker date="1539671120361" expanded="true" signature="2272:2354" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="2371:2465" ph="{...}" />
+            <marker date="1539671120361" expanded="false" signature="2503:2683" ph="带数据处理的凭证" />
+            <marker date="1539671120361" expanded="true" signature="2574:2659" ph="{...}" />
+            <marker date="1539671120361" expanded="false" signature="2697:2787" ph="设置过期时间" />
+            <marker date="1539671120361" expanded="false" signature="2801:2899" ph="多少天后自动删除" />
+            <marker date="1539671120361" expanded="true" signature="2939:5252" ph="得到文件上传额外参数" />
+            <marker date="1539671120361" expanded="true" signature="2967:3113" ph="/// 得到文件上传额外参数 ... " />
+            <marker date="1539671120361" expanded="true" signature="3200:5232" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="3303:5192" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="3398:3520" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="3617:3719" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="3793:3899" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="3964:4220" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="4070:4201" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="4287:5000" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="4482:4591" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="4661:4768" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="4793:4902" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="5062:5178" ph="{...}" />
+            <marker date="1539671120361" expanded="false" signature="5262:6420" ph="得到七牛配置文件" />
+            <marker date="1539671120361" expanded="true" signature="5288:5377" ph="/// 得到七牛配置文件 ... " />
+            <marker date="1539671120361" expanded="true" signature="5471:6400" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="5546:5607" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="5653:6185" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="5882:5996" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="6057:6171" ph="{...}" />
+            <marker date="1539671120361" expanded="true" signature="6237:6362" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/6c/824c88f2/FormUploader.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="568">
+          <caret line="40" column="44" selection-start-line="40" selection-start-column="33" selection-end-line="40" selection-end-column="44" />
+          <folding>
+            <marker date="1539671106309" expanded="true" signature="0:284" ph="/* Decompiled with JetBrains decompiler ... */" />
+            <marker date="1539671106309" expanded="false" signature="292:405" ph="..." />
+            <marker date="1539671106309" expanded="true" signature="430:7667" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="460:7665" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="568:657" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="751:1063" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="767:887" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="914:1057" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="1152:1248" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="1344:7036" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="1968:7005" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="1988:6055" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="2223:2483" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="2783:3344" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="2878:3332" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="2945:3318" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="6084:6997" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="6514:6852" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="6867:6987" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="7126:7534" ph="{...}" />
+            <marker date="1539671106309" expanded="true" signature="7602:7661" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PasswordCommon.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="627">
+          <caret line="365" selection-start-line="365" selection-end-line="365" />
+          <folding>
+            <marker date="1530319277784" expanded="false" signature="6:103" ph="..." />
+            <marker date="1530319277784" expanded="true" signature="146:13519" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="153:236" ph="/// 加密方法帮助类 ... " />
+            <marker date="1530319277784" expanded="true" signature="275:13517" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="291:837" ph="私有属性" />
+            <marker date="1530319277784" expanded="true" signature="313:379" ph="/// 是否返回为加密后字符的Byte代码 ... " />
+            <marker date="1530319277784" expanded="false" signature="438:592" ph="AES" />
+            <marker date="1530319277784" expanded="true" signature="459:511" ph="/// 密钥  ... " />
+            <marker date="1530319277784" expanded="false" signature="602:817" ph="DES" />
+            <marker date="1530319277784" expanded="true" signature="623:680" ph="///预设Des密钥向量 ... " />
+            <marker date="1530319277784" expanded="false" signature="847:1145" ph="设置aes秘钥的值" />
+            <marker date="1530319277784" expanded="true" signature="873:985" ph="/// 设置aes秘钥的值 ... " />
+            <marker date="1530319277784" expanded="true" signature="1057:1126" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="1155:1970" ph="得到字符串" />
+            <marker date="1530319277784" expanded="true" signature="1178:1368" ph="/// 得到字符串 ... " />
+            <marker date="1530319277784" expanded="true" signature="1452:1951" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="1535:1669" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="1686:1911" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="1801:1897" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="1980:2361" ph="得到字节数组" />
+            <marker date="1530319277784" expanded="true" signature="2003:2132" ph="/// 得到字节数组 ... " />
+            <marker date="1530319277784" expanded="true" signature="2193:2342" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="2371:2691" ph="是否返回为加密后字符的Byte代码" />
+            <marker date="1530319277784" expanded="true" signature="2405:2471" ph="/// 是否返回为加密后字符的Byte代码 ... " />
+            <marker date="1530319277784" expanded="true" signature="2540:2671" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="2701:5845" ph="Aes加密" />
+            <marker date="1530319277784" expanded="false" signature="2724:3219" ph="得到密钥" />
+            <marker date="1530319277784" expanded="true" signature="2745:2875" ph="/// 得到密钥 ... " />
+            <marker date="1530319277784" expanded="true" signature="2932:3200" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="3229:4584" ph="加密，需要关键字" />
+            <marker date="1530319277784" expanded="true" signature="3255:3437" ph="/// 加密，需要关键字 ... " />
+            <marker date="1530319277784" expanded="true" signature="3519:4565" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="3686:4475" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="3924:4070" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="4303:4377" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="4506:4555" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="4594:5825" ph="解密，需要AES关键字" />
+            <marker date="1530319277784" expanded="true" signature="4622:4789" ph="/// 解密 ... " />
+            <marker date="1530319277784" expanded="true" signature="4871:5806" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="5038:5716" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="5313:5459" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="5747:5796" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="5855:8700" ph="Des加密" />
+            <marker date="1530319277784" expanded="true" signature="5877:6024" ph="/// 得到Des密钥向量 ... " />
+            <marker date="1530319277784" expanded="true" signature="6097:6238" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="6248:7450" ph="DES加密字符串" />
+            <marker date="1530319277784" expanded="true" signature="6274:6529" ph="/// DES加密字符串 ... " />
+            <marker date="1530319277784" expanded="true" signature="6629:7431" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="6655:7346" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="7377:7420" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="7460:8680" ph="DES解密字符串" />
+            <marker date="1530319277784" expanded="true" signature="7485:7748" ph="/// DES解密字符串 ... " />
+            <marker date="1530319277784" expanded="true" signature="7848:8661" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="7874:8576" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="8607:8650" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="8710:9527" ph="MD5加密" />
+            <marker date="1530319277784" expanded="true" signature="8733:8913" ph="///  MD5加密 ... " />
+            <marker date="1530319277784" expanded="true" signature="8995:9508" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="9537:10274" ph="SHA1加密" />
+            <marker date="1530319277784" expanded="true" signature="9560:9692" ph="/// SHA1加密 ... " />
+            <marker date="1530319277784" expanded="true" signature="9751:10254" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="10284:10869" ph="Sha256加密" />
+            <marker date="1530319277784" expanded="true" signature="10310:10513" ph="/// Sha256加密 ... " />
+            <marker date="1530319277784" expanded="true" signature="10605:10850" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="10879:11464" ph="Sha512加密" />
+            <marker date="1530319277784" expanded="true" signature="10905:11108" ph="/// Sha512加密 ... " />
+            <marker date="1530319277784" expanded="true" signature="11200:11445" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="11474:12361" ph="Base64编码" />
+            <marker date="1530319277784" expanded="false" signature="11500:11837" ph="Base64编码" />
+            <marker date="1530319277784" expanded="true" signature="11525:11662" ph="/// Base64编码 ... " />
+            <marker date="1530319277784" expanded="true" signature="11722:11818" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="11847:12341" ph="Base64解码" />
+            <marker date="1530319277784" expanded="true" signature="11873:12010" ph="/// Base64解码 ... " />
+            <marker date="1530319277784" expanded="true" signature="12070:12322" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="12096:12207" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="12248:12312" ph="{...}" />
+            <marker date="1530319277784" expanded="false" signature="12371:13510" ph="Url编码" />
+            <marker date="1530319277784" expanded="true" signature="12394:12537" ph="/// 返回 html 字符串的编码结果 ... " />
+            <marker date="1530319277784" expanded="true" signature="12594:12662" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="12672:12815" ph="/// 返回 html 字符串的解码结果 ... " />
+            <marker date="1530319277784" expanded="true" signature="12872:12940" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="12950:13092" ph="/// 返回 URL 字符串的编码结果 ... " />
+            <marker date="1530319277784" expanded="true" signature="13148:13215" ph="{...}" />
+            <marker date="1530319277784" expanded="true" signature="13225:13367" ph="/// 返回 URL 字符串的编码结果 ... " />
+            <marker date="1530319277784" expanded="true" signature="13423:13490" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/StringCommon.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <marker date="1530319277862" expanded="false" signature="6:111" ph="..." />
+            <marker date="1530319277862" expanded="true" signature="154:6109" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="161:210" ph="/// String扩展 ... " />
+            <marker date="1530319277862" expanded="true" signature="247:6107" ph="{...}" />
+            <marker date="1530319277862" expanded="false" signature="262:2258" ph="判断位置" />
+            <marker date="1530319277862" expanded="false" signature="284:2238" ph="获取字符第N次出现的下标位置" />
+            <marker date="1530319277862" expanded="false" signature="316:1283" ph="得到第number次出现character的位置下标" />
+            <marker date="1530319277862" expanded="true" signature="359:688" ph="/// 得到第number次出现character的位置下标 ... " />
+            <marker date="1530319277862" expanded="true" signature="802:1264" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="861:928" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="1027:1210" ph="{...}" />
+            <marker date="1530319277862" expanded="false" signature="1293:2218" ph="得到倒数第number次出现character的位置下标" />
+            <marker date="1530319277862" expanded="true" signature="1338:1669" ph="/// 得到倒数第number次出现character的位置下标 ... " />
+            <marker date="1530319277862" expanded="true" signature="1787:2199" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="1846:1913" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="2012:2141" ph="{...}" />
+            <marker date="1530319277862" expanded="false" signature="2268:3883" ph="在字符串前后增加特殊字符" />
+            <marker date="1530319277862" expanded="true" signature="2297:2729" ph="/// 在字符串前后增加特殊字符 ... " />
+            <marker date="1530319277862" expanded="true" signature="2899:3863" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="2952:3033" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="3212:3819" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="3296:3362" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="3436:3567" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="3625:3748" ph="{...}" />
+            <marker date="1530319277862" expanded="false" signature="3893:4598" ph="隐藏手机" />
+            <marker date="1530319277862" expanded="true" signature="3914:3967" ph="/// 隐藏手机 ... " />
+            <marker date="1530319277862" expanded="true" signature="4022:4579" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="4084:4515" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="4137:4256" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="4294:4443" ph="{...}" />
+            <marker date="1530319277862" expanded="false" signature="4608:5221" ph="字符串转换为泛型集合" />
+            <marker date="1530319277862" expanded="true" signature="4635:4825" ph="/// 字符串转化为泛型集合 ... " />
+            <marker date="1530319277862" expanded="true" signature="4913:5202" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="4966:5032" ph="{...}" />
+            <marker date="1530319277862" expanded="false" signature="5231:6101" ph="操作" />
+            <marker date="1530319277862" expanded="false" signature="5251:6081" ph="清除字符串数组中的重复项" />
+            <marker date="1530319277862" expanded="true" signature="5280:5489" ph="/// 清除字符串数组中的重复项 ... " />
+            <marker date="1530319277862" expanded="true" signature="5581:6061" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="5677:5935" ph="{...}" />
+            <marker date="1530319277862" expanded="true" signature="5794:5888" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/UniqueCommon.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <marker date="1530319277987" expanded="true" signature="56:347" ph="{...}" />
+            <marker date="1530319277987" expanded="true" signature="63:110" ph="/// 唯一方法实现 ... " />
+            <marker date="1530319277987" expanded="true" signature="140:345" ph="{...}" />
+            <marker date="1530319277987" expanded="false" signature="155:339" ph="全局唯一Guid" />
+            <marker date="1530319277987" expanded="true" signature="180:237" ph="/// 全局唯一Guid ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByStreamParam.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
+          <folding>
+            <marker date="1539668415278" expanded="false" signature="6:69" ph="..." />
+            <marker date="1539668415278" expanded="true" signature="125:833" ph="{...}" />
+            <marker date="1539668415278" expanded="true" signature="132:180" ph="/// 根据文件流上传 ... " />
+            <marker date="1539668415278" expanded="true" signature="217:831" ph="{...}" />
+            <marker date="1539668415278" expanded="true" signature="333:460" ph="{...}" />
+            <marker date="1539668415278" expanded="true" signature="470:524" ph="/// 文件key ... " />
+            <marker date="1539668415278" expanded="true" signature="582:634" ph="/// 文件流 ... " />
+            <marker date="1539668415278" expanded="true" signature="695:748" ph="/// 上传策略 ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/Pictures/UploadByBase64Param.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
+          <folding>
+            <marker date="1539670852940" expanded="true" signature="126:478" ph="{...}" />
+            <marker date="1539670852940" expanded="true" signature="133:188" ph="/// 根据图片base64上传图片 ... " />
+            <marker date="1539670852940" expanded="true" signature="225:476" ph="{...}" />
+            <marker date="1539670852940" expanded="true" signature="240:299" ph="/// 图片Base64编码 ... " />
+            <marker date="1539670852940" expanded="true" signature="352:407" ph="/// 上传图片策略 ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/ImgPersistentOps.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="58" column="5" selection-start-line="6" selection-start-column="4" selection-end-line="58" selection-end-column="5" />
+          <folding>
+            <marker date="1539670900728" expanded="false" signature="6:123" ph="..." />
+            <marker date="1539670900728" expanded="true" signature="189:1605" ph="{...}" />
+            <marker date="1539670900728" expanded="true" signature="196:241" ph="/// 上传策略 ... " />
+            <marker date="1539670900728" expanded="false" signature="275:1603" ph="{...}" />
+            <marker date="1539670900728" expanded="true" signature="290:569" ph="/// 上传策略 ... " />
+            <marker date="1539670900728" expanded="true" signature="736:896" ph="{...}" />
+            <marker date="1539670900728" expanded="true" signature="906:961" ph="/// 图片缩放信息 ... " />
+            <marker date="1539670900728" expanded="true" signature="1044:1099" ph="/// 图片相对地址 ... " />
+            <marker date="1539670900728" expanded="true" signature="1149:1199" ph="/// 宽 ... " />
+            <marker date="1539670900728" expanded="true" signature="1253:1303" ph="/// 高 ... " />
+            <marker date="1539670900728" expanded="true" signature="1358:1413" ph="/// 是否覆盖上传 ... " />
+            <marker date="1539670900728" expanded="true" signature="1480:1533" ph="/// 水印信息 ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IPictureService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+          <folding>
+            <marker date="1539669093801" expanded="true" signature="110:405" ph="{...}" />
+            <marker date="1539669093801" expanded="true" signature="117:160" ph="/// 图片 ... " />
+            <marker date="1539669093801" expanded="true" signature="197:403" ph="{...}" />
+            <marker date="1539669093801" expanded="true" signature="212:349" ph="/// 根据图片base64流上传图片 ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/PictureService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="36" column="51" selection-start-line="36" selection-start-column="51" selection-end-line="36" selection-end-column="51" />
+          <folding>
+            <marker date="1539672050550" expanded="false" signature="6:329" ph="..." />
+            <marker date="1539672050550" expanded="true" signature="375:1410" ph="{...}" />
+            <marker date="1539672050550" expanded="true" signature="382:427" ph="/// 图片服务 ... " />
+            <marker date="1539672050550" expanded="true" signature="515:1408" ph="{...}" />
+            <marker date="1539672050550" expanded="true" signature="630:650" ph="{...}" />
+            <marker date="1539672050550" expanded="true" signature="660:1402" ph="根据图片base64上传" />
+            <marker date="1539672050550" expanded="true" signature="690:824" ph="/// 根据图片base64上传 ... " />
+            <marker date="1539672050550" expanded="true" signature="878:1382" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/TypeConversionCommon.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="442" column="44" selection-start-line="442" selection-start-column="19" selection-end-line="442" selection-end-column="44" />
+          <folding>
+            <marker date="1539672007375" expanded="false" signature="6:30" ph="..." />
+            <marker date="1539672007375" expanded="true" signature="73:16749" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="80:125" ph="/// 类型转换 ... " />
+            <marker date="1539672007375" expanded="true" signature="170:16747" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="185:10290" ph="Object转换类型" />
+            <marker date="1539672007375" expanded="false" signature="213:1318" ph="obj转Guid" />
+            <marker date="1539672007375" expanded="true" signature="239:421" ph="/// obj转Guid ... " />
+            <marker date="1539672007375" expanded="true" signature="496:759" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="769:951" ph="/// obj转Guid ... " />
+            <marker date="1539672007375" expanded="true" signature="1035:1298" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="1328:2410" ph="obj转Int" />
+            <marker date="1539672007375" expanded="true" signature="1353:1529" ph="/// obj转Int ... " />
+            <marker date="1539672007375" expanded="true" signature="1601:1862" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="1872:2048" ph="/// obj转Int ... " />
+            <marker date="1539672007375" expanded="true" signature="2129:2390" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="2420:3526" ph="obj转Short" />
+            <marker date="1539672007375" expanded="true" signature="2447:2625" ph="/// obj转Short ... " />
+            <marker date="1539672007375" expanded="true" signature="2703:2968" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="2978:3154" ph="/// obj转Int ... " />
+            <marker date="1539672007375" expanded="true" signature="3241:3506" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="3536:4666" ph="obj转decimal" />
+            <marker date="1539672007375" expanded="true" signature="3565:3745" ph="/// obj转decimal ... " />
+            <marker date="1539672007375" expanded="true" signature="3829:4098" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="4108:4284" ph="/// obj转Int ... " />
+            <marker date="1539672007375" expanded="true" signature="4377:4646" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="4676:5794" ph="obj转double" />
+            <marker date="1539672007375" expanded="true" signature="4704:4883" ph="/// obj转double ... " />
+            <marker date="1539672007375" expanded="true" signature="4964:5231" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="5241:5417" ph="/// obj转Int ... " />
+            <marker date="1539672007375" expanded="true" signature="5507:5774" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="5804:6910" ph="obj转float" />
+            <marker date="1539672007375" expanded="true" signature="5831:6009" ph="/// obj转float ... " />
+            <marker date="1539672007375" expanded="true" signature="6087:6352" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="6362:6538" ph="/// obj转Int ... " />
+            <marker date="1539672007375" expanded="true" signature="6625:6890" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="6920:8062" ph="obj转datetime" />
+            <marker date="1539672007375" expanded="true" signature="6950:7131" ph="/// obj转datetime ... " />
+            <marker date="1539672007375" expanded="true" signature="7218:7489" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="7499:7675" ph="/// obj转Int ... " />
+            <marker date="1539672007375" expanded="true" signature="7771:8042" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="8072:9166" ph="obj转byte" />
+            <marker date="1539672007375" expanded="true" signature="8098:8275" ph="/// obj转byte ... " />
+            <marker date="1539672007375" expanded="true" signature="8350:8613" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="8623:8799" ph="/// obj转Int ... " />
+            <marker date="1539672007375" expanded="true" signature="8883:9146" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="9176:10270" ph="obj转bool" />
+            <marker date="1539672007375" expanded="true" signature="9202:9379" ph="/// obj转bool ... " />
+            <marker date="1539672007375" expanded="true" signature="9454:9717" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="9727:9903" ph="/// obj转Int ... " />
+            <marker date="1539672007375" expanded="true" signature="9987:10250" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="10300:12532" ph="文件类型转换" />
+            <marker date="1539672007375" expanded="false" signature="10324:11280" ph="转换为Byte数组" />
+            <marker date="1539672007375" expanded="false" signature="10351:10838" ph="Stream转换为Byte数组" />
+            <marker date="1539672007375" expanded="true" signature="10384:10528" ph="/// Stream转换为Byte数组 ... " />
+            <marker date="1539672007375" expanded="true" signature="10596:10818" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="10848:11260" ph="String转换为Byte数组" />
+            <marker date="1539672007375" expanded="true" signature="10881:11022" ph="/// String转换为Byte数组 ... " />
+            <marker date="1539672007375" expanded="true" signature="11088:11240" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="11290:11703" ph="转换为Stream" />
+            <marker date="1539672007375" expanded="false" signature="11317:11683" ph="将 byte[] 转成 Stream" />
+            <marker date="1539672007375" expanded="true" signature="11353:11499" ph="/// 将 byte[] 转成 Stream ... " />
+            <marker date="1539672007375" expanded="true" signature="11563:11663" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="11713:12174" ph="转换为String" />
+            <marker date="1539672007375" expanded="false" signature="11740:12154" ph="byte数组转换为string" />
+            <marker date="1539672007375" expanded="true" signature="11773:11916" ph="/// byte数组转换为string ... " />
+            <marker date="1539672007375" expanded="true" signature="11980:12134" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="12184:12512" ph="base64字符串转byte数组" />
+            <marker date="1539672007375" expanded="true" signature="12218:12356" ph="/// 图片base64转byte数组 ... " />
+            <marker date="1539672007375" expanded="true" signature="12419:12492" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="12542:13153" ph="清空小数点后0" />
+            <marker date="1539672007375" expanded="true" signature="12567:12695" ph="/// 清楚小数点后的0 ... " />
+            <marker date="1539672007375" expanded="true" signature="12754:13133" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="12985:13098" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="13163:13783" ph="加密显示以*表示" />
+            <marker date="1539672007375" expanded="true" signature="13189:13334" ph="/// 加密显示以*表示 ... " />
+            <marker date="1539672007375" expanded="true" signature="13398:13763" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="13544:13610" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="13666:13725" ph="{...}" />
+            <marker date="1539672007375" expanded="false" signature="13793:16741" ph="值互换(左边最小值,右边最大值)" />
+            <marker date="1539672007375" expanded="true" signature="13827:13994" ph="/// 值互换(左边最小值,右边最大值) ... " />
+            <marker date="1539672007375" expanded="true" signature="14080:14296" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="14135:14286" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="14306:14473" ph="/// 值互换(左边最小值,右边最大值) ... " />
+            <marker date="1539672007375" expanded="true" signature="14561:14777" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="14616:14767" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="14787:14954" ph="/// 值互换(左边最小值,右边最大值) ... " />
+            <marker date="1539672007375" expanded="true" signature="15044:15260" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="15099:15250" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="15270:15437" ph="/// 值互换(左边最小值,右边最大值) ... " />
+            <marker date="1539672007375" expanded="true" signature="15529:15745" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="15584:15735" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="15755:15922" ph="/// 值互换(左边最小值,右边最大值) ... " />
+            <marker date="1539672007375" expanded="true" signature="16016:16232" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="16071:16222" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="16242:16409" ph="/// 值互换(左边最小值,右边最大值) ... " />
+            <marker date="1539672007375" expanded="true" signature="16505:16721" ph="{...}" />
+            <marker date="1539672007375" expanded="true" signature="16560:16711" ph="{...}" />
           </folding>
         </state>
       </provider>

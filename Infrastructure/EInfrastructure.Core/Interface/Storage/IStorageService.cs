@@ -20,5 +20,6 @@ namespace EInfrastructure.Core.Interface.Storage
         /// <param name="param"></param>
         /// <returns></returns>
         bool UploadFile(UploadByFormFileParam param);
+
     }
 }
