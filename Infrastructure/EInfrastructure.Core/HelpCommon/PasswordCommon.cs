@@ -98,33 +98,22 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static string ToEncryptAes(this string toEncrypt, string key = "")
         {
-            if (String.IsNullOrWhiteSpace(toEncrypt))
-                return "";
-            try
-            {
-                byte[] keyArray = Encoding.UTF8.GetBytes(key);
-                byte[] toEncryptArray = Encoding.UTF8.GetBytes(toEncrypt);
-                RijndaelManaged rDel = new RijndaelManaged
-                {
-                    Key = keyArray,
-                    Mode = CipherMode.ECB,
-                    Padding = PaddingMode.PKCS7
-                };
+            if (string.IsNullOrWhiteSpace(toEncrypt))
+                return string.Empty;
+            // 256-AES key    
+            byte[] keyArray = UTF8Encoding.UTF8.GetBytes(key);
+            byte[] toEncryptArray = UTF8Encoding.UTF8.GetBytes(toEncrypt);
 
-                ICryptoTransform cTransform = rDel.CreateEncryptor();
-                byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+            RijndaelManaged rDel = new RijndaelManaged();
+            rDel.Key = keyArray;
+            rDel.Mode = CipherMode.ECB;
+            rDel.Padding = PaddingMode.PKCS7;
 
-                if (resultArray.Length % 8 != 0)
-                {
-                    return toEncrypt;
-                }
+            ICryptoTransform cTransform = rDel.CreateEncryptor();
+            byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
 
-                return Convert.ToBase64String(resultArray, 0, resultArray.Length);
-            }
-            catch
-            {
-                return toEncrypt;
-            }
+
+            return Convert.ToBase64String(resultArray, 0, resultArray.Length);
         }
         #endregion
 
@@ -137,22 +126,24 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static string ToDecryptAes(this string toDecrypt, string key = "")
         {
-            if (String.IsNullOrWhiteSpace(toDecrypt))
-                return "";
+            if (string.IsNullOrWhiteSpace(toDecrypt))
+                return string.Empty;
             try
             {
                 // 256-AES key    
-                byte[] keyArray = Encoding.UTF8.GetBytes(key);
+                byte[] keyArray = UTF8Encoding.UTF8.GetBytes(key);
                 byte[] toEncryptArray = Convert.FromBase64String(toDecrypt);
-                RijndaelManaged rDel = new RijndaelManaged
-                {
-                    Key = keyArray,
-                    Mode = CipherMode.ECB,
-                    Padding = PaddingMode.PKCS7
-                };
+
+                RijndaelManaged rDel = new RijndaelManaged();
+                rDel.Key = keyArray;
+                rDel.Mode = CipherMode.ECB;
+                rDel.Padding = PaddingMode.PKCS7;
+
                 ICryptoTransform cTransform = rDel.CreateDecryptor();
+
+
                 byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
-                return Encoding.UTF8.GetString(resultArray);
+                return UTF8Encoding.UTF8.GetString(resultArray);
             }
             catch
             {
