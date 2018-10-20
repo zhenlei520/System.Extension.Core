@@ -6,14 +6,12 @@ using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Serialization;
 using EInfrastructure.Core.Interface.IOC;
 using Microsoft.Extensions.DependencyInjection;
-using EInfrastructure.Core.Ddd;
-using EInfrastructure.Core.MySql;
 
 namespace EInfrastructure.Core.AutoFac
 {
     public class MvcAutoRegister
     {
-        public IServiceProvider Build(IServiceCollection services,
+        public virtual IServiceProvider Build(IServiceCollection services,
             Action<ContainerBuilder> action)
         {
             services.AddMvc().AddControllersAsServices();
@@ -45,12 +43,6 @@ namespace EInfrastructure.Core.AutoFac
                 .PropertiesAutowired()
                 .AsImplementedInterfaces()
                 .SingleInstance();
-
-            builder.RegisterGeneric(typeof(QueryBase<,>)).As(typeof(IQuery<,>)).PropertiesAutowired()
-                .InstancePerLifetimeScope();
-
-            builder.RegisterGeneric(typeof(RepositoryBase<,>)).As(typeof(IRepository<,>)).PropertiesAutowired()
-                .InstancePerLifetimeScope();
 
             action(builder);
 
