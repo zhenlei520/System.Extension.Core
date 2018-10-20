@@ -20,15 +20,6 @@ namespace EInfrastructure.Core.HelpCommon
         /// </summary>
         private static bool IsReturnNum => true;
 
-        #region AES
-
-        /// <summary>
-        /// 密钥 
-        /// </summary>
-        private static string AesEncryptionKey { get; set; }
-
-        #endregion
-
         #region DES
 
         /// <summary>
@@ -38,17 +29,6 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
-        #endregion
-
-        #region 设置aes秘钥的值
-        /// <summary>
-        /// 设置aes秘钥的值
-        /// </summary>
-        /// <param name="aesEncryptionKey">密钥</param>
-        public static void SetAesEncryptionKey(string aesEncryptionKey)
-        {
-            AesEncryptionKey = aesEncryptionKey;
-        }
         #endregion
 
         #region 得到字符串
@@ -108,22 +88,6 @@ namespace EInfrastructure.Core.HelpCommon
 
         #region Aes加密
 
-        #region 得到密钥
-        /// <summary>
-        /// 得到密钥
-        /// </summary>
-        /// <param name="key">用户输入密钥</param>
-        /// <returns></returns>
-        private static string FindEncryptKey(string key)
-        {
-            if (!string.IsNullOrEmpty(key))
-                return key;//用户输入秘钥
-            if (!string.IsNullOrEmpty(AesEncryptionKey))
-                return AesEncryptionKey;
-            throw new System.Exception("未配置aes秘钥AesEncryptionKey的值");
-        }
-        #endregion
-
         #region 加密，需要关键字
 
         /// <summary>
@@ -136,10 +100,9 @@ namespace EInfrastructure.Core.HelpCommon
         {
             if (String.IsNullOrWhiteSpace(toEncrypt))
                 return "";
-            string encryptionKey = FindEncryptKey(key);//密钥
             try
             {
-                byte[] keyArray = Encoding.UTF8.GetBytes(encryptionKey);
+                byte[] keyArray = Encoding.UTF8.GetBytes(key);
                 byte[] toEncryptArray = Encoding.UTF8.GetBytes(toEncrypt);
                 RijndaelManaged rDel = new RijndaelManaged
                 {
@@ -176,11 +139,10 @@ namespace EInfrastructure.Core.HelpCommon
         {
             if (String.IsNullOrWhiteSpace(toDecrypt))
                 return "";
-            string encryptionKey = FindEncryptKey(key);//密钥
             try
             {
                 // 256-AES key    
-                byte[] keyArray = Encoding.UTF8.GetBytes(encryptionKey);
+                byte[] keyArray = Encoding.UTF8.GetBytes(key);
                 byte[] toEncryptArray = Convert.FromBase64String(toDecrypt);
                 RijndaelManaged rDel = new RijndaelManaged
                 {
