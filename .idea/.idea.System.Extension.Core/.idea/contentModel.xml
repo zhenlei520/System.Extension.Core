@@ -217,6 +217,30 @@
           </e>
         </e>
       </e>
+      <e p="Infrastructure\EInfrastructure.Core.AutoFac.MySql" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="EInfrastructure.Core.AutoFac.MySql.csproj" t="IncludeRecursive" />
+        <e p="MvcAutoRegister.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="EInfrastructure.Core.AutoFac.MySql.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Infrastructure\EInfrastructure.Core.AutoFac.SqlServer" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="EInfrastructure.Core.AutoFac.SqlServer.csproj" t="IncludeRecursive" />
+        <e p="MvcAutoRegister.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="EInfrastructure.Core.AutoFac.SqlServer.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
       <e p="Infrastructure\EInfrastructure.Core.MemoryCache" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="EInfrastructure.Core.MemoryCache.csproj" t="IncludeRecursive" />
@@ -347,6 +371,22 @@
           </e>
         </e>
         <e p="RedisCacheService.cs" t="Include" />
+      </e>
+      <e p="Infrastructure\EInfrastructure.Core.SqlServer" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="EInfrastructure.Core.SqlServer.csproj" t="IncludeRecursive" />
+        <e p="Ext.cs" t="Include" />
+        <e p="IEntityTypeConfiguration.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="EInfrastructure.Core.SqlServer.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="QueryBase.cs" t="Include" />
+        <e p="QueryExtension.cs" t="Include" />
+        <e p="RepositoryBase.cs" t="Include" />
       </e>
       <e p="Infrastructure\EInfrastructure.Core.Web" t="IncludeRecursive">
         <e p="Api" t="Include">

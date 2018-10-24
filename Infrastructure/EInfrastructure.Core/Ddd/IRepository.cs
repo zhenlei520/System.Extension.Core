@@ -1,6 +1,8 @@
-﻿namespace EInfrastructure.Core.Ddd
+﻿using System;
+
+namespace EInfrastructure.Core.Ddd
 {
-    public interface IRepository<TEntity,T> where TEntity : IAggregateRoot<T> where T:struct 
+    public interface IRepository<TEntity, T> where TEntity : IAggregateRoot<T> where T : IComparable
     {
         TEntity FindById(T id);
 

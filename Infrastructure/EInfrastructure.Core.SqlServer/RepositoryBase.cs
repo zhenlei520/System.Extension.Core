@@ -7,60 +7,61 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.SqlServer
 {
-  public class RepositoryBase<TEntity, T> : IRepository<TEntity, T> where TEntity : Entity<T>, IAggregateRoot<T> where T : struct
-  {
-    protected DbContext Dbcontext;
-
-    public RepositoryBase(IUnitOfWork unitOfWork)
+    public class RepositoryBase<TEntity, T> : IRepository<TEntity, T> where TEntity : Entity<T>, IAggregateRoot<T>
+        where T : IComparable
     {
-      Dbcontext = unitOfWork as DbContext;
-    }
+        protected DbContext Dbcontext;
 
-    public void Add(TEntity entity)
-    {
-      Dbcontext.Set<TEntity>().Add(entity);
-    }
+        public RepositoryBase(IUnitOfWork unitOfWork)
+        {
+            Dbcontext = unitOfWork as DbContext;
+        }
 
-    public void Remove(TEntity entity)
-    {
-      Dbcontext.Set<TEntity>().Remove(entity);
-    }
+        public void Add(TEntity entity)
+        {
+            Dbcontext.Set<TEntity>().Add(entity);
+        }
 
-    /// <summary>
-    /// 批量删除实体
-    /// </summary>
-    public void Removes(Expression<Func<TEntity, bool>> condition)
-    {
-      var query = Dbcontext.Set<TEntity>().Where(condition);
-      foreach (var q in query)
-      {
-        Dbcontext.Set<TEntity>().Remove(q);
-      }
-    }
+        public void Remove(TEntity entity)
+        {
+            Dbcontext.Set<TEntity>().Remove(entity);
+        }
 
-    public TEntity FindById(T id)
-    {
-      return Dbcontext.Set<TEntity>().Find(id);
-    }
+        /// <summary>
+        /// 批量删除实体
+        /// </summary>
+        public void Removes(Expression<Func<TEntity, bool>> condition)
+        {
+            var query = Dbcontext.Set<TEntity>().Where(condition);
+            foreach (var q in query)
+            {
+                Dbcontext.Set<TEntity>().Remove(q);
+            }
+        }
 
-    public void Update(TEntity entity)
-    {
-      Dbcontext.Set<TEntity>().Update(entity);
-    }
+        public TEntity FindById(T id)
+        {
+            return Dbcontext.Set<TEntity>().Find(id);
+        }
 
-    public virtual TEntity LoadIntegrate(T id)
-    {
-      throw new NotImplementedException();
-    }
+        public void Update(TEntity entity)
+        {
+            Dbcontext.Set<TEntity>().Update(entity);
+        }
 
-    public TEntity FindEntity(Expression<Func<TEntity, bool>> condition)
-    {
-      return Dbcontext.Set<TEntity>().FirstOrDefault(condition);
-    }
+        public virtual TEntity LoadIntegrate(T id)
+        {
+            throw new NotImplementedException();
+        }
 
-    public List<TEntity> GetList(Expression<Func<TEntity, bool>> condition)
-    {
-      return Dbcontext.Set<TEntity>().Where(condition).ToList();
+        public TEntity FindEntity(Expression<Func<TEntity, bool>> condition)
+        {
+            return Dbcontext.Set<TEntity>().FirstOrDefault(condition);
+        }
+
+        public List<TEntity> GetList(Expression<Func<TEntity, bool>> condition)
+        {
+            return Dbcontext.Set<TEntity>().Where(condition).ToList();
+        }
     }
-  }
 }
