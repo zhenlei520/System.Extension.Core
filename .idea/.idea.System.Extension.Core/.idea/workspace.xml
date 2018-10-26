@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="99a4e9c0-8115-428c-83db-090f2e504254" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.DaYu/EInfrastructure.Core.AliYun.DaYu.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.DaYu/EInfrastructure.Core.AliYun.DaYu.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/EInfrastructure.Core.AliYun.Tbk.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/EInfrastructure.Core.AliYun.Tbk.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoFac.MySql/EInfrastructure.Core.AutoFac.MySql.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoFac.MySql/EInfrastructure.Core.AutoFac.MySql.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoFac.SqlServer/EInfrastructure.Core.AutoFac.SqlServer.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoFac.SqlServer/EInfrastructure.Core.AutoFac.SqlServer.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoFac/EInfrastructure.Core.AutoFac.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoFac/EInfrastructure.Core.AutoFac.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MemoryCache/EInfrastructure.Core.MemoryCache.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MemoryCache/EInfrastructure.Core.MemoryCache.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/EInfrastructure.Core.QiNiu.Storage.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/EInfrastructure.Core.QiNiu.Storage.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.Redis/EInfrastructure.Core.Redis.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.Redis/EInfrastructure.Core.Redis.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.Web/EInfrastructure.Core.Web.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.Web/EInfrastructure.Core.Web.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.WebChat/EInfrastructure.Core.WebChat.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.WebChat/EInfrastructure.Core.WebChat.csproj" afterDir="false" />
-    </list>
+    <list default="true" id="99a4e9c0-8115-428c-83db-090f2e504254" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +43,7 @@
     <session id="711838357">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.4" value="1" />
@@ -312,7 +300,7 @@
       <workItem from="1539669345982" duration="3339000" />
       <workItem from="1540378868313" duration="1249000" />
       <workItem from="1540533967853" duration="560000" />
-      <workItem from="1540535335692" duration="604000" />
+      <workItem from="1540535335692" duration="1116000" />
     </task>
     <task id="LOCAL-00001" summary="更改七牛上传图片配置--目前只有最简单的上传，之后会重做图片上传">
       <created>1536284494110</created>
@@ -346,7 +334,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23847000" />
+    <option name="totallyTimeSpent" value="24359000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -359,6 +347,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17110874" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
