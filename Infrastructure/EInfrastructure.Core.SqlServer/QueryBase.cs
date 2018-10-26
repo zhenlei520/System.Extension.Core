@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -10,7 +11,7 @@ namespace EInfrastructure.Core.SqlServer
 {
   public class QueryBase<TEntity, T>
     : IQuery<TEntity, T> where TEntity : class, IEntity<T>
-    where T : struct
+    where T : IComparable
 
     //IQuery<TEntity, T> where TEntity : class, IEntity<T>
   {

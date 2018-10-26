@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -6,7 +7,7 @@ using EInfrastructure.Core.Data;
 
 namespace EInfrastructure.Core.Ddd
 {
-  public interface IQuery<TEntity, T> where TEntity : IEntity<T> where T : struct
+  public interface IQuery<TEntity, T> where TEntity : IEntity<T> where T : IComparable
   {
     TEntity GetOne(Expression<Func<TEntity, bool>> condition, bool isTracking = true);
 
