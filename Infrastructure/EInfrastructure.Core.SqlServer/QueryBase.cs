@@ -7,7 +7,7 @@ using EInfrastructure.Core.Data;
 using EInfrastructure.Core.Ddd;
 using Microsoft.EntityFrameworkCore;
 
-namespace EInfrastructure.Core.MySql
+namespace EInfrastructure.Core.SqlServer
 {
   public class QueryBase<TEntity, T>
     : IQuery<TEntity, T> where TEntity : class, IEntity<T>

@@ -37,6 +37,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.MySql"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.WebChat", "Infrastructure\EInfrastructure.Core.WebChat\EInfrastructure.Core.WebChat.csproj", "{BC77E7FF-09A7-4786-A313-09A114F1CCCC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.SqlServer", "Infrastructure\EInfrastructure.Core.SqlServer\EInfrastructure.Core.SqlServer.csproj", "{B2DEF448-095E-4A60-89A3-667E5FD2EBA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AutoFac.MySql", "Infrastructure\EInfrastructure.Core.AutoFac.MySql\EInfrastructure.Core.AutoFac.MySql.csproj", "{3F0348A6-1F0D-4C37-9DCA-1ADFEE00D7F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AutoFac.SqlServer", "Infrastructure\EInfrastructure.Core.AutoFac.SqlServer\EInfrastructure.Core.AutoFac.SqlServer.csproj", "{00BB73B8-755E-4CF2-97E1-5336B501693A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +89,18 @@ Global
 		{BC77E7FF-09A7-4786-A313-09A114F1CCCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC77E7FF-09A7-4786-A313-09A114F1CCCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC77E7FF-09A7-4786-A313-09A114F1CCCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2DEF448-095E-4A60-89A3-667E5FD2EBA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2DEF448-095E-4A60-89A3-667E5FD2EBA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2DEF448-095E-4A60-89A3-667E5FD2EBA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2DEF448-095E-4A60-89A3-667E5FD2EBA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F0348A6-1F0D-4C37-9DCA-1ADFEE00D7F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0348A6-1F0D-4C37-9DCA-1ADFEE00D7F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0348A6-1F0D-4C37-9DCA-1ADFEE00D7F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0348A6-1F0D-4C37-9DCA-1ADFEE00D7F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00BB73B8-755E-4CF2-97E1-5336B501693A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00BB73B8-755E-4CF2-97E1-5336B501693A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00BB73B8-755E-4CF2-97E1-5336B501693A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00BB73B8-755E-4CF2-97E1-5336B501693A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +115,9 @@ Global
 		{59E72F74-2D06-4E52-ADB5-C0184F1C747C} = {DE824100-DC36-4F2B-8092-317C669C260C}
 		{A3B800E3-B300-46DB-B334-F23561500122} = {A0DA4A28-DE2A-4F1C-9F8F-C0336E2EE70D}
 		{BC77E7FF-09A7-4786-A313-09A114F1CCCC} = {1A482526-7E29-4D16-9E1A-743770227F00}
+		{B2DEF448-095E-4A60-89A3-667E5FD2EBA0} = {A0DA4A28-DE2A-4F1C-9F8F-C0336E2EE70D}
+		{3F0348A6-1F0D-4C37-9DCA-1ADFEE00D7F9} = {DE824100-DC36-4F2B-8092-317C669C260C}
+		{00BB73B8-755E-4CF2-97E1-5336B501693A} = {DE824100-DC36-4F2B-8092-317C669C260C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41FDCFC5-66DA-415D-AA6C-38806CB952CD}

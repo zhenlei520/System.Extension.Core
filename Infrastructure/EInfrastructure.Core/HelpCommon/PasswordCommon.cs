@@ -20,15 +20,6 @@ namespace EInfrastructure.Core.HelpCommon
         /// </summary>
         private static bool IsReturnNum => true;
 
-        #region AES
-
-        /// <summary>
-        /// 密钥 
-        /// </summary>
-        private static string AesEncryptionKey { get; set; }
-
-        #endregion
-
         #region DES
 
         /// <summary>
@@ -38,17 +29,6 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
-        #endregion
-
-        #region 设置aes秘钥的值
-        /// <summary>
-        /// 设置aes秘钥的值
-        /// </summary>
-        /// <param name="aesEncryptionKey">密钥</param>
-        public static void SetAesEncryptionKey(string aesEncryptionKey)
-        {
-            AesEncryptionKey = aesEncryptionKey;
-        }
         #endregion
 
         #region 得到字符串
@@ -108,22 +88,6 @@ namespace EInfrastructure.Core.HelpCommon
 
         #region Aes加密
 
-        #region 得到密钥
-        /// <summary>
-        /// 得到密钥
-        /// </summary>
-        /// <param name="key">用户输入密钥</param>
-        /// <returns></returns>
-        private static string FindEncryptKey(string key)
-        {
-            if (!string.IsNullOrEmpty(key))
-                return key;//用户输入秘钥
-            if (!string.IsNullOrEmpty(AesEncryptionKey))
-                return AesEncryptionKey;
-            throw new System.Exception("未配置aes秘钥AesEncryptionKey的值");
-        }
-        #endregion
-
         #region 加密，需要关键字
 
         /// <summary>
@@ -134,34 +98,22 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static string ToEncryptAes(this string toEncrypt, string key = "")
         {
-            if (String.IsNullOrWhiteSpace(toEncrypt))
-                return "";
-            string encryptionKey = FindEncryptKey(key);//密钥
-            try
-            {
-                byte[] keyArray = Encoding.UTF8.GetBytes(encryptionKey);
-                byte[] toEncryptArray = Encoding.UTF8.GetBytes(toEncrypt);
-                RijndaelManaged rDel = new RijndaelManaged
-                {
-                    Key = keyArray,
-                    Mode = CipherMode.ECB,
-                    Padding = PaddingMode.PKCS7
-                };
+            if (string.IsNullOrWhiteSpace(toEncrypt))
+                return string.Empty;
+            // 256-AES key    
+            byte[] keyArray = UTF8Encoding.UTF8.GetBytes(key);
+            byte[] toEncryptArray = UTF8Encoding.UTF8.GetBytes(toEncrypt);
 
-                ICryptoTransform cTransform = rDel.CreateEncryptor();
-                byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+            RijndaelManaged rDel = new RijndaelManaged();
+            rDel.Key = keyArray;
+            rDel.Mode = CipherMode.ECB;
+            rDel.Padding = PaddingMode.PKCS7;
 
-                if (resultArray.Length % 8 != 0)
-                {
-                    return toEncrypt;
-                }
+            ICryptoTransform cTransform = rDel.CreateEncryptor();
+            byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
 
-                return Convert.ToBase64String(resultArray, 0, resultArray.Length);
-            }
-            catch
-            {
-                return toEncrypt;
-            }
+
+            return Convert.ToBase64String(resultArray, 0, resultArray.Length);
         }
         #endregion
 
@@ -174,23 +126,24 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static string ToDecryptAes(this string toDecrypt, string key = "")
         {
-            if (String.IsNullOrWhiteSpace(toDecrypt))
-                return "";
-            string encryptionKey = FindEncryptKey(key);//密钥
+            if (string.IsNullOrWhiteSpace(toDecrypt))
+                return string.Empty;
             try
             {
                 // 256-AES key    
-                byte[] keyArray = Encoding.UTF8.GetBytes(encryptionKey);
+                byte[] keyArray = UTF8Encoding.UTF8.GetBytes(key);
                 byte[] toEncryptArray = Convert.FromBase64String(toDecrypt);
-                RijndaelManaged rDel = new RijndaelManaged
-                {
-                    Key = keyArray,
-                    Mode = CipherMode.ECB,
-                    Padding = PaddingMode.PKCS7
-                };
+
+                RijndaelManaged rDel = new RijndaelManaged();
+                rDel.Key = keyArray;
+                rDel.Mode = CipherMode.ECB;
+                rDel.Padding = PaddingMode.PKCS7;
+
                 ICryptoTransform cTransform = rDel.CreateDecryptor();
+
+
                 byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
-                return Encoding.UTF8.GetString(resultArray);
+                return UTF8Encoding.UTF8.GetString(resultArray);
             }
             catch
             {

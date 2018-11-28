@@ -1,4 +1,4 @@
-﻿namespace EInfrastructure.Core.Interface.Storage.Config
+﻿namespace EInfrastructure.Core.Interface.Storage.Config.Pictures
 {
     /// <summary>
     /// 图片水印
@@ -53,6 +53,5 @@
         /// </summary>
         public int WaterMarkFontSize { get; set; }
         #endregion
-
     }
 }

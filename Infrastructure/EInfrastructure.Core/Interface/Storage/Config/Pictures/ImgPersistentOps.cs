@@ -2,17 +2,13 @@
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Interface.Storage.Enum;
 
-namespace EInfrastructure.Core.Interface.Storage.Config
+namespace EInfrastructure.Core.Interface.Storage.Config.Pictures
 {
     /// <summary>
     /// 上传策略
     /// </summary>
     public class ImgPersistentOps
     {
-        public ImgPersistentOps()
-        {
-        }
-
         /// <summary>
         /// 上传策略
         /// </summary>
@@ -21,19 +17,14 @@ namespace EInfrastructure.Core.Interface.Storage.Config
         /// <param name="height">高度</param>
         /// <param name="model">缩放信息</param>
         /// <param name="waterMark">水印信息</param>
-        /// <param name="thumOpsList">缩略图信息</param>
         public ImgPersistentOps(string key, int width = 0, int height = 0, ImageModeEnum model = ImageModeEnum.Nothing,
-            StorageWaterMark waterMark = null, List<ThumOps> thumOpsList = null)
+            StorageWaterMark waterMark = null)
         {
             Key = key;
             Width = width;
             Height = height;
             Mode = model;
             WaterMark = waterMark;
-            if (thumOpsList != null)
-            {
-                ThumOpsList = thumOpsList;
-            }
         }
 
         /// <summary>
@@ -47,16 +38,6 @@ namespace EInfrastructure.Core.Interface.Storage.Config
         public string Key { get; set; }
 
         /// <summary>
-        /// 扩展
-        /// </summary>
-        public string Ext { get; protected set; }
-
-        /// <summary>
-        /// 文件类型
-        /// </summary>
-        public FileTypeEnum FileType { get; protected set; } = FileTypeEnum.Other;
-
-        /// <summary>
         /// 宽
         /// </summary>
         public int Width { get; set; } = 0;
@@ -67,28 +48,13 @@ namespace EInfrastructure.Core.Interface.Storage.Config
         public int Height { get; set; } = 0;
 
         /// <summary>
+        /// 是否覆盖上传
+        /// </summary>
+        public bool IsAllowOverlap { get; set; } = true;
+
+        /// <summary>
         /// 水印信息
         /// </summary>
         public StorageWaterMark WaterMark { get; set; } = null;
-
-        /// <summary>
-        /// 图片缩略图信息
-        /// </summary>
-        public List<ThumOps> ThumOpsList { get; set; } = new List<ThumOps>();
-
-        /// <summary>
-        /// 存储配置信息
-        /// 对应七牛配置信息
-        /// 对应本地配置信息
-        /// 对应阿里云配置信息
-        /// 对应腾讯云配置信息
-        /// </summary>
-        public object Json { get; protected set; }
-
-        public virtual void CheckData()
-        {
-            if (!string.IsNullOrEmpty(Key))
-                Key = Key.UrlDecode();
-        }
     }
 }

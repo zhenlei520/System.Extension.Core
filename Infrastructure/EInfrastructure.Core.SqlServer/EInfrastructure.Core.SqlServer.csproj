@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.1.5</Version>
+    <PackageReleaseNotes>sqlserver2012以上数据库</PackageReleaseNotes>
+    <Description>dotnet core 使用sqlserver数据库实现</Description>
+    <Copyright>Copyright ©zhenlei520 2018</Copyright>
+    <PackageProjectUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/Infrastructure/EInfrastructure.Core.SqlServer</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EInfrastructure.Core\EInfrastructure.Core.csproj" />
+  </ItemGroup>
+
+</Project>

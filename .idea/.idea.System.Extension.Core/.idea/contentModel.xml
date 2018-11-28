@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\wangz\.Rider2018.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\wangz\.Rider2018.2\system\resharper-host\local\Transient\ReSharperHost\v182\SolutionCaches\_System.Extension.Core.-1542861991.00" t="ExcludeRecursive" />
-    <e p="D:\Important\Study\Owner\GitHub\System.Extension\System.Extension.Core" t="IncludeFlat">
+    <e p="C:\Users\zhenlei\.Rider2018.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\zhenlei\.Rider2018.2\system\resharper-host\local\Transient\ReSharperHost\v182\SolutionCaches\_System.Extension.Core.-289912442.00" t="ExcludeRecursive" />
+    <e p="F:\zhenlei\Owner\Framework\System.Extension.Core" t="IncludeFlat">
       <e p="Cache" t="Include" />
       <e p="Database" t="Include" />
       <e p="Infrastructure\EInfrastructure.Core" t="IncludeRecursive">
@@ -104,9 +104,10 @@
           </e>
           <e p="Storage" t="Include">
             <e p="Config" t="Include">
-              <e p="ImgPersistentOps.cs" t="Include" />
-              <e p="StorageWaterMark.cs" t="Include" />
-              <e p="ThumOps.cs" t="Include" />
+              <e p="Pictures" t="Include">
+                <e p="ImgPersistentOps.cs" t="Include" />
+                <e p="StorageWaterMark.cs" t="Include" />
+              </e>
               <e p="UploadPersistentOps.cs" t="Include" />
             </e>
             <e p="Dto" t="Include">
@@ -116,18 +117,21 @@
             <e p="Enum" t="Include">
               <e p="CallbackBodyTypeEnum.cs" t="Include" />
               <e p="ChunkUnitEnum.cs" t="Include" />
-              <e p="FileTypeEnum.cs" t="Include" />
               <e p="ImageModeEnum.cs" t="Include" />
               <e p="UploadStateEnum.cs" t="Include" />
             </e>
             <e p="Handler" t="Include">
               <e p="UploadControllerAction.cs" t="Include" />
             </e>
+            <e p="IPictureService.cs" t="Include" />
             <e p="IStorageService.cs" t="Include" />
             <e p="Model" t="Include">
               <e p="PlugResponseInfo.cs" t="Include" />
             </e>
             <e p="Param" t="Include">
+              <e p="Pictures" t="Include">
+                <e p="UploadByBase64Param.cs" t="Include" />
+              </e>
               <e p="UploadByFormFileParam.cs" t="Include" />
               <e p="UploadByStreamParam.cs" t="Include" />
             </e>
@@ -213,6 +217,30 @@
           </e>
         </e>
       </e>
+      <e p="Infrastructure\EInfrastructure.Core.AutoFac.MySql" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="EInfrastructure.Core.AutoFac.MySql.csproj" t="IncludeRecursive" />
+        <e p="MvcAutoRegister.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="EInfrastructure.Core.AutoFac.MySql.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Infrastructure\EInfrastructure.Core.AutoFac.SqlServer" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="EInfrastructure.Core.AutoFac.SqlServer.csproj" t="IncludeRecursive" />
+        <e p="MvcAutoRegister.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="EInfrastructure.Core.AutoFac.SqlServer.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
       <e p="Infrastructure\EInfrastructure.Core.MemoryCache" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="EInfrastructure.Core.MemoryCache.csproj" t="IncludeRecursive" />
@@ -259,6 +287,7 @@
             </e>
           </e>
         </e>
+        <e p="PictureService.cs" t="Include" />
         <e p="StorageProvider.cs" t="Include" />
       </e>
       <e p="Infrastructure\EInfrastructure.Core.Redis" t="IncludeRecursive">
@@ -342,6 +371,22 @@
           </e>
         </e>
         <e p="RedisCacheService.cs" t="Include" />
+      </e>
+      <e p="Infrastructure\EInfrastructure.Core.SqlServer" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="EInfrastructure.Core.SqlServer.csproj" t="IncludeRecursive" />
+        <e p="Ext.cs" t="Include" />
+        <e p="IEntityTypeConfiguration.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="EInfrastructure.Core.SqlServer.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="QueryBase.cs" t="Include" />
+        <e p="QueryExtension.cs" t="Include" />
+        <e p="RepositoryBase.cs" t="Include" />
       </e>
       <e p="Infrastructure\EInfrastructure.Core.Web" t="IncludeRecursive">
         <e p="Api" t="Include">
