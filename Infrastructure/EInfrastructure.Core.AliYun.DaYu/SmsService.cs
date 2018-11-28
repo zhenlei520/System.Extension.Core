@@ -64,7 +64,8 @@ namespace EInfrastructure.Core.AliYun.DaYu
             {
                 PhoneList = phoneNumbers,
                 Msg = "短信发送失败",
-                SubMsg = response.Content
+                SubMsg = response.Content,
+                Code=result.Code
             });
             return false;
         }

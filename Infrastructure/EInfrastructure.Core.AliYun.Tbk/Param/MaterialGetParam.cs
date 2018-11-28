@@ -80,7 +80,7 @@
         /// <summary>
         ///adzone_id（必填）
         /// </summary>
-        public int AdzoneId { get; set; }
+        public string AdzoneId { get; set; }
 
         /// <summary>
         ///是否有优惠券，设置为true表示该商品有优惠券，设置为false或不设置表示不判断这个属性(可选)

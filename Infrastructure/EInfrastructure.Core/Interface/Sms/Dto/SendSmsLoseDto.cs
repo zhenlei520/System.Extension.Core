@@ -21,5 +21,10 @@ namespace EInfrastructure.Core.Interface.Sms.Dto
         /// 具体失败原因
         /// </summary>
         public string SubMsg { get; set; }
+        
+        /// <summary>
+        /// 错误码
+        /// </summary>
+        public string Code { get; set; }
     }
 }
