@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using EInfrastructure.Core.AliYun.Tbk.Dto;
 using EInfrastructure.Core.AliYun.Tbk.Param;
@@ -52,24 +53,30 @@ namespace EInfrastructure.Core.AliYun.Tbk
 
         #endregion
 
-        #region 根据链接生成淘口令
+        #region 根据链接生成淘口令（只支持优惠券链接）
 
         /// <summary>
-        /// 根据链接生成淘口令
+        /// 根据链接生成淘口令（只支持优惠券链接）
         /// </summary>
         /// <param name="url">链接</param>
         /// <param name="text"></param>
+        /// <param name="logo">图片地址</param>
+        /// <param name="action">委托方法</param>
         /// <returns></returns>
-        public string TpwdCreate(string url, string text = "超值活动，惊喜活动多多")
+        public string TpwdCreate(string url, string text = "超值活动，惊喜活动多多", string logo = "",
+            Action<Dictionary<string, string>> action = null)
         {
-            string response = base.GetResponse("taobao.wireless.share.tpwd.create", Method.POST,
-                (Dictionary<string, string> para) =>
+            if (!url.Contains("https:"))
+            {
+                url = $"https:{url}";
+            }
+
+            string response = base.GetResponse("taobao.tbk.tpwd.create", Method.POST,
+                para =>
                 {
-                    para.Add("tpwd_param", JsonConvert.SerializeObject(new
-                    {
-                        url = url,
-                        text = text
-                    }));
+                    para.Add("url", url);
+                    para.Add("text", text);
+                    para.Add("logo", "logo");
                     return para;
                 });
             return response;
@@ -80,15 +87,18 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// </summary>
         /// <param name="url">链接</param>
         /// <param name="text"></param>
+        /// <param name="logo"></param>
+        /// <param name="action">委托方法</param>
         /// <returns></returns>
-        public string TpwdCreateString(string url, string text = "超值活动，惊喜活动多多")
+        public string TpwdCreateString(string url, string text = "超值活动，惊喜活动多多", string logo = "",
+            Action<Dictionary<string, string>> action = null)
         {
-            var response = TpwdCreate(url, text);
+            var response = TpwdCreate(url, text, logo, action);
             if (!string.IsNullOrEmpty(response))
             {
                 if (response.Contains("model"))
                 {
-                    return new JsonCommon().Deserialize<dynamic>(response).model;
+                    return new JsonCommon().Deserialize<dynamic>(response).data.model;
                 }
             }
 

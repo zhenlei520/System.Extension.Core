@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\zhenlei\.Rider2018.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\zhenlei\.Rider2018.2\system\resharper-host\local\Transient\ReSharperHost\v182\SolutionCaches\_System.Extension.Core.-289912442.00" t="ExcludeRecursive" />
-    <e p="F:\zhenlei\Owner\Framework\System.Extension.Core" t="IncludeFlat">
+    <e p="C:\Users\zhenlei\.Rider2018.2\system\resharper-host\local\Transient\ReSharperHost\v182\SolutionCaches\_System.Extension.Core.153698981.00" t="ExcludeRecursive" />
+    <e p="G:\zhenlei\Owner\Framework\System.Extension.Core" t="IncludeFlat">
       <e p="Cache" t="Include" />
       <e p="Database" t="Include" />
       <e p="Infrastructure\EInfrastructure.Core" t="IncludeRecursive">
