@@ -180,10 +180,6 @@
         <e p="Config" t="Include">
           <e p="AliConfig.cs" t="Include" />
         </e>
-        <e p="Dto" t="Include">
-          <e p="MaterialDto.cs" t="Include" />
-          <e p="NaughtyPasswordQueryDto.cs" t="Include" />
-        </e>
         <e p="EInfrastructure.Core.AliYun.Tbk.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -202,6 +198,15 @@
           <e p="ShopGetParam.cs" t="Include" />
           <e p="ShopRelatedParam.cs" t="Include" />
           <e p="TqgGetParam.cs" t="Include" />
+        </e>
+        <e p="Respose" t="Include">
+          <e p="ErrDto.cs" t="Include" />
+          <e p="Success" t="Include">
+            <e p="MaterialDto.cs" t="Include" />
+            <e p="NaughtyPasswordQueryDto.cs" t="Include" />
+            <e p="TaobaoTbkTpwdCreateResponseDto.cs" t="Include" />
+            <e p="TaobaoTbkTpwdMixCreateResponseDto.cs" t="Include" />
+          </e>
         </e>
         <e p="TbkOpenApi.cs" t="Include" />
       </e>

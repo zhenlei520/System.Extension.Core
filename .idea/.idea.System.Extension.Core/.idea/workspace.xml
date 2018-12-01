@@ -84,32 +84,33 @@
     <session id="2052770450">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="cs" value="6" />
+          <entry key="cs" value="7" />
           <entry key="csproj" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="C#" value="6" />
+          <entry key="C#" value="7" />
           <entry key="Csproj" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cs" value="56" />
+          <entry key="cs" value="58" />
           <entry key="csproj" value="2" />
           <entry key="txt" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="C#" value="56" />
+          <entry key="C#" value="58" />
           <entry key="Csproj" value="2" />
           <entry key="PLAIN_TEXT" value="4" />
         </counts>
@@ -117,7 +118,24 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/Config/AliConfig.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+              <folding>
+                <marker date="1543454101816" expanded="true" signature="48:452" ph="{...}" />
+                <marker date="1543454101816" expanded="true" signature="77:450" ph="{...}" />
+                <marker date="1543454101816" expanded="true" signature="92:171" ph="/// 推广id ... " />
+                <marker date="1543454101816" expanded="true" signature="229:283" ph="/// 淘口令使用 ... " />
+                <marker date="1543454101816" expanded="true" signature="344:398" ph="/// 淘口令使用 ... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -166,6 +184,7 @@
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/Param/MaterialGetParam.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/TbkOpenApi.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/OpenApiUtil.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/Config/AliConfig.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/OpenApi.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -211,6 +230,7 @@
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.Redis/EInfrastructure.Core.Redis.csproj" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/EInfrastructure.Core.AliYun.Tbk.csproj" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/TbkOpenApi.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/Config/AliConfig.cs" />
       </list>
     </option>
   </component>
@@ -220,11 +240,11 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="383" />
-    <option name="y" value="492" />
-    <option name="width" value="1631" />
-    <option name="height" value="904" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="446" />
+    <option name="y" value="77" />
+    <option name="width" value="1789" />
+    <option name="height" value="822" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -256,26 +276,6 @@
               <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
               <item name="System.Extension.Core" type="24d0babc:SolutionExplorerModelNode" />
               <item name="Marketing" type="24d0babc:SolutionExplorerModelNode" />
-            </path>
-            <path>
-              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
-              <item name="System.Extension.Core" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="Marketing" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="EInfrastructure.Core.AliYun.Tbk" type="24d0babc:SolutionExplorerModelNode" />
-            </path>
-            <path>
-              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
-              <item name="System.Extension.Core" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="Marketing" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="EInfrastructure.Core.AliYun.Tbk" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="Common" type="24d0babc:SolutionExplorerModelNode" />
-            </path>
-            <path>
-              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
-              <item name="System.Extension.Core" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="Marketing" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="EInfrastructure.Core.AliYun.Tbk" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="Param" type="24d0babc:SolutionExplorerModelNode" />
             </path>
             <path>
               <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
@@ -343,7 +343,7 @@
       <workItem from="1540378868313" duration="1249000" />
       <workItem from="1540533967853" duration="560000" />
       <workItem from="1540535335692" duration="1116000" />
-      <workItem from="1543452876260" duration="1007000" />
+      <workItem from="1543452876260" duration="1974000" />
     </task>
     <task id="LOCAL-00001" summary="更改七牛上传图片配置--目前只有最简单的上传，之后会重做图片上传">
       <created>1536284494110</created>
@@ -380,11 +380,18 @@
       <option name="project" value="LOCAL" />
       <updated>1543453781312</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="更新类库信息">
+      <created>1543454109682</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1543454109682</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25366000" />
+    <option name="totallyTimeSpent" value="26333000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -464,7 +471,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/FileFormModel.cs" />
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/UploadImgByBase64FormModel.cs" />
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/UploadImgByByteArrayFormModel.cs" />
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/UploadImgByOriginFormModel.cs" />
@@ -868,6 +874,20 @@
             <marker date="1543452810343" expanded="true" signature="2960:3042" ph="///是否加入消费者保障，true表示加入，空或false表示不限(可选) ... " />
             <marker date="1543452810343" expanded="true" signature="3106:3183" ph="///是否包邮，true表示包邮，空或false表示不限(可选) ... " />
             <marker date="1543452810343" expanded="true" signature="3253:3328" ph="/// 牛皮癣程度，取值：1:不限，2:无，3:轻微(可选) ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/Config/AliConfig.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+          <folding>
+            <marker date="1543454101816" expanded="true" signature="48:452" ph="{...}" />
+            <marker date="1543454101816" expanded="true" signature="77:450" ph="{...}" />
+            <marker date="1543454101816" expanded="true" signature="92:171" ph="/// 推广id ... " />
+            <marker date="1543454101816" expanded="true" signature="229:283" ph="/// 淘口令使用 ... " />
+            <marker date="1543454101816" expanded="true" signature="344:398" ph="/// 淘口令使用 ... " />
           </folding>
         </state>
       </provider>
