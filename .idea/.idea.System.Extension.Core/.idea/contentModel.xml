@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\zhenlei\.Rider2018.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\zhenlei\.Rider2018.2\system\resharper-host\local\Transient\ReSharperHost\v182\SolutionCaches\_System.Extension.Core.-289912442.00" t="ExcludeRecursive" />
-    <e p="F:\zhenlei\Owner\Framework\System.Extension.Core" t="IncludeFlat">
+    <e p="C:\Users\zhenlei\.Rider2018.2\system\resharper-host\local\Transient\ReSharperHost\v182\SolutionCaches\_System.Extension.Core.153698981.00" t="ExcludeRecursive" />
+    <e p="G:\zhenlei\Owner\Framework\System.Extension.Core" t="IncludeFlat">
       <e p="Cache" t="Include" />
       <e p="Database" t="Include" />
       <e p="Infrastructure\EInfrastructure.Core" t="IncludeRecursive">
@@ -180,10 +180,6 @@
         <e p="Config" t="Include">
           <e p="AliConfig.cs" t="Include" />
         </e>
-        <e p="Dto" t="Include">
-          <e p="MaterialDto.cs" t="Include" />
-          <e p="NaughtyPasswordQueryDto.cs" t="Include" />
-        </e>
         <e p="EInfrastructure.Core.AliYun.Tbk.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -202,6 +198,15 @@
           <e p="ShopGetParam.cs" t="Include" />
           <e p="ShopRelatedParam.cs" t="Include" />
           <e p="TqgGetParam.cs" t="Include" />
+        </e>
+        <e p="Respose" t="Include">
+          <e p="ErrDto.cs" t="Include" />
+          <e p="Success" t="Include">
+            <e p="MaterialDto.cs" t="Include" />
+            <e p="NaughtyPasswordQueryDto.cs" t="Include" />
+            <e p="TaobaoTbkTpwdCreateResponseDto.cs" t="Include" />
+            <e p="TaobaoTbkTpwdMixCreateResponseDto.cs" t="Include" />
+          </e>
         </e>
         <e p="TbkOpenApi.cs" t="Include" />
       </e>

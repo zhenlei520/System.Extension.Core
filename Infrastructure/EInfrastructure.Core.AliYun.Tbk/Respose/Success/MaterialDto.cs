@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.AliYun.Tbk.Dto
+namespace EInfrastructure.Core.AliYun.Tbk.Respose.Success
 {
     /// <summary>
     /// 通用物料搜索API（导购）

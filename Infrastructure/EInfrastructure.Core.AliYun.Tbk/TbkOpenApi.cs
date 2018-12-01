@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
-using EInfrastructure.Core.AliYun.Tbk.Dto;
 using EInfrastructure.Core.AliYun.Tbk.Param;
+using EInfrastructure.Core.AliYun.Tbk.Respose;
+using EInfrastructure.Core.AliYun.Tbk.Respose.Success;
+using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon.Serialization;
 using Newtonsoft.Json;
 using RestSharp;
@@ -16,12 +19,14 @@ namespace EInfrastructure.Core.AliYun.Tbk
 
         #region 根据淘口令获取响应信息
 
+        #region 根据淘口令获取响应信息
+
         /// <summary>
         /// 根据淘口令获取响应信息
         /// </summary>
         /// <param name="tbCode">淘口令</param>
         /// <returns></returns>
-        public string TpwdQuery(string tbCode)
+        private string TpwdQuery(string tbCode)
         {
             string response = base.GetResponse("taobao.wireless.share.tpwd.query", Method.POST,
                 (Dictionary<string, string> para) =>
@@ -32,6 +37,8 @@ namespace EInfrastructure.Core.AliYun.Tbk
             return response;
         }
 
+        #endregion
+
         /// <summary>
         /// 根据淘口令获取响应信息
         /// </summary>
@@ -40,59 +47,152 @@ namespace EInfrastructure.Core.AliYun.Tbk
         public NaughtyPasswordQueryDto TpwdQueryGet(string tbCode)
         {
             var response = TpwdQuery(tbCode);
-            if (!response.Contains("error_response"))
-            {
-                return new JsonCommon().Deserialize<NaughtyPasswordQueryDto>(response);
-            }
-            else
-            {
-                return new NaughtyPasswordQueryDto();
-            }
+            NaughtyPasswordQueryDto naughtyPasswordQuery = null;
+            GetResult(response, (NaughtyPasswordQueryDto passwordQuery) => { naughtyPasswordQuery = passwordQuery; },
+                (ErrDto err) => { throw new BusinessException(err.ErrorResponse.SubCode); });
+            return naughtyPasswordQuery;
         }
 
         #endregion
 
-        #region 根据链接生成淘口令
+        #region 根据优惠券链接生成淘口令
+
+        #region 根据优惠券链接生成淘口令
 
         /// <summary>
-        /// 根据链接生成淘口令
+        /// 根据优惠券链接生成淘口令
         /// </summary>
-        /// <param name="url">链接</param>
-        /// <param name="text"></param>
+        /// <param name="url">口令跳转目标页</param>
+        /// <param name="text">口令弹框内容</param>
+        /// <param name="logo">口令弹框logoURL</param>
+        /// <param name="userId">生成口令的淘宝用户ID</param>
+        /// <param name="ext">扩展字段JSON格式</param>
         /// <returns></returns>
-        public string TpwdCreate(string url, string text = "超值活动，惊喜活动多多")
+        private string TpwdCreate(string url, string text = "超值活动，惊喜活动多多", string logo = "", string userId = "",
+            string ext = "")
         {
-            string response = base.GetResponse("taobao.wireless.share.tpwd.create", Method.POST,
-                (Dictionary<string, string> para) =>
+            if (!url.Contains("https:"))
+            {
+                url = $"https:{url}";
+            }
+
+            string response = base.GetResponse("taobao.tbk.tpwd.create", Method.POST,
+                (para) =>
                 {
-                    para.Add("tpwd_param", JsonConvert.SerializeObject(new
+                    para.Add("url", url);
+                    para.Add("text", text);
+                    if (!string.IsNullOrEmpty(logo))
                     {
-                        url = url,
-                        text = text
-                    }));
+                        para.Add("logo", logo);
+                    }
+
+                    if (!string.IsNullOrEmpty(userId))
+                    {
+                        para.Add("user_id", userId);
+                    }
+
+                    if (!string.IsNullOrEmpty(ext))
+                    {
+                        para.Add("ext", ext);
+                    }
+
                     return para;
                 });
             return response;
         }
 
+        #endregion
+
         /// <summary>
         /// 根据链接生成淘口令
         /// </summary>
-        /// <param name="url">链接</param>
-        /// <param name="text"></param>
+        /// <param name="url">口令跳转目标页</param>
+        /// <param name="text">口令弹框内容</param>
+        /// <param name="logo">口令弹框logoURL</param>
+        /// <param name="userId">生成口令的淘宝用户ID</param>
+        /// <param name="ext">扩展字段JSON格式</param>
         /// <returns></returns>
-        public string TpwdCreateString(string url, string text = "超值活动，惊喜活动多多")
+        public string TpwdCreateString(string url, string text = "超值活动，惊喜活动多多", string logo = "", string userId = "",
+            string ext = "")
         {
-            var response = TpwdCreate(url, text);
-            if (!string.IsNullOrEmpty(response))
+            var response = TpwdCreate(url, text, logo);
+
+            TaobaoTbkTpwdCreateResponseDto tpwdCreateResponse = null;
+            GetResult(response, (TaobaoTbkTpwdCreateResponseDto result) => { tpwdCreateResponse = result; },
+                (ErrDto err) => { throw new BusinessException(err.ErrorResponse.SubCode); });
+
+            return tpwdCreateResponse.Data.Model;
+        }
+
+        #endregion
+
+        #region 淘宝客文本淘口令
+
+        /// <summary>
+        /// 淘宝客文本淘口令
+        /// </summary>
+        /// <param name="url">口令跳转目标页</param>
+        /// <param name="text">口令弹框内容</param>
+        /// <param name="password">口令文本</param>
+        /// <param name="logo">口令弹框logoURL</param>
+        /// <param name="userId">生成口令的淘宝用户ID</param>
+        /// <param name="ext">扩展字段JSON格式</param>
+        /// <returns></returns>
+        public string TpwdMixCreate(string url, string text, string password, string logo = "", string userId = "",
+            string ext = "")
+        {
+            if (!url.Contains("https:"))
             {
-                if (response.Contains("model"))
-                {
-                    return new JsonCommon().Deserialize<dynamic>(response).model;
-                }
+                url = $"https:{url}";
             }
 
-            return "";
+
+            string response = base.GetResponse("taobao.tbk.tpwd.mix.create", Method.POST,
+                (Dictionary<string, string> para) =>
+                {
+                    para.Add("url", url);
+                    para.Add("text", text);
+                    para.Add("password", password);
+                    if (!string.IsNullOrEmpty(logo))
+                    {
+                        para.Add("logo", logo);
+                    }
+
+                    if (!string.IsNullOrEmpty(userId))
+                    {
+                        para.Add("user_id", userId);
+                    }
+
+                    if (!string.IsNullOrEmpty(ext))
+                    {
+                        para.Add("ext", ext);
+                    }
+
+                    return para;
+                });
+            TaobaoTbkTpwdMixCreateResponseDto tpwdMixCreateResponse = null;
+            GetResult(response,
+                (TaobaoTbkTpwdMixCreateResponseDto result) => { tpwdMixCreateResponse = result; },
+                (ErrDto err) =>
+                {
+                    if (err != null)
+                    {
+                        throw new BusinessException(err.ErrorResponse.SubCode);
+                    }
+
+                    throw new BusinessException("生成淘口令失败");
+                });
+
+            switch (tpwdMixCreateResponse.TaobaoTbkTpwdMixCreate.Data.Status)
+            {
+                case "1":
+                    return tpwdMixCreateResponse.TaobaoTbkTpwdMixCreate.Data.Password;
+                case "2":
+                default:
+                    throw new BusinessException("生成淘口令失败");
+                case "3":
+                    throw new BusinessException("生成淘口令失败，文本不符合规范");
+            }
         }
 
         #endregion
@@ -314,35 +414,18 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// 超级搜索
         /// </summary>
         /// <param name="param"></param>
+        /// <param name="action"></param>
         /// <returns></returns>
-        public MaterialDto MaterialGet(MaterialGetParam param)
+        public MaterialDto MaterialGet(MaterialGetParam param, Action<Dictionary<string, string>> action = null)
         {
             string response = base.GetResponse("taobao.tbk.dg.material.optional", Method.POST,
                 (Dictionary<string, string> para) =>
                 {
-//                    para.Add("start_dsr", param.StartDsr.ToString());
                     para.Add("page_size", param.PageSize.ToString());
                     para.Add("page_no", param.PageNo.ToString());
-//                    para.Add("platform", param.PlatForm.ToString());
-//                    para.Add("end_tk_rate", param.EndTkRate.ToString());
-//                    para.Add("start_tk_rate", param.StartTkRate.ToString());
-//                    para.Add("end_price", param.EndPrice.ToString());
-//                    para.Add("start_price", param.StartPrice.ToString());
-//                    para.Add("is_overseas", param.IsOverSeas.ToString().ToLower());
-//                    para.Add("is_tmall", param.IsTmal.ToString().ToLower());
-//                    para.Add("sort", param.Sort.ToString());
-//                    para.Add("itemloc", param.ItemLoc.ToString());
-//                    para.Add("cat", param.Cat.ToString());
                     para.Add("q", param.Q.ToString());
-//                    para.Add("has_coupon", param.HasCoupon.ToString().ToLower());
-//                    para.Add("ip", param.Ip.ToString());
-                    para.Add("adzone_id", param.AdzoneId.ToString());
-//                    para.Add("need_free_shipment", param.NeedFreeShipment.ToString().ToLower());
-//                    para.Add("need_prepay", param.NeedPrepay.ToString().ToLower());
-//                    para.Add("include_pay_rate_30", param.IncludePayRate30.ToString().ToLower());
-//                    para.Add("include_good_rate", param.IncludeGoodRate.ToString().ToLower());
-//                    para.Add("include_rfd_rate", param.IncludeRfdRate.ToString().ToLower());
-//                    para.Add("npx_level", param.NpxLevel.ToString());
+                    para.Add("adzone_id", param.AdzoneId);
+                    action?.Invoke(para);
                     return para;
                 });
             if (!response.Contains("error_response"))

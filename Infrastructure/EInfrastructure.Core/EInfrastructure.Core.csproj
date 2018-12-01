@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.1.5</Version>
+    <Version>1.1.6</Version>
     <Authors>zhenlei520</Authors>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Company>zhenlei520</Company>
@@ -17,5 +17,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

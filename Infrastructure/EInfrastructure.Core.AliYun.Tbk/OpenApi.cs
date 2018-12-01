@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.Tbk.Config;
+using EInfrastructure.Core.AliYun.Tbk.Respose;
+using EInfrastructure.Core.AliYun.Tbk.Respose.Success;
+using EInfrastructure.Core.HelpCommon.Serialization;
 using RestSharp;
 
 namespace EInfrastructure.Core.AliYun.Tbk
@@ -21,7 +24,8 @@ namespace EInfrastructure.Core.AliYun.Tbk
 
         protected readonly AliConfig AliConfig;
 
-        static readonly RestClient RestClient = new RestClient("http://gw.api.taobao.com/router/rest");
+        static readonly RestClient RestClient = new RestClient("https://eco.taobao.com/router/rest");
+//        static readonly RestClient RestClient = new RestClient("http://gw.api.taobao.com/router/rest");
 
         /// <summary>
         /// 
@@ -45,10 +49,33 @@ namespace EInfrastructure.Core.AliYun.Tbk
                 {
                     request.AddParameter(key, param[key]);
                 }
+
                 var resultContent = RestClient.Execute(request).Content;
                 return resultContent;
             }
+
             return "";
         }
+
+        #region 得到结果
+
+        /// <summary>
+        /// 得到结果
+        /// </summary>
+        /// <param name="response">响应信息</param>
+        /// <param name="successAction">成功响应</param>
+        /// <param name="errAction">失败响应</param>
+        /// <typeparam name="T"></typeparam>
+        protected void GetResult<T>(string response, Action<T> successAction, Action<ErrDto> errAction)
+        {
+            if (response.Contains("error_response"))
+            {
+                errAction(new JsonCommon().Deserialize<ErrDto>(response));
+            }
+
+            successAction(new JsonCommon().Deserialize<T>(response));
+        }
+
+        #endregion
     }
 }

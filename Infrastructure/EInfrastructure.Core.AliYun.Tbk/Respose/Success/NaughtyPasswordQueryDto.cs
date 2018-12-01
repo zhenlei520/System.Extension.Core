@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.AliYun.Tbk.Dto
+namespace EInfrastructure.Core.AliYun.Tbk.Respose.Success
 {
     /// <summary>
     /// 淘口令解析
