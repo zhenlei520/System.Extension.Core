@@ -39,11 +39,17 @@ namespace EInfrastructure.Core.Interface.Storage.Config
 
         /// <summary>
         /// [可选]文件的存储类型，默认为普通存储，设置为1为低频存储
+        /// 1、低频存储，
         /// </summary>
         public int? FileType { get; set; } = null;
 
         /// <summary>
         /// [可选]上传时是否自动检测MIME
+        /// 开启 MimeType 侦测功能。设为非 0 值，则忽略上传端传递的文件 MimeType 信息，使用七牛服务器侦测内容后的判断结果。默认设为 0 值，如上传端指定了 MimeType 则直接使用该值，否则按如下顺序侦测 MimeType 值：
+        /// 1. 检查文件扩展名
+        /// 2. 检查 Key 扩展名；
+        /// 3. 侦测内容。
+        /// 如不能侦测出正确的值，会默认使用 application/octet-stream。
         /// </summary>
         public int? DetectMime { get; set; } = null;
 
