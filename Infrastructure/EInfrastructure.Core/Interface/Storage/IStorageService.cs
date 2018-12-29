@@ -21,5 +21,10 @@ namespace EInfrastructure.Core.Interface.Storage
         /// <returns></returns>
         bool UploadFile(UploadByFormFileParam param);
 
+        /// <summary>
+        /// 得到上传文件策略信息
+        /// </summary>
+        /// <param name="opsParam">上传信息</param>
+        string GetUploadCredentials(UploadPersistentOpsParam opsParam);
     }
 }
