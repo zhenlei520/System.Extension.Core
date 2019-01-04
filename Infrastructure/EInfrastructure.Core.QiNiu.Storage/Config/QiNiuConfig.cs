@@ -92,14 +92,20 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         public string PersistentNotifyUrl { get; set; }
 
         /// <summary>
+        /// 上传成功后，七牛云向业务服务器发送 POST 请求的 URL
+        /// 可以使用ip，减少对dns的依赖
+        /// </summary>
+        public string CallbackUrl { get; set; }
+        
+        /// <summary>
         /// 回调内容
         /// </summary>
-        public string CallbackBody { get; set; } = "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsiz\":$(fsize),\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\"}";
+        public string CallbackBody { get; set; } = "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsiz\":$(fsize),\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\",\"mimeType\":\"$(mimeType)\"}";
 
         /// <summary>
         /// 回调内容类型
         /// </summary>
-        public CallbackBodyTypeEnum CallbackBodyType { get; set; }
+        public CallbackBodyTypeEnum CallbackBodyType { get; set; } = CallbackBodyTypeEnum.Json;
         
         /// <summary>
         /// 得到空间

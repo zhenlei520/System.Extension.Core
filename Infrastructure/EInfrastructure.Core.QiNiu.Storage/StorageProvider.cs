@@ -1,7 +1,5 @@
-﻿using System;
-using EInfrastructure.Core.Interface.IOC;
+﻿using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Storage;
-using EInfrastructure.Core.Interface.Storage.Config;
 using EInfrastructure.Core.Interface.Storage.Param;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Microsoft.Extensions.Options;

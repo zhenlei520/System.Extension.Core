@@ -10,7 +10,7 @@ namespace EInfrastructure.Core.Interface.Storage.Enum
         /// <summary>
         /// application/json
         /// </summary>
-        [Description("Json")] Json = 1,
+        [Description("application/json")] Json = 1,
 
         /// <summary>
         /// application/x-www-form-urlencoded
