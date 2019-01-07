@@ -108,6 +108,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         public CallbackBodyTypeEnum CallbackBodyType { get; set; } = CallbackBodyTypeEnum.Json;
         
         /// <summary>
+        /// 鉴权回调
+        /// </summary>
+        public string CallbackAuthHost { get; set; }
+
+        /// <summary>
         /// 得到空间
         /// </summary>
         /// <returns></returns>
