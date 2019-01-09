@@ -14,7 +14,6 @@ namespace EInfrastructure.Core.HelpCommon.Attributes
 
         public ENameAttribute(string name)
         {
-            
         }
     }
 }

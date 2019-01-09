@@ -6,7 +6,7 @@ namespace EInfrastructure.Core.HelpCommon.Attributes
     /// 描述信息
     /// </summary>
     [AttributeUsage(AttributeTargets.All)]
-    public class EDescribeAttribute
+    public class EDescribeAttribute : Attribute
     {
         private readonly string _describe;
 

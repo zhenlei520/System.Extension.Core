@@ -6,13 +6,13 @@ namespace EInfrastructure.Core.HelpCommon.Attributes
     /// 版本信息
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class EVersionAttribute<T>
+    public class EVersionAttribute : Attribute
     {
-        private readonly T _version;
+        private readonly string _version;
 
-        public virtual T Version => _version;
+        public virtual string Version => _version;
 
-        public EVersionAttribute(T version)
+        public EVersionAttribute(string version)
         {
             _version = version;
         }
