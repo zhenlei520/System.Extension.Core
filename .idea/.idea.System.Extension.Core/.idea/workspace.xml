@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="99a4e9c0-8115-428c-83db-090f2e504254" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PinYinCommon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PinYinCommon.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,7 +14,75 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/UniqueCommon.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+              <folding>
+                <marker date="1547351417149" expanded="true" signature="56:386" ph="{...}" />
+                <marker date="1547351417149" expanded="true" signature="63:110" ph="/// 唯一方法实现 ... " />
+                <marker date="1547351417149" expanded="true" signature="140:384" ph="{...}" />
+                <marker date="1547351417149" expanded="true" signature="155:378" ph="全局唯一Guid" />
+                <marker date="1547351417149" expanded="true" signature="181:238" ph="/// 全局唯一Guid ... " />
+                <marker date="1547351417149" expanded="true" signature="275:358" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PinYinCommon.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="417">
+              <caret line="613" lean-forward="true" selection-start-line="613" selection-end-line="613" />
+              <folding>
+                <marker date="1547392270420" expanded="true" signature="6:32" ph="..." />
+                <marker date="1547392270420" expanded="true" signature="75:48397" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="82:128" ph="/// 拼音帮助类 ... " />
+                <marker date="1547392270420" expanded="true" signature="165:48395" ph="{...}" />
+                <marker date="1547392270420" expanded="false" signature="180:44255" ph="数组信息" />
+                <marker date="1547392270420" expanded="false" signature="262:4039" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="4115:7575" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="7586:43825" ph="二级汉字" />
+                <marker date="1547392270420" expanded="true" signature="7607:7662" ph="/// 二级汉字数组 ... " />
+                <marker date="1547392270420" expanded="true" signature="7740:22278" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="22289:22348" ph="/// 二级汉字对应拼音数组 ... " />
+                <marker date="1547392270420" expanded="true" signature="22428:43800" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="43834:44236" ph="变量定义" />
+                <marker date="1547392270420" expanded="true" signature="44145:44216" ph="/* 配置中文字符 ... */" />
+                <marker date="1547392270420" expanded="true" signature="44265:44674" ph="得到输入文字的第一个拼音" />
+                <marker date="1547392270420" expanded="true" signature="44294:44441" ph="/// 得到输入文字的第一个拼音 ... " />
+                <marker date="1547392270420" expanded="true" signature="44503:44655" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="44684:45270" ph="取拼音第一个字段----字符串" />
+                <marker date="1547392270420" expanded="true" signature="44717:44858" ph="/// 取拼音第一个字段 ... " />
+                <marker date="1547392270420" expanded="true" signature="44919:45251" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="45127:45206" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="45280:47794" ph="获取单字拼音" />
+                <marker date="1547392270420" expanded="true" signature="45304:45442" ph="/// 获取单字拼音 ... " />
+                <marker date="1547392270420" expanded="true" signature="45498:47775" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="45913:46027" ph="/* Encoding.Default默认在中文环境里虽是GB2312，但在多变的环境可能是其它 ... */" />
+                <marker date="1547392270420" expanded="true" signature="46189:47731" ph="中文字符处理" />
+                <marker date="1547392270420" expanded="true" signature="46298:46364" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="46439:47435" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="46547:47421" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="46717:47403" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="46764:46964" ph="/* Console.WriteLine(&quot;存在于第 &quot; + aPos.ToString() + &quot; 块,此块的第一个机内码是: &quot; + PyValue[aPos * 33].ToString()); ... */" />
+                <marker date="1547392270420" expanded="true" signature="47036:47350" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="47113:47324" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="47477:47701" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="47606:47687" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="47804:48388" ph="把汉字转换成拼音(全拼)" />
+                <marker date="1547392270420" expanded="true" signature="47833:47983" ph="/// 把汉字转换成拼音(全拼) ... " />
+                <marker date="1547392270420" expanded="true" signature="48041:48369" ph="{...}" />
+                <marker date="1547392270420" expanded="true" signature="48251:48324" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -30,46 +100,46 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByFormFileParam.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/StorageProvider.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/20/254e1584/PutPolicy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/StringCommon.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/UniqueCommon.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/QueryExtension.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/Pictures/UploadByBase64Param.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/ImgPersistentOps.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IPictureService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/TypeConversionCommon.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/QueryBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/PictureService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/ChunkUnitEnum.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/OpenApi.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/QueryExtension.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/UploadStateEnum.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/TbkOpenApi.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/OpenApiUtil.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/Param/MaterialGetParam.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByStreamParam.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Config/QiNiuConfig.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/Pictures/UploadByBase64Param.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/UploadPersistentOps.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/QueryExtension.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/StorageWaterMark.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/ImgPersistentOps.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IStorageService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/QueryBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/Config/AliConfig.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Ddd/IEntity.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/OpenApiUtil.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/BaseStorageProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Handler/UploadControllerAction.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/UniqueCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/TypeConversionCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/MathCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Ddd/IEntity.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Ddd/IQuery.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Ddd/IRepository.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/RepositoryBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/CallbackBodyTypeEnum.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/ChunkUnitEnum.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/UploadStateEnum.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByStreamParam.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/Param/MaterialGetParam.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadPersistentOpsParam.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/UploadPersistentOps.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Handler/UploadControllerAction.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/RepositoryBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/MathCommon.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Config/QiNiuConfig.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/StorageWaterMark.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.Redis/Common/QuickHelperBase.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/ValidateCommon.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PasswordCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/StringCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.Redis/Common/QuickHelperBase.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Enum/ZoneEnum.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/QueryBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PasswordCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByFormFileParam.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/QueryBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PinYinCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/StorageProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/PictureService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/QueryExtension.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/RepositoryBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/RepositoryBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/Config/AliConfig.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IPictureService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/CallbackBodyTypeEnum.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -98,7 +168,6 @@
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Ddd/IQuery.cs" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/EInfrastructure.Core.MySql.csproj" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/EInfrastructure.Core.SqlServer.csproj" />
-        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/EInfrastructure.Core.csproj" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoFac.MySql/EInfrastructure.Core.AutoFac.MySql.csproj" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoFac.SqlServer/EInfrastructure.Core.AutoFac.SqlServer.csproj" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/EInfrastructure.Core.QiNiu.Storage.csproj" />
@@ -116,14 +185,17 @@
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Config/QiNiuConfig.cs" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/CallbackBodyTypeEnum.cs" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/StorageProvider.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/UniqueCommon.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/EInfrastructure.Core.csproj" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PinYinCommon.cs" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="355" />
-    <option name="y" value="393" />
-    <option name="width" value="1427" />
-    <option name="height" value="599" />
+    <option name="y" value="391" />
+    <option name="width" value="1429" />
+    <option name="height" value="600" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -133,7 +205,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AssemblyExplorer" />
+      <pane id="FileSystemExplorer" />
       <pane id="SolutionExplorer">
         <subPane>
           <expand>
@@ -144,19 +216,20 @@
             <path>
               <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
               <item name="System.Extension.Core" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="Storage" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="EInfrastructure.Core" type="24d0babc:SolutionExplorerModelNode" />
             </path>
             <path>
               <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
               <item name="System.Extension.Core" type="24d0babc:SolutionExplorerModelNode" />
               <item name="EInfrastructure.Core" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="HelpCommon" type="24d0babc:SolutionExplorerModelNode" />
             </path>
           </expand>
           <select />
         </subPane>
         <option name="show-all-files" value="false" />
       </pane>
-      <pane id="FileSystemExplorer" />
+      <pane id="AssemblyExplorer" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -194,6 +267,8 @@
       <workItem from="1540535335692" duration="1116000" />
       <workItem from="1543452876260" duration="1974000" />
       <workItem from="1546579762406" duration="1126000" />
+      <workItem from="1547351342250" duration="453000" />
+      <workItem from="1547392057042" duration="244000" />
     </task>
     <task id="LOCAL-00001" summary="更改七牛上传图片配置--目前只有最简单的上传，之后会重做图片上传">
       <created>1536284494110</created>
@@ -258,11 +333,18 @@
       <option name="project" value="LOCAL" />
       <updated>1546580873464</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="更新唯一标识方法">
+      <created>1547351543364</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1547351543364</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32635000" />
+    <option name="totallyTimeSpent" value="33332000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -274,14 +356,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-62" y="275" width="1427" height="932" extended-state="0" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Image Layers" />
-      <window_info id="Capture Tool" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24652524" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2533512" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Performance Profiler" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.21800433" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -296,15 +378,16 @@
       <window_info anchor="bottom" id="Unit Tests" order="11" />
       <window_info anchor="bottom" id="Terminal" order="12" />
       <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
-      <window_info anchor="bottom" id="Build" order="14" visible="true" weight="0.3784461" />
+      <window_info anchor="bottom" id="Build" order="14" visible="true" weight="0.37818697" />
       <window_info anchor="bottom" id="Messages" order="15" />
-      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="bottom" id="Performance Profiler" order="16" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Errors In Solution" order="3" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="Unit Tests Coverage" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
     </layout>
     <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17803837" />
@@ -347,7 +430,8 @@
     <MESSAGE value="更新类库信息" />
     <MESSAGE value="更新文件上传，获取上传凭证" />
     <MESSAGE value="图片上传" />
-    <option name="LAST_COMMIT_MESSAGE" value="图片上传" />
+    <MESSAGE value="更新唯一标识方法" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新唯一标识方法" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -360,13 +444,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/StorageWaterMark.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="57" selection-start-line="57" selection-end-line="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/6c/824c88f2/FormUploader.cs" />
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PasswordCommon.cs">
       <provider selected="true" editor-type-id="text-editor">
@@ -421,9 +498,6 @@
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/UniqueCommon.cs">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/Pictures/UploadByBase64Param.cs">
       <provider selected="true" editor-type-id="text-editor">
@@ -521,13 +595,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
           <caret line="10" column="29" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/EInfrastructure.Core.csproj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -838,13 +905,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/20/254e1584/PutPolicy.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="17" column="31" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/20/254e1584/PutPolicy.cs" />
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByStreamParam.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -990,25 +1051,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/StorageProvider.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-418">
-          <folding>
-            <marker date="1546580846351" expanded="true" signature="6:281" ph="..." />
-            <marker date="1546580846351" expanded="true" signature="327:2732" ph="{...}" />
-            <marker date="1546580846351" expanded="true" signature="334:377" ph="/// 存储 ... " />
-            <marker date="1546580846351" expanded="true" signature="466:2730" ph="{...}" />
-            <marker date="1546580846351" expanded="true" signature="582:602" ph="{...}" />
-            <marker date="1546580846351" expanded="false" signature="612:1352" ph="根据文件流上传" />
-            <marker date="1546580846351" expanded="true" signature="637:766" ph="/// 根据文件流上传 ... " />
-            <marker date="1546580846351" expanded="true" signature="826:1332" ph="{...}" />
-            <marker date="1546580846351" expanded="true" signature="1362:2242" ph="根据文件上传" />
-            <marker date="1546580846351" expanded="true" signature="1386:1514" ph="/// 根据文件上传 ... " />
-            <marker date="1546580846351" expanded="true" signature="1574:2222" ph="{...}" />
-            <marker date="1546580846351" expanded="true" signature="1912:2185" ph="{...}" />
-            <marker date="1546580846351" expanded="false" signature="2252:2724" ph="得到上传文件策略信息" />
-            <marker date="1546580846351" expanded="true" signature="2280:2387" ph="/// 得到上传文件策略信息 ... " />
-            <marker date="1546580846351" expanded="true" signature="2465:2704" ph="{...}" />
-          </folding>
-        </state>
+        <state relative-caret-position="-418" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/BaseStorageProvider.cs">
@@ -1077,6 +1120,76 @@
             <marker date="1543452810355" expanded="true" signature="660:1402" ph="根据图片base64上传" />
             <marker date="1543452810355" expanded="true" signature="690:824" ph="/// 根据图片base64上传 ... " />
             <marker date="1543452810355" expanded="true" signature="878:1382" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/EInfrastructure.Core.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="35" lean-forward="true" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/UniqueCommon.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <marker date="1547351417149" expanded="true" signature="56:386" ph="{...}" />
+            <marker date="1547351417149" expanded="true" signature="63:110" ph="/// 唯一方法实现 ... " />
+            <marker date="1547351417149" expanded="true" signature="140:384" ph="{...}" />
+            <marker date="1547351417149" expanded="true" signature="155:378" ph="全局唯一Guid" />
+            <marker date="1547351417149" expanded="true" signature="181:238" ph="/// 全局唯一Guid ... " />
+            <marker date="1547351417149" expanded="true" signature="275:358" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PinYinCommon.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="613" lean-forward="true" selection-start-line="613" selection-end-line="613" />
+          <folding>
+            <marker date="1547392270420" expanded="true" signature="6:32" ph="..." />
+            <marker date="1547392270420" expanded="true" signature="75:48397" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="82:128" ph="/// 拼音帮助类 ... " />
+            <marker date="1547392270420" expanded="true" signature="165:48395" ph="{...}" />
+            <marker date="1547392270420" expanded="false" signature="180:44255" ph="数组信息" />
+            <marker date="1547392270420" expanded="false" signature="262:4039" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="4115:7575" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="7586:43825" ph="二级汉字" />
+            <marker date="1547392270420" expanded="true" signature="7607:7662" ph="/// 二级汉字数组 ... " />
+            <marker date="1547392270420" expanded="true" signature="7740:22278" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="22289:22348" ph="/// 二级汉字对应拼音数组 ... " />
+            <marker date="1547392270420" expanded="true" signature="22428:43800" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="43834:44236" ph="变量定义" />
+            <marker date="1547392270420" expanded="true" signature="44145:44216" ph="/* 配置中文字符 ... */" />
+            <marker date="1547392270420" expanded="true" signature="44265:44674" ph="得到输入文字的第一个拼音" />
+            <marker date="1547392270420" expanded="true" signature="44294:44441" ph="/// 得到输入文字的第一个拼音 ... " />
+            <marker date="1547392270420" expanded="true" signature="44503:44655" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="44684:45270" ph="取拼音第一个字段----字符串" />
+            <marker date="1547392270420" expanded="true" signature="44717:44858" ph="/// 取拼音第一个字段 ... " />
+            <marker date="1547392270420" expanded="true" signature="44919:45251" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="45127:45206" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="45280:47794" ph="获取单字拼音" />
+            <marker date="1547392270420" expanded="true" signature="45304:45442" ph="/// 获取单字拼音 ... " />
+            <marker date="1547392270420" expanded="true" signature="45498:47775" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="45913:46027" ph="/* Encoding.Default默认在中文环境里虽是GB2312，但在多变的环境可能是其它 ... */" />
+            <marker date="1547392270420" expanded="true" signature="46189:47731" ph="中文字符处理" />
+            <marker date="1547392270420" expanded="true" signature="46298:46364" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="46439:47435" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="46547:47421" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="46717:47403" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="46764:46964" ph="/* Console.WriteLine(&quot;存在于第 &quot; + aPos.ToString() + &quot; 块,此块的第一个机内码是: &quot; + PyValue[aPos * 33].ToString()); ... */" />
+            <marker date="1547392270420" expanded="true" signature="47036:47350" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="47113:47324" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="47477:47701" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="47606:47687" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="47804:48388" ph="把汉字转换成拼音(全拼)" />
+            <marker date="1547392270420" expanded="true" signature="47833:47983" ph="/// 把汉字转换成拼音(全拼) ... " />
+            <marker date="1547392270420" expanded="true" signature="48041:48369" ph="{...}" />
+            <marker date="1547392270420" expanded="true" signature="48251:48324" ph="{...}" />
           </folding>
         </state>
       </provider>
