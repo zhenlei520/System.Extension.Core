@@ -33,7 +33,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             FormUploader target = new FormUploader(GetConfig(param.UploadPersistentOps));
             HttpResult result =
                 target.UploadStream(param.Stream, param.Key, token, GetPutExtra(param.UploadPersistentOps));
-            return result.Code == (int)HttpCode.OK;
+            return result.Code == (int) HttpCode.OK;
         }
 
         #endregion
@@ -53,10 +53,27 @@ namespace EInfrastructure.Core.QiNiu.Storage
             if (param.File != null)
             {
                 HttpResult result =
-                    target.UploadStream(param.File.OpenReadStream(), param.Key, token, GetPutExtra(param.UploadPersistentOps));
-                return result.Code == (int)HttpCode.OK;
+                    target.UploadStream(param.File.OpenReadStream(), param.Key, token,
+                        GetPutExtra(param.UploadPersistentOps));
+                return result.Code == (int) HttpCode.OK;
             }
+
             return false;
+        }
+
+        #endregion
+
+        #region 得到上传文件策略信息
+
+        /// <summary>
+        /// 得到上传文件策略信息
+        /// </summary>
+        /// <param name="opsParam">上传信息</param>
+        public string GetUploadCredentials(UploadPersistentOpsParam opsParam)
+        {
+            SetPutPolicy(opsParam.Key, opsParam.UploadPersistentOps.IsAllowOverlap,
+                opsParam.UploadPersistentOps.PersistentOps);
+            return Auth.CreateUploadToken(Mac, PutPolicy.ToJsonString());
         }
 
         #endregion

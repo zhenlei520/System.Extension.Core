@@ -1,4 +1,5 @@
-﻿using EInfrastructure.Core.HelpCommon;
+﻿using System;
+using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Interface.Storage.Config;
 using EInfrastructure.Core.Interface.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Config;
@@ -28,6 +29,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 PutPolicy.PersistentNotifyUrl = QiNiuConfig.PersistentNotifyUrl;
                 PutPolicy.CallbackBody = QiNiuConfig.CallbackBody;
                 PutPolicy.CallbackBodyType = QiNiuConfig.CallbackBodyType.GetDescription();
+                PutPolicy.CallbackUrl = QiNiuConfig.CallbackUrl;
+                PutPolicy.CallbackHost = new Uri(QiNiuConfig.CallbackUrl).Host;
             }
 
             if (!string.IsNullOrEmpty(QiNiuConfig.PersistentPipeline))
@@ -189,12 +192,13 @@ namespace EInfrastructure.Core.QiNiu.Storage
             if (uploadPersistentOps != null)
             {
                 config.UseHttps = uploadPersistentOps.IsUseHttps;
-                
+
                 config.ChunkSize = Get(uploadPersistentOps.ChunkUnit);
                 if (uploadPersistentOps.MaxRetryTimes != -1)
                 {
                     config.MaxRetryTimes = uploadPersistentOps.MaxRetryTimes;
                 }
+
                 if (uploadPersistentOps.MaxRetryTimes != -1)
                 {
                     config.MaxRetryTimes = uploadPersistentOps.MaxRetryTimes;

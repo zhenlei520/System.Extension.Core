@@ -5,3 +5,6 @@ Infrastructure/*/obj/
 *.dll
 *.pdb
 Infrastructure/*/obj/*
+.idea/*
+.idea/*
+.idea/*
