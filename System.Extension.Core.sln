@@ -43,6 +43,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AutoFa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AutoFac.SqlServer", "Infrastructure\EInfrastructure.Core.AutoFac.SqlServer\EInfrastructure.Core.AutoFac.SqlServer.csproj", "{00BB73B8-755E-4CF2-97E1-5336B501693A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AutoConfig", "Infrastructure\EInfrastructure.Core.AutoConfig\EInfrastructure.Core.AutoConfig.csproj", "{00D60196-2D7D-439A-BE6A-D99FE893526F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Automation", "Automation", "{98E16CCC-77CD-4705-8FC1-0F182515EEB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +105,10 @@ Global
 		{00BB73B8-755E-4CF2-97E1-5336B501693A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00BB73B8-755E-4CF2-97E1-5336B501693A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00BB73B8-755E-4CF2-97E1-5336B501693A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00D60196-2D7D-439A-BE6A-D99FE893526F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00D60196-2D7D-439A-BE6A-D99FE893526F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00D60196-2D7D-439A-BE6A-D99FE893526F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00D60196-2D7D-439A-BE6A-D99FE893526F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,6 +126,7 @@ Global
 		{B2DEF448-095E-4A60-89A3-667E5FD2EBA0} = {A0DA4A28-DE2A-4F1C-9F8F-C0336E2EE70D}
 		{3F0348A6-1F0D-4C37-9DCA-1ADFEE00D7F9} = {DE824100-DC36-4F2B-8092-317C669C260C}
 		{00BB73B8-755E-4CF2-97E1-5336B501693A} = {DE824100-DC36-4F2B-8092-317C669C260C}
+		{00D60196-2D7D-439A-BE6A-D99FE893526F} = {98E16CCC-77CD-4705-8FC1-0F182515EEB0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41FDCFC5-66DA-415D-AA6C-38806CB952CD}
