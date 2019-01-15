@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.Web.Exception
+namespace EInfrastructure.Core.AspNetCore.Exception
 {
     public static class Ext
     {

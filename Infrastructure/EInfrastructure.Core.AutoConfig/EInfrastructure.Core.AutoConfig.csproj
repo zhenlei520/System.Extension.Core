@@ -1,21 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <Version>1.1.9.2</Version>
-        <Authors>zhenlei520</Authors>
-        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-        <Company>zhenlei520</Company>
-        <Description>dotnet core自动注入配置文件</Description>
-        <RepositoryUrl></RepositoryUrl>
-        <PackageProjectUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/Infrastructure/EInfrastructure.Core.AutoConfig</PackageProjectUrl>
-        <Copyright>Copyright ©zhenlei520 2018</Copyright>
-    </PropertyGroup>
+
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.0"/>
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.0" />
     </ItemGroup>
 
 </Project>

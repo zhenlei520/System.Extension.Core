@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.Web.Api
+namespace EInfrastructure.Core.AspNetCore.Api
 {
     /// <summary>
     /// 异常响应信息

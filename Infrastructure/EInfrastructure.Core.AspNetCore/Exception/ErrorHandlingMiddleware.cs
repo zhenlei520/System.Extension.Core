@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using EInfrastructure.Core.AspNetCore.Api;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon.Serialization;
-using EInfrastructure.Core.Web.Api;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
-namespace EInfrastructure.Core.Web.Exception
+namespace EInfrastructure.Core.AspNetCore.Exception
 {
     public class ErrorHandlingMiddleware
     {

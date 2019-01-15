@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Http;
 
-namespace EInfrastructure.Core.Web.Exception
+namespace EInfrastructure.Core.AspNetCore.Exception
 {
     public static class HttpContextExtension
     {
