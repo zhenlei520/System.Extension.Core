@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\zhenlei\.Rider2018.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\zhenlei\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_System.Extension.Core.153698981.00" t="ExcludeRecursive" />
-    <e p="G:\zhenlei\Owner\Framework\System.Extension.Core" t="IncludeFlat">
+    <e p="C:\Users\wangz\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\wangz\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_System.Extension.Core.-1542861991.00" t="ExcludeRecursive" />
+    <e p="D:\Important\Study\Owner\GitHub\System.Extension\System.Extension.Core" t="IncludeFlat">
       <e p="Cache" t="Include" />
       <e p="Database" t="Include" />
       <e p="Infrastructure\EInfrastructure.Core" t="IncludeRecursive">
@@ -45,9 +45,15 @@
         <e p="HelpCommon" t="Include">
           <e p="AnimalCommon.cs" t="Include" />
           <e p="Assert.cs" t="Include" />
+          <e p="Attributes" t="Include">
+            <e p="EDescribeAttribute.cs" t="Include" />
+            <e p="ENameAttribute.cs" t="Include" />
+            <e p="EVersionAttribute.cs" t="Include" />
+          </e>
           <e p="Check.cs" t="Include" />
           <e p="CloneableClass.cs" t="Include" />
           <e p="ConstellationCommon.cs" t="Include" />
+          <e p="CustomAttributeCommon.cs" t="Include" />
           <e p="EMailCommon.cs" t="Include" />
           <e p="EnumCommon.cs" t="Include" />
           <e p="Enumerable" t="Include">
@@ -277,6 +283,9 @@
         <e p="迁移命令.txt" t="Include" />
       </e>
       <e p="Infrastructure\EInfrastructure.Core.QiNiu.Storage" t="IncludeRecursive">
+        <e p="Auths" t="Include">
+          <e p="QiNiuAuthAttribute.cs" t="Include" />
+        </e>
         <e p="BaseStorageProvider.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Config" t="Include">
@@ -285,6 +294,9 @@
         <e p="EInfrastructure.Core.QiNiu.Storage.csproj" t="IncludeRecursive" />
         <e p="Enum" t="Include">
           <e p="ZoneEnum.cs" t="Include" />
+        </e>
+        <e p="Keys" t="Include">
+          <e p="QiniuKey.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
