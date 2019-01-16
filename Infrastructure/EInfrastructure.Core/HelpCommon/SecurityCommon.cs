@@ -9,13 +9,13 @@ namespace EInfrastructure.Core.HelpCommon
     {
         #region AES加密
 
-      /// <summary>
-      /// AES加密
-      /// </summary>
-      /// <param name="toEncrypt"></param>
-      /// <param name="key"></param>
-      /// <returns></returns>
-      public static string AesEncrypt(string toEncrypt, string key)
+        /// <summary>
+        /// AES加密
+        /// </summary>
+        /// <param name="toEncrypt"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string AesEncrypt(string toEncrypt, string key)
         {
             if (string.IsNullOrWhiteSpace(toEncrypt))
                 return string.Empty;
@@ -23,14 +23,14 @@ namespace EInfrastructure.Core.HelpCommon
             byte[] keyArray = Encoding.UTF8.GetBytes(key);
             byte[] toEncryptArray = Encoding.UTF8.GetBytes(toEncrypt);
 
-          RijndaelManaged rDel = new RijndaelManaged
-          {
-            Key = keyArray,
-            Mode = CipherMode.ECB,
-            Padding = PaddingMode.PKCS7
-          };
+            RijndaelManaged rDel = new RijndaelManaged
+            {
+                Key = keyArray,
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.PKCS7
+            };
 
-          ICryptoTransform cTransform = rDel.CreateEncryptor();
+            ICryptoTransform cTransform = rDel.CreateEncryptor();
             byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
 
 
@@ -41,13 +41,13 @@ namespace EInfrastructure.Core.HelpCommon
 
         #region AES解密
 
-      /// <summary>
-      /// AES解密
-      /// </summary>
-      /// <param name="toDecrypt"></param>
-      /// <param name="key"></param>
-      /// <returns></returns>
-      public static string Decrypt(string toDecrypt, string key)
+        /// <summary>
+        /// AES解密
+        /// </summary>
+        /// <param name="toDecrypt"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string Decrypt(string toDecrypt, string key)
         {
             if (string.IsNullOrWhiteSpace(toDecrypt))
                 return string.Empty;
@@ -57,14 +57,14 @@ namespace EInfrastructure.Core.HelpCommon
                 byte[] keyArray = Encoding.UTF8.GetBytes(key);
                 byte[] toEncryptArray = Convert.FromBase64String(toDecrypt);
 
-              RijndaelManaged rDel = new RijndaelManaged
-              {
-                Key = keyArray,
-                Mode = CipherMode.ECB,
-                Padding = PaddingMode.PKCS7
-              };
+                RijndaelManaged rDel = new RijndaelManaged
+                {
+                    Key = keyArray,
+                    Mode = CipherMode.ECB,
+                    Padding = PaddingMode.PKCS7
+                };
 
-              ICryptoTransform cTransform = rDel.CreateDecryptor();
+                ICryptoTransform cTransform = rDel.CreateDecryptor();
 
 
                 byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
@@ -80,13 +80,13 @@ namespace EInfrastructure.Core.HelpCommon
 
         #region MD5加密
 
-      /// <summary>
-      /// MD5加密
-      /// </summary>
-      /// <param name="input"></param>
-      /// <param name="encoding"></param>
-      /// <returns></returns>
-      public static string GetMd5Hash(string input, Encoding encoding = null)
+        /// <summary>
+        /// MD5加密
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
+        public static string GetMd5Hash(string input, Encoding encoding = null)
         {
             if (encoding == null)
             {
@@ -114,14 +114,16 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
-      /// <summary>
-      /// 对字符串进行DES加密
-      /// </summary>
-      /// <param name="sourceString">待加密的字符串</param>
-      /// <param name="key"></param>
-      /// <param name="iv"></param>
-      /// <returns>加密后的BASE64编码的字符串</returns>
-      public static string DesEncrypt(string sourceString, string key, string iv)
+        #region Des加密
+
+        /// <summary>
+        /// 对字符串进行DES加密
+        /// </summary>
+        /// <param name="sourceString">待加密的字符串</param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
+        /// <returns>加密后的BASE64编码的字符串</returns>
+        public static string DesEncrypt(string sourceString, string key, string iv)
         {
             byte[] btKey = Encoding.Default.GetBytes(key);
             byte[] btIv = Encoding.Default.GetBytes(iv);
@@ -134,18 +136,19 @@ namespace EInfrastructure.Core.HelpCommon
                     cs.Write(inData, 0, inData.Length);
                     cs.FlushFinalBlock();
                 }
+
                 return Convert.ToBase64String(ms.ToArray());
             }
         }
 
-      /// <summary>
-      /// 对DES加密后的字符串进行解密
-      /// </summary>
-      /// <param name="encryptedString">待解密的字符串</param>
-      /// <param name="key"></param>
-      /// <param name="iv"></param>
-      /// <returns>解密后的字符串</returns>
-      public static string DesDecrypt(string encryptedString, string key, string iv)
+        /// <summary>
+        /// 对DES加密后的字符串进行解密
+        /// </summary>
+        /// <param name="encryptedString">待解密的字符串</param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
+        /// <returns>解密后的字符串</returns>
+        public static string DesDecrypt(string encryptedString, string key, string iv)
         {
             byte[] btKey = Encoding.Default.GetBytes(key);
             byte[] btIv = Encoding.Default.GetBytes(iv);
@@ -158,10 +161,20 @@ namespace EInfrastructure.Core.HelpCommon
                     cs.Write(inData, 0, inData.Length);
                     cs.FlushFinalBlock();
                 }
+
                 return Encoding.Default.GetString(ms.ToArray());
             }
         }
 
+        #endregion
+
+        #region Sha1加密
+
+        /// <summary>
+        /// Sha1
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string Sha1(string str)
         {
             //建立SHA1对象
@@ -176,7 +189,17 @@ namespace EInfrastructure.Core.HelpCommon
             return hash;
         }
 
-        public static string Hmacsha1(string text, string key)
+        #endregion
+
+        #region HMacSha1加密
+
+        /// <summary>
+        /// HMacSha1加密
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string HMacSha1(string text, string key)
         {
             HMACSHA1 myhmacsha1 = new HMACSHA1(Encoding.UTF8.GetBytes(key));
             byte[] byteArray = Encoding.UTF8.GetBytes(text);
@@ -185,5 +208,7 @@ namespace EInfrastructure.Core.HelpCommon
 
             return signature;
         }
+
+        #endregion
     }
 }

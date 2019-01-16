@@ -2,10 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="99a4e9c0-8115-428c-83db-090f2e504254" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Files/FileCommon.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Files/FileInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/Const.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/Interface/IRandomBuilder.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/Interface/IRandomNumberGenerator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/RandomCommon.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/RandomNumberGenerator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.System.Extension.Core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PinYinCommon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PinYinCommon.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/RandomCommon.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/SecurityCommon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/SecurityCommon.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,75 +21,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/UniqueCommon.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-              <folding>
-                <marker date="1547351417149" expanded="true" signature="56:386" ph="{...}" />
-                <marker date="1547351417149" expanded="true" signature="63:110" ph="/// 唯一方法实现 ... " />
-                <marker date="1547351417149" expanded="true" signature="140:384" ph="{...}" />
-                <marker date="1547351417149" expanded="true" signature="155:378" ph="全局唯一Guid" />
-                <marker date="1547351417149" expanded="true" signature="181:238" ph="/// 全局唯一Guid ... " />
-                <marker date="1547351417149" expanded="true" signature="275:358" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PinYinCommon.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="613" lean-forward="true" selection-start-line="613" selection-end-line="613" />
-              <folding>
-                <marker date="1547392270420" expanded="true" signature="6:32" ph="..." />
-                <marker date="1547392270420" expanded="true" signature="75:48397" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="82:128" ph="/// 拼音帮助类 ... " />
-                <marker date="1547392270420" expanded="true" signature="165:48395" ph="{...}" />
-                <marker date="1547392270420" expanded="false" signature="180:44255" ph="数组信息" />
-                <marker date="1547392270420" expanded="false" signature="262:4039" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="4115:7575" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="7586:43825" ph="二级汉字" />
-                <marker date="1547392270420" expanded="true" signature="7607:7662" ph="/// 二级汉字数组 ... " />
-                <marker date="1547392270420" expanded="true" signature="7740:22278" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="22289:22348" ph="/// 二级汉字对应拼音数组 ... " />
-                <marker date="1547392270420" expanded="true" signature="22428:43800" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="43834:44236" ph="变量定义" />
-                <marker date="1547392270420" expanded="true" signature="44145:44216" ph="/* 配置中文字符 ... */" />
-                <marker date="1547392270420" expanded="true" signature="44265:44674" ph="得到输入文字的第一个拼音" />
-                <marker date="1547392270420" expanded="true" signature="44294:44441" ph="/// 得到输入文字的第一个拼音 ... " />
-                <marker date="1547392270420" expanded="true" signature="44503:44655" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="44684:45270" ph="取拼音第一个字段----字符串" />
-                <marker date="1547392270420" expanded="true" signature="44717:44858" ph="/// 取拼音第一个字段 ... " />
-                <marker date="1547392270420" expanded="true" signature="44919:45251" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="45127:45206" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="45280:47794" ph="获取单字拼音" />
-                <marker date="1547392270420" expanded="true" signature="45304:45442" ph="/// 获取单字拼音 ... " />
-                <marker date="1547392270420" expanded="true" signature="45498:47775" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="45913:46027" ph="/* Encoding.Default默认在中文环境里虽是GB2312，但在多变的环境可能是其它 ... */" />
-                <marker date="1547392270420" expanded="true" signature="46189:47731" ph="中文字符处理" />
-                <marker date="1547392270420" expanded="true" signature="46298:46364" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="46439:47435" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="46547:47421" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="46717:47403" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="46764:46964" ph="/* Console.WriteLine(&quot;存在于第 &quot; + aPos.ToString() + &quot; 块,此块的第一个机内码是: &quot; + PyValue[aPos * 33].ToString()); ... */" />
-                <marker date="1547392270420" expanded="true" signature="47036:47350" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="47113:47324" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="47477:47701" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="47606:47687" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="47804:48388" ph="把汉字转换成拼音(全拼)" />
-                <marker date="1547392270420" expanded="true" signature="47833:47983" ph="/// 把汉字转换成拼音(全拼) ... " />
-                <marker date="1547392270420" expanded="true" signature="48041:48369" ph="{...}" />
-                <marker date="1547392270420" expanded="true" signature="48251:48324" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -100,61 +39,112 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/ChunkUnitEnum.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/OpenApi.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/UploadStateEnum.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/TbkOpenApi.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByStreamParam.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Config/QiNiuConfig.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/Pictures/UploadByBase64Param.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/UploadPersistentOps.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/QueryExtension.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/StorageWaterMark.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/ImgPersistentOps.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IStorageService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/OpenApiUtil.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/BaseStorageProvider.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Handler/UploadControllerAction.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/UniqueCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/SecurityCommon.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/TypeConversionCommon.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/MathCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/EnumCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/ValidateCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/StringCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PasswordCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7FE31C59-73AA-4F78-B307-71273A4CBEF6/21/b663e56b/OptionsServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/AnimalCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PinYinCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/Interface/IRandomBuilder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/Interface/IRandomNumberGenerator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Attributes/ENameAttribute.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/RandomCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Attributes/EDescribeAttribute.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/RandomNumberGenerator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Attributes/EVersionAttribute.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Enumerable/EnumerableExtend.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Serialization/XmlCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/Const.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6DADD22E-0197-42CE-80AA-EFEF99855BE0/aa/0a297ac4/KeyValuePair`2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6DADD22E-0197-42CE-80AA-EFEF99855BE0/b5/69d4d9a3/MemberInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1EC2EDA9-8BAC-4EBF-8272-E53A027092F4/d1/19a1c869/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6DADD22E-0197-42CE-80AA-EFEF99855BE0/d6/daf510d3/Random.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/OpenApi.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/Ext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/QueryBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/QueryExtension.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/RepositoryBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/TbkOpenApi.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/OpenApiUtil.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/Param/MaterialGetParam.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Files/FileCommon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/Config/AliConfig.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7460CB6C-A306-4DC8-853B-8198169150CE/df/8f1e794f/SHA512CryptoServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/442CFECB-0770-42F6-A8FC-8FE27BF82D28/0c/f9282084/SHA512.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.Redis/Common/QuickHelperBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Auths/QiNiuAuthAttribute.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/10F11FE8-97FE-4BE1-A70E-AB5930F22D56/4d/ff211cea/HashAlgorithm.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Files/FileInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/20/254e1584/PutPolicy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D3E859D9-502F-4785-A4D4-7D7DEE02C8EC/8a/ce0168c1/FileInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Enum/ZoneEnum.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/221FA654-76FD-4A6A-A7BE-C2CD9B5A08D9/a1/b4f69383/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/QueryBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/QueryExtension.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0483C335-F48F-4670-9723-603C1A3A0703/ca/8a124560/ServiceProviderServiceExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/RepositoryBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9E583682-5CC6-412D-8360-C4C6ADFE4941/94/e511613b/IFormFile.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6DADD22E-0197-42CE-80AA-EFEF99855BE0/f8/e98d3ee7/String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Config/QiNiuConfig.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/StorageProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6DADD22E-0197-42CE-80AA-EFEF99855BE0/96/a9a2cc57/Int32.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/BaseStorageProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/PictureService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/442CFECB-0770-42F6-A8FC-8FE27BF82D28/b7/28d33328/SHA1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6DADD22E-0197-42CE-80AA-EFEF99855BE0/b7/af018434/AttributeUsageAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D2497BBA-08E4-4FD8-8839-19A01AFAF5EB/b9/6c04fe92/OptionsConfigurationServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AspNetCore/Api/ApiErrResult.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AspNetCore/Api/ApiResult.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByFormFileParam.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AspNetCore/Exception/ErrorHandlingMiddleware.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AspNetCore/Exception/WebRequest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AspNetCore/Exception/Ext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AspNetCore.AutoConfig/Extension/IWritableOptions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoConfig/Interface/IScopedConfigModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4B47B422-BC4C-4615-BBDE-BE1DF9B21B0D/20/ac509c48/IServiceCollection.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5B476E36-D7ED-4011-8121-C30CDE0AA9A7/57/28989a36/ConfigurationBinder.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/56C817B4-CBE2-4F51-9D8D-37BFCAB88E4A/3c/7294666c/IServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AspNetCore.AutoConfig/Extension/WritableOptions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/93881288-31B9-4764-A3F0-C59F22D0E4C4/dd/a306c44c/Object.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6DADD22E-0197-42CE-80AA-EFEF99855BE0/95/1891628d/Assembly.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AspNetCore.AutoConfig/ConfigAutoRegister.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoConfig/ConfigAutoRegister.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AspNetCore.AutoConfig/ServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Ddd/IEntity.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Ddd/IQuery.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Ddd/IRepository.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/Param/MaterialGetParam.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadPersistentOpsParam.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/ValidateCommon.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/StringCommon.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.Redis/Common/QuickHelperBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Enum/ZoneEnum.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/QueryBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PasswordCommon.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByFormFileParam.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/QueryBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PinYinCommon.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/StorageProvider.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/PictureService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/QueryExtension.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/RepositoryBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/RepositoryBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/Config/AliConfig.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Key/HttpStatusMessageKey.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Key/CodeKey.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoConfig/Interface/IConfigModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/C7CF6354-FDBD-4D4A-8E1F-5A0D0DEB310C/dd/6c47637c/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Data/EntitiesExtension/ExpressionVisitor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Config/LogConfig.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Exception/BusinessException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Exception/AuthException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoFac/MvcAutoRegister.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IStorageService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IPictureService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/CallbackBodyTypeEnum.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/ChunkUnitEnum.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/UploadStateEnum.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByStreamParam.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadPersistentOpsParam.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/Pictures/UploadByBase64Param.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/UploadPersistentOps.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/StorageWaterMark.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/ImgPersistentOps.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Handler/UploadControllerAction.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Check.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/CustomAttributeCommon.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Old/StorageServiceExt.cs" />
-        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/ChunkSizeEnum.cs" />
-        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.QiNiu.Storage/Old/StorageService.cs" />
-        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByStreamParam.cs" />
-        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Handler/UploadProgressHandler.cs" />
-        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Handler/UploadControllerAction.cs" />
-        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/UploadStateEnu.cs" />
-        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Enum/UploadStateEnum.cs" />
-        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/FormModel/UploadByFormFileParam.cs" />
-        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/UploadByFormFileParam.cs" />
-        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/ThumOps.cs" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/StorageWaterMark.cs" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/Pictures/UploadByBase64Param.cs" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/ImgPersistentOps.cs" />
@@ -188,14 +178,32 @@
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/UniqueCommon.cs" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/EInfrastructure.Core.csproj" />
         <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PinYinCommon.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/SecurityCommon.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/File/FileInfo.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Files/EncryptTypeEnum.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Files/FileInfo.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/FileCommon.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Files/FileCommon.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/IRandomNumberGenerator.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/RandomNumberGenerator.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/StubRandomGenerator.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/EnumCommon.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/GuidRandomGenerator.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/IRandomGenerator.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/Const.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/IRandomBuilder.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/RandomBuilder.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/RandomCommon.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/Interface/IRandomNumberGenerator.cs" />
+        <option value="$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/Interface/IRandomBuilder.cs" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="355" />
-    <option name="y" value="391" />
-    <option name="width" value="1429" />
-    <option name="height" value="600" />
+    <option name="x" value="278" />
+    <option name="y" value="245" />
+    <option name="width" value="1514" />
+    <option name="height" value="1100" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -205,13 +213,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="FileSystemExplorer" />
       <pane id="SolutionExplorer">
         <subPane>
           <expand>
             <path>
               <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
               <item name="System.Extension.Core" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="System.Extension.Core" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Automation" type="24d0babc:SolutionExplorerModelNode" />
             </path>
             <path>
               <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
@@ -230,6 +242,7 @@
         <option name="show-all-files" value="false" />
       </pane>
       <pane id="AssemblyExplorer" />
+      <pane id="FileSystemExplorer" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -269,6 +282,8 @@
       <workItem from="1546579762406" duration="1126000" />
       <workItem from="1547351342250" duration="453000" />
       <workItem from="1547392057042" duration="244000" />
+      <workItem from="1547625714058" duration="161000" />
+      <workItem from="1547625900439" duration="5794000" />
     </task>
     <task id="LOCAL-00001" summary="更改七牛上传图片配置--目前只有最简单的上传，之后会重做图片上传">
       <created>1536284494110</created>
@@ -340,11 +355,18 @@
       <option name="project" value="LOCAL" />
       <updated>1547351543364</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="更新唯一标识方法">
+      <created>1547537190648</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1547537190648</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33332000" />
+    <option name="totallyTimeSpent" value="39321000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -356,10 +378,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2533512" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17643923" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
@@ -373,12 +394,12 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="NuGet" order="7" weight="0.329718" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.17984831" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.1787649" />
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Unit Tests" order="11" />
       <window_info anchor="bottom" id="Terminal" order="12" />
       <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
-      <window_info anchor="bottom" id="Build" order="14" visible="true" weight="0.37818697" />
+      <window_info anchor="bottom" id="Build" order="14" weight="0.37744033" />
       <window_info anchor="bottom" id="Messages" order="15" />
       <window_info anchor="bottom" id="Performance Profiler" order="16" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -390,31 +411,35 @@
       <window_info anchor="right" id="Capture Analysis" order="6" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17803837" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15031983" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="0" />
-      <window_info anchor="bottom" id="Message" order="1" />
-      <window_info anchor="bottom" id="Find" order="2" weight="0.21800433" />
-      <window_info anchor="bottom" id="Run" order="3" />
-      <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="7" />
-      <window_info anchor="bottom" id="NuGet" order="8" weight="0.329718" />
-      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.18004338" />
-      <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Unit Tests" order="12" />
-      <window_info anchor="bottom" id="Terminal" order="13" />
-      <window_info anchor="bottom" id="Event Log" order="14" side_tool="true" />
-      <window_info anchor="bottom" id="Build" order="15" weight="0.3275488" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.21800433" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="NuGet" order="7" weight="0.329718" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" visible="true" weight="0.1787649" />
+      <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Unit Tests" order="11" />
+      <window_info anchor="bottom" id="Terminal" order="12" />
+      <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
+      <window_info anchor="bottom" id="Build" order="14" weight="0.37818697" />
+      <window_info anchor="bottom" id="Messages" order="15" />
+      <window_info anchor="bottom" id="Performance Profiler" order="16" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Errors In Solution" order="3" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="Unit Tests Coverage" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -444,216 +469,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D711A65-FEFF-43FA-91C2-B8F485AF72BB/6c/824c88f2/FormUploader.cs" />
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/PasswordCommon.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="365" selection-start-line="365" selection-end-line="365" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/StringCommon.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <marker date="1543452810467" expanded="true" signature="154:6109" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="161:210" ph="/// String扩展 ... " />
-            <marker date="1543452810467" expanded="true" signature="247:6107" ph="{...}" />
-            <marker date="1543452810467" expanded="false" signature="262:2258" ph="判断位置" />
-            <marker date="1543452810467" expanded="false" signature="284:2238" ph="获取字符第N次出现的下标位置" />
-            <marker date="1543452810467" expanded="false" signature="316:1283" ph="得到第number次出现character的位置下标" />
-            <marker date="1543452810467" expanded="true" signature="359:688" ph="/// 得到第number次出现character的位置下标 ... " />
-            <marker date="1543452810467" expanded="true" signature="802:1264" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="861:928" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="1027:1210" ph="{...}" />
-            <marker date="1543452810467" expanded="false" signature="1293:2218" ph="得到倒数第number次出现character的位置下标" />
-            <marker date="1543452810467" expanded="true" signature="1338:1669" ph="/// 得到倒数第number次出现character的位置下标 ... " />
-            <marker date="1543452810467" expanded="true" signature="1787:2199" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="1846:1913" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="2012:2141" ph="{...}" />
-            <marker date="1543452810467" expanded="false" signature="2268:3883" ph="在字符串前后增加特殊字符" />
-            <marker date="1543452810467" expanded="true" signature="2297:2729" ph="/// 在字符串前后增加特殊字符 ... " />
-            <marker date="1543452810467" expanded="true" signature="2899:3863" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="2952:3033" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="3212:3819" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="3296:3362" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="3436:3567" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="3625:3748" ph="{...}" />
-            <marker date="1543452810467" expanded="false" signature="3893:4598" ph="隐藏手机" />
-            <marker date="1543452810467" expanded="true" signature="3914:3967" ph="/// 隐藏手机 ... " />
-            <marker date="1543452810467" expanded="true" signature="4022:4579" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="4084:4515" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="4137:4256" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="4294:4443" ph="{...}" />
-            <marker date="1543452810467" expanded="false" signature="4608:5221" ph="字符串转换为泛型集合" />
-            <marker date="1543452810467" expanded="true" signature="4635:4825" ph="/// 字符串转化为泛型集合 ... " />
-            <marker date="1543452810467" expanded="true" signature="4913:5202" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="4966:5032" ph="{...}" />
-            <marker date="1543452810467" expanded="false" signature="5231:6101" ph="操作" />
-            <marker date="1543452810467" expanded="false" signature="5251:6081" ph="清除字符串数组中的重复项" />
-            <marker date="1543452810467" expanded="true" signature="5280:5489" ph="/// 清除字符串数组中的重复项 ... " />
-            <marker date="1543452810467" expanded="true" signature="5581:6061" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="5677:5935" ph="{...}" />
-            <marker date="1543452810467" expanded="true" signature="5794:5888" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Param/Pictures/UploadByBase64Param.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/Config/Pictures/ImgPersistentOps.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="58" column="5" selection-start-line="6" selection-start-column="4" selection-end-line="58" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Interface/Storage/IPictureService.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/TypeConversionCommon.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="442" column="44" selection-start-line="442" selection-start-column="19" selection-end-line="442" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Ddd/IRepository.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/RepositoryBase.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="9" column="134" selection-start-line="9" selection-start-column="134" selection-end-line="9" selection-end-column="134" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/QueryExtension.cs">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Ddd/IEntity.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6DADD22E-0197-42CE-80AA-EFEF99855BE0/e9/2e78dd90/String.cs" />
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6DADD22E-0197-42CE-80AA-EFEF99855BE0/fa/b1dcfa08/IComparable.cs" />
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/QueryBase.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/Ddd/IQuery.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/QueryExtension.cs">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MySql/EInfrastructure.Core.MySql.csproj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/QueryBase.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/EInfrastructure.Core.SqlServer.csproj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.SqlServer/RepositoryBase.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="10" column="29" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoFac/EInfrastructure.Core.AutoFac.csproj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="11" column="18" lean-forward="true" selection-start-line="1" selection-start-column="2" selection-end-line="11" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoFac.MySql/EInfrastructure.Core.AutoFac.MySql.csproj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="11" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoFac.SqlServer/EInfrastructure.Core.AutoFac.SqlServer.csproj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.Web/EInfrastructure.Core.Web.csproj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.WebChat/EInfrastructure.Core.WebChat.csproj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.MemoryCache/EInfrastructure.Core.MemoryCache.csproj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.Redis/EInfrastructure.Core.Redis.csproj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/EInfrastructure.Core.AliYun.Tbk.csproj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AliYun.Tbk/OpenApi.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -1190,6 +1005,517 @@
             <marker date="1547392270420" expanded="true" signature="47833:47983" ph="/// 把汉字转换成拼音(全拼) ... " />
             <marker date="1547392270420" expanded="true" signature="48041:48369" ph="{...}" />
             <marker date="1547392270420" expanded="true" signature="48251:48324" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoConfig/ConfigAutoRegister.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="144" column="1" selection-start-line="144" selection-start-column="1" selection-end-line="144" selection-end-column="1" />
+          <folding>
+            <marker date="1547450302998" expanded="false" signature="6:171" ph="..." />
+            <marker date="1547450302998" expanded="true" signature="214:4511" ph="{...}" />
+            <marker date="1547450302998" expanded="true" signature="221:274" ph="/// 自动注入config文件 ... " />
+            <marker date="1547450302998" expanded="true" signature="317:4509" ph="{...}" />
+            <marker date="1547450302998" expanded="false" signature="332:969" ph="自动注入配置文件（含热更新与非热更新）" />
+            <marker date="1547450302998" expanded="true" signature="369:600" ph="/// 自动注入配置文件（含热更新与非热更新） ... " />
+            <marker date="1547450302998" expanded="true" signature="729:949" ph="{...}" />
+            <marker date="1547450302998" expanded="false" signature="979:1638" ph="自动注入配置文件（项目启动-项目关闭）" />
+            <marker date="1547450302998" expanded="true" signature="1016:1247" ph="/// 自动注入配置文件（项目启动-项目关闭） ... " />
+            <marker date="1547450302998" expanded="true" signature="1382:1618" ph="{...}" />
+            <marker date="1547450302998" expanded="true" signature="1456:1577" ph="{...}" />
+            <marker date="1547450302998" expanded="false" signature="1648:2287" ph="自动注入配置文件（请求开始-请求结束）" />
+            <marker date="1547450302998" expanded="true" signature="1686:1917" ph="/// 自动注入配置文件（请求开始-请求结束） ... " />
+            <marker date="1547450302998" expanded="true" signature="2037:2267" ph="{...}" />
+            <marker date="1547450302998" expanded="true" signature="2108:2226" ph="{...}" />
+            <marker date="1547450302998" expanded="false" signature="2297:2979" ph="自动注入配置文件（请求开始-请求结束）" />
+            <marker date="1547450302998" expanded="true" signature="2335:2588" ph="/// 自动注入配置文件（请求获取-（GC回收-主动释放），每一次获取的对象都不是同一个） ... " />
+            <marker date="1547450302998" expanded="true" signature="2723:2959" ph="{...}" />
+            <marker date="1547450302998" expanded="true" signature="2797:2918" ph="{...}" />
+            <marker date="1547450302998" expanded="false" signature="2989:4503" ph="private methods" />
+            <marker date="1547450302998" expanded="false" signature="3022:3791" ph="注册配置文件信息" />
+            <marker date="1547450302998" expanded="true" signature="3048:3268" ph="/// 注册配置文件信息 ... " />
+            <marker date="1547450302998" expanded="true" signature="3426:3771" ph="{...}" />
+            <marker date="1547450302998" expanded="true" signature="3666:3731" ph="{...}" />
+            <marker date="1547450302998" expanded="false" signature="3801:4483" ph="得到配置文件信息" />
+            <marker date="1547450302998" expanded="true" signature="3827:4087" ph="/// 得到配置文件信息 ... " />
+            <marker date="1547450302998" expanded="true" signature="4193:4463" ph="{...}" />
+            <marker date="1547450302998" expanded="true" signature="4236:4358" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AspNetCore.AutoConfig/EInfrastructure.Core.AspNetCore.AutoConfig.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="4" selection-start-line="1" selection-start-column="4" selection-end-line="11" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core.AutoConfig/EInfrastructure.Core.AutoConfig.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="57" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/StringCommon.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="158" column="8" lean-forward="true" selection-start-line="158" selection-start-column="8" selection-end-line="158" selection-end-column="8" />
+          <folding>
+            <marker date="1543452810467" expanded="false" signature="6:111" ph="..." />
+            <marker date="1543452810467" expanded="true" signature="154:6109" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="161:210" ph="/// String扩展 ... " />
+            <marker date="1543452810467" expanded="true" signature="247:6107" ph="{...}" />
+            <marker date="1543452810467" expanded="false" signature="262:2258" ph="判断位置" />
+            <marker date="1543452810467" expanded="false" signature="284:2238" ph="获取字符第N次出现的下标位置" />
+            <marker date="1543452810467" expanded="false" signature="316:1283" ph="得到第number次出现character的位置下标" />
+            <marker date="1543452810467" expanded="true" signature="359:688" ph="/// 得到第number次出现character的位置下标 ... " />
+            <marker date="1543452810467" expanded="true" signature="802:1264" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="861:928" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="1027:1210" ph="{...}" />
+            <marker date="1543452810467" expanded="false" signature="1293:2218" ph="得到倒数第number次出现character的位置下标" />
+            <marker date="1543452810467" expanded="true" signature="1338:1669" ph="/// 得到倒数第number次出现character的位置下标 ... " />
+            <marker date="1543452810467" expanded="true" signature="1787:2199" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="1846:1913" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="2012:2141" ph="{...}" />
+            <marker date="1543452810467" expanded="false" signature="2268:3883" ph="在字符串前后增加特殊字符" />
+            <marker date="1543452810467" expanded="true" signature="2297:2729" ph="/// 在字符串前后增加特殊字符 ... " />
+            <marker date="1543452810467" expanded="true" signature="2899:3863" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="2952:3033" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="3212:3819" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="3296:3362" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="3436:3567" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="3625:3748" ph="{...}" />
+            <marker date="1543452810467" expanded="false" signature="3893:4598" ph="隐藏手机" />
+            <marker date="1543452810467" expanded="true" signature="3914:3967" ph="/// 隐藏手机 ... " />
+            <marker date="1543452810467" expanded="true" signature="4022:4579" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="4084:4515" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="4137:4256" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="4294:4443" ph="{...}" />
+            <marker date="1543452810467" expanded="false" signature="4608:5221" ph="字符串转换为泛型集合" />
+            <marker date="1543452810467" expanded="true" signature="4635:4825" ph="/// 字符串转化为泛型集合 ... " />
+            <marker date="1543452810467" expanded="true" signature="4913:5202" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="4966:5032" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="5231:6101" ph="操作" />
+            <marker date="1543452810467" expanded="false" signature="5251:6081" ph="清除字符串数组中的重复项" />
+            <marker date="1543452810467" expanded="true" signature="5280:5489" ph="/// 清除字符串数组中的重复项 ... " />
+            <marker date="1543452810467" expanded="true" signature="5581:6061" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="5677:5935" ph="{...}" />
+            <marker date="1543452810467" expanded="true" signature="5794:5888" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/10F11FE8-97FE-4BE1-A70E-AB5930F22D56/4d/ff211cea/HashAlgorithm.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-390">
+          <caret line="11" column="37" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/442CFECB-0770-42F6-A8FC-8FE27BF82D28/0c/f9282084/SHA512.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7460CB6C-A306-4DC8-853B-8198169150CE/df/8f1e794f/SHA512CryptoServiceProvider.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="55" selection-start-line="11" selection-start-column="55" selection-end-line="11" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D3E859D9-502F-4785-A4D4-7D7DEE02C8EC/8a/ce0168c1/FileInfo.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-135">
+          <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9E583682-5CC6-412D-8360-C4C6ADFE4941/94/e511613b/IFormFile.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="31" column="17" lean-forward="true" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Files/EncryptTypeEnum.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="5" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Serialization/XmlCommon.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="518">
+          <caret line="109" column="21" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="21" />
+          <folding>
+            <marker date="1543452810466" expanded="false" signature="6:134" ph="..." />
+            <marker date="1543452810466" expanded="true" signature="191:6664" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="198:249" ph="/// XML序列化 部分类 ... " />
+            <marker date="1543452810466" expanded="true" signature="276:6662" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="369:453" ph="/// 序列化 ... " />
+            <marker date="1543452810466" expanded="true" signature="503:1065" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="737:1055" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="845:1041" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="1075:1159" ph="/// 序列化 ... " />
+            <marker date="1543452810466" expanded="true" signature="1227:2032" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="1359:2022" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="1467:2008" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="1531:1761" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="1786:1888" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="2042:2127" ph="/// 反序列化 ... " />
+            <marker date="1543452810466" expanded="true" signature="2178:2460" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="2367:2450" ph="{...}" />
+            <marker date="1543452810466" expanded="false" signature="2470:3226" ph="序列化为xml文件(保存到本地)" />
+            <marker date="1543452810466" expanded="true" signature="2503:2667" ph="/// 序列化为xml(保存到本地) ... " />
+            <marker date="1543452810466" expanded="true" signature="2745:3207" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="2805:3060" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="3080:3172" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="3236:3901" ph="本地xml文件反序列化" />
+            <marker date="1543452810466" expanded="true" signature="3264:3456" ph="/// 本地xml文件反序列化 ... " />
+            <marker date="1543452810466" expanded="true" signature="3541:3881" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="3680:3871" ph="{...}" />
+            <marker date="1543452810466" expanded="false" signature="3911:4946" ph="云端xml反序列化为对象" />
+            <marker date="1543452810466" expanded="true" signature="3940:4123" ph="/// 云端xml反序列化为对象 ... " />
+            <marker date="1543452810466" expanded="true" signature="4208:4927" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="4385:4917" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="4461:4903" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="4557:4738" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="4785:4885" ph="{...}" />
+            <marker date="1543452810466" expanded="false" signature="4956:5773" ph="XML序列化" />
+            <marker date="1543452810466" expanded="true" signature="4979:5164" ph="/// XML序列化 ... " />
+            <marker date="1543452810466" expanded="true" signature="5235:5753" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="5295:5550" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="5590:5641" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="5661:5718" ph="{...}" />
+            <marker date="1543452810466" expanded="false" signature="5783:6656" ph="XML反序列化" />
+            <marker date="1543452810466" expanded="true" signature="5808:6003" ph="/// XML反序列化 ... " />
+            <marker date="1543452810466" expanded="true" signature="6079:6636" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="6140:6387" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="6427:6478" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="6498:6626" ph="{...}" />
+            <marker date="1543452810466" expanded="true" signature="6544:6612" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/442CFECB-0770-42F6-A8FC-8FE27BF82D28/b7/28d33328/SHA1.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Files/FileInfo.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="31" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="31" />
+          <folding>
+            <marker date="1547627754319" expanded="true" signature="77:1017" ph="{...}" />
+            <marker date="1547627754319" expanded="true" signature="84:129" ph="/// 文件信息 ... " />
+            <marker date="1547627754319" expanded="true" signature="155:382" ph="{...}" />
+            <marker date="1547627754319" expanded="true" signature="170:223" ph="/// 文件名称 ... " />
+            <marker date="1547627754319" expanded="true" signature="274:326" ph="/// 特征码 ... " />
+            <marker date="1547627754319" expanded="true" signature="388:433" ph="///  ... " />
+            <marker date="1547627754319" expanded="true" signature="465:1015" ph="{...}" />
+            <marker date="1547627754319" expanded="true" signature="480:534" ph="///  ... " />
+            <marker date="1547627754319" expanded="true" signature="582:637" ph="///  ... " />
+            <marker date="1547627754319" expanded="true" signature="687:744" ph="///  ... " />
+            <marker date="1547627754319" expanded="true" signature="798:855" ph="///  ... " />
+            <marker date="1547627754319" expanded="true" signature="909:966" ph="///  ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Files/FileCommon.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="153" column="13" selection-start-line="153" selection-start-column="13" selection-end-line="153" selection-end-column="13" />
+          <folding>
+            <marker date="1547627899584" expanded="true" signature="6:118" ph="..." />
+            <marker date="1547627899584" expanded="true" signature="167:4734" ph="{...}" />
+            <marker date="1547627899584" expanded="true" signature="197:4732" ph="{...}" />
+            <marker date="1547627899584" expanded="false" signature="212:1317" ph="得到文件md5" />
+            <marker date="1547627899584" expanded="true" signature="237:365" ph="/// 得到文件md5 ... " />
+            <marker date="1547627899584" expanded="true" signature="417:1297" ph="{...}" />
+            <marker date="1547627899584" expanded="true" signature="831:963" ph="{...}" />
+            <marker date="1547627899584" expanded="false" signature="1327:1643" ph="得到文件的Sha1" />
+            <marker date="1547627899584" expanded="true" signature="1354:1484" ph="/// 得到文件的Sha1 ... " />
+            <marker date="1547627899584" expanded="true" signature="1537:1623" ph="{...}" />
+            <marker date="1547627899584" expanded="false" signature="1653:1977" ph="得到文件的Sha256" />
+            <marker date="1547627899584" expanded="true" signature="1682:1814" ph="/// 得到文件的Sha256 ... " />
+            <marker date="1547627899584" expanded="true" signature="1869:1957" ph="{...}" />
+            <marker date="1547627899584" expanded="false" signature="1987:2311" ph="得到文件的Sha384" />
+            <marker date="1547627899584" expanded="true" signature="2016:2148" ph="/// 得到文件的Sha512 ... " />
+            <marker date="1547627899584" expanded="true" signature="2203:2291" ph="{...}" />
+            <marker date="1547627899584" expanded="false" signature="2321:2645" ph="得到文件的Sha512" />
+            <marker date="1547627899584" expanded="true" signature="2350:2482" ph="/// 得到文件的Sha512 ... " />
+            <marker date="1547627899584" expanded="true" signature="2537:2625" ph="{...}" />
+            <marker date="1547627899584" expanded="false" signature="2655:3359" ph="得到sha系列加密信息" />
+            <marker date="1547627899584" expanded="true" signature="2684:2869" ph="/// 得到sha系列加密信息 ... " />
+            <marker date="1547627899584" expanded="true" signature="2955:3339" ph="{...}" />
+            <marker date="1547627899584" expanded="true" signature="3213:3294" ph="{...}" />
+            <marker date="1547627899584" expanded="true" signature="3369:4726" ph="得到文件信息" />
+            <marker date="1547627899584" expanded="true" signature="3393:3589" ph="/// 得到文件信息 ... " />
+            <marker date="1547627899584" expanded="true" signature="3741:4706" ph="{...}" />
+            <marker date="1547627899584" expanded="true" signature="3818:4506" ph="{...}" />
+            <marker date="1547627899584" expanded="true" signature="4592:4695" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6DADD22E-0197-42CE-80AA-EFEF99855BE0/aa/0a297ac4/KeyValuePair`2.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/EnumCommon.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="29" column="46" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="46" />
+          <folding>
+            <marker date="1547635963670" expanded="false" signature="6:127" ph="..." />
+            <marker date="1547635963670" expanded="true" signature="170:3538" ph="{...}" />
+            <marker date="1547635963670" expanded="true" signature="207:3536" ph="{...}" />
+            <marker date="1547635963670" expanded="true" signature="292:369" ph="{...}" />
+            <marker date="1547635963670" expanded="true" signature="429:532" ph="{...}" />
+            <marker date="1547635963670" expanded="true" signature="542:1168" ph="得到枚举字典（key对应枚举的值，value对应枚举的注释）" />
+            <marker date="1547635963670" expanded="true" signature="589:749" ph="/// 得到枚举字典（key对应枚举的值，value对应枚举的注释） ... " />
+            <marker date="1547635963670" expanded="true" signature="828:1149" ph="{...}" />
+            <marker date="1547635963670" expanded="true" signature="1013:1114" ph="{...}" />
+            <marker date="1547635963670" expanded="false" signature="1178:1774" ph="得到枚举字典（key与value与字典值一致）" />
+            <marker date="1547635963670" expanded="true" signature="1218:1371" ph="/// 得到枚举字典（key与value与字典值一致） ... " />
+            <marker date="1547635963670" expanded="true" signature="1439:1755" ph="{...}" />
+            <marker date="1547635963670" expanded="true" signature="1624:1720" ph="{...}" />
+            <marker date="1547635963670" expanded="false" signature="1784:2720" ph="返回枚举项的描述信息" />
+            <marker date="1547635963670" expanded="true" signature="1811:1965" ph="/// 返回枚举项的描述信息。 ... " />
+            <marker date="1547635963670" expanded="true" signature="2026:2701" ph="{...}" />
+            <marker date="1547635963670" expanded="true" signature="2193:2666" ph="{...}" />
+            <marker date="1547635963670" expanded="true" signature="2336:2652" ph="{...}" />
+            <marker date="1547635963670" expanded="true" signature="2541:2634" ph="{...}" />
+            <marker date="1547635963670" expanded="false" signature="2730:3530" ph="判断值是否在枚举类型中存在" />
+            <marker date="1547635963670" expanded="true" signature="2760:2952" ph="/// 判断值是否在枚举中存在 ... " />
+            <marker date="1547635963670" expanded="true" signature="3022:3098" ph="{...}" />
+            <marker date="1547635963670" expanded="true" signature="3108:3300" ph="/// 判断值是否在枚举中存在 ... " />
+            <marker date="1547635963670" expanded="true" signature="3371:3511" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/GuidRandomGenerator.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/StubRandomGenerator.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/IRandomGenerator.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6DADD22E-0197-42CE-80AA-EFEF99855BE0/d6/daf510d3/Random.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="23" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6DADD22E-0197-42CE-80AA-EFEF99855BE0/96/a9a2cc57/Int32.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/RandomNumberGenerator.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
+          <folding>
+            <marker date="1547637692343" expanded="true" signature="107:778" ph="{...}" />
+            <marker date="1547637692343" expanded="true" signature="114:162" ph="/// 随机数字生成器 ... " />
+            <marker date="1547637692343" expanded="true" signature="226:776" ph="{...}" />
+            <marker date="1547637692343" expanded="true" signature="241:293" ph="/// 随机数 ... " />
+            <marker date="1547637692343" expanded="true" signature="351:410" ph="/// 初始化随机数字生成器 ... " />
+            <marker date="1547637692343" expanded="true" signature="449:512" ph="{...}" />
+            <marker date="1547637692343" expanded="true" signature="522:661" ph="/// 生成随机数字 ... " />
+            <marker date="1547637692343" expanded="true" signature="707:770" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/Const.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="91" selection-start-line="22" selection-start-column="91" selection-end-line="22" selection-end-column="91" />
+          <folding>
+            <marker date="1547637270351" expanded="true" signature="49:44969" ph="{...}" />
+            <marker date="1547637270351" expanded="true" signature="56:99" ph="/// 常量 ... " />
+            <marker date="1547637270351" expanded="true" signature="129:44967" ph="{...}" />
+            <marker date="1547637270351" expanded="true" signature="144:201" ph="/// 汉字及拼音首字母 ... " />
+            <marker date="1547637270351" expanded="true" signature="42073:42128" ph="/// 常用简体汉字 ... " />
+            <marker date="1547637270351" expanded="true" signature="44701:44754" ph="/// 英文字母 ... " />
+            <marker date="1547637270351" expanded="true" signature="44858:44909" ph="/// 数字 ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/SecurityCommon.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="170" column="8" selection-start-line="170" selection-start-column="8" selection-end-line="170" selection-end-column="8" />
+          <folding>
+            <marker date="1547626373417" expanded="false" signature="6:85" ph="..." />
+            <marker date="1547626373417" expanded="true" signature="128:6698" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="162:6696" ph="{...}" />
+            <marker date="1547626373417" expanded="false" signature="177:1187" ph="AES加密" />
+            <marker date="1547626373417" expanded="true" signature="200:370" ph="/// AES加密 ... " />
+            <marker date="1547626373417" expanded="true" signature="440:1167" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="771:901" ph="{...}" />
+            <marker date="1547626373417" expanded="false" signature="1197:2356" ph="AES解密" />
+            <marker date="1547626373417" expanded="true" signature="1220:1390" ph="/// AES解密 ... " />
+            <marker date="1547626373417" expanded="true" signature="1457:2336" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="1574:2246" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="1840:1986" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="2277:2326" ph="{...}" />
+            <marker date="1547626373417" expanded="false" signature="2366:3317" ph="MD5加密" />
+            <marker date="1547626373417" expanded="true" signature="2389:2560" ph="/// MD5加密 ... " />
+            <marker date="1547626373417" expanded="true" signature="2640:2986" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="2684:2754" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="3059:3297" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="3167:3248" ph="{...}" />
+            <marker date="1547626373417" expanded="false" signature="3327:5407" ph="Des加密" />
+            <marker date="1547626373417" expanded="true" signature="3350:3590" ph="/// 对字符串进行DES加密 ... " />
+            <marker date="1547626373417" expanded="true" signature="3674:4360" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="3932:4350" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="4140:4274" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="4370:4608" ph="/// 对DES加密后的字符串进行解密 ... " />
+            <marker date="1547626373417" expanded="true" signature="4695:5387" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="4953:5377" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="5163:5297" ph="{...}" />
+            <marker date="1547626373417" expanded="true" signature="5417:6060" ph="Sha1加密" />
+            <marker date="1547626373417" expanded="true" signature="5441:5565" ph="/// Sha1 ... " />
+            <marker date="1547626373417" expanded="true" signature="5611:6040" ph="{...}" />
+            <marker date="1547626373417" expanded="false" signature="6070:6690" ph="HMacSha1加密" />
+            <marker date="1547626373417" expanded="true" signature="6098:6268" ph="/// HMacSha1加密 ... " />
+            <marker date="1547626373417" expanded="true" signature="6331:6670" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/RandomCommon.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="46" column="8" lean-forward="true" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/RandomCommon.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="64" column="18" lean-forward="true" selection-start-line="64" selection-start-column="18" selection-end-line="64" selection-end-column="18" />
+          <folding>
+            <marker date="1547637688580" expanded="false" signature="6:51" ph="..." />
+            <marker date="1547637688580" expanded="true" signature="159:6042" ph="{...}" />
+            <marker date="1547637688580" expanded="true" signature="166:213" ph="/// 随机数生成器 ... " />
+            <marker date="1547637688580" expanded="true" signature="260:6040" ph="{...}" />
+            <marker date="1547637688580" expanded="true" signature="275:385" ph="/// 初始化随机数生成器 ... " />
+            <marker date="1547637688580" expanded="true" signature="454:538" ph="{...}" />
+            <marker date="1547637688580" expanded="true" signature="548:604" ph="/// 随机数字生成器 ... " />
+            <marker date="1547637688580" expanded="false" signature="671:1277" ph="生成指定长度的随机字符串" />
+            <marker date="1547637688580" expanded="true" signature="701:901" ph="/// 生成指定长度的随机字符串 ... " />
+            <marker date="1547637688580" expanded="true" signature="972:1257" ph="{...}" />
+            <marker date="1547637688580" expanded="false" signature="1295:1913" ph="生成随机字符串" />
+            <marker date="1547637688580" expanded="true" signature="1320:1483" ph="/// 生成随机字符串 ... " />
+            <marker date="1547637688580" expanded="true" signature="1555:1893" ph="{...}" />
+            <marker date="1547637688580" expanded="false" signature="1923:2159" ph="获取随机长度" />
+            <marker date="1547637688580" expanded="true" signature="1947:2002" ph="/// 获取随机长度 ... " />
+            <marker date="1547637688580" expanded="true" signature="2068:2139" ph="{...}" />
+            <marker date="1547637688580" expanded="false" signature="2169:2408" ph="获取随机字符" />
+            <marker date="1547637688580" expanded="true" signature="2193:2248" ph="/// 获取随机字符 ... " />
+            <marker date="1547637688580" expanded="true" signature="2298:2388" ph="{...}" />
+            <marker date="1547637688580" expanded="false" signature="2418:2866" ph="生成随机字母" />
+            <marker date="1547637688580" expanded="true" signature="2442:2592" ph="/// 生成随机字母 ... " />
+            <marker date="1547637688580" expanded="true" signature="2663:2846" ph="{...}" />
+            <marker date="1547637688580" expanded="true" signature="2717:2783" ph="{...}" />
+            <marker date="1547637688580" expanded="false" signature="2876:3168" ph="生成随机汉字" />
+            <marker date="1547637688580" expanded="true" signature="2900:3004" ph="/// 生成随机汉字 ... " />
+            <marker date="1547637688580" expanded="true" signature="3057:3148" ph="{...}" />
+            <marker date="1547637688580" expanded="false" signature="3178:3460" ph="生成随机数字" />
+            <marker date="1547637688580" expanded="true" signature="3202:3306" ph="/// 生成随机数字 ... " />
+            <marker date="1547637688580" expanded="true" signature="3359:3440" ph="{...}" />
+            <marker date="1547637688580" expanded="false" signature="3470:3765" ph="生成随机布尔值" />
+            <marker date="1547637688580" expanded="true" signature="3495:3551" ph="/// 生成随机布尔值 ... " />
+            <marker date="1547637688580" expanded="true" signature="3586:3745" ph="{...}" />
+            <marker date="1547637688580" expanded="false" signature="3775:4040" ph="生成随机整数" />
+            <marker date="1547637688580" expanded="true" signature="3799:3901" ph="/// 生成随机整数 ... " />
+            <marker date="1547637688580" expanded="true" signature="3946:4020" ph="{...}" />
+            <marker date="1547637688580" expanded="false" signature="4050:4722" ph="生成随机日期" />
+            <marker date="1547637688580" expanded="true" signature="4074:4225" ph="/// 生成随机日期 ... " />
+            <marker date="1547637688580" expanded="true" signature="4304:4702" ph="{...}" />
+            <marker date="1547637688580" expanded="false" signature="4732:5184" ph="生成随机枚举" />
+            <marker date="1547637688580" expanded="true" signature="4756:4864" ph="/// 生成随机枚举 ... " />
+            <marker date="1547637688580" expanded="true" signature="4907:5164" ph="{...}" />
+            <marker date="1547637688580" expanded="false" signature="5202:6034" ph="对一个数组进行随机排序" />
+            <marker date="1547637688580" expanded="true" signature="5230:5388" ph="/// 对一个数组进行随机排序 ... " />
+            <marker date="1547637688580" expanded="true" signature="5435:6015" ph="{...}" />
+            <marker date="1547637688580" expanded="true" signature="5458:5528" ph="/* 对数组进行随机排序的算法:随机选择两个位置，将两个位置上的值交换 ... */" />
+            <marker date="1547637688580" expanded="true" signature="5627:6005" ph="{...}" />
+            <marker date="1547637688580" expanded="true" signature="5818:5856" ph="/* 定义临时变量 ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/Interface/IRandomNumberGenerator.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="61" lean-forward="true" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="61" />
+          <folding>
+            <marker date="1547637706196" expanded="true" signature="102:421" ph="{...}" />
+            <marker date="1547637706196" expanded="true" signature="109:157" ph="/// 随机数字生成器 ... " />
+            <marker date="1547637706196" expanded="true" signature="219:419" ph="{...}" />
+            <marker date="1547637706196" expanded="true" signature="234:373" ph="/// 生成随机数字 ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Infrastructure/EInfrastructure.Core/HelpCommon/Randoms/Interface/IRandomBuilder.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="8" column="44" lean-forward="true" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+          <folding>
+            <marker date="1547637712255" expanded="true" signature="6:55" ph="..." />
+            <marker date="1547637712255" expanded="true" signature="116:1933" ph="{...}" />
+            <marker date="1547637712255" expanded="true" signature="123:170" ph="/// 随机数生成器 ... " />
+            <marker date="1547637712255" expanded="true" signature="224:1931" ph="{...}" />
+            <marker date="1547637712255" expanded="true" signature="239:439" ph="/// 生成指定长度的随机字符串 ... " />
+            <marker date="1547637712255" expanded="true" signature="514:677" ph="/// 生成随机字符串 ... " />
+            <marker date="1547637712255" expanded="true" signature="753:903" ph="/// 生成随机字母 ... " />
+            <marker date="1547637712255" expanded="true" signature="978:1082" ph="/// 生成随机汉字 ... " />
+            <marker date="1547637712255" expanded="true" signature="1139:1243" ph="/// 生成随机数字 ... " />
+            <marker date="1547637712255" expanded="true" signature="1300:1356" ph="/// 生成随机布尔值 ... " />
+            <marker date="1547637712255" expanded="true" signature="1395:1497" ph="/// 生成随机整数 ... " />
+            <marker date="1547637712255" expanded="true" signature="1546:1697" ph="/// 生成随机日期 ... " />
+            <marker date="1547637712255" expanded="true" signature="1780:1888" ph="/// 生成随机枚举 ... " />
           </folding>
         </state>
       </provider>

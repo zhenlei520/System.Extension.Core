@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\wangz\.Rider2018.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\wangz\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_System.Extension.Core.-1542861991.00" t="ExcludeRecursive" />
-    <e p="D:\Important\Study\Owner\GitHub\System.Extension\System.Extension.Core" t="IncludeFlat">
+    <e p="C:\Users\zhenlei\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\zhenlei\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_System.Extension.Core.153698981.00" t="ExcludeRecursive" />
+    <e p="G:\zhenlei\Owner\Framework\System.Extension.Core" t="IncludeFlat">
+      <e p="Automation" t="Include" />
       <e p="Cache" t="Include" />
       <e p="Database" t="Include" />
       <e p="Infrastructure\EInfrastructure.Core" t="IncludeRecursive">
@@ -42,6 +43,7 @@
           <e p="AuthException.cs" t="Include" />
           <e p="BusinessException.cs" t="Include" />
         </e>
+        <e p="Extension" t="Include" />
         <e p="HelpCommon" t="Include">
           <e p="AnimalCommon.cs" t="Include" />
           <e p="Assert.cs" t="Include" />
@@ -63,13 +65,25 @@
             <e p="AnimalEnum.cs" t="Include" />
             <e p="ConstellationEnum.cs" t="Include" />
           </e>
+          <e p="Files" t="Include">
+            <e p="FileCommon.cs" t="Include" />
+            <e p="FileInfo.cs" t="Include" />
+          </e>
           <e p="ListCommon.cs" t="Include" />
           <e p="LogCommon.cs" t="Include" />
           <e p="MathCommon.cs" t="Include" />
           <e p="NumberTypeCommon.cs" t="Include" />
           <e p="PasswordCommon.cs" t="Include" />
           <e p="PinYinCommon.cs" t="Include" />
-          <e p="RandomCommon.cs" t="Include" />
+          <e p="Randoms" t="Include">
+            <e p="Const.cs" t="Include" />
+            <e p="Interface" t="Include">
+              <e p="IRandomBuilder.cs" t="Include" />
+              <e p="IRandomNumberGenerator.cs" t="Include" />
+            </e>
+            <e p="RandomCommon.cs" t="Include" />
+            <e p="RandomNumberGenerator.cs" t="Include" />
+          </e>
           <e p="SecurityCommon.cs" t="Include" />
           <e p="Serialization" t="Include">
             <e p="BinaryCommon.cs" t="Include" />
@@ -216,6 +230,64 @@
           </e>
         </e>
         <e p="TbkOpenApi.cs" t="Include" />
+      </e>
+      <e p="Infrastructure\EInfrastructure.Core.AspNetCore" t="IncludeRecursive">
+        <e p="Api" t="Include">
+          <e p="ApiErrResult.cs" t="Include" />
+          <e p="ApiResult.cs" t="Include" />
+        </e>
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="EInfrastructure.Core.AspNetCore.csproj" t="IncludeRecursive" />
+        <e p="Exception" t="Include">
+          <e p="ErrorHandlingMiddleware.cs" t="Include" />
+          <e p="Ext.cs" t="Include" />
+          <e p="WebRequest.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="EInfrastructure.Core.AspNetCore.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Infrastructure\EInfrastructure.Core.AspNetCore.AutoConfig" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ConfigAutoRegister.cs" t="Include" />
+        <e p="EInfrastructure.Core.AspNetCore.AutoConfig.csproj" t="IncludeRecursive" />
+        <e p="Extension" t="Include">
+          <e p="IWritableOptions.cs" t="Include" />
+          <e p="WritableOptions.cs" t="Include" />
+        </e>
+        <e p="Interface" t="Include">
+          <e p="IWritableConfigModel.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="EInfrastructure.Core.AspNetCore.AutoConfig.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="ServiceCollectionExtensions.cs" t="Include" />
+      </e>
+      <e p="Infrastructure\EInfrastructure.Core.AutoConfig" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ConfigAutoRegister.cs" t="Include" />
+        <e p="EInfrastructure.Core.AutoConfig.csproj" t="IncludeRecursive" />
+        <e p="Interface" t="Include">
+          <e p="IConfigModel.cs" t="Include" />
+          <e p="IScopedConfigModel.cs" t="Include" />
+          <e p="ISingletonConfigModel.cs" t="Include" />
+          <e p="ITransientConfigModel.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="EInfrastructure.Core.AutoConfig.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
       </e>
       <e p="Infrastructure\EInfrastructure.Core.AutoFac" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
@@ -405,26 +477,6 @@
         <e p="QueryBase.cs" t="Include" />
         <e p="QueryExtension.cs" t="Include" />
         <e p="RepositoryBase.cs" t="Include" />
-      </e>
-      <e p="Infrastructure\EInfrastructure.Core.Web" t="IncludeRecursive">
-        <e p="Api" t="Include">
-          <e p="ApiErrResult.cs" t="Include" />
-          <e p="ApiResult.cs" t="Include" />
-        </e>
-        <e p="bin" t="ExcludeRecursive" />
-        <e p="EInfrastructure.Core.Web.csproj" t="IncludeRecursive" />
-        <e p="Exception" t="Include">
-          <e p="ErrorHandlingMiddleware.cs" t="Include" />
-          <e p="Ext.cs" t="Include" />
-          <e p="WebRequest.cs" t="Include" />
-        </e>
-        <e p="obj" t="ExcludeRecursive">
-          <e p="Debug" t="Include">
-            <e p="netstandard2.0" t="Include">
-              <e p="EInfrastructure.Core.Web.AssemblyInfo.cs" t="Include" />
-            </e>
-          </e>
-        </e>
       </e>
       <e p="Infrastructure\EInfrastructure.Core.WebChat" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
