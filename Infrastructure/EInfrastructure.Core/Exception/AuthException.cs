@@ -1,5 +1,5 @@
 ﻿
-using EInfrastructure.Core.Key;
+using EInfrastructure.Core.Configuration.Key;
 
 namespace EInfrastructure.Core.Exception
 {

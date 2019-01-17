@@ -13,7 +13,7 @@
 using System;
 using System.Linq;
 using EInfrastructure.Core.AspNetCore.AutoConfig.Extension;
-using EInfrastructure.Core.AspNetCore.AutoConfig.Interface;
+using EInfrastructure.Core.Configuration.Interface.Config;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -26,6 +26,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Extension" />
+    <ProjectReference Include="..\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
   </ItemGroup>
 </Project>

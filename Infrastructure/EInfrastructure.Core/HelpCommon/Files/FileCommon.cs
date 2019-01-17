@@ -129,7 +129,7 @@ namespace EInfrastructure.Core.HelpCommon.Files
         /// <param name="formFile"></param>
         /// <param name="encryptType">加密方式，默认加密方式为Sha256</param>
         /// <returns></returns>
-        public EInfrastructure.Core.HelpCommon.Files.FileInfo Get(IFormFile formFile,
+        public static FileInfo Get(IFormFile formFile,
             EncryptTypeEnum encryptType = EncryptTypeEnum.Sha256)
         {
             string conditionCode;
@@ -158,6 +158,26 @@ namespace EInfrastructure.Core.HelpCommon.Files
                 Name = formFile.FileName,
                 ConditionCode = conditionCode
             };
+        }
+
+        #endregion
+
+        #region 得到文本内容
+
+        /// <summary>
+        /// 得到文本内容
+        /// </summary>
+        /// <param name="path">绝对路径</param>
+        /// <param name="isAbsolutePath">是否绝对路径，默认为false（相对路径）</param>
+        /// <returns></returns>
+        public static string GetContent(string path, bool isAbsolutePath = false)
+        {
+            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                byte[] byts = new byte[fileStream.Length];
+                fileStream.Read(byts, 0, byts.Length);
+                return Encoding.Default.GetString(byts);
+            }
         }
 
         #endregion

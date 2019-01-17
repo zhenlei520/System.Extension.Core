@@ -1,5 +1,5 @@
 using System.Linq;
-using EInfrastructure.Core.Key;
+using EInfrastructure.Core.Configuration.Key;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;

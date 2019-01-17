@@ -1,6 +1,4 @@
-using EInfrastructure.Core.AutoConfig.Interface;
-
-namespace EInfrastructure.Core.AspNetCore.AutoConfig.Interface
+namespace EInfrastructure.Core.Configuration.Interface.Config
 {
     /// <summary>
     /// 可修改的配置信息

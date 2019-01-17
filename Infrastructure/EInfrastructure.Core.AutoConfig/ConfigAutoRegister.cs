@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using EInfrastructure.Core.AutoConfig.Interface;
+using EInfrastructure.Core.Configuration.Interface.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

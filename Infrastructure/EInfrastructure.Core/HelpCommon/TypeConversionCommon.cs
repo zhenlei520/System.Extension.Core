@@ -18,6 +18,44 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="obj">待转换参数</param>
         /// <param name="defaultVal">默认值</param>
         /// <returns></returns>
+        public static char ConvertToChar(this object obj, char defaultVal)
+        {
+            char result;
+            if (obj != null)
+                if (char.TryParse(obj.ToString(), out result))
+                    return result;
+                else
+                    return defaultVal;
+            return defaultVal;
+        }
+
+        /// <summary>
+        /// obj转Guid
+        /// </summary>
+        /// <param name="obj">待转换参数</param>
+        /// <param name="defaultVal">默认值</param>
+        /// <returns></returns>
+        public static char? ConvertToChar(this object obj, char? defaultVal = null)
+        {
+            char result;
+            if (obj != null)
+                if (char.TryParse(obj.ToString(), out result))
+                    return result;
+                else
+                    return defaultVal;
+            return defaultVal;
+        }
+
+        #endregion
+
+        #region obj转Guid
+
+        /// <summary>
+        /// obj转Guid
+        /// </summary>
+        /// <param name="obj">待转换参数</param>
+        /// <param name="defaultVal">默认值</param>
+        /// <returns></returns>
         public static Guid ConvertToGuid(this object obj, Guid defaultVal)
         {
             Guid result;
@@ -306,6 +344,44 @@ namespace EInfrastructure.Core.HelpCommon
             byte result;
             if (obj != null)
                 if (byte.TryParse(obj.ToString(), out result))
+                    return result;
+                else
+                    return defaultVal;
+            return defaultVal;
+        }
+
+        #endregion
+
+        #region obj转sbyte
+
+        /// <summary>
+        /// obj转byte
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="defaultVal">默认值</param>
+        /// <returns></returns>
+        public static sbyte ConvertToSByte(this object obj, sbyte defaultVal)
+        {
+            sbyte result;
+            if (obj != null)
+                if (sbyte.TryParse(obj.ToString(), out result))
+                    return result;
+                else
+                    return defaultVal;
+            return defaultVal;
+        }
+
+        /// <summary>
+        /// obj转Int
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="defaultVal">默认值</param>
+        /// <returns></returns>
+        public static sbyte? ConvertToSByte(this object obj, sbyte? defaultVal = null)
+        {
+            sbyte result;
+            if (obj != null)
+                if (sbyte.TryParse(obj.ToString(), out result))
                     return result;
                 else
                     return defaultVal;

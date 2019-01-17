@@ -1,5 +1,5 @@
 ﻿using System;
-using EInfrastructure.Core.Config;
+using EInfrastructure.Core.Configuration.Config;
 using Microsoft.Extensions.Options;
 using NLog;
 

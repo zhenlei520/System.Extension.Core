@@ -1,4 +1,4 @@
-﻿namespace EInfrastructure.Core.Config
+﻿namespace EInfrastructure.Core.Configuration.Config
 {
     /// <summary>
     /// 日志配置

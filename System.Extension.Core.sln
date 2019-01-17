@@ -49,6 +49,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AspNet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AspNetCore", "Infrastructure\EInfrastructure.Core.AspNetCore\EInfrastructure.Core.AspNetCore.csproj", "{5923F71E-C311-4FC4-A7C5-A8ADC2E6623A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Words", "Infrastructure\EInfrastructure.Core.Words\EInfrastructure.Core.Words.csproj", "{425F7F0A-B359-44C1-ABF2-7F60091E2E30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Configuration", "Infrastructure\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj", "{20E00246-AEC9-4DC4-9241-44F554799CE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +119,14 @@ Global
 		{5923F71E-C311-4FC4-A7C5-A8ADC2E6623A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5923F71E-C311-4FC4-A7C5-A8ADC2E6623A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5923F71E-C311-4FC4-A7C5-A8ADC2E6623A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{425F7F0A-B359-44C1-ABF2-7F60091E2E30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{425F7F0A-B359-44C1-ABF2-7F60091E2E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{425F7F0A-B359-44C1-ABF2-7F60091E2E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{425F7F0A-B359-44C1-ABF2-7F60091E2E30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20E00246-AEC9-4DC4-9241-44F554799CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E00246-AEC9-4DC4-9241-44F554799CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E00246-AEC9-4DC4-9241-44F554799CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E00246-AEC9-4DC4-9241-44F554799CE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

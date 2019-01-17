@@ -1,5 +1,5 @@
-﻿using EInfrastructure.Core.HelpCommon.Serialization;
-using EInfrastructure.Core.Key;
+﻿using EInfrastructure.Core.Configuration.Key;
+using EInfrastructure.Core.HelpCommon.Serialization;
 
 namespace EInfrastructure.Core.Exception
 {

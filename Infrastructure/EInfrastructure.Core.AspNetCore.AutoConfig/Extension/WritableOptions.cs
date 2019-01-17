@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using EInfrastructure.Core.Configuration.Interface.Config;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;

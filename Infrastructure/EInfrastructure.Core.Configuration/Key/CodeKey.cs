@@ -1,4 +1,4 @@
-﻿namespace EInfrastructure.Core.Key
+﻿namespace EInfrastructure.Core.Configuration.Key
 {
     /// <summary>
     /// 错误码
