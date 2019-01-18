@@ -10,11 +10,25 @@ namespace EInfrastructure.Core.Interface.Words
     public interface IWordService : ISingleInstance
     {
         /// <summary>
+        /// 得到文字首字母
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        string GetFirstPinYin(string text);
+
+        /// <summary>
         /// 得到完整的拼音
         /// </summary>
         /// <param name="text">文本信息</param>
         /// <returns></returns>
         string GetPinYin(string text);
+
+        /// <summary>
+        /// 获取文字的全部拼音（多读音）
+        /// </summary>
+        /// <param name="text">文本信息</param>
+        /// <returns></returns>
+        List<string> GetAllPinYin(char text);
 
         /// <summary>
         /// 得到中文简体
@@ -85,5 +99,47 @@ namespace EInfrastructure.Core.Interface.Words
         /// <param name="textType">文字类型</param>
         /// <returns></returns>
         bool IsAll(string text, TextTypesEnum textType);
+
+        /// <summary>
+        /// 得到字典内容
+        /// </summary>
+        /// <param name="path">文件绝对地址</param>
+        /// <returns></returns>
+        string GetDicContent(string path);
+
+        /// <summary>
+        /// 得到字典内容
+        /// </summary>
+        /// <param name="path">文件相对地址集合</param>
+        /// <returns></returns>
+        string GetDicContent(string[] path);
+
+        /// <summary>
+        /// 数字转中文大写
+        /// </summary>
+        /// <param name="x">数字信息</param>
+        /// <returns></returns>
+        string ToChineseRmb(double x);
+
+        /// <summary>
+        /// 中文转数字（支持中文大写）
+        /// </summary>
+        /// <param name="chineseString">中文信息</param>
+        /// <returns></returns>
+        decimal ToNumber(string chineseString);
+
+        /// <summary>
+        /// 半角转全角
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        string ToSbc(string input);
+
+        /// <summary>
+        /// 转半角的函数
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        string ToDbc(string input);
     }
 }

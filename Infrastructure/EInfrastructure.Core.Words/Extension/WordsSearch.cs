@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EInfrastructure.Core.Words.Config;
 
-namespace EInfrastructure.Core.Words.PinYin
+namespace EInfrastructure.Core.Words.Extension
 {
     /// <summary>
     /// 文本搜索，带返回位置及索引号
@@ -200,6 +200,8 @@ namespace EInfrastructure.Core.Words.PinYin
             _root = root;
         }
 
+        #endregion
+
         private void TryLinks(TrieNode node, TrieNode node2, Dictionary<TrieNode, TrieNode> links)
         {
             foreach (var item in node.m_values)
@@ -224,8 +226,6 @@ namespace EInfrastructure.Core.Words.PinYin
                 TryLinks(item.Value, tn, links);
             }
         }
-
-        #endregion
 
         #region 查找 替换 查找第一个关键字 判断是否包含关键字
 
@@ -266,12 +266,14 @@ namespace EInfrastructure.Core.Words.PinYin
             return false;
         }
 
+        #region 在文本中查找第一个关键字
+
         /// <summary>
         /// 在文本中查找第一个关键字
         /// </summary>
         /// <param name="text">文本</param>
         /// <returns></returns>
-        public WordsSearchResult FindFirst(string text)
+        internal WordsSearchResult FindFirst(string text)
         {
             TrieNode ptr = null;
             for (int i = 0; i < text.Length; i++)
@@ -304,12 +306,16 @@ namespace EInfrastructure.Core.Words.PinYin
             return WordsSearchResult.Empty;
         }
 
+        #endregion
+
+        #region 在文本中查找所有的关键字
+
         /// <summary>
         /// 在文本中查找所有的关键字
         /// </summary>
         /// <param name="text">文本</param>
         /// <returns></returns>
-        public List<WordsSearchResult> FindAll(string text)
+        internal List<WordsSearchResult> FindAll(string text)
         {
             TrieNode ptr = null;
             List<WordsSearchResult> list = new List<WordsSearchResult>();
@@ -346,13 +352,17 @@ namespace EInfrastructure.Core.Words.PinYin
             return list;
         }
 
+        #endregion
+
+        #region 在文本中替换所有的关键字
+
         /// <summary>
         /// 在文本中替换所有的关键字
         /// </summary>
         /// <param name="text">文本</param>
         /// <param name="replaceChar">替换符</param>
         /// <returns></returns>
-        public string Replace(string text, char replaceChar = '*')
+        internal string Replace(string text, char replaceChar = '*')
         {
             StringBuilder result = new StringBuilder(text);
 
@@ -391,6 +401,8 @@ namespace EInfrastructure.Core.Words.PinYin
 
             return result.ToString();
         }
+
+        #endregion
 
         #endregion
     }

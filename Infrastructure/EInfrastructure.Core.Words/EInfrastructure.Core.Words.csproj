@@ -9,4 +9,27 @@
       <ProjectReference Include="..\EInfrastructure.Core\EInfrastructure.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="Dict\Text\initial.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Dict\Text\simplified.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Dict\Text\specialNumber.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Dict\Text\traditional.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Dict\Text\transcodingNumber.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Dict\initial.txt" />
+      <None Remove="Dict\simplified.txt" />
+      <None Remove="Dict\specialNumber.txt" />
+      <None Remove="Dict\traditional.txt" />
+      <None Remove="Dict\transcodingNumber.txt" />
+    </ItemGroup>
+
 </Project>
