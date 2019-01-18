@@ -34,11 +34,11 @@ namespace EInfrastructure.Core.Words
             {
                 _dictConfig = new DictTextConfig()
                 {
-                    Simplified = GetContent(new List<string>() {textPathConfig.SimplifiedPath}),
-                    Traditional = GetContent(new List<string>() {textPathConfig.TraditionalPath}),
-                    Initial = GetContent(new List<string>() {textPathConfig.InitialPath}),
-                    SpecialNumber = GetContent(new List<string>() {textPathConfig.SpecialNumberPath}),
-                    TranscodingNumber = GetContent(new List<string>() {textPathConfig.TranscodingNumberPath})
+                    Simplified = GetContent(textPathConfig.SimplifiedPath.ConvertStrToList<string>('/')),
+                    Traditional = GetContent(textPathConfig.TraditionalPath.ConvertStrToList<string>('/')),
+                    Initial = GetContent(textPathConfig.InitialPath.ConvertStrToList<string>('/')),
+                    SpecialNumber = GetContent(textPathConfig.SpecialNumberPath.ConvertStrToList<string>('/')),
+                    TranscodingNumber = GetContent(textPathConfig.TranscodingNumberPath.ConvertStrToList<string>('/'))
                 };
             }
 
@@ -46,15 +46,15 @@ namespace EInfrastructure.Core.Words
             {
                 _dictPinYinConfig = new DictPinYinConfig()
                 {
-                    PinYinIndex = GetContent(new List<string>() {dictPinYinPathConfig.PinYinIndexPath})
-                        .ConvertStrToList<short>(',').ToArray(),
-                    PinYinData = GetContent(new List<string>() {dictPinYinPathConfig.PinYinDataPath})
-                        .ConvertStrToList<short>(',').ToArray(),
-                    PinYinName = GetContent(new List<string>() {dictPinYinPathConfig.PinYinDataPath})
-                        .ConvertStrToList<string>(','),
-                    Word = GetContent(new List<string>() {dictPinYinPathConfig.WordPath}),
-                    WordPinYin = GetContent(new List<string>() {dictPinYinPathConfig.WordPinYinPath})
-                        .ConvertStrToList<short>(',').ToArray()
+                    PinYinIndex = GetContent(dictPinYinPathConfig.PinYinIndexPath.ConvertStrToList<string>('/'))
+                        .ConvertStrToList<short>('/').ToArray(),
+                    PinYinData = GetContent(dictPinYinPathConfig.PinYinDataPath.ConvertStrToList<string>('/'))
+                        .ConvertStrToList<short>('/').ToArray(),
+                    PinYinName = GetContent(dictPinYinPathConfig.PinYinDataPath.ConvertStrToList<string>('/'))
+                        .ConvertStrToList<string>('/'),
+                    Word = GetContent(dictPinYinPathConfig.WordPath.ConvertStrToList<string>('/')),
+                    WordPinYin = GetContent(dictPinYinPathConfig.WordPinYinPath.ConvertStrToList<string>('/'))
+                        .ConvertStrToList<short>('/').ToArray()
                 };
             }
         }

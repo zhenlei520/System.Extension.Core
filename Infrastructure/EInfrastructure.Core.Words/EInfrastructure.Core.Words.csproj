@@ -30,6 +30,26 @@
       <None Remove="Dict\specialNumber.txt" />
       <None Remove="Dict\traditional.txt" />
       <None Remove="Dict\transcodingNumber.txt" />
+      <None Remove="Dict\PinYin\pinyinData.txt" />
+      <Content Include="Dict\PinYin\pinyinData.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Dict\PinYin\pinyinIndex.txt" />
+      <Content Include="Dict\PinYin\pinyinIndex.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Dict\PinYin\pinyinName.txt" />
+      <Content Include="Dict\PinYin\pinyinName.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Dict\PinYin\wordPinyin.txt" />
+      <Content Include="Dict\PinYin\wordPinyin.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Dict\PinYin\pinyinWord.txt" />
+      <Content Include="Dict\PinYin\pinyinWord.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
