@@ -8,11 +8,6 @@ namespace EInfrastructure.Core.AutoConfig
     /// </summary>
     public static class Startup
     {
-        /// <summary>
-        /// 只能启动一次
-        /// </summary>
-        private static bool _startUp = false;
-
         #region 自动注入配置文件（含热更新与非热更新，不可修改）
 
         /// <summary>
