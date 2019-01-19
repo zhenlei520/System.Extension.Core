@@ -53,14 +53,14 @@ namespace EInfrastructure.Core.Words
                 DictPinYinConfig = new DictPinYinConfig()
                 {
                     PinYinIndex = GetContent(dictPinYinPathConfig.PinYinIndexPath.ConvertStrToList<string>('/'))
-                        .ConvertStrToList<short>('/').ToArray(),
+                        .ConvertStrToList<short>('/',false).ToArray(),
                     PinYinData = GetContent(dictPinYinPathConfig.PinYinDataPath.ConvertStrToList<string>('/'))
-                        .ConvertStrToList<short>('/').ToArray(),
+                        .ConvertStrToList<short>('/',false).ToArray(),
                     PinYinName = GetContent(dictPinYinPathConfig.PinYinNamePath.ConvertStrToList<string>('/'))
-                        .ConvertStrToList<string>('/'),
-                    Word = GetContent(dictPinYinPathConfig.WordPath.ConvertStrToList<string>('/')),
+                        .ConvertStrToList<string>('/',false),
+                    Word = GetContent(dictPinYinPathConfig.WordPath.ConvertStrToList<string>('/',false)),
                     WordPinYin = GetContent(dictPinYinPathConfig.WordPinYinPath.ConvertStrToList<string>('/'))
-                        .ConvertStrToList<short>('/').ToArray()
+                        .ConvertStrToList<short>('/',false).ToArray()
                 };
             }
         }
