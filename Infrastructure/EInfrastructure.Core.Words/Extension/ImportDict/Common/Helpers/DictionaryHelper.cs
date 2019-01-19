@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Helpers
 {
-    public class DictionaryHelper
+    internal class DictionaryHelper
     {
         private static readonly Dictionary<char, ChineseCode> Dictionary = new Dictionary<char, ChineseCode>();
 

@@ -4,7 +4,7 @@ using EInfrastructure.Core.Words.Extension.ImportDict.Common.Enum;
 
 namespace EInfrastructure.Core.Words.Extension.ImportDict.Common
 {
-    public interface IWordLibraryImport
+    internal interface IWordLibraryImport
     {
         int CountWord { get; set; }
         
@@ -20,14 +20,14 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict.Common
         
     }
 
-    public interface IWordLibraryTextImport : IWordLibraryImport
+    internal interface IWordLibraryTextImport : IWordLibraryImport
     {
         Encoding Encoding { get; }
         
         WordLibraryList ImportText(string text);
     }
 
-    public interface IWordLibraryExport
+    internal interface IWordLibraryExport
     {
         Encoding Encoding { get; }
         
@@ -38,12 +38,12 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict.Common
         string ExportLine(WordLibrary wl);
     }
 
-    public interface IMultiCodeType
+    internal interface IMultiCodeType
     {
         CodeTypeEnum CodeType { get; }
     }
 
-    public interface IStreamPrepare
+    internal interface IStreamPrepare
     {
         void Prepare();
     }

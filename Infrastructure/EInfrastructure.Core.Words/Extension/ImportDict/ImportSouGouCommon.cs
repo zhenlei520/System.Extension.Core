@@ -10,7 +10,7 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict
 {
     /// <summary>
     /// </summary>
-    public class ImportSouGouCommon
+    internal class ImportSouGouCommon
     {
         private static IWordService _wordService;
 

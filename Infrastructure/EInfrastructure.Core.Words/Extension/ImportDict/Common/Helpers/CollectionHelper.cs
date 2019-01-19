@@ -5,7 +5,7 @@ using EInfrastructure.Core.Words.Extension.ImportDict.Common.Enum;
 
 namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Helpers
 {
-    public static class CollectionHelper
+    internal static class CollectionHelper
     {
         public static string GetString(IEnumerable<string> list, string split, BuildTypeEnum buildType)
         {

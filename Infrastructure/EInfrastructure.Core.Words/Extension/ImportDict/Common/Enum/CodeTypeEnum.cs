@@ -5,7 +5,7 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Enum
     /// <summary>
     /// 输入法类型
     /// </summary>
-    public enum CodeTypeEnum
+    internal enum CodeTypeEnum
     {
         /// <summary>
         /// 用户自定义短语

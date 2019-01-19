@@ -2,7 +2,7 @@
 
 namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Enum
 {
-    public enum BuildTypeEnum
+    internal enum BuildTypeEnum
     {
         /// <summary>
         /// 字符串左边包含分隔符

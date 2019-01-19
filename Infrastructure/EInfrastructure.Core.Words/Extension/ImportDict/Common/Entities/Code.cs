@@ -4,9 +4,9 @@ using EInfrastructure.Core.Words.Extension.ImportDict.Common.Helpers;
 
 namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Entities
 {
-   public class Code:List<IList<string>>
+   internal class Code:List<IList<string>>
     {
-        public Code(IEnumerable<IList<string>> code)
+        internal Code(IEnumerable<IList<string>> code)
         {
             foreach (var c in code)
             {

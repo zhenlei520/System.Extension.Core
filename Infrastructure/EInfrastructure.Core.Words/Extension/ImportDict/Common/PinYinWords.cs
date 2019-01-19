@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EInfrastructure.Core.Words.Extension.ImportDict.Common
 {
-    public class PinYinWords
+    internal class PinYinWords
     {
         public string Words { get; set; }
         public string PinYins { get; set; }

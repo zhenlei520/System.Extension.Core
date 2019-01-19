@@ -2,9 +2,9 @@
 
 namespace EInfrastructure.Core.Words.Extension.ImportDict.Common
 {
-    public class BaseImport
+    internal class BaseImport
     {
-        public BaseImport()
+        internal BaseImport()
         {
             DefaultRank = 0;
             CodeType = CodeTypeEnum.Pinyin;

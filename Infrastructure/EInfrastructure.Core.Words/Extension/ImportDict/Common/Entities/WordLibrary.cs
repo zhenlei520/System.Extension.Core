@@ -9,9 +9,9 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Entities
     /// <summary>
     ///     词条类
     /// </summary>
-    public class WordLibrary
+    internal class WordLibrary
     {
-        public WordLibrary()
+        internal WordLibrary()
         {
             CodeType = CodeTypeEnum.Pinyin;
             Codes = new Code();
