@@ -58,9 +58,11 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict
                 index += pys.Count();
                 pyIndex += "," + index;
             }
-
-            File.WriteAllText(BaseWordService.DictPinYinPathConfig.WordPath, text);
-            File.WriteAllText(BaseWordService.DictPinYinPathConfig.PinYinIndexPath, pyIndex);
+            //PinYinIndexPath
+//            WordPinYinPath
+//                PinYinDataPath
+            File.WriteAllText(BaseWordService.DictPinYinPathConfig.WordPath, text);//确定
+//            File.WriteAllText(BaseWordService.DictPinYinPathConfig., pyIndex);
             File.WriteAllText(BaseWordService.DictPinYinPathConfig.WordPinYinPath, py);
         }
 
@@ -80,7 +82,7 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict
             foreach (var item in t)
             {
                 var w = item.Word;
-                var py = _wordService.GetPinYin(w).ToLower();
+                var py = _wordService.GetPinYinFast(w).ToLower();
                 var py1 = item.PinYinString.Replace("'", "");
                 if (py != py1)
                 {
@@ -133,7 +135,7 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict
                     w = w.Replace(pyw.Words, pyw.PinYins);
                 }
 
-                var py = _wordService.GetPinYin(w).ToLower().Replace("'", "");
+                var py = _wordService.GetPinYinFast(w).ToLower().Replace("'", "");
                 var py1 = item.PinYins.Replace("'", "");
 
                 if (py != py1)
@@ -162,7 +164,7 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict
                     w = w.Replace(pyw.Words, pyw.PinYins);
                 }
 
-                var py = _wordService.GetPinYin(w).ToLower().Replace("'", "");
+                var py = _wordService.GetPinYinFast(w).ToLower().Replace("'", "");
                 var py1 = item.Item2.Replace("'", "");
 
                 if (py != py1)

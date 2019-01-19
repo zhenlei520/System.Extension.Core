@@ -92,7 +92,8 @@ namespace EInfrastructure.Core.Words.Extension
             string filePath = "";
             path.ForEach(item => { filePath = Path.Combine(filePath, item); });
             filePath = Path.Combine(HostingEnvironmentConfig.ContentRootPath, filePath);
-            return GetContent(filePath);
+            string result= GetContent(filePath);
+            return result;
         }
 
         #endregion

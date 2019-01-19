@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,23 @@ namespace EInfrastructure.Core.Words
 
         #endregion
 
+        /// <summary>
+        /// 获取拼音全拼, 不支持多音,中文字符集为[0x4E00,0x9FA5]
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        [Obsolete("请使用GetPinYin方法，此方法不支持多音")]
+        public string GetPinYinFast(string text)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < text.Length; i++) {
+                var c = text[i];
+                sb.Append(PinyinDict.GetPinYinFast(c));
+            }
+            return sb.ToString();
+        }
+
+        
         #region 得到完整的拼音
 
         /// <summary>
