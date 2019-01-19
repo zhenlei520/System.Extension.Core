@@ -180,12 +180,12 @@ namespace EInfrastructure.Core.Words.PinYin
             if (c >= 0x4e00 && c <= 0x9fa5)
             {
                 var index = c - 0x4e00;
-                var start = BaseWordService.DictPinYinConfig.PinYinIndex2[index];
-                var end = BaseWordService.DictPinYinConfig.PinYinIndex2[index + 1];
+                var start = BaseWordService.DictPinYinConfig.PinYinIndex[index];
+                var end = BaseWordService.DictPinYinConfig.PinYinIndex[index + 1];
                 if (end > start)
                 {
-                    return BaseWordService.DictPinYinConfig.PinYinName2[
-                        BaseWordService.DictPinYinConfig.PinYinData2[start]];
+                    return BaseWordService.DictPinYinConfig.PinYinName[
+                        BaseWordService.DictPinYinConfig.PinYinData[start]];
                 }
             }
 
