@@ -5,7 +5,7 @@ namespace EInfrastructure.Core.Words.Config.PinYin
     /// <summary>
     /// 文字拼音
     /// </summary>
-    public class DictPinYinPathConfig : IScopedConfigModel
+    public class DictPinYinPathConfig : ISingletonConfigModel
     {
         /// <summary>
         /// 拼音下表

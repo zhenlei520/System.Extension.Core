@@ -21,16 +21,18 @@ namespace EInfrastructure.Core.AutoConfig
         /// <param name="services"></param>
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
         /// <param name="action"></param>
+        /// <param name="errConfigAction">配置信息错误回调</param>
         /// <returns></returns>
         public static IServiceCollection AddAutoConfig(this IServiceCollection services,
-            bool isCompleteName = false, Action<ConfigAutoRegister> action = null)
+            bool isCompleteName = false, Action<ConfigAutoRegister> action = null,
+            Action<string> errConfigAction = null)
         {
             ConfigAutoRegister configAutoRegisterExt = new ConfigAutoRegister();
             if (action == null)
             {
-                configAutoRegisterExt.AddSingletonConfig(services, isCompleteName);
-                configAutoRegisterExt.AddScopedConfig(services, isCompleteName);
-                configAutoRegisterExt.AddTransientConfig(services, isCompleteName);
+                configAutoRegisterExt.AddSingletonConfig(services, isCompleteName,errConfigAction);
+                configAutoRegisterExt.AddScopedConfig(services, isCompleteName,errConfigAction);
+                configAutoRegisterExt.AddTransientConfig(services, isCompleteName,errConfigAction);
             }
             else
             {

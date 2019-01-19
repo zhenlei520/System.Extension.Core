@@ -5,7 +5,7 @@ namespace EInfrastructure.Core.Words.Config.Text
     /// <summary>
     /// 可修改的字典配置文件地址
     /// </summary>
-    public class DictTextPathConfig : IScopedConfigModel
+    public class DictTextPathConfig : ISingletonConfigModel
     {
         /// <summary>
         /// 中文简体

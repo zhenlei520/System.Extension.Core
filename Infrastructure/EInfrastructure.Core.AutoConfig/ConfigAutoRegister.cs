@@ -15,12 +15,17 @@ namespace EInfrastructure.Core.AutoConfig
         /// </summary>
         /// <param name="services"></param>
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
+        /// <param name="errConfigAction">配置信息错误回调</param>
         /// <returns></returns>
         internal IServiceCollection AddSingletonConfig(IServiceCollection services,
-            bool isCompleteName = false)
+            bool isCompleteName = false,
+            Action<string> errConfigAction = null)
         {
             AddConfig<ISingletonConfigModel>(services,
-                (type) => { services.AddSingleton(type, provider => Get(provider, type, isCompleteName)); });
+                (type) =>
+                {
+                    services.AddSingleton(type, provider => Get(provider, type, isCompleteName, errConfigAction));
+                });
             return services;
         }
 
@@ -33,12 +38,17 @@ namespace EInfrastructure.Core.AutoConfig
         /// </summary>
         /// <param name="services"></param>
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
+        /// <param name="errConfigAction">配置信息错误回调</param>
         /// <returns></returns>
         internal IServiceCollection AddScopedConfig(IServiceCollection services,
-            bool isCompleteName = false)
+            bool isCompleteName = false,
+            Action<string> errConfigAction = null)
         {
             AddConfig<IScopedConfigModel>(services,
-                (type) => { services.AddScoped(type, provider => Get(provider, type, isCompleteName)); });
+                (type) =>
+                {
+                    services.AddScoped(type, provider => Get(provider, type, isCompleteName, errConfigAction));
+                });
             return services;
         }
 
@@ -51,12 +61,17 @@ namespace EInfrastructure.Core.AutoConfig
         /// </summary>
         /// <param name="services"></param>
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
+        /// <param name="errConfigAction">配置信息错误回调</param>
         /// <returns></returns>
         internal IServiceCollection AddTransientConfig(IServiceCollection services,
-            bool isCompleteName = false)
+            bool isCompleteName = false,
+            Action<string> errConfigAction = null)
         {
             AddConfig<ITransientConfigModel>(services,
-                (type) => { services.AddTransient(type, provider => Get(provider, type, isCompleteName)); });
+                (type) =>
+                {
+                    services.AddTransient(type, provider => Get(provider, type, isCompleteName, errConfigAction));
+                });
             return services;
         }
 
@@ -100,15 +115,31 @@ namespace EInfrastructure.Core.AutoConfig
         /// <param name="provider"></param>
         /// <param name="type"></param>
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
+        /// <param name="errConfigAction">配置信息错误回调</param>
         /// <returns></returns>
-        private object Get(IServiceProvider provider, Type type, bool isCompleteName = false)
+        private object Get(IServiceProvider provider, Type type, bool isCompleteName = false,
+            Action<string> errConfigAction = null)
         {
+            object result;
+            string sectionName = "";
             if (!isCompleteName)
             {
-                return provider.GetService<IConfiguration>().GetSection(type.Name).Get(type);
+                sectionName = type.Name;
+            }
+            else
+            {
+                sectionName = type.FullName;
             }
 
-            return provider.GetService<IConfiguration>().GetSection(type.FullName).Get(type);
+            result = provider.GetService<IConfiguration>().GetSection(sectionName).Get(type);
+
+            if (result == null && errConfigAction != null)
+            {
+                errConfigAction.Invoke($"获取{sectionName}节点的信息失败");
+                return System.Reflection.Assembly.GetAssembly(type).CreateInstance(type.ToString());
+            }
+
+            return result;
         }
 
         #endregion
