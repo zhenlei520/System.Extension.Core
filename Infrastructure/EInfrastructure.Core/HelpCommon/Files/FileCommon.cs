@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -158,6 +159,33 @@ namespace EInfrastructure.Core.HelpCommon.Files
                 Name = formFile.FileName,
                 ConditionCode = conditionCode
             };
+        }
+
+        #endregion
+
+        #region 得到文件地址信息
+
+        /// <summary>
+        /// 得到当前文件夹下的所有文件地址
+        /// </summary>
+        /// <param name="path">要搜索的目录的相对或绝对路径</param>
+        /// <returns></returns>
+        public static string[] GetFiles(string path)
+        {
+            return System.IO.Directory.GetFiles(path);
+        }
+
+        /// <summary>
+        /// 根据通配符搜索文件下的所有地址信息，可选择查询所有层级的或者当前层级的
+        /// </summary>
+        /// <param name="path">要搜索的目录的相对或绝对路径</param>
+        /// <param name="searchPattern">要与 path 中的文件名匹配的搜索字符串。此参数可以包含有效文本路径和通配符（* 和 ?）的组合（请参见“备注”），但不支持正则表达式。</param>
+        /// <param name="searchOption">默认当前文件夹下 TopDirectoryOnly，若查询包含所有子目录为AllDirectories</param>
+        /// <returns></returns>
+        public static string[] GetFiles(string path, string searchPattern,
+            SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        {
+            return System.IO.Directory.GetFiles(path, searchPattern, searchOption);
         }
 
         #endregion
