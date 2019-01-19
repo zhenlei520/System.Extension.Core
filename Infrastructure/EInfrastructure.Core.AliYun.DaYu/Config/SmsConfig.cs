@@ -1,9 +1,11 @@
-﻿namespace EInfrastructure.Core.AliYun.DaYu.Config
+﻿using EInfrastructure.Core.AutoConfig.Interface;
+
+namespace EInfrastructure.Core.AliYun.DaYu.Config
 {
     /// <summary>
     /// 短信配置
     /// </summary>
-    public class SmsConfig
+    public class SmsConfig : IScopedConfigModel
     {
         /// <summary>
         /// 秘钥参数

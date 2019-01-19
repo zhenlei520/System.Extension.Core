@@ -22,7 +22,7 @@ namespace EInfrastructure.Core.Words.PinYin
             if (_search == null)
             {
                 Dictionary<string, int> dict = new Dictionary<string, int>();
-                var sp = BaseWordService._dictPinYinConfig.Word.Split(',');
+                var sp = BaseWordService.DictPinYinConfig.Word.Split(',');
                 var index = 0;
                 foreach (var item in sp)
                 {
@@ -55,8 +55,8 @@ namespace EInfrastructure.Core.Words.PinYin
                 for (int i = 0; i < p.Keyword.Length; i++)
                 {
                     list[i + p.Start] =
-                        BaseWordService._dictPinYinConfig.PinYinName[
-                            BaseWordService._dictPinYinConfig.WordPinYin[i + p.Index]];
+                        BaseWordService.DictPinYinConfig.PinYinName[
+                            BaseWordService.DictPinYinConfig.WordPinYin[i + p.Index]];
                 }
             }
 
@@ -67,12 +67,12 @@ namespace EInfrastructure.Core.Words.PinYin
                 if (c >= 0x4e00 && c <= 0x9fa5)
                 {
                     var index = c - 0x4e00;
-                    var start = BaseWordService._dictPinYinConfig.PinYinIndex[index];
-                    var end = BaseWordService._dictPinYinConfig.PinYinIndex[index + 1];
+                    var start = BaseWordService.DictPinYinConfig.PinYinIndex[index];
+                    var end = BaseWordService.DictPinYinConfig.PinYinIndex[index + 1];
                     if (end > start)
                     {
-                        list[i] = BaseWordService._dictPinYinConfig.PinYinName[
-                            BaseWordService._dictPinYinConfig.PinYinData[start]];
+                        list[i] = BaseWordService.DictPinYinConfig.PinYinName[
+                            BaseWordService.DictPinYinConfig.PinYinData[start]];
                     }
                 }
             }
@@ -149,14 +149,14 @@ namespace EInfrastructure.Core.Words.PinYin
             {
                 var index = c - 0x4e00;
                 List<string> list = new List<string>();
-                var start = BaseWordService._dictPinYinConfig.PinYinIndex[index];
-                var end = BaseWordService._dictPinYinConfig.PinYinIndex[index + 1];
+                var start = BaseWordService.DictPinYinConfig.PinYinIndex[index];
+                var end = BaseWordService.DictPinYinConfig.PinYinIndex[index + 1];
                 if (end > start)
                 {
                     for (int i = start; i < end; i++)
                     {
-                        list.Add(BaseWordService._dictPinYinConfig.PinYinName[
-                            BaseWordService._dictPinYinConfig.PinYinData[i]]);
+                        list.Add(BaseWordService.DictPinYinConfig.PinYinName[
+                            BaseWordService.DictPinYinConfig.PinYinData[i]]);
                     }
                 }
 
@@ -180,12 +180,12 @@ namespace EInfrastructure.Core.Words.PinYin
             if (c >= 0x4e00 && c <= 0x9fa5)
             {
                 var index = c - 0x4e00;
-                var start = BaseWordService._dictPinYinConfig.PinYinIndex[index];
-                var end = BaseWordService._dictPinYinConfig.PinYinIndex[index + 1];
+                var start = BaseWordService.DictPinYinConfig.PinYinIndex[index];
+                var end = BaseWordService.DictPinYinConfig.PinYinIndex[index + 1];
                 if (end > start)
                 {
-                    return BaseWordService._dictPinYinConfig.PinYinName[
-                        BaseWordService._dictPinYinConfig.PinYinData[start]];
+                    return BaseWordService.DictPinYinConfig.PinYinName[
+                        BaseWordService.DictPinYinConfig.PinYinData[start]];
                 }
             }
 

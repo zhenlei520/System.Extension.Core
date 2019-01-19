@@ -8,4 +8,8 @@
       <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Interface" />
+    </ItemGroup>
+
 </Project>

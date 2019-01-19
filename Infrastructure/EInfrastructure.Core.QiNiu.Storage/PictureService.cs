@@ -15,7 +15,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// </summary>
     public class PictureService : BaseStorageProvider, IPictureService, ISingleInstance
     {
-        public PictureService(IOptionsSnapshot<QiNiuConfig> qiNiuSnapshot) :
+        public PictureService(QiNiuConfig qiNiuSnapshot) :
             base(qiNiuSnapshot)
         {
         }

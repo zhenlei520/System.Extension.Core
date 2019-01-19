@@ -26,9 +26,9 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         private readonly string _overtimeCacheKey = "Cache_HashKey";
 
-        public RedisCacheService(IOptionsSnapshot<RedisConfig> redisConfig)
+        public RedisCacheService(RedisConfig redisConfig)
         {
-            CsRedisHelper.InitializeConfiguration(redisConfig.Value);
+            CsRedisHelper.InitializeConfiguration(redisConfig);
         }
 
         #region Methods

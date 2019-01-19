@@ -1,4 +1,5 @@
-﻿using EInfrastructure.Core.Interface.Storage.Enum;
+﻿using EInfrastructure.Core.AutoConfig.Interface;
+using EInfrastructure.Core.Interface.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Enum;
 using Qiniu.Storage;
 
@@ -7,7 +8,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
     /// <summary>
     /// 七牛配置
     /// </summary>
-    public class QiNiuConfig
+    public class QiNiuConfig: IScopedConfigModel
     {
         /// <summary>
         /// 代理

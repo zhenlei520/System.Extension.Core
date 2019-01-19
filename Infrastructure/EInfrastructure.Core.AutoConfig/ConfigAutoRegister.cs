@@ -1,35 +1,13 @@
 using System;
 using System.Linq;
-using EInfrastructure.Core.Configuration.Interface.Config;
+using EInfrastructure.Core.AutoConfig.Interface;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.AutoConfig
 {
-    /// <summary>
-    /// 自动注入config文件
-    /// </summary>
-    public static class ConfigAutoRegister
+    public class ConfigAutoRegister
     {
-        #region 自动注入配置文件（含热更新与非热更新）
-
-        /// <summary>
-        /// 自动注入配置文件（含热更新与非热更新）
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
-        /// <returns></returns>
-        public static IServiceCollection AutoRegister(this IServiceCollection services,
-            bool isCompleteName = false)
-        {
-            AddSingletonConfig(services, isCompleteName);
-            AddScopedConfig(services, isCompleteName);
-            AddTransientConfig(services, isCompleteName);
-            return services;
-        }
-
-        #endregion
-
         #region 自动注入配置文件（项目启动-项目关闭）
 
         /// <summary>
@@ -38,13 +16,11 @@ namespace EInfrastructure.Core.AutoConfig
         /// <param name="services"></param>
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
         /// <returns></returns>
-        public static IServiceCollection AddSingletonConfig(this IServiceCollection services,
+        internal IServiceCollection AddSingletonConfig(IServiceCollection services,
             bool isCompleteName = false)
         {
-            services.AddConfig<ISingletonConfigModel>((type) =>
-            {
-                services.AddSingleton(type, provider => provider.Get(type, isCompleteName));
-            });
+            AddConfig<ISingletonConfigModel>(services,
+                (type) => { services.AddSingleton(type, provider => Get(provider, type, isCompleteName)); });
             return services;
         }
 
@@ -58,12 +34,11 @@ namespace EInfrastructure.Core.AutoConfig
         /// <param name="services"></param>
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
         /// <returns></returns>
-        public static IServiceCollection AddScopedConfig(this IServiceCollection services, bool isCompleteName = false)
+        internal IServiceCollection AddScopedConfig(IServiceCollection services,
+            bool isCompleteName = false)
         {
-            services.AddConfig<IScopedConfigModel>((type) =>
-            {
-                services.AddScoped(type, provider => provider.Get(type, isCompleteName));
-            });
+            AddConfig<IScopedConfigModel>(services,
+                (type) => { services.AddScoped(type, provider => Get(provider, type, isCompleteName)); });
             return services;
         }
 
@@ -77,13 +52,11 @@ namespace EInfrastructure.Core.AutoConfig
         /// <param name="services"></param>
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
         /// <returns></returns>
-        public static IServiceCollection AddTransientConfig(this IServiceCollection services,
+        internal IServiceCollection AddTransientConfig(IServiceCollection services,
             bool isCompleteName = false)
         {
-            services.AddConfig<ITransientConfigModel>((type) =>
-            {
-                services.AddTransient(type, provider => provider.Get(type, isCompleteName));
-            });
+            AddConfig<ITransientConfigModel>(services,
+                (type) => { services.AddTransient(type, provider => Get(provider, type, isCompleteName)); });
             return services;
         }
 
@@ -100,7 +73,7 @@ namespace EInfrastructure.Core.AutoConfig
         /// <param name="action"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        private static IServiceCollection AddConfig<T>(this IServiceCollection services,
+        private static IServiceCollection AddConfig<T>(IServiceCollection services,
             Action<Type> action)
             where T : IConfigModel
 
@@ -128,7 +101,7 @@ namespace EInfrastructure.Core.AutoConfig
         /// <param name="type"></param>
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
         /// <returns></returns>
-        private static object Get(this IServiceProvider provider, Type type, bool isCompleteName = false)
+        private object Get(IServiceProvider provider, Type type, bool isCompleteName = false)
         {
             if (!isCompleteName)
             {

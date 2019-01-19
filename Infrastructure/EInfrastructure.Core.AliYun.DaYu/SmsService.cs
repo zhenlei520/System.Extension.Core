@@ -20,9 +20,9 @@ namespace EInfrastructure.Core.AliYun.DaYu
     {
         private readonly SmsConfig _smsConfig;
 
-        public SmsService(IOptionsSnapshot<SmsConfig> smsConfig)
+        public SmsService(SmsConfig smsConfig)
         {
-            _smsConfig = smsConfig.Value;
+            _smsConfig = smsConfig;
         }
 
         readonly RestClient _restClient = new RestClient("http://dysmsapi.aliyuncs.com");

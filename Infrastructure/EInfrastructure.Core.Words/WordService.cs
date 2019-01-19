@@ -2,24 +2,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using EInfrastructure.Core.Configuration.Interface.Config;
+using EInfrastructure.Core.AutoConfig;
 using EInfrastructure.Core.Interface.Words;
 using EInfrastructure.Core.Interface.Words.Config;
 using EInfrastructure.Core.Interface.Words.Enum;
-using EInfrastructure.Core.Words.Config;
 using EInfrastructure.Core.Words.Config.PinYin;
 using EInfrastructure.Core.Words.Config.Text;
 using EInfrastructure.Core.Words.Extension;
 using EInfrastructure.Core.Words.PinYin;
-using Microsoft.AspNetCore.Hosting;
 
 namespace EInfrastructure.Core.Words
 {
     public class WordService : BaseWordService, IWordService
     {
-        public WordService(IHostingEnvironment hostingEnvironment, DictTextPathConfig textPathConfig,
+        public WordService(
+            HostingEnvironmentConfigs hostingEnvironmentConfig,
+            DictTextPathConfig textPathConfig,
             DictPinYinPathConfig dictPinYinPathConfig) : base(
-            hostingEnvironment, textPathConfig, dictPinYinPathConfig)
+            hostingEnvironmentConfig,
+            textPathConfig, dictPinYinPathConfig)
         {
         }
 
@@ -80,7 +81,7 @@ namespace EInfrastructure.Core.Words
                 var c = text[i];
                 if (c >= 0x4e00 && c <= 0x9fa5)
                 {
-                    var k = _dictConfig.Simplified[c - 0x4e00];
+                    var k = DictConfig.Simplified[c - 0x4e00];
                     if (k != c)
                     {
                         sb[i] = k;
@@ -108,7 +109,7 @@ namespace EInfrastructure.Core.Words
                 var c = text[i];
                 if (c >= 0x4e00 && c <= 0x9fa5)
                 {
-                    var k = _dictConfig.Traditional[c - 0x4e00];
+                    var k = DictConfig.Traditional[c - 0x4e00];
                     if (k != c)
                     {
                         sb[i] = k;

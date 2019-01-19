@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Options;
 
-namespace EInfrastructure.Core.Configuration.Interface.Config
+namespace EInfrastructure.Core.AspNetCore.AutoConfig.Extension
 {
     public interface IWritableOptions<out T> : IOptionsSnapshot<T> where T : class, new()
     {

@@ -13,7 +13,6 @@
 using System;
 using System.Linq;
 using EInfrastructure.Core.AspNetCore.AutoConfig.Extension;
-using EInfrastructure.Core.Configuration.Interface.Config;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +20,7 @@ using Microsoft.Extensions.Options;
 
 namespace EInfrastructure.Core.AspNetCore.AutoConfig
 {
-    public static class ServiceCollectionExtensions
+    public static class Startup
     {
         #region 配置写入文件
 
@@ -32,7 +31,7 @@ namespace EInfrastructure.Core.AspNetCore.AutoConfig
         /// <param name="section"></param>
         /// <param name="file"></param>
         /// <typeparam name="T"></typeparam>
-        public static void ConfigureWritable<T>(
+        public static IServiceCollection AddAutoUpdateConfig<T>(
             this IServiceCollection services,
             IConfigurationSection section,
             string file = "appsettings.json") where T : class, new()
@@ -44,6 +43,7 @@ namespace EInfrastructure.Core.AspNetCore.AutoConfig
                 var options = provider.GetService<IOptionsMonitor<T>>();
                 return new WritableOptions<T>(environment, options, section.Key, file);
             });
+            return services;
         }
 
         /// <summary>
@@ -75,20 +75,19 @@ namespace EInfrastructure.Core.AspNetCore.AutoConfig
 
         #endregion
 
-        #region 自动注入修改配置文件
+        #region 自动注入可修改配置文件
 
         /// <summary>
-        /// 自动注入修改配置文件
+        /// 自动注入可修改配置文件
         /// </summary>
         /// <param name="services"></param>
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
         /// <param name="configuration"></param>
         /// <param name="file">配置文件地址</param>
-        public static void AutoRegister(this IServiceCollection services, IConfiguration configuration,
+        public static IServiceCollection AddAutoUpdateConfig(this IServiceCollection services, IConfiguration configuration,
             string file = "appsettings.json",
             bool isCompleteName = false)
         {
-            EInfrastructure.Core.AutoConfig.ConfigAutoRegister.AutoRegister(services, isCompleteName);
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes().Where(t =>
                     t.GetInterfaces().Contains(typeof(IWritableConfigModel))))
@@ -97,6 +96,8 @@ namespace EInfrastructure.Core.AspNetCore.AutoConfig
             {
                 ConfigureWritable(services, type, configuration, isCompleteName, file);
             }
+
+            return services;
         }
 
         #endregion

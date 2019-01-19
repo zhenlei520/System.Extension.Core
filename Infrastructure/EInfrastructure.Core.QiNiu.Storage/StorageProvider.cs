@@ -14,7 +14,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// </summary>
     public class StorageProvider : BaseStorageProvider, IStorageService, ISingleInstance
     {
-        public StorageProvider(IOptionsSnapshot<QiNiuConfig> qiNiuSnapshot)
+        public StorageProvider(QiNiuConfig qiNiuSnapshot)
             : base(qiNiuSnapshot)
         {
         }

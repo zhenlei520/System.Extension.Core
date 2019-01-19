@@ -28,4 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interface\Words\Config" />
+  </ItemGroup>
 </Project>

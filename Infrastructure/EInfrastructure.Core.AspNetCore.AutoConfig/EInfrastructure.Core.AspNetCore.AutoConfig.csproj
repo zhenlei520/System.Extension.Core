@@ -19,7 +19,4 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="2.1.1" />
     </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\EInfrastructure.Core.AutoConfig\EInfrastructure.Core.AutoConfig.csproj" />
-    </ItemGroup>
 </Project>

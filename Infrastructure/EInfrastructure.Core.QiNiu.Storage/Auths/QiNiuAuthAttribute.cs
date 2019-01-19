@@ -18,9 +18,9 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
 
     public class ClaimQiNiuRequirementFilter : IAuthorizationFilter
     {
-        private readonly IOptionsSnapshot<QiNiuConfig> _qiNiuConfig;
+        private readonly QiNiuConfig _qiNiuConfig;
 
-        public ClaimQiNiuRequirementFilter(IOptionsSnapshot<QiNiuConfig> qiniuConfig)
+        public ClaimQiNiuRequirementFilter(QiNiuConfig qiniuConfig)
         {
             this._qiNiuConfig = qiniuConfig;
         }
@@ -36,7 +36,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
                 return;
             }
 
-            string callbackUrl = _qiNiuConfig.Value.CallbackAuthHost + context.HttpContext.Request.Path.Value;
+            string callbackUrl = _qiNiuConfig.CallbackAuthHost + context.HttpContext.Request.Path.Value;
             string authorization = new Auth(new BaseStorageProvider(_qiNiuConfig).Mac).CreateManageToken(callbackUrl);
 
             if (authorization != qiNiuAuthorization)

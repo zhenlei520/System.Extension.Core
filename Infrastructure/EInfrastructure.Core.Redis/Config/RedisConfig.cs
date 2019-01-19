@@ -1,6 +1,8 @@
-﻿namespace EInfrastructure.Core.Redis.Config
+﻿using EInfrastructure.Core.AutoConfig.Interface;
+
+namespace EInfrastructure.Core.Redis.Config
 {
-    public class RedisConfig
+    public class RedisConfig: IScopedConfigModel
     {
         /// <summary>
         /// Ip地址

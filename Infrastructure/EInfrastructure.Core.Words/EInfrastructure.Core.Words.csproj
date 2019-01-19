@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EInfrastructure.Core.AspNetCore.AutoConfig\EInfrastructure.Core.AspNetCore.AutoConfig.csproj" />
+      <ProjectReference Include="..\EInfrastructure.Core.AutoConfig\EInfrastructure.Core.AutoConfig.csproj" />
       <ProjectReference Include="..\EInfrastructure.Core\EInfrastructure.Core.csproj" />
     </ItemGroup>
 

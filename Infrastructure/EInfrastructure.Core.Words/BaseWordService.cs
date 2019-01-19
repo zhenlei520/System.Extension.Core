@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using EInfrastructure.Core.Configuration.Interface.Config;
+using EInfrastructure.Core.AutoConfig;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Words.Config;
 using EInfrastructure.Core.Words.Config.PinYin;
 using EInfrastructure.Core.Words.Config.Text;
-using Microsoft.AspNetCore.Hosting;
 
 namespace EInfrastructure.Core.Words
 {
@@ -16,23 +15,30 @@ namespace EInfrastructure.Core.Words
     public class BaseWordService
     {
         /// <summary>
-        /// 词库
+        /// 环境信息
         /// </summary>
-        internal static DictTextConfig _dictConfig;
+        internal static HostingEnvironmentConfigs HostingEnvironmentConfig;
 
-        internal static DictPinYinConfig _dictPinYinConfig;
+        /// <summary>
+        /// 内容词库
+        /// </summary>
+        internal static DictTextConfig DictConfig;
 
-        protected readonly IHostingEnvironment _hostingEnvironment;
+        /// <summary>
+        /// 拼音词库
+        /// </summary>
+        internal static DictPinYinConfig DictPinYinConfig;
 
-        public BaseWordService(IHostingEnvironment hostingEnvironment, DictTextPathConfig textPathConfig,
+        public BaseWordService(
+            HostingEnvironmentConfigs hostingEnvironmentConfig,
+            DictTextPathConfig textPathConfig,
             DictPinYinPathConfig dictPinYinPathConfig)
         {
-            _hostingEnvironment = hostingEnvironment;
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-            if (_dictConfig == null)
+            HostingEnvironmentConfig = hostingEnvironmentConfig;
+            if (DictConfig == null)
             {
-                _dictConfig = new DictTextConfig()
+                DictConfig = new DictTextConfig()
                 {
                     Simplified = GetContent(textPathConfig.SimplifiedPath.ConvertStrToList<string>('/')),
                     Traditional = GetContent(textPathConfig.TraditionalPath.ConvertStrToList<string>('/')),
@@ -42,15 +48,15 @@ namespace EInfrastructure.Core.Words
                 };
             }
 
-            if (_dictPinYinConfig == null)
+            if (DictPinYinConfig == null)
             {
-                _dictPinYinConfig = new DictPinYinConfig()
+                DictPinYinConfig = new DictPinYinConfig()
                 {
                     PinYinIndex = GetContent(dictPinYinPathConfig.PinYinIndexPath.ConvertStrToList<string>('/'))
                         .ConvertStrToList<short>('/').ToArray(),
                     PinYinData = GetContent(dictPinYinPathConfig.PinYinDataPath.ConvertStrToList<string>('/'))
                         .ConvertStrToList<short>('/').ToArray(),
-                    PinYinName = GetContent(dictPinYinPathConfig.PinYinDataPath.ConvertStrToList<string>('/'))
+                    PinYinName = GetContent(dictPinYinPathConfig.PinYinNamePath.ConvertStrToList<string>('/'))
                         .ConvertStrToList<string>('/'),
                     Word = GetContent(dictPinYinPathConfig.WordPath.ConvertStrToList<string>('/')),
                     WordPinYin = GetContent(dictPinYinPathConfig.WordPinYinPath.ConvertStrToList<string>('/'))
@@ -89,8 +95,9 @@ namespace EInfrastructure.Core.Words
         /// <returns></returns>
         internal string GetContent(List<string> path)
         {
-            string filePath = _hostingEnvironment.ContentRootPath;
+            string filePath = "";
             path.ForEach(item => { filePath = Path.Combine(filePath, item); });
+            filePath = Path.Combine(HostingEnvironmentConfig.ContentRootPath, filePath);
             return GetContent(filePath);
         }
 

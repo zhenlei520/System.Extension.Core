@@ -1,4 +1,4 @@
-namespace EInfrastructure.Core.Configuration.Interface.Config
+namespace EInfrastructure.Core.AutoConfig.Interface
 {
     /// <summary>
     /// 泛型约束只能为接口

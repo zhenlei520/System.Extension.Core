@@ -11,9 +11,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
 {
     public class BaseStorageProvider
     {
-        public BaseStorageProvider(IOptionsSnapshot<QiNiuConfig> qiNiuSnapshot)
+        public BaseStorageProvider(QiNiuConfig qiNiuSnapshot)
         {
-            QiNiuConfig = qiNiuSnapshot.Value;
+            QiNiuConfig = qiNiuSnapshot;
 
             Mac = new Mac(QiNiuConfig.AccessKey, QiNiuConfig.SecretKey);
 
