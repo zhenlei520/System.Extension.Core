@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using EInfrastructure.Core.AutoConfig;
+using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Words.Config.PinYin;
 using EInfrastructure.Core.Words.Config.Text;
@@ -92,7 +93,7 @@ namespace EInfrastructure.Core.Words.Extension
             string filePath = "";
             path.ForEach(item => { filePath = Path.Combine(filePath, item); });
             filePath = Path.Combine(HostingEnvironmentConfig.ContentRootPath, filePath);
-            string result= GetContent(filePath);
+            string result = GetContent(filePath);
             return result;
         }
 
@@ -124,14 +125,22 @@ namespace EInfrastructure.Core.Words.Extension
         /// </summary>
         private void ReloadTextDict()
         {
-            DictConfig = new DictTextConfig()
+            try
             {
-                Simplified = GetContent(DictTextPathConfig.SimplifiedPath.ConvertStrToList<string>('/')),
-                Traditional = GetContent(DictTextPathConfig.TraditionalPath.ConvertStrToList<string>('/')),
-                Initial = GetContent(DictTextPathConfig.InitialPath.ConvertStrToList<string>('/')),
-                SpecialNumber = GetContent(DictTextPathConfig.SpecialNumberPath.ConvertStrToList<string>('/')),
-                TranscodingNumber = GetContent(DictTextPathConfig.TranscodingNumberPath.ConvertStrToList<string>('/'))
-            };
+                DictConfig = new DictTextConfig()
+                {
+                    Simplified = GetContent(DictTextPathConfig.SimplifiedPath.ConvertStrToList<string>('/')),
+                    Traditional = GetContent(DictTextPathConfig.TraditionalPath.ConvertStrToList<string>('/')),
+                    Initial = GetContent(DictTextPathConfig.InitialPath.ConvertStrToList<string>('/')),
+                    SpecialNumber = GetContent(DictTextPathConfig.SpecialNumberPath.ConvertStrToList<string>('/')),
+                    TranscodingNumber =
+                        GetContent(DictTextPathConfig.TranscodingNumberPath.ConvertStrToList<string>('/'))
+                };
+            }
+            catch (System.Exception ex)
+            {
+                throw new BusinessException("词语词库异常");
+            }
         }
 
         #endregion
@@ -143,18 +152,25 @@ namespace EInfrastructure.Core.Words.Extension
         /// </summary>
         private void ReloadPinYinDict()
         {
-            DictPinYinConfig = new DictPinYinConfig()
+            try
             {
-                PinYinIndex = GetContent(DictPinYinPathConfig.PinYinIndexPath.ConvertStrToList<string>('/'))
-                    .ConvertStrToList<short>(',', false).ToArray(),
-                PinYinData = GetContent(DictPinYinPathConfig.PinYinDataPath.ConvertStrToList<string>('/'))
-                    .ConvertStrToList<short>(',', false).ToArray(),
-                PinYinName = GetContent(DictPinYinPathConfig.PinYinNamePath.ConvertStrToList<string>('/'))
-                    .ConvertStrToList<string>(',', false),
-                Word = GetContent(DictPinYinPathConfig.WordPath.ConvertStrToList<string>('/', false)),
-                WordPinYin = GetContent(DictPinYinPathConfig.WordPinYinPath.ConvertStrToList<string>('/'))
-                    .ConvertStrToList<short>(',', false).ToArray()
-            };
+                DictPinYinConfig = new DictPinYinConfig()
+                {
+                    PinYinIndex = GetContent(DictPinYinPathConfig.PinYinIndexPath.ConvertStrToList<string>('/'))
+                        .ConvertStrToList<short>(',', false).ToArray(),
+                    PinYinData = GetContent(DictPinYinPathConfig.PinYinDataPath.ConvertStrToList<string>('/'))
+                        .ConvertStrToList<short>(',', false).ToArray(),
+                    PinYinName = GetContent(DictPinYinPathConfig.PinYinNamePath.ConvertStrToList<string>('/'))
+                        .ConvertStrToList<string>(',', false),
+                    Word = GetContent(DictPinYinPathConfig.WordPath.ConvertStrToList<string>('/', false)),
+                    WordPinYin = GetContent(DictPinYinPathConfig.WordPinYinPath.ConvertStrToList<string>('/'))
+                        .ConvertStrToList<short>(',', false).ToArray()
+                };
+            }
+            catch (System.Exception ex)
+            {
+                throw new BusinessException("拼音词库异常");
+            }
         }
 
         #endregion
