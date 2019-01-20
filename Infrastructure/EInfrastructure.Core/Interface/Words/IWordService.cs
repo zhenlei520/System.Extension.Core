@@ -24,6 +24,13 @@ namespace EInfrastructure.Core.Interface.Words
         string GetPinYin(string text);
 
         /// <summary>
+        /// 获取拼音全拼, 不支持多音,中文字符集为[0x4E00,0x9FA5]
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        string GetPinYinFast(string text);
+
+        /// <summary>
         /// 获取文字的全部拼音（多读音）
         /// </summary>
         /// <param name="text">文本信息</param>
