@@ -24,25 +24,5 @@ namespace EInfrastructure.Core.AspNetCore.Exception
 
                 }));
         }
-
-        /// <summary>
-        /// 使用设置
-        /// </summary>
-        /// <param name="evn"></param>
-        /// <param name="isUseEnvironment">是否使用环境配置json</param>
-        /// <returns></returns>
-        public static IConfigurationRoot UseAppsettings(this IHostingEnvironment evn, bool isUseEnvironment = false)
-        {
-            IConfigurationBuilder builder = new ConfigurationBuilder()
-                .SetBasePath(evn.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            if (isUseEnvironment)
-            {
-                builder = builder.AddJsonFile($"appsettings.{evn.EnvironmentName}.json", optional: true)
-                            .AddEnvironmentVariables();
-            }
-            var config = builder.Build();
-            return builder.Build();
-        }
     }
 }
