@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.AutoConfig;
+using EInfrastructure.Core.AutoConfig.Config;
 using EInfrastructure.Core.Interface.Words;
 using EInfrastructure.Core.Interface.Words.Config;
 using EInfrastructure.Core.Interface.Words.Enum;

@@ -1,4 +1,5 @@
 using EInfrastructure.Core.AutoConfig;
+using EInfrastructure.Core.AutoConfig.Config;
 using EInfrastructure.Core.HelpCommon.Files;
 using EInfrastructure.Core.Interface.Words;
 using EInfrastructure.Core.Words.Config.PinYin;

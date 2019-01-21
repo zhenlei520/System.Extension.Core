@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using EInfrastructure.Core.AutoConfig;
+using EInfrastructure.Core.AutoConfig.Config;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Words.Config.PinYin;
