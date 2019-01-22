@@ -12,7 +12,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
     {
         private readonly RequestDelegate _next;
 
-        public static Action<System.Exception> ExceptionAction = null;
+        public static Func<System.Exception, bool> ExceptionAction = null;
 
         public ErrorHandlingMiddleware(RequestDelegate next)
         {
@@ -27,7 +27,15 @@ namespace EInfrastructure.Core.AspNetCore.Exception
             }
             catch (System.Exception ex)
             {
-                ExceptionAction?.Invoke(ex);
+                if (ExceptionAction != null)
+                {
+                    var isStop = ExceptionAction.Invoke(ex);
+                    if (isStop)
+                    {
+                        return;
+                    }
+                }
+
                 var statusCode = context.Response.StatusCode;
                 string msg = "";
 
@@ -69,6 +77,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
                 {
                     msg = "未知错误";
                 }
+
                 if (!string.IsNullOrWhiteSpace(msg) && statusCode != 401)
                 {
                     await HandleExceptionAsync(context, statusCode, msg);
@@ -78,7 +87,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
 
         private static Task HandleExceptionAsync(HttpContext context, int statusCode, string msg)
         {
-            var data = new ApiErrResult() { Code = statusCode, Msg = msg };
+            var data = new ApiErrResult() {Code = statusCode, Msg = msg};
 
             var result = new JsonCommon().Serializer(data);
 
@@ -90,7 +99,8 @@ namespace EInfrastructure.Core.AspNetCore.Exception
 
     public static class ErrorHandlingExtensions
     {
-        public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder builder, Action<System.Exception> exceptionAction = null)
+        public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder builder,
+            Func<System.Exception, bool> exceptionAction = null)
         {
             ErrorHandlingMiddleware.ExceptionAction = exceptionAction;
             return builder.UseMiddleware<ErrorHandlingMiddleware>();
