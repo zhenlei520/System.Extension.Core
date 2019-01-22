@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
 {
-    public class DataContractJsonProvider : BaseJsonProvider
+    internal class DataContractJsonProvider : IJsonProvider
     {
         /// <summary>
         /// 默认格式 UTF8
@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
         /// <param name="o"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public override string Serializer(object o, bool format = false)
+        public string Serializer(object o, bool format = false)
         {
             DataContractJsonSerializer json = new DataContractJsonSerializer(o.GetType());
             using (MemoryStream stream = new MemoryStream())
@@ -35,7 +35,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
         /// <param name="s"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public override object Deserialize(string s, Type type)
+        public object Deserialize(string s, Type type)
         {
             using (MemoryStream ms = new MemoryStream(EncodingFormat.GetBytes(s)))
             {

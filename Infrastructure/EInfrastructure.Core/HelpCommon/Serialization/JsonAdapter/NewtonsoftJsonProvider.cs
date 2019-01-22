@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
 {
-    public class NewtonsoftJsonProvider : BaseJsonProvider
+    internal class NewtonsoftJsonProvider : IJsonProvider
     {
         /// <summary>
         /// json序列化
@@ -12,7 +12,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
         /// <param name="o"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public override string Serializer(object o, bool format = false)
+        public  string Serializer(object o, bool format = false)
         {
             using (StringWriter sw = new StringWriter())
             {
@@ -53,7 +53,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
         /// <param name="s"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public override object Deserialize(string s, Type type)
+        public  object Deserialize(string s, Type type)
         {
             return JsonConvert.DeserializeObject(s, type);
         }

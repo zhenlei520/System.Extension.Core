@@ -69,6 +69,12 @@ namespace EInfrastructure.Core.HelpCommon
 
         #region 返回时间差
 
+        /// <summary>
+        /// 返回时间差
+        /// </summary>
+        /// <param name="dateTime1"></param>
+        /// <param name="dateTime2"></param>
+        /// <returns></returns>
         public static string DateDiff(this DateTime dateTime1, DateTime dateTime2)
         {
             string dateDiff = null;
@@ -832,6 +838,5 @@ namespace EInfrastructure.Core.HelpCommon
         }
 
         #endregion
-        
     }
 }

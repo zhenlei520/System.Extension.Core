@@ -6,15 +6,16 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
     /// <summary>
     /// json 序列化方式
     /// </summary>
-    public class JsonCommon : BaseJsonProvider
+    public class JsonCommon : IJsonProvider
     {
         private readonly EnumJsonMode _jsonMode;
+
         public JsonCommon(EnumJsonMode mode = EnumJsonMode.Newtonsoft)
         {
             _jsonMode = mode;
         }
 
-        private BaseJsonProvider CreateJsonProvider()
+        private IJsonProvider CreateJsonProvider()
         {
             if (_jsonMode == EnumJsonMode.Newtonsoft)
             {
@@ -24,6 +25,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
             {
                 return new DataContractJsonProvider();
             }
+
             throw new System.Exception("未找到相应的json序列化Provider");
         }
 
@@ -33,7 +35,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
         /// <param name="o"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public override string Serializer(object o, bool format = false)
+        public string Serializer(object o, bool format = false)
         {
             try
             {
@@ -57,9 +59,10 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
             {
                 return default(T);
             }
+
             try
             {
-                return (T)CreateJsonProvider().Deserialize(s, typeof(T));
+                return (T) CreateJsonProvider().Deserialize(s, typeof(T));
             }
             catch (System.Exception)
             {
@@ -73,7 +76,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
         /// <param name="s"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public override object Deserialize(string s, Type type)
+        public object Deserialize(string s, Type type)
         {
             try
             {

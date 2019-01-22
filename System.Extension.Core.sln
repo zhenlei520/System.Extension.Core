@@ -53,6 +53,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Words"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Configuration", "Infrastructure\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj", "{20E00246-AEC9-4DC4-9241-44F554799CE4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compress", "Compress", "{7424A0CF-38AE-4295-AE4D-A5A9B1044A37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Compress.Systems", "Infrastructure\EInfrastructure.Core.Compress.Systems\EInfrastructure.Core.Compress.Systems.csproj", "{4099D2B6-7EB2-4B05-B8A7-5D1F336BDA94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +131,10 @@ Global
 		{20E00246-AEC9-4DC4-9241-44F554799CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20E00246-AEC9-4DC4-9241-44F554799CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20E00246-AEC9-4DC4-9241-44F554799CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4099D2B6-7EB2-4B05-B8A7-5D1F336BDA94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4099D2B6-7EB2-4B05-B8A7-5D1F336BDA94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4099D2B6-7EB2-4B05-B8A7-5D1F336BDA94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4099D2B6-7EB2-4B05-B8A7-5D1F336BDA94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,6 +154,7 @@ Global
 		{00D60196-2D7D-439A-BE6A-D99FE893526F} = {98E16CCC-77CD-4705-8FC1-0F182515EEB0}
 		{DC149452-34F1-410E-AEDA-C57810B43C82} = {98E16CCC-77CD-4705-8FC1-0F182515EEB0}
 		{5923F71E-C311-4FC4-A7C5-A8ADC2E6623A} = {1A482526-7E29-4D16-9E1A-743770227F00}
+		{4099D2B6-7EB2-4B05-B8A7-5D1F336BDA94} = {7424A0CF-38AE-4295-AE4D-A5A9B1044A37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41FDCFC5-66DA-415D-AA6C-38806CB952CD}

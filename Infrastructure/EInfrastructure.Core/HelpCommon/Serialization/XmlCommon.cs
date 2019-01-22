@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -12,57 +13,61 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
     /// </summary>
     public class XmlHelper
     {
-        public static Encoding EncodingFormat = Encoding.GetEncoding("gbk");
+        public static Encoding EncodingFormat = Encoding.Default;
+
+        #region 序列化为xml字符串
 
         /// <summary>
-        /// 序列化
+        /// 序列化为xml字符串
         /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="ifNameSpace">是否强制指定命名空间，覆盖默认的命名空间</param>
+        /// <param name="nameSpaceDic">默认为null（移除默认命名空间）</param>
+        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static string Serializer<T>(T obj)
-        {
-            XmlSerializer xs = new XmlSerializer(typeof(T));
-            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-            //ns.Add("", "");
-            using (MemoryStream stream = new MemoryStream())
-            {
-                using (StreamWriter vStreamWriter = new StreamWriter(stream, EncodingFormat))
-                {
-                    xs.Serialize(vStreamWriter, obj, ns);
-                    var r = EncodingFormat.GetString(stream.ToArray());
-                    return r;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 序列化
-        /// </summary>
-        /// <returns></returns>
-        public static string Serializer<T>(T obj, bool ifNameSpace)
+        public static string Serializer<T>(T obj, bool ifNameSpace = true,
+            Dictionary<string, string> nameSpaceDic = null)
         {
             XmlSerializer xs = new XmlSerializer(typeof(T));
             using (MemoryStream stream = new MemoryStream())
             {
                 using (StreamWriter vStreamWriter = new StreamWriter(stream, EncodingFormat))
                 {
-                    if (ifNameSpace == false)
+                    if (ifNameSpace)
                     {
                         XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                        ns.Add("", "");
+
+                        if (nameSpaceDic == null)
+                        {
+                            ns.Add("", "");
+                        }
+                        else
+                        {
+                            foreach (var item in nameSpaceDic)
+                            {
+                                ns.Add(item.Key, item.Value);
+                            }
+                        }
+
                         xs.Serialize(vStreamWriter, obj, ns);
                     }
                     else
                     {
                         xs.Serialize(vStreamWriter, obj);
                     }
+
                     var r = EncodingFormat.GetString(stream.ToArray());
                     return r;
                 }
             }
         }
 
+        #endregion
+
+        #region xml字符串反序列化
+
         /// <summary>
-        /// 反序列化
+        /// xml字符串反序列化
         /// </summary>
         /// <returns></returns>
         public static T Deserialize<T>(string xml)
@@ -74,7 +79,12 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
             }
         }
 
-        #region 序列化为xml文件(保存到本地)
+        #endregion
+
+        #region 序列化与反序列化 加保存
+
+        #region 序列化为xml文件(且保存到本地)
+
         /// <summary>
         /// 序列化为xml(保存到本地)
         /// </summary>
@@ -94,33 +104,16 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
                 if (fs != null)
                     fs.Close();
             }
+
             return true;
         }
-        #endregion
 
-        #region 本地xml文件反序列化
-        /// <summary>
-        /// 本地xml文件反序列化
-        /// </summary>
-        /// <param name="filePath">文件绝对地址（服务器端地址）</param>
-        /// <param name="type">类型</param>
-        /// <returns></returns>
-        public static object ToObjectByDeserializeByFile(string filePath, Type type)
-        {
-            if (!File.Exists(filePath))
-                return null;
-            using (var reader = new StreamReader(filePath))
-            {
-                var xs = new XmlSerializer(type);
-                object obj = xs.Deserialize(reader);
-                reader.Close();
-                return obj;
-            }
-        }
+        #endregion
 
         #endregion
 
         #region 云端xml反序列化为对象
+
         /// <summary>
         /// 云端xml反序列化为对象
         /// </summary>
@@ -150,9 +143,13 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
                 }
             }
         }
+
         #endregion
 
+        #region 本地文件序列化与反序列化
+
         #region XML序列化
+
         /// <summary>
         /// XML序列化
         /// </summary>
@@ -176,6 +173,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
             {
                 fs?.Close();
             }
+
             return true;
         }
 
@@ -183,34 +181,9 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
 
         #region XML反序列化
 
-        /// <summary>
-        /// XML反序列化
-        /// </summary>
-        /// <param name="type">目标类型（Type类型）</param>
-        /// <param name="filePath">XML文件路径</param>
-        /// <returns>序列对象</returns>
-        public static object DeserializeFromXml(Type type, string filePath)
-        {
-            FileStream fs = null;
+        
 
-            try
-            {
-                fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                XmlSerializer serializer = new XmlSerializer(type);
-                return serializer.Deserialize(fs);
-            }
-            catch (System.Exception ex)
-            {
-                throw;
-            }
-            finally
-            {
-                if (fs != null)
-                {
-                    fs.Close();
-                }
-            }
-        }
+        #endregion
 
         #endregion
     }
