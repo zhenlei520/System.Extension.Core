@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using ICSharpCode.SharpZipLib.Checksum;
@@ -8,7 +9,7 @@ using ICSharpCode.SharpZipLib.Zip;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
 {
-    public class BaseZipCompressService
+    public class BaseZipCompressService:BaseCompressService
     {
         #region 检查是否存在
 
@@ -243,6 +244,8 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
         {
             using (FileStream zipFile = File.Create(fileZipPath))
             {
+                Encoding encoding = Encoding.UTF8;
+                ZipConstants.DefaultCodePage = encoding.CodePage;
                 using (ZipOutputStream zipStream = new ZipOutputStream(zipFile))
                 {
                     sourceFileList.ToList().ForEach(filePath =>

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Files;
 using ICSharpCode.SharpZipLib.Zip;
@@ -26,7 +27,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
         /// <returns></returns>
-        public string CompressSingle(string sourceFilePath, string zipDirectory = "", string zipName = "",
+        public override string CompressSingle(string sourceFilePath, string zipDirectory = "", string zipName = "",
             bool overWrite = true,
             bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int blockSize = 2048)
@@ -57,7 +58,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
         /// <param name="zipMaxFile">压缩包内最多文件数量(-1不限)</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
         /// <returns></returns>
-        public string[] CompressMulti(string[] sourceFileList, string zipDirectory, string zipName,
+        public override string[] CompressMulti(string[] sourceFileList, string zipDirectory, string zipName,
             bool overWrite = true, bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048)
         {
@@ -106,7 +107,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
         /// <param name="zipMaxFile">压缩包内最多文件数量(-1不限)</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
         /// <returns></returns>
-        public string[] CompressCatalogAndFiltrate(string sourceFilePath, string zipDirectory, string zipName,
+        public override string[] CompressCatalogAndFiltrate(string sourceFilePath, string zipDirectory, string zipName,
             string searchPattern = "*.*",
             SearchOption searchOption = SearchOption.AllDirectories, bool overWrite = true, bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048)
@@ -137,7 +138,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
         /// <param name="password">密码</param>
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <returns></returns>
-        public string CompressCatalog(string sourceFilePath, string zipDirectory, string zipName,
+        public override string CompressCatalog(string sourceFilePath, string zipDirectory, string zipName,
             bool isRecursive = true, bool overWrite = true, bool isEncrypt = false,
             string password = "", int compressionLevel = 5)
         {
@@ -147,6 +148,8 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
             {
                 using (FileStream zipFile = File.Create(fileZipPath))
                 {
+                    Encoding encoding = Encoding.UTF8;
+                    ZipConstants.DefaultCodePage = encoding.CodePage;
                     using (ZipOutputStream stream = new ZipOutputStream(zipFile))
                     {
                         if (isEncrypt)
@@ -176,7 +179,8 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
         /// <param name="targetDirectory">解压目录</param>
         /// <param name="password">密码</param>
         /// <param name="overWrite">是否覆盖</param>
-        public void DeCompress(string zipFile, string targetDirectory, string password = "", bool overWrite = true)
+        public override void DeCompress(string zipFile, string targetDirectory, string password = "",
+            bool overWrite = true)
         {
             //如果解压到的目录不存在，则报错
             if (!Directory.Exists(targetDirectory))
@@ -190,6 +194,8 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
                 targetDirectory = targetDirectory + "\\";
             }
 
+            Encoding encoding = Encoding.UTF8;
+            ZipConstants.DefaultCodePage = encoding.CodePage;
             using (ZipInputStream zipfiles = new ZipInputStream(File.OpenRead(zipFile)))
             {
                 zipfiles.Password = password;

@@ -13,12 +13,12 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// </summary>
         /// <param name="compressType">压缩方式</param>
         /// <returns></returns>
-        internal static ICompressService GetProvider(CompressTypeEnum compressType = CompressTypeEnum.Zip)
+        internal static BaseCompressService GetProvider(CompressTypeEnum compressType = CompressTypeEnum.Zip)
         {
             switch (compressType)
             {
                 case CompressTypeEnum.Zip:
-                    return new CompressService();
+                    return new Zip.ZipCompressService();
                 default:
                     throw new BusinessException("暂不支持的压缩方式");
             }
