@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using EInfrastructure.Core.Data;
+using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
 {
@@ -46,9 +49,11 @@ namespace EInfrastructure.Core.HelpCommon
                 resultList.Add(item);
             }
         }
+
         #endregion
 
         #region List实体减法操作
+
         /// <summary>
         /// List实体减法操作
         /// </summary>
@@ -60,9 +65,11 @@ namespace EInfrastructure.Core.HelpCommon
         {
             return t1.Where(x => !t2.Contains(x)).ToList();
         }
+
         #endregion
 
         #region 得到新增的集合以及被删除的集合
+
         /// <summary>
         /// 得到新增的集合以及被删除的集合
         /// </summary>
@@ -82,20 +89,22 @@ namespace EInfrastructure.Core.HelpCommon
             {
                 oldObject = new List<T>();
             }
+
             if (newOject == null)
             {
                 newOject = new List<T>();
             }
+
             foreach (var objects in oldObject)
             {
                 if (newOject.Contains(objects))
                 {
-                    newAddObject.Remove(objects);//从新的中删除原来已存在的
-                    alwaysExist.Add(objects);//始终存在的
+                    newAddObject.Remove(objects); //从新的中删除原来已存在的
+                    alwaysExist.Add(objects); //始终存在的
                 }
                 else
                 {
-                    deleteObject.Add(objects);//被删除的
+                    deleteObject.Add(objects); //被删除的
                 }
             }
         }
@@ -117,12 +126,14 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
         /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
         /// <returns></returns>
-        public static string ToStringByList<T>(this List<T> s, char c = ',', bool isReplaceEmpty = true, bool isReplaceSpace = true)
+        public static string ConvertListToString<T>(this List<T> s, char c = ',', bool isReplaceEmpty = true,
+            bool isReplaceSpace = true)
         {
             if (s == null || s.Count == 0)
             {
                 return "";
             }
+
             string temp = "";
             foreach (var item in s)
             {
@@ -138,6 +149,7 @@ namespace EInfrastructure.Core.HelpCommon
                             {
                                 itemTemp = item.ToString().Trim();
                             }
+
                             if (!string.IsNullOrEmpty(itemTemp))
                             {
                                 temp = temp + itemTemp + c;
@@ -150,13 +162,16 @@ namespace EInfrastructure.Core.HelpCommon
                     }
                 }
             }
+
             if (temp.Length > 0)
                 temp = temp.Substring(0, temp.Length - 1);
             return temp;
         }
+
         #endregion
 
         #region 字符串数组转String(简单转换)
+
         /// <summary>
         /// 字符串数组转String(简单转换)
         /// </summary>
@@ -165,19 +180,23 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
         /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
         /// <returns></returns>
-        public static string ToStringByStringArray(this string[] s, char c = ',',bool isReplaceEmpty = true, bool isReplaceSpace = true)
+        public static string ConvertListToString(this string[] s, char c = ',', bool isReplaceEmpty = true,
+            bool isReplaceSpace = true)
         {
             if (s == null || s.Length == 0)
             {
                 return "";
             }
-            return ToStringByList(s.ToList(), c);
+
+            return ConvertListToString(s.ToList(), c, isReplaceEmpty, isReplaceSpace);
         }
+
         #endregion
 
         #endregion
 
         #region 合并两个类型一致的泛型集合
+
         /// <summary>
         /// 合并两个类型一致的泛型
         /// </summary>
@@ -191,13 +210,79 @@ namespace EInfrastructure.Core.HelpCommon
             {
                 a = new List<T>();
             }
+
             if (b == null)
             {
                 b = new List<T>();
             }
+
             List<T> c = a.ToList();
             c.AddRange(b);
             return c;
+        }
+
+        #endregion
+
+        #region 对list集合分页
+
+        /// <summary>
+        /// 对list集合分页
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="pageSize">页码</param>
+        /// <param name="pageIndex">页大小</param>
+        /// <param name="isTotal">是否计算总条数</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static PageData<T> ListPager<T>(this ICollection<T> query, int pageSize, int pageIndex, bool isTotal)
+        {
+            PageData<T> list = new PageData<T>();
+
+            if (isTotal)
+            {
+                list.RowCount = query.Count();
+            }
+
+            list.Data = pageSize > 0 ? query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList() : query.ToList();
+
+            return list;
+        }
+
+        #endregion
+
+        #region 对list集合分页
+
+        /// <summary>
+        /// 对list集合分页
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="action"></param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="pageIndex">当前页数（默认第一页）</param>
+        /// <typeparam name="T"></typeparam>
+        public static void ListPager<T>(this ICollection<T> query, Action<List<T>> action, int pageSize = -1,
+            int pageIndex = 1)
+        {
+            if (pageSize <= 0 && pageSize != -1)
+            {
+                throw new BusinessException("页大小必须为正数");
+            }
+
+            var totalCount = query.Count * 1.0d;
+            int pageMax = 1;
+            if (pageSize != -1)
+            {
+                pageMax = Math.Ceiling(totalCount / pageSize).ConvertToInt(1);
+            }
+            else
+            {
+                pageSize = totalCount.ConvertToInt(0)* -1;
+            }
+
+            for (int index = pageIndex; index <= pageMax; index++)
+            {
+                action(query.Skip((index - 1) * pageSize).Take(pageSize).ToList());
+            }
         }
 
         #endregion

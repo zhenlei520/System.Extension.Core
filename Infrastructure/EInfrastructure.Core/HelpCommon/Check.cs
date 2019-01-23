@@ -1,29 +1,61 @@
-﻿using System.Text.RegularExpressions;
-using EInfrastructure.Core.Exception;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace EInfrastructure.Core.HelpCommon
 {
-    public class Check
+    public static class Check
     {
-        public static void NotNull(object obj, string message = "")
-        {
-            if (ReferenceEquals(obj, null))
-            {
-                if (string.IsNullOrEmpty(message))
-                {
-                    message = obj.ToString() + "空引用";
-                }
+        #region 检查空或者null
 
-                throw new System.Exception(message);
+        /// <summary>
+        /// 检查空或者null
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="message"></param>
+        /// <param name="action"></param>
+        public static void IsNullOrEmptyTip(this string str, string message, Func<bool> action = null)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                if (action == null || action.Invoke())
+                {
+                    throw new System.Exception(message);
+                }
             }
         }
+
+        #endregion
+
+        #region 检查是否空或者null
+
+        /// <summary>
+        /// 检查是否空或者null
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="message"></param>
+        /// <param name="action"></param>
+        /// <exception cref="Exception"></exception>
+        public static void IsNullOrEmptyTip(this object[] array, string message, Func<bool> action = null)
+        {
+            if (array == null || array.Length == 0)
+            {
+                if (action == null || action.Invoke())
+                {
+                    throw new System.Exception(message);
+                }
+            }
+        }
+
+        #endregion
+
+        #region 判断是否是淘口令
 
         /// <summary>
         /// 判断是否是淘口令
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static bool IsAmoyPsd(string str, ref string code)
+        public static bool IsAmoyPsdTip(string str, ref string code)
         {
             Regex reg = new Regex("(￥|€|《).*(￥|€|《)", RegexOptions.Multiline);
             MatchCollection matchs = reg.Matches(str);
@@ -35,28 +67,10 @@ namespace EInfrastructure.Core.HelpCommon
                     return true;
                 }
             }
+
             return false;
         }
 
-        public static bool IsUrl(string str)
-        {
-            return Regex.IsMatch(str??"", @"^(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]$");
-        }
-
-        public static string GetUrl(string str)
-        {
-            string regexStr = "[a-zA-Z]+://[^\\s]*";
-            Regex reg = new Regex(regexStr, RegexOptions.Multiline);
-            MatchCollection matchs = reg.Matches(str);
-            foreach (Match item in matchs)
-            {
-                if (item.Success)
-                {
-                   return item.Value;
-                }
-            }
-            throw new BusinessException("无效的链接");
-            return "";
-        }
+        #endregion
     }
 }

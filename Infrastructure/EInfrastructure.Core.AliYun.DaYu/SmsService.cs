@@ -42,7 +42,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
             commonParam.Add("Action", "SendSms");
             commonParam.Add("Version", "2017-05-25");
             commonParam.Add("RegionId", "cn-hangzhou");
-            commonParam.Add("PhoneNumbers", phoneNumbers.ToStringByList(','));
+            commonParam.Add("PhoneNumbers", phoneNumbers.ConvertListToString(','));
             commonParam.Add("SignName", "得有生活");
             commonParam.Add("TemplateCode", templateCode);
             commonParam.Add("TemplateParam", new JsonCommon().Serializer(content));

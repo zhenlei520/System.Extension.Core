@@ -30,7 +30,7 @@ namespace EInfrastructure.Core.Data
         /// 当前页数据集合
         /// </summary>
         [JsonProperty(PropertyName = "data")]
-        public List<T> Data { get; set; }
+        public ICollection<T> Data { get; set; }
 
         /// <summary>
         /// 扩展Data
