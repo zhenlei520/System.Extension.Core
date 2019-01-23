@@ -6,9 +6,9 @@ using EInfrastructure.Core.HelpCommon;
 using ICSharpCode.SharpZipLib.Checksum;
 using ICSharpCode.SharpZipLib.Zip;
 
-namespace EInfrastructure.Core.Compress.ICSharpCode
+namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
 {
-    public class BaseCompressService
+    public class BaseZipCompressService
     {
         #region 检查是否存在
 

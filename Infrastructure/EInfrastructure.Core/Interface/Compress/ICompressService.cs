@@ -1,4 +1,5 @@
 using System.IO;
+using EInfrastructure.Core.Interface.Compress.Enum;
 using EInfrastructure.Core.Interface.IOC;
 
 namespace EInfrastructure.Core.Interface.Compress
@@ -19,11 +20,13 @@ namespace EInfrastructure.Core.Interface.Compress
         /// <param name="password">密码</param>
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
+        /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
         string CompressSingle(string sourceFilePath, string zipDirectory = "", string zipName = "",
             bool overWrite = true,
             bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, int blockSize = 2048);
+            string password = "", int compressionLevel = 5, int blockSize = 2048,
+            CompressTypeEnum compressType = CompressTypeEnum.Zip);
 
         /// <summary>
         /// 压缩多个文件
@@ -37,10 +40,12 @@ namespace EInfrastructure.Core.Interface.Compress
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="zipMaxFile">压缩包内最多文件数量(-1不限)</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
+        /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
         string[] CompressMulti(string[] sourceFileList, string zipDirectory, string zipName,
             bool overWrite = true, bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048);
+            string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048,
+            CompressTypeEnum compressType = CompressTypeEnum.Zip);
 
         /// <summary>
         /// 压缩指定文件夹下的文件
@@ -56,11 +61,13 @@ namespace EInfrastructure.Core.Interface.Compress
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="zipMaxFile">压缩包内最多文件数量(-1不限)</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
+        /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
         string[] CompressCatalogAndFiltrate(string sourceFilePath, string zipDirectory, string zipName,
             string searchPattern = "*.*",
             SearchOption searchOption = SearchOption.AllDirectories, bool overWrite = true, bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048);
+            string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048,
+            CompressTypeEnum compressType = CompressTypeEnum.Zip);
 
         /// <summary>
         /// 压缩指定文件夹（压缩为单个压缩包）
@@ -73,10 +80,12 @@ namespace EInfrastructure.Core.Interface.Compress
         /// <param name="isEncrypt">是否加密</param>
         /// <param name="password">密码</param>
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
+        /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
         string CompressCatalog(string sourceFilePath, string zipDirectory, string zipName,
             bool isRecursive = true, bool overWrite = true, bool isEncrypt = false,
-            string password = "", int compressionLevel = 5);
+            string password = "", int compressionLevel = 5,
+            CompressTypeEnum compressType = CompressTypeEnum.Zip);
 
         /// <summary>
         /// 文件压缩解压
@@ -85,6 +94,8 @@ namespace EInfrastructure.Core.Interface.Compress
         /// <param name="targetDirectory">解压目录</param>
         /// <param name="password">密码</param>
         /// <param name="overWrite">是否覆盖</param>
-        void DeCompress(string zipFile, string targetDirectory, string password = "", bool overWrite = true);
+        /// <param name="compressType">压缩方式（默认zip）</param>
+        void DeCompress(string zipFile, string targetDirectory, string password = "", bool overWrite = true,
+            CompressTypeEnum compressType = CompressTypeEnum.Zip);
     }
 }
