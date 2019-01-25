@@ -26,6 +26,7 @@ namespace EInfrastructure.Core.AliYun.Tbk.Common
         private string _originUrl; //商品来源地址
 
         #region 获取并检查商品id
+
         /// <summary>
         /// 获取并检查商品id
         /// </summary>
@@ -38,6 +39,7 @@ namespace EInfrastructure.Core.AliYun.Tbk.Common
                 //未解密淘口令短连接
                 url = GetGoodUrl(url);
             }
+
             return url;
 
             //判断是否是短连接
@@ -50,6 +52,7 @@ namespace EInfrastructure.Core.AliYun.Tbk.Common
                         return false;
                     }
                 }
+
                 return true;
             }
         }
@@ -69,8 +72,9 @@ namespace EInfrastructure.Core.AliYun.Tbk.Common
             string host = uri.Host;
             int tryAgainCount = 0; //当前重试次数
             again:
-            RestClient restClient = new RestClient("http://"+ uri.Host);
-            restClient.UserAgent = "User-Agent:Mozilla/5.0(iPhone;U;CPUiPhoneOS4_3_3likeMacOSX;en-us)AppleWebKit/533.17.9(KHTML,likeGecko)Version/5.0.2Mobile/8J2Safari/6533.18.5";
+            RestClient restClient = new RestClient("http://" + uri.Host);
+            restClient.UserAgent =
+                "User-Agent:Mozilla/5.0(iPhone;U;CPUiPhoneOS4_3_3likeMacOSX;en-us)AppleWebKit/533.17.9(KHTML,likeGecko)Version/5.0.2Mobile/8J2Safari/6533.18.5";
 
             RestRequest request = new RestRequest(uri.PathAndQuery, Method.GET);
 
@@ -82,6 +86,7 @@ namespace EInfrastructure.Core.AliYun.Tbk.Common
                 {
                     return _originUrl;
                 }
+
                 tryAgainCount++;
                 goto again;
             }
@@ -94,6 +99,7 @@ namespace EInfrastructure.Core.AliYun.Tbk.Common
                     //淘宝，例如：http://www.dwntme.com/h.ZZllOcZ
                     _originUrl = Regex.Match(response, regexStr).Groups[1].Value.UrlDecode();
                 }
+
                 regexStr = "var pageData = (.*);";
                 if (Regex.Match(response, regexStr).Success)
                 {
@@ -122,10 +128,13 @@ namespace EInfrastructure.Core.AliYun.Tbk.Common
                     }
                 }
             }
+
             throw new BusinessException("获取商品真实地址出错");
         }
 
         #endregion
+
+        #region 判断是否是淘口令
 
         /// <summary>
         /// 判断是否是淘口令
@@ -145,7 +154,10 @@ namespace EInfrastructure.Core.AliYun.Tbk.Common
                     return true;
                 }
             }
+
             return false;
         }
+
+        #endregion
     }
 }
