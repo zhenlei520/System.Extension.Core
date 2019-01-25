@@ -7,60 +7,101 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.MySql
 {
-  public class RepositoryBase<TEntity, T> : IRepository<TEntity, T> where TEntity : Entity<T>, IAggregateRoot<T> where T : IComparable
-  {
-    protected DbContext Dbcontext;
-
-    public RepositoryBase(IUnitOfWork unitOfWork)
+    public class RepositoryBase<TEntity, T> : IRepository<TEntity, T> where TEntity : Entity<T>, IAggregateRoot<T>
+        where T : IComparable
     {
-      Dbcontext = unitOfWork as DbContext;
-    }
+        protected DbContext Dbcontext;
 
-    public void Add(TEntity entity)
-    {
-      Dbcontext.Set<TEntity>().Add(entity);
-    }
+        public RepositoryBase(IUnitOfWork unitOfWork)
+        {
+            Dbcontext = unitOfWork as DbContext;
+        }
 
-    public void Remove(TEntity entity)
-    {
-      Dbcontext.Set<TEntity>().Remove(entity);
-    }
+        #region 根据id得到实体信息
 
-    /// <summary>
-    /// 批量删除实体
-    /// </summary>
-    public void Removes(Expression<Func<TEntity, bool>> condition)
-    {
-      var query = Dbcontext.Set<TEntity>().Where(condition);
-      foreach (var q in query)
-      {
-        Dbcontext.Set<TEntity>().Remove(q);
-      }
-    }
+        /// <summary>
+        /// 根据id得到实体信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public TEntity FindById(T id)
+        {
+            return Dbcontext.Set<TEntity>().Find(id);
+        }
 
-    public TEntity FindById(T id)
-    {
-      return Dbcontext.Set<TEntity>().Find(id);
-    }
+        #endregion
 
-    public void Update(TEntity entity)
-    {
-      Dbcontext.Set<TEntity>().Update(entity);
-    }
+        #region 添加单个实体信息
 
-    public virtual TEntity LoadIntegrate(T id)
-    {
-      throw new NotImplementedException();
-    }
+        /// <summary>
+        /// 添加单个实体信息
+        /// </summary>
+        /// <param name="entity"></param>
+        public void Add(TEntity entity)
+        {
+            Dbcontext.Set<TEntity>().Add(entity);
+        }
 
-    public TEntity FindEntity(Expression<Func<TEntity, bool>> condition)
-    {
-      return Dbcontext.Set<TEntity>().FirstOrDefault(condition);
-    }
+        #endregion
 
-    public List<TEntity> GetList(Expression<Func<TEntity, bool>> condition)
-    {
-      return Dbcontext.Set<TEntity>().Where(condition).ToList();
+        #region 添加集合
+
+        /// <summary>
+        /// 添加集合
+        /// </summary>
+        /// <param name="entities"></param>
+        public void AddRange(List<TEntity> entities)
+        {
+            Dbcontext.Set<TEntity>().AddRange(entities);
+        }
+
+        #endregion
+
+        #region 移除数据
+
+        /// <summary>
+        /// 移除数据
+        /// </summary>
+        /// <param name="entity"></param>
+        public void Remove(TEntity entity)
+        {
+            Dbcontext.Set<TEntity>().Remove(entity);
+        }
+
+        #endregion
+
+        #region 批量删除实体
+
+        /// <summary>
+        /// 批量删除实体
+        /// </summary>
+        public void Removes(Expression<Func<TEntity, bool>> condition)
+        {
+            var query = Dbcontext.Set<TEntity>().Where(condition);
+            foreach (var q in query)
+            {
+                Dbcontext.Set<TEntity>().Remove(q);
+            }
+        }
+
+        #endregion
+
+        #region 更新实体
+
+        /// <summary>
+        /// 更新实体
+        /// </summary>
+        /// <param name="entity"></param>
+        public void Update(TEntity entity)
+        {
+            Dbcontext.Set<TEntity>().Update(entity);
+        }
+
+        #endregion
+
+        public virtual TEntity LoadIntegrate(T id)
+        {
+            throw new NotImplementedException();
+        }
     }
-  }
 }

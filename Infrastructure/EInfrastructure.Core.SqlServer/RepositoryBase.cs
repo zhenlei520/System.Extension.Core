@@ -17,15 +17,60 @@ namespace EInfrastructure.Core.SqlServer
             Dbcontext = unitOfWork as DbContext;
         }
 
+        #region 根据id得到实体信息
+
+        /// <summary>
+        /// 根据id得到实体信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public TEntity FindById(T id)
+        {
+            return Dbcontext.Set<TEntity>().Find(id);
+        }
+
+        #endregion
+
+        #region 添加单个实体信息
+
+        /// <summary>
+        /// 添加单个实体信息
+        /// </summary>
+        /// <param name="entity"></param>
         public void Add(TEntity entity)
         {
             Dbcontext.Set<TEntity>().Add(entity);
         }
 
+        #endregion
+
+        #region 添加集合
+
+        /// <summary>
+        /// 添加集合
+        /// </summary>
+        /// <param name="entities"></param>
+        public void AddRange(List<TEntity> entities)
+        {
+            Dbcontext.Set<TEntity>().AddRange(entities);
+        }
+
+        #endregion
+
+        #region 移除数据
+
+        /// <summary>
+        /// 移除数据
+        /// </summary>
+        /// <param name="entity"></param>
         public void Remove(TEntity entity)
         {
             Dbcontext.Set<TEntity>().Remove(entity);
         }
+
+        #endregion
+
+        #region 批量删除实体
 
         /// <summary>
         /// 批量删除实体
@@ -39,29 +84,24 @@ namespace EInfrastructure.Core.SqlServer
             }
         }
 
-        public TEntity FindById(T id)
-        {
-            return Dbcontext.Set<TEntity>().Find(id);
-        }
+        #endregion
 
+        #region 更新实体
+
+        /// <summary>
+        /// 更新实体
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update(TEntity entity)
         {
             Dbcontext.Set<TEntity>().Update(entity);
         }
 
+        #endregion
+
         public virtual TEntity LoadIntegrate(T id)
         {
             throw new NotImplementedException();
-        }
-
-        public TEntity FindEntity(Expression<Func<TEntity, bool>> condition)
-        {
-            return Dbcontext.Set<TEntity>().FirstOrDefault(condition);
-        }
-
-        public List<TEntity> GetList(Expression<Func<TEntity, bool>> condition)
-        {
-            return Dbcontext.Set<TEntity>().Where(condition).ToList();
         }
     }
 }
