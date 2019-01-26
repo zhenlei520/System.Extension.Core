@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <Version>1.2.1.2</Version>
+        <Version>1.2.1.3</Version>
         <Authors>zhenlei520</Authors>
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <Company>zhenlei520</Company>
@@ -23,9 +23,9 @@
       <ProjectReference Include="..\EInfrastructure.Core.AutoConfig\EInfrastructure.Core.AutoConfig.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <None Remove="environment.json" />
-      <Content Include="environment.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+        <None Remove="environment.json" />
+        <Content Include="environment.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 </Project>
