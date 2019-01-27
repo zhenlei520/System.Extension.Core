@@ -7,6 +7,9 @@
     <Description>dotnet core autofac 与sqlserver自动注入</Description>
     <Copyright>Copyright ©zhenlei520 2018</Copyright>
     <PackageProjectUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/Infrastructure/EInfrastructure.Core.AutoFac.SqlServer</PackageProjectUrl>
+    <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
+    <Title>Autofac sql自动注入</Title>
+    <PackageTags>autofac autofac.sqlserver</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

@@ -9,6 +9,9 @@
     <RepositoryUrl></RepositoryUrl>
     <PackageProjectUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/Infrastructure/EInfrastructure.Core.WebChat</PackageProjectUrl>
     <Copyright>Copyright ©zhenlei520 2018</Copyright>
+    <Title>微信公众号帮助类库</Title>
+    <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
+    <PackageTags>wechat</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\EInfrastructure.Core\EInfrastructure.Core.csproj" />
