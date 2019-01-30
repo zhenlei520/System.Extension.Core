@@ -26,7 +26,6 @@ namespace EInfrastructure.Core.Words.Config.PinYin
 
         #endregion
 
-
         #region 肯定修改
 
         /// <summary>

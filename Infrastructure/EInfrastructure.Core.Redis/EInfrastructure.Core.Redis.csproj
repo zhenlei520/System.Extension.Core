@@ -27,4 +27,10 @@
     <ProjectReference Include="..\EInfrastructure.Core\EInfrastructure.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="redis.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

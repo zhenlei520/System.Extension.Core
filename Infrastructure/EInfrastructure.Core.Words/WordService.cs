@@ -17,11 +17,8 @@ namespace EInfrastructure.Core.Words
 {
     public class WordService : BaseWordService, IWordService
     {
-        public WordService(
-            HostingEnvironmentConfigs hostingEnvironmentConfig,
-            DictTextPathConfig textPathConfig,
+        public WordService(DictTextPathConfig textPathConfig,
             DictPinYinPathConfig dictPinYinPathConfig) : base(
-            hostingEnvironmentConfig,
             textPathConfig, dictPinYinPathConfig)
         {
         }
@@ -49,14 +46,16 @@ namespace EInfrastructure.Core.Words
         public string GetPinYinFast(string text)
         {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < text.Length; i++) {
+            for (int i = 0; i < text.Length; i++)
+            {
                 var c = text[i];
                 sb.Append(PinyinDict.GetPinYinFast(c));
             }
+
             return sb.ToString();
         }
 
-        
+
         #region 得到完整的拼音
 
         /// <summary>

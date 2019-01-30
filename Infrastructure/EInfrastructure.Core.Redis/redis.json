@@ -1,0 +1,10 @@
+{
+  "EInfrastructure.Core.Redis.Config.RedisConfig": {
+    "Ip": "",
+    "Port": 6379,
+    "DataBase": 0,
+    "Name": "",
+    "Password": "",
+    "PoolSize": 500
+  }
+}

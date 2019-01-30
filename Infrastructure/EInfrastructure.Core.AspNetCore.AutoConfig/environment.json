@@ -1,8 +1,0 @@
-{
-  "EInfrastructure.Core.AutoConfig.Config.HostingEnvironmentConfigs": {
-    "EnvironmentName": "",
-    "ApplicationName": "",
-    "WebRootPath": "",
-    "ContentRootPath": ""
-  }
-}

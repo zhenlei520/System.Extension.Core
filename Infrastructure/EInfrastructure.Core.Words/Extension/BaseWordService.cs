@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -16,11 +17,6 @@ namespace EInfrastructure.Core.Words.Extension
     /// </summary>
     public class BaseWordService
     {
-        /// <summary>
-        /// 环境信息
-        /// </summary>
-        internal static HostingEnvironmentConfigs HostingEnvironmentConfig;
-
         /// <summary>
         /// 内容词库
         /// </summary>
@@ -42,12 +38,10 @@ namespace EInfrastructure.Core.Words.Extension
         internal static DictPinYinPathConfig DictPinYinPathConfig;
 
         public BaseWordService(
-            HostingEnvironmentConfigs hostingEnvironmentConfig,
             DictTextPathConfig textPathConfig,
             DictPinYinPathConfig dictPinYinPathConfig)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            HostingEnvironmentConfig = hostingEnvironmentConfig;
             DictTextPathConfig = textPathConfig;
             DictPinYinPathConfig = dictPinYinPathConfig;
             if (DictConfig == null)
@@ -93,7 +87,7 @@ namespace EInfrastructure.Core.Words.Extension
         {
             string filePath = "";
             path.ForEach(item => { filePath = Path.Combine(filePath, item); });
-            filePath = Path.Combine(HostingEnvironmentConfig.ContentRootPath, filePath);
+            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
             string result = GetContent(filePath);
             return result;
         }

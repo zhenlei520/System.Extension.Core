@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.DaYu.Common;
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.AliYun.DaYu.Model;
+using EInfrastructure.Core.AutoConfig.Extension;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Serialization;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Sms;
 using EInfrastructure.Core.Interface.Sms.Dto;
-using Microsoft.Extensions.Options;
 using RestSharp;
 
 namespace EInfrastructure.Core.AliYun.DaYu
@@ -20,9 +20,9 @@ namespace EInfrastructure.Core.AliYun.DaYu
     {
         private readonly SmsConfig _smsConfig;
 
-        public SmsService(SmsConfig smsConfig)
+        public SmsService(IWritableOptions<SmsConfig> smsConfig)
         {
-            _smsConfig = smsConfig;
+            _smsConfig = smsConfig.Get<SmsConfig>();
         }
 
         readonly RestClient _restClient = new RestClient("http://dysmsapi.aliyuncs.com");

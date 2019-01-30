@@ -17,10 +17,10 @@ namespace EInfrastructure.Core.Words
     {
         private readonly IWordService _wordService;
 
-        public ImportWordService(HostingEnvironmentConfigs hostingEnvironmentConfig,
+        public ImportWordService(
             IWordService wordService,
             DictTextPathConfig textPathConfig,
-            DictPinYinPathConfig dictPinYinPathConfig) : base(hostingEnvironmentConfig, textPathConfig,
+            DictPinYinPathConfig dictPinYinPathConfig) : base(textPathConfig,
             dictPinYinPathConfig)
         {
             _wordService = wordService;

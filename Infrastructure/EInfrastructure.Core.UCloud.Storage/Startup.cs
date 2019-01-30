@@ -1,4 +1,3 @@
-using System;
 using EInfrastructure.Core.AutoConfig;
 using EInfrastructure.Core.UCloud.Storage.Config;
 using Microsoft.Extensions.Configuration;
@@ -13,17 +12,10 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="serviceCollection"></param>
         /// <param name="configuration"></param>
-        /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名（配置文件需要）</param>
-        /// <param name="action"></param>
-        /// <param name="errConfigAction">配置信息错误回调</param>
         public static IServiceCollection AddUCloudStorage(this IServiceCollection serviceCollection,
-            IConfiguration configuration,
-            bool isCompleteName = false,
-            Action<ConfigAutoRegister> action = null,
-            Action<string> errConfigAction = null)
+            IConfiguration configuration)
         {
             serviceCollection.AddCustomerConfig<UCloudConfig>(configuration.GetSection("EInfrastructure.Core.UCloud.Storage.Config.UCloudConfig"), "ucloud.json");
-            serviceCollection.AddAutoConfig(isCompleteName, action, errConfigAction);
             return serviceCollection;
         }
     }

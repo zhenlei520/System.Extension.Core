@@ -29,4 +29,10 @@
     <ProjectReference Include="..\EInfrastructure.Core\EInfrastructure.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="alidayu.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

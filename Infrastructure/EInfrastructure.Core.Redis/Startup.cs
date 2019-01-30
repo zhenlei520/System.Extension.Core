@@ -1,5 +1,6 @@
-using System;
 using EInfrastructure.Core.AutoConfig;
+using EInfrastructure.Core.Redis.Config;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.Redis
@@ -10,15 +11,12 @@ namespace EInfrastructure.Core.Redis
         /// 加载此服务
         /// </summary>
         /// <param name="serviceCollection"></param>
-        /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名（配置文件需要）</param>
-        /// <param name="action"></param>
-        /// <param name="errConfigAction">配置信息错误回调</param>
+        /// <param name="configuration"></param>
         public static IServiceCollection AddRedis(this IServiceCollection serviceCollection,
-            bool isCompleteName = false,
-            Action<ConfigAutoRegister> action = null,
-            Action<string> errConfigAction = null)
+            IConfiguration configuration)
         {
-            serviceCollection.AddAutoConfig(isCompleteName, action,errConfigAction);
+            serviceCollection.AddCustomerConfig<RedisConfig>(
+                configuration.GetSection("EInfrastructure.Core.Redis.Config.RedisConfig"), "redis.json");
             return serviceCollection;
         }
     }

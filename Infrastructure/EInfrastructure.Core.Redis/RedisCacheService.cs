@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
+using EInfrastructure.Core.AutoConfig.Extension;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Interface;
 using EInfrastructure.Core.Interface.Cache;
@@ -26,9 +27,9 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         private readonly string _overtimeCacheKey = "Cache_HashKey";
 
-        public RedisCacheService(RedisConfig redisConfig)
+        public RedisCacheService(IWritableOptions<RedisConfig> redisConfig)
         {
-            CsRedisHelper.InitializeConfiguration(redisConfig);
+            CsRedisHelper.InitializeConfiguration(redisConfig.Get<RedisConfig>());
         }
 
         #region Methods
@@ -660,7 +661,8 @@ namespace EInfrastructure.Core.Redis
         public Dictionary<string, string> SortedSetRangeByRankAndOverTime(int count = 1000)
         {
             var keyList = CsRedisHelper
-                .ZRevRangeByScore(_overtimeCacheKey, TimeCommon.GetTimeSpan(DateTime.Now), 0, count, null).ToList<string>(); //得到过期的key集合
+                .ZRevRangeByScore(_overtimeCacheKey, TimeCommon.GetTimeSpan(DateTime.Now), 0, count, null)
+                .ToList<string>(); //得到过期的key集合
 
             Dictionary<string, string> hasKey = new Dictionary<string, string>();
             keyList.ForEach(item =>
