@@ -19,10 +19,12 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
+      <ProjectReference Include="..\EInfrastructure.Core\EInfrastructure.Core.csproj" />
     </ItemGroup>
 
 </Project>

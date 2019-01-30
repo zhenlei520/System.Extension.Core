@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\EInfrastructure.Core.AutoConfig\EInfrastructure.Core.AutoConfig.csproj" />
+      <ProjectReference Include="..\EInfrastructure.Core\EInfrastructure.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="ucloud.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

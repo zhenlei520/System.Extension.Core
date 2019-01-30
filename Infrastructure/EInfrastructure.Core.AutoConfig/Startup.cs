@@ -1,5 +1,8 @@
 using System;
+using EInfrastructure.Core.AutoConfig.Extension;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace EInfrastructure.Core.AutoConfig
 {
@@ -25,15 +28,40 @@ namespace EInfrastructure.Core.AutoConfig
             ConfigAutoRegister configAutoRegisterExt = new ConfigAutoRegister();
             if (action == null)
             {
-                configAutoRegisterExt.AddSingletonConfig(services, isCompleteName,errConfigAction);
-                configAutoRegisterExt.AddScopedConfig(services, isCompleteName,errConfigAction);
-                configAutoRegisterExt.AddTransientConfig(services, isCompleteName,errConfigAction);
+                configAutoRegisterExt.AddSingletonConfig(services, isCompleteName, errConfigAction);
+                configAutoRegisterExt.AddScopedConfig(services, isCompleteName, errConfigAction);
+                configAutoRegisterExt.AddTransientConfig(services, isCompleteName, errConfigAction);
             }
             else
             {
                 action.Invoke(configAutoRegisterExt);
             }
 
+            return services;
+        }
+
+        #endregion
+
+        #region 配置写入文件
+
+        /// <summary>
+        /// 配置写入文件
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="section"></param>
+        /// <param name="file"></param>
+        /// <typeparam name="T"></typeparam>
+        public static IServiceCollection AddCustomerConfig<T>(
+            this IServiceCollection services,
+            IConfigurationSection section,
+            string file) where T : class, new()
+        {
+            services.Configure<T>(section);
+            services.AddTransient<IWritableOptions<T>>(provider =>
+            {
+                var options = provider.GetService<IOptionsMonitor<T>>();
+                return new WritableOptions<T>(options, section.Key, file);
+            });
             return services;
         }
 

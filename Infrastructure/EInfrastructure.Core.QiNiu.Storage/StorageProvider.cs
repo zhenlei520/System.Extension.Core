@@ -1,8 +1,8 @@
-﻿using EInfrastructure.Core.Interface.IOC;
+﻿using EInfrastructure.Core.AutoConfig.Extension;
+using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Storage;
 using EInfrastructure.Core.Interface.Storage.Param;
 using EInfrastructure.Core.QiNiu.Storage.Config;
-using Microsoft.Extensions.Options;
 using Qiniu.Http;
 using Qiniu.Storage;
 using Qiniu.Util;
@@ -14,8 +14,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// </summary>
     public class StorageProvider : BaseStorageProvider, IStorageService, ISingleInstance
     {
-        public StorageProvider(QiNiuConfig qiNiuSnapshot)
-            : base(qiNiuSnapshot)
+        public StorageProvider(IWritableOptions<QiNiuConfig> qiNiuSnapshot)
+            : base(qiNiuSnapshot.Get<QiNiuConfig>())
         {
         }
 

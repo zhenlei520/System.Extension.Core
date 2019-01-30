@@ -1,9 +1,9 @@
-﻿using EInfrastructure.Core.HelpCommon;
+﻿using EInfrastructure.Core.AutoConfig.Extension;
+using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Storage;
 using EInfrastructure.Core.Interface.Storage.Param.Pictures;
 using EInfrastructure.Core.QiNiu.Storage.Config;
-using Microsoft.Extensions.Options;
 using Qiniu.Http;
 using Qiniu.Storage;
 using Qiniu.Util;
@@ -15,8 +15,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// </summary>
     public class PictureService : BaseStorageProvider, IPictureService, ISingleInstance
     {
-        public PictureService(QiNiuConfig qiNiuSnapshot) :
-            base(qiNiuSnapshot)
+        public PictureService(IWritableOptions<QiNiuConfig> qiNiuSnapshot) :
+            base(qiNiuSnapshot.Get<QiNiuConfig>())
         {
         }
 
@@ -33,7 +33,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 "");
             string token = Auth.CreateUploadToken(Mac, PutPolicy.ToJsonString());
             FormUploader target = new FormUploader(GetConfig());
-                HttpResult result =
+            HttpResult result =
                 target.UploadData(param.Base64.ConvertToByte(), param.ImgPersistentOps.Key, token,
                     GetPutExtra());
             return result.Code == (int) HttpCode.OK;

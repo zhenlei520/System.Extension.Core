@@ -1,0 +1,15 @@
+{
+  "EInfrastructure.Core.QiNiu.Storage.Config.QiNiuConfig": {
+    "AccessKey": "",
+    "SecretKey": "",
+    "Zones": 1,
+    "Host": "",
+    "Bucket": "",
+    "PersistentPipeline": "",
+    "PersistentNotifyUrl": "",
+    "CallbackUrl": "",
+    "CallbackBody": "",
+    "CallbackBodyType": 0,
+    "CallbackAuthHost": ""
+  }
+}
