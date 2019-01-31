@@ -9,8 +9,15 @@ using Microsoft.Extensions.Logging;
 
 namespace EInfrastructure.Core.MySql
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class Ext
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
         public static void EnableDebugTrace(this DbContextOptionsBuilder optionsBuilder)
         {
             LoggerFactory loggerFactory = new LoggerFactory();
@@ -19,6 +26,11 @@ namespace EInfrastructure.Core.MySql
             optionsBuilder.EnableSensitiveDataLogging();
         }
 
+        /// <summary>
+        /// 自动映射
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        /// <param name="assType"></param>
         public static void AutoMap(this ModelBuilder modelBuilder, Type assType)
         {
             // Interface that all of our Entity maps implement
@@ -53,6 +65,12 @@ namespace EInfrastructure.Core.MySql
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <param name="sql"></param>
+        /// <param name="action"></param>
         public static void Reader(this DbContext dbContext, string sql, Action<DbDataReader> action)
         {
             var conn = dbContext.Database.GetDbConnection();
@@ -85,6 +103,13 @@ namespace EInfrastructure.Core.MySql
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <param name="sql">sql语句</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static List<T> SqlQuery<T>(this DbContext dbContext, string sql)
         {
             List<T> list = new List<T>();
@@ -194,14 +219,35 @@ namespace EInfrastructure.Core.MySql
         }
     }
 
+    /// <summary>
+    /// 跟踪日志
+    /// </summary>
     public class TraceLogger : ILogger
     {
         private readonly string categoryName;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="categoryName"></param>
         public TraceLogger(string categoryName) => this.categoryName = categoryName;
 
+        /// <summary>
+        /// 是否启用日志
+        /// </summary>
+        /// <param name="logLevel"></param>
+        /// <returns></returns>
         public bool IsEnabled(LogLevel logLevel) => true;
 
+        /// <summary>
+        /// 增加日志
+        /// </summary>
+        /// <param name="logLevel"></param>
+        /// <param name="eventId"></param>
+        /// <param name="state"></param>
+        /// <param name="exception"></param>
+        /// <param name="formatter"></param>
+        /// <typeparam name="TState"></typeparam>
         public void Log<TState>(
             LogLevel logLevel,
             EventId eventId,
@@ -213,13 +259,30 @@ namespace EInfrastructure.Core.MySql
             Trace.WriteLine(formatter(state, exception));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="state"></param>
+        /// <typeparam name="TState"></typeparam>
+        /// <returns></returns>
         public IDisposable BeginScope<TState>(TState state) => null;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class TraceLoggerProvider : ILoggerProvider
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="categoryName"></param>
+        /// <returns></returns>
         public ILogger CreateLogger(string categoryName) => new TraceLogger(categoryName);
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Dispose()
         {
         }

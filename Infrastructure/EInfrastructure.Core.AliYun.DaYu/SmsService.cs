@@ -20,6 +20,10 @@ namespace EInfrastructure.Core.AliYun.DaYu
     {
         private readonly SmsConfig _smsConfig;
 
+        /// <summary>
+        /// 短信服务
+        /// </summary>
+        /// <param name="smsConfig">阿里大于短信配置</param>
         public SmsService(IWritableOptions<SmsConfig> smsConfig)
         {
             _smsConfig = smsConfig.Get<SmsConfig>();

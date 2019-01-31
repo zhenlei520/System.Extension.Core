@@ -9,10 +9,17 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace EInfrastructure.Core.MemoryCache
 {
+    /// <summary>
+    /// MemoryCache缓存实现类
+    /// </summary>
     public class MemoryCacheService : ICacheService, ISingleInstance
     {
         private readonly IMemoryCache _cache;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cache"></param>
         public MemoryCacheService(IMemoryCache cache)
         {
             _cache = cache;

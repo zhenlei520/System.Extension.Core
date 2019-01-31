@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.AliYun.DaYu
 {
+    /// <summary>
+    /// 加载阿里大于短信服务
+    /// </summary>
     public static class Startup
     {
         /// <summary>

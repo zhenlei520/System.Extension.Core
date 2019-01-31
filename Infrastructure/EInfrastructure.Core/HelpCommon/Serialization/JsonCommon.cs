@@ -10,6 +10,10 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
     {
         private readonly EnumJsonMode _jsonMode;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mode">序列化方式</param>
         public JsonCommon(EnumJsonMode mode = EnumJsonMode.Newtonsoft)
         {
             _jsonMode = mode;

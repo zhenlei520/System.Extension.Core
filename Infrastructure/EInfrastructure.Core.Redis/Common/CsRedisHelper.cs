@@ -5,8 +5,12 @@ namespace EInfrastructure.Core.Redis.Common
     /// <summary>
     /// 基于CsRedisCore的实现
     /// </summary>
-    public partial class CsRedisHelper: QuickHelperBase
+    internal partial class CsRedisHelper: QuickHelperBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="redisConfig"></param>
         public static void InitializeConfiguration(RedisConfig redisConfig)
         {
             int port, poolsize, database;

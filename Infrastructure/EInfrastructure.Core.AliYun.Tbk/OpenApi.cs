@@ -13,6 +13,11 @@ namespace EInfrastructure.Core.AliYun.Tbk
     /// </summary>
     public class OpenApi
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="appKey">appKey</param>
+        /// <param name="appSecret">app秘钥</param>
         protected OpenApi(string appKey, string appSecret)
         {
             AliConfig = new AliConfig()
@@ -22,6 +27,9 @@ namespace EInfrastructure.Core.AliYun.Tbk
             };
         }
 
+        /// <summary>
+        /// 淘宝客配置
+        /// </summary>
         protected readonly AliConfig AliConfig;
 
         static readonly RestClient RestClient = new RestClient("https://eco.taobao.com/router/rest");

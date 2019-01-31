@@ -7,6 +7,11 @@ namespace EInfrastructure.Core.Interface.Storage.Param
     /// </summary>
     public class UploadPersistentOpsParam
     {
+        /// <summary>
+        /// 上传文件（前端上传，后台生成策略信息）
+        /// </summary>
+        /// <param name="key">文件地址</param>
+        /// <param name="uploadPersistentOps">上传配置</param>
         public UploadPersistentOpsParam(string key, UploadPersistentOps uploadPersistentOps = null)
         {
             Key = key;

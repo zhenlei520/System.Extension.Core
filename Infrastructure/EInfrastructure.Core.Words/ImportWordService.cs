@@ -1,6 +1,4 @@
-using EInfrastructure.Core.AutoConfig;
-using EInfrastructure.Core.AutoConfig.Config;
-using EInfrastructure.Core.HelpCommon.Files;
+using EInfrastructure.Core.AutoConfig.Extension;
 using EInfrastructure.Core.Interface.Words;
 using EInfrastructure.Core.Words.Config.PinYin;
 using EInfrastructure.Core.Words.Config.Text;
@@ -17,11 +15,18 @@ namespace EInfrastructure.Core.Words
     {
         private readonly IWordService _wordService;
 
+        /// <summary>
+        /// 导入词库
+        /// </summary>
+        /// <param name="wordService"></param>
+        /// <param name="textPathConfig">字典配置地址</param>
+        /// <param name="dictPinYinPathConfig">文字拼音地址</param>
         public ImportWordService(
             IWordService wordService,
-            DictTextPathConfig textPathConfig,
-            DictPinYinPathConfig dictPinYinPathConfig) : base(textPathConfig,
-            dictPinYinPathConfig)
+            IWritableOptions<DictTextPathConfig> textPathConfig,
+            IWritableOptions<DictPinYinPathConfig> dictPinYinPathConfig) : base(
+            textPathConfig.Get<DictTextPathConfig>(),
+            dictPinYinPathConfig.Get<DictPinYinPathConfig>())
         {
             _wordService = wordService;
         }

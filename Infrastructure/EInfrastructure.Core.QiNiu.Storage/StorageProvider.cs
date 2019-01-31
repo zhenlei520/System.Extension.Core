@@ -10,10 +10,14 @@ using Qiniu.Util;
 namespace EInfrastructure.Core.QiNiu.Storage
 {
     /// <summary>
-    /// 存储
+    /// 文件实现类
     /// </summary>
     public class StorageProvider : BaseStorageProvider, IStorageService, ISingleInstance
     {
+        /// <summary>
+        /// 文件实现类
+        /// </summary>
+        /// <param name="qiNiuSnapshot">七牛配置</param>
         public StorageProvider(IWritableOptions<QiNiuConfig> qiNiuSnapshot)
             : base(qiNiuSnapshot.Get<QiNiuConfig>())
         {

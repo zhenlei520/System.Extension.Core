@@ -3,6 +3,9 @@ using System.Text.RegularExpressions;
 
 namespace EInfrastructure.Core.HelpCommon
 {
+    /// <summary>
+    /// 验证方法
+    /// </summary>
     public static class ValidateCommon
     {
         //邮件正则表达式

@@ -11,8 +11,16 @@ using RestSharp;
 
 namespace EInfrastructure.Core.AliYun.Tbk
 {
+    /// <summary>
+    /// 淘宝客api
+    /// </summary>
     public class TbkOpenApi : OpenApi
     {
+        /// <summary>
+        /// 淘宝客api
+        /// </summary>
+        /// <param name="appKey">appKey</param>
+        /// <param name="appSecret">app秘钥</param>
         public TbkOpenApi(string appKey, string appSecret) : base(appKey, appSecret)
         {
         }

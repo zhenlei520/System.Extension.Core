@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace EInfrastructure.Core.Ddd
 {
+    /// <summary>
+    /// 基类增删改仓储接口
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="T"></typeparam>
     public interface IRepository<TEntity, T> where TEntity : IAggregateRoot<T> where T : IComparable
     {
         /// <summary>
@@ -37,7 +42,7 @@ namespace EInfrastructure.Core.Ddd
         void Update(TEntity entity);
 
         /// <summary>
-        /// 加载实体
+        /// 根据id得到实体信息（需要重写）
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

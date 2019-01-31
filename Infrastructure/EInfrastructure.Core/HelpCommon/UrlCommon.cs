@@ -3,6 +3,9 @@ using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
 {
+    /// <summary>
+    /// url地址方法
+    /// </summary>
     public class UrlCommon
     {
         #region 得到url地址

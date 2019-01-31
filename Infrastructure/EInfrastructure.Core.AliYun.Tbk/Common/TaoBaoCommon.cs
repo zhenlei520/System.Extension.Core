@@ -8,7 +8,10 @@ using RestSharp;
 
 namespace EInfrastructure.Core.AliYun.Tbk.Common
 {
-    public class TaoBaoCommon
+    /// <summary>
+    /// 淘宝公共类
+    /// </summary>
+    internal class TaoBaoCommon
     {
         /// <summary>
         /// 普通url地址列表

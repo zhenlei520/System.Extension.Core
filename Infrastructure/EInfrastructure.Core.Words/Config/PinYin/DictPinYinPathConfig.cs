@@ -7,8 +7,6 @@ namespace EInfrastructure.Core.Words.Config.PinYin
     /// </summary>
     public class DictPinYinPathConfig : ISingletonConfigModel
     {
-        #region 不可修改
-
         /// <summary>
         /// 文字全拼 ××
         /// </summary>
@@ -24,10 +22,6 @@ namespace EInfrastructure.Core.Words.Config.PinYin
         /// </summary>
         public string PinYinDataPath { get; set; } = "Dict/PinYin/pinyinData.txt";
 
-        #endregion
-
-        #region 肯定修改
-
         /// <summary>
         /// 文字信息（需要重写，已确定）
         /// </summary>
@@ -37,7 +31,5 @@ namespace EInfrastructure.Core.Words.Config.PinYin
         /// 文字拼音（需要重写）
         /// </summary>
         public string WordPinYinPath { get; set; } = "Dict/PinYin/wordPinyin.txt";
-
-        #endregion
     }
 }

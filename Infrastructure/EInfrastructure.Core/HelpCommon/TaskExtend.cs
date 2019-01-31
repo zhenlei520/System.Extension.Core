@@ -3,32 +3,69 @@ using System.Threading.Tasks;
 
 namespace EInfrastructure.Core.HelpCommon
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class TaskExtend
     {
         #region Public Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="action"></param>
         public static void ToTaskNoResult(Action action)
         {
             Task.Run(action);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
         public static Task ToTask(Action action)
         {
             return Task.Run(action);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="function"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static Task<T> ToTask<T>(Func<T> function)
         {
             return Task.Run(function);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
         public static async Task ToTaskAsync(Action action)
         {
             await Task.Run(action);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="function"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static async Task<T> ToTaskAsync<T>(Func<T> function)
         {
             return await Task.Run(function);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="function"></param>
+        /// <typeparam name="T"></typeparam>
         public static void TaskNoResult<T>(Func<T> function)
         {
             Task.Run(function);
@@ -38,6 +75,10 @@ namespace EInfrastructure.Core.HelpCommon
 
         #region 扩展Task
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="action"></param>
         public static async void ToTaskAsyncExt(Action action)
         {
             await Task.Run(action);

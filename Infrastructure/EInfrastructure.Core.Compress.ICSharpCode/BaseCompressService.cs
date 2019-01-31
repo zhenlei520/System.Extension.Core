@@ -4,6 +4,9 @@ using EInfrastructure.Core.Interface.Compress.Enum;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode
 {
+    /// <summary>
+    /// 基类压缩方法
+    /// </summary>
     public abstract class BaseCompressService
     {
         #region 压缩文件

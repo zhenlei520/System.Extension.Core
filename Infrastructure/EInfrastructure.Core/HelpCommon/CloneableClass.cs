@@ -12,6 +12,10 @@ namespace EInfrastructure.Core.HelpCommon
     {
         #region ICloneable 成员
 
+        /// <summary>
+        /// 浅拷贝
+        /// </summary>
+        /// <returns></returns>
         public object Clone()
         {
             return MemberwiseClone();
@@ -20,6 +24,7 @@ namespace EInfrastructure.Core.HelpCommon
         #endregion
 
         #region 深拷贝
+
         /// <summary>
         /// 深拷贝
         /// </summary>
@@ -33,12 +38,14 @@ namespace EInfrastructure.Core.HelpCommon
                 IFormatter formatter = new BinaryFormatter();
                 formatter.Serialize(objectStream, t);
                 objectStream.Seek(0, SeekOrigin.Begin);
-                return (T)formatter.Deserialize(objectStream);
+                return (T) formatter.Deserialize(objectStream);
             }
         }
+
         #endregion
 
         #region 浅拷贝
+
         /// <summary>
         /// 浅拷贝
         /// </summary>
@@ -46,8 +53,9 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public T ShallowClone<T>()
         {
-            return (T)Clone();
+            return (T) Clone();
         }
+
         #endregion
     }
 }

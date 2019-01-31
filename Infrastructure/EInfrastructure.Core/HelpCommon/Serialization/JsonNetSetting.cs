@@ -7,8 +7,17 @@ using Newtonsoft.Json.Serialization;
 
 namespace EInfrastructure.Core.HelpCommon.Serialization
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class NullToEmptyStringResolver : DefaultContractResolver
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="memberSerialization"></param>
+        /// <returns></returns>
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
             return type.GetProperties()
@@ -21,15 +30,27 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class NullToEmptyStringValueProvider : IValueProvider
     {
         readonly PropertyInfo _memberInfo;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="memberInfo"></param>
         public NullToEmptyStringValueProvider(PropertyInfo memberInfo)
         {
             _memberInfo = memberInfo;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public object GetValue(object target)
         {
             object result = _memberInfo.GetValue(target);
@@ -68,6 +89,11 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
             return result;
         }
 
+        /// <summary>
+        /// 设置值
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="value"></param>
         public void SetValue(object target, object value)
         {
             _memberInfo.SetValue(target, value);

@@ -164,6 +164,7 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Entities
         /// </summary>
         /// <param name="type"></param>
         /// <param name="codes"></param>
+        /// <param name="is1Char1Code"></param>
         public void SetCode(CodeTypeEnum type, IList<string> codes,bool is1Char1Code)
         {
             CodeType = type;

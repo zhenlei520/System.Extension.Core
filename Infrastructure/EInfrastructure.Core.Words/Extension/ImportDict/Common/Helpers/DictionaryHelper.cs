@@ -48,18 +48,39 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Helpers
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public struct ChineseCode
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string Code { get; set; }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
         public char Word { get; set; }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Wubi86 { get; set; }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Wubi98 { get; set; }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Pinyins { get; set; }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
         public double Freq { get; set; }
     }
 }

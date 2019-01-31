@@ -6,6 +6,9 @@ using EInfrastructure.Core.HelpCommon;
 
 namespace EInfrastructure.Core.Data.EntitiesExtension
 {
+    /// <summary>
+    /// Queryable扩展方法
+    /// </summary>
     public static class QueryableExtend
     {
         #region 返回IQueryable<T>前几条数据
@@ -72,11 +75,11 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
         #region 得到IQueryable<T>分页
 
         /// <summary>
-        /// 得到IQueryable<T>分页
+        /// 得到IQueryable分页
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="query"></param>
-        /// <param name="action"></param>
+        /// <param name="action">分页需要执行的委托方法</param>
         /// <param name="pageSize">每页几条数据（默认20条，-1则不分页）</param>
         /// <param name="pageIndex">当前页数（默认第一页）</param>
         /// <returns></returns>
@@ -97,7 +100,7 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             }
             else
             {
-                pageSize = totalCount.ConvertToInt(0)* -1;
+                pageSize = totalCount.ConvertToInt(0) * -1;
             }
 
             for (int index = pageIndex; index <= pageMax; index++)

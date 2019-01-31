@@ -4,20 +4,36 @@ using System.Linq.Expressions;
 
 namespace EInfrastructure.Core.Data.EntitiesExtension
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class PartialEvaluator : ExpressionVisitor
     {
         private Func<Expression, bool> m_fnCanBeEvaluated;
         private HashSet<Expression> m_candidates;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public PartialEvaluator()
             : this(CanBeEvaluatedLocally)
-        { }
+        {
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fnCanBeEvaluated"></param>
         public PartialEvaluator(Func<Expression, bool> fnCanBeEvaluated)
         {
             this.m_fnCanBeEvaluated = fnCanBeEvaluated;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="exp"></param>
+        /// <returns></returns>
         public Expression Eval(Expression exp)
         {
             this.m_candidates = new Nominator(this.m_fnCanBeEvaluated).Nominate(exp);
@@ -25,6 +41,11 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             return this.Visit(exp);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="exp"></param>
+        /// <returns></returns>
         protected override Expression Visit(Expression exp)
         {
             if (exp == null)

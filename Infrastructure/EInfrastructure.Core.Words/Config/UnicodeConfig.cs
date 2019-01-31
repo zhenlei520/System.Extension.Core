@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.Interface.Words.Enum;
 
-namespace EInfrastructure.Core.Interface.Words.Config
+namespace EInfrastructure.Core.Words.Config
 {
     /// <summary>
     /// Unicode编码范围

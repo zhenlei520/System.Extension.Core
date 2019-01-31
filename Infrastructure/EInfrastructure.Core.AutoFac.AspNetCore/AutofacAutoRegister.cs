@@ -2,9 +2,12 @@
 using Autofac;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EInfrastructure.Core.AutoFac.SqlServer.AspNetCore
+namespace EInfrastructure.Core.AutoFac.AspNetCore
 {
-    public class MvcAutoRegister : EInfrastructure.Core.AutoFac.SqlServer.MvcAutoRegister
+    /// <summary>
+    /// Mvc自动注入(注入mvc)
+    /// </summary>
+    public class AutofacAutoRegister : EInfrastructure.Core.AutoFac.AutofacAutoRegister
     {
         /// <summary>
         /// 

@@ -1,0 +1,16 @@
+{
+  "EInfrastructure.Core.Words.Config.PinYin.DictPinYinPathConfig": {
+    "PinYinNamePath": "Dict/PinYin/pinyinName.txt",
+    "PinYinIndexPath": "Dict/PinYin/pinyinIndex.txt",
+    "PinYinDataPath": "Dict/PinYin/pinyinData.txt",
+    "WordPath": "Dict/PinYin/pinyinWord.txt",
+    "WordPinYinPath": "Dict/PinYin/wordPinyin.txt"
+  },
+  "EInfrastructure.Core.Words.Config.Text.DictTextPathConfig": {
+    "SimplifiedPath": "Dict/Text/simplified.txt",
+    "TraditionalPath": "Dict/Text/traditional.txt",
+    "InitialPath": "Dict/Text/initial.txt",
+    "SpecialNumberPath": "Dict/Text/specialNumber.txt",
+    "TranscodingNumberPath": "Dict/Text/transcodingNumber.txt"
+  }
+}

@@ -2,6 +2,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode
 {
+    /// <summary>
+    /// 加载压缩服务
+    /// </summary>
     public static class Startup
     {
         /// <summary>

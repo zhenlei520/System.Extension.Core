@@ -3,6 +3,9 @@ using System.Text.RegularExpressions;
 
 namespace EInfrastructure.Core.HelpCommon
 {
+    /// <summary>
+    /// 校验方法
+    /// </summary>
     public static class Check
     {
         #region 检查空或者null
@@ -53,7 +56,8 @@ namespace EInfrastructure.Core.HelpCommon
         /// <summary>
         /// 判断是否是淘口令
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="str">待校验的字符串</param>
+        /// <param name="code">淘口令</param>
         /// <returns></returns>
         public static bool IsAmoyPsdTip(string str, ref string code)
         {

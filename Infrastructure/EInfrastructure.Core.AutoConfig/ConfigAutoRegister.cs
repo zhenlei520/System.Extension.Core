@@ -6,6 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.AutoConfig
 {
+    /// <summary>
+    /// 自动注入配置
+    /// </summary>
     public class ConfigAutoRegister
     {
         #region 自动注入配置文件（项目启动-项目关闭）

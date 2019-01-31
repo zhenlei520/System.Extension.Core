@@ -8,11 +8,20 @@ namespace EInfrastructure.Core.Data
     /// </summary>
     public class PageData<T>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public PageData()
         {
             Data = new List<T>();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rowCount">总条数</param>
+        /// <param name="data">数据集合</param>
+        /// <param name="extendedData">扩展信息</param>
         public PageData(int rowCount, List<T> data, object extendedData)
         {
             this.Data = data;

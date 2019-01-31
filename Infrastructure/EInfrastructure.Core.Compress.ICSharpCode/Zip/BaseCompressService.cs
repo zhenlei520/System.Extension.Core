@@ -9,7 +9,10 @@ using ICSharpCode.SharpZipLib.Zip;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
 {
-    public class BaseZipCompressService:BaseCompressService
+    /// <summary>
+    /// 
+    /// </summary>
+    public class BaseZipCompressService : BaseCompressService
     {
         #region 检查是否存在
 

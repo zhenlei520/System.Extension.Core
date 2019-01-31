@@ -8,10 +8,20 @@ using EInfrastructure.Core.UCloud.Storage.Config;
 
 namespace EInfrastructure.Core.UCloud.Storage
 {
+    /// <summary>
+    /// 基类UCloud实现
+    /// </summary>
     public class BaseStorageProvider
     {
+        /// <summary>
+        /// UCloud配置
+        /// </summary>
         protected readonly UCloudConfig _uCloudConfig;
 
+        /// <summary>
+        /// 基类UCloud实现
+        /// </summary>
+        /// <param name="uCloudConfig">UCloud配置</param>
         public BaseStorageProvider(UCloudConfig uCloudConfig)
         {
             _uCloudConfig = uCloudConfig;

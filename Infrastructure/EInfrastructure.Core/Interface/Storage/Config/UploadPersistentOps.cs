@@ -5,6 +5,9 @@ using EInfrastructure.Core.Interface.Storage.Handler;
 
 namespace EInfrastructure.Core.Interface.Storage.Config
 {
+    /// <summary>
+    /// 上传策略配置
+    /// </summary>
     public class UploadPersistentOps
     {
         /// <summary>

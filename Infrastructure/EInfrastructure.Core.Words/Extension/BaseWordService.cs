@@ -37,6 +37,11 @@ namespace EInfrastructure.Core.Words.Extension
         /// </summary>
         internal static DictPinYinPathConfig DictPinYinPathConfig;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="textPathConfig"></param>
+        /// <param name="dictPinYinPathConfig"></param>
         public BaseWordService(
             DictTextPathConfig textPathConfig,
             DictPinYinPathConfig dictPinYinPathConfig)

@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.UCloud.Storage
 {
+    /// <summary>
+    /// 加载UCloud存储服务
+    /// </summary>
     public static class Startup
     {
         /// <summary>
@@ -15,7 +18,8 @@ namespace EInfrastructure.Core.UCloud.Storage
         public static IServiceCollection AddUCloudStorage(this IServiceCollection serviceCollection,
             IConfiguration configuration)
         {
-            serviceCollection.AddCustomerConfig<UCloudConfig>(configuration.GetSection("EInfrastructure.Core.UCloud.Storage.Config.UCloudConfig"), "ucloud.json");
+            serviceCollection.AddCustomerConfig<UCloudConfig>(
+                configuration.GetSection("EInfrastructure.Core.UCloud.Storage.Config.UCloudConfig"), "ucloud.json");
             return serviceCollection;
         }
     }

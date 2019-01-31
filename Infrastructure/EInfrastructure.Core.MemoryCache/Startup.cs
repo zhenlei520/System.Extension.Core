@@ -2,6 +2,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.MemoryCache
 {
+    /// <summary>
+    /// 加载MemoryCache服务
+    /// </summary>
     public static class Startup
     {
         /// <summary>

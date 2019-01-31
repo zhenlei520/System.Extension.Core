@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <Version>1.2.2</Version>
+        <Version>1.2.3</Version>
         <Authors>zhenlei520</Authors>
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <Company>zhenlei520</Company>
@@ -14,13 +13,19 @@
         <Title>基础类库配置</Title>
         <PackageTags>Configuration ECommon EInfrastructure.Core.Configuration</PackageTags>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\EInfrastructure.Core.Configuration.xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\EInfrastructure.Core.Configuration.xml</DocumentationFile>
+    </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Interface" />
+        <Folder Include="Interface" />
     </ItemGroup>
 
 </Project>

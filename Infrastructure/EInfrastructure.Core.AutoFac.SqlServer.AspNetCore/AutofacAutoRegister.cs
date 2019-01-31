@@ -2,9 +2,12 @@
 using Autofac;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EInfrastructure.Core.AutoFac.MySql.AspNetCore
+namespace EInfrastructure.Core.AutoFac.SqlServer.AspNetCore
 {
-    public class MvcAutoRegister : EInfrastructure.Core.AutoFac.MySql.MvcAutoRegister
+    /// <summary>
+    /// Autofac自动注入（注入mvc以及sqlserver）
+    /// </summary>
+    public class AutofacAutoRegister : EInfrastructure.Core.AutoFac.SqlServer.AutofacAutoRegister
     {
         /// <summary>
         /// 
@@ -13,7 +16,7 @@ namespace EInfrastructure.Core.AutoFac.MySql.AspNetCore
         /// <param name="action"></param>
         /// <returns></returns>
         public override IServiceProvider Build(IServiceCollection services,
-           Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action)
         {
             return base.Build(services, (builder) =>
             {

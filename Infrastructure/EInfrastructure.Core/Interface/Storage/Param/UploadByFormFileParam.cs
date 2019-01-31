@@ -4,10 +4,16 @@ using Microsoft.AspNetCore.Http;
 namespace EInfrastructure.Core.Interface.Storage.Param
 {
     /// <summary>
-    /// ¸ù¾İÎÄ¼şÉÏ´«
+    /// æ ¹æ®æ–‡ä»¶ä¸Šä¼ 
     /// </summary>
     public class UploadByFormFileParam
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key">æ–‡ä»¶key</param>
+        /// <param name="file">æ–‡ä»¶ä¿¡æ¯</param>
+        /// <param name="uploadPersistentOps">ä¸Šä¼ ç­–ç•¥</param>
         public UploadByFormFileParam(string key, IFormFile file, UploadPersistentOps uploadPersistentOps = null)
         {
             Key = key;
@@ -16,17 +22,17 @@ namespace EInfrastructure.Core.Interface.Storage.Param
         }
 
         /// <summary>
-        /// ÎÄ¼şkey
+        /// æ–‡ä»¶key
         /// </summary>
         public string Key { get; private set; }
 
         /// <summary>
-        /// ÎÄ¼şÁ÷
+        /// æ–‡ä»¶æµ
         /// </summary>
         public IFormFile File { get; private set; }
 
         /// <summary>
-        /// ÉÏ´«²ßÂÔ
+        /// ä¸Šä¼ ç­–ç•¥
         /// </summary>
         public UploadPersistentOps UploadPersistentOps { get; private set; }
     }

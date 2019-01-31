@@ -5,9 +5,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.AutoConfig;
 using EInfrastructure.Core.AutoConfig.Config;
+using EInfrastructure.Core.AutoConfig.Extension;
 using EInfrastructure.Core.Interface.Words;
-using EInfrastructure.Core.Interface.Words.Config;
 using EInfrastructure.Core.Interface.Words.Enum;
+using EInfrastructure.Core.Words.Config;
 using EInfrastructure.Core.Words.Config.PinYin;
 using EInfrastructure.Core.Words.Config.Text;
 using EInfrastructure.Core.Words.Extension;
@@ -15,11 +16,19 @@ using EInfrastructure.Core.Words.PinYin;
 
 namespace EInfrastructure.Core.Words
 {
+    /// <summary>
+    /// 单词帮助类
+    /// </summary>
     public class WordService : BaseWordService, IWordService
     {
-        public WordService(DictTextPathConfig textPathConfig,
-            DictPinYinPathConfig dictPinYinPathConfig) : base(
-            textPathConfig, dictPinYinPathConfig)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="textPathConfig"></param>
+        /// <param name="dictPinYinPathConfig"></param>
+        public WordService(IWritableOptions<DictTextPathConfig> textPathConfig,
+            IWritableOptions<DictPinYinPathConfig> dictPinYinPathConfig) : base(
+            textPathConfig.Get<DictTextPathConfig>(), dictPinYinPathConfig.Get<DictPinYinPathConfig>())
         {
         }
 
@@ -37,10 +46,12 @@ namespace EInfrastructure.Core.Words
 
         #endregion
 
+        #region 获取拼音全拼, 不支持多音,中文字符集为[0x4E00,0x9FA5]
+
         /// <summary>
         /// 获取拼音全拼, 不支持多音,中文字符集为[0x4E00,0x9FA5]
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="text">文本信息</param>
         /// <returns></returns>
         [Obsolete("请使用GetPinYin方法，此方法不支持多音")]
         public string GetPinYinFast(string text)
@@ -55,6 +66,7 @@ namespace EInfrastructure.Core.Words
             return sb.ToString();
         }
 
+        #endregion
 
         #region 得到完整的拼音
 

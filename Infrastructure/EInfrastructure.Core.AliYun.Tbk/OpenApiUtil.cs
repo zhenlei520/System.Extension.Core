@@ -6,7 +6,10 @@ using EInfrastructure.Core.HelpCommon;
 
 namespace EInfrastructure.Core.AliYun.Tbk
 {
-    public class OpenApiUtil
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class OpenApiUtil
     {
         public static Dictionary<string, string> BuildCommonParam(string method, string appKey)
         {
@@ -25,7 +28,13 @@ namespace EInfrastructure.Core.AliYun.Tbk
             return dic;
         }
 
-        public static string CreateSign(IDictionary<string, string> parameters, string secret)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="secret"></param>
+        /// <returns></returns>
+        internal static string CreateSign(IDictionary<string, string> parameters, string secret)
         {
             // 第一步：把字典按Key的字母顺序排序
             IDictionary<string, string> sortedParams =

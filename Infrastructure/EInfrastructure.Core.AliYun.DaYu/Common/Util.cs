@@ -9,7 +9,10 @@ using Microsoft.AspNetCore.Routing;
 
 namespace EInfrastructure.Core.AliYun.DaYu.Common
 {
-    public class Util
+    /// <summary>
+    /// 工具类
+    /// </summary>
+    internal class Util
     {
         protected const string QuerySeparator = "&";
         protected const string HeaderSeparator = "\n";

@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.Redis
 {
+    /// <summary>
+    /// 加载Redis服务
+    /// </summary>
     public static class Startup
     {
         /// <summary>

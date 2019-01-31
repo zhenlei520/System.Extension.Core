@@ -4,10 +4,24 @@ using System.Linq.Expressions;
 
 namespace EInfrastructure.Core.Data.EntitiesExtension
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class ExpressionVisitor
     {
-        protected ExpressionVisitor() { }
+        /// <summary>
+        /// 
+        /// </summary>
+        protected ExpressionVisitor()
+        {
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="exp"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         protected virtual Expression Visit(Expression exp)
         {
             if (exp == null)
@@ -22,7 +36,7 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
                 case ExpressionType.ArrayLength:
                 case ExpressionType.Quote:
                 case ExpressionType.TypeAs:
-                    return this.VisitUnary((UnaryExpression)exp);
+                    return this.VisitUnary((UnaryExpression) exp);
                 case ExpressionType.Add:
                 case ExpressionType.AddChecked:
                 case ExpressionType.Subtract:
@@ -46,52 +60,63 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
                 case ExpressionType.RightShift:
                 case ExpressionType.LeftShift:
                 case ExpressionType.ExclusiveOr:
-                    return this.VisitBinary((BinaryExpression)exp);
+                    return this.VisitBinary((BinaryExpression) exp);
                 case ExpressionType.TypeIs:
-                    return this.VisitTypeIs((TypeBinaryExpression)exp);
+                    return this.VisitTypeIs((TypeBinaryExpression) exp);
                 case ExpressionType.Conditional:
-                    return this.VisitConditional((ConditionalExpression)exp);
+                    return this.VisitConditional((ConditionalExpression) exp);
                 case ExpressionType.Constant:
-                    return this.VisitConstant((ConstantExpression)exp);
+                    return this.VisitConstant((ConstantExpression) exp);
                 case ExpressionType.Parameter:
-                    return this.VisitParameter((ParameterExpression)exp);
+                    return this.VisitParameter((ParameterExpression) exp);
                 case ExpressionType.MemberAccess:
-                    return this.VisitMemberAccess((MemberExpression)exp);
+                    return this.VisitMemberAccess((MemberExpression) exp);
                 case ExpressionType.Call:
-                    return this.VisitMethodCall((MethodCallExpression)exp);
+                    return this.VisitMethodCall((MethodCallExpression) exp);
                 case ExpressionType.Lambda:
-                    return this.VisitLambda((LambdaExpression)exp);
+                    return this.VisitLambda((LambdaExpression) exp);
                 case ExpressionType.New:
-                    return this.VisitNew((NewExpression)exp);
+                    return this.VisitNew((NewExpression) exp);
                 case ExpressionType.NewArrayInit:
                 case ExpressionType.NewArrayBounds:
-                    return this.VisitNewArray((NewArrayExpression)exp);
+                    return this.VisitNewArray((NewArrayExpression) exp);
                 case ExpressionType.Invoke:
-                    return this.VisitInvocation((InvocationExpression)exp);
+                    return this.VisitInvocation((InvocationExpression) exp);
                 case ExpressionType.MemberInit:
-                    return this.VisitMemberInit((MemberInitExpression)exp);
+                    return this.VisitMemberInit((MemberInitExpression) exp);
                 case ExpressionType.ListInit:
-                    return this.VisitListInit((ListInitExpression)exp);
+                    return this.VisitListInit((ListInitExpression) exp);
                 default:
                     throw new System.Exception(string.Format("Unhandled expression type: '{0}'", exp.NodeType));
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="binding"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         protected virtual MemberBinding VisitBinding(MemberBinding binding)
         {
             switch (binding.BindingType)
             {
                 case MemberBindingType.Assignment:
-                    return this.VisitMemberAssignment((MemberAssignment)binding);
+                    return this.VisitMemberAssignment((MemberAssignment) binding);
                 case MemberBindingType.MemberBinding:
-                    return this.VisitMemberMemberBinding((MemberMemberBinding)binding);
+                    return this.VisitMemberMemberBinding((MemberMemberBinding) binding);
                 case MemberBindingType.ListBinding:
-                    return this.VisitMemberListBinding((MemberListBinding)binding);
+                    return this.VisitMemberListBinding((MemberListBinding) binding);
                 default:
                     throw new System.Exception(string.Format("Unhandled binding type '{0}'", binding.BindingType));
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="initializer"></param>
+        /// <returns></returns>
         protected virtual ElementInit VisitElementInitializer(ElementInit initializer)
         {
             ReadOnlyCollection<Expression> arguments = this.VisitExpressionList(initializer.Arguments);
@@ -99,9 +124,15 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             {
                 return Expression.ElementInit(initializer.AddMethod, arguments);
             }
+
             return initializer;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="u"></param>
+        /// <returns></returns>
         protected virtual Expression VisitUnary(UnaryExpression u)
         {
             Expression operand = this.Visit(u.Operand);
@@ -109,9 +140,15 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             {
                 return Expression.MakeUnary(u.NodeType, operand, u.Type, u.Method);
             }
+
             return u;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
         protected virtual Expression VisitBinary(BinaryExpression b)
         {
             Expression left = this.Visit(b.Left);
@@ -124,9 +161,15 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
                 else
                     return Expression.MakeBinary(b.NodeType, left, right, b.IsLiftedToNull, b.Method);
             }
+
             return b;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
         protected virtual Expression VisitTypeIs(TypeBinaryExpression b)
         {
             Expression expr = this.Visit(b.Expression);
@@ -134,14 +177,25 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             {
                 return Expression.TypeIs(expr, b.TypeOperand);
             }
+
             return b;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
         protected virtual Expression VisitConstant(ConstantExpression c)
         {
             return c;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
         protected virtual Expression VisitConditional(ConditionalExpression c)
         {
             Expression test = this.Visit(c.Test);
@@ -151,14 +205,25 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             {
                 return Expression.Condition(test, ifTrue, ifFalse);
             }
+
             return c;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
         protected virtual Expression VisitParameter(ParameterExpression p)
         {
             return p;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
         protected virtual Expression VisitMemberAccess(MemberExpression m)
         {
             Expression exp = this.Visit(m.Expression);
@@ -166,9 +231,15 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             {
                 return Expression.MakeMemberAccess(exp, m.Member);
             }
+
             return m;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
         protected virtual Expression VisitMethodCall(MethodCallExpression m)
         {
             Expression obj = this.Visit(m.Object);
@@ -177,9 +248,15 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             {
                 return Expression.Call(obj, m.Method, args);
             }
+
             return m;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="original"></param>
+        /// <returns></returns>
         protected virtual ReadOnlyCollection<Expression> VisitExpressionList(ReadOnlyCollection<Expression> original)
         {
             List<Expression> list = null;
@@ -197,16 +274,24 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
                     {
                         list.Add(original[j]);
                     }
+
                     list.Add(p);
                 }
             }
+
             if (list != null)
             {
                 return list.AsReadOnly();
             }
+
             return original;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assignment"></param>
+        /// <returns></returns>
         protected virtual MemberAssignment VisitMemberAssignment(MemberAssignment assignment)
         {
             Expression e = this.Visit(assignment.Expression);
@@ -214,9 +299,15 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             {
                 return Expression.Bind(assignment.Member, e);
             }
+
             return assignment;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="binding"></param>
+        /// <returns></returns>
         protected virtual MemberMemberBinding VisitMemberMemberBinding(MemberMemberBinding binding)
         {
             IEnumerable<MemberBinding> bindings = this.VisitBindingList(binding.Bindings);
@@ -224,9 +315,15 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             {
                 return Expression.MemberBind(binding.Member, bindings);
             }
+
             return binding;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="binding"></param>
+        /// <returns></returns>
         protected virtual MemberListBinding VisitMemberListBinding(MemberListBinding binding)
         {
             IEnumerable<ElementInit> initializers = this.VisitElementInitializerList(binding.Initializers);
@@ -234,9 +331,15 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             {
                 return Expression.ListBind(binding.Member, initializers);
             }
+
             return binding;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="original"></param>
+        /// <returns></returns>
         protected virtual IEnumerable<MemberBinding> VisitBindingList(ReadOnlyCollection<MemberBinding> original)
         {
             List<MemberBinding> list = null;
@@ -254,14 +357,21 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
                     {
                         list.Add(original[j]);
                     }
+
                     list.Add(b);
                 }
             }
+
             if (list != null)
                 return list;
             return original;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="original"></param>
+        /// <returns></returns>
         protected virtual IEnumerable<ElementInit> VisitElementInitializerList(ReadOnlyCollection<ElementInit> original)
         {
             List<ElementInit> list = null;
@@ -279,14 +389,21 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
                     {
                         list.Add(original[j]);
                     }
+
                     list.Add(init);
                 }
             }
+
             if (list != null)
                 return list;
             return original;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lambda"></param>
+        /// <returns></returns>
         protected virtual Expression VisitLambda(LambdaExpression lambda)
         {
             Expression body = this.Visit(lambda.Body);
@@ -294,9 +411,15 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             {
                 return Expression.Lambda(lambda.Type, body, lambda.Parameters);
             }
+
             return lambda;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nex"></param>
+        /// <returns></returns>
         protected virtual NewExpression VisitNew(NewExpression nex)
         {
             IEnumerable<Expression> args = this.VisitExpressionList(nex.Arguments);
@@ -307,9 +430,15 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
                 else
                     return Expression.New(nex.Constructor, args);
             }
+
             return nex;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="init"></param>
+        /// <returns></returns>
         protected virtual Expression VisitMemberInit(MemberInitExpression init)
         {
             NewExpression n = this.VisitNew(init.NewExpression);
@@ -318,9 +447,15 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             {
                 return Expression.MemberInit(n, bindings);
             }
+
             return init;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="init"></param>
+        /// <returns></returns>
         protected virtual Expression VisitListInit(ListInitExpression init)
         {
             NewExpression n = this.VisitNew(init.NewExpression);
@@ -329,9 +464,15 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             {
                 return Expression.ListInit(n, initializers);
             }
+
             return init;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="na"></param>
+        /// <returns></returns>
         protected virtual Expression VisitNewArray(NewArrayExpression na)
         {
             IEnumerable<Expression> exprs = this.VisitExpressionList(na.Expressions);
@@ -346,9 +487,15 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
                     return Expression.NewArrayBounds(na.Type.GetElementType(), exprs);
                 }
             }
+
             return na;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="iv"></param>
+        /// <returns></returns>
         protected virtual Expression VisitInvocation(InvocationExpression iv)
         {
             IEnumerable<Expression> args = this.VisitExpressionList(iv.Arguments);
@@ -357,6 +504,7 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
             {
                 return Expression.Invoke(expr, args);
             }
+
             return iv;
         }
     }

@@ -6,7 +6,10 @@ using System;
 
 namespace EInfrastructure.Core.AutoFac.MySql
 {
-    public class MvcAutoRegister : EInfrastructure.Core.AutoFac.MvcAutoRegister
+    /// <summary>
+    /// Autofac自动注入(注入mysql)
+    /// </summary>
+    public class AutofacAutoRegister : AutoFac.AutofacAutoRegister
     {
         /// <summary>
         /// 

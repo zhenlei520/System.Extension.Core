@@ -4,7 +4,10 @@ using EInfrastructure.Core.Interface.Compress.Enum;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode
 {
-    public class CompressFactory
+    /// <summary>
+    /// 压缩工厂
+    /// </summary>
+    internal class CompressFactory
     {
         #region 得到实现类
 

@@ -8,6 +8,12 @@ namespace EInfrastructure.Core.Interface.Storage.Param
     /// </summary>
     public class UploadByStreamParam
     {
+        /// <summary>
+        /// 根据文件流上传
+        /// </summary>
+        /// <param name="key">文件地址</param>
+        /// <param name="stream">文件流</param>
+        /// <param name="uploadPersistentOps">上传配置</param>
         public UploadByStreamParam(string key, Stream stream, UploadPersistentOps uploadPersistentOps = null)
         {
             Key = key;

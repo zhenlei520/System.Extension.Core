@@ -2,6 +2,9 @@ using System.ComponentModel;
 
 namespace EInfrastructure.Core.Interface.Storage.Enum
 {
+    /// <summary>
+    /// 上传状态
+    /// </summary>
     public enum UploadStateEnum
     {
         /// <summary>

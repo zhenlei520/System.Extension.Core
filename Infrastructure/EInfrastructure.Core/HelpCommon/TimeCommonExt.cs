@@ -47,6 +47,11 @@ namespace EInfrastructure.Core.HelpCommon
         Action<Delegate> _timeoutHandle;      //超时后处理事件  
         System.Threading.ManualResetEvent _event = new System.Threading.ManualResetEvent(false);
 
+        /// <summary>
+        /// 超时自动结束
+        /// </summary>
+        /// <param name="proc"></param>
+        /// <param name="timeoutHandle"></param>
         public TimeCommonExt(Action<Delegate> proc, Action<Delegate> timeoutHandle)
         {
             _proc = proc;

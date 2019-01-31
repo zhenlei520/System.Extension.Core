@@ -7,11 +7,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.SqlServer
 {
+    /// <summary>
+    /// 基类增删改仓储实现类
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="T"></typeparam>
     public class RepositoryBase<TEntity, T> : IRepository<TEntity, T> where TEntity : Entity<T>, IAggregateRoot<T>
         where T : IComparable
     {
+        /// <summary>
+        /// 
+        /// </summary>
         protected DbContext Dbcontext;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unitOfWork"></param>
         public RepositoryBase(IUnitOfWork unitOfWork)
         {
             Dbcontext = unitOfWork as DbContext;
@@ -99,9 +111,19 @@ namespace EInfrastructure.Core.SqlServer
 
         #endregion
 
+        #region 根据id得到实体信息（需要重写）
+
+        /// <summary>
+        /// 根据id得到实体信息（需要重写）
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public virtual TEntity LoadIntegrate(T id)
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

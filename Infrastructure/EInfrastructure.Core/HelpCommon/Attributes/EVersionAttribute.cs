@@ -10,8 +10,15 @@ namespace EInfrastructure.Core.HelpCommon.Attributes
     {
         private readonly string _version;
 
+        /// <summary>
+        /// 版本
+        /// </summary>
         public virtual string Version => _version;
 
+        /// <summary>
+        /// 版本信息
+        /// </summary>
+        /// <param name="version"></param>
         public EVersionAttribute(string version)
         {
             _version = version;

@@ -9,18 +9,27 @@ using Qiniu.Util;
 
 namespace EInfrastructure.Core.QiNiu.Storage.Auths
 {
+    /// <summary>
+    /// 七牛回调鉴权
+    /// </summary>
     public class QiNiuAuthAttribute : TypeFilterAttribute
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public QiNiuAuthAttribute() : base(typeof(ClaimQiNiuRequirementFilter))
         {
         }
     }
 
-    public class ClaimQiNiuRequirementFilter : IAuthorizationFilter
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class ClaimQiNiuRequirementFilter : IAuthorizationFilter
     {
         private readonly QiNiuConfig _qiNiuConfig;
 
-        public ClaimQiNiuRequirementFilter(QiNiuConfig qiniuConfig)
+        internal ClaimQiNiuRequirementFilter(QiNiuConfig qiniuConfig)
         {
             this._qiNiuConfig = qiniuConfig;
         }
@@ -54,7 +63,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
         {
             context.HttpContext.Response.StatusCode = (int) CodeKey.NoAuthorization;
             context.Result =
-                new JsonResult(new 
+                new JsonResult(new
                 {
                     Code = (int) CodeKey.NoAuthorization,
                     Msg = "鉴权失败"

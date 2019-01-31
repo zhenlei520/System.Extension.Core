@@ -3,6 +3,10 @@ using Microsoft.Extensions.Options;
 
 namespace EInfrastructure.Core.AutoConfig.Extension
 {
+    /// <summary>
+    /// 读写接口
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IWritableOptions<out T> : IOptionsSnapshot<T> where T : class, new()
     {
         /// <summary>

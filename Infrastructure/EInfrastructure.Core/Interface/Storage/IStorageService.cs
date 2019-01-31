@@ -10,14 +10,14 @@ namespace EInfrastructure.Core.Interface.Storage
         /// <summary>
         /// 根据文件流上传
         /// </summary>
-        /// <param name="param"></param>
+        /// <param name="param">文件流上传配置</param>
         /// <returns></returns>
         bool UploadStream(UploadByStreamParam param);
 
         /// <summary>
         /// 根据文件上传
         /// </summary>
-        /// <param name="param"></param>
+        /// <param name="param">文件上传配置</param>
         /// <returns></returns>
         bool UploadFile(UploadByFormFileParam param);
 

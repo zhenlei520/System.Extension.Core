@@ -9,6 +9,14 @@ namespace EInfrastructure.Core.HelpCommon
     /// </summary>
     public static class TimeCommon
     {
+        #region 格式化时间
+
+        /// <summary>
+        /// 格式化时间
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
         public static string Format(this DateTime? time, string format = "yyyy-MM-dd")
         {
             if (time != null &&
@@ -19,6 +27,8 @@ namespace EInfrastructure.Core.HelpCommon
 
             return "";
         }
+
+        #endregion
 
         #region 将时间格式化成 年月日 的形式,如果时间为null，返回当前系统时间
 
@@ -415,6 +425,9 @@ namespace EInfrastructure.Core.HelpCommon
             308563, 331033, 353350, 375494, 397447, 419210, 440795, 462224, 483532, 504758
         };
 
+        /// <summary>
+        /// 中国节日
+        /// </summary>
         public static void ChinaDate()
         {
             //公历节日

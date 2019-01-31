@@ -5,6 +5,11 @@
     /// </summary>
     public class ConvertToMarketingParam
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url">商品url</param>
+        /// <param name="numIds">商品ID串</param>
         public ConvertToMarketingParam(string url,string numIds)
         {
             Url = url;

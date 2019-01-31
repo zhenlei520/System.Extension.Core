@@ -13,6 +13,9 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
     /// </summary>
     public class XmlHelper
     {
+        /// <summary>
+        /// xml编码格式
+        /// </summary>
         public static Encoding EncodingFormat = Encoding.Default;
 
         #region 序列化为xml字符串

@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 namespace EInfrastructure.Core.AutoConfig.Extension
 {
     /// <summary>
-    /// 设置AppSetting的实现类
+    /// 设置读写接口的实现类
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class WritableOptions<T> : IWritableOptions<T> where T : class, new()
@@ -16,6 +16,12 @@ namespace EInfrastructure.Core.AutoConfig.Extension
         private readonly string _section;
         private readonly string _file;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="section"></param>
+        /// <param name="file"></param>
         public WritableOptions(
             IOptionsMonitor<T> options,
             string section,
@@ -26,7 +32,16 @@ namespace EInfrastructure.Core.AutoConfig.Extension
             _file = file;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public T Value => _options.CurrentValue;
+
+        /// <summary>
+        /// 根据名称获取配置
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public T Get(string name) => _options.Get(name);
 
         #region 得到配置信息

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace EInfrastructure.Core.HelpCommon
 {
+    /// <summary>
+    /// 加密帮助类
+    /// </summary>
     public class SecurityCommon
     {
         #region AES加密

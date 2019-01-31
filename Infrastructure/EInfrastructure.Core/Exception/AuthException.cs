@@ -8,6 +8,10 @@ namespace EInfrastructure.Core.Exception
     /// </summary>
     public class AuthException : System.Exception
     {
+        /// <summary>
+        /// 权限校验
+        /// </summary>
+        /// <param name="msg">提示信息</param>
         public AuthException(string msg = HttpStatusMessageKey.NoAuthorization)
            : base(msg)
         {

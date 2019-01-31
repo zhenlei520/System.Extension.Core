@@ -6,6 +6,9 @@ using System.Reflection;
 
 namespace EInfrastructure.Core.HelpCommon
 {
+    /// <summary>
+    /// 枚举帮助类
+    /// </summary>
     public static class EnumCommon
     {
         private static Hashtable _enumDesciption;

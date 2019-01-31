@@ -7,8 +7,17 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.AutoFac
 {
-    public class MvcAutoRegister
+    /// <summary>
+    /// Autofac自动注入
+    /// </summary>
+    public class AutofacAutoRegister
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
         public virtual IServiceProvider Build(IServiceCollection services,
             Action<ContainerBuilder> action)
         {

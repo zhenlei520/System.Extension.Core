@@ -4,6 +4,9 @@ using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
 {
+    /// <summary>
+    /// Mime类型帮助类
+    /// </summary>
     public class MimeTypeCommon
     {
         private static readonly IDictionary<string, string> Mappings =

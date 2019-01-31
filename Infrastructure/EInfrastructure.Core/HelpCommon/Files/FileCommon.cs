@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace EInfrastructure.Core.HelpCommon.Files
 {
+    /// <summary>
+    /// 文件帮助类
+    /// </summary>
     public class FileCommon
     {
         #region 得到文件md5

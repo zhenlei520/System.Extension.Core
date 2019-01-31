@@ -2,9 +2,12 @@
 using Autofac;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EInfrastructure.Core.AutoFac.AspNetCore
+namespace EInfrastructure.Core.AutoFac.MySql.AspNetCore
 {
-    public class MvcAutoRegister : EInfrastructure.Core.AutoFac.MvcAutoRegister
+    /// <summary>
+    /// Autofac自动注入（注入mvc以及mysql）
+    /// </summary>
+    public class AutofacAutoRegister : EInfrastructure.Core.AutoFac.MySql.AutofacAutoRegister
     {
         /// <summary>
         /// 

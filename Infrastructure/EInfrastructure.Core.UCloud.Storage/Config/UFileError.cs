@@ -1,6 +1,9 @@
 namespace EInfrastructure.Core.UCloud.Storage.Config
 {
-    public class UFileError
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class UFileError
     {
         /// <summary>
         /// 得到code码
@@ -23,11 +26,11 @@ namespace EInfrastructure.Core.UCloud.Storage.Config
         /// <summary>
         /// 错误码
         /// </summary>
-        private int RetCode;
-        
+        internal int RetCode { private get; set; }
+
         /// <summary>
         /// 错误信息
         /// </summary>
-        private string ErrMsg;
+        internal string ErrMsg { private get; set; }
     }
 }

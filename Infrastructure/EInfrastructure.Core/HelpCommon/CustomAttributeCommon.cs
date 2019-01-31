@@ -93,7 +93,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="attributeValueAction"></param>
         /// <param name="name"></param>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TSource">属性类型</typeparam>
         /// <returns></returns>
         private static TSource GetValue(Type type,
             Func<T, TSource> attributeValueAction, string name)

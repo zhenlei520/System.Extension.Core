@@ -15,6 +15,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// </summary>
     public class PictureService : BaseStorageProvider, IPictureService, ISingleInstance
     {
+        /// <summary>
+        /// 图片服务
+        /// </summary>
+        /// <param name="qiNiuSnapshot">七牛配置</param>
         public PictureService(IWritableOptions<QiNiuConfig> qiNiuSnapshot) :
             base(qiNiuSnapshot.Get<QiNiuConfig>())
         {

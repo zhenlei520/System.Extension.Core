@@ -9,8 +9,15 @@ using Qiniu.Util;
 
 namespace EInfrastructure.Core.QiNiu.Storage
 {
+    /// <summary>
+    /// 基类存储实现类
+    /// </summary>
     public class BaseStorageProvider
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="qiNiuSnapshot">七牛配置</param>
         public BaseStorageProvider(QiNiuConfig qiNiuSnapshot)
         {
             QiNiuConfig = qiNiuSnapshot;

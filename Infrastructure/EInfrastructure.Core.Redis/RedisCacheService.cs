@@ -831,11 +831,11 @@ namespace EInfrastructure.Core.Redis
 
         #region 将一个object对象序列化，返回一个byte[]  
 
-        // <summary> 
-        /// 将一个object对象序列化，返回一个byte[]         
-        /// </summary> 
-        /// <param name="obj">能序列化的对象</param>         
-        /// <returns></returns> 
+        /// <summary>
+        ///  将一个object对象序列化，返回一个byte[]   
+        /// </summary>
+        /// <param name="obj">序列化对象</param>
+        /// <returns></returns>
         private byte[] ObjectToBytes(object obj)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -853,11 +853,11 @@ namespace EInfrastructure.Core.Redis
         /// <summary> 
         /// 将一个序列化后的byte[]数组还原         
         /// </summary>
-        /// <param name="Bytes"></param>         
+        /// <param name="bytes"></param>         
         /// <returns></returns> 
-        public object BytesToObject(byte[] Bytes)
+        public object BytesToObject(byte[] bytes)
         {
-            using (MemoryStream ms = new MemoryStream(Bytes))
+            using (MemoryStream ms = new MemoryStream(bytes))
             {
                 IFormatter formatter = new BinaryFormatter();
                 return formatter.Deserialize(ms);

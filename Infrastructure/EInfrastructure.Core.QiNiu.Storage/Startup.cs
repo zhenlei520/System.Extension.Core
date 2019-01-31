@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.QiNiu.Storage
 {
+    /// <summary>
+    /// 加载七牛云存储服务
+    /// </summary>
     public static class Startup
     {
         /// <summary>

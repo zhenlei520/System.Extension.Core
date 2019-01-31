@@ -3,6 +3,9 @@ using System.Linq.Expressions;
 
 namespace EInfrastructure.Core.Data.EntitiesExtension
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ParameterRebinder : ExpressionVisitor
     {
         private readonly Dictionary<ParameterExpression, ParameterExpression> map;
@@ -15,16 +18,19 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
         {
             this.map = map ?? new Dictionary<ParameterExpression, ParameterExpression>();
         }
+
         /// <summary>
         /// Replate parameters in expression with a Map information
         /// </summary>
         /// <param name="map">Map information</param>
         /// <param name="exp">Expression to replace parameters</param>
         /// <returns>Expression with parameters replaced</returns>
-        public static Expression ReplaceParameters(Dictionary<ParameterExpression, ParameterExpression> map, Expression exp)
+        public static Expression ReplaceParameters(Dictionary<ParameterExpression, ParameterExpression> map,
+            Expression exp)
         {
             return new ParameterRebinder(map).Visit(exp);
         }
+
         /// <summary>
         /// Visit pattern method
         /// </summary>

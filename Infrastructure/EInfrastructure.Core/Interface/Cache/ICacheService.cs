@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace EInfrastructure.Core.Interface.Cache
 {
+    /// <summary>
+    /// 缓存接口
+    /// </summary>
     public interface ICacheService
     {
         #region String
@@ -178,7 +181,6 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <summary>
         /// 从hash表获取数据
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="dataKeys"></param>
         /// <returns></returns>
@@ -205,8 +207,7 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <summary>
         /// 获取hashkey所有Redis key
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="key"></param>
+        /// <param name="key">缓存key名称</param>
         /// <returns></returns>
         List<string> HashKeys(string key);
 
