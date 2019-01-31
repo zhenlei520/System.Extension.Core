@@ -2,14 +2,33 @@
 
 namespace EInfrastructure.Core.WebChat.Config
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class JsSdkConfig
     {
-        [JsonProperty("appId")] public string AppId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonProperty("appId")]
+        public string AppId { get; set; }
 
-        [JsonProperty("timestamp")] public long TimeStamp { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonProperty("timestamp")]
+        public long TimeStamp { get; set; }
 
-        [JsonProperty("nonceStr")] public string NonceStr { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonProperty("nonceStr")]
+        public string NonceStr { get; set; }
 
-        [JsonProperty("signature")] public string Signature { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonProperty("signature")]
+        public string Signature { get; set; }
     }
 }

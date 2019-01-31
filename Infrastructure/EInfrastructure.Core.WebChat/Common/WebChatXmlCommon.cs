@@ -9,6 +9,12 @@ namespace EInfrastructure.Core.WebChat.Common
     /// </summary>
     public class WebChatXmlCommon
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="toUserName"></param>
+        /// <param name="fromUserName"></param>
+        /// <param name="events"></param>
         public WebChatXmlCommon(string toUserName, string fromUserName, string events = "")
         {
             ToUserName = toUserName;

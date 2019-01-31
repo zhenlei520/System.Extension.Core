@@ -9,19 +9,36 @@ using RestSharp;
 
 namespace EInfrastructure.Core.WebChat.Common
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class WebChatJsSdkCommon
     {
         private readonly WxConfig _config;
         private readonly ICacheService _cacheService;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static RestClient RestClient = new RestClient("https://api.weixin.qq.com/");
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="cacheService"></param>
         public WebChatJsSdkCommon(WxConfig config, ICacheService cacheService)
         {
             _config = config;
             _cacheService = cacheService;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cacheKey"></param>
+        /// <returns></returns>
+        /// <exception cref="BusinessException"></exception>
         public string GetAccessToken(string cacheKey)
         {
             cacheKey = cacheKey + _config.Type;
@@ -50,6 +67,13 @@ namespace EInfrastructure.Core.WebChat.Common
             return token;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tickCacheKey"></param>
+        /// <param name="tokenCacheKey"></param>
+        /// <returns></returns>
+        /// <exception cref="BusinessException"></exception>
         public string GetJsApiTicket(string tickCacheKey, string tokenCacheKey)
         {
             string ticket = _cacheService.StringGet<string>(tickCacheKey);
@@ -77,7 +101,13 @@ namespace EInfrastructure.Core.WebChat.Common
             return ticket;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tickCacheKey"></param>
+        /// <param name="tokenCacheKey"></param>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public JsSdkConfig GetConfig(string tickCacheKey, string tokenCacheKey, string url)
         {
             string ticket = GetJsApiTicket(tickCacheKey, tokenCacheKey);
