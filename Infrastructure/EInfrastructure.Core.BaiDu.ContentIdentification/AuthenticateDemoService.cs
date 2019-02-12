@@ -27,15 +27,18 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         {
             _jsonCommon = new JsonCommon();
             _restClient = new RestClient("http://ai.baidu.com");
+            _restClient.UserAgent =
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36";
             _request =
                 new RestRequest(
                     $"aidemo",
                     Method.POST) {RequestFormat = RestSharp.DataFormat.Json};
-            _request.AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36");
             _request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             _request.AddHeader("Origin", "http://ai.baidu.com");
             _request.AddHeader("Host", "ai.baidu.com");
             _request.AddHeader("Referer", "http://ai.baidu.com/tech/imagecensoring");
+            _request.AddHeader("Accept", "*/*");
+            _request.AddHeader("Accept-Language", "zh-CN,zh;q=0.9");
             _request.AddParameter("type", "user_defined");
         }
 
@@ -48,13 +51,15 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         /// </summary>
         /// <param name="url">图片地址</param>
         /// <param name="webProxy">代理信息</param>
+        /// <param name="cookie">cookie信息</param>
         /// <returns></returns>
-        public ContentInfoDto ImgAuthenticateByUrl(string url, WebProxy webProxy = null)
+        public ContentInfoDto ImgAuthenticateByUrl(string url, WebProxy webProxy = null, string cookie = "")
         {
             url.IsNullOrEmptyTip("图片地址不能为空");
             SetProxy(webProxy);
-            _request.AddParameter("image_url", url);
+            SetCookie(cookie);
             _request.AddParameter("image", "");
+            _request.AddParameter("image_url", url);
             var response = _restClient.Execute(_request);
             var result = response.Content;
             return GetResponse(result);
@@ -69,11 +74,13 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         /// </summary>
         /// <param name="base64">图片base64</param>
         /// <param name="webProxy">代理信息</param>
+        /// <param name="cookie">cookie信息</param>
         /// <returns></returns>
-        public ContentInfoDto ImgAuthenticateByBase64(string base64, WebProxy webProxy = null)
+        public ContentInfoDto ImgAuthenticateByBase64(string base64, WebProxy webProxy = null, string cookie = "")
         {
             base64.IsNullOrEmptyTip("图片信息有误");
             SetProxy(webProxy);
+            SetCookie(cookie);
             _request.AddParameter("image", base64);
             _request.AddParameter("image_url", "");
             var response = _restClient.Execute(_request);
@@ -90,8 +97,9 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         /// </summary>
         /// <param name="formFile">文件信息</param>
         /// <param name="webProxy">代理信息</param>
+        /// <param name="cookie">cookie信息</param>
         /// <returns></returns>
-        public ContentInfoDto ImgAuthenticateByFile(IFormFile formFile, WebProxy webProxy = null)
+        public ContentInfoDto ImgAuthenticateByFile(IFormFile formFile, WebProxy webProxy = null, string cookie = "")
         {
             return ImgAuthenticateByBase64(ImageCommon.GetBase64(formFile), webProxy);
         }
@@ -242,6 +250,25 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
             if (webProxy != null)
             {
                 _restClient.Proxy = webProxy;
+            }
+        }
+
+        #endregion
+
+        #region 设置cookie
+
+        /// <summary>
+        /// 设置cookie
+        /// </summary>
+        /// <param name="cookie">cookie信息</param>
+        private void SetCookie(string cookie)
+        {
+            if (!string.IsNullOrEmpty(cookie))
+            {
+                foreach (var item in cookie.Split(';'))
+                {
+                    _request.AddParameter(item.Split('=')[0], item.Split('=')[1], ParameterType.Cookie);
+                }
             }
         }
 
