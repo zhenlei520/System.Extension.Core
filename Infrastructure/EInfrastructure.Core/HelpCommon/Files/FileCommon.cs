@@ -192,5 +192,32 @@ namespace EInfrastructure.Core.HelpCommon.Files
         }
 
         #endregion
+
+        #region 将文件转换成Base64格式
+
+        /// <summary>
+        /// 将文件转换成Base64格式
+        /// </summary>
+        /// <param name="filePath">文件地址</param>
+        /// <returns></returns>
+        public static string FileToBase64(string filePath)
+        {
+            string result = "";
+            try
+            {
+                using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    return fs.ConvertToBase64();
+                }
+            }
+            catch
+            {
+                result = "";
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }

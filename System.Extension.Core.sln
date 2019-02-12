@@ -63,6 +63,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AutoFa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.UCloud.Storage", "Infrastructure\EInfrastructure.Core.UCloud.Storage\EInfrastructure.Core.UCloud.Storage.csproj", "{469F3858-B900-4F28-A29C-A6149CB213BE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ContentIdentification", "ContentIdentification", "{32DE210B-D9AA-4790-B454-DE993C61CE53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.BaiDu.ContentIdentification", "Infrastructure\EInfrastructure.Core.BaiDu.ContentIdentification\EInfrastructure.Core.BaiDu.ContentIdentification.csproj", "{13627BD2-1F88-4033-85EA-9AF6CC594FB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +157,10 @@ Global
 		{469F3858-B900-4F28-A29C-A6149CB213BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{469F3858-B900-4F28-A29C-A6149CB213BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{469F3858-B900-4F28-A29C-A6149CB213BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13627BD2-1F88-4033-85EA-9AF6CC594FB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13627BD2-1F88-4033-85EA-9AF6CC594FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13627BD2-1F88-4033-85EA-9AF6CC594FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13627BD2-1F88-4033-85EA-9AF6CC594FB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -176,6 +184,7 @@ Global
 		{A7C26912-71CD-4567-B684-C184BC1411FD} = {DE824100-DC36-4F2B-8092-317C669C260C}
 		{AB2D3F0F-3B1D-4D20-AF6E-58697061720B} = {DE824100-DC36-4F2B-8092-317C669C260C}
 		{469F3858-B900-4F28-A29C-A6149CB213BE} = {9A0D3363-93C8-4B93-806D-45180B3EDF3A}
+		{13627BD2-1F88-4033-85EA-9AF6CC594FB3} = {32DE210B-D9AA-4790-B454-DE993C61CE53}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41FDCFC5-66DA-415D-AA6C-38806CB952CD}

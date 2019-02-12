@@ -510,13 +510,41 @@ namespace EInfrastructure.Core.HelpCommon
         #region base64字符串转byte数组
 
         /// <summary>
-        /// 图片base64转byte数组
+        /// 文件base64转byte数组
         /// </summary>
-        /// <param name="base64"></param>
+        /// <param name="base64">文件base64</param>
         /// <returns></returns>
         public static byte[] ConvertToByte(this string base64)
         {
             return Convert.FromBase64String(base64);
+        }
+
+        #endregion
+
+        #region byte数组转换为base64
+
+        /// <summary>
+        /// byte数组转换为base64
+        /// </summary>
+        /// <param name="param">byte数组</param>
+        /// <returns></returns>
+        public static string ConvertToBase64(this byte[] param)
+        {
+            return Convert.ToBase64String(param);
+        }
+
+        #endregion
+        
+        #region 文件流转换为base64
+
+        /// <summary>
+        /// 文件流转换为base64
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <returns></returns>
+        public static string ConvertToBase64(this Stream stream)
+        {
+            return ConvertToBase64(stream.ConvertToByteArray());
         }
 
         #endregion
