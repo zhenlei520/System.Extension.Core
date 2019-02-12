@@ -55,7 +55,7 @@ namespace EInfrastructure.Core.Interface.ContentIdentification.Dto
         /// <summary>
         /// 详细信息
         /// </summary>
-        [JsonProperty(PropertyName = "data")]
+        [JsonProperty(PropertyName = "data", NullValueHandling = NullValueHandling.Ignore)]
         public List<DataDto> Data { get; set; }
 
         /// <summary>

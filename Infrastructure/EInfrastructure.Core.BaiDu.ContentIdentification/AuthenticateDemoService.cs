@@ -15,7 +15,7 @@ using RestSharp;
 namespace EInfrastructure.Core.BaiDu.ContentIdentification
 {
     /// <summary>
-    /// 鉴定服务（体验版）
+    /// 鉴定服务
     /// </summary>
     public class AuthenticateDemoService : IAuthenticateDemoService, IPerRequest
     {
@@ -30,11 +30,13 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
             _request =
                 new RestRequest(
                     $"aidemo",
-                    Method.POST) {RequestFormat = DataFormat.Json};
+                    Method.POST) {RequestFormat = RestSharp.DataFormat.Json};
+            _request.AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36");
             _request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             _request.AddHeader("Origin", "http://ai.baidu.com");
             _request.AddHeader("Host", "ai.baidu.com");
             _request.AddHeader("Referer", "http://ai.baidu.com/tech/imagecensoring");
+            _request.AddParameter("type", "user_defined");
         }
 
         #region 鉴定图片信息
@@ -52,6 +54,7 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
             url.IsNullOrEmptyTip("图片地址不能为空");
             SetProxy(webProxy);
             _request.AddParameter("image_url", url);
+            _request.AddParameter("image", "");
             var response = _restClient.Execute(_request);
             var result = response.Content;
             return GetResponse(result);
@@ -72,6 +75,7 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
             base64.IsNullOrEmptyTip("图片信息有误");
             SetProxy(webProxy);
             _request.AddParameter("image", base64);
+            _request.AddParameter("image_url", "");
             var response = _restClient.Execute(_request);
             var result = response.Content;
             return GetResponse(result);
