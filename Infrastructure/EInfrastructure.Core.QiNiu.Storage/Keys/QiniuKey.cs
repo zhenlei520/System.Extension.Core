@@ -1,4 +1,4 @@
-namespace Infrastructure.Core.QiNiu.Storage.Keys
+namespace EInfrastructure.Core.QiNiu.Storage.Keys
 {
     /// <summary>
     /// 
