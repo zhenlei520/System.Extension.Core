@@ -97,17 +97,18 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// 可以使用ip，减少对dns的依赖
         /// </summary>
         public string CallbackUrl { get; set; }
-        
+
         /// <summary>
         /// 回调内容
         /// </summary>
-        public string CallbackBody { get; set; } = "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsiz\":$(fsize),\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\",\"mimeType\":\"$(mimeType)\"}";
+        public string CallbackBody { get; set; } =
+            "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsiz\":$(fsize),\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\",\"mimeType\":\"$(mimeType)\"}";
 
         /// <summary>
         /// 回调内容类型
         /// </summary>
         public CallbackBodyTypeEnum CallbackBodyType { get; set; } = CallbackBodyTypeEnum.Json;
-        
+
         /// <summary>
         /// 鉴权回调
         /// </summary>
@@ -131,11 +132,16 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
                     return Zone.ZONE_US_North;
             }
         }
-        
+
+        /// <summary>
+        /// 是否第一次获取
+        /// </summary>
+        private static bool IsFirst = true;
+
         /// <summary>
         /// 存储配置
         /// </summary>
-        private static QiNiuConfig Config;
+        private static QiNiuConfig Config = new QiNiuConfig();
 
         /// <summary>
         /// 设置七牛存储配置
@@ -145,18 +151,19 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         {
             Config = qiNiuConfig;
         }
-        
+
         /// <summary>
         /// 读取七牛存储配置
         /// </summary>
         /// <returns></returns>
         internal static QiNiuConfig Get()
         {
-            if (Config == null)
+            if (Config.Equals(new QiNiuConfig()) && !IsFirst)
             {
                 throw new BusinessException("未配置七牛");
             }
 
+            IsFirst = false;
             return Config;
         }
     }

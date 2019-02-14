@@ -40,7 +40,12 @@ namespace EInfrastructure.Core.UCloud.Storage.Config
         {
             return @"UCloudCSharp/" + Version;
         }
-        
+
+        /// <summary>
+        /// 是否第一次获取
+        /// </summary>
+        private static bool IsFirst = true;
+
         /// <summary>
         /// 存储配置
         /// </summary>
@@ -61,11 +66,12 @@ namespace EInfrastructure.Core.UCloud.Storage.Config
         /// <returns></returns>
         internal static UCloudConfig Get()
         {
-            if (Config == null)
+            if (Config.Equals(new UCloudConfig()) && !IsFirst)
             {
                 throw new BusinessException("未配置uCloud");
             }
 
+            IsFirst = false;
             return Config;
         }
     }
