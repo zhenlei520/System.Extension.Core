@@ -49,7 +49,7 @@ namespace EInfrastructure.Core.UCloud.Storage.Config
         /// <summary>
         /// 存储配置
         /// </summary>
-        private static UCloudConfig Config;
+        private static UCloudConfig Config=new UCloudConfig();
 
         /// <summary>
         /// 设置uCloud存储配置

@@ -45,7 +45,7 @@ namespace EInfrastructure.Core.Redis.Config
         /// <summary>
         /// Redis链接信息
         /// </summary>
-        private static RedisConfig Config;
+        private static RedisConfig Config = new RedisConfig();
 
         /// <summary>
         /// 设置Redis链接信息

@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Config
         /// <summary>
         /// 短信配置
         /// </summary>
-        private static SmsConfig Config;
+        private static SmsConfig Config=new SmsConfig();
 
         /// <summary>
         /// 设置短信配置
