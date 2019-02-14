@@ -1,6 +1,5 @@
-using EInfrastructure.Core.AutoConfig;
+using System;
 using EInfrastructure.Core.UCloud.Storage.Config;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.UCloud.Storage
@@ -14,12 +13,11 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// 加载此服务
         /// </summary>
         /// <param name="serviceCollection"></param>
-        /// <param name="configuration"></param>
+        /// <param name="action"></param>
         public static IServiceCollection AddUCloudStorage(this IServiceCollection serviceCollection,
-            IConfiguration configuration)
+            Action<UCloudConfig> action)
         {
-            serviceCollection.AddCustomerConfig<UCloudConfig>(
-                configuration.GetSection("EInfrastructure.Core.UCloud.Storage.Config.UCloudConfig"), "ucloud.json");
+            action.Invoke(UCloudConfig.Get());
             return serviceCollection;
         }
     }

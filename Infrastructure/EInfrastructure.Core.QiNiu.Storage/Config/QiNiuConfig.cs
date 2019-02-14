@@ -1,4 +1,4 @@
-﻿using EInfrastructure.Core.AutoConfig.Interface;
+﻿using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.Interface.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Enum;
 using Qiniu.Storage;
@@ -8,12 +8,12 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
     /// <summary>
     /// 七牛配置
     /// </summary>
-    public class QiNiuConfig: IScopedConfigModel
+    public class QiNiuConfig
     {
         /// <summary>
         /// 代理
         /// </summary>
-        public string UserAgent { get; protected set; }
+        public string UserAgent { get; set; }
 
         /// <summary>
         /// 七牛提供的公钥，用于识别用户
@@ -28,7 +28,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// <summary>
         /// 七牛资源管理服务器地址
         /// </summary>
-        public string RsHost { get; protected set; }
+        public string RsHost { get; set; }
 
         /// <summary>
         /// 七牛资源上传服务器地址.
@@ -60,17 +60,17 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// <summary>
         /// 七牛资源列表服务器地址.
         /// </summary>
-        public string RsfHost { get; protected set; }
+        public string RsfHost { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string PrefetchHost { get; protected set; }
+        public string PrefetchHost { get; set; }
 
         /// <summary>
         /// Api域
         /// </summary>
-        public string ApiHost { get; protected set; }
+        public string ApiHost { get; set; }
 
         /// <summary>
         /// 对外访问的主机名
@@ -130,6 +130,34 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
                 case ZoneEnum.ZoneUsNorth:
                     return Zone.ZONE_US_North;
             }
+        }
+        
+        /// <summary>
+        /// 存储配置
+        /// </summary>
+        private static QiNiuConfig Config;
+
+        /// <summary>
+        /// 设置七牛存储配置
+        /// </summary>
+        /// <param name="qiNiuConfig"></param>
+        internal static void Set(QiNiuConfig qiNiuConfig)
+        {
+            Config = qiNiuConfig;
+        }
+        
+        /// <summary>
+        /// 读取七牛存储配置
+        /// </summary>
+        /// <returns></returns>
+        internal static QiNiuConfig Get()
+        {
+            if (Config == null)
+            {
+                throw new BusinessException("未配置七牛");
+            }
+
+            return Config;
         }
     }
 }

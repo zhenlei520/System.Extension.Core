@@ -1,6 +1,5 @@
+using System;
 using EInfrastructure.Core.AliYun.DaYu.Config;
-using EInfrastructure.Core.AutoConfig;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.AliYun.DaYu
@@ -14,12 +13,11 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// 加载此服务
         /// </summary>
         /// <param name="serviceCollection"></param>
-        /// <param name="configuration"></param>
+        /// <param name="action"></param>
         public static IServiceCollection AddAliDaYu(this IServiceCollection serviceCollection,
-            IConfiguration configuration)
+            Action<SmsConfig> action)
         {
-            serviceCollection.AddCustomerConfig<SmsConfig>(
-                configuration.GetSection("EInfrastructure.Core.AliYun.DaYu.Config.SmsConfig"), "alidayu.json");
+            action.Invoke(SmsConfig.Get());
             return serviceCollection;
         }
     }

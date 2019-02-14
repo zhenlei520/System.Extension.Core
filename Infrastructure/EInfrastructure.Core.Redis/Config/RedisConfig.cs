@@ -1,8 +1,11 @@
-﻿using EInfrastructure.Core.AutoConfig.Interface;
+﻿using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.Redis.Config
 {
-    public class RedisConfig: IScopedConfigModel
+    /// <summary>
+    /// Redis配置
+    /// </summary>
+    public class RedisConfig
     {
         /// <summary>
         /// Ip地址
@@ -33,5 +36,33 @@ namespace EInfrastructure.Core.Redis.Config
         /// Redis连接池连接数
         /// </summary>
         public int PoolSize { get; set; }
+
+        /// <summary>
+        /// Redis链接信息
+        /// </summary>
+        private static RedisConfig Config;
+
+        /// <summary>
+        /// 设置Redis链接信息
+        /// </summary>
+        /// <param name="config"></param>
+        internal static void Set(RedisConfig config)
+        {
+            Config = config;
+        }
+
+        /// <summary>
+        /// 读取Redis链接信息
+        /// </summary>
+        /// <returns></returns>
+        internal static RedisConfig Get()
+        {
+            if (Config == null)
+            {
+                throw new BusinessException("未配置Redis链接信息");
+            }
+
+            return Config;
+        }
     }
 }

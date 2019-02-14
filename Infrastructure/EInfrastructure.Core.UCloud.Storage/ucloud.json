@@ -1,9 +1,0 @@
-{
-  "EInfrastructure.Core.UCloud.Storage.Config.UCloudConfig": {
-    "Version": "",
-    "UcloudProxySuffix": "",
-    "UcloudPublicKey": "",
-    "UCloudPrivateKey": "",
-    "Bucket": ""
-  }
-}

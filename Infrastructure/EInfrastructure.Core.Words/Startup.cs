@@ -1,8 +1,6 @@
 using System;
-using EInfrastructure.Core.AutoConfig;
 using EInfrastructure.Core.Words.Config.PinYin;
 using EInfrastructure.Core.Words.Config.Text;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.Words
@@ -16,15 +14,11 @@ namespace EInfrastructure.Core.Words
         /// 加载此服务
         /// </summary>
         /// <param name="serviceCollection"></param>
-        /// <param name="configuration"></param>
+        /// <param name="action"></param>
         public static IServiceCollection AddWords(this IServiceCollection serviceCollection,
-            IConfiguration configuration)
+            Action<DictPinYinPathConfig, DictTextPathConfig> action = null)
         {
-            serviceCollection.AddCustomerConfig<DictPinYinPathConfig>(
-                configuration.GetSection("EInfrastructure.Core.Words.Config.PinYin.DictPinYinPathConfig"),
-                "words.json");
-            serviceCollection.AddCustomerConfig<DictTextPathConfig>(
-                configuration.GetSection("EInfrastructure.Core.Words.Config.PinYin.DictTextPathConfig"), "words.json");
+            action?.Invoke(DictPinYinPathConfig.Get(), DictTextPathConfig.Get());
             return serviceCollection;
         }
     }

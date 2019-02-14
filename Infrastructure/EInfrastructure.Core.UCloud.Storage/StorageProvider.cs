@@ -1,9 +1,7 @@
 using System.IO;
-using EInfrastructure.Core.AutoConfig.Extension;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Storage;
 using EInfrastructure.Core.Interface.Storage.Param;
-using EInfrastructure.Core.UCloud.Storage.Config;
 
 namespace EInfrastructure.Core.UCloud.Storage
 {
@@ -15,8 +13,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// UCloud存储实现类
         /// </summary>
-        /// <param name="uCloudConfig">UCloud配置</param>
-        public StorageProvider(IWritableOptions<UCloudConfig> uCloudConfig) : base(uCloudConfig.Get<UCloudConfig>())
+        public StorageProvider() 
         {
         }
 

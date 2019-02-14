@@ -21,10 +21,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 基类UCloud实现
         /// </summary>
-        /// <param name="uCloudConfig">UCloud配置</param>
-        public BaseStorageProvider(UCloudConfig uCloudConfig)
+        public BaseStorageProvider()
         {
-            _uCloudConfig = uCloudConfig;
+            _uCloudConfig = UCloudConfig.Get();
         }
 
         #region 上传文件

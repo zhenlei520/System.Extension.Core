@@ -1,11 +1,11 @@
-using EInfrastructure.Core.AutoConfig.Interface;
+using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.Words.Config.PinYin
 {
     /// <summary>
     /// 文字拼音
     /// </summary>
-    public class DictPinYinPathConfig : ISingletonConfigModel
+    public class DictPinYinPathConfig
     {
         /// <summary>
         /// 文字全拼 ××
@@ -31,5 +31,28 @@ namespace EInfrastructure.Core.Words.Config.PinYin
         /// 文字拼音（需要重写）
         /// </summary>
         public string WordPinYinPath { get; set; } = "Dict/PinYin/wordPinyin.txt";
+
+        /// <summary>
+        /// 文字拼音配置
+        /// </summary>
+        private static DictPinYinPathConfig Config;
+
+        /// <summary>
+        /// 设置文字拼音词库
+        /// </summary>
+        /// <param name="config"></param>
+        internal static void Set(DictPinYinPathConfig config)
+        {
+            Config = config;
+        }
+
+        /// <summary>
+        /// 读取文字拼音词库
+        /// </summary>
+        /// <returns></returns>
+        internal static DictPinYinPathConfig Get()
+        {
+            return Config ?? (Config = new DictPinYinPathConfig());
+        }
     }
 }

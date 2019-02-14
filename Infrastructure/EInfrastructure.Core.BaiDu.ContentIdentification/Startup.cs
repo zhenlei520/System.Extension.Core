@@ -1,6 +1,5 @@
-using EInfrastructure.Core.AutoConfig;
+using System;
 using EInfrastructure.Core.BaiDu.ContentIdentification.Config;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.BaiDu.ContentIdentification
@@ -14,13 +13,11 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         /// 加载此服务
         /// </summary>
         /// <param name="serviceCollection"></param>
-        /// <param name="configuration"></param>
+        /// <param name="action"></param>
         public static IServiceCollection AddBaiduContentIdentification(this IServiceCollection serviceCollection,
-            IConfiguration configuration)
+            Action<BaiDuConfig> action = null)
         {
-            serviceCollection.AddCustomerConfig<BaiDuConfig>(
-                configuration.GetSection("EInfrastructure.Core.BaiDu.ContentIdentification.Config.BaiDuConfig"),
-                "baiducontentidentification.json");
+            action?.Invoke(BaiDuConfig.Get());
             return serviceCollection;
         }
     }

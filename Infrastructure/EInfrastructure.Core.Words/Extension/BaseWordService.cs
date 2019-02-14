@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using EInfrastructure.Core.AutoConfig;
-using EInfrastructure.Core.AutoConfig.Config;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Words.Config.PinYin;
@@ -40,15 +38,11 @@ namespace EInfrastructure.Core.Words.Extension
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="textPathConfig"></param>
-        /// <param name="dictPinYinPathConfig"></param>
-        public BaseWordService(
-            DictTextPathConfig textPathConfig,
-            DictPinYinPathConfig dictPinYinPathConfig)
+        public BaseWordService()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            DictTextPathConfig = textPathConfig;
-            DictPinYinPathConfig = dictPinYinPathConfig;
+            DictTextPathConfig = DictTextPathConfig.Get();
+            DictPinYinPathConfig = DictPinYinPathConfig.Get();
             if (DictConfig == null)
             {
                 Reload(DictTypeEnum.Text);

@@ -5,14 +5,11 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
-using EInfrastructure.Core.AutoConfig.Extension;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.Interface;
 using EInfrastructure.Core.Interface.Cache;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Redis.Common;
 using EInfrastructure.Core.Redis.Config;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.Redis
@@ -27,9 +24,12 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         private readonly string _overtimeCacheKey = "Cache_HashKey";
 
-        public RedisCacheService(IWritableOptions<RedisConfig> redisConfig)
+        /// <summary>
+        /// 
+        /// </summary>
+        public RedisCacheService()
         {
-            CsRedisHelper.InitializeConfiguration(redisConfig.Get<RedisConfig>());
+            CsRedisHelper.InitializeConfiguration(RedisConfig.Get());
         }
 
         #region Methods

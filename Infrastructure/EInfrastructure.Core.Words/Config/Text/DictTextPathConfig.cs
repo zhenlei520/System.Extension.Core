@@ -1,11 +1,11 @@
-using EInfrastructure.Core.AutoConfig.Interface;
+using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.Words.Config.Text
 {
     /// <summary>
     /// 可修改的字典配置文件地址
     /// </summary>
-    public class DictTextPathConfig : ISingletonConfigModel
+    public class DictTextPathConfig
     {
         /// <summary>
         /// 中文简体
@@ -31,5 +31,28 @@ namespace EInfrastructure.Core.Words.Config.Text
         /// 转义后的数字
         /// </summary>
         public string TranscodingNumberPath { get; set; } = "Dict/Text/transcodingNumber.txt";
+
+        /// <summary>
+        /// 字典词库配置
+        /// </summary>
+        private static DictTextPathConfig Config;
+
+        /// <summary>
+        /// 设置字典词库
+        /// </summary>
+        /// <param name="config"></param>
+        internal static void Set(DictTextPathConfig config)
+        {
+            Config = config;
+        }
+
+        /// <summary>
+        /// 读取字典词库
+        /// </summary>
+        /// <returns></returns>
+        internal static DictTextPathConfig Get()
+        {
+            return Config ?? (Config = new DictTextPathConfig());
+        }
     }
 }

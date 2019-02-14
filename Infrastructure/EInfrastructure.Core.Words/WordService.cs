@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using EInfrastructure.Core.AutoConfig;
-using EInfrastructure.Core.AutoConfig.Config;
-using EInfrastructure.Core.AutoConfig.Extension;
 using EInfrastructure.Core.Interface.Words;
 using EInfrastructure.Core.Interface.Words.Enum;
 using EInfrastructure.Core.Words.Config;
-using EInfrastructure.Core.Words.Config.PinYin;
-using EInfrastructure.Core.Words.Config.Text;
 using EInfrastructure.Core.Words.Extension;
 using EInfrastructure.Core.Words.PinYin;
 
@@ -21,17 +16,6 @@ namespace EInfrastructure.Core.Words
     /// </summary>
     public class WordService : BaseWordService, IWordService
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="textPathConfig"></param>
-        /// <param name="dictPinYinPathConfig"></param>
-        public WordService(IWritableOptions<DictTextPathConfig> textPathConfig,
-            IWritableOptions<DictPinYinPathConfig> dictPinYinPathConfig) : base(
-            textPathConfig.Get<DictTextPathConfig>(), dictPinYinPathConfig.Get<DictPinYinPathConfig>())
-        {
-        }
-
         #region 得到文字首字母
 
         /// <summary>

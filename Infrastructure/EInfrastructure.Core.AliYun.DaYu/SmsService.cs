@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.DaYu.Common;
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.AliYun.DaYu.Model;
-using EInfrastructure.Core.AutoConfig.Extension;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Serialization;
 using EInfrastructure.Core.Interface.IOC;
@@ -18,20 +17,17 @@ namespace EInfrastructure.Core.AliYun.DaYu
     /// </summary>
     public class SmsService : ISmsService, ISingleInstance
     {
-        private readonly SmsConfig _smsConfig;
-
         /// <summary>
         /// 短信服务
         /// </summary>
-        /// <param name="smsConfig">阿里大于短信配置</param>
-        public SmsService(IWritableOptions<SmsConfig> smsConfig)
+        public SmsService()
         {
-            _smsConfig = smsConfig.Get<SmsConfig>();
         }
 
         readonly RestClient _restClient = new RestClient("http://dysmsapi.aliyuncs.com");
 
         #region 指定短信列表发送短信
+
         /// <summary>
         /// 指定短信列表发送短信
         /// </summary>
@@ -40,7 +36,8 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <param name="content">内容</param>
         /// <param name="loseAction">失败回调函数</param>
         /// <returns></returns>
-        public bool Send(List<string> phoneNumbers, string templateCode, object content, Action<SendSmsLoseDto> loseAction = null)
+        public bool Send(List<string> phoneNumbers, string templateCode, object content,
+            Action<SendSmsLoseDto> loseAction = null)
         {
             Dictionary<string, string> commonParam = Util.BuildCommonParam();
             commonParam.Add("Action", "SendSms");
@@ -51,31 +48,35 @@ namespace EInfrastructure.Core.AliYun.DaYu
             commonParam.Add("TemplateCode", templateCode);
             commonParam.Add("TemplateParam", new JsonCommon().Serializer(content));
 
-            string sign = Util.CreateSign(commonParam, _smsConfig.EncryptionKey);
+            string sign = Util.CreateSign(commonParam, SmsConfig.Get().EncryptionKey);
             commonParam.Add("Signature", sign);
             RestRequest request = new RestRequest(Method.GET);
             foreach (var key in commonParam.Keys)
             {
                 request.AddQueryParameter(key, commonParam[key]);
             }
+
             var response = _restClient.Execute(request);
             SendSmsResponse result = XmlHelper.Deserialize<SendSmsResponse>(response.Content);
             if (result.Code == "OK")
             {
                 return true;
             }
+
             loseAction?.Invoke(new SendSmsLoseDto()
             {
                 PhoneList = phoneNumbers,
                 Msg = "短信发送失败",
                 SubMsg = response.Content,
-                Code=result.Code
+                Code = result.Code
             });
             return false;
         }
+
         #endregion
 
         #region 指定单个手机号发送短信
+
         /// <summary>
         /// 指定单个手机号发送短信
         /// </summary>
@@ -84,10 +85,12 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <param name="content">内容</param>
         /// <param name="loseAction">失败回调函数</param>
         /// <returns></returns>
-        public bool Send(string phoneNumber, string templateCode, object content, Action<SendSmsLoseDto> loseAction = null)
+        public bool Send(string phoneNumber, string templateCode, object content,
+            Action<SendSmsLoseDto> loseAction = null)
         {
-            return Send(new List<string>() { phoneNumber }, templateCode, content, loseAction);
+            return Send(new List<string>() {phoneNumber}, templateCode, content, loseAction);
         }
+
         #endregion
     }
 }

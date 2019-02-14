@@ -1,6 +1,5 @@
-using EInfrastructure.Core.AutoConfig;
+using System;
 using EInfrastructure.Core.Redis.Config;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.Redis
@@ -14,12 +13,11 @@ namespace EInfrastructure.Core.Redis
         /// 加载此服务
         /// </summary>
         /// <param name="serviceCollection"></param>
-        /// <param name="configuration"></param>
+        /// <param name="action"></param>
         public static IServiceCollection AddRedis(this IServiceCollection serviceCollection,
-            IConfiguration configuration)
+            Action<RedisConfig> action)
         {
-            serviceCollection.AddCustomerConfig<RedisConfig>(
-                configuration.GetSection("EInfrastructure.Core.Redis.Config.RedisConfig"), "redis.json");
+            action.Invoke(RedisConfig.Get());
             return serviceCollection;
         }
     }

@@ -1,11 +1,11 @@
-using EInfrastructure.Core.AutoConfig.Interface;
+using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.UCloud.Storage.Config
 {
     /// <summary>
     /// UCloud配置
     /// </summary>
-    public class UCloudConfig : IScopedConfigModel
+    public class UCloudConfig
     {
         /// <summary>
         /// 版本号
@@ -39,6 +39,34 @@ namespace EInfrastructure.Core.UCloud.Storage.Config
         public string GetUserAgent()
         {
             return @"UCloudCSharp/" + Version;
+        }
+        
+        /// <summary>
+        /// 存储配置
+        /// </summary>
+        private static UCloudConfig Config;
+
+        /// <summary>
+        /// 设置uCloud存储配置
+        /// </summary>
+        /// <param name="uCloudConfig"></param>
+        internal static void Set(UCloudConfig uCloudConfig)
+        {
+            Config = uCloudConfig;
+        }
+
+        /// <summary>
+        /// 读取uCloud存储配置
+        /// </summary>
+        /// <returns></returns>
+        internal static UCloudConfig Get()
+        {
+            if (Config == null)
+            {
+                throw new BusinessException("未配置uCloud");
+            }
+
+            return Config;
         }
     }
 }

@@ -1,6 +1,5 @@
-using EInfrastructure.Core.AutoConfig;
+using System;
 using EInfrastructure.Core.QiNiu.Storage.Config;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.QiNiu.Storage
@@ -14,11 +13,11 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// 加载此服务
         /// </summary>
         /// <param name="serviceCollection"></param>
-        /// <param name="configuration"></param>
+        /// <param name="action"></param>
         public static IServiceCollection AddQiNiuStorage(this IServiceCollection serviceCollection,
-            IConfiguration configuration)
+            Action<QiNiuConfig> action )
         {
-            serviceCollection.AddCustomerConfig<QiNiuConfig>(configuration.GetSection("EInfrastructure.Core.QiNiu.Storage.Config.QiNiuConfig"), "qiniucloud.json");
+            action.Invoke(QiNiuConfig.Get());
             return serviceCollection;
         }
     }

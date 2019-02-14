@@ -3,7 +3,6 @@ using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Interface.Storage.Config;
 using EInfrastructure.Core.Interface.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Config;
-using Microsoft.Extensions.Options;
 using Qiniu.Storage;
 using Qiniu.Util;
 
@@ -17,10 +16,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="qiNiuSnapshot">七牛配置</param>
-        public BaseStorageProvider(QiNiuConfig qiNiuSnapshot)
+        public BaseStorageProvider()
         {
-            QiNiuConfig = qiNiuSnapshot;
+            QiNiuConfig = QiNiuConfig.Get();
 
             Mac = new Mac(QiNiuConfig.AccessKey, QiNiuConfig.SecretKey);
 
