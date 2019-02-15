@@ -113,6 +113,7 @@ namespace EInfrastructure.Core.HelpCommon.Files
             var stream = formFile.OpenReadStream();
             byte[] retval = hashAlgorithm.ComputeHash(stream);
             stream.Close();
+            return SecurityCommon.GetSha(retval, hashAlgorithm);
 
             StringBuilder sc = new StringBuilder();
             for (int i = 0; i < retval.Length; i++)

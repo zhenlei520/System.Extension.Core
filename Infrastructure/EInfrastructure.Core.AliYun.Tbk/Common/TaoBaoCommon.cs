@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Exception;
-using EInfrastructure.Core.HelpCommon;
 using Newtonsoft.Json;
 using RestSharp;
+using RestSharp.Extensions;
 
 namespace EInfrastructure.Core.AliYun.Tbk.Common
 {

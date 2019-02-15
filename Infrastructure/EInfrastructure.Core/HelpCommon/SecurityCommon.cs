@@ -171,6 +171,8 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
+        #region Sha加密
+
         #region Sha1加密
 
         /// <summary>
@@ -180,17 +182,82 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static string Sha1(string str)
         {
-            //建立SHA1对象
-            SHA1 sha = new SHA1CryptoServiceProvider();
-            //将mystr转换成byte[] 
-            var enc = new ASCIIEncoding();
-            var dataToHash = enc.GetBytes(str);
-            //Hash运算
-            var dataHashed = sha.ComputeHash(dataToHash);
-            //将运算结果转换成string
-            var hash = BitConverter.ToString(dataHashed).Replace("-", "");
-            return hash;
+            var enc = new ASCIIEncoding(); //将mystr转换成byte[] 
+            return GetSha(enc.GetBytes(str), new SHA1CryptoServiceProvider());
         }
+
+        #endregion
+        
+        #region Sha256加密
+
+        /// <summary>
+        /// Sha256
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Sha256(string str)
+        {
+            var enc = new ASCIIEncoding(); //将mystr转换成byte[] 
+            return GetSha(enc.GetBytes(str), new SHA256CryptoServiceProvider());
+        }
+
+        #endregion
+        
+        #region Sha384加密
+
+        /// <summary>
+        /// Sha384
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Sha384(string str)
+        {
+            var enc = new ASCIIEncoding(); //将mystr转换成byte[] 
+            return GetSha(enc.GetBytes(str), new SHA384CryptoServiceProvider());
+        }
+
+        #endregion
+        
+        #region Sha512加密
+
+        /// <summary>
+        /// Sha512加密
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Sha512(string str)
+        {
+            var enc = new ASCIIEncoding(); //将mystr转换成byte[] 
+            return GetSha(enc.GetBytes(str), new SHA512CryptoServiceProvider());
+        }
+
+        #endregion
+
+        #region private methods
+
+        #region 得到sha系列加密信息
+
+        /// <summary>
+        /// 得到sha系列加密信息
+        /// </summary>
+        /// <param name="retval"></param>
+        /// <param name="hashAlgorithm"></param>
+        /// <returns></returns>
+        internal static string GetSha(byte[] retval, HashAlgorithm hashAlgorithm)
+        {
+            var data = hashAlgorithm.ComputeHash(retval);
+            StringBuilder sc = new StringBuilder();
+            foreach (var t in data)
+            {
+                sc.Append(t.ToString("X2"));
+            }
+
+            return sc.ToString();
+        }
+
+        #endregion
+
+        #endregion
 
         #endregion
 
@@ -207,9 +274,7 @@ namespace EInfrastructure.Core.HelpCommon
             HMACSHA1 myhmacsha1 = new HMACSHA1(Encoding.UTF8.GetBytes(key));
             byte[] byteArray = Encoding.UTF8.GetBytes(text);
             MemoryStream stream = new MemoryStream(byteArray);
-            string signature = Convert.ToBase64String(myhmacsha1.ComputeHash(stream));
-
-            return signature;
+            return Convert.ToBase64String(myhmacsha1.ComputeHash(stream));
         }
 
         #endregion
