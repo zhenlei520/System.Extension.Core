@@ -329,8 +329,9 @@ namespace EInfrastructure.Core.MemoryCache
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="kvalues"></param>
+        /// <param name="second">秒</param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, Dictionary<string, T> kvalues)
+        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, int second = -1)
         {
             return false;
         }
@@ -880,7 +881,7 @@ namespace EInfrastructure.Core.MemoryCache
         }
 
         #endregion
-        
+
         #region 获取指定索引的集合
 
         /// <summary>

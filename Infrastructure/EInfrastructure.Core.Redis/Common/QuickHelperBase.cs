@@ -39,6 +39,7 @@ namespace EInfrastructure.Core.Redis.Common
         /// 
         /// </summary>
         private static readonly int __staticPid = Process.GetCurrentProcess().Id;
+
         private static int __staticIncrement = rnd.Next();
 
         /// <summary>
@@ -252,9 +253,10 @@ namespace EInfrastructure.Core.Redis.Common
         /// 同时将多个 field-value (域-值)对设置到哈希表 key 中
         /// </summary>
         /// <param name="key">不含prefix前辍RedisHelper.Name</param>
+        /// <param name="expire">过期时间（单位：秒）</param>
         /// <param name="keyValues">field1 value1 [field2 value2]</param>
         /// <returns></returns>
-        public static string HashSet(string key, params object[] keyValues)
+        public static string HashSet(string key, TimeSpan expire, params object[] keyValues)
         {
             return HashSetExpire(key, TimeSpan.Zero, keyValues);
         }

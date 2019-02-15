@@ -140,7 +140,7 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="key"></param>
         /// <param name="dataKey"></param>
         /// <param name="t"></param>
-        /// <param name="second"></param>
+        /// <param name="second">秒</param>
         /// <returns></returns>
         bool HashSet<T>(string key, string dataKey, T t, int second = -1);
 
@@ -150,8 +150,9 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="kvalues"></param>
+        /// <param name="second">秒</param>
         /// <returns></returns>
-        bool HashSet<T>(string key, Dictionary<string, T> kvalues);
+        bool HashSet<T>(string key, Dictionary<string, T> kvalues, int second = -1);
 
         /// <summary>
         /// 移除hash中的某值

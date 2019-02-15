@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
+using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Interface.Cache;
 using EInfrastructure.Core.Interface.IOC;
@@ -211,19 +212,9 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public bool HashSet<T>(string key, string dataKey, T t, int second = -1)
         {
-            string value = CsRedisHelper.HashSet(key, dataKey, ConvertJson<T>(t));
+            string value = CsRedisHelper.HashSet(key, GetExpire(second), dataKey, ConvertJson<T>(t));
             bool result = string.Equals(value, "OK",
                 StringComparison.OrdinalIgnoreCase);
-            if (result)
-            {
-                if (second > 0)
-                {
-                    SortedSetAdd(_overtimeCacheKey, key + "~_~" + dataKey,
-                        TimeCommon.GetTimeSpan(DateTime.Now.AddSeconds(second)),
-                        true); //增加SortSet缓存，协助删除过期的缓存信息
-                }
-            }
-
             return result;
         }
 
@@ -233,8 +224,9 @@ namespace EInfrastructure.Core.Redis
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="kvalues"></param>
+        /// <param name="second">秒</param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, Dictionary<string, T> kvalues)
+        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, int second = -1)
         {
             List<object> keyValues = new List<object>();
             foreach (var kvp in kvalues)
@@ -243,7 +235,7 @@ namespace EInfrastructure.Core.Redis
                 keyValues.Add(ConvertJson<T>(kvp.Value));
             }
 
-            return string.Equals(CsRedisHelper.HashSet(key, keyValues.ToArray()), "OK",
+            return string.Equals(CsRedisHelper.HashSet(key, GetExpire(second), keyValues.ToArray()), "OK",
                 StringComparison.OrdinalIgnoreCase);
         }
 
@@ -862,6 +854,33 @@ namespace EInfrastructure.Core.Redis
                 IFormatter formatter = new BinaryFormatter();
                 return formatter.Deserialize(ms);
             }
+        }
+
+        #endregion
+
+        #region 获取过期时间
+
+        /// <summary>
+        /// 获取过期时间
+        /// </summary>
+        /// <param name="second"></param>
+        private TimeSpan GetExpire(int second = -1)
+        {
+            TimeSpan timeSpan;
+            if (second == 0)
+            {
+                timeSpan = TimeSpan.Zero;
+            }
+            else if (second > 0)
+            {
+                timeSpan = DateTime.Now.AddSeconds(second) - DateTime.Now;
+            }
+            else
+            {
+                throw new BusinessException("过期时间设置有误");
+            }
+
+            return timeSpan;
         }
 
         #endregion
