@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// <summary>
         /// 异常委托
         /// </summary>
-        public static Func<System.Exception, bool> ExceptionAction = null;
+        public static Func<HttpContext, System.Exception, bool> ExceptionAction = null;
 
         /// <summary>
         /// 
@@ -44,7 +44,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
             {
                 if (ExceptionAction != null)
                 {
-                    var isStop = ExceptionAction.Invoke(ex);
+                    var isStop = ExceptionAction.Invoke(context, ex);
                     if (isStop)
                     {
                         return;
@@ -124,7 +124,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// <param name="exceptionAction">异常委托方法</param>
         /// <returns></returns>
         public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder builder,
-            Func<System.Exception, bool> exceptionAction = null)
+            Func<HttpContext, System.Exception, bool> exceptionAction = null)
         {
             ErrorHandlingMiddleware.ExceptionAction = exceptionAction;
             return builder.UseMiddleware<ErrorHandlingMiddleware>();
