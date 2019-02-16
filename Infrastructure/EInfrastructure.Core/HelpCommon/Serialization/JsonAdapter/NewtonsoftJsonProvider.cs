@@ -12,7 +12,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
         /// <param name="o"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public  string Serializer(object o, bool format = false)
+        public string Serializer(object o, bool format = false)
         {
             using (StringWriter sw = new StringWriter())
             {
@@ -43,6 +43,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
                 {
                     serializer.Serialize(jsonWriter, o);
                 }
+
                 return sw.ToString();
             }
         }
@@ -53,7 +54,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
         /// <param name="s"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public  object Deserialize(string s, Type type)
+        public object Deserialize(string s, Type type)
         {
             return JsonConvert.DeserializeObject(s, type);
         }
