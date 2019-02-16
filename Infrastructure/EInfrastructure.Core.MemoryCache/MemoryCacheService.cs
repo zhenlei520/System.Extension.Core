@@ -996,5 +996,67 @@ namespace EInfrastructure.Core.MemoryCache
         #endregion 异步方法
 
         #endregion SortedSet 有序集合
+
+        #region Basics
+
+        #region  删除指定Key的缓存    
+
+        /// <summary>
+        /// 删除指定Key的缓存
+        /// 用于在 key 存在时删除 key
+        /// </summary>
+        /// <param name="keys">待删除的Key集合</param>
+        /// <returns>返回删除的数量</returns>
+        public long Remove(List<string> keys)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 检查给定 key 是否存在
+
+        /// <summary>
+        /// 检查给定 key 是否存在
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool Exist(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 设置指定key过期时间
+
+        /// <summary>
+        /// 设置指定key过期时间
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="expire">过期时间</param>
+        /// <returns></returns>
+        public bool Expire(string key, TimeSpan expire)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 查找所有符合给定模式( pattern)的 key
+
+        /// <summary>
+        /// 查找所有符合给定模式( pattern)的 key
+        /// </summary>
+        /// <param name="pattern">如：runoob*</param>
+        /// <returns></returns>
+        public List<string> Keys(string pattern)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #endregion
     }
 }

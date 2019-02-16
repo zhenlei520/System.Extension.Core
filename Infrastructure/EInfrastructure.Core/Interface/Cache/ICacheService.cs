@@ -424,7 +424,7 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="score"></param>
         /// <param name="isOverlap"></param>
         /// <returns></returns>
-        bool SortedSetAdd<T>(string key, T value, double score,bool isOverlap=false);
+        bool SortedSetAdd<T>(string key, T value, double score, bool isOverlap = false);
 
         /// <summary>
         /// 删除
@@ -448,7 +448,7 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="count"></param>
         /// <returns></returns>
         Dictionary<string, string> SortedSetRangeByRankAndOverTime(int count = 1000);
-        
+
         /// <summary>
         /// 降序获取指定索引的集合
         /// </summary>
@@ -524,5 +524,39 @@ namespace EInfrastructure.Core.Interface.Cache
         #endregion 异步方法
 
         #endregion SortedSet 有序集合
+
+        #region Basics
+
+        /// <summary>
+        /// 删除指定Key的缓存
+        /// 用于在 key 存在时删除 key
+        /// </summary>
+        /// <param name="keys">待删除的Key集合</param>
+        /// <returns>返回删除的数量</returns>
+        long Remove(List<string> keys);
+
+        /// <summary>
+        /// 检查给定 key 是否存在
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        bool Exist(string key);
+
+        /// <summary>
+        /// 设置指定key过期时间
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="expire">过期时间</param>
+        /// <returns></returns>
+        bool Expire(string key, TimeSpan expire);
+
+        /// <summary>
+        /// 查找所有符合给定模式( pattern)的 key
+        /// </summary>
+        /// <param name="pattern">如：runoob*</param>
+        /// <returns></returns>
+        List<string> Keys(string pattern);
+
+        #endregion
     }
 }

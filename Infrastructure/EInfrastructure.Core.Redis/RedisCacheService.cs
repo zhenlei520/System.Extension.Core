@@ -26,11 +26,18 @@ namespace EInfrastructure.Core.Redis
         private readonly string _overtimeCacheKey = "Cache_HashKey";
 
         /// <summary>
+        /// 前缀
+        /// </summary>
+        private readonly string _prefix;
+
+        /// <summary>
         /// 
         /// </summary>
         public RedisCacheService()
         {
-            CsRedisHelper.InitializeConfiguration(RedisConfig.Get());
+            var redisConfig = RedisConfig.Get();
+            _prefix = redisConfig.Name;
+            CsRedisHelper.InitializeConfiguration(redisConfig);
         }
 
         #region Methods
@@ -767,6 +774,70 @@ namespace EInfrastructure.Core.Redis
         #endregion 异步方法
 
         #endregion SortedSet 有序集合
+
+        #region Basics
+
+        #region  删除指定Key的缓存    
+
+        /// <summary>
+        /// 删除指定Key的缓存
+        /// 用于在 key 存在时删除 key
+        /// </summary>
+        /// <param name="keys">待删除的Key集合，不含prefix前辍RedisHelper.Name</param>
+        /// <returns>返回删除的数量</returns>
+        public long Remove(List<string> keys)
+        {
+            return CsRedisHelper.Remove(keys?.ToArray());
+        }
+
+        #endregion
+
+        #region 检查给定 key 是否存在
+
+        /// <summary>
+        /// 检查给定 key 是否存在
+        /// </summary>
+        /// <param name="key">不含prefix前辍RedisHelper.Name</param>
+        /// <returns></returns>
+        public bool Exist(string key)
+        {
+            return CsRedisHelper.Exists(key);
+        }
+
+        #endregion
+
+        #region 设置指定key过期时间
+
+        /// <summary>
+        /// 设置指定key过期时间
+        /// </summary>
+        /// <param name="key">不含prefix前辍RedisHelper.Name</param>
+        /// <param name="expire">过期时间</param>
+        /// <returns></returns>
+        public bool Expire(string key, TimeSpan expire)
+        {
+            return CsRedisHelper.Expire(key, expire);
+        }
+
+        #endregion
+
+        #region 查找所有符合给定模式( pattern)的 key
+
+        /// <summary>
+        /// 查找所有符合给定模式( pattern)的 key
+        /// </summary>
+        /// <param name="pattern">如：runoob*，不含prefix前辍RedisHelper.Name</param>
+        /// <returns></returns>
+        public List<string> Keys(string pattern)
+        {
+            var keys = new List<string>();
+            CsRedisHelper.Keys(_prefix + pattern).ToList().ForEach(p => { keys.Add(p.Substring(_prefix.Length)); });
+            return keys;
+        }
+
+        #endregion
+
+        #endregion Basics
 
         #endregion
 
