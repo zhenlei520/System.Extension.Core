@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Globalization;
+using static System.TimeZone;
 
 namespace EInfrastructure.Core.HelpCommon
 {
@@ -811,7 +812,7 @@ namespace EInfrastructure.Core.HelpCommon
         {
             if (time == null)
                 time = DateTime.Now;
-            var startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0, 0));
+            var startTime = CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0, 0));
             long t = (time.Value.Ticks - startTime.Ticks) / 10000; //除10000调整为13位      
             return t;
         }
@@ -827,11 +828,56 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns>Unix时间戳格式</returns>
         public static int ConvertDateTimeInt(DateTime time)
         {
-            DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            DateTime startTime = CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
             return (int) (time - startTime).TotalSeconds;
         }
 
         #endregion
+
+        #region 将当前Utc时间转换为总秒数
+
+        /// <summary>
+        /// 将当前Utc时间转换为总秒数
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static long ToUnixTimestamp(DateTime target)
+        {
+            return Convert.ToInt64((TimeZoneInfo.ConvertTimeToUtc(target) -
+                                    new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)).TotalSeconds);
+        }
+
+        #endregion
+
+        #region 将时间戳转为DateTime类型
+
+        /// <summary>
+        /// 将10位时间戳转时间
+        /// </summary>
+        /// <param name="unixTimeStamp"></param>
+        /// <returns></returns>
+        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
+        }
+
+        /// <summary>
+        /// 将13位时间戳转为时间
+        /// </summary>
+        /// <param name="javaTimeStamp"></param>
+        /// <returns></returns>
+        public static DateTime JsTimeStampToDateTime(double javaTimeStamp)
+        {
+            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddMilliseconds(javaTimeStamp).ToLocalTime();
+            return dtDateTime;
+        }
+
+        #endregion
+
 
         #region 获得总秒数
 
