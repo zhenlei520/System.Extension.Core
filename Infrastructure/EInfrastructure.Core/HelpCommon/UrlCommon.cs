@@ -1,4 +1,6 @@
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
@@ -6,7 +8,7 @@ namespace EInfrastructure.Core.HelpCommon
     /// <summary>
     /// url地址方法
     /// </summary>
-    public class UrlCommon
+    public static class UrlCommon
     {
         #region 得到url地址
 
@@ -16,7 +18,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="str"></param>
         /// <returns></returns>
         /// <exception cref="BusinessException"></exception>
-        public static string GetUrl(string str)
+        public static string GetUrl(this string str)
         {
             string regexStr = "[a-zA-z]+://[^\\s]*";
             Regex reg = new Regex(regexStr, RegexOptions.Multiline);
@@ -30,6 +32,98 @@ namespace EInfrastructure.Core.HelpCommon
             }
 
             throw new BusinessException("无效的链接");
+        }
+
+        #endregion
+
+        #region Url编码
+
+        /// <summary>
+        /// Url编码
+        /// </summary>
+        /// <param name="target">待加密字符串</param>
+        /// <returns></returns>
+        public static string UrlEncode(this string target)
+        {
+            return HttpUtility.UrlEncode(target);
+        }
+
+        /// <summary>
+        /// Url编码
+        /// </summary>
+        /// <param name="target">待加密字符串</param>
+        /// <param name="encoding">编码类型</param>
+        /// <returns></returns>
+        public static string UrlEncode(this string target, Encoding encoding)
+        {
+            return HttpUtility.UrlEncode(target, encoding);
+        }
+
+        #endregion
+
+        #region Url解码
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target">待解密字符串</param>
+        /// <returns></returns>
+        public static string UrlDecode(this string target)
+        {
+            return HttpUtility.UrlDecode(target);
+        }
+
+        /// <summary>
+        /// Url解码
+        /// </summary>
+        /// <param name="target">待解密字符串</param>
+        /// <param name="encoding">编码类型</param>
+        /// <returns></returns>
+        public static string UrlDecode(this string target, Encoding encoding)
+        {
+            return HttpUtility.UrlDecode(target, encoding);
+        }
+
+        #endregion
+
+        #region Html属性编码
+
+        /// <summary>
+        /// Html属性编码
+        /// </summary>
+        /// <param name="target">待加密字符串</param>
+        /// <returns></returns>
+        public static string AttributeEncode(this string target)
+        {
+            return HttpUtility.HtmlAttributeEncode(target);
+        }
+
+        #endregion
+
+        #region Html编码
+
+        /// <summary>
+        /// Html编码
+        /// </summary>
+        /// <param name="target">待加密字符串</param>
+        /// <returns></returns>
+        public static string HtmlEncode(this string target)
+        {
+            return HttpUtility.HtmlEncode(target);
+        }
+
+        #endregion
+
+        #region Html解码
+
+        /// <summary>
+        /// Html解码
+        /// </summary>
+        /// <param name="target">待解密字符串</param>
+        /// <returns></returns>
+        public static string HtmlDecode(this string target)
+        {
+            return HttpUtility.HtmlDecode(target);
         }
 
         #endregion

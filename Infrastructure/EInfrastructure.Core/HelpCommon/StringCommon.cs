@@ -56,6 +56,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="number">倒数第n次出现（默认倒数第1次）</param>
         /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
         /// <returns></returns>
+        // ReSharper disable once InconsistentNaming
         public static int LastIndexOf(this string parameter, char character, int number = 1, int defaultIndexof = -1)
         {
             if (string.IsNullOrEmpty(parameter))
