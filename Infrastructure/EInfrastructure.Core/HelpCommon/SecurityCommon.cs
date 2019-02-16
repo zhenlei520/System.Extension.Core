@@ -186,8 +186,28 @@ namespace EInfrastructure.Core.HelpCommon
             return GetSha(enc.GetBytes(str), new SHA1CryptoServiceProvider());
         }
 
+        /// <summary>
+        /// Sha1
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Sha1(Stream str)
+        {
+            return GetSha(str.ConvertToByteArray(), new SHA1CryptoServiceProvider());
+        }
+
+        /// <summary>
+        /// Sha1
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Sha1(byte[] str)
+        {
+            return GetSha(str, new SHA1CryptoServiceProvider());
+        }
+
         #endregion
-        
+
         #region Sha256加密
 
         /// <summary>
@@ -201,8 +221,28 @@ namespace EInfrastructure.Core.HelpCommon
             return GetSha(enc.GetBytes(str), new SHA256CryptoServiceProvider());
         }
 
+        /// <summary>
+        /// Sha256
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Sha256(Stream str)
+        {
+            return GetSha(str.ConvertToByteArray(), new SHA256CryptoServiceProvider());
+        }
+
+        /// <summary>
+        /// Sha256
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Sha256(byte[] str)
+        {
+            return GetSha(str, new SHA256CryptoServiceProvider());
+        }
+
         #endregion
-        
+
         #region Sha384加密
 
         /// <summary>
@@ -216,8 +256,28 @@ namespace EInfrastructure.Core.HelpCommon
             return GetSha(enc.GetBytes(str), new SHA384CryptoServiceProvider());
         }
 
+        /// <summary>
+        /// Sha384
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Sha384(Stream str)
+        {
+            return GetSha(str.ConvertToByteArray(), new SHA384CryptoServiceProvider());
+        }
+
+        /// <summary>
+        /// Sha384
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Sha384(byte[] str)
+        {
+            return GetSha(str, new SHA384CryptoServiceProvider());
+        }
+
         #endregion
-        
+
         #region Sha512加密
 
         /// <summary>
@@ -229,6 +289,26 @@ namespace EInfrastructure.Core.HelpCommon
         {
             var enc = new ASCIIEncoding(); //将mystr转换成byte[] 
             return GetSha(enc.GetBytes(str), new SHA512CryptoServiceProvider());
+        }
+
+        /// <summary>
+        /// Sha512加密
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Sha512(Stream str)
+        {
+            return GetSha(str.ConvertToByteArray(), new SHA512CryptoServiceProvider());
+        }
+
+        /// <summary>
+        /// Sha512加密
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Sha512(byte[] str)
+        {
+            return GetSha(str, new SHA512CryptoServiceProvider());
         }
 
         #endregion
