@@ -30,9 +30,9 @@ namespace EInfrastructure.Core.HelpCommon.Randoms
         /// 生成指定长度的随机字符串
         /// </summary>
         /// <param name="length">生成字符串长度</param>
-        /// <param name="text">如果传入该参数，则从该文本中随机抽取</param>
+        /// <param name="text">如果传入该参数，则从该文本中随机抽取（若未传值，默认为英文字母与数字串）</param>
         /// <returns></returns>
-        public string GenerateSpecifiedString(int length, string text)
+        public string GenerateSpecifiedString(int length, string text = null)
         {
             if (text == null)
                 text = Const.Letters + Const.Numbers;
@@ -43,7 +43,7 @@ namespace EInfrastructure.Core.HelpCommon.Randoms
         }
 
         #endregion
-        
+
         #region 生成随机字符串
 
         /// <summary>
@@ -195,8 +195,9 @@ namespace EInfrastructure.Core.HelpCommon.Randoms
         }
 
         #endregion
-        
+
         #region 对一个数组进行随机排序
+
         /// <summary>
         /// 对一个数组进行随机排序
         /// </summary>
@@ -220,6 +221,7 @@ namespace EInfrastructure.Core.HelpCommon.Randoms
                 arr[randomNum2] = temp;
             }
         }
+
         #endregion
     }
 }
