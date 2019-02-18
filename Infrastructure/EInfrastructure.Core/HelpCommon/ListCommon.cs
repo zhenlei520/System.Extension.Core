@@ -276,7 +276,7 @@ namespace EInfrastructure.Core.HelpCommon
             }
             else
             {
-                pageSize = totalCount.ConvertToInt(0)* -1;
+                pageSize = totalCount.ConvertToInt(0) * -1;
             }
 
             for (int index = pageIndex; index <= pageMax; index++)
@@ -284,6 +284,107 @@ namespace EInfrastructure.Core.HelpCommon
                 action(query.Skip((index - 1) * pageSize).Take(pageSize).ToList());
             }
         }
+
+        #endregion
+
+        #region 添加单个对象
+
+        /// <summary>
+        /// 添加单个对象
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="item"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<T> AddNew<T>(this List<T> list, T item)
+        {
+            list.Add(item);
+            return list;
+        }
+
+        #endregion
+
+        #region 添加多个集合
+
+        /// <summary>
+        /// 添加多个集合
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="item"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<T> AddNewMult<T>(this List<T> list, List<T> item)
+        {
+            list.AddRange(item);
+            return list;
+        }
+
+        #endregion
+
+        #region 移除
+
+        /// <summary>
+        /// 移除
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="item"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<T> RemoveNew<T>(this List<T> list, T item)
+        {
+            list.Remove(item);
+            return list;
+        }
+
+        #endregion
+
+        #region 按条件移除
+
+        #region 移除单条符合条件的数据
+
+        /// <summary>
+        /// 移除单条符合条件的数据
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="condtion">条件</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<T> RemoveNew<T>(this List<T> list, Func<T, bool> condtion)
+        {
+            List<T> listTemp = list;
+            var item = listTemp.FirstOrDefault(condtion);
+            if (item != null)
+            {
+                listTemp.Remove(item);
+            }
+
+            return list;
+        }
+
+        #endregion
+
+        #region 移除多条满足条件
+
+        /// <summary>
+        /// 移除多条满足条件
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="condtion">条件</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<T> RemoveMultNew<T>(this List<T> list, Func<T, bool> condtion)
+        {
+            List<T> listTemp = list;
+            var items = listTemp.Where(condtion).ToList() ?? new List<T>();
+            foreach (var item in items)
+            {
+                listTemp.Remove(item);
+            }
+
+            return list;
+        }
+
+        #endregion
 
         #endregion
     }
