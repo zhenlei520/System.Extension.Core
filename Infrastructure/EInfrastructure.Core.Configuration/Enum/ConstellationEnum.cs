@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace EInfrastructure.Core.HelpCommon.Enums
+namespace EInfrastructure.Core.Configuration.Enum
 {
     /// <summary>
     /// 星座

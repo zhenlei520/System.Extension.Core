@@ -1,5 +1,5 @@
 ﻿using System;
-using EInfrastructure.Core.HelpCommon.Enums;
+using EInfrastructure.Core.Configuration.Enum;
 
 namespace EInfrastructure.Core.HelpCommon
 {
