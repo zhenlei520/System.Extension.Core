@@ -18,7 +18,9 @@ namespace EInfrastructure.Core.Words
         public static IServiceCollection AddWords(this IServiceCollection serviceCollection,
             Action<DictPinYinPathConfig, DictTextPathConfig> action = null)
         {
-            action?.Invoke(DictPinYinPathConfig.Get(), DictTextPathConfig.Get());
+            DictPinYinPathConfig dictPinYinPathConfig = DictPinYinPathConfig.Get();
+            DictTextPathConfig dictTextPathConfig = DictTextPathConfig.Get();
+            action?.Invoke(dictPinYinPathConfig, dictTextPathConfig);
             return serviceCollection;
         }
     }
