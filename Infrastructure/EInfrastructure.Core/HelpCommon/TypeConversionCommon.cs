@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
 {
@@ -517,7 +518,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static byte[] ConvertToByteArray(this string para)
         {
-            System.Text.UnicodeEncoding converter = new System.Text.UnicodeEncoding();
+            UnicodeEncoding converter = new UnicodeEncoding();
             return converter.GetBytes(para);
         }
 
@@ -635,19 +636,52 @@ namespace EInfrastructure.Core.HelpCommon
         /// 加密显示以*表示
         /// </summary>
         /// <param name="number">显示N位*,-1默认显示6位</param>
+        /// <param name="symbol">特殊符号，默认为*</param>
         /// <returns></returns>
-        public static string GetContentByEncryption(int number)
+        public static string GetContentByEncryption(this char? symbol, int number = 6)
         {
-            int encryptionLength = 6; //默认加密后数据显示6位***
-            string result = ""; //结果
-            if (number == -1 || number < 0)
+            if (symbol == null)
             {
-                encryptionLength = 6;
+                symbol = '*';
             }
 
-            for (int i = 0; i < encryptionLength; i++)
+            string result = ""; //结果
+            if (number < 0)
             {
-                result += "*";
+                throw new BusinessException("number必须为正整数");
+            }
+
+            for (int i = 0; i < number; i++)
+            {
+                result += symbol;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 加密显示以*表示
+        /// </summary>
+        /// <param name="number">显示N次*,-1默认显示6位</param>
+        /// <param name="symbol">特殊符号，默认为*</param>
+        /// <returns></returns>
+        public static string GetContentByEncryption(this string symbol, int number = 6)
+        {
+            
+            if (string.IsNullOrEmpty(symbol))
+            {
+                symbol = "*";
+            }
+
+            string result = ""; //结果
+            if (number < 0)
+            {
+                throw new BusinessException("number必须为正整数");
+            }
+
+            for (int i = 0; i < number; i++)
+            {
+                result += symbol;
             }
 
             return result;

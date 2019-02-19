@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Globalization;
+using EInfrastructure.Core.Configuration.Enum;
 using static System.TimeZone;
 
 namespace EInfrastructure.Core.HelpCommon
@@ -123,8 +124,8 @@ namespace EInfrastructure.Core.HelpCommon
         /// <summary>
         /// 获得两个日期的间隔
         /// </summary>
-        /// <param name="dateTime1">日期一。</param>
-        /// <param name="dateTime2">日期二。</param>
+        /// <param name="dateTime1">日期一(较大一点的时间)。</param>
+        /// <param name="dateTime2">日期二(较小一点的时间)。</param>
         /// <returns>日期间隔TimeSpan。</returns>
         public static TimeSpan DateDiff2(this DateTime dateTime1, DateTime dateTime2)
         {
@@ -144,29 +145,29 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="dateTime1">日期时间</param>
         /// <param name="dateMode">显示模式</param>
         /// <returns>0-9种模式的日期</returns>
-        public static string FormatDate(this DateTime dateTime1, string dateMode)
+        public static string FormatDate(this DateTime dateTime1, FormatDateTypeEnum dateMode = FormatDateTypeEnum.One)
         {
             switch (dateMode)
             {
-                case "0":
+                case FormatDateTypeEnum.Zero:
                     return dateTime1.ToString("yyyy-MM-dd");
-                case "1":
+                case FormatDateTypeEnum.One:
                     return dateTime1.ToString("yyyy-MM-dd HH:mm:ss");
-                case "2":
+                case FormatDateTypeEnum.Two:
                     return dateTime1.ToString("yyyy/MM/dd");
-                case "3":
+                case FormatDateTypeEnum.Three:
                     return dateTime1.ToString("yyyy年MM月dd日");
-                case "4":
+                case FormatDateTypeEnum.Four:
                     return dateTime1.ToString("MM-dd");
-                case "5":
+                case FormatDateTypeEnum.Five:
                     return dateTime1.ToString("MM/dd");
-                case "6":
+                case FormatDateTypeEnum.Six:
                     return dateTime1.ToString("MM月dd日");
-                case "7":
+                case FormatDateTypeEnum.Seven:
                     return dateTime1.ToString("yyyy-MM");
-                case "8":
+                case FormatDateTypeEnum.Eight:
                     return dateTime1.ToString("yyyy/MM");
-                case "9":
+                case FormatDateTypeEnum.Nine:
                     return dateTime1.ToString("yyyy年MM月");
                 default:
                     return dateTime1.ToString(CultureInfo.InvariantCulture);
@@ -366,30 +367,42 @@ namespace EInfrastructure.Core.HelpCommon
         public static string GetAccordingToCurrent(this DateTime date)
         {
             TimeSpan span = DateTime.Now - date;
+            if (span.TotalMinutes < 1)
+            {
+                return "刚刚";
+            }
+
+            if (span.TotalSeconds < 60)
+            {
+                return "1分钟之前";
+            }
+
             if (span.TotalMinutes < 60)
             {
                 return Math.Ceiling(span.TotalMinutes) + "分钟之前";
             }
-            else if (span.TotalHours < 24)
+
+            if (span.TotalHours < 24)
             {
                 return Math.Ceiling(span.TotalHours) + "小时之内";
             }
-            else if (span.TotalDays < 7)
+
+            if (span.TotalDays < 7)
             {
                 return Math.Ceiling(span.TotalDays) + "天之内";
             }
-            else if (span.TotalDays < 30)
+
+            if (span.TotalDays < 30)
             {
                 return Math.Ceiling(span.TotalDays / 7) + "周之内";
             }
-            else if (span.TotalDays < 180)
+
+            if (span.TotalDays < 180)
             {
                 return Math.Ceiling(span.TotalDays / 30) + "月之内";
             }
-            else
-            {
-                return Math.Ceiling(span.TotalDays / 360) + "年之内";
-            }
+
+            return Math.Ceiling(span.TotalDays / 360) + "年之内";
         }
 
         /// <summary>
@@ -807,12 +820,13 @@ namespace EInfrastructure.Core.HelpCommon
         /// 得到13位时间戳
         /// </summary>
         /// <param name="time"></param>
+        /// <param name="dateTimeKind"></param>
         /// <returns></returns>
-        public static long GetTimeSpan(DateTime? time = null)
+        public static long GetTimeSpan(this DateTime? time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
             if (time == null)
                 time = DateTime.Now;
-            var startTime = CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0, 0));
+            var startTime = CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind));
             long t = (time.Value.Ticks - startTime.Ticks) / 10000; //除10000调整为13位      
             return t;
         }
@@ -825,10 +839,11 @@ namespace EInfrastructure.Core.HelpCommon
         /// DateTime时间格式转换为10位不带毫秒的Unix时间戳
         /// </summary>
         /// <param name="time"> DateTime时间格式</param>
+        /// <param name="dateTimeKind"></param>
         /// <returns>Unix时间戳格式</returns>
-        public static int ConvertDateTimeInt(DateTime time)
+        public static int ConvertDateTimeInt(this DateTime time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
-            DateTime startTime = CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            DateTime startTime = CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind));
             return (int) (time - startTime).TotalSeconds;
         }
 
@@ -840,26 +855,29 @@ namespace EInfrastructure.Core.HelpCommon
         /// 将当前Utc时间转换为总秒数
         /// </summary>
         /// <param name="target"></param>
+        /// <param name="dateTimeKind"></param>
         /// <returns></returns>
-        public static long ToUnixTimestamp(DateTime target)
+        public static long ToUnixTimestamp(this DateTime target, DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
             return Convert.ToInt64((TimeZoneInfo.ConvertTimeToUtc(target) -
-                                    new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)).TotalSeconds);
+                                    new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind)).TotalSeconds);
         }
 
         #endregion
 
-        #region 将时间戳转为DateTime类型
+        #region 将10位时间戳转时间
 
         /// <summary>
         /// 将10位时间戳转时间
         /// </summary>
         /// <param name="unixTimeStamp"></param>
+        /// <param name="dateTimeKind"></param>
         /// <returns></returns>
-        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp,
+            DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
             // Unix timestamp is seconds past epoch
-            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind);
             dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
             return dtDateTime;
         }
@@ -868,16 +886,16 @@ namespace EInfrastructure.Core.HelpCommon
         /// 将13位时间戳转为时间
         /// </summary>
         /// <param name="javaTimeStamp"></param>
+        /// <param name="dateTimeKind"></param>
         /// <returns></returns>
-        public static DateTime JsTimeStampToDateTime(double javaTimeStamp)
+        public static DateTime JsTimeStampToDateTime(double javaTimeStamp, DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
-            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind);
             dtDateTime = dtDateTime.AddMilliseconds(javaTimeStamp).ToLocalTime();
             return dtDateTime;
         }
 
         #endregion
-
 
         #region 获得总秒数
 
@@ -885,12 +903,13 @@ namespace EInfrastructure.Core.HelpCommon
         /// 获得总秒数
         /// </summary>
         /// <param name="jan1St1970"></param>
+        /// <param name="dateTimeKind"></param>
         /// <returns></returns>
-        public static long CurrentTimeMillis(DateTime? jan1St1970 = null)
+        public static long CurrentTimeMillis(DateTime? jan1St1970 = null, DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
             if (jan1St1970 == null)
             {
-                jan1St1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                jan1St1970 = new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind);
             }
 
             return (long) ((DateTime.UtcNow - jan1St1970.Value).TotalMilliseconds);
