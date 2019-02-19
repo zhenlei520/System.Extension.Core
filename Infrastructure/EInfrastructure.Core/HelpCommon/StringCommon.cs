@@ -159,6 +159,50 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
+        #region 加密隐藏信息（将原信息其中一部分数据替换为特殊字符）
+
+        /// <summary>
+        /// 加密隐藏信息（将原信息其中一部分数据替换为特殊字符）
+        /// </summary>
+        /// <param name="param">原参数信息</param>
+        /// <param name="key">更换后的特殊字符</param>
+        /// <param name="index">下标</param>
+        /// <param name="length">位数,-1代表到队尾</param>
+        /// <returns></returns>
+        public static string EncryptStr(string param, string key, int index, int length = -1)
+        {
+            if (string.IsNullOrEmpty(param))
+            {
+                return "";
+            }
+
+            string str = "";
+            if (index > param.Length - 1)
+            {
+                return param;
+            }
+
+            str = param.Substring(0, index);
+            if (length == -1)
+            {
+                length = param.Length - index;
+            }
+
+            for (int i = 0; i < length; i++)
+            {
+                str += key;
+            }
+
+            if (index + length < param.Length)
+            {
+                str += param.Substring(index + length);
+            }
+
+            return str;
+        }
+
+        #endregion
+        
         #region 字符串转换为泛型集合
 
         /// <summary>
