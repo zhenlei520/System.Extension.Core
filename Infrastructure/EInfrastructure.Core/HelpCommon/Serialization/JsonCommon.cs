@@ -56,21 +56,29 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="s"></param>
+        /// <param name="defaultResult">反序列化异常</param>
+        /// <param name="action">委托方法</param>
         /// <returns></returns>
-        public T Deserialize<T>(string s)
+        public T Deserialize<T>(string s, T defaultResult = default(T), Action<System.Exception> action = null)
         {
             if (string.IsNullOrWhiteSpace(s))
             {
-                return default(T);
+                return defaultResult;
             }
 
             try
             {
                 return (T) CreateJsonProvider().Deserialize(s, typeof(T));
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                throw new System.Exception($"json反序列化出错,jsonMode:{1},内容：{s}");
+                if (action == null)
+                {
+                    throw new System.Exception($"json反序列化出错,jsonMode:{1},内容：{s}");
+                }
+
+                action.Invoke(ex);
+                return defaultResult;
             }
         }
 

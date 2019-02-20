@@ -57,7 +57,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
             }
 
             var response = _restClient.Execute(request);
-            SendSmsResponse result = XmlHelper.Deserialize<SendSmsResponse>(response.Content);
+            SendSmsResponse result = XmlCommon.Deserialize<SendSmsResponse>(response.Content);
             if (result.Code == "OK")
             {
                 return true;

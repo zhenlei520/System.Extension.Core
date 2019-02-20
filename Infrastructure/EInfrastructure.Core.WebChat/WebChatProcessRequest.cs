@@ -33,7 +33,7 @@ namespace EInfrastructure.Core.WebChat
                     throw new BusinessException("签名错误");
                 }
 
-                refundReponse = XmlHelper.Deserialize<WebChatMessage>(xml);
+                refundReponse = XmlCommon.Deserialize<WebChatMessage>(xml);
                 if (refundReponse == null)
                 {
                     throw new BusinessException("参数错误");

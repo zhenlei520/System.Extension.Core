@@ -48,6 +48,9 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
             }
         }
 
+        #region json反序列化
+
+        
         /// <summary>
         /// json反序列化
         /// </summary>
@@ -58,5 +61,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
         {
             return JsonConvert.DeserializeObject(s, type);
         }
+
+        #endregion
     }
 }
