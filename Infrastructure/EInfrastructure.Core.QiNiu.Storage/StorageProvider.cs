@@ -1,4 +1,5 @@
-﻿using EInfrastructure.Core.Interface.IOC;
+﻿using System;
+using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Storage;
 using EInfrastructure.Core.Interface.Storage.Param;
 using Qiniu.Http;
@@ -69,10 +70,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// 得到上传文件策略信息
         /// </summary>
         /// <param name="opsParam">上传信息</param>
-        public string GetUploadCredentials(UploadPersistentOpsParam opsParam)
+        /// <param name="func"></param>
+        public string GetUploadCredentials(UploadPersistentOpsParam opsParam, Func<string> func)
         {
             SetPutPolicy(opsParam.Key, opsParam.UploadPersistentOps.IsAllowOverlap,
                 opsParam.UploadPersistentOps.PersistentOps);
+            PutPolicy.CallbackBody = func?.Invoke();
             return Auth.CreateUploadToken(Mac, PutPolicy.ToJsonString());
         }
 

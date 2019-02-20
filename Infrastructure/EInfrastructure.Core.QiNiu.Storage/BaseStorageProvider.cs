@@ -222,5 +222,18 @@ namespace EInfrastructure.Core.QiNiu.Storage
         #endregion
 
         #endregion
+        
+        #region 得到资源管理
+
+        /// <summary>
+        /// 得到资源管理
+        /// </summary>
+        /// <returns></returns>
+        protected BucketManager GetBucketManager()
+        {
+            return new BucketManager(Mac, GetConfig());
+        }
+
+        #endregion
     }
 }

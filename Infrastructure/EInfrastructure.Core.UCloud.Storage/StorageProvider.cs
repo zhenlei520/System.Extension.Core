@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Storage;
@@ -13,7 +14,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// UCloud存储实现类
         /// </summary>
-        public StorageProvider() 
+        public StorageProvider()
         {
         }
 
@@ -54,6 +55,20 @@ namespace EInfrastructure.Core.UCloud.Storage
         public string GetUploadCredentials(UploadPersistentOpsParam opsParam)
         {
             throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region 得到上传文件策略信息
+
+        /// <summary>
+        /// 得到上传文件策略信息
+        /// </summary>
+        /// <param name="opsParam">上传信息</param>
+        /// <param name="func"></param>
+        public string GetUploadCredentials(UploadPersistentOpsParam opsParam, Func<string> func)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

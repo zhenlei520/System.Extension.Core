@@ -13,5 +13,12 @@ namespace EInfrastructure.Core.Interface.Storage
         /// <param name="param"></param>
         /// <returns></returns>
         bool Upload(UploadByBase64Param param);
+
+        /// <summary>
+        /// 抓取资源到空间
+        /// </summary>
+        /// <param name="fetchFileParam">资源信息</param>
+        /// <returns></returns>
+        bool FetchFile(FetchFileParam fetchFileParam);
     }
 }

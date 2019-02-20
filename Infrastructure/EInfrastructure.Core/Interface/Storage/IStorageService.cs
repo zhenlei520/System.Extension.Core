@@ -1,4 +1,5 @@
-﻿using EInfrastructure.Core.Interface.Storage.Param;
+﻿using System;
+using EInfrastructure.Core.Interface.Storage.Param;
 
 namespace EInfrastructure.Core.Interface.Storage
 {
@@ -25,6 +26,7 @@ namespace EInfrastructure.Core.Interface.Storage
         /// 得到上传文件策略信息
         /// </summary>
         /// <param name="opsParam">上传信息</param>
-        string GetUploadCredentials(UploadPersistentOpsParam opsParam);
+        /// <param name="func"></param>
+        string GetUploadCredentials(UploadPersistentOpsParam opsParam, Func<string> func);
     }
 }
