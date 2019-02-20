@@ -99,11 +99,11 @@ namespace EInfrastructure.Core.AliYun.DaYu.Common
         /// 构建公共参数
         /// </summary>
         /// <returns></returns>
-        public static Dictionary<string, string> BuildCommonParam()
+        public static Dictionary<string, string> BuildCommonParam(string accessKey)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>
             {
-                {"AccessKeyId", "LTAIbrduImdIA16C"},
+                {"AccessKeyId", accessKey},
                 {"Timestamp", DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")},
                 {"SignatureMethod", "HMAC-SHA1"},
                 {"SignatureVersion", "1.0"},

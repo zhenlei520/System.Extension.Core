@@ -8,6 +8,16 @@ namespace EInfrastructure.Core.AliYun.DaYu.Config
     public class SmsConfig
     {
         /// <summary>
+        /// 签名名称
+        /// </summary>
+        public string SignName { get; set; }
+        
+        /// <summary>
+        /// AccessKey ID
+        /// </summary>
+        public string AccessKey { get; set; }
+        
+        /// <summary>
         /// 秘钥参数
         /// </summary>
         public string EncryptionKey { get; set; }

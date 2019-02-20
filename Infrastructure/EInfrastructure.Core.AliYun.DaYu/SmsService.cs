@@ -39,12 +39,12 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public bool Send(List<string> phoneNumbers, string templateCode, object content,
             Action<SendSmsLoseDto> loseAction = null)
         {
-            Dictionary<string, string> commonParam = Util.BuildCommonParam();
+            Dictionary<string, string> commonParam = Util.BuildCommonParam(SmsConfig.Get().AccessKey);
             commonParam.Add("Action", "SendSms");
             commonParam.Add("Version", "2017-05-25");
             commonParam.Add("RegionId", "cn-hangzhou");
             commonParam.Add("PhoneNumbers", phoneNumbers.ConvertListToString(','));
-            commonParam.Add("SignName", "得有生活");
+            commonParam.Add("SignName", SmsConfig.Get().SignName);
             commonParam.Add("TemplateCode", templateCode);
             commonParam.Add("TemplateParam", new JsonCommon().Serializer(content));
 
