@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -18,9 +19,10 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// 设置Json配置
         /// </summary>
         /// <param name="services"></param>
-        public static void SetJsonOption(this IServiceCollection services)
+        /// <param name="action">拦截器，默认无</param>
+        public static void SetJsonOption(this IServiceCollection services, Action<MvcOptions> action = null)
         {
-            services.AddMvc()
+            services.AddMvc(options => { action?.Invoke(options); })
                 .AddJsonOptions((options =>
                 {
                     options.SerializerSettings.ContractResolver =
