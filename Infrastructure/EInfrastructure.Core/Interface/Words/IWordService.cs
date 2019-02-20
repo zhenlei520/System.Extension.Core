@@ -55,9 +55,8 @@ namespace EInfrastructure.Core.Interface.Words
         /// 得到日文
         /// </summary>
         /// <param name="text">文本信息</param>
-        /// <param name="languageType">文字类型，默认中文简体</param>
         /// <returns></returns>
-        string GetJapanese(string text, TextTypesEnum languageType = TextTypesEnum.Simplified);
+        string GetJapanese(string text);
 
         /// <summary>
         /// 判断是否在范围之内

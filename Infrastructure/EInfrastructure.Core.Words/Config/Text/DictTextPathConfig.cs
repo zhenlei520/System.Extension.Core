@@ -40,10 +40,26 @@ namespace EInfrastructure.Core.Words.Config.Text
         /// <summary>
         /// 设置字典词库
         /// </summary>
-        /// <param name="config"></param>
-        internal static void Set(DictTextPathConfig config)
+        /// <param name="simplifiedPath">中文简体</param>
+        /// <param name="traditionalPath">中文繁体</param>
+        /// <param name="initialPath">简拼</param>
+        /// <param name="specialNumberPath">特殊数字符号</param>
+        /// <param name="transcodingNumberPath">转义后的数字</param>
+        internal static void Set(string simplifiedPath, string traditionalPath, string initialPath,
+            string specialNumberPath, string transcodingNumberPath)
         {
-            Config = config;
+            Config = new DictTextPathConfig()
+            {
+                SimplifiedPath = string.IsNullOrEmpty(simplifiedPath) ? "Dict/Text/simplified.txt" : simplifiedPath,
+                TraditionalPath = string.IsNullOrEmpty(traditionalPath) ? "Dict/Text/traditional.txt" : traditionalPath,
+                InitialPath = string.IsNullOrEmpty(initialPath) ? "Dict/Text/initial.txt" : initialPath,
+                SpecialNumberPath = string.IsNullOrEmpty(specialNumberPath)
+                    ? "Dict/Text/specialNumber.txt"
+                    : specialNumberPath,
+                TranscodingNumberPath = string.IsNullOrEmpty(transcodingNumberPath)
+                    ? "Dict/Text/transcodingNumber.txt"
+                    : transcodingNumberPath,
+            };
         }
 
         /// <summary>

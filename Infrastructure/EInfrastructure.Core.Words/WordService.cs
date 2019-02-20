@@ -142,9 +142,8 @@ namespace EInfrastructure.Core.Words
         /// 得到日文
         /// </summary>
         /// <param name="text">文本信息</param>
-        /// <param name="languageType">语言类型，默认中文简体</param>
         /// <returns></returns>
-        public string GetJapanese(string text, TextTypesEnum languageType = TextTypesEnum.Simplified)
+        public string GetJapanese(string text)
         {
             throw new System.NotImplementedException();
         }
