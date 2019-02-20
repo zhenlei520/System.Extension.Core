@@ -17,7 +17,9 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public static IServiceCollection AddAliDaYu(this IServiceCollection serviceCollection,
             Action<SmsConfig> action)
         {
-            action.Invoke(SmsConfig.Get());
+            var smsConfig = new SmsConfig();
+            action.Invoke(smsConfig);
+            SmsConfig.Set(smsConfig);
             return serviceCollection;
         }
     }

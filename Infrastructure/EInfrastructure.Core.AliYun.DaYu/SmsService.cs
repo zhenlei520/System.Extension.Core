@@ -35,20 +35,21 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <param name="templateCode">短信模板</param>
         /// <param name="content">内容</param>
         /// <param name="loseAction">失败回调函数</param>
+        /// <param name="smsConfigJson">短信配置Json串</param>
         /// <returns></returns>
         public bool Send(List<string> phoneNumbers, string templateCode, object content,
-            Action<SendSmsLoseDto> loseAction = null)
+            Action<SendSmsLoseDto> loseAction = null, string smsConfigJson = "")
         {
-            Dictionary<string, string> commonParam = Util.BuildCommonParam(SmsConfig.Get().AccessKey);
+            Dictionary<string, string> commonParam = Util.BuildCommonParam(SmsConfig.Get(smsConfigJson).AccessKey);
             commonParam.Add("Action", "SendSms");
             commonParam.Add("Version", "2017-05-25");
             commonParam.Add("RegionId", "cn-hangzhou");
             commonParam.Add("PhoneNumbers", phoneNumbers.ConvertListToString(','));
-            commonParam.Add("SignName", SmsConfig.Get().SignName);
+            commonParam.Add("SignName", SmsConfig.Get(smsConfigJson).SignName);
             commonParam.Add("TemplateCode", templateCode);
             commonParam.Add("TemplateParam", new JsonCommon().Serializer(content));
 
-            string sign = Util.CreateSign(commonParam, SmsConfig.Get().EncryptionKey);
+            string sign = Util.CreateSign(commonParam, SmsConfig.Get(smsConfigJson).EncryptionKey);
             commonParam.Add("Signature", sign);
             RestRequest request = new RestRequest(Method.GET);
             foreach (var key in commonParam.Keys)
@@ -84,9 +85,10 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <param name="templateCode">短信模板</param>
         /// <param name="content">内容</param>
         /// <param name="loseAction">失败回调函数</param>
+        /// <param name="smsConfigJson">短信配置Json串</param>
         /// <returns></returns>
         public bool Send(string phoneNumber, string templateCode, object content,
-            Action<SendSmsLoseDto> loseAction = null)
+            Action<SendSmsLoseDto> loseAction = null, string smsConfigJson = "")
         {
             return Send(new List<string>() {phoneNumber}, templateCode, content, loseAction);
         }

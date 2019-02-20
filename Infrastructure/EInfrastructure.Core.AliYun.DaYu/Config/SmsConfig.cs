@@ -1,22 +1,24 @@
-﻿using EInfrastructure.Core.Exception;
+﻿using EInfrastructure.Core.AutoConfig.Interface;
+using EInfrastructure.Core.Exception;
+using EInfrastructure.Core.HelpCommon.Serialization;
 
 namespace EInfrastructure.Core.AliYun.DaYu.Config
 {
     /// <summary>
     /// 短信配置
     /// </summary>
-    public class SmsConfig
+    public class SmsConfig : IScopedConfigModel
     {
         /// <summary>
         /// 签名名称
         /// </summary>
         public string SignName { get; set; }
-        
+
         /// <summary>
         /// AccessKey ID
         /// </summary>
         public string AccessKey { get; set; }
-        
+
         /// <summary>
         /// 秘钥参数
         /// </summary>
@@ -30,13 +32,13 @@ namespace EInfrastructure.Core.AliYun.DaYu.Config
         /// <summary>
         /// 短信配置
         /// </summary>
-        private static SmsConfig Config=new SmsConfig();
+        private static SmsConfig Config = new SmsConfig();
 
         /// <summary>
         /// 设置短信配置
         /// </summary>
         /// <param name="smsConfig"></param>
-        internal static void Set(SmsConfig smsConfig)
+        public static void Set(SmsConfig smsConfig)
         {
             Config = smsConfig;
         }
@@ -45,15 +47,21 @@ namespace EInfrastructure.Core.AliYun.DaYu.Config
         /// 读取短信配置
         /// </summary>
         /// <returns></returns>
-        internal static SmsConfig Get()
+        internal static SmsConfig Get(string smsConfigJson = "")
         {
-            if (Config.Equals(new SmsConfig()) && !IsFirst)
+            if (string.IsNullOrEmpty(smsConfigJson))
             {
-                throw new BusinessException("未配置短信");
+                if (Config.Equals(new SmsConfig()) && !IsFirst)
+                {
+                    throw new BusinessException("未配置短信");
+                }
+
+                IsFirst = false;
+                return Config;
             }
 
-            IsFirst = false;
-            return Config;
+            return new JsonCommon().Deserialize<SmsConfig>(smsConfigJson, null,
+                (System.Exception ex) => throw new BusinessException("短信配置异常"));
         }
     }
 }
