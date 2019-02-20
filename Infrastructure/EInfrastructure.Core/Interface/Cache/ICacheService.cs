@@ -142,7 +142,7 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="t"></param>
         /// <param name="second">秒</param>
         /// <returns></returns>
-        bool HashSet<T>(string key, string dataKey, T t, int second = -1);
+        bool HashSet<T>(string key, string dataKey, T t, long second = -1L);
 
         /// <summary>
         ///  存储数据到hash表
@@ -152,7 +152,7 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="kvalues"></param>
         /// <param name="second">秒</param>
         /// <returns></returns>
-        bool HashSet<T>(string key, Dictionary<string, T> kvalues, int second = -1);
+        bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L);
 
         /// <summary>
         /// 移除hash中的某值
@@ -306,7 +306,7 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        List<T> ListRange<T>(string key, int count = 1000);
+        List<T> ListRange<T>(string key, long count = 1000);
 
         /// <summary>
         /// 入队
@@ -364,9 +364,9 @@ namespace EInfrastructure.Core.Interface.Cache
         /// 获取指定key的List
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="count"></param> 
+        /// <param name="count"></param>
         /// <returns></returns>
-        Task<List<T>> ListRangeAsync<T>(string key, int count = 1000);
+        Task<List<T>> ListRangeAsync<T>(string key, long count = 1000L);
 
         /// <summary>
         /// 入队
@@ -440,14 +440,14 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        List<T> SortedSetRangeByRank<T>(string key, int count = 1000);
+        List<T> SortedSetRangeByRank<T>(string key, long count = 1000L);
 
         /// <summary>
         /// 获取已过期的hashKey
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
-        Dictionary<string, string> SortedSetRangeByRankAndOverTime(int count = 1000);
+        Dictionary<string, string> SortedSetRangeByRankAndOverTime(long count = 1000L);
 
         /// <summary>
         /// 降序获取指定索引的集合
@@ -457,7 +457,7 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="fromRank"></param>
         /// <param name="toRank"></param>
         /// <returns></returns>
-        List<T> GetRangeFromSortedSetDesc<T>(string key, int fromRank, int toRank);
+        List<T> GetRangeFromSortedSetDesc<T>(string key, long fromRank, long toRank);
 
         /// <summary>
         /// 获取指定索引的集合
@@ -467,7 +467,7 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="fromRank"></param>
         /// <param name="toRank"></param>
         /// <returns></returns>
-        List<T> GetRangeFromSortedSet<T>(string key, int fromRank, int toRank);
+        List<T> GetRangeFromSortedSet<T>(string key, long fromRank, long toRank);
 
         /// <summary>
         /// 判断是否存在项
@@ -512,7 +512,7 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        Task<List<T>> SortedSetRangeByRankAsync<T>(string key, int count = 1000);
+        Task<List<T>> SortedSetRangeByRankAsync<T>(string key, long count = 1000L);
 
         /// <summary>
         /// 获取集合中的数量

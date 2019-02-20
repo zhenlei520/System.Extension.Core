@@ -217,7 +217,7 @@ namespace EInfrastructure.Core.Redis
         /// <param name="t"></param>
         /// <param name="second">秒</param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, string dataKey, T t, int second = -1)
+        public bool HashSet<T>(string key, string dataKey, T t, long second = -1)
         {
             string value = CsRedisHelper.HashSet(key, GetExpire(second), dataKey, ConvertJson<T>(t));
             bool result = string.Equals(value, "OK",
@@ -233,7 +233,7 @@ namespace EInfrastructure.Core.Redis
         /// <param name="kvalues"></param>
         /// <param name="second">秒</param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, int second = -1)
+        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1)
         {
             List<object> keyValues = new List<object>();
             foreach (var kvp in kvalues)
@@ -463,7 +463,7 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public List<T> ListRange<T>(string key, int count = 1000)
+        public List<T> ListRange<T>(string key, long count = 1000)
         {
             List<T> list = new List<T>();
             Enumerable.ToList<string>(CsRedisHelper.LRang(key, 0, count)).ForEach(p => { list.Add(ConvertObj<T>(p)); });
@@ -542,9 +542,10 @@ namespace EInfrastructure.Core.Redis
         /// <summary>
         /// 获取指定key的List
         /// </summary>
-        /// <param name="key"></param> 
+        /// <param name="key"></param>
+        /// <param name="count"></param>
         /// <returns></returns>
-        public async Task<List<T>> ListRangeAsync<T>(string key, int count = 1000)
+        public async Task<List<T>> ListRangeAsync<T>(string key, long count = 1000)
         {
             return ConvertListObj<T>(Enumerable.ToList<string>((await CsRedisHelper.LRangAsync(key, 0, count))));
         }
@@ -647,7 +648,7 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public List<T> SortedSetRangeByRank<T>(string key, int count = 1000)
+        public List<T> SortedSetRangeByRank<T>(string key, long count = 1000)
         {
             return ConvertListObj<T>(CsRedisHelper.ZRange(key, 0, count).ToList<string>());
         }
@@ -657,7 +658,7 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
-        public Dictionary<string, string> SortedSetRangeByRankAndOverTime(int count = 1000)
+        public Dictionary<string, string> SortedSetRangeByRankAndOverTime(long count = 1000)
         {
             var keyList = CsRedisHelper
                 .ZRevRangeByScore(_overtimeCacheKey, TimeCommon.GetTimeSpan(DateTime.Now), 0, count, null)
@@ -683,7 +684,7 @@ namespace EInfrastructure.Core.Redis
         /// <param name="fromRank"></param>
         /// <param name="toRank"></param>
         /// <returns></returns>
-        public List<T> GetRangeFromSortedSetDesc<T>(string key, int fromRank, int toRank)
+        public List<T> GetRangeFromSortedSetDesc<T>(string key, long fromRank, long toRank)
         {
             return ConvertListObj<T>(Enumerable.ToList<string>(CsRedisHelper.ZRevRange(key, fromRank, toRank)));
         }
@@ -696,7 +697,7 @@ namespace EInfrastructure.Core.Redis
         /// <param name="fromRank"></param>
         /// <param name="toRank"></param>
         /// <returns></returns>
-        public List<T> GetRangeFromSortedSet<T>(string key, int fromRank, int toRank)
+        public List<T> GetRangeFromSortedSet<T>(string key, long fromRank, long toRank)
         {
             return ConvertListObj<T>(Enumerable.ToList<string>(CsRedisHelper.ZRange(key, fromRank, toRank)));
         }
@@ -756,7 +757,7 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public async Task<List<T>> SortedSetRangeByRankAsync<T>(string key, int count = 1000)
+        public async Task<List<T>> SortedSetRangeByRankAsync<T>(string key, long count = 1000)
         {
             return ConvertListObj<T>(Enumerable.ToList<string>((await CsRedisHelper.ZRangeAsync(key, 0, count))));
         }
@@ -935,7 +936,7 @@ namespace EInfrastructure.Core.Redis
         /// 获取过期时间
         /// </summary>
         /// <param name="second"></param>
-        private TimeSpan GetExpire(int second = -1)
+        private TimeSpan GetExpire(long second = -1)
         {
             TimeSpan timeSpan;
             if (second == 0)

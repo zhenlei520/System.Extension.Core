@@ -314,7 +314,7 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="t"></param>
         /// <param name="second"></param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, string dataKey, T t, int second = -1)
+        public bool HashSet<T>(string key, string dataKey, T t, long second = -1L)
         {
             return false;
         }
@@ -331,7 +331,7 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="kvalues"></param>
         /// <param name="second">秒</param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, int second = -1)
+        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L)
         {
             return false;
         }
@@ -604,7 +604,7 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public List<T> ListRange<T>(string key, int count = 1000)
+        public List<T> ListRange<T>(string key, long count = 1000L)
         {
             return default(List<T>);
         }
@@ -712,9 +712,9 @@ namespace EInfrastructure.Core.MemoryCache
         /// 获取指定key的List
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="count"></param> 
+        /// <param name="count"></param>
         /// <returns></returns>
-        public Task<List<T>> ListRangeAsync<T>(string key, int count = 1000)
+        public Task<List<T>> ListRangeAsync<T>(string key, long count = 1000L)
         {
             return new Task<List<T>>(() => ListRange<T>(key, count));
         }
@@ -844,7 +844,7 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public List<T> SortedSetRangeByRank<T>(string key, int count = 1000)
+        public List<T> SortedSetRangeByRank<T>(string key, long count = 1000L)
         {
             return default(List<T>);
         }
@@ -861,7 +861,7 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="fromRank"></param>
         /// <param name="toRank"></param>
         /// <returns></returns>
-        public List<T> GetRangeFromSortedSetDesc<T>(string key, int fromRank, int toRank)
+        public List<T> GetRangeFromSortedSetDesc<T>(string key, long fromRank, long toRank)
         {
             return default(List<T>);
         }
@@ -875,7 +875,7 @@ namespace EInfrastructure.Core.MemoryCache
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
-        public Dictionary<string, string> SortedSetRangeByRankAndOverTime(int count = 1000)
+        public Dictionary<string, string> SortedSetRangeByRankAndOverTime(long count = 1000L)
         {
             return default(Dictionary<string, string>);
         }
@@ -892,7 +892,7 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="fromRank"></param>
         /// <param name="toRank"></param>
         /// <returns></returns>
-        public List<T> GetRangeFromSortedSet<T>(string key, int fromRank, int toRank)
+        public List<T> GetRangeFromSortedSet<T>(string key, long fromRank, long toRank)
         {
             return default(List<T>);
         }
@@ -972,7 +972,7 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public Task<List<T>> SortedSetRangeByRankAsync<T>(string key, int count = 1000)
+        public Task<List<T>> SortedSetRangeByRankAsync<T>(string key, long count = 1000L)
         {
             return new Task<List<T>>(() => SortedSetRangeByRank<T>(key, count));
         }
