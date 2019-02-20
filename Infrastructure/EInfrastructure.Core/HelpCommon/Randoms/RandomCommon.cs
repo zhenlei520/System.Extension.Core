@@ -69,9 +69,12 @@ namespace EInfrastructure.Core.HelpCommon.Randoms
         /// <summary>
         /// 获取随机长度
         /// </summary>
-        private int GetRandomLength(int maxLength = int.MaxValue)
+        /// <param name="maxLength">最大值（默认为int.MaxValue）</param>
+        /// <param name="minLength">最小值（默认为0）</param>
+        /// <returns></returns>
+        private int GetRandomLength(int maxLength = int.MaxValue, int minLength = 1)
         {
-            return _random.Generate(1, maxLength);
+            return _random.Generate(minLength, maxLength);
         }
 
         #endregion
@@ -120,10 +123,10 @@ namespace EInfrastructure.Core.HelpCommon.Randoms
 
         #endregion
 
-        #region 生成随机数字
+        #region 生成随机数字(指定最大程度)
 
         /// <summary>
-        /// 生成随机数字
+        /// 生成随机数字(指定最大程度)
         /// </summary>
         /// <param name="maxLength">最大长度</param>
         public string GenerateNumbers(int maxLength)
