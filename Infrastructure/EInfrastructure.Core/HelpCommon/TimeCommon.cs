@@ -315,7 +315,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="timeKey">时间Key</param>
         /// <param name="dateTime">指定时间</param>
         /// <returns></returns>
-        public static DateTime ReturnDateTime(TimeType timeKey, DateTime? dateTime = null)
+        public static DateTime ReturnDateTime(this DateTime? dateTime, TimeType timeKey)
         {
             DateTime dateNow = dateTime ?? DateTime.Now.Date; //当前时间  
             switch (timeKey)
