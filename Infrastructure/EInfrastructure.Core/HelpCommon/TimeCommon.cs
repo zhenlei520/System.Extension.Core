@@ -313,10 +313,11 @@ namespace EInfrastructure.Core.HelpCommon
         /// 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
         /// </summary>
         /// <param name="timeKey">时间Key</param>
+        /// <param name="dateTime">指定时间</param>
         /// <returns></returns>
-        public static DateTime ReturnDateTime(TimeType timeKey)
+        public static DateTime ReturnDateTime(TimeType timeKey, DateTime? dateTime = null)
         {
-            DateTime dateNow = DateTime.Now.Date; //当前时间  
+            DateTime dateNow = dateTime ?? DateTime.Now.Date; //当前时间  
             switch (timeKey)
             {
                 case TimeType.StartYear:
@@ -324,7 +325,7 @@ namespace EInfrastructure.Core.HelpCommon
                 case TimeType.EndYear:
                     return new DateTime(dateNow.Year, 12, 31); //本年年末  
                 case TimeType.StartQuarter:
-                    return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day); //本季度初  ;
+                    return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day); //本季度初;
                 case TimeType.EndQuarter:
                     return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day).AddMonths(3)
                         .AddDays(-1); //本季度末  
