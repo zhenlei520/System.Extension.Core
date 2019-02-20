@@ -1,7 +1,8 @@
 using System;
 using Consul;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config;
-using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Extensions.Configs;
+using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
+using EInfrastructure.Core.Validation.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
@@ -43,6 +44,9 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// <returns></returns>
         public static IApplicationBuilder UseConsul(this IApplicationBuilder app, IApplicationLifetime lifetime)
         {
+            new ApiServiceConfigValidator().Validate(ConsulConfig.GetApiServiceConfig()).Check();
+            new ApiServiceHealthyConfigValidator().Validate(ConsulConfig.GetApiServiceHealthyConfig()).Check();
+
             var consulClient =
                 new ConsulClient(x =>
                     x.Address = new Uri(ConsulConfig.GetConsulClientAddress())); //请求注册的 Consul 地址

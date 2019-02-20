@@ -25,7 +25,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config
         /// <summary>
         /// 端口
         /// </summary>
-        public int Port { get; set; }
+        public int Port { get; set; } = 0;
 
         /// <summary>
         /// 标签信息（非必填）
