@@ -432,6 +432,30 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
+        #region 对可空类型进行判断转换
+
+        /// <summary>
+        /// 对可空类型进行判断转换
+        /// </summary>
+        /// <param name="value">DataReader字段的值</param>
+        /// <param name="conversionType">该字段的类型</param>
+        /// <returns></returns>
+        public static object ConvertToSpecifyType(this object value, Type conversionType)
+        {
+            if (conversionType.IsGenericType && conversionType.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                if (value == null)
+                    return null;
+                System.ComponentModel.NullableConverter nullableConverter =
+                    new System.ComponentModel.NullableConverter(conversionType);
+                conversionType = nullableConverter.UnderlyingType;
+            }
+
+            return Convert.ChangeType(value, conversionType);
+        }
+
+        #endregion
+
         #region Unicode编码
 
         /// <summary>
@@ -667,7 +691,6 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static string GetContentByEncryption(this string symbol, int number = 6)
         {
-            
             if (string.IsNullOrEmpty(symbol))
             {
                 symbol = "*";
