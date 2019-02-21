@@ -182,6 +182,15 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <summary>
         /// 从hash表获取数据
         /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="dataKey"></param>
+        /// <returns></returns>
+        string HashGet(string key, string dataKey);
+        
+        /// <summary>
+        /// 从hash表获取数据
+        /// </summary>
         /// <param name="key"></param>
         /// <param name="dataKeys"></param>
         /// <returns></returns>
@@ -259,6 +268,15 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <returns></returns>
         Task<T> HashGetAsync<T>(string key, string dataKey);
 
+        /// <summary>
+        /// 从hash表获取数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="dataKey"></param>
+        /// <returns></returns>
+        Task<string> HashGetAsync(string key, string dataKey);
+        
         /// <summary>
         /// 为数字增长val
         /// </summary>
@@ -535,6 +553,14 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <returns>返回删除的数量</returns>
         long Remove(List<string> keys);
 
+        /// <summary>
+        /// 删除指定Key的缓存
+        /// 用于在 key 存在时删除 key
+        /// </summary>
+        /// <param name="keys">待删除的Key集合，不含prefix前辍RedisHelper.Name</param>
+        /// <returns>返回删除的数量</returns>
+        long Remove(params string[] keys);        
+        
         /// <summary>
         /// 检查给定 key 是否存在
         /// </summary>

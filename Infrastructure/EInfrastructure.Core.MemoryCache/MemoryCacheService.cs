@@ -382,6 +382,19 @@ namespace EInfrastructure.Core.MemoryCache
             return default(T);
         }
 
+
+        /// <summary>
+        /// 从hash表获取数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="dataKey"></param>
+        /// <returns></returns>
+        public string HashGet(string key, string dataKey)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region 从hash表获取数据
@@ -525,6 +538,17 @@ namespace EInfrastructure.Core.MemoryCache
             return new Task<T>(() => HashGet<T>(key, dataKey));
         }
 
+        /// <summary>
+        /// 从hash表获取数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="dataKey"></param>
+        /// <returns></returns>
+        public Task<string> HashGetAsync(string key, string dataKey)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region 为数字增长val
@@ -1012,6 +1036,16 @@ namespace EInfrastructure.Core.MemoryCache
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 删除指定Key的缓存
+        /// 用于在 key 存在时删除 key
+        /// </summary>
+        /// <param name="keys">待删除的Key集合，不含prefix前辍RedisHelper.Name</param>
+        /// <returns>返回删除的数量</returns>
+        public long Remove(params string[] keys)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region 检查给定 key 是否存在

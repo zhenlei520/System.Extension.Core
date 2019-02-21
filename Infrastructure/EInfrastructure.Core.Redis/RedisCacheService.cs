@@ -7,6 +7,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.HelpCommon.Serialization;
+using EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter;
 using EInfrastructure.Core.Interface.Cache;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Redis.Common;
@@ -278,9 +280,21 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public T HashGet<T>(string key, string dataKey)
         {
-            return ConvertObj<T>(CsRedisHelper.HashGet(key, dataKey));
+            var str = HashGet(key, dataKey);
+            return ConvertObj<T>(str);
         }
 
+        /// <summary>
+        /// 从hash表获取数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="dataKey"></param>
+        /// <returns></returns>
+        public string HashGet(string key, string dataKey)
+        {
+            return CsRedisHelper.HashGet(key, dataKey);
+        }
 
         /// <summary>
         /// 从hash表获取数据
@@ -401,6 +415,18 @@ namespace EInfrastructure.Core.Redis
         public async Task<T> HashGetAsync<T>(string key, string dataKey)
         {
             return ConvertObj<T>(await CsRedisHelper.HashGetAsync(key, dataKey));
+        }
+
+        /// <summary>
+        /// 从hash表获取数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="dataKey"></param>
+        /// <returns></returns>
+        public Task<string> HashGetAsync(string key, string dataKey)
+        {
+            return CsRedisHelper.HashGetAsync(key, dataKey);
         }
 
         /// <summary>
@@ -793,6 +819,21 @@ namespace EInfrastructure.Core.Redis
 
         #endregion
 
+        #region  删除指定Key的缓存    
+
+        /// <summary>
+        /// 删除指定Key的缓存
+        /// 用于在 key 存在时删除 key
+        /// </summary>
+        /// <param name="keys">待删除的Key集合，不含prefix前辍RedisHelper.Name</param>
+        /// <returns>返回删除的数量</returns>
+        public long Remove(params string[] keys)
+        {
+            return CsRedisHelper.Remove(keys);
+        }
+
+        #endregion
+
         #region 检查给定 key 是否存在
 
         /// <summary>
@@ -854,7 +895,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         private string ConvertJson<T>(T value)
         {
-            string result = value is string ? value.ToString() : JsonConvert.SerializeObject(value);
+            string result = value is string ? value.ToString() : new JsonCommon().Serializer(value);
             return result;
         }
 
@@ -888,7 +929,7 @@ namespace EInfrastructure.Core.Redis
                 return default(T);
             }
 
-            return JsonConvert.DeserializeObject<T>(value);
+            return new JsonCommon().Deserialize<T>(value);
         }
 
         #endregion
@@ -949,7 +990,6 @@ namespace EInfrastructure.Core.Redis
             }
             else if (second == -1)
             {
-                
             }
             else
             {
