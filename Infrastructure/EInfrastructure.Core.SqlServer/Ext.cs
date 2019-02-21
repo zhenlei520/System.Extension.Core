@@ -34,7 +34,6 @@ namespace EInfrastructure.Core.SqlServer
             // Interface that all of our Entity maps implement
             var mappingInterface = typeof(IEntityMap<>);
 
-
             // Types that do entity mapping
             var mappingTypes = assType.GetTypeInfo().Assembly.GetTypes()
                 .Where(x => x.GetInterfaces().Any(y =>
