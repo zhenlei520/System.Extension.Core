@@ -102,7 +102,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public T StringGet<T>(string key)
         {
-            return ConvertObj<T>(key);
+            return ConvertObj<T>(StringGet(key));
         }
 
         /// <summary>
