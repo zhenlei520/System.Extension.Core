@@ -947,6 +947,10 @@ namespace EInfrastructure.Core.Redis
             {
                 timeSpan = DateTime.Now.AddSeconds(second) - DateTime.Now;
             }
+            else if (second != -1)
+            {
+                
+            }
             else
             {
                 throw new BusinessException("过期时间设置有误");
