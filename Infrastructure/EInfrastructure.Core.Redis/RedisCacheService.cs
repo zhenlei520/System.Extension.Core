@@ -947,7 +947,7 @@ namespace EInfrastructure.Core.Redis
             {
                 timeSpan = DateTime.Now.AddSeconds(second) - DateTime.Now;
             }
-            else if (second != -1)
+            else if (second == -1)
             {
                 
             }

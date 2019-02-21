@@ -18,17 +18,17 @@ namespace EInfrastructure.Core.AutoFac.MySql
         /// <param name="action"></param>
         /// <returns></returns>
         public override IServiceProvider Build(IServiceCollection services,
-           Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action)
         {
             return base.Build(services, (builder) =>
             {
                 builder.RegisterGeneric(typeof(QueryBase<,>)).As(typeof(IQuery<,>)).PropertiesAutowired()
-                .InstancePerLifetimeScope();
+                    .InstancePerLifetimeScope();
 
                 builder.RegisterGeneric(typeof(RepositoryBase<,>)).As(typeof(IRepository<,>)).PropertiesAutowired()
                     .InstancePerLifetimeScope();
-                
-                builder.RegisterGeneric(typeof(ExecuteBase)).As(typeof(IExecute)).PropertiesAutowired()
+
+                builder.RegisterType<ExecuteBase>().As<IExecute>().PropertiesAutowired()
                     .InstancePerLifetimeScope();
                 action(builder);
             });

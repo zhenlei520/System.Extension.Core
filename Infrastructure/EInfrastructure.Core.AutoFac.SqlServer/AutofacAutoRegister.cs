@@ -28,7 +28,7 @@ namespace EInfrastructure.Core.AutoFac.SqlServer
                 builder.RegisterGeneric(typeof(RepositoryBase<,>)).As(typeof(IRepository<,>)).PropertiesAutowired()
                     .InstancePerLifetimeScope();
                 
-                builder.RegisterGeneric(typeof(ExecuteBase)).As(typeof(IExecute)).PropertiesAutowired()
+                builder.RegisterType<ExecuteBase>().As<IExecute>().PropertiesAutowired()
                     .InstancePerLifetimeScope();
                 action(builder);
             });
