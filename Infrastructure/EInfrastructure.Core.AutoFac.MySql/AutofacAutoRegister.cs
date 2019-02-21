@@ -27,6 +27,9 @@ namespace EInfrastructure.Core.AutoFac.MySql
 
                 builder.RegisterGeneric(typeof(RepositoryBase<,>)).As(typeof(IRepository<,>)).PropertiesAutowired()
                     .InstancePerLifetimeScope();
+                
+                builder.RegisterGeneric(typeof(ExecuteBase)).As(typeof(IExecute)).PropertiesAutowired()
+                    .InstancePerLifetimeScope();
                 action(builder);
             });
         }
