@@ -99,6 +99,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         public string CallbackUrl { get; set; }
 
         /// <summary>
+        /// 回调七牛Host（可为空,非真正回调地址）
+        /// </summary>
+        public string CallbackHost { get; set; } = null;
+
+        /// <summary>
         /// 回调内容
         /// </summary>
         public string CallbackBody { get; set; } =
@@ -147,9 +152,9 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// 设置七牛存储配置
         /// </summary>
         /// <param name="qiNiuConfig"></param>
-        internal static void Set(QiNiuConfig qiNiuConfig)
+        internal void Set()
         {
-            Config = qiNiuConfig;
+            Config = this;
         }
 
         /// <summary>

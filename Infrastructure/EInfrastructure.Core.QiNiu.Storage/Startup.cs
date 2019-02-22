@@ -13,11 +13,13 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// 加载此服务
         /// </summary>
         /// <param name="serviceCollection"></param>
-        /// <param name="action"></param>
+        /// <param name="action">委托</param>
         public static IServiceCollection AddQiNiuStorage(this IServiceCollection serviceCollection,
             Action<QiNiuConfig> action )
         {
-            action.Invoke(QiNiuConfig.Get());
+            var qiNiuConfig = QiNiuConfig.Get();
+            action.Invoke(qiNiuConfig);
+            qiNiuConfig.Set();//不执行也可
             return serviceCollection;
         }
     }

@@ -17,7 +17,9 @@ namespace EInfrastructure.Core.Redis
         public static IServiceCollection AddRedis(this IServiceCollection serviceCollection,
             Action<RedisConfig> action)
         {
-            action.Invoke(RedisConfig.Get());
+            var redisConfig = RedisConfig.Get();
+            action.Invoke(redisConfig);
+            redisConfig.Set();//不执行也可
             return serviceCollection;
         }
     }

@@ -54,10 +54,9 @@ namespace EInfrastructure.Core.UCloud.Storage.Config
         /// <summary>
         /// 设置uCloud存储配置
         /// </summary>
-        /// <param name="uCloudConfig"></param>
-        internal static void Set(UCloudConfig uCloudConfig)
+        internal void Set()
         {
-            Config = uCloudConfig;
+            Config = this;
         }
 
         /// <summary>

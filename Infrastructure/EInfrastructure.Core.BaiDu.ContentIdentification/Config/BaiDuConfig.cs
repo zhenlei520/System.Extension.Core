@@ -15,10 +15,9 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification.Config
         /// <summary>
         /// 设置百度鉴定信息
         /// </summary>
-        /// <param name="config"></param>
-        internal static void Set(BaiDuConfig config)
+        internal void Set()
         {
-            Config = config;
+            Config = this;
         }
 
         /// <summary>

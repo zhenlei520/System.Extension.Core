@@ -35,7 +35,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 PutPolicy.CallbackBody = QiNiuConfig.CallbackBody;
                 PutPolicy.CallbackBodyType = QiNiuConfig.CallbackBodyType.GetDescription();
                 PutPolicy.CallbackUrl = QiNiuConfig.CallbackUrl;
-                PutPolicy.CallbackHost = new Uri(QiNiuConfig.CallbackUrl).Host;
+                if (!string.IsNullOrEmpty(QiNiuConfig.CallbackHost))
+                {
+                    PutPolicy.CallbackHost = QiNiuConfig.CallbackHost;
+                }
             }
 
             if (!string.IsNullOrEmpty(QiNiuConfig.PersistentPipeline))

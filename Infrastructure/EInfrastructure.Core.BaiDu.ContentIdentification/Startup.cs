@@ -17,7 +17,9 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         public static IServiceCollection AddBaiduContentIdentification(this IServiceCollection serviceCollection,
             Action<BaiDuConfig> action = null)
         {
-            action?.Invoke(BaiDuConfig.Get());
+            var baiDuConfig = BaiDuConfig.Get();
+            action?.Invoke(baiDuConfig);
+            baiDuConfig.Set();
             return serviceCollection;
         }
     }

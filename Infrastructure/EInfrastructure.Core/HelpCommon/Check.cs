@@ -35,8 +35,26 @@ namespace EInfrastructure.Core.HelpCommon
         /// 检查是否空或者null
         /// </summary>
         /// <param name="array"></param>
-        /// <param name="message"></param>
-        /// <param name="action"></param>
+        /// <param name="message">异常信息</param>
+        /// <param name="action">委托，是否执行系统预设的异常</param>
+        /// <exception cref="Exception"></exception>
+        public static void IsNullOrEmptyTip(this object array, string message, Func<bool> action = null)
+        {
+            if (array == null)
+            {
+                if (action == null || action.Invoke())
+                {
+                    throw new System.Exception(message);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 检查是否空或者null
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="message">异常信息</param>
+        /// <param name="action">委托，是否执行系统预设的异常</param>
         /// <exception cref="Exception"></exception>
         public static void IsNullOrEmptyTip(this object[] array, string message, Func<bool> action = null)
         {

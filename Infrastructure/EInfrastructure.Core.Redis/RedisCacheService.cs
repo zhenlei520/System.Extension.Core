@@ -8,12 +8,10 @@ using System.Threading.Tasks;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Serialization;
-using EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter;
 using EInfrastructure.Core.Interface.Cache;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Redis.Common;
 using EInfrastructure.Core.Redis.Config;
-using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.Redis
 {

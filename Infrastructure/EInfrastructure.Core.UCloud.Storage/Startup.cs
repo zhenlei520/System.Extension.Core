@@ -17,7 +17,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         public static IServiceCollection AddUCloudStorage(this IServiceCollection serviceCollection,
             Action<UCloudConfig> action)
         {
-            action.Invoke(UCloudConfig.Get());
+            var uCloudConfig = UCloudConfig.Get();
+            action.Invoke(uCloudConfig);
+            uCloudConfig.Set();//不执行也可
             return serviceCollection;
         }
     }

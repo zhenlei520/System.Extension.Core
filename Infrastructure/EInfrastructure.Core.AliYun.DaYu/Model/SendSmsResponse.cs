@@ -6,7 +6,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Model
     /// 发送短信响应信息
     /// </summary>
     [XmlRoot]
-    internal class SendSmsResponse
+    public class SendSmsResponse
     {
         /// <summary>
         /// 错误信息

@@ -19,7 +19,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         {
             var smsConfig = new SmsConfig();
             action.Invoke(smsConfig);
-            SmsConfig.Set(smsConfig);
+            smsConfig.Set();//不执行也可
             return serviceCollection;
         }
     }

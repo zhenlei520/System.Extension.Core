@@ -50,10 +50,9 @@ namespace EInfrastructure.Core.Redis.Config
         /// <summary>
         /// 设置Redis链接信息
         /// </summary>
-        /// <param name="config"></param>
-        internal static void Set(RedisConfig config)
+        internal void Set()
         {
-            Config = config;
+            Config = this;
         }
 
         /// <summary>

@@ -37,10 +37,9 @@ namespace EInfrastructure.Core.AliYun.DaYu.Config
         /// <summary>
         /// 设置短信配置
         /// </summary>
-        /// <param name="smsConfig"></param>
-        public static void Set(SmsConfig smsConfig)
+        public void Set()
         {
-            Config = smsConfig;
+            Config = this;
         }
 
         /// <summary>

@@ -1,5 +1,3 @@
-using EInfrastructure.Core.Exception;
-
 namespace EInfrastructure.Core.Words.Config.Text
 {
     /// <summary>
@@ -10,27 +8,27 @@ namespace EInfrastructure.Core.Words.Config.Text
         /// <summary>
         /// 中文简体
         /// </summary>
-        public string SimplifiedPath { get; set; } = "Dict/Text/simplified.txt";
+        public string SimplifiedPath { get;private set; } = "Dict/Text/simplified.txt";
 
         /// <summary>
         /// 中文繁体
         /// </summary>
-        public string TraditionalPath { get; set; } = "Dict/Text/traditional.txt";
+        public string TraditionalPath { get;private set; } = "Dict/Text/traditional.txt";
 
         /// <summary>
         /// 简拼
         /// </summary>
-        public string InitialPath { get; set; } = "Dict/Text/initial.txt";
+        public string InitialPath { get;private set; } = "Dict/Text/initial.txt";
 
         /// <summary>
         /// 特殊数字符号
         /// </summary>
-        public string SpecialNumberPath { get; set; } = "Dict/Text/specialNumber.txt";
+        public string SpecialNumberPath { get;private set; } = "Dict/Text/specialNumber.txt";
 
         /// <summary>
         /// 转义后的数字
         /// </summary>
-        public string TranscodingNumberPath { get; set; } = "Dict/Text/transcodingNumber.txt";
+        public string TranscodingNumberPath { get;private set; } = "Dict/Text/transcodingNumber.txt";
 
         /// <summary>
         /// 字典词库配置
