@@ -305,19 +305,25 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public Dictionary<string, string> HashGet(string key, List<string> dataKeys)
         {
-            dataKeys = dataKeys.Distinct().ToList();
-            List<string> values = Enumerable.ToList<string>(CsRedisHelper.HashGet(key, dataKeys.ToArray()));
-
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-            for (int i = 0; i < dataKeys.Count; i++)
+            if (dataKeys != null && dataKeys.Count > 0)
             {
-                if (!dic.ContainsKey(dataKeys[i]) && values[i] != null)
-                {
-                    dic.Add(dataKeys[i], values[i]);
-                }
-            }
+                dataKeys = dataKeys.Distinct().ToList();
+                var values = CsRedisHelper.HashGet(key, dataKeys.ToArray()).ToList();
 
-            return dic;
+                Dictionary<string, string> dic = new Dictionary<string, string>();
+                for (int i = 0; i < dataKeys.Count; i++)
+                {
+                    if (!dic.ContainsKey(dataKeys[i]) && values[i] != null)
+                    {
+                        dic.Add(dataKeys[i], values[i]);
+                    }
+                }
+                return dic;
+            }
+            else
+            {
+                return CsRedisHelper.HashGetAll(key);
+            }
         }
 
         /// <summary>
