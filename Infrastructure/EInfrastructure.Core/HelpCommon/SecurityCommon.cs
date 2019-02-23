@@ -2,6 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
 {
@@ -22,6 +23,11 @@ namespace EInfrastructure.Core.HelpCommon
         {
             if (string.IsNullOrWhiteSpace(toEncrypt))
                 return string.Empty;
+            if (key.Length != 32)
+            {
+                throw new BusinessException("Aes秘钥异常");
+            }
+
             // 256-AES key    
             byte[] keyArray = Encoding.UTF8.GetBytes(key);
             byte[] toEncryptArray = Encoding.UTF8.GetBytes(toEncrypt);
@@ -54,6 +60,10 @@ namespace EInfrastructure.Core.HelpCommon
         {
             if (string.IsNullOrWhiteSpace(toDecrypt))
                 return string.Empty;
+            if (key.Length != 32)
+            {
+                throw new BusinessException("Aes秘钥异常");
+            }
             try
             {
                 // 256-AES key    
