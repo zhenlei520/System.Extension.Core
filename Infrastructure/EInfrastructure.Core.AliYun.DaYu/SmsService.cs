@@ -90,7 +90,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public bool Send(string phoneNumber, string templateCode, object content,
             Action<SendSmsLoseDto> loseAction = null, string smsConfigJson = "")
         {
-            return Send(new List<string>() {phoneNumber}, templateCode, content, loseAction);
+            return Send(new List<string>() {phoneNumber}, templateCode, content, loseAction, smsConfigJson);
         }
 
         #endregion
