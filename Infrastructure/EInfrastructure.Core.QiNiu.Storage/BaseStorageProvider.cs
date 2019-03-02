@@ -1,5 +1,4 @@
-﻿using System;
-using EInfrastructure.Core.HelpCommon;
+﻿using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Interface.Storage.Config;
 using EInfrastructure.Core.Interface.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Config;

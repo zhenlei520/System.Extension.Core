@@ -72,8 +72,9 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
                 Name = apiServiceConfig.Name,
                 Address = apiServiceConfig.Ip,
                 Port = apiServiceConfig.Port,
-                Tags = apiServiceConfig.Tags ??
-                       new[] {$"urlprefix-/{apiServiceConfig.Name}"} //添加 urlprefix-/servicename 格式的 tag 标签，以便 Fabio 识别
+                Tags = apiServiceConfig.Tags == null || apiServiceConfig.Tags.Length == 0
+                    ? new[] {$"urlprefix-/{apiServiceConfig.Name}"}
+                    : apiServiceConfig.Tags //添加 urlprefix-/servicename 格式的 tag 标签，以便 Fabio 识别
             };
 
             consulClient.Agent.ServiceRegister(registration).Wait(); //服务启动时注册，内部实现其实就是使用 Consul API 进行注册（HttpClient发起）
