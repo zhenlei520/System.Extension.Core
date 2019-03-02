@@ -13,6 +13,12 @@
         <Title>Consul服务自动注册</Title>
         <PackageTags>EInfrastructure.Core Consul</PackageTags>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.xml</DocumentationFile>
+    </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Consul">
             <Version>0.7.2.6</Version>

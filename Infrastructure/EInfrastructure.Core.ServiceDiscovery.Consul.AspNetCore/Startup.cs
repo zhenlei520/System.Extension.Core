@@ -5,6 +5,7 @@ using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
 using EInfrastructure.Core.Validation.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
 {
@@ -18,18 +19,20 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// <summary>
         /// 添加Consul配置文件
         /// </summary>
-        /// <param name="app"></param>
-        /// <param name="consulClientAddress"></param>
-        /// <param name="apiServiceConfig"></param>
-        /// <param name="apiServiceHealthyConfig"></param>
+        /// <param name="serviceCollection"></param>
+        /// <param name="consulClientAddress">Consul 服务器地址</param>
+        /// <param name="apiServiceConfig">api服务配置</param>
+        /// <param name="apiServiceHealthyConfig">api服务健康配置</param>
         /// <returns></returns>
-        public static IApplicationBuilder AddConsulConfig(this IApplicationBuilder app, string consulClientAddress,
+        public static IServiceCollection AddConsulConfig(this IServiceCollection serviceCollection,
+            string consulClientAddress,
             ApiServiceConfig apiServiceConfig, ApiServiceHealthyConfig apiServiceHealthyConfig)
         {
             ConsulConfig.SetConsulClientAddress(consulClientAddress);
             ConsulConfig.SetApiServiceConfig(apiServiceConfig);
             ConsulConfig.SetApiServiceHealthyConfig(apiServiceHealthyConfig);
-            return app;
+            Validation.Startup.AddModelValidation(serviceCollection); //默认开启级联验证
+            return serviceCollection;
         }
 
         #endregion
