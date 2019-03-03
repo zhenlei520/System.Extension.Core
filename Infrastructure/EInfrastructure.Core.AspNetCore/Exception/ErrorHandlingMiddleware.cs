@@ -102,7 +102,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
 
         private static Task HandleExceptionAsync(HttpContext context, int statusCode, string msg)
         {
-            var data = new ApiErrResult() {Code = statusCode, Msg = msg};
+            var data = new ApiErrResult(statusCode, msg);
 
             var result = new JsonCommon().Serializer(data);
 

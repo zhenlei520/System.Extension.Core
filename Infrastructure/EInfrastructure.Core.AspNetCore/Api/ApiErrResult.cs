@@ -19,10 +19,11 @@ namespace EInfrastructure.Core.AspNetCore.Api
         /// </summary>
         /// <param name="code">错误码</param>
         /// <param name="msg">错误信息</param>
-        public ApiErrResult(int code, string msg)
+        public ApiErrResult(int code, string msg, object extend = null)
         {
             this.Msg = msg;
             this.Code = code;
+            this.Extend = extend;
         }
 
         /// <summary>
@@ -36,11 +37,11 @@ namespace EInfrastructure.Core.AspNetCore.Api
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public int Code { get; set; }
-        
+
         /// <summary>
         /// 扩展信息
         /// </summary>
-        [JsonProperty(PropertyName = "extend")]
+        [JsonProperty(PropertyName = "extend",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public object Extend { get; set; }
     }
 }

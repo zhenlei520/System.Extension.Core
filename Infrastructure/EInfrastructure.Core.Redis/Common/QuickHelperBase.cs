@@ -258,7 +258,7 @@ namespace EInfrastructure.Core.Redis.Common
         /// <returns></returns>
         public static string HashSet(string key, TimeSpan expire, params object[] keyValues)
         {
-            return HashSetExpire(key, TimeSpan.Zero, keyValues);
+            return HashSetExpire(key, expire, keyValues);
         }
 
         /// <summary>
