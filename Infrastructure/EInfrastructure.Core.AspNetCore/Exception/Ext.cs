@@ -48,8 +48,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
             List<string> configPathList = null, bool isOptional = true, bool reloadOnChange = true)
         {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                .SetBasePath(env.ContentRootPath);
             if (useEnvironment)
             {
                 builder.AddJsonFile($"appsettings.{env.EnvironmentName}.json", isOptional, reloadOnChange)
