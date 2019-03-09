@@ -45,14 +45,14 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// <param name="configPathList">自定义配置列表</param>
         /// <returns></returns>
         public static IConfigurationRoot UseAppsettings(this IHostingEnvironment env, bool useEnvironment = true,
-            List<string> configPathList = null)
+            List<string> configPathList = null, bool isOptional = true, bool reloadOnChange = true)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             if (useEnvironment)
             {
-                builder.AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true)
+                builder.AddJsonFile($"appsettings.{env.EnvironmentName}.json", isOptional, reloadOnChange)
                     .AddEnvironmentVariables();
             }
 
@@ -61,7 +61,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
                 configPathList = new List<string>();
             }
 
-            configPathList.ForEach(configPath => { builder.AddJsonFile(configPath, true, true); });
+            configPathList.ForEach(configPath => { builder.AddJsonFile(configPath, isOptional, reloadOnChange); });
 
             var config = builder.Build();
 
