@@ -6,7 +6,9 @@ namespace EInfrastructure.Core.HelpCommon
 {
     /// <summary>
     /// 自定义属性
+    /// CustomAttributeCommon<ENameAttribute, string>.GetCustomAttributeValue(typeof(Test), x => x.Name)
     /// </summary>
+    /// 其中Test为用户自定义类
     public static class CustomAttributeCommon<T, TSource>
         where T : Attribute
         where TSource : IComparable
