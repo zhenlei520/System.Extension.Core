@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using EInfrastructure.Core.AutoConfig.Extension;
+using EInfrastructure.Core.AutoConfig.Interface;
 using EInfrastructure.Core.HelpCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -63,7 +64,7 @@ namespace EInfrastructure.Core.AutoConfig
             ConfigAutoRegister configAutoRegisterExt = new ConfigAutoRegister();
             if (action == null)
             {
-                configAutoRegisterExt.AddSingletonConfig(services, isCompleteName, errConfigAction);
+                configAutoRegisterExt.AddSingletonConfig(services, configuration, isCompleteName, errConfigAction);
                 configAutoRegisterExt.AddScopedConfig(services, isCompleteName, errConfigAction);
                 configAutoRegisterExt.AddTransientConfig(services, isCompleteName, errConfigAction);
             }

@@ -18,17 +18,21 @@ namespace EInfrastructure.Core.AutoConfig
         /// 自动注入配置文件（项目启动-项目关闭）
         /// </summary>
         /// <param name="services"></param>
+        /// <param name="configuration"></param>
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
         /// <param name="errConfigAction">配置信息错误回调</param>
         /// <returns></returns>
         internal IServiceCollection AddSingletonConfig(IServiceCollection services,
+            IConfiguration configuration,
             bool isCompleteName = false,
             Action<string> errConfigAction = null)
         {
             AddConfig<ISingletonConfigModel>(services,
                 type =>
                 {
-                    services.AddSingleton(type, provider => Get(provider, type, isCompleteName, errConfigAction));
+                    var config = Get(sectionName =>
+                        configuration.GetSection(sectionName).Get(type), type, isCompleteName, errConfigAction);
+                    services.AddSingleton(type, config);
                 });
             return services;
         }
@@ -48,10 +52,13 @@ namespace EInfrastructure.Core.AutoConfig
             bool isCompleteName = false,
             Action<string> errConfigAction = null)
         {
+            IConfiguration configuration = null;
             AddConfig<IScopedConfigModel>(services,
-                (type) =>
+                type =>
                 {
-                    services.AddScoped(type, provider => Get(provider, type, isCompleteName, errConfigAction));
+                    services.AddScoped(type, provider => Get(sectionName =>
+                            provider.GetService<IConfiguration>().GetSection(sectionName).Get(type)
+                        , type, isCompleteName, errConfigAction));
                 });
             return services;
         }
@@ -72,9 +79,11 @@ namespace EInfrastructure.Core.AutoConfig
             Action<string> errConfigAction = null)
         {
             AddConfig<ITransientConfigModel>(services,
-                (type) =>
+                type =>
                 {
-                    services.AddTransient(type, provider => Get(provider, type, isCompleteName, errConfigAction));
+                    services.AddTransient(type, provider => Get(sectionName =>
+                            provider.GetService<IConfiguration>().GetSection(sectionName).Get(type)
+                        , type, isCompleteName, errConfigAction));
                 });
             return services;
         }
@@ -116,16 +125,16 @@ namespace EInfrastructure.Core.AutoConfig
         /// <summary>
         /// 得到配置文件信息
         /// </summary>
-        /// <param name="provider"></param>
+        /// <param name="func"></param>
         /// <param name="type"></param>
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
         /// <param name="errConfigAction">配置信息错误回调</param>
         /// <returns></returns>
-        private object Get(IServiceProvider provider, Type type, bool isCompleteName = false,
+        private object Get(Func<string, object> func, Type type, bool isCompleteName = false,
             Action<string> errConfigAction = null)
         {
             object result;
-            string sectionName = "";
+            string sectionName;
             if (!isCompleteName)
             {
                 sectionName = type.Name;
@@ -135,7 +144,7 @@ namespace EInfrastructure.Core.AutoConfig
                 sectionName = type.FullName;
             }
 
-            result = provider.GetService<IConfiguration>().GetSection(sectionName).Get(type);
+            result = func.Invoke(sectionName);
             LogCommon.Debug("自动注入获取配置成功");
             if (result == null && errConfigAction != null)
             {
