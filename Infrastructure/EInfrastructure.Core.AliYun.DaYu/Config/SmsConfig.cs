@@ -7,7 +7,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Config
     /// <summary>
     /// 短信配置
     /// </summary>
-    public class SmsConfig : IScopedConfigModel
+    public class SmsConfig
     {
         /// <summary>
         /// 签名名称
