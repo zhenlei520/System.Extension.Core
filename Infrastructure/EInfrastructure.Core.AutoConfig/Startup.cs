@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using EInfrastructure.Core.AutoConfig.Extension;
+using EInfrastructure.Core.HelpCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -57,7 +58,7 @@ namespace EInfrastructure.Core.AutoConfig
             IConfiguration configuration,
             string file = "appsettings.json",
             bool isCompleteName = false, Action<ConfigAutoRegister> action = null,
-            Action<string> errConfigAction = null)
+            Action<string> errConfigAction = null, bool isUpdate = false)
         {
             ConfigAutoRegister configAutoRegisterExt = new ConfigAutoRegister();
             if (action == null)
@@ -71,7 +72,11 @@ namespace EInfrastructure.Core.AutoConfig
                 action.Invoke(configAutoRegisterExt);
             }
 
-            services.AddAutoUpdateConfig(configuration, file, isCompleteName);
+            if (isUpdate)
+            {
+                services.AddAutoUpdateConfig(configuration, file, isCompleteName);
+            }
+
             return services;
         }
 
@@ -150,6 +155,7 @@ namespace EInfrastructure.Core.AutoConfig
             section = configuration
                 .GetSection(!isCompleteName ? type.Name : type.FullName);
             services.Configure<object>(section);
+            LogCommon.Debug("执行自动写入的配置");
             services.AddTransient<IWritableOptions<object>>(provider =>
             {
                 var options = provider.GetService<IOptionsMonitor<object>>();

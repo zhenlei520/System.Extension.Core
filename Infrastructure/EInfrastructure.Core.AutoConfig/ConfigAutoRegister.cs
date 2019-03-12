@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using EInfrastructure.Core.AutoConfig.Interface;
+using EInfrastructure.Core.HelpCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,7 +26,7 @@ namespace EInfrastructure.Core.AutoConfig
             Action<string> errConfigAction = null)
         {
             AddConfig<ISingletonConfigModel>(services,
-                (type) =>
+                type =>
                 {
                     services.AddSingleton(type, provider => Get(provider, type, isCompleteName, errConfigAction));
                 });
@@ -135,7 +136,7 @@ namespace EInfrastructure.Core.AutoConfig
             }
 
             result = provider.GetService<IConfiguration>().GetSection(sectionName).Get(type);
-
+            LogCommon.Debug("自动注入获取配置成功");
             if (result == null && errConfigAction != null)
             {
                 errConfigAction.Invoke($"获取{sectionName}节点的信息失败");
