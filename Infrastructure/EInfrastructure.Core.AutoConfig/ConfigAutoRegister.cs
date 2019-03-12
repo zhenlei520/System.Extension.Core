@@ -32,6 +32,11 @@ namespace EInfrastructure.Core.AutoConfig
                 {
                     var config = Get(sectionName =>
                         configuration.GetSection(sectionName).Get(type), type, isCompleteName, errConfigAction);
+                    if (config == null)
+                    {
+                        LogCommon.Error("自动注入，获取配置文件失败");
+                    }
+
                     services.AddSingleton(type, config);
                 });
             return services;
@@ -150,6 +155,11 @@ namespace EInfrastructure.Core.AutoConfig
             {
                 errConfigAction.Invoke($"获取{sectionName}节点的信息失败");
                 return System.Reflection.Assembly.GetAssembly(type).CreateInstance(type.ToString());
+            }
+
+            if (result == null)
+            {
+                LogCommon.Error("自动注入：获取配置文件失败了");
             }
 
             return result;
