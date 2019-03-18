@@ -34,10 +34,21 @@ namespace EInfrastructure.Core.AutoConfig
                         configuration.GetSection(sectionName).Get(type), type, isCompleteName, errConfigAction);
                     if (config == null)
                     {
-                        LogCommon.Error("自动注入，获取配置文件失败");
+                        LogCommon.Trace($"自动注入，获取配置文件失败，配置为：{type.FullName}");
+                        services.AddSingleton(type, provider => Get(sectionName =>
+                        {
+                            var configObj = provider.GetService<IConfiguration>().GetSection(sectionName).Get(type);
+                            if (configObj == null)
+                            {
+                                LogCommon.Trace($"自动注入，第二次获取配置文件失败，配置为：{type.FullName}");
+                            }
+                            return configObj;
+                        }, type, isCompleteName, errConfigAction));
                     }
-
-                    services.AddSingleton(type, config);
+                    else
+                    {
+                        services.AddSingleton(type, config);
+                    }
                 });
             return services;
         }
@@ -109,14 +120,14 @@ namespace EInfrastructure.Core.AutoConfig
         private static IServiceCollection AddConfig<T>(IServiceCollection services,
             Action<Type> action)
             where T : IConfigModel
-
         {
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes().Where(t => t.GetInterfaces().Contains(typeof(T))))
                 .ToArray();
-
+            LogCommon.Trace($"自动注入数量：{types.Length}");
             foreach (var type in types)
             {
+                LogCommon.Trace($"自动注入类型：{type.FullName}");
                 action.Invoke(type);
             }
 
@@ -150,7 +161,6 @@ namespace EInfrastructure.Core.AutoConfig
             }
 
             result = func.Invoke(sectionName);
-            LogCommon.Debug("自动注入获取配置成功");
             if (result == null && errConfigAction != null)
             {
                 errConfigAction.Invoke($"获取{sectionName}节点的信息失败");
@@ -159,7 +169,7 @@ namespace EInfrastructure.Core.AutoConfig
 
             if (result == null)
             {
-                LogCommon.Error("自动注入：获取配置文件失败了");
+                LogCommon.Trace("自动注入：获取配置文件失败了");
             }
 
             return result;
