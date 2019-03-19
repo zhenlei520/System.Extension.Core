@@ -316,6 +316,7 @@ namespace EInfrastructure.Core.Redis
                         dic.Add(dataKeys[i], values[i]);
                     }
                 }
+
                 return dic;
             }
             else
@@ -931,6 +932,12 @@ namespace EInfrastructure.Core.Redis
             if (string.IsNullOrWhiteSpace(value))
             {
                 return default(T);
+            }
+            
+            Type t = typeof(T);
+            if (string.Equals(t.Name, "string", StringComparison.OrdinalIgnoreCase))
+            {
+                return (T)Convert.ChangeType(value, typeof(T));
             }
 
             return new JsonCommon().Deserialize<T>(value);
