@@ -68,11 +68,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         public string PrefetchHost { get; set; }
 
         /// <summary>
-        /// Api域
-        /// </summary>
-        public string ApiHost { get; set; }
-
-        /// <summary>
         /// 对外访问的主机名
         /// </summary>
         public string Host { get; set; }
