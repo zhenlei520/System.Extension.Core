@@ -1,5 +1,6 @@
 using System.Linq;
 using EInfrastructure.Core.Configuration.Key;
+using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -24,11 +25,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
     /// <summary>
     /// 
     /// </summary>
-    internal class ClaimQiNiuRequirementFilter : IAuthorizationFilter
+    public class ClaimQiNiuRequirementFilter : IAuthorizationFilter
     {
         private readonly QiNiuConfig _qiNiuConfig;
 
-        internal ClaimQiNiuRequirementFilter()
+        public ClaimQiNiuRequirementFilter()
         {
             this._qiNiuConfig = QiNiuConfig.Get();
         }
