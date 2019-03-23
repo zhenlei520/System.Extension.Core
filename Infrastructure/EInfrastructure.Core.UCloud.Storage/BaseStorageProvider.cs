@@ -3,8 +3,10 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
 using EInfrastructure.Core.UCloud.Storage.Common;
 using EInfrastructure.Core.UCloud.Storage.Config;
+using EInfrastructure.Core.Validation.Common;
 
 namespace EInfrastructure.Core.UCloud.Storage
 {
@@ -16,14 +18,15 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// UCloud配置
         /// </summary>
-        protected readonly UCloudConfig _uCloudConfig;
+        protected readonly UCloudStorageConfig _uCloudConfig;
 
         /// <summary>
         /// 基类UCloud实现
         /// </summary>
-        public BaseStorageProvider()
+        public BaseStorageProvider(UCloudStorageConfig uCloudConfig)
         {
-            _uCloudConfig = UCloudConfig.Get();
+            _uCloudConfig = uCloudConfig;
+            new UCloudConfigValidator().Validate(_uCloudConfig).Check();
         }
 
         #region 上传文件

@@ -3,6 +3,7 @@ using System.IO;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Storage;
 using EInfrastructure.Core.Interface.Storage.Param;
+using EInfrastructure.Core.UCloud.Storage.Config;
 
 namespace EInfrastructure.Core.UCloud.Storage
 {
@@ -14,7 +15,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// UCloud存储实现类
         /// </summary>
-        public StorageProvider()
+        public StorageProvider(UCloudStorageConfig uCloudStorageConfig):base(uCloudStorageConfig)
         {
         }
 

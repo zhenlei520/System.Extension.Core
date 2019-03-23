@@ -1,11 +1,9 @@
-using EInfrastructure.Core.Exception;
-
 namespace EInfrastructure.Core.UCloud.Storage.Config
 {
     /// <summary>
     /// UCloud配置
     /// </summary>
-    public class UCloudConfig
+    public class UCloudStorageConfig
     {
         /// <summary>
         /// 版本号
@@ -39,39 +37,6 @@ namespace EInfrastructure.Core.UCloud.Storage.Config
         public string GetUserAgent()
         {
             return @"UCloudCSharp/" + Version;
-        }
-
-        /// <summary>
-        /// 是否第一次获取
-        /// </summary>
-        private static bool IsFirst = true;
-
-        /// <summary>
-        /// 存储配置
-        /// </summary>
-        private static UCloudConfig Config=new UCloudConfig();
-
-        /// <summary>
-        /// 设置uCloud存储配置
-        /// </summary>
-        internal void Set()
-        {
-            Config = this;
-        }
-
-        /// <summary>
-        /// 读取uCloud存储配置
-        /// </summary>
-        /// <returns></returns>
-        internal static UCloudConfig Get()
-        {
-            if (Config.Equals(new UCloudConfig()) && !IsFirst)
-            {
-                throw new BusinessException("未配置uCloud");
-            }
-
-            IsFirst = false;
-            return Config;
         }
     }
 }

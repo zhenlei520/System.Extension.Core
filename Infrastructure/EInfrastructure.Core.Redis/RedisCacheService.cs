@@ -12,6 +12,8 @@ using EInfrastructure.Core.Interface.Cache;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Redis.Common;
 using EInfrastructure.Core.Redis.Config;
+using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
+using EInfrastructure.Core.Validation.Common;
 
 namespace EInfrastructure.Core.Redis
 {
@@ -33,9 +35,9 @@ namespace EInfrastructure.Core.Redis
         /// <summary>
         /// 
         /// </summary>
-        public RedisCacheService()
+        public RedisCacheService(RedisConfig redisConfig)
         {
-            var redisConfig = RedisConfig.Get();
+            new RedisConfigValidator().Validate(redisConfig).Check();
             _prefix = redisConfig.Name;
             CsRedisHelper.InitializeConfiguration(redisConfig);
         }
@@ -933,11 +935,11 @@ namespace EInfrastructure.Core.Redis
             {
                 return default(T);
             }
-            
+
             Type t = typeof(T);
             if (string.Equals(t.Name, "string", StringComparison.OrdinalIgnoreCase))
             {
-                return (T)Convert.ChangeType(value, typeof(T));
+                return (T) Convert.ChangeType(value, typeof(T));
             }
 
             return new JsonCommon().Deserialize<T>(value);

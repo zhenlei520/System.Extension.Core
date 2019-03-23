@@ -16,6 +16,10 @@ namespace EInfrastructure.Core.Words
     /// </summary>
     public class WordService : BaseWordService, IWordService
     {
+        public WordService(EWordConfig wordConfig) : base(wordConfig)
+        {
+        }
+
         #region 得到文字首字母
 
         /// <summary>

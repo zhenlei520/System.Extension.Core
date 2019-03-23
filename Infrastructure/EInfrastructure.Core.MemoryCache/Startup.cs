@@ -10,10 +10,10 @@ namespace EInfrastructure.Core.MemoryCache
         /// <summary>
         /// 加载此服务
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public static IServiceCollection AddMemoryCache(this IServiceCollection serviceCollection)
+        /// <param name="services"></param>
+        public static IServiceCollection AddMemoryCache(this IServiceCollection services)
         {
-            return serviceCollection;
+            return services;
         }
     }
 }

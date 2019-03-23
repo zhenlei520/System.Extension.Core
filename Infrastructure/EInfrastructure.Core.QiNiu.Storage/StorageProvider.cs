@@ -2,6 +2,7 @@
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Storage;
 using EInfrastructure.Core.Interface.Storage.Param;
+using EInfrastructure.Core.QiNiu.Storage.Config;
 using Qiniu.Http;
 using Qiniu.Storage;
 using Qiniu.Util;
@@ -16,7 +17,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 文件实现类
         /// </summary>
-        public StorageProvider()
+        public StorageProvider(QiNiuStorageConfig qiNiuConfig) : base(qiNiuConfig)
         {
         }
 

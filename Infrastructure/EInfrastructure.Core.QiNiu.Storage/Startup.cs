@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using EInfrastructure.Core.QiNiu.Storage.Config;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.QiNiu.Storage
@@ -9,18 +11,52 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// </summary>
     public static class Startup
     {
+        #region 加载七牛云存储
+
         /// <summary>
-        /// 加载此服务
+        /// 加载七牛云存储
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        /// <param name="action">委托</param>
-        public static IServiceCollection AddQiNiuStorage(this IServiceCollection serviceCollection,
-            Action<QiNiuConfig> action )
+        /// <param name="services"></param>
+        public static IServiceCollection AddQiNiuStorage(this IServiceCollection services)
         {
-            var qiNiuConfig = QiNiuConfig.Get();
-            action.Invoke(qiNiuConfig);
-            qiNiuConfig.Set();//不执行也可
-            return serviceCollection;
+            var service = services.First(x => x.ServiceType == typeof(IConfiguration));
+            var configuration = (IConfiguration) service.ImplementationInstance;
+            return AddQiNiuStorage(services, configuration);
         }
+
+        #endregion
+
+        #region 加载七牛云存储
+
+        /// <summary>
+        /// 加载七牛云存储
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action">委托</param>
+        public static IServiceCollection AddQiNiuStorage(this IServiceCollection services,
+            Action<QiNiuStorageConfig> action)
+        {
+            services.Configure(action);
+            return services;
+        }
+
+        #endregion
+
+
+        #region 加载七牛云存储
+
+        /// <summary>
+        /// 加载七牛云存储
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        public static IServiceCollection AddQiNiuStorage(this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services.Configure<QiNiuStorageConfig>(configuration);
+            return services;
+        }
+
+        #endregion
     }
 }

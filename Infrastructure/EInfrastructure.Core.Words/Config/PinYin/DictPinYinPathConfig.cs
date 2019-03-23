@@ -8,27 +8,27 @@ namespace EInfrastructure.Core.Words.Config.PinYin
         /// <summary>
         /// 文字全拼
         /// </summary>
-        public string PinYinNamePath { get; private set; } = "Dict/PinYin/pinyinName.txt";
+        public string PinYinNamePath { get; set; } = "Dict/PinYin/pinyinName.txt";
 
         /// <summary>
         /// 拼音下表 
         /// </summary>
-        public string PinYinIndexPath { get; private set; } = "Dict/PinYin/pinyinIndex.txt";
+        public string PinYinIndexPath { get; set; } = "Dict/PinYin/pinyinIndex.txt";
 
         /// <summary>
         /// 拼音数据
         /// </summary>
-        public string PinYinDataPath { get; private set; } = "Dict/PinYin/pinyinData.txt";
+        public string PinYinDataPath { get; set; } = "Dict/PinYin/pinyinData.txt";
 
         /// <summary>
         /// 文字信息
         /// </summary>
-        public string WordPath { get; private set; } = "Dict/PinYin/pinyinWord.txt";
+        public string WordPath { get; set; } = "Dict/PinYin/pinyinWord.txt";
 
         /// <summary>
         /// 文字拼音
         /// </summary>
-        public string WordPinYinPath { get; private set; } = "Dict/PinYin/wordPinyin.txt";
+        public string WordPinYinPath { get; set; } = "Dict/PinYin/wordPinyin.txt";
 
         /// <summary>
         /// 文字拼音配置
@@ -38,25 +38,29 @@ namespace EInfrastructure.Core.Words.Config.PinYin
         /// <summary>
         /// 设置文字拼音词库
         /// </summary>
-        /// <param name="pinYinNamePath">文字全拼</param>
-        /// <param name="pinYinIndexPath">拼音下表</param>
-        /// <param name="pinYinDataPath">拼音数据</param>
-        /// <param name="wordPath">文字信息</param>
-        /// <param name="wordPinYinPath">文字拼音</param>
-        public void Set(string pinYinNamePath = "", string pinYinIndexPath = "", string pinYinDataPath = "",
-            string wordPath = "",
-            string wordPinYinPath = "")
+        /// <param name="pathConfig">文字拼音词库</param>
+        public void Set(DictPinYinPathConfig pathConfig)
         {
-            Config = new DictPinYinPathConfig()
+            if (pathConfig == null)
             {
-                PinYinNamePath = string.IsNullOrEmpty(pinYinNamePath) ? "Dict/PinYin/pinyinName.txt" : pinYinNamePath,
-                PinYinIndexPath = string.IsNullOrEmpty(pinYinIndexPath)
-                    ? "Dict/PinYin/pinyinIndex.txt"
-                    : pinYinIndexPath,
-                PinYinDataPath = string.IsNullOrEmpty(pinYinDataPath) ? "Dict/PinYin/pinyinData.txt" : PinYinDataPath,
-                WordPath = string.IsNullOrEmpty(wordPath) ? "Dict/PinYin/pinyinWord.txt" : WordPath,
-                WordPinYinPath = string.IsNullOrEmpty(wordPinYinPath) ? "Dict/PinYin/wordPinyin.txt" : WordPinYinPath
-            };
+                pathConfig = new DictPinYinPathConfig();
+            }
+
+            pathConfig.PinYinNamePath = string.IsNullOrEmpty(pathConfig.PinYinNamePath)
+                ? "Dict/PinYin/pinyinName.txt"
+                : pathConfig.PinYinNamePath;
+            pathConfig.PinYinIndexPath = string.IsNullOrEmpty(pathConfig.PinYinIndexPath)
+                ? "Dict/PinYin/pinyinIndex.txt"
+                : pathConfig.PinYinIndexPath;
+            pathConfig.PinYinDataPath = string.IsNullOrEmpty(pathConfig.PinYinDataPath)
+                ? "Dict/PinYin/pinyinData.txt"
+                : pathConfig.PinYinDataPath;
+            pathConfig.WordPath = string.IsNullOrEmpty(pathConfig.WordPath)
+                ? "Dict/PinYin/pinyinWord.txt"
+                : pathConfig.WordPath;
+            pathConfig.WordPinYinPath = string.IsNullOrEmpty(pathConfig.WordPinYinPath)
+                ? "Dict/PinYin/wordPinyin.txt"
+                : pathConfig.WordPinYinPath;
         }
 
         /// <summary>

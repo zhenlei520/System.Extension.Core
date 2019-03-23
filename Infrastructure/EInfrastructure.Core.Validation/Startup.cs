@@ -11,13 +11,13 @@ namespace EInfrastructure.Core.Validation
         /// <summary>
         /// 加载类验证服务
         /// </summary>
-        /// <param name="serviceCollection"></param>
+        /// <param name="services"></param>
         /// <param name="cascadeMode">开启全局级联验证模式，当出现一个错误时，不再继续执行;默认开启级联验证</param>
-        public static IServiceCollection AddModelValidation(this IServiceCollection serviceCollection,
+        public static IServiceCollection AddModelValidation(this IServiceCollection services,
             CascadeMode cascadeMode = CascadeMode.StopOnFirstFailure)
         {
             ValidatorOptions.CascadeMode = cascadeMode;
-            return serviceCollection;
+            return services;
         }
     }
 }

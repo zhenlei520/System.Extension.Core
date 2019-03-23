@@ -1,5 +1,4 @@
-﻿using EInfrastructure.Core.Exception;
-using EInfrastructure.Core.Interface.Storage.Enum;
+﻿using EInfrastructure.Core.Interface.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Enum;
 using Qiniu.Storage;
 
@@ -8,7 +7,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
     /// <summary>
     /// 七牛配置
     /// </summary>
-    public class QiNiuConfig
+    public class QiNiuStorageConfig
     {
         /// <summary>
         /// 代理
@@ -94,11 +93,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         public string CallbackUrl { get; set; }
 
         /// <summary>
-        /// 回调七牛Host（可为空,非真正回调地址）
-        /// </summary>
-        public string CallbackHost { get; set; } = null;
-
-        /// <summary>
         /// 回调内容
         /// </summary>
         public string CallbackBody { get; set; } =
@@ -131,40 +125,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
                 case ZoneEnum.ZoneUsNorth:
                     return Zone.ZONE_US_North;
             }
-        }
-
-        /// <summary>
-        /// 是否第一次获取
-        /// </summary>
-        private static bool IsFirst = true;
-
-        /// <summary>
-        /// 存储配置
-        /// </summary>
-        private static QiNiuConfig Config = new QiNiuConfig();
-
-        /// <summary>
-        /// 设置七牛存储配置
-        /// </summary>
-        /// <param name="qiNiuConfig"></param>
-        internal void Set()
-        {
-            Config = this;
-        }
-
-        /// <summary>
-        /// 读取七牛存储配置
-        /// </summary>
-        /// <returns></returns>
-        internal static QiNiuConfig Get()
-        {
-            if (Config.Equals(new QiNiuConfig()) && !IsFirst)
-            {
-                throw new BusinessException("未配置七牛");
-            }
-
-            IsFirst = false;
-            return Config;
         }
     }
 }

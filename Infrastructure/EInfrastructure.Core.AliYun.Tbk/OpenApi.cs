@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <param name="appSecret">app秘钥</param>
         protected OpenApi(string appKey, string appSecret)
         {
-            AliConfig = new AliConfig()
+            AliConfig = new AliTbkConfig()
             {
                 AppKey = appKey,
                 AppSecret = appSecret
@@ -30,7 +30,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <summary>
         /// 淘宝客配置
         /// </summary>
-        protected readonly AliConfig AliConfig;
+        protected readonly AliTbkConfig AliConfig;
 
         static readonly RestClient RestClient = new RestClient("https://eco.taobao.com/router/rest");
 //        static readonly RestClient RestClient = new RestClient("http://gw.api.taobao.com/router/rest");

@@ -2,6 +2,8 @@
 using EInfrastructure.Core.Interface.Storage.Config;
 using EInfrastructure.Core.Interface.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Config;
+using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
+using EInfrastructure.Core.Validation.Common;
 using Qiniu.Storage;
 using Qiniu.Util;
 
@@ -15,9 +17,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 
         /// </summary>
-        public BaseStorageProvider()
+        public BaseStorageProvider(QiNiuStorageConfig qiNiuConfig)
         {
-            QiNiuConfig = QiNiuConfig.Get();
+            QiNiuConfig = qiNiuConfig;
 
             Mac = new Mac(QiNiuConfig.AccessKey, QiNiuConfig.SecretKey);
 
@@ -27,17 +29,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
 
             #region 上传成功后通知
 
-            if (!string.IsNullOrEmpty(QiNiuConfig.PersistentNotifyUrl) &&
-                !string.IsNullOrEmpty(QiNiuConfig.CallbackBody))
+            if (!string.IsNullOrEmpty(QiNiuConfig.CallbackBody))
             {
                 PutPolicy.PersistentNotifyUrl = QiNiuConfig.PersistentNotifyUrl;
                 PutPolicy.CallbackBody = QiNiuConfig.CallbackBody;
                 PutPolicy.CallbackBodyType = QiNiuConfig.CallbackBodyType.GetDescription();
                 PutPolicy.CallbackUrl = QiNiuConfig.CallbackUrl;
-                if (!string.IsNullOrEmpty(QiNiuConfig.CallbackHost))
-                {
-                    PutPolicy.CallbackHost = QiNiuConfig.CallbackHost;
-                }
             }
 
             if (!string.IsNullOrEmpty(QiNiuConfig.PersistentPipeline))
@@ -47,13 +44,15 @@ namespace EInfrastructure.Core.QiNiu.Storage
 
             #endregion
 
+            new QiNiuConfigValidator().Validate(qiNiuConfig).Check();
+
             #endregion
         }
 
         /// <summary>
         /// 存储配置文件
         /// </summary>
-        internal QiNiuConfig QiNiuConfig;
+        internal QiNiuStorageConfig QiNiuConfig;
 
         /// <summary>
         /// 
@@ -224,7 +223,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         #endregion
 
         #endregion
-        
+
         #region 得到资源管理
 
         /// <summary>

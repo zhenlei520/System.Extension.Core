@@ -1,11 +1,9 @@
-using EInfrastructure.Core.AutoConfig.Interface;
-
 namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config
 {
     /// <summary>
     /// Api服务健康检查
     /// </summary>
-    public class ApiServiceHealthyConfig : IScopedConfigModel
+    public class ApiServiceHealthyConfig
     {
         /// <summary>
         /// 检查Api接口地址(HttpStatus为200代表正常)

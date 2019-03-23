@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using EInfrastructure.Core.Redis.Config;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.Redis
@@ -9,18 +11,51 @@ namespace EInfrastructure.Core.Redis
     /// </summary>
     public static class Startup
     {
+        #region 加载Redis服务
+
         /// <summary>
-        /// 加载此服务
+        /// 加载Redis服务
         /// </summary>
-        /// <param name="serviceCollection"></param>
+        /// <param name="services"></param>
+        public static IServiceCollection AddRedis(this IServiceCollection services)
+        {
+            var service = services.First(x => x.ServiceType == typeof(IConfiguration));
+            var configuration = (IConfiguration) service.ImplementationInstance;
+            return AddRedis(services, configuration);
+        }
+
+        #endregion
+
+        #region 加载Redis服务
+
+        /// <summary>
+        /// 加载Redis服务
+        /// </summary>
+        /// <param name="services"></param>
         /// <param name="action"></param>
-        public static IServiceCollection AddRedis(this IServiceCollection serviceCollection,
+        public static IServiceCollection AddRedis(this IServiceCollection services,
             Action<RedisConfig> action)
         {
-            var redisConfig = RedisConfig.Get();
-            action.Invoke(redisConfig);
-            redisConfig.Set();//不执行也可
-            return serviceCollection;
+            services.Configure(action);
+            return services;
         }
+
+        #endregion
+
+        #region 加载Redis服务
+
+        /// <summary>
+        /// 加载Redis服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action"></param>
+        public static IServiceCollection AddRedis(this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services.Configure<RedisConfig>(configuration);
+            return services;
+        }
+
+        #endregion
     }
 }

@@ -12,15 +12,13 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         /// <summary>
         /// 加载此服务
         /// </summary>
-        /// <param name="serviceCollection"></param>
+        /// <param name="services"></param>
         /// <param name="action"></param>
-        public static IServiceCollection AddBaiduContentIdentification(this IServiceCollection serviceCollection,
+        public static IServiceCollection AddBaiduContentIdentification(this IServiceCollection services,
             Action<BaiDuConfig> action = null)
         {
-            var baiDuConfig = BaiDuConfig.Get();
-            action?.Invoke(baiDuConfig);
-            baiDuConfig.Set();
-            return serviceCollection;
+            services.Configure(action);
+            return services;
         }
     }
 }

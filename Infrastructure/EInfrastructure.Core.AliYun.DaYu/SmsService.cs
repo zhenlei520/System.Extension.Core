@@ -8,6 +8,8 @@ using EInfrastructure.Core.HelpCommon.Serialization;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Sms;
 using EInfrastructure.Core.Interface.Sms.Dto;
+using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
+using EInfrastructure.Core.Validation.Common;
 using RestSharp;
 
 namespace EInfrastructure.Core.AliYun.DaYu
@@ -17,11 +19,14 @@ namespace EInfrastructure.Core.AliYun.DaYu
     /// </summary>
     public class SmsService : ISmsService, ISingleInstance
     {
+        private AliSmsConfig _smsConfig;
+
         /// <summary>
         /// 短信服务
         /// </summary>
-        public SmsService()
+        public SmsService(AliSmsConfig smsConfig)
         {
+            _smsConfig = smsConfig;
         }
 
         readonly RestClient _restClient = new RestClient("http://dysmsapi.aliyuncs.com");
@@ -40,16 +45,16 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public bool Send(List<string> phoneNumbers, string templateCode, object content,
             Action<SendSmsLoseDto> loseAction = null, string smsConfigJson = "")
         {
-            Dictionary<string, string> commonParam = Util.BuildCommonParam(SmsConfig.Get(smsConfigJson).AccessKey);
+            Dictionary<string, string> commonParam = Util.BuildCommonParam(GetSmsConfig(smsConfigJson).AccessKey);
             commonParam.Add("Action", "SendSms");
             commonParam.Add("Version", "2017-05-25");
             commonParam.Add("RegionId", "cn-hangzhou");
             commonParam.Add("PhoneNumbers", phoneNumbers.ConvertListToString(','));
-            commonParam.Add("SignName", SmsConfig.Get(smsConfigJson).SignName);
+            commonParam.Add("SignName", GetSmsConfig(smsConfigJson).SignName);
             commonParam.Add("TemplateCode", templateCode);
             commonParam.Add("TemplateParam", new JsonCommon().Serializer(content));
 
-            string sign = Util.CreateSign(commonParam, SmsConfig.Get(smsConfigJson).EncryptionKey);
+            string sign = Util.CreateSign(commonParam, GetSmsConfig(smsConfigJson).EncryptionKey);
             commonParam.Add("Signature", sign);
             RestRequest request = new RestRequest(Method.GET);
             foreach (var key in commonParam.Keys)
@@ -92,6 +97,30 @@ namespace EInfrastructure.Core.AliYun.DaYu
         {
             return Send(new List<string>() {phoneNumber}, templateCode, content, loseAction, smsConfigJson);
         }
+
+        #endregion
+
+        #region private methods
+
+        #region 获取阿里大于配置
+
+        /// <summary>
+        /// 获取阿里大于配置
+        /// </summary>
+        /// <param name="smsConfigJson">自定义短信配置</param>
+        /// <returns></returns>
+        public AliSmsConfig GetSmsConfig(string smsConfigJson)
+        {
+            if (!string.IsNullOrEmpty(smsConfigJson))
+            {
+                _smsConfig = new JsonCommon().Deserialize<AliSmsConfig>(smsConfigJson);
+            }
+
+            new AliYunConfigValidator().Validate(_smsConfig).Check();
+            return _smsConfig;
+        }
+
+        #endregion
 
         #endregion
     }

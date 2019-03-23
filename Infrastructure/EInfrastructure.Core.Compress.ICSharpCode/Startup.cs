@@ -10,10 +10,10 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <summary>
         /// 加载此服务
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public static IServiceCollection AddSystemsCompress(this IServiceCollection serviceCollection)
+        /// <param name="services"></param>
+        public static IServiceCollection AddSystemsCompress(this IServiceCollection services)
         {
-            return serviceCollection;
+            return services;
         }
     }
 }

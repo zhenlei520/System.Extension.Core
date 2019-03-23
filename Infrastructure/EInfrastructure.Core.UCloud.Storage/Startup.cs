@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using EInfrastructure.Core.UCloud.Storage.Config;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.UCloud.Storage
@@ -9,18 +11,52 @@ namespace EInfrastructure.Core.UCloud.Storage
     /// </summary>
     public static class Startup
     {
+        #region 加载UCloud服务
+
         /// <summary>
-        /// 加载此服务
+        /// 加载UCloud服务
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        /// <param name="action"></param>
-        public static IServiceCollection AddUCloudStorage(this IServiceCollection serviceCollection,
-            Action<UCloudConfig> action)
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        public static IServiceCollection AddUCloudStorage(this IServiceCollection services)
         {
-            var uCloudConfig = UCloudConfig.Get();
-            action.Invoke(uCloudConfig);
-            uCloudConfig.Set();//不执行也可
-            return serviceCollection;
+            var service = services.First(x => x.ServiceType == typeof(IConfiguration));
+            var configuration = (IConfiguration) service.ImplementationInstance;
+            return AddUCloudStorage(services, configuration);
         }
+
+        #endregion
+
+        #region 加载UCloud服务
+
+        /// <summary>
+        /// 加载UCloud服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action"></param>
+        public static IServiceCollection AddUCloudStorage(this IServiceCollection services,
+            Action<UCloudStorageConfig> action)
+        {
+            services.Configure(action);
+            return services;
+        }
+
+        #endregion
+
+        #region 加载UCloud服务
+
+        /// <summary>
+        /// 加载UCloud服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        public static IServiceCollection AddUCloudStorage(this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services.Configure<UCloudStorageConfig>(configuration);
+            return services;
+        }
+
+        #endregion
     }
 }

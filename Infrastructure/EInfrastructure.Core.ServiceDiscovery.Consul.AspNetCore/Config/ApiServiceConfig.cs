@@ -1,11 +1,9 @@
-using EInfrastructure.Core.AutoConfig.Interface;
-
 namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config
 {
     /// <summary>
     /// api服务配置
     /// </summary>
-    public class ApiServiceConfig : IScopedConfigModel
+    public class ApiServiceConfig
     {
         /// <summary>
         /// 服务id（非必填）

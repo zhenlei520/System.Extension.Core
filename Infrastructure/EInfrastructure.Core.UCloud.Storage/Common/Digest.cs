@@ -58,7 +58,7 @@ namespace EInfrastructure.Core.UCloud.Storage.Common
         /// <param name="uCloudConfig"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        internal static string SignRequst(HttpWebRequest request, Utils.RequestHeadType type, UCloudConfig uCloudConfig,
+        internal static string SignRequst(HttpWebRequest request, Utils.RequestHeadType type, UCloudStorageConfig uCloudConfig,
             string key)
         {
             string authorization = string.Empty;

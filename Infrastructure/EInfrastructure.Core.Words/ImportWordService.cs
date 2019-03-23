@@ -1,4 +1,5 @@
 using EInfrastructure.Core.Interface.Words;
+using EInfrastructure.Core.Words.Config;
 using EInfrastructure.Core.Words.Enum;
 using EInfrastructure.Core.Words.Extension;
 using EInfrastructure.Core.Words.Extension.ImportDict;
@@ -15,9 +16,10 @@ namespace EInfrastructure.Core.Words
         /// <summary>
         /// 导入词库
         /// </summary>
+        /// <param name="wordConfig"></param>
         /// <param name="wordService"></param>
-        public ImportWordService(
-            IWordService wordService)
+        public ImportWordService(EWordConfig wordConfig,
+            IWordService wordService) : base(wordConfig)
         {
             _wordService = wordService;
         }

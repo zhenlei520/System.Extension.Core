@@ -25,7 +25,7 @@ namespace EInfrastructure.Core.UCloud.Storage.Common
         /// <param name="uCloudConfig">配置信息</param>
         /// <param name="key">秘钥</param>
         /// <returns></returns>
-        internal static string GetUrl(UCloudConfig uCloudConfig, string key)
+        internal static string GetUrl(UCloudStorageConfig uCloudConfig, string key)
         {
             return @"http://" + uCloudConfig.Bucket + uCloudConfig.UcloudProxySuffix +
                    (key == string.Empty ? "" : (@"/" + key));
@@ -60,7 +60,7 @@ namespace EInfrastructure.Core.UCloud.Storage.Common
         /// <param name="uCloudConfig">配置信息</param>
         /// <param name="key">文件地址</param>
         /// <param name="httpVerb"></param>
-        internal static void SetHeaders(HttpWebRequest request, string ext, UCloudConfig uCloudConfig, string key,
+        internal static void SetHeaders(HttpWebRequest request, string ext, UCloudStorageConfig uCloudConfig, string key,
             string httpVerb)
         {
             request.UserAgent = uCloudConfig.GetUserAgent();

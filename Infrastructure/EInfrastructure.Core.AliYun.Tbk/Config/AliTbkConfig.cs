@@ -3,7 +3,7 @@
     /// <summary>
     /// 阿里配置
     /// </summary>
-    public class AliConfig
+    public class AliTbkConfig
     {
         /// <summary>
         /// 推广id

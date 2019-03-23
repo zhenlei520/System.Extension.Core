@@ -1,6 +1,9 @@
 using System;
+using System.Linq;
+using EInfrastructure.Core.Words.Config;
 using EInfrastructure.Core.Words.Config.PinYin;
 using EInfrastructure.Core.Words.Config.Text;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.Words
@@ -10,18 +13,51 @@ namespace EInfrastructure.Core.Words
     /// </summary>
     public static class Startup
     {
+        #region 加载单词服务
+
         /// <summary>
-        /// 加载此服务
+        /// 加载单词服务
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        /// <param name="action"></param>
-        public static IServiceCollection AddWords(this IServiceCollection serviceCollection,
-            Action<DictPinYinPathConfig, DictTextPathConfig> action = null)
+        /// <param name="services"></param>
+        public static IServiceCollection AddWords(this IServiceCollection services)
         {
-            DictPinYinPathConfig dictPinYinPathConfig = DictPinYinPathConfig.Get();
-            DictTextPathConfig dictTextPathConfig = DictTextPathConfig.Get();
-            action?.Invoke(dictPinYinPathConfig, dictTextPathConfig);
-            return serviceCollection;
+            var service = services.First(x => x.ServiceType == typeof(IConfiguration));
+            var configuration = (IConfiguration) service.ImplementationInstance;
+            return AddWords(services, configuration);
         }
+
+        #endregion
+
+        #region 加载单词服务
+
+        /// <summary>
+        /// 加载单词服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action"></param>
+        public static IServiceCollection AddWords(this IServiceCollection services,
+            Action<EWordConfig> action = null)
+        {
+            services.Configure(action);
+            return services;
+        }
+
+        #endregion
+
+        #region 加载单词服务
+
+        /// <summary>
+        /// 加载单词服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        public static IServiceCollection AddWords(this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services.Configure<EWordConfig>(configuration);
+            return services;
+        }
+
+        #endregion
     }
 }

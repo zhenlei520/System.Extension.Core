@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Words.Config;
 using EInfrastructure.Core.Words.Config.PinYin;
 using EInfrastructure.Core.Words.Config.Text;
 using EInfrastructure.Core.Words.Enum;
@@ -38,9 +39,11 @@ namespace EInfrastructure.Core.Words.Extension
         /// <summary>
         /// 
         /// </summary>
-        public BaseWordService()
+        public BaseWordService(EWordConfig wordConfig)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            DictTextPathConfig.Set(wordConfig.DictTextPathConfig);
+            DictPinYinPathConfig.Set(wordConfig.DictPinYinPathConfig);
             DictTextPathConfig = DictTextPathConfig.Get();
             DictPinYinPathConfig = DictPinYinPathConfig.Get();
             if (DictConfig == null)
