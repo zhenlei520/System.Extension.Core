@@ -6,3 +6,5 @@ Infrastructure/*/obj/
 *.pdb
 Infrastructure/*/obj/*
 .idea/*
+bin/
+obj/
