@@ -917,5 +917,29 @@ namespace EInfrastructure.Core.HelpCommon
         }
 
         #endregion
+
+        #region 获取当前是周几
+
+        /// <summary>
+        /// 获取当前是周几
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="days"></param>
+        /// <returns></returns>
+        public static string GetDayName(this DateTime date,
+            string[] days = null)
+        {
+            if (days == null)
+            {
+                days = new string[]
+                {
+                    "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"
+                };
+            }
+
+            return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
+        }
+
+        #endregion
     }
 }
