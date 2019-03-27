@@ -141,24 +141,20 @@ namespace EInfrastructure.Core.HelpCommon
                 {
                     if (isReplaceEmpty)
                     {
-                        //移除空格
-                        if (item is string)
+                        string itemTemp = "";
+                        if (isReplaceSpace)
                         {
-                            string itemTemp = "";
-                            if (isReplaceSpace)
-                            {
-                                itemTemp = item.ToString().Trim();
-                            }
+                            itemTemp = item.ToString().Trim();
+                        }
 
-                            if (!string.IsNullOrEmpty(itemTemp))
-                            {
-                                temp = temp + itemTemp + c;
-                            }
+                        if (!string.IsNullOrEmpty(itemTemp))
+                        {
+                            temp = temp + itemTemp + c;
                         }
                     }
                     else
                     {
-                        temp = temp + item + c;
+                        temp = temp + item.ToString() + c;
                     }
                 }
             }
