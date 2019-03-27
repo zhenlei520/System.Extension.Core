@@ -154,7 +154,7 @@ namespace EInfrastructure.Core.HelpCommon
                     }
                     else
                     {
-                        temp = temp + item + c;
+                        temp = temp + item.ToString() + c;
                     }
                 }
             }
