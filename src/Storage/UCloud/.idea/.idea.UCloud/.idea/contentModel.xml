@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\wj\.Rider2018.3\config\consoles\ide" t="IncludeRecursive" />
+    <e p="C:\Users\wj\.Rider2018.3\config\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\wj\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\wj\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_UCloud.-840493954.00" t="ExcludeRecursive" />
+    <e p="D:\zhenlei\Owner\Framework\System.Extension.Core\src\Infrastructure\src\EInfrastructure.Core" t="IncludeRecursive">
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="Data" t="Include">
+        <e p="EntitiesExtension" t="Include">
+          <e p="CommonEqualityComparer.cs" t="Include" />
+          <e p="ConditionBuilder.cs" t="Include" />
+          <e p="ExpressionBuilder.cs" t="Include" />
+          <e p="ExpressionVisitor.cs" t="Include" />
+          <e p="ParameterRebinder.cs" t="Include" />
+          <e p="PartialEvaluator.cs" t="Include" />
+          <e p="QueryableExtend.cs" t="Include" />
+        </e>
+        <e p="PageData.cs" t="Include" />
+      </e>
+      <e p="Ddd" t="Include">
+        <e p="AggregateRoot.cs" t="Include" />
+        <e p="Entity.cs" t="Include" />
+        <e p="IAggregateRoot.cs" t="Include" />
+        <e p="IEntity.cs" t="Include" />
+        <e p="IExecute.cs" t="Include" />
+        <e p="IQuery.cs" t="Include" />
+        <e p="IRepository.cs" t="Include" />
+        <e p="IUnitOfWork.cs" t="Include" />
+        <e p="Repository" t="Include">
+          <e p="AddAndUpdates.cs" t="Include" />
+          <e p="Adds.cs" t="Include" />
+          <e p="Fulls.cs" t="Include" />
+        </e>
+      </e>
+      <e p="EInfrastructure.Core.csproj" t="IncludeRecursive" />
+      <e p="Exception" t="Include">
+        <e p="AuthException.cs" t="Include" />
+        <e p="BusinessException.cs" t="Include" />
+      </e>
+      <e p="HelpCommon" t="Include">
+        <e p="AnimalCommon.cs" t="Include" />
+        <e p="Assert.cs" t="Include" />
+        <e p="Attributes" t="Include">
+          <e p="EDescribeAttribute.cs" t="Include" />
+          <e p="ENameAttribute.cs" t="Include" />
+          <e p="EVersionAttribute.cs" t="Include" />
+        </e>
+        <e p="Base64Common.cs" t="Include" />
+        <e p="Check.cs" t="Include" />
+        <e p="CloneableClass.cs" t="Include" />
+        <e p="ConstellationCommon.cs" t="Include" />
+        <e p="CustomAttributeCommon.cs" t="Include" />
+        <e p="DbDataReaderCommon.cs" t="Include" />
+        <e p="DistanceCommon.cs" t="Include" />
+        <e p="EMailCommon.cs" t="Include" />
+        <e p="EnumCommon.cs" t="Include" />
+        <e p="Enumerable" t="Include">
+          <e p="EnumerableExtend.cs" t="Include" />
+        </e>
+        <e p="Files" t="Include">
+          <e p="FileCommon.cs" t="Include" />
+          <e p="FileInfo.cs" t="Include" />
+          <e p="ImageCommon.cs" t="Include" />
+        </e>
+        <e p="ListCommon.cs" t="Include" />
+        <e p="LogCommon.cs" t="Include" />
+        <e p="MathCommon.cs" t="Include" />
+        <e p="MimeTypeCommon.cs" t="Include" />
+        <e p="NumberTypeCommon.cs" t="Include" />
+        <e p="Randoms" t="Include">
+          <e p="Const.cs" t="Include" />
+          <e p="Interface" t="Include">
+            <e p="IRandomBuilder.cs" t="Include" />
+            <e p="IRandomNumberGenerator.cs" t="Include" />
+          </e>
+          <e p="RandomCommon.cs" t="Include" />
+          <e p="RandomNumberGenerator.cs" t="Include" />
+        </e>
+        <e p="SecurityCommon.cs" t="Include" />
+        <e p="Serialization" t="Include">
+          <e p="BinaryCommon.cs" t="Include" />
+          <e p="JsonAdapter" t="Include">
+            <e p="DataContractJsonProvider.cs" t="Include" />
+            <e p="IJsonProvider.cs" t="Include" />
+            <e p="NewtonsoftJsonProvider.cs" t="Include" />
+          </e>
+          <e p="JsonCommon.cs" t="Include" />
+          <e p="JsonNetSetting.cs" t="Include" />
+          <e p="XmlCommon.cs" t="Include" />
+        </e>
+        <e p="StringCommon.cs" t="Include" />
+        <e p="Systems" t="Include">
+          <e p="AssemblyCommon.cs" t="Include" />
+        </e>
+        <e p="TaskExtend.cs" t="Include" />
+        <e p="TimeCommon.cs" t="Include" />
+        <e p="TimeCommonExt.cs" t="Include" />
+        <e p="TypeConversionCommon.cs" t="Include" />
+        <e p="UniqueCommon.cs" t="Include" />
+        <e p="UrlCommon.cs" t="Include" />
+        <e p="ValidateCommon.cs" t="Include" />
+      </e>
+      <e p="Interface" t="Include">
+        <e p="Cache" t="Include">
+          <e p="ICacheService.cs" t="Include" />
+        </e>
+        <e p="Compress" t="Include">
+          <e p="Enum" t="Include">
+            <e p="CompressTypeEnum.cs" t="Include" />
+          </e>
+          <e p="ICompressService.cs" t="Include" />
+        </e>
+        <e p="ContentIdentification" t="Include">
+          <e p="config" t="Include">
+            <e p="AuthenticateConfig.cs" t="Include" />
+          </e>
+          <e p="Dto" t="Include">
+            <e p="ContentInfoDto.cs" t="Include" />
+          </e>
+          <e p="Enum" t="Include">
+            <e p="ContentRatingEnum.cs" t="Include" />
+            <e p="SubContentRatingEnum.cs" t="Include" />
+            <e p="ViolationStatusEnum.cs" t="Include" />
+          </e>
+          <e p="IAuthenticateDemoService.cs" t="Include" />
+          <e p="IAuthenticateService.cs" t="Include" />
+        </e>
+        <e p="IOC" t="Include">
+          <e p="IAopInterceptor.cs" t="Include" />
+          <e p="IDependency.cs" t="Include" />
+          <e p="IPerRequest.cs" t="Include" />
+          <e p="ISingleInstance.cs" t="Include" />
+        </e>
+        <e p="Sms" t="Include">
+          <e p="Dto" t="Include">
+            <e p="SendSmsLoseDto.cs" t="Include" />
+          </e>
+          <e p="ISmsService.cs" t="Include" />
+        </e>
+        <e p="Storage" t="Include">
+          <e p="config" t="Include">
+            <e p="Pictures" t="Include">
+              <e p="ImgPersistentOps.cs" t="Include" />
+              <e p="StorageWaterMark.cs" t="Include" />
+            </e>
+            <e p="UploadPersistentOps.cs" t="Include" />
+          </e>
+          <e p="Dto" t="Include">
+            <e p="FileBaseInfoDto.cs" t="Include" />
+            <e p="FileInfoDto.cs" t="Include" />
+          </e>
+          <e p="Enum" t="Include">
+            <e p="CallbackBodyTypeEnum.cs" t="Include" />
+            <e p="ChunkUnitEnum.cs" t="Include" />
+            <e p="ImageModeEnum.cs" t="Include" />
+            <e p="UploadStateEnum.cs" t="Include" />
+          </e>
+          <e p="Handler" t="Include">
+            <e p="UploadControllerAction.cs" t="Include" />
+          </e>
+          <e p="IPictureService.cs" t="Include" />
+          <e p="IStorageService.cs" t="Include" />
+          <e p="Model" t="Include">
+            <e p="PlugResponseInfo.cs" t="Include" />
+          </e>
+          <e p="Param" t="Include">
+            <e p="Pictures" t="Include">
+              <e p="FetchFileParam.cs" t="Include" />
+              <e p="UploadByBase64Param.cs" t="Include" />
+            </e>
+            <e p="UploadByFormFileParam.cs" t="Include" />
+            <e p="UploadByStreamParam.cs" t="Include" />
+            <e p="UploadPersistentOpsParam.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Words" t="Include">
+          <e p="config" t="Include" />
+          <e p="Enum" t="Include">
+            <e p="LangueEnum.cs" t="Include" />
+            <e p="TextTypesEnum.cs" t="Include" />
+            <e p="WordTypeEnum.cs" t="Include" />
+          </e>
+          <e p="IImportWordService.cs" t="Include" />
+          <e p="IWordService.cs" t="Include" />
+        </e>
+      </e>
+      <e p="nlog.config" t="Include" />
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="netstandard2.0" t="Include">
+            <e p="EInfrastructure.Core.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+    </e>
+    <e p="D:\zhenlei\Owner\Framework\System.Extension.Core\src\Infrastructure\src\EInfrastructure.Core.Configuration" t="IncludeRecursive">
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="config" t="Include">
+        <e p="LogConfig.cs" t="Include" />
+      </e>
+      <e p="EInfrastructure.Core.Configuration.csproj" t="IncludeRecursive" />
+      <e p="Enum" t="Include">
+        <e p="AnimalEnum.cs" t="Include" />
+        <e p="BloodEnum.cs" t="Include" />
+        <e p="ConstellationEnum.cs" t="Include" />
+        <e p="CupSizeTypeEnum.cs" t="Include" />
+        <e p="FormatDateTypeEnum.cs" t="Include" />
+        <e p="GenderEnum.cs" t="Include" />
+        <e p="LangueEnum.cs" t="Include" />
+        <e p="NationalityEnum.cs" t="Include" />
+        <e p="NationEnum.cs" t="Include" />
+      </e>
+      <e p="Key" t="Include">
+        <e p="CodeKey.cs" t="Include" />
+        <e p="HttpStatusMessageKey.cs" t="Include" />
+      </e>
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="netstandard2.0" t="Include">
+            <e p="EInfrastructure.Core.Configuration.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+    </e>
+    <e p="D:\zhenlei\Owner\Framework\System.Extension.Core\src\Storage\UCloud" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="src\EInfrastructure.Core.UCloud.Storage" t="IncludeRecursive">
+        <e p="BaseStorageProvider.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Common" t="Include">
+          <e p="Digest.cs" t="Include" />
+          <e p="HttpWebResponseExt.cs" t="Include" />
+          <e p="Utils.cs" t="Include" />
+        </e>
+        <e p="config" t="Include">
+          <e p="UCloudStorageConfig.cs" t="Include" />
+          <e p="UFileError.cs" t="Include" />
+        </e>
+        <e p="EInfrastructure.Core.UCloud.Storage.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="EInfrastructure.Core.UCloud.Storage.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="PictureService.cs" t="Include" />
+        <e p="Startup.cs" t="Include" />
+        <e p="StorageProvider.cs" t="Include" />
+        <e p="Validator" t="Include">
+          <e p="UCloudConfigValidator.cs" t="Include" />
+        </e>
+      </e>
+      <e p="UCloud.sln" t="IncludeFlat" />
+    </e>
+    <e p="D:\zhenlei\Owner\Framework\System.Extension.Core\src\Tools\Validation\src\EInfrastructure.Core.Validation" t="IncludeRecursive">
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="Common" t="Include">
+        <e p="ValidationCommon.cs" t="Include" />
+      </e>
+      <e p="EInfrastructure.Core.Validation.csproj" t="IncludeRecursive" />
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="netstandard2.0" t="Include">
+            <e p="EInfrastructure.Core.Validation.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Startup.cs" t="Include" />
+    </e>
+  </component>
+</project>

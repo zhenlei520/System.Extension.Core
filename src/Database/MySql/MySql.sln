@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.MySql", "src\EInfrastructure.Core.MySql\EInfrastructure.Core.MySql.csproj", "{A1864D4F-4CE1-4B77-8A71-BCD4696BC30F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Configuration", "..\..\Infrastructure\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj", "{301E5D2A-ECFA-4D2C-BD44-FCD515093BB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core", "..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj", "{077B778B-0A5F-403F-AEDD-B8952830CAE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1864D4F-4CE1-4B77-8A71-BCD4696BC30F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1864D4F-4CE1-4B77-8A71-BCD4696BC30F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1864D4F-4CE1-4B77-8A71-BCD4696BC30F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1864D4F-4CE1-4B77-8A71-BCD4696BC30F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{301E5D2A-ECFA-4D2C-BD44-FCD515093BB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{301E5D2A-ECFA-4D2C-BD44-FCD515093BB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{301E5D2A-ECFA-4D2C-BD44-FCD515093BB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{301E5D2A-ECFA-4D2C-BD44-FCD515093BB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{077B778B-0A5F-403F-AEDD-B8952830CAE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{077B778B-0A5F-403F-AEDD-B8952830CAE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{077B778B-0A5F-403F-AEDD-B8952830CAE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{077B778B-0A5F-403F-AEDD-B8952830CAE4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

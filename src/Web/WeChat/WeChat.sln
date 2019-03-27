@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.WeChat", "src\EInfrastructure.Core.WeChat\EInfrastructure.Core.WeChat.csproj", "{9C1B42E6-353E-4DD4-88AE-A8AAF1C8EA74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core", "..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj", "{ABB09987-A5AB-4CAB-8A24-21FF2CF5EAF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Configuration", "..\..\Infrastructure\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj", "{9BE81D2B-5881-4D4C-A76B-B5D83F28C756}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C1B42E6-353E-4DD4-88AE-A8AAF1C8EA74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C1B42E6-353E-4DD4-88AE-A8AAF1C8EA74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C1B42E6-353E-4DD4-88AE-A8AAF1C8EA74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C1B42E6-353E-4DD4-88AE-A8AAF1C8EA74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABB09987-A5AB-4CAB-8A24-21FF2CF5EAF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABB09987-A5AB-4CAB-8A24-21FF2CF5EAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABB09987-A5AB-4CAB-8A24-21FF2CF5EAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABB09987-A5AB-4CAB-8A24-21FF2CF5EAF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BE81D2B-5881-4D4C-A76B-B5D83F28C756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BE81D2B-5881-4D4C-A76B-B5D83F28C756}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BE81D2B-5881-4D4C-A76B-B5D83F28C756}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BE81D2B-5881-4D4C-A76B-B5D83F28C756}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
