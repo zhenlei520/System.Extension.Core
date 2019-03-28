@@ -1,5 +1,7 @@
 [![Build status](https://wangzhenlei520.visualstudio.com/System.Extension.Core/_apis/build/status/System.Extension.Core-ASP.NET%20Core%20(.NET%20Framework)-CI)](https://wangzhenlei520.visualstudio.com/System.Extension.Core/_build/latest?definitionId=1)
 
+[![Build Status](https://img.shields.io/travis/com/zhenlei520/System.Extension.Core/master.svg?label=travis-ci)](https://travis-ci.com/zhenlei520/System.Extension.Core)
+
 # 大纲
 
 ### <a href="https://github.com/zhenlei520/System.Extension.Core/blob/master/Wiki/1%E3%80%81%E5%85%A5%E9%97%A8%E7%AF%87.md">1、入门篇</a>  
