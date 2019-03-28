@@ -1,4 +1,7 @@
-﻿namespace EInfrastructure.Core.Configuration.Config
+﻿// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+namespace EInfrastructure.Core.Configuration.Config
 {
     /// <summary>
     /// 日志配置

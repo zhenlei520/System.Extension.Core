@@ -1,4 +1,7 @@
-﻿namespace EInfrastructure.Core.AliYun.Tbk.Param
+﻿// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+namespace EInfrastructure.Core.AliYun.Tbk.Param
 {
     /// <summary>
     /// 淘宝客店铺关联推荐查询

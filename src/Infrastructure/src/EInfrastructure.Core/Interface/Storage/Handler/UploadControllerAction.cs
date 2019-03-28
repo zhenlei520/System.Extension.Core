@@ -1,3 +1,8 @@
+// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System.ComponentModel;
+
 namespace EInfrastructure.Core.Interface.Storage.Handler
 {
     /// <summary>
@@ -8,17 +13,17 @@ namespace EInfrastructure.Core.Interface.Storage.Handler
         /// <summary>
         /// 任务状态:激活
         /// </summary>
-        Activated,         
+        [Description("激活")] Activated,
 
         /// <summary>
         /// 任务状态:暂停
         /// </summary>
-        Suspended, 
+        [Description("暂停")] Suspended,
 
         /// <summary>
         /// 任务状态:退出
         /// </summary>
-        Aborted 
+        [Description("退出")] Aborted
     };
 
     /// <summary>

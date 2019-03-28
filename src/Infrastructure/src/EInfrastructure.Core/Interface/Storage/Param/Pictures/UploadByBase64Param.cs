@@ -1,4 +1,7 @@
-﻿using EInfrastructure.Core.Interface.Storage.Config.Pictures;
+﻿// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using EInfrastructure.Core.Interface.Storage.Config.Pictures;
 
 namespace EInfrastructure.Core.Interface.Storage.Param.Pictures
 {

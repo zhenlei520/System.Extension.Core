@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System;
 using EInfrastructure.Core.Interface.Storage.Param;
 
 namespace EInfrastructure.Core.Interface.Storage

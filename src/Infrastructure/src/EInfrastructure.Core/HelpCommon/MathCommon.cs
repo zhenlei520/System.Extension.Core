@@ -1,4 +1,7 @@
-﻿namespace EInfrastructure.Core.HelpCommon
+﻿// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+namespace EInfrastructure.Core.HelpCommon
 {
     /// <summary>
     /// 计算帮助类

@@ -1,3 +1,6 @@
+// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Linq;
 using EInfrastructure.Core.QiNiu.Storage.Config;
@@ -41,7 +44,6 @@ namespace EInfrastructure.Core.QiNiu.Storage
         }
 
         #endregion
-
 
         #region 加载七牛云存储
 

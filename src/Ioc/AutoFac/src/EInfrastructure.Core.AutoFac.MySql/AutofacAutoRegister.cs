@@ -1,4 +1,7 @@
-﻿using Autofac;
+﻿// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Autofac;
 using EInfrastructure.Core.Ddd;
 using EInfrastructure.Core.MySql;
 using Microsoft.Extensions.DependencyInjection;

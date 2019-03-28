@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System.Text;
 using EInfrastructure.Core.Words.Extension.ImportDict.Common.Entities;
 using EInfrastructure.Core.Words.Extension.ImportDict.Common.Enum;
 

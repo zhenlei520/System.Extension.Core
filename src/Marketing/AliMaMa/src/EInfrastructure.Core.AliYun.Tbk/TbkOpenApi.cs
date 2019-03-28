@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using EInfrastructure.Core.AliYun.Tbk.Param;
@@ -6,7 +9,6 @@ using EInfrastructure.Core.AliYun.Tbk.Respose;
 using EInfrastructure.Core.AliYun.Tbk.Respose.Success;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon.Serialization;
-using Newtonsoft.Json;
 using RestSharp;
 
 namespace EInfrastructure.Core.AliYun.Tbk

@@ -1,3 +1,8 @@
+// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System.ComponentModel;
+
 namespace EInfrastructure.Core.Interface.Storage.Enum
 {
     /// <summary>
@@ -8,31 +13,31 @@ namespace EInfrastructure.Core.Interface.Storage.Enum
         /// <summary>
         /// 128KB
         /// </summary>
-        U128K = 1,
+        [Description("128KB")]U128K = 1,
 
         /// <summary>
         /// 256KB
         /// </summary>
-        U256K = 2,
+        [Description("256KB")]U256K = 2,
 
         /// <summary>
         /// 512KB
         /// </summary>
-        U512K = 4,
+        [Description("512KB")]U512K = 4,
 
         /// <summary>
         /// 1MB
         /// </summary>
-        U1024K = 8,
+        [Description("1M")]U1024K = 8,
 
         /// <summary>
         /// 2MB
         /// </summary>
-        U2048K = 16,
+        [Description("2M")]U2048K = 16,
 
         /// <summary>
         /// 4MB
         /// </summary>
-        U4096K = 32
+        [Description("4M")] U4096K = 32
     }
 }

@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System;
 using System.Threading.Tasks;
 using EInfrastructure.Core.AspNetCore.Api;
 using EInfrastructure.Core.Exception;
