@@ -8,7 +8,7 @@
         <Company>zhenlei520</Company>
         <Description>dotnet core 压缩包类库（父类ICSharpCode.SharpZipLib），通过进一步封装ICSharpCode.SharpZipLib实现压缩与解压功能，中文乱码问题已修复</Description>
         <RepositoryUrl></RepositoryUrl>
-        <PackageProjectUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/Infrastructure/EInfrastructure.Core.Compress.ICSharpCode</PackageProjectUrl>
+        <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.Compress.ICSharpCode/</PackageProjectUrl>
         <Copyright>Copyright ©zhenlei520 2018</Copyright>
         <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
         <Title>DotnetCore压缩包类库</Title>

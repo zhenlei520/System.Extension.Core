@@ -7,8 +7,8 @@
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <Company>zhenlei520</Company>
         <Description>dotnet core autofac mvc自动注入mysql</Description>
-        <RepositoryUrl></RepositoryUrl>
-        <PackageProjectUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/Infrastructure/EInfrastructure.Core.AutoFac.MySql.AspNetCore</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/src/Ioc/AutoFac</RepositoryUrl>
+        <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.AutoFac.MySql.AspNetCore/</PackageProjectUrl>
         <Copyright>Copyright ©zhenlei520 2018</Copyright>
         <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
         <Title>autofac mvc mysql自动注入</Title>
