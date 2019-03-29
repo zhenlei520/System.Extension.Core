@@ -1,57 +1,62 @@
-<a href="https://github.com/zhenlei520/System.Extension.Core/blob/master/Wiki/%e7%9b%ae%e5%bd%95.md">回到目录</a>
+<a href="https://github.com/zhenlei520/System.Extension.Core/blob/master/README.md">Home</a>
 
-# 存储服务 #
+# storage service #
+<p align="right"><a href="https://github.com/zhenlei520/System.Extension.Core/tree/master/src/Storage/QiNiu/README.zh-cn.md">Chinese</a></p>
 
-在Nuget包市场中搜索`EInfrastructure.Core、EInfrastructure.Core.AutoFac`，并安装最新版本
+In Nuget package market search ` EInfrastructure. Core, EInfrastructure. Core. The AutoFac `, and install the latest version
 
-### 七牛云存储 ###
-在Nuget包市场中搜索`EInfrastructure.Core.QiNiu.Storage`，并安装最新版本
-
-在Starup中ConfigureServices中添加AutoFac自动注入，实例为：  
+### qiniu storage ###
+In Nuget package market search `EInfrastructure.Core.QiNiu.Storage`, and install the latest version  
+  
+Add the AutoFac automatic injection in Starup ConfigureServices,  
+Example：  
     
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
 
-            第一种办法：
+            //The first method：
+
 			services.AddQiNiuStorage(qiniuConfig=>{
 				
-				#region 必填
-				qiniuConfig.AccessKey="七牛提供的公钥";
-				qiniuConfig.SecretKey="七牛提供的秘钥";
-				qiniuConfig.Zones="空间";
-				qiniuConfig.Host="文件访问域";
-				qiniuConfig.Bucket="存储的空间名";
+				#region required
+				qiniuConfig.AccessKey="Access Key";
+				qiniuConfig.SecretKey="Secret Key";
+				qiniuConfig.Zones="zone";
+				qiniuConfig.Host="file host";
+				qiniuConfig.Bucket="bucket";
 
 				#endregion
 
-				#region 选填
-				qiniuConfig.UserAgent="代理";
-				qiniuConfig.RsHost="七牛资源管理服务器地址";
-				qiniuConfig.RsfHost="七牛资源列表服务器地址";
-				qiniuConfig.PrefetchHost="空间";
-				qiniuConfig.PersistentPipeline="传输队列";
-				qiniuConfig.PersistentNotifyUrl="持久化结果通知";
-				qiniuConfig.CallbackUrl="上传成功后，七牛云向业务服务器发送 POST 请求的 URL";//其中CallbackHost属性不要赋值，会导致接收不到七牛回调
-				qiniuConfig.CallbackBody="回调内容";
-				qiniuConfig.CallbackBodyType="回调内容类型";
-				qiniuConfig.CallbackAuthHost="鉴权回调域";
+				#region optional
+				qiniuConfig.UserAgent="agent";
+				qiniuConfig.RsHost="Qiniu resource server address";
+				qiniuConfig.RsfHost="Qiniu resource list server address";
+				qiniuConfig.PrefetchHost="";
+				qiniuConfig.PersistentPipeline="Pipeline";
+				qiniuConfig.PersistentNotifyUrl="NotifyUrl";
+				qiniuConfig.CallbackUrl="";
+				qiniuConfig.CallbackBody="";
+				qiniuConfig.CallbackBodyType="";
+				qiniuConfig.CallbackAuthHost="auth host";
 				#endregion
 			});
 
-            第二种办法：
-                services.AddQiNiuStorage();//配置文件如下所示
+            //The second method：
+
+                services.AddQiNiuStorage();//The configuration file is shown belo
 
 		    this._serviceProvider = new AutofacAutoRegister().Build(services,
                 (builder) => { });
 
-            第三种办法：
-                services.AddQiNiuStorage(Configuration);//配置文件如下所示
+           //The third method：
+
+                services.AddQiNiuStorage(Configuration);//The configuration file is shown belo
 
 		    this._serviceProvider = new AutofacAutoRegister().Build(services,
                 (builder) => { });
 		}
 
-然后在配置文件（appsettings.json）中添加：
+Then in the configuration file (appsettings.json) add:
 
     {
         "QiNiuConfig": {
@@ -70,9 +75,7 @@
         },
     }
 
-
-通过控制器注入的方式可直接得到IStorageService，之后直接调用即可
-例如：
+Example：
 
 		public class TestController{
 			private readonly IStorageService _storageService;
@@ -82,6 +85,22 @@
 
 			public void Check()
 			{
-				_storageService.UploadStream(new UploadByStreamParam("文件key","文件Stream流",null));
+				_storageService.UploadStream(new UploadByStreamParam("key","file Stream",null));
 			}
 		} 
+
+Note: when IStorageService has multiple implementation classes, the reference may be ambiguous, such as if you want to specify the implementation class:
+
+		public class TestController{
+			private readonly IStorageService _storageService;
+			public TestController(ICollection<IStorageService> storageService){
+				_storageService=storageService.FirstOrDefault(x => x.GetIdentify() == "EInfrastructure.Core.QiNiu.Storage");
+			}
+
+			public void Check()
+			{
+				_storageService.UploadStream(new UploadByStreamParam("key","file Stream",null));
+			}
+		} 
+
+
