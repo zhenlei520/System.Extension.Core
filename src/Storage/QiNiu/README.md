@@ -19,8 +19,8 @@ Example：
 			services.AddQiNiuStorage(qiniuConfig=>{
 				
 				#region required
-				qiniuConfig.AccessKey="Access Key";
-				qiniuConfig.SecretKey="Secret Key";
+				qiniuConfig.AccessKey="access Key";
+				qiniuConfig.SecretKey="secret Key";
 				qiniuConfig.Zones="zone";
 				qiniuConfig.Host="file host";
 				qiniuConfig.Bucket="bucket";
@@ -29,11 +29,11 @@ Example：
 
 				#region optional
 				qiniuConfig.UserAgent="agent";
-				qiniuConfig.RsHost="Qiniu resource server address";
-				qiniuConfig.RsfHost="Qiniu resource list server address";
+				qiniuConfig.RsHost="qiniu resource server address";
+				qiniuConfig.RsfHost="qiniu resource list server address";
 				qiniuConfig.PrefetchHost="";
-				qiniuConfig.PersistentPipeline="Pipeline";
-				qiniuConfig.PersistentNotifyUrl="NotifyUrl";
+				qiniuConfig.PersistentPipeline="pipeline";
+				qiniuConfig.PersistentNotifyUrl="notifyUrl";
 				qiniuConfig.CallbackUrl="";
 				qiniuConfig.CallbackBody="";
 				qiniuConfig.CallbackBodyType="";
