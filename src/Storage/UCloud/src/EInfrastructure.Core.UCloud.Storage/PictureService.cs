@@ -1,6 +1,7 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.Interface.Storage;
@@ -27,7 +28,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <returns></returns>
         public string GetIdentify()
         {
-            return "ucloud_picture";
+            return AssemblyCommon.GetReflectedInfo().Namespace;
         }
 
         #endregion

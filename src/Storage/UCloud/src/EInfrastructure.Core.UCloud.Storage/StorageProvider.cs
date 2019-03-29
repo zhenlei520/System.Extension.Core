@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.Interface.Storage;
@@ -32,7 +33,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <returns></returns>
         public string GetIdentify()
         {
-            return "ucloud_storage";
+            return AssemblyCommon.GetReflectedInfo().Namespace;
         }
 
         #endregion

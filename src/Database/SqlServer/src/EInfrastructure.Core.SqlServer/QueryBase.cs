@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using EInfrastructure.Core.Data;
 using EInfrastructure.Core.Ddd;
+using EInfrastructure.Core.HelpCommon.Systems;
 using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.SqlServer
@@ -43,7 +44,7 @@ namespace EInfrastructure.Core.SqlServer
         /// <returns></returns>
         public string GetIdentify()
         {
-            return "entityframeworkcore.sqlserver";
+            return AssemblyCommon.GetReflectedInfo().Namespace;
         }
 
         #endregion

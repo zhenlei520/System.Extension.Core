@@ -8,6 +8,7 @@ using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.AliYun.DaYu.Model;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Serialization;
+using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Sms;
 using EInfrastructure.Core.Interface.Sms.Dto;
@@ -42,7 +43,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <returns></returns>
         public string GetIdentify()
         {
-            return "alidayu_sms";
+            return AssemblyCommon.GetReflectedInfo().Namespace;
         }
 
         #endregion

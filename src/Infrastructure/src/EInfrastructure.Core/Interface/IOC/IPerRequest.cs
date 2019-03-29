@@ -8,6 +8,6 @@ namespace EInfrastructure.Core.Interface.IOC
     /// </summary>
     public interface IPerRequest
     {
-         
+        
     }
 }

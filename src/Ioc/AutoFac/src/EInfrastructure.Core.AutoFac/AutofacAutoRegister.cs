@@ -26,7 +26,8 @@ namespace EInfrastructure.Core.AutoFac
         {
             var builder = new ContainerBuilder();
             var assemblys = AppDomain.CurrentDomain.GetAssemblies().ToArray();
-            
+
+
             var perRequestType = typeof(IPerRequest);
             builder.RegisterAssemblyTypes(assemblys)
                 .Where(t => perRequestType.IsAssignableFrom(t) && t != perRequestType)

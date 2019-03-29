@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using EInfrastructure.Core.Data;
 using EInfrastructure.Core.Ddd;
+using EInfrastructure.Core.HelpCommon.Systems;
 using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.MySql
@@ -42,7 +43,7 @@ namespace EInfrastructure.Core.MySql
         /// <returns></returns>
         public string GetIdentify()
         {
-            return "entityframeworkcore.mysql";
+            return AssemblyCommon.GetReflectedInfo().Namespace;
         }
 
         #endregion

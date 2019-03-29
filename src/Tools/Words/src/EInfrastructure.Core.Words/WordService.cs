@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.Interface.Words;
 using EInfrastructure.Core.Interface.Words.Enum;
 using EInfrastructure.Core.Words.Config;
@@ -31,7 +32,7 @@ namespace EInfrastructure.Core.Words
         /// <returns></returns>
         public string GetIdentify()
         {
-            return "words_word";
+            return AssemblyCommon.GetReflectedInfo().Namespace;
         }
 
         #endregion

@@ -54,5 +54,19 @@ namespace EInfrastructure.Core.HelpCommon.Systems
         }
 
         #endregion
+
+        #region 得到调用者信息
+
+        /// <summary>
+        /// 得到调用者信息
+        /// </summary>
+        /// <returns></returns>
+        public static Type GetReflectedInfo()
+        {
+            MethodBase method = new StackTrace().GetFrame(1).GetMethod();
+            return method.ReflectedType;
+        }
+
+        #endregion
     }
 }

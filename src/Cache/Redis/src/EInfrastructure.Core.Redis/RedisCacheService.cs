@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Serialization;
+using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.Interface.Cache;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Redis.Common;
@@ -50,7 +51,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public string GetIdentify()
         {
-            return "redis_cache";
+            return AssemblyCommon.GetReflectedInfo().Namespace;
         }
 
         #endregion

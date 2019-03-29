@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.Interface;
 using EInfrastructure.Core.Interface.Cache;
 using EInfrastructure.Core.Interface.IOC;
@@ -36,7 +37,7 @@ namespace EInfrastructure.Core.MemoryCache
         /// <returns></returns>
         public string GetIdentify()
         {
-            return "memory_cache";
+            return AssemblyCommon.GetReflectedInfo().Namespace;
         }
 
         #endregion

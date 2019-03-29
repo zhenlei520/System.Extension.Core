@@ -7,6 +7,7 @@ using System.Net;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Files;
 using EInfrastructure.Core.HelpCommon.Serialization;
+using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.Interface.ContentIdentification;
 using EInfrastructure.Core.Interface.ContentIdentification.Dto;
 using EInfrastructure.Core.Interface.ContentIdentification.Enum;
@@ -53,7 +54,7 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         /// <returns></returns>
         public string GetIdentify()
         {
-            return "baidu_content_identification";
+            return AssemblyCommon.GetReflectedInfo().Namespace;
         }
 
         #endregion

@@ -4,6 +4,7 @@
 using System;
 using System.Text;
 using EInfrastructure.Core.HelpCommon.Randoms.Interface;
+using EInfrastructure.Core.HelpCommon.Systems;
 
 namespace EInfrastructure.Core.HelpCommon.Randoms
 {
@@ -24,7 +25,7 @@ namespace EInfrastructure.Core.HelpCommon.Randoms
         {
             _random = new System.Random();
         }
-
+        
         #region 生成随机数字
 
         /// <summary>

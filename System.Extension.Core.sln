@@ -94,6 +94,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AliMaMa", "AliMaMa", "{BE0A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AliYun.Tbk", "src\Marketing\AliMaMa\src\EInfrastructure.Core.AliYun.Tbk\EInfrastructure.Core.AliYun.Tbk.csproj", "{A899C7D2-A798-4B3F-A416-ACA36F366CE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Test", "src\Infrastructure\test\EInfrastructure.Core.Test\EInfrastructure.Core.Test.csproj", "{E987F188-7D71-4E9C-82A5-FE2AD0556F64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -134,6 +136,7 @@ Global
 		{370B05B4-57B8-4104-AD74-08FBF6CEC51E} = {94D802FC-B9DB-4AB4-ABFA-8A5487EA1353}
 		{BE0A7BEA-EDD7-4568-81BD-B863FF7F44D2} = {A434B55D-6F96-4A85-A710-C483C4570A23}
 		{A899C7D2-A798-4B3F-A416-ACA36F366CE2} = {BE0A7BEA-EDD7-4568-81BD-B863FF7F44D2}
+		{E987F188-7D71-4E9C-82A5-FE2AD0556F64} = {A4334682-4470-4071-B962-594D3CE7D28A}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AEDA49CB-AB8A-4A3C-87A2-DECA5EA1B613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -236,5 +239,9 @@ Global
 		{A899C7D2-A798-4B3F-A416-ACA36F366CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A899C7D2-A798-4B3F-A416-ACA36F366CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A899C7D2-A798-4B3F-A416-ACA36F366CE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E987F188-7D71-4E9C-82A5-FE2AD0556F64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E987F188-7D71-4E9C-82A5-FE2AD0556F64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E987F188-7D71-4E9C-82A5-FE2AD0556F64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E987F188-7D71-4E9C-82A5-FE2AD0556F64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

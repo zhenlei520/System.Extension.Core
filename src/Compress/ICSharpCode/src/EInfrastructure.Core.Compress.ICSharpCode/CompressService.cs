@@ -3,6 +3,7 @@
 
 using System.IO;
 using EInfrastructure.Core.Compress.ICSharpCode.Zip;
+using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.Interface.Compress;
 using EInfrastructure.Core.Interface.Compress.Enum;
 
@@ -21,7 +22,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <returns></returns>
         public string GetIdentify()
         {
-            return "compress_icsharp_code";
+            return AssemblyCommon.GetReflectedInfo().Namespace;
         }
 
         #endregion
