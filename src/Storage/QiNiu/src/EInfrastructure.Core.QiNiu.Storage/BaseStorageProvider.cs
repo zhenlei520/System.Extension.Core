@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.Interface.Storage.Config;
 using EInfrastructure.Core.Interface.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Config;
@@ -17,11 +18,15 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// </summary>
     public class BaseStorageProvider
     {
+        protected readonly ILogService _logService;
+
         /// <summary>
         /// 
         /// </summary>
-        public BaseStorageProvider(QiNiuStorageConfig qiNiuConfig)
+        public BaseStorageProvider(ILogService logService, QiNiuStorageConfig qiNiuConfig)
         {
+            _logService = logService;
+            
             QiNiuConfig = qiNiuConfig;
 
             Mac = new Mac(QiNiuConfig.AccessKey, QiNiuConfig.SecretKey);

@@ -12,6 +12,18 @@ namespace EInfrastructure.Core.Interface.ContentIdentification
     /// </summary>
     public interface IAuthenticateDemoService
     {
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        string GetIdentify();
+
+        #endregion
+
+        #region 鉴定图片信息
+
         /// <summary>
         /// 鉴定图片信息
         /// </summary>
@@ -20,6 +32,10 @@ namespace EInfrastructure.Core.Interface.ContentIdentification
         /// <param name="cookie">cookie信息</param>
         /// <returns></returns>
         ContentInfoDto ImgAuthenticateByUrl(string url, WebProxy webProxy = null, string cookie = "");
+
+        #endregion
+
+        #region 鉴定图片信息（根据图片base64,带data:image/jpeg;base64,）
 
         /// <summary>
         /// 鉴定图片信息（根据图片base64,带data:image/jpeg;base64,）
@@ -30,6 +46,10 @@ namespace EInfrastructure.Core.Interface.ContentIdentification
         /// <returns></returns>
         ContentInfoDto ImgAuthenticateByBase64(string base64, WebProxy webProxy = null, string cookie = "");
 
+        #endregion
+
+        #region 鉴定图片信息
+
         /// <summary>
         /// 鉴定图片信息
         /// </summary>
@@ -38,5 +58,7 @@ namespace EInfrastructure.Core.Interface.ContentIdentification
         /// <param name="cookie">cookie信息</param>
         /// <returns></returns>
         ContentInfoDto ImgAuthenticateByFile(IFormFile formFile, WebProxy webProxy = null, string cookie = "");
+
+        #endregion
     }
 }

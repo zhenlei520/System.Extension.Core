@@ -13,6 +13,19 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
     /// </summary>
     public class CompressService : BaseZipCompressService, ICompressService
     {
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            return "compress_icsharp_code";
+        }
+
+        #endregion
+        
         #region 压缩文件
 
         /// <summary>

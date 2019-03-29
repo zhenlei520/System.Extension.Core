@@ -5,6 +5,7 @@ using System;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Serialization;
+using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.WeChat.Common;
 using EInfrastructure.Core.WeChat.Config;
 using EInfrastructure.Core.WeChat.Enum;
@@ -18,6 +19,14 @@ namespace EInfrastructure.Core.WeChat
     /// </summary>
     public class WebChatProcessRequest
     {
+        private readonly ILogService _logService;
+
+        public WebChatProcessRequest(ILogService logService)
+        {
+            _logService = logService;
+        }
+        
+        
         #region 处理用户消息
 
         /// <summary>
@@ -44,7 +53,7 @@ namespace EInfrastructure.Core.WeChat
             }
             catch (System.Exception e)
             {
-                LogCommon.Error("接受用户信息错误：", e);
+                _logService.Error("接受用户信息错误：", e);
             }
 
             return refundReponse;
@@ -65,7 +74,7 @@ namespace EInfrastructure.Core.WeChat
             string token = wxConfig.Token; //从配置文件获取Token
             if (string.IsNullOrEmpty(token))
             {
-                LogCommon.Error("WeixinToken 配置项没有配置！");
+                _logService.Error("WeixinToken 配置项没有配置！");
             }
 
             if (CheckSignature(token, chatAuthConfig.Signature, chatAuthConfig.Timestamp, chatAuthConfig.Nonce) &&
@@ -173,7 +182,7 @@ namespace EInfrastructure.Core.WeChat
 
                 if (!loginResult.Success)
                 {
-                    LogCommon.Warn("[微信登陆失败]\r\n请求参数：" + getAccessTokenUrl + "\r\n返回参数：" +
+                    _logService.Warn("[微信登陆失败]\r\n请求参数：" + getAccessTokenUrl + "\r\n返回参数：" +
                                    new JsonCommon().Serializer(getAccessTokenResult, true));
                 }
             }

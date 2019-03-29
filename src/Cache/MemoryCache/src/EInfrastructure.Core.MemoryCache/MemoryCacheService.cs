@@ -27,6 +27,19 @@ namespace EInfrastructure.Core.MemoryCache
         {
             _cache = cache;
         }
+        
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            return "memory_cache";
+        }
+
+        #endregion
 
         #region String
 

@@ -72,7 +72,6 @@
               <e p="ImageCommon.cs" t="Include" />
             </e>
             <e p="ListCommon.cs" t="Include" />
-            <e p="LogCommon.cs" t="Include" />
             <e p="MathCommon.cs" t="Include" />
             <e p="MimeTypeCommon.cs" t="Include" />
             <e p="NumberTypeCommon.cs" t="Include" />
@@ -103,7 +102,6 @@
             </e>
             <e p="TaskExtend.cs" t="Include" />
             <e p="TimeCommon.cs" t="Include" />
-            <e p="TimeCommonExt.cs" t="Include" />
             <e p="TypeConversionCommon.cs" t="Include" />
             <e p="UniqueCommon.cs" t="Include" />
             <e p="UrlCommon.cs" t="Include" />
@@ -196,7 +194,6 @@
               <e p="IWordService.cs" t="Include" />
             </e>
           </e>
-          <e p="nlog.config" t="Include" />
           <e p="obj" t="ExcludeRecursive">
             <e p="Debug" t="Include">
               <e p="netstandard2.0" t="Include">
@@ -208,9 +205,6 @@
         </e>
         <e p="EInfrastructure.Core.Configuration" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />
-          <e p="config" t="Include">
-            <e p="LogConfig.cs" t="Include" />
-          </e>
           <e p="EInfrastructure.Core.Configuration.csproj" t="IncludeRecursive" />
           <e p="Enum" t="Include">
             <e p="AnimalEnum.cs" t="Include" />
@@ -238,6 +232,7 @@
       </e>
       <e p="test" t="Include">
         <e p="EInfrastructure.Core.Test" t="IncludeRecursive">
+          <e p="AnimalUnitTest.cs" t="Include" />
           <e p="bin" t="ExcludeRecursive" />
           <e p="EInfrastructure.Core.Test.csproj" t="IncludeRecursive" />
           <e p="obj" t="ExcludeRecursive">

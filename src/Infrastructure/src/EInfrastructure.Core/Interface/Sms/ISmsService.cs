@@ -12,6 +12,18 @@ namespace EInfrastructure.Core.Interface.Sms
     /// </summary>
     public interface ISmsService
     {
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        string GetIdentify();
+
+        #endregion
+
+        #region 指定短信列表发送短信
+
         /// <summary>
         /// 指定短信列表发送短信
         /// </summary>
@@ -24,6 +36,10 @@ namespace EInfrastructure.Core.Interface.Sms
         bool Send(List<string> phoneNumbers, string templateCode, object content,
             Action<SendSmsLoseDto> loseAction = null, string smsConfigJson = "");
 
+        #endregion
+
+        #region 指定单个手机号发送短信
+
         /// <summary>
         /// 指定单个手机号发送短信
         /// </summary>
@@ -35,5 +51,7 @@ namespace EInfrastructure.Core.Interface.Sms
         /// <returns></returns>
         bool Send(string phoneNumber, string templateCode, object content, Action<SendSmsLoseDto> loseAction = null,
             string smsConfigJson = "");
+
+        #endregion
     }
 }

@@ -42,6 +42,19 @@ namespace EInfrastructure.Core.Redis
             CsRedisHelper.InitializeConfiguration(redisConfig);
         }
 
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            return "redis_cache";
+        }
+
+        #endregion
+        
         #region Methods
 
         #region String

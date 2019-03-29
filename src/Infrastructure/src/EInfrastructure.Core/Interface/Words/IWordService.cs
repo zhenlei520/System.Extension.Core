@@ -12,12 +12,28 @@ namespace EInfrastructure.Core.Interface.Words
     /// </summary>
     public interface IWordService : ISingleInstance
     {
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        string GetIdentify();
+
+        #endregion
+
+        #region 得到文字首字母
+
         /// <summary>
         /// 得到文字首字母
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
         string GetFirstPinYin(string text);
+
+        #endregion
+
+        #region 得到完整的拼音
 
         /// <summary>
         /// 得到完整的拼音
@@ -26,12 +42,20 @@ namespace EInfrastructure.Core.Interface.Words
         /// <returns></returns>
         string GetPinYin(string text);
 
+        #endregion
+
+        #region 获取拼音全拼, 不支持多音,中文字符集为[0x4E00,0x9FA5]
+
         /// <summary>
         /// 获取拼音全拼, 不支持多音,中文字符集为[0x4E00,0x9FA5]
         /// </summary>
         /// <param name="text">文本信息</param>
         /// <returns></returns>
         string GetPinYinFast(string text);
+
+        #endregion
+
+        #region 获取文字的全部拼音（多读音）
 
         /// <summary>
         /// 获取文字的全部拼音（多读音）
@@ -40,12 +64,20 @@ namespace EInfrastructure.Core.Interface.Words
         /// <returns></returns>
         List<string> GetAllPinYin(char text);
 
+        #endregion
+
+        #region 得到中文简体
+
         /// <summary>
         /// 得到中文简体
         /// </summary>
         /// <param name="text">文本信息</param>
         /// <returns></returns>
         string GetSimplified(string text);
+
+        #endregion
+
+        #region 得到中文繁体
 
         /// <summary>
         /// 得到中文繁体
@@ -54,12 +86,20 @@ namespace EInfrastructure.Core.Interface.Words
         /// <returns></returns>
         string GetTraditional(string text);
 
+        #endregion
+
+        #region 得到日文
+
         /// <summary>
         /// 得到日文
         /// </summary>
         /// <param name="text">文本信息</param>
         /// <returns></returns>
         string GetJapanese(string text);
+
+        #endregion
+
+        #region 判断是否在范围之内
 
         /// <summary>
         /// 判断是否在范围之内
@@ -69,6 +109,10 @@ namespace EInfrastructure.Core.Interface.Words
         /// <returns></returns>
         bool IsExist(string text, int[] unicodeRange);
 
+        #endregion
+
+        #region 判断是否在范围之内
+
         /// <summary>
         /// 判断是否在范围之内
         /// </summary>
@@ -76,6 +120,10 @@ namespace EInfrastructure.Core.Interface.Words
         /// <param name="wordTypeList">文本类型集合</param>
         /// <returns></returns>
         bool IsExist(string text, List<WordTypeEnum> wordTypeList);
+
+        #endregion
+
+        #region 判断是否存在某种文字
 
         /// <summary>
         /// 判断是否存在某种文字
@@ -85,6 +133,10 @@ namespace EInfrastructure.Core.Interface.Words
         /// <returns></returns>
         bool IsExist(string text, TextTypesEnum textType);
 
+        #endregion
+
+        #region 判断是否全部在范围内
+
         /// <summary>
         /// 判断是否全部在范围内
         /// </summary>
@@ -92,6 +144,10 @@ namespace EInfrastructure.Core.Interface.Words
         /// <param name="unicodeRange">范围</param>
         /// <returns></returns>
         bool IsAll(string text, int[] unicodeRange);
+
+        #endregion
+
+        #region 判断是否全部在范围内（至少满足一组需要全部包含）
 
         /// <summary>
         /// 判断是否全部在范围内（至少满足一组需要全部包含）
@@ -101,6 +157,10 @@ namespace EInfrastructure.Core.Interface.Words
         /// <returns></returns>
         bool IsAll(string text, List<WordTypeEnum> wordTypeList);
 
+        #endregion
+
+        #region 判断是否全部都是某种文字
+
         /// <summary>
         /// 判断是否全部都是某种文字
         /// </summary>
@@ -109,12 +169,20 @@ namespace EInfrastructure.Core.Interface.Words
         /// <returns></returns>
         bool IsAll(string text, TextTypesEnum textType);
 
+        #endregion
+
+        #region 得到字典内容
+
         /// <summary>
         /// 得到字典内容
         /// </summary>
         /// <param name="path">文件绝对地址</param>
         /// <returns></returns>
         string GetDicContent(string path);
+
+        #endregion
+
+        #region 得到字典内容
 
         /// <summary>
         /// 得到字典内容
@@ -123,12 +191,20 @@ namespace EInfrastructure.Core.Interface.Words
         /// <returns></returns>
         string GetDicContent(string[] path);
 
+        #endregion
+
+        #region 数字转中文大写
+
         /// <summary>
         /// 数字转中文大写
         /// </summary>
         /// <param name="x">数字信息</param>
         /// <returns></returns>
         string ToChineseRmb(double x);
+
+        #endregion
+
+        #region 中文转数字（支持中文大写）
 
         /// <summary>
         /// 中文转数字（支持中文大写）
@@ -137,6 +213,10 @@ namespace EInfrastructure.Core.Interface.Words
         /// <returns></returns>
         decimal ToNumber(string chineseString);
 
+        #endregion
+
+        #region 半角转全角
+
         /// <summary>
         /// 半角转全角
         /// </summary>
@@ -144,11 +224,17 @@ namespace EInfrastructure.Core.Interface.Words
         /// <returns></returns>
         string ToSbc(string input);
 
+        #endregion
+
+        #region 转半角的函数
+
         /// <summary>
         /// 转半角的函数
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         string ToDbc(string input);
+
+        #endregion
     }
 }

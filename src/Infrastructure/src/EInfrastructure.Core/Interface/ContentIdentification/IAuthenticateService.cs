@@ -8,5 +8,14 @@ namespace EInfrastructure.Core.Interface.ContentIdentification
     /// </summary>
     public interface IAuthenticateService
     {
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        string GetIdentify();
+
+        #endregion
     }
 }

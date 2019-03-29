@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static string GetAnimalFromBirthday(int year)
         {
-            List<string> animateList = EnumCommon.ToDictionary<AnimalEnum>().Select(x => x.Value).ToList();
+            List<string> animateList = EnumCommon.ToDescriptionDictionary<AnimalEnum>().Select(x => x.Value).ToList();
             int tmp = year - 2008;
             if (year < 2008)
                 return animateList[tmp % 12 + 12];

@@ -10,6 +10,18 @@ namespace EInfrastructure.Core.Interface.Storage
     /// </summary>
     public interface IPictureService
     {
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        string GetIdentify();
+
+        #endregion
+
+        #region 根据图片base64流上传图片
+
         /// <summary>
         /// 根据图片base64流上传图片
         /// </summary>
@@ -17,11 +29,17 @@ namespace EInfrastructure.Core.Interface.Storage
         /// <returns></returns>
         bool Upload(UploadByBase64Param param);
 
+        #endregion
+
+        #region 抓取资源到空间
+
         /// <summary>
         /// 抓取资源到空间
         /// </summary>
         /// <param name="fetchFileParam">资源信息</param>
         /// <returns></returns>
         bool FetchFile(FetchFileParam fetchFileParam);
+
+        #endregion
     }
 }

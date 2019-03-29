@@ -3,6 +3,7 @@
 
 using System.Linq;
 using EInfrastructure.Core.Configuration.Key;
+using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -30,10 +31,12 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
     public class ClaimQiNiuRequirementFilter : IAuthorizationFilter
     {
         private readonly QiNiuStorageConfig _qiNiuConfig;
+        private readonly ILogService _logService;
 
-        public ClaimQiNiuRequirementFilter(QiNiuStorageConfig qiNiuConfig)
+        public ClaimQiNiuRequirementFilter(ILogService logService, QiNiuStorageConfig qiNiuConfig)
         {
             _qiNiuConfig = qiNiuConfig;
+            _logService = logService;
         }
 
         public void OnAuthorization(AuthorizationFilterContext context)
@@ -48,7 +51,8 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
             }
 
             string callbackUrl = _qiNiuConfig.CallbackAuthHost + context.HttpContext.Request.Path.Value;
-            string authorization = new Auth(new BaseStorageProvider(_qiNiuConfig).Mac).CreateManageToken(callbackUrl);
+            string authorization =
+                new Auth(new BaseStorageProvider(_logService, _qiNiuConfig).Mac).CreateManageToken(callbackUrl);
 
             if (authorization != qiNiuAuthorization)
             {

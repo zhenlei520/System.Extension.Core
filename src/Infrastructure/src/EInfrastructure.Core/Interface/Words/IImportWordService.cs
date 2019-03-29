@@ -10,9 +10,23 @@ namespace EInfrastructure.Core.Interface.Words
     /// </summary>
     public interface IImportWordService : ISingleInstance
     {
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        string GetIdentify();
+
+        #endregion
+
+        #region 导入搜狗词库（导入path下的词库文件）
+
         /// <summary>
         /// 导入搜狗词库（导入path下的词库文件）
         /// </summary>
         bool ImportBySouGou(string path);
+
+        #endregion
     }
 }

@@ -34,6 +34,19 @@ namespace EInfrastructure.Core.AliYun.DaYu
 
         readonly RestClient _restClient = new RestClient("http://dysmsapi.aliyuncs.com");
 
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            return "alidayu_sms";
+        }
+
+        #endregion
+        
         #region 指定短信列表发送短信
 
         /// <summary>

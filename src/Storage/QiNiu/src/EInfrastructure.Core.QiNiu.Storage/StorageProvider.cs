@@ -3,6 +3,7 @@
 
 using System;
 using EInfrastructure.Core.Interface.IOC;
+using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.Interface.Storage;
 using EInfrastructure.Core.Interface.Storage.Param;
 using EInfrastructure.Core.QiNiu.Storage.Config;
@@ -20,9 +21,22 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 文件实现类
         /// </summary>
-        public StorageProvider(QiNiuStorageConfig qiNiuConfig) : base(qiNiuConfig)
+        public StorageProvider(ILogService logService, QiNiuStorageConfig qiNiuConfig) : base(logService, qiNiuConfig)
         {
         }
+        
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            return "qiniu_storage";
+        }
+
+        #endregion
 
         #region 根据文件流上传
 

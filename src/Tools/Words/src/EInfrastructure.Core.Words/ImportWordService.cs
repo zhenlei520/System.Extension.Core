@@ -27,6 +27,19 @@ namespace EInfrastructure.Core.Words
             _wordService = wordService;
         }
 
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            return "words_importword";
+        }
+
+        #endregion
+        
         #region 导入搜狗词库（导入path下的词库文件）
 
         /// <summary>

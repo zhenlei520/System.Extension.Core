@@ -23,6 +23,19 @@ namespace EInfrastructure.Core.Words
         {
         }
 
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            return "words_word";
+        }
+
+        #endregion
+        
         #region 得到文字首字母
 
         /// <summary>

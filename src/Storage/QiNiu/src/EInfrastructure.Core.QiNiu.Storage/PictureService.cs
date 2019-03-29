@@ -3,6 +3,7 @@
 
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Interface.IOC;
+using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.Interface.Storage;
 using EInfrastructure.Core.Interface.Storage.Param.Pictures;
 using EInfrastructure.Core.QiNiu.Storage.Config;
@@ -20,9 +21,22 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 图片服务
         /// </summary>
-        public PictureService(QiNiuStorageConfig qiNiuConfig) : base(qiNiuConfig)
+        public PictureService(ILogService logService,QiNiuStorageConfig qiNiuConfig) : base(logService,qiNiuConfig)
         {
         }
+        
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            return "qiniu_picture";
+        }
+
+        #endregion
 
         #region 根据图片base64上传
 
@@ -60,7 +74,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             {
                 case (int) HttpCode.OK:
                 case (int) HttpCode.CALLBACK_FAILED:
-                    LogCommon.Info($"上传code为：{ret.Code}");
+                    _logService.Info($"上传code为：{ret.Code}");
                     return true;
                 default:
                     return false;

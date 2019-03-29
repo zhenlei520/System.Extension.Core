@@ -12,6 +12,16 @@ namespace EInfrastructure.Core.Interface.Cache
     /// </summary>
     public interface ICacheService
     {
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        string GetIdentify();
+
+        #endregion
+        
         #region String
 
         #region 同步方法

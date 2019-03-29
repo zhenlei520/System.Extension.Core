@@ -8,8 +8,18 @@ namespace EInfrastructure.Core.Interface.Log
     /// <summary>
     /// 日志服务
     /// </summary>
-    public interface ILogService : IPerRequest
+    public interface ILogService : IPerRequest, ISingleInstance
     {
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        string GetIdentify();
+
+        #endregion
+        
         #region 增加error文件日志
 
         /// <summary>

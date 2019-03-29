@@ -12,6 +12,18 @@ namespace EInfrastructure.Core.Interface.Compress
     /// </summary>
     public interface ICompressService : ISingleInstance
     {
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        string GetIdentify();
+
+        #endregion
+
+        #region 压缩文件
+
         /// <summary>
         /// 压缩文件
         /// </summary>
@@ -31,6 +43,10 @@ namespace EInfrastructure.Core.Interface.Compress
             string password = "", int compressionLevel = 5, int blockSize = 2048,
             CompressTypeEnum compressType = CompressTypeEnum.Zip);
 
+        #endregion
+
+        #region 压缩多个文件
+
         /// <summary>
         /// 压缩多个文件
         /// </summary>
@@ -49,6 +65,10 @@ namespace EInfrastructure.Core.Interface.Compress
             bool overWrite = true, bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048,
             CompressTypeEnum compressType = CompressTypeEnum.Zip);
+
+        #endregion
+
+        #region 压缩指定文件夹下的文件
 
         /// <summary>
         /// 压缩指定文件夹下的文件
@@ -72,6 +92,10 @@ namespace EInfrastructure.Core.Interface.Compress
             string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048,
             CompressTypeEnum compressType = CompressTypeEnum.Zip);
 
+        #endregion
+
+        #region 压缩指定文件夹（压缩为单个压缩包）
+
         /// <summary>
         /// 压缩指定文件夹（压缩为单个压缩包）
         /// </summary>
@@ -90,6 +114,10 @@ namespace EInfrastructure.Core.Interface.Compress
             string password = "", int compressionLevel = 5,
             CompressTypeEnum compressType = CompressTypeEnum.Zip);
 
+        #endregion
+
+        #region 文件压缩解压
+
         /// <summary>
         /// 文件压缩解压
         /// </summary>
@@ -100,5 +128,7 @@ namespace EInfrastructure.Core.Interface.Compress
         /// <param name="compressType">压缩方式（默认zip）</param>
         void DeCompress(string zipFile, string targetDirectory, string password = "", bool overWrite = true,
             CompressTypeEnum compressType = CompressTypeEnum.Zip);
+
+        #endregion
     }
 }

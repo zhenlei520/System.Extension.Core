@@ -1,9 +1,11 @@
-﻿namespace EInfrastructure.Core.Redis.Config
+﻿using EInfrastructure.Core.AutomationConfiguration.Interface;
+
+namespace EInfrastructure.Core.Redis.Config
 {
     /// <summary>
     /// Redis配置
     /// </summary>
-    public class RedisConfig
+    public class RedisConfig : ISingletonConfigModel
     {
         /// <summary>
         /// Ip地址

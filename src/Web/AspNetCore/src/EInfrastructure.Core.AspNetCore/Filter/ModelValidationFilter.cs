@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Exception;
-using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Interface.Log;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace EInfrastructure.Core.AspNetCore.Filter
@@ -12,6 +12,13 @@ namespace EInfrastructure.Core.AspNetCore.Filter
     /// </summary>
     public class ModelValidationFilter
     {
+        private readonly ILogService _logService;
+
+        public ModelValidationFilter(ILogService logService)
+        {
+            _logService = logService;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -50,11 +57,11 @@ namespace EInfrastructure.Core.AspNetCore.Filter
                 byte[] byts = new byte[context.HttpContext.Request.Body.Length];
                 context.HttpContext.Request.Body.Read(byts, 0, byts.Length);
                 string param = System.Text.Encoding.Default.GetString(byts);
-                LogCommon.Error($"模型校验异常，请求接口路径：{context.HttpContext.Request.Scheme}，请求参数：{param}");
+                _logService.Error($"模型校验异常，请求接口路径：{context.HttpContext.Request.Scheme}，请求参数：{param}");
             }
             catch (System.Exception e)
             {
-                LogCommon.Error("模型校验异常，处理日志异常");
+                _logService.Error("模型校验异常，处理日志异常");
             }
         }
     }

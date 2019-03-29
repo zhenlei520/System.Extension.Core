@@ -45,6 +45,19 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
             _request.AddParameter("type", "user_defined");
         }
 
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            return "baidu_content_identification";
+        }
+
+        #endregion
+        
         #region 鉴定图片信息
 
         #region 鉴定图片信息（根据图片地址）

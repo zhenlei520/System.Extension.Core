@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Interface.IOC;
+using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.Interface.Storage;
 using EInfrastructure.Core.Interface.Storage.Param.Pictures;
 using EInfrastructure.Core.UCloud.Storage.Config;
@@ -13,9 +14,23 @@ namespace EInfrastructure.Core.UCloud.Storage
     /// </summary>
     public class PictureService : BaseStorageProvider, IPictureService, ISingleInstance
     {
-        public PictureService(UCloudStorageConfig uCloudConfig) : base(uCloudConfig)
+        public PictureService(ILogService logService, UCloudStorageConfig uCloudConfig) : base(logService,
+            uCloudConfig)
         {
         }
+        
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            return "ucloud_picture";
+        }
+
+        #endregion
 
         #region 根据图片base64上传
 

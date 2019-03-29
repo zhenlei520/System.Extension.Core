@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
-using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
 using EInfrastructure.Core.UCloud.Storage.Common;
 using EInfrastructure.Core.UCloud.Storage.Config;
@@ -18,6 +18,8 @@ namespace EInfrastructure.Core.UCloud.Storage
     /// </summary>
     public class BaseStorageProvider
     {
+        protected readonly ILogService _logService;
+
         /// <summary>
         /// UCloud配置
         /// </summary>
@@ -26,8 +28,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 基类UCloud实现
         /// </summary>
-        public BaseStorageProvider(UCloudStorageConfig uCloudConfig)
+        public BaseStorageProvider(ILogService logService, UCloudStorageConfig uCloudConfig)
         {
+            _logService = logService;
             _uCloudConfig = uCloudConfig;
             new UCloudConfigValidator().Validate(_uCloudConfig).Check();
         }
@@ -57,13 +60,13 @@ namespace EInfrastructure.Core.UCloud.Storage
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     string e = FormatString(body);
-                    LogCommon.Error(string.Format("{0} {1}", response.StatusDescription, e));
+                    _logService.Error(string.Format("{0} {1}", response.StatusDescription, e));
                     return false;
                 }
             }
             catch (System.Exception e)
             {
-                LogCommon.Error(e.ToString());
+                _logService.Error(e.ToString());
                 return false;
             }
             finally
