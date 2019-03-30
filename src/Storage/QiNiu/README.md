@@ -19,8 +19,8 @@ Example：
 			services.AddQiNiuStorage(qiniuConfig=>{
 				
 				#region required
-				qiniuConfig.AccessKey="access Key";
-				qiniuConfig.SecretKey="secret Key";
+				qiniuConfig.AccessKey="access key";
+				qiniuConfig.SecretKey="secret key";
 				qiniuConfig.Zones="zone";
 				qiniuConfig.Host="file host";
 				qiniuConfig.Bucket="bucket";

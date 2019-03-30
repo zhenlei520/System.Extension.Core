@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.RegularExpressions;
+using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
 {
@@ -25,7 +26,7 @@ namespace EInfrastructure.Core.HelpCommon
             {
                 if (action == null || action.Invoke())
                 {
-                    throw new System.Exception(message);
+                    throw new BusinessException(message);
                 }
             }
         }
@@ -47,7 +48,7 @@ namespace EInfrastructure.Core.HelpCommon
             {
                 if (action == null || action.Invoke())
                 {
-                    throw new System.Exception(message);
+                    throw new BusinessException(message);
                 }
             }
         }
@@ -67,6 +68,23 @@ namespace EInfrastructure.Core.HelpCommon
                 {
                     throw new System.Exception(message);
                 }
+            }
+        }
+
+        #endregion
+
+        #region 检查是否为假
+
+        /// <summary>
+        /// 检查是否为假
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="errorMessageFormat"></param>
+        public static void True(bool status, string errorMessageFormat)
+        {
+            if (!status)
+            {
+                throw new BusinessException(string.Format(errorMessageFormat));
             }
         }
 

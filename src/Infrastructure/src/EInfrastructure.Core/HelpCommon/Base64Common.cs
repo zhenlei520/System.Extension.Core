@@ -8,11 +8,11 @@ using System.Linq;
 namespace EInfrastructure.Core.HelpCommon
 {
     /// <summary>
-    /// base64编码方式
+    /// base64 coding scheme
     /// </summary>
     public class Base64Common
     {
-        private static readonly IDictionary<string, string> Mappings =
+        private static IDictionary<string, string> Mappings =
             new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
             {
                 {"data:image/jpeg;base64", "image/jpeg"},
@@ -24,6 +24,66 @@ namespace EInfrastructure.Core.HelpCommon
                 {"data:text/html;base64", "text/html"},
             };
 
+        #region reset data
+
+        /// <summary>
+        /// reset data
+        /// </summary>
+        public static void Reset()
+        {
+            Mappings = new Dictionary<string, string>();
+        }
+
+        #endregion
+
+        #region Set base64 coding scheme
+
+        /// <summary>
+        /// Set base64 coding scheme
+        /// </summary>
+        /// <param name="maps"></param>
+        public static void Set(Dictionary<string, string> maps)
+        {
+            Mappings = maps;
+        }
+
+        #endregion
+
+        #region Get Base64 Coding Scheme
+
+        /// <summary>
+        /// Get Base64 Coding Scheme
+        /// </summary>
+        /// <returns></returns>
+        public static IDictionary<string, string> Get()
+        {
+            return Mappings;
+        }
+
+        #endregion
+
+        #region Add coding Scheme
+
+        /// <summary>
+        /// Add coding Scheme
+        /// </summary>
+        /// <param name="maps"></param>
+        /// <param name="isReplace">The default to replace</param>
+        public static void Add(Dictionary<string, string> maps, bool isReplace = true)
+        {
+            foreach (var map in maps)
+            {
+                if (isReplace && Mappings.All(x => x.Key == map.Key))
+                {
+                    Mappings.Remove(map.Key);
+                }
+
+                Mappings.Add(map);
+            }
+        }
+
+        #endregion
+        
         #region GetBaseEncoding
 
         /// <summary>

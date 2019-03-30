@@ -1,4 +1,4 @@
-<a href="https://github.com/zhenlei520/System.Extension.Core/blob/master/README.md">回到目录</a>
+<a href="https://github.com/zhenlei520/System.Extension.Core/blob/master/README.zh-cn.md">回到目录</a>
 
 # 存储服务 #
 <p align="right"><a href="https://github.com/zhenlei520/System.Extension.Core/tree/master/src/Storage/QiNiu/README.md">英文</a></p>
@@ -89,8 +89,8 @@
 
 		public class TestController{
 			private readonly IStorageService _storageService;
-			public TestController(ICollection<IStorageService> storageService){
-				_storageService=storageService.FirstOrDefault(x => x.GetIdentify() == "EInfrastructure.Core.QiNiu.Storage");
+			public TestController(ICollection<IStorageService> storageServices){
+				_storageService=storageServices.FirstOrDefault(x => x.GetIdentify() == "EInfrastructure.Core.QiNiu.Storage");
 			}
 
 			public void Check()

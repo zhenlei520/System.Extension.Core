@@ -129,7 +129,7 @@ namespace EInfrastructure.Core.HelpCommon
     public static bool IsAuspiciousNumber(int number, List<int> auspiciousNumberList = null)
     {
       var auspiciousNumberListTemp = auspiciousNumberList ?? AuspiciousNumberList;
-      Assert.NotNull(auspiciousNumberListTemp, "吉祥号码规则未设置");
+      auspiciousNumberListTemp.IsNullOrEmptyTip("吉祥号码规则未设置");
       if (auspiciousNumberListTemp != null && auspiciousNumberListTemp.Contains(number))
         return true;
       return false;

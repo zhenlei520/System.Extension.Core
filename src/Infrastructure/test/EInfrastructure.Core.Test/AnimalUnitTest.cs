@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using EInfrastructure.Core.HelpCommon;
 using Xunit;
-using Assert = Xunit.Assert;
 
 namespace EInfrastructure.Core.Test
 {
@@ -26,7 +25,7 @@ namespace EInfrastructure.Core.Test
         [InlineData(2008)]
         public void GetAnimal(int year)
         {
-            Assert.True(AnimalCommon.GetAnimalFromBirthday(year) == GetAnimal2(year));
+            Check.True(AnimalCommon.GetAnimalFromBirthday(year) == GetAnimal2(year),"animal is error");
         }
 
         /// <summary>
@@ -45,7 +44,5 @@ namespace EInfrastructure.Core.Test
         }
 
         #endregion
-        
-        
     }
 }
