@@ -12,7 +12,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator
         {
             RuleFor(x => x.Ip).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
                 .WithMessage("Redis主机信息异常");
-            RuleFor(x => x.Port).Cascade(CascadeMode.StopOnFirstFailure).Equal(0)
+            RuleFor(x => x.Port).Cascade(CascadeMode.StopOnFirstFailure).NotEqual(0)
                 .WithMessage("Redis端口信息异常");
         }
     }
