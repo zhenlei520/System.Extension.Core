@@ -36,7 +36,7 @@ namespace EInfrastructure.Core.Words.Config.Text
         /// <summary>
         /// 字典词库配置
         /// </summary>
-        private static DictTextPathConfig Config;
+        private static DictTextPathConfig Config = new DictTextPathConfig();
 
         /// <summary>
         /// 设置字典词库
@@ -44,10 +44,7 @@ namespace EInfrastructure.Core.Words.Config.Text
         /// <param name="pathConfig">地址</param>
         internal static void Set(DictTextPathConfig pathConfig)
         {
-            if (pathConfig == null)
-            {
-                Config = new DictTextPathConfig();
-            }
+            Config = Get();
 
             Config.SimplifiedPath = string.IsNullOrEmpty(pathConfig.SimplifiedPath)
                 ? "Dict/Text/simplified.txt"

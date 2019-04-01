@@ -28,6 +28,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             _logService = logService;
             
             QiNiuConfig = qiNiuConfig;
+            new QiNiuConfigValidator().Validate(qiNiuConfig).Check();
 
             Mac = new Mac(QiNiuConfig.AccessKey, QiNiuConfig.SecretKey);
 
@@ -52,7 +53,6 @@ namespace EInfrastructure.Core.QiNiu.Storage
 
             #endregion
 
-            new QiNiuConfigValidator().Validate(qiNiuConfig).Check();
 
             #endregion
         }

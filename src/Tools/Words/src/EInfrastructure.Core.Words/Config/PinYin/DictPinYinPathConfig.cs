@@ -44,10 +44,7 @@ namespace EInfrastructure.Core.Words.Config.PinYin
         /// <param name="pathConfig">文字拼音词库</param>
         public void Set(DictPinYinPathConfig pathConfig)
         {
-            if (pathConfig == null)
-            {
-                pathConfig = new DictPinYinPathConfig();
-            }
+            pathConfig = Get();
 
             pathConfig.PinYinNamePath = string.IsNullOrEmpty(pathConfig.PinYinNamePath)
                 ? "Dict/PinYin/pinyinName.txt"

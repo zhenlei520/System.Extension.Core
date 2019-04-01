@@ -44,11 +44,16 @@ namespace EInfrastructure.Core.Words.Extension
         /// </summary>
         public BaseWordService(EWordConfig wordConfig)
         {
+            if (wordConfig == null)
+            {
+                wordConfig = new EWordConfig();
+            }
+
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            DictTextPathConfig.Set(wordConfig.DictTextPathConfig);
-            DictPinYinPathConfig.Set(wordConfig.DictPinYinPathConfig);
             DictTextPathConfig = DictTextPathConfig.Get();
             DictPinYinPathConfig = DictPinYinPathConfig.Get();
+            DictTextPathConfig.Set(wordConfig.DictTextPathConfig);
+            DictPinYinPathConfig.Set(wordConfig.DictPinYinPathConfig);
             if (DictConfig == null)
             {
                 Reload(DictTypeEnum.Text);

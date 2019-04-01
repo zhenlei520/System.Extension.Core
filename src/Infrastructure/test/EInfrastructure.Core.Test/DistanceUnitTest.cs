@@ -19,8 +19,8 @@ namespace EInfrastructure.Core.Test
         /// <param name="lat2"></param>
         /// <param name="lng2"></param>
         [Theory]
-        [InlineData(34.772586d, 113.636379d, 34.777745, 113.611227)]
-        [InlineData(34.777448, 113.618773, 34.774483, 113.623516)]
+        [InlineData(34.772058d, 113.734792d, 34.788907d, 113.787664d)]
+        [InlineData(34.780589d, 113.796848d, 34.784607d, 113.695997d)]
         public void GetDistance(double lat1, double lng1, double lat2, double lng2)
         {
             var result = DistanceCommon.GetDistance(lat1, lng1, lat2, lng2);
