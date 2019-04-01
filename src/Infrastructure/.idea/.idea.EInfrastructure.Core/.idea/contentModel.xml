@@ -34,6 +34,7 @@
             <e p="IExecute.cs" t="Include" />
             <e p="IQuery.cs" t="Include" />
             <e p="IRepository.cs" t="Include" />
+            <e p="ISpatialDimensionQuery.cs" t="Include" />
             <e p="IUnitOfWork.cs" t="Include" />
             <e p="Repository" t="Include">
               <e p="AddAndUpdates.cs" t="Include" />

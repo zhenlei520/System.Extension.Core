@@ -9,38 +9,40 @@ namespace EInfrastructure.Core.MySql.Test
     /// </summary>
     public class SpatialDimensionQueryUnitTest
     {
-        private readonly ISpatialDimensionQuery _spatialDimensionQuery;
+        private readonly ISpatialDimensionQuery<User, int> _spatialDimensionQuery;
 
-        private SpatialDimensionQueryUnitTest()
+        public SpatialDimensionQueryUnitTest()
         {
         }
 
         [Fact]
         public void Test1()
         {
-            _spatialDimensionQuery.GetList<User>(new SpatialDimensionParam()
+            _spatialDimensionQuery.GetPageData<User>(new SpatialDimensionPagingParam()
             {
                 TableName = "point2",
                 Distance = 1000,
                 FileKeys = new List<KeyValuePair<string, string>>()
                 {
-                    new KeyValuePair<string, string>("id","Id"),
-                    new KeyValuePair<string, string>("lng","Lng"),
-                    new KeyValuePair<string, string>("lat","Lat"),
-                    new KeyValuePair<string, string>("title","Title")
+                    new KeyValuePair<string, string>("id", "Id"),
+                    new KeyValuePair<string, string>("lng", "Lng"),
+                    new KeyValuePair<string, string>("lat", "Lat"),
+                    new KeyValuePair<string, string>("title", "Title")
                 },
                 DistanceAlias = "Distance",
-                Location = new KeyValuePair<decimal, decimal>(113.734792m,34.772058m),
-                Point = new KeyValuePair<string, string>("Lng","Lat"),
+                Location = new KeyValuePair<decimal, decimal>(113.734792m, 34.772058m),
+                Point = new KeyValuePair<string, string>("Lng", "Lat"),
                 Sorts = new List<KeyValuePair<string, bool>>()
                 {
-                    new KeyValuePair<string, bool>("Distance",true),
-                    new KeyValuePair<string, bool>("Id",false)
-                }
+                    new KeyValuePair<string, bool>("Distance", true),
+                    new KeyValuePair<string, bool>("Id", false)
+                },
+                PageSize = 20,
+                PageIndex = 1
             });
         }
 
-        public class User
+        public class User : Entity<int>
         {
             public string Name { get; set; }
         }

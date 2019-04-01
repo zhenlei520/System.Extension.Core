@@ -33,6 +33,11 @@ namespace EInfrastructure.Core.AutoFac.MySql
 
                 builder.RegisterType<ExecuteBase>().As<IExecute>().PropertiesAutowired()
                     .InstancePerLifetimeScope();
+
+                builder.RegisterGeneric(typeof(SpatialDimensionQuery<,>)).As(typeof(ISpatialDimensionQuery<,>))
+                    .PropertiesAutowired()
+                    .InstancePerLifetimeScope();
+
                 action(builder);
             });
         }

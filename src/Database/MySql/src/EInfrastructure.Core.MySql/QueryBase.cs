@@ -64,6 +64,7 @@ namespace EInfrastructure.Core.MySql
             }
             else
             {
+               
                 return Dbcontext.Set<TEntity>().AsNoTracking()
                     .FirstOrDefault(condition);
             }
