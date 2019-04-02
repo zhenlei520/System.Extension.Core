@@ -42,17 +42,17 @@ namespace EInfrastructure.Core.Ddd
     public class SpatialDimensionParam
     {
         /// <summary>
-        /// Table name
+        /// Table name *
         /// </summary>
         public string TableName { get; set; }
 
         /// <summary>
-        /// Query property set
+        /// Query property set *
         /// </summary>
         public List<KeyValuePair<string, string>> FileKeys { get; set; }
 
         /// <summary>
-        /// Longtitude And Latitude
+        /// Longtitude And Latitude *
         /// Key:Longtitude
         /// Value:Latitude
         /// </summary>
@@ -67,22 +67,28 @@ namespace EInfrastructure.Core.Ddd
 
         /// <summary>
         /// The current position
-        /// Longtitude And Latitude
+        /// Longtitude And Latitude *
         /// Key:Longtitude
         /// Value:Latitude
         /// </summary>
         public KeyValuePair<decimal, decimal> Location { get; set; }
 
         /// <summary>
-        /// 
+        /// The DistanceAlias cannot be empty
         /// </summary>
         public string DistanceAlias { get; set; } = "distance";
 
         /// <summary>
-        /// distance unit：m
-        /// the default 500 m
+        /// max distance,unit：m
+        /// the default 500 m,
         /// </summary>
         public decimal Distance { get; set; } = 500;
+        
+        /// <summary>
+        /// min distance,unit：m
+        /// the default 0 m
+        /// </summary>
+        public decimal MinDistance { get; set; } = 0;
     }
 
     /// <summary>

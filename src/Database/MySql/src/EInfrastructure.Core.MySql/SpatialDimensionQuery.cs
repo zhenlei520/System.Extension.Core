@@ -99,7 +99,7 @@ namespace EInfrastructure.Core.MySql
         }
 
         #endregion
-        
+
         #region private methods
 
         #region Check Param
@@ -115,8 +115,9 @@ namespace EInfrastructure.Core.MySql
             Check.True(!(string.IsNullOrEmpty(param.DistanceAlias)),
                 "The DistanceAlias cannot be empty");
             Check.True(!(param.Point.Equals(default(KeyValuePair<string, string>))), "The Point cannot be empty");
-            Check.True(param.Distance > 0, "The distance has to be greater than 0");
-            Check.True(!(param.Location.Equals(default(KeyValuePair<decimal, decimal>))), "The Location Is Error");
+            Check.True(param.Distance > 0 || param.Distance == -1, "The distance has to be greater than 0 or equal -1");
+            Check.True(param.MinDistance > 0, "The distance has to be greater than 0");
+            Check.True(!param.Location.Equals(default(KeyValuePair<decimal, decimal>)), "The Location Is Error");
         }
 
         #endregion
@@ -140,7 +141,12 @@ namespace EInfrastructure.Core.MySql
             stringBuilder.Append(
                 $"((st_distance (point (epointTable.{param.Point.Key}, epointTable.{param.Point.Value}),point({param.Location.Key},{param.Location.Value}) ) / 0.0111)*1000) AS '{param.DistanceAlias}'");
             stringBuilder.Append($" FROM {param.TableName} as {tableAlias}");
-            stringBuilder.Append($" HAVING {param.DistanceAlias}<{param.Distance}");
+            stringBuilder.Append($" HAVING {param.DistanceAlias}>{param.MinDistance}");
+            if (param.Distance != -1)
+            {
+                stringBuilder.Append($" And {param.DistanceAlias}<{param.Distance}");
+            }
+
             bool isFirst = true;
             param.Sorts?.ForEach(item =>
             {
