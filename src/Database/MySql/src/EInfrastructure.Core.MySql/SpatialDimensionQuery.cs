@@ -116,7 +116,7 @@ namespace EInfrastructure.Core.MySql
                 "The DistanceAlias cannot be empty");
             Check.True(!(param.Point.Equals(default(KeyValuePair<string, string>))), "The Point cannot be empty");
             Check.True(param.Distance > 0 || param.Distance == -1, "The distance has to be greater than 0 or equal -1");
-            Check.True(param.MinDistance > 0, "The distance has to be greater than 0");
+            Check.True(param.MinDistance >= 0, "The distance has to be greater than 0 or equals 0");
             Check.True(!param.Location.Equals(default(KeyValuePair<decimal, decimal>)), "The Location Is Error");
         }
 
