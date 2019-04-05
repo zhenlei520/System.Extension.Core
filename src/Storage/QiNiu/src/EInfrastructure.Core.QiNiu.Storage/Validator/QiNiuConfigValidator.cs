@@ -20,16 +20,19 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator
                 .WithMessage("AccessKey信息异常");
             RuleFor(x => x.SecretKey).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
                 .WithMessage("SecretKey信息异常");
-            RuleFor(x => x.Zones).Cascade(CascadeMode.StopOnFirstFailure)
-                .Must(item => !((int) item).IsExist(typeof(ZoneEnum))).WithMessage("AccessKey Secret信息异常");
+
+            RuleFor(x => (int) x.Zones)
+                .Must(enums => enums.IsExist(typeof(ZoneEnum))).WithMessage("Zones 信息异常");
+
             RuleFor(x => x.Bucket).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
                 .WithMessage("Bucket信息异常");
 
             RuleFor(x => x.CallbackBody).Cascade(CascadeMode.StopOnFirstFailure)
-                .Must(string.IsNullOrEmpty).WithMessage("CallbackBody信息异常")
+                .Must(item => !string.IsNullOrEmpty(item)).WithMessage("CallbackBody信息异常")
                 .When(item => !string.IsNullOrEmpty(item.CallbackUrl));
-            RuleFor(x => x.CallbackBodyType).Cascade(CascadeMode.StopOnFirstFailure)
-                .Must(item => !((int) item).IsExist(typeof(CallbackBodyTypeEnum))).WithMessage("CallbackBodyType信息异常")
+
+            RuleFor(x => (int) x.CallbackBodyType).Cascade(CascadeMode.StopOnFirstFailure)
+                .Must(enums => enums.IsExist(typeof(CallbackBodyTypeEnum))).WithMessage("CallbackBodyType信息异常")
                 .When(item => !string.IsNullOrEmpty(item.CallbackUrl));
         }
     }

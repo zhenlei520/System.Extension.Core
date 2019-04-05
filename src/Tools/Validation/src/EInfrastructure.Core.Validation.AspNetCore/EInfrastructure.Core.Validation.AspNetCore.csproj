@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\Web\AspNetCore\src\EInfrastructure.Core.AspNetCore\EInfrastructure.Core.AspNetCore.csproj" />
+      <ProjectReference Include="..\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj" />
+    </ItemGroup>
+
+</Project>

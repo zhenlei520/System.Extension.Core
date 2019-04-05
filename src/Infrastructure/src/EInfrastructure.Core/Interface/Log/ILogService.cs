@@ -1,14 +1,12 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using EInfrastructure.Core.Interface.IOC;
-
 namespace EInfrastructure.Core.Interface.Log
 {
     /// <summary>
     /// 日志服务
     /// </summary>
-    public interface ILogService : IPerRequest, ISingleInstance
+    public interface ILogService 
     {
         #region 得到实现类唯一标示
 
