@@ -223,5 +223,35 @@ namespace EInfrastructure.Core.HelpCommon.Files
         }
 
         #endregion
+        
+        #region 获取文件内容
+
+        /// <summary>
+        /// 获取文件内容
+        /// </summary>
+        /// <param name="filePath">文件地址</param>
+        /// <returns></returns>
+        public static string GetFileContent(string filePath)
+        {
+            string result = "";
+            try
+            {
+                using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    using (StreamReader reader = new StreamReader(fs))
+                    {
+                        result = reader.ReadLine();
+                    }
+                }
+            }
+            catch
+            {
+                result = "";
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }
