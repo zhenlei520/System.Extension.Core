@@ -320,26 +320,26 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static DateTime Get(this DateTime? dateTime, TimeType timeKey)
         {
-            DateTime dateNow = dateTime ?? DateTime.Now.Date; //当前时间  
+            DateTime dateNow = dateTime ?? DateTime.Now.Date; //当前时间
             switch (timeKey)
             {
                 case TimeType.StartYear:
-                    return new DateTime(dateNow.Year, 1, 1); //本年年初  
+                    return new DateTime(dateNow.Year, 1, 1); //本年年初
                 case TimeType.EndYear:
-                    return new DateTime(dateNow.Year, 12, 31); //本年年末  
+                    return new DateTime(dateNow.Year, 12, 31); //本年年末
                 case TimeType.StartQuarter:
                     return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day); //本季度初;
                 case TimeType.EndQuarter:
                     return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day).AddMonths(3)
-                        .AddDays(-1); //本季度末  
+                        .AddDays(-1); //本季度末
                 case TimeType.StartMonth:
-                    return dateNow.AddDays(1 - dateNow.Day); //本月月初  
+                    return dateNow.AddDays(1 - dateNow.Day); //本月月初
                 case TimeType.EndMonth:
-                    return dateNow.AddDays(1 - dateNow.Day).AddMonths(1).AddDays(-1); //本月月末  
+                    return dateNow.AddDays(1 - dateNow.Day).AddMonths(1).AddDays(-1); //本月月末
                 case TimeType.StartWeek:
-                    return dateNow.AddDays(1 - Convert.ToInt32(dateNow.DayOfWeek.ToString("d"))); //本周周一  
+                    return dateNow.AddDays(1 - Convert.ToInt32(dateNow.DayOfWeek.ToString("d"))); //本周周一
                 case TimeType.EndWeek:
-                    return dateNow.AddDays(1 - Convert.ToInt32(dateNow.DayOfWeek.ToString("d"))).AddDays(6); //本周周日  
+                    return dateNow.AddDays(1 - Convert.ToInt32(dateNow.DayOfWeek.ToString("d"))).AddDays(6); //本周周日
                 default:
                     return dateNow;
             }
@@ -791,7 +791,7 @@ namespace EInfrastructure.Core.HelpCommon
             StartWeek = 3,
 
             /// <summary>
-            /// 本周周日  
+            /// 本周周日
             /// </summary>
             EndWeek = 4,
 
@@ -831,7 +831,7 @@ namespace EInfrastructure.Core.HelpCommon
             if (time == null)
                 time = DateTime.Now;
             var startTime = CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind));
-            long t = (time.Value.Ticks - startTime.Ticks) / 10000; //除10000调整为13位      
+            long t = (time.Value.Ticks - startTime.Ticks) / 10000; //除10000调整为13位
             return t;
         }
 
@@ -940,6 +940,22 @@ namespace EInfrastructure.Core.HelpCommon
                 };
             }
 
+            return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
+        }
+
+        #endregion
+
+        #region 获取当前是周几
+
+        /// <summary>
+        /// 获取当前是周几
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="days">从周日到周六</param>
+        /// <returns></returns>
+        public static Enum GetDayName(this DateTime date,
+            Enum[] days = null)
+        {
             return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
         }
 
