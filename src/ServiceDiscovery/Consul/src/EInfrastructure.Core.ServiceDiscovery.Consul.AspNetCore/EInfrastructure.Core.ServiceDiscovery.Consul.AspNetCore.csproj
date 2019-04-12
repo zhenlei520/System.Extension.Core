@@ -26,6 +26,7 @@
         <PackageReference Include="Microsoft.AspNetCore.Mvc">
             <Version>2.1.1</Version>
         </PackageReference>
+      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\Tools\Validation\src\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj" />

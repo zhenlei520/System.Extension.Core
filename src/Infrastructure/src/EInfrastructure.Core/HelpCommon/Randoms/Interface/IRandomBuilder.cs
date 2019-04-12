@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using EInfrastructure.Core.Interface.IOC;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.HelpCommon.Randoms.Interface
 {

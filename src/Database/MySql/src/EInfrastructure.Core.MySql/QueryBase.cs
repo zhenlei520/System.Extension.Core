@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using EInfrastructure.Core.Data;
-using EInfrastructure.Core.Ddd;
+using EInfrastructure.Core.Config.EntitiesExtensions;
+using EInfrastructure.Core.Configuration.Data;
 using EInfrastructure.Core.HelpCommon.Systems;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,19 +22,19 @@ namespace EInfrastructure.Core.MySql
         where T : IComparable
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected DbContext Dbcontext;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork">工作单元</param>
         public QueryBase(IUnitOfWork unitOfWork)
         {
             this.Dbcontext = unitOfWork as DbContext;
         }
-        
+
         #region 得到唯一标示
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace EInfrastructure.Core.MySql
         }
 
         #endregion
-        
+
         #region 根据条件得到满足条件的单条信息
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace EInfrastructure.Core.MySql
             }
             else
             {
-               
+
                 return Dbcontext.Set<TEntity>().AsNoTracking()
                     .FirstOrDefault(condition);
             }

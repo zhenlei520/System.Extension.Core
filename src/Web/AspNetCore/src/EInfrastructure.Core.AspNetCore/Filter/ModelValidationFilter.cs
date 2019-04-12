@@ -1,8 +1,8 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Exception;
-using EInfrastructure.Core.Interface.Log;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace EInfrastructure.Core.AspNetCore.Filter

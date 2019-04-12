@@ -3,9 +3,9 @@
 
 using System.IO;
 using EInfrastructure.Core.Compress.ICSharpCode.Zip;
+using EInfrastructure.Core.Config.CompressExtensions;
+using EInfrastructure.Core.Config.CompressExtensions.Enum;
 using EInfrastructure.Core.HelpCommon.Systems;
-using EInfrastructure.Core.Interface.Compress;
-using EInfrastructure.Core.Interface.Compress.Enum;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode
 {
@@ -26,7 +26,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         }
 
         #endregion
-        
+
         #region 压缩文件
 
         /// <summary>

@@ -3,11 +3,10 @@
 
 using System;
 using System.IO;
+using EInfrastructure.Core.Config.StorageExtensions;
+using EInfrastructure.Core.Config.StorageExtensions.Param;
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon.Systems;
-using EInfrastructure.Core.Interface.IOC;
-using EInfrastructure.Core.Interface.Log;
-using EInfrastructure.Core.Interface.Storage;
-using EInfrastructure.Core.Interface.Storage.Param;
 using EInfrastructure.Core.UCloud.Storage.Config;
 
 namespace EInfrastructure.Core.UCloud.Storage
@@ -37,7 +36,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         }
 
         #endregion
-        
+
         #region 根据文件流上传
 
         /// <summary>

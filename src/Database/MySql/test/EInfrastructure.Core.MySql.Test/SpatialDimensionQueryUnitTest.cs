@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using EInfrastructure.Core.Ddd;
+using EInfrastructure.Core.Config.EntitiesExtensions;
 using Xunit;
 
 namespace EInfrastructure.Core.MySql.Test
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class SpatialDimensionQueryUnitTest
     {

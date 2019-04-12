@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EInfrastructure.Core.Data;
-using EInfrastructure.Core.Ddd;
+using EInfrastructure.Core.Config.EntitiesExtensions;
+using EInfrastructure.Core.Configuration.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.SqlServer

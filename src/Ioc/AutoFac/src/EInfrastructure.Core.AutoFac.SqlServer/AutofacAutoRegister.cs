@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Autofac;
-using EInfrastructure.Core.Ddd;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using EInfrastructure.Core.Config.EntitiesExtensions;
 using EInfrastructure.Core.SqlServer;
 
 namespace EInfrastructure.Core.AutoFac.SqlServer

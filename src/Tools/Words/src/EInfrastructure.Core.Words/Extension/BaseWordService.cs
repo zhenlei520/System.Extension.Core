@@ -40,7 +40,7 @@ namespace EInfrastructure.Core.Words.Extension
         internal static DictPinYinPathConfig DictPinYinPathConfig;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public BaseWordService(EWordConfig wordConfig)
         {
@@ -144,7 +144,7 @@ namespace EInfrastructure.Core.Words.Extension
             }
             catch (System.Exception ex)
             {
-                throw new BusinessException("词语词库异常");
+                throw new BusinessException($"词语词库异常：{ex}");
             }
         }
 
@@ -174,7 +174,7 @@ namespace EInfrastructure.Core.Words.Extension
             }
             catch (System.Exception ex)
             {
-                throw new BusinessException("拼音词库异常");
+                throw new BusinessException($"拼音词库异常：{ex}");
             }
         }
 

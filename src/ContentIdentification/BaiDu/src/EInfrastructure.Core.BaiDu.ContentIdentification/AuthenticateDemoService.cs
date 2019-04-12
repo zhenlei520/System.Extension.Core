@@ -4,14 +4,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using EInfrastructure.Core.Config.IdentificationExtensions;
+using EInfrastructure.Core.Config.IdentificationExtensions.Dto;
+using EInfrastructure.Core.Config.IdentificationExtensions.Enum;
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Files;
 using EInfrastructure.Core.HelpCommon.Serialization;
 using EInfrastructure.Core.HelpCommon.Systems;
-using EInfrastructure.Core.Interface.ContentIdentification;
-using EInfrastructure.Core.Interface.ContentIdentification.Dto;
-using EInfrastructure.Core.Interface.ContentIdentification.Enum;
-using EInfrastructure.Core.Interface.IOC;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using RestSharp;
@@ -58,7 +58,7 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         }
 
         #endregion
-        
+
         #region 鉴定图片信息
 
         #region 鉴定图片信息（根据图片地址）

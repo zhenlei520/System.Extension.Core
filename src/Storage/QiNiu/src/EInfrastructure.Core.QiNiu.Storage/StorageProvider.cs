@@ -2,11 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using EInfrastructure.Core.Config.StorageExtensions;
+using EInfrastructure.Core.Config.StorageExtensions.Param;
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon.Systems;
-using EInfrastructure.Core.Interface.IOC;
-using EInfrastructure.Core.Interface.Log;
-using EInfrastructure.Core.Interface.Storage;
-using EInfrastructure.Core.Interface.Storage.Param;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Qiniu.Http;
 using Qiniu.Storage;
@@ -25,7 +24,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public StorageProvider(ILogService logService, QiNiuStorageConfig qiNiuConfig) : base(logService, qiNiuConfig)
         {
         }
-        
+
         #region 得到实现类唯一标示
 
         /// <summary>

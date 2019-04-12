@@ -1,11 +1,10 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Config.StorageExtensions;
+using EInfrastructure.Core.Config.StorageExtensions.Param.Pictures;
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon.Systems;
-using EInfrastructure.Core.Interface.IOC;
-using EInfrastructure.Core.Interface.Log;
-using EInfrastructure.Core.Interface.Storage;
-using EInfrastructure.Core.Interface.Storage.Param.Pictures;
 using EInfrastructure.Core.UCloud.Storage.Config;
 
 namespace EInfrastructure.Core.UCloud.Storage
@@ -19,7 +18,7 @@ namespace EInfrastructure.Core.UCloud.Storage
             uCloudConfig)
         {
         }
-        
+
         #region 得到实现类唯一标示
 
         /// <summary>

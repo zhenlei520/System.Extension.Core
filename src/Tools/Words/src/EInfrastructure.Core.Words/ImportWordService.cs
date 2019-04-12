@@ -1,8 +1,8 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Config.WordsExtensions;
 using EInfrastructure.Core.HelpCommon.Systems;
-using EInfrastructure.Core.Interface.Words;
 using EInfrastructure.Core.Words.Config;
 using EInfrastructure.Core.Words.Enum;
 using EInfrastructure.Core.Words.Extension;
@@ -40,7 +40,7 @@ namespace EInfrastructure.Core.Words
         }
 
         #endregion
-        
+
         #region 导入搜狗词库（导入path下的词库文件）
 
         /// <summary>

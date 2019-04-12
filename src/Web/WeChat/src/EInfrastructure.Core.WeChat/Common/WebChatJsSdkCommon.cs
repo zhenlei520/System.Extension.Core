@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using EInfrastructure.Core.Config.CacheExtensions;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.Interface.Cache;
 using EInfrastructure.Core.WeChat.Config;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,7 +13,7 @@ using RestSharp;
 namespace EInfrastructure.Core.WeChat.Common
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class WebChatJsSdkCommon
     {
@@ -21,12 +21,12 @@ namespace EInfrastructure.Core.WeChat.Common
         private readonly ICacheService _cacheService;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static RestClient RestClient = new RestClient("https://api.weixin.qq.com/");
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="config"></param>
         /// <param name="cacheService"></param>
@@ -37,7 +37,7 @@ namespace EInfrastructure.Core.WeChat.Common
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="cacheKey"></param>
         /// <returns></returns>
@@ -71,7 +71,7 @@ namespace EInfrastructure.Core.WeChat.Common
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="tickCacheKey"></param>
         /// <param name="tokenCacheKey"></param>
@@ -105,7 +105,7 @@ namespace EInfrastructure.Core.WeChat.Common
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="tickCacheKey"></param>
         /// <param name="tokenCacheKey"></param>

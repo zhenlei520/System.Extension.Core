@@ -14,15 +14,15 @@
     <Title>阿里大鱼短信类库</Title>
     <PackageTags>dayu ali sms</PackageTags>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DocumentationFile>bin\Debug\EInfrastructure.Core.AliYun.DaYu.xml</DocumentationFile>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DocumentationFile>bin\Release\EInfrastructure.Core.AliYun.DaYu.xml</DocumentationFile>
   </PropertyGroup>

@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Autofac;
-using EInfrastructure.Core.Ddd;
 using EInfrastructure.Core.MySql;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using EInfrastructure.Core.Config.EntitiesExtensions;
 
 namespace EInfrastructure.Core.AutoFac.MySql
 {

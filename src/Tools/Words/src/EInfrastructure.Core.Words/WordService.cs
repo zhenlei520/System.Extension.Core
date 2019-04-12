@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using EInfrastructure.Core.Config.WordsExtensions;
+using EInfrastructure.Core.Config.WordsExtensions.Enum;
 using EInfrastructure.Core.HelpCommon.Systems;
-using EInfrastructure.Core.Interface.Words;
-using EInfrastructure.Core.Interface.Words.Enum;
 using EInfrastructure.Core.Words.Config;
 using EInfrastructure.Core.Words.Extension;
 using EInfrastructure.Core.Words.PinYin;
@@ -20,6 +20,10 @@ namespace EInfrastructure.Core.Words
     /// </summary>
     public class WordService : BaseWordService, IWordService
     {
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="wordConfig"></param>
         public WordService(EWordConfig wordConfig) : base(wordConfig)
         {
         }
@@ -36,7 +40,7 @@ namespace EInfrastructure.Core.Words
         }
 
         #endregion
-        
+
         #region 得到文字首字母
 
         /// <summary>

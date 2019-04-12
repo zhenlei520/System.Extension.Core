@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using EInfrastructure.Core.Interface.IOC;
+using EInfrastructure.Core.Configuration.Ioc;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.AutoFac

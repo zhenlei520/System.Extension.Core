@@ -4,11 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EInfrastructure.Core.Config.CacheExtensions;
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Systems;
-using EInfrastructure.Core.Interface;
-using EInfrastructure.Core.Interface.Cache;
-using EInfrastructure.Core.Interface.IOC;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace EInfrastructure.Core.MemoryCache
@@ -21,14 +20,14 @@ namespace EInfrastructure.Core.MemoryCache
         private readonly IMemoryCache _cache;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="cache"></param>
         public MemoryCacheService(IMemoryCache cache)
         {
             _cache = cache;
         }
-        
+
         #region 得到实现类唯一标示
 
         /// <summary>
@@ -323,7 +322,7 @@ namespace EInfrastructure.Core.MemoryCache
         #region 存储数据到hash表
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
@@ -1040,7 +1039,7 @@ namespace EInfrastructure.Core.MemoryCache
 
         #region Basics
 
-        #region  删除指定Key的缓存    
+        #region  删除指定Key的缓存
 
         /// <summary>
         /// 删除指定Key的缓存

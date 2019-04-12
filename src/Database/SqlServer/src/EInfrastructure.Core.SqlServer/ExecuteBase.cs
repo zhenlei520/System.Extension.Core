@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using EInfrastructure.Core.Ddd;
+using EInfrastructure.Core.Config.EntitiesExtensions;
 using EInfrastructure.Core.HelpCommon;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,12 +16,12 @@ namespace EInfrastructure.Core.SqlServer
     public class ExecuteBase : IExecute
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected DbContext Dbcontext;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork">工作单元</param>
         public ExecuteBase(IUnitOfWork unitOfWork)

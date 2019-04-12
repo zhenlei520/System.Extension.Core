@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using EInfrastructure.Core.Data;
-using EInfrastructure.Core.Ddd;
+using EInfrastructure.Core.Config.EntitiesExtensions;
+using EInfrastructure.Core.Configuration.Data;
 using EInfrastructure.Core.HelpCommon;
 using Microsoft.EntityFrameworkCore;
 

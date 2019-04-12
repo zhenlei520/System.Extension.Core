@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using EInfrastructure.Core.Config.WordsExtensions;
 using EInfrastructure.Core.HelpCommon.Files;
-using EInfrastructure.Core.Interface.Words;
 using EInfrastructure.Core.Words.Extension.ImportDict.Common;
 
 namespace EInfrastructure.Core.Words.Extension.ImportDict
@@ -149,7 +149,7 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="list"></param>
         /// <param name="pyws"></param>

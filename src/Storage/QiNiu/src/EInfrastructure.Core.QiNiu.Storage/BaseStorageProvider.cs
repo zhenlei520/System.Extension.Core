@@ -1,10 +1,10 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Config.StorageExtensions.Config;
+using EInfrastructure.Core.Config.StorageExtensions.Enum;
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.Interface.Log;
-using EInfrastructure.Core.Interface.Storage.Config;
-using EInfrastructure.Core.Interface.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
 using EInfrastructure.Core.Validation.Common;
@@ -21,12 +21,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
         protected readonly ILogService _logService;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public BaseStorageProvider(ILogService logService, QiNiuStorageConfig qiNiuConfig)
         {
             _logService = logService;
-            
+
             QiNiuConfig = qiNiuConfig;
             new QiNiuConfigValidator().Validate(qiNiuConfig).Check();
 
@@ -63,7 +63,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         internal QiNiuStorageConfig QiNiuConfig;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         internal Mac Mac;
 

@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Serialization;
-using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.WeChat.Common;
 using EInfrastructure.Core.WeChat.Config;
 using EInfrastructure.Core.WeChat.Enum;

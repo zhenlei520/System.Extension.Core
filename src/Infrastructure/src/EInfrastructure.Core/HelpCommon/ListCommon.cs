@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EInfrastructure.Core.Data;
+using EInfrastructure.Core.Configuration.Data;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon

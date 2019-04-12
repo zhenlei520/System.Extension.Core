@@ -4,8 +4,6 @@
 using System;
 using System.Linq;
 using EInfrastructure.Core.Words.Config;
-using EInfrastructure.Core.Words.Config.PinYin;
-using EInfrastructure.Core.Words.Config.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

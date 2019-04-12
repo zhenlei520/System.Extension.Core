@@ -1,9 +1,8 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Config.CompressExtensions.Enum;
 using EInfrastructure.Core.Exception;
-using EInfrastructure.Core.Interface.Compress;
-using EInfrastructure.Core.Interface.Compress.Enum;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode
 {

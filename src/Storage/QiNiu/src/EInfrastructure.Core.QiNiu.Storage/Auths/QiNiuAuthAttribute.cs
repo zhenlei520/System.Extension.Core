@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Linq;
-using EInfrastructure.Core.Configuration.Key;
-using EInfrastructure.Core.Interface.Log;
+using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
     public class QiNiuAuthAttribute : TypeFilterAttribute
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public QiNiuAuthAttribute() : base(typeof(ClaimQiNiuRequirementFilter))
         {
@@ -26,7 +26,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class ClaimQiNiuRequirementFilter : IAuthorizationFilter
     {
@@ -67,11 +67,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
         /// <param name="context"></param>
         private void AuthLose(AuthorizationFilterContext context)
         {
-            context.HttpContext.Response.StatusCode = (int) CodeKey.NoAuthorization;
+            context.HttpContext.Response.StatusCode = (int) HttpStatusEnum.Unauthorized;
             context.Result =
                 new JsonResult(new
                 {
-                    Code = (int) CodeKey.NoAuthorization,
+                    Code = (int) HttpStatusEnum.Unauthorized,
                     Msg = "鉴权失败"
                 });
         }

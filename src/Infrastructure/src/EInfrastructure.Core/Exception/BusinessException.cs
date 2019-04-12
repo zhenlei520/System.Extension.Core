@@ -1,7 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using EInfrastructure.Core.Configuration.Key;
+using EInfrastructure.Core.Configuration.Enum;
 using EInfrastructure.Core.HelpCommon.Serialization;
 
 namespace EInfrastructure.Core.Exception
@@ -17,10 +17,9 @@ namespace EInfrastructure.Core.Exception
         /// </summary>
         /// <param name="code">状态码</param>
         /// <param name="content">异常详情</param>
-        public BusinessException(string content, int code = CodeKey.Err) :
-            base(new JsonCommon().Serializer(new { code = (int)code, content = content }))
+        public BusinessException(string content, int code = (int) HttpStatusEnum.Err) :
+            base(new JsonCommon().Serializer(new {code, content}))
         {
-
         }
     }
 }

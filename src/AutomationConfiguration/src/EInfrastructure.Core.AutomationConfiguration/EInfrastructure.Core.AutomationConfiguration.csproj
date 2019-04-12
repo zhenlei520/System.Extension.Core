@@ -1,23 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <Version>1.4.0-beta</Version>
-        <Authors>zhenlei520</Authors>
-        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-        <Company>zhenlei520</Company>
-        <Description>dotnet core 自动注入配置文件</Description>
-        <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/src/AutomationConfiguration</RepositoryUrl>
-        <PackageProjectUrl></PackageProjectUrl>
-        <Copyright>Copyright ©zhenlei520 2018</Copyright>
-        <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
-        <Title>自动注入配置</Title>
-        <PackageTags>EInfrastructure ECommon AutoConfig</PackageTags>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\..\Infrastructure\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
-      <ProjectReference Include="..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.4.0-beta</Version>
+    <Authors>zhenlei520</Authors>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Company>zhenlei520</Company>
+    <Description>dotnet core 自动注入配置文件</Description>
+    <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/src/AutomationConfiguration</RepositoryUrl>
+    <PackageProjectUrl></PackageProjectUrl>
+    <Copyright>Copyright ©zhenlei520 2018</Copyright>
+    <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
+    <Title>自动注入配置</Title>
+    <PackageTags>EInfrastructure ECommon AutoConfig</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj"/>
+  </ItemGroup>
 
 </Project>

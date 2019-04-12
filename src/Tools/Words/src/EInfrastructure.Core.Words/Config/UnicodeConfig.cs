@@ -1,13 +1,11 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-/**
- * 详细查看https://www.qqxiuzi.cn/zh/hanzi-unicode-bianma.php
- */
+// 详细查看https://www.qqxiuzi.cn/zh/hanzi-unicode-bianma.php
 
 using System;
 using System.Collections.Generic;
-using EInfrastructure.Core.Interface.Words.Enum;
+using EInfrastructure.Core.Config.WordsExtensions.Enum;
 
 namespace EInfrastructure.Core.Words.Config
 {

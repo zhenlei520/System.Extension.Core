@@ -1,12 +1,11 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Config.StorageExtensions;
+using EInfrastructure.Core.Config.StorageExtensions.Param.Pictures;
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Systems;
-using EInfrastructure.Core.Interface.IOC;
-using EInfrastructure.Core.Interface.Log;
-using EInfrastructure.Core.Interface.Storage;
-using EInfrastructure.Core.Interface.Storage.Param.Pictures;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Qiniu.Http;
 using Qiniu.Storage;
@@ -25,7 +24,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public PictureService(ILogService logService,QiNiuStorageConfig qiNiuConfig) : base(logService,qiNiuConfig)
         {
         }
-        
+
         #region 得到实现类唯一标示
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         }
 
         #endregion
-        
+
         #region 抓取资源到空间
 
         /// <summary>

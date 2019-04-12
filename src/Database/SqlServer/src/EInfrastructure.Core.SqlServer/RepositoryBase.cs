@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using EInfrastructure.Core.Ddd;
+using EInfrastructure.Core.Config.EntitiesExtensions;
 using EInfrastructure.Core.HelpCommon.Systems;
 using Microsoft.EntityFrameworkCore;
 

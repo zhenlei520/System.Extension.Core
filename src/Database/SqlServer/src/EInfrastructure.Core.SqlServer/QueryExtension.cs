@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using EInfrastructure.Core.Data;
+using EInfrastructure.Core.Config.EntitiesExtensions;
+using EInfrastructure.Core.Configuration.Data;
 using EInfrastructure.Core.Data.EntitiesExtension;
-using EInfrastructure.Core.Ddd;
 using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.SqlServer

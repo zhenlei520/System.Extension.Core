@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Globalization;
+using System.Linq;
 using EInfrastructure.Core.Configuration.Enum;
 using static System.TimeZone;
 
@@ -940,6 +941,22 @@ namespace EInfrastructure.Core.HelpCommon
                 };
             }
 
+            return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
+        }
+
+        #endregion
+
+        #region 获取当前是周几
+
+        /// <summary>
+        /// 获取当前是周几
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="days"></param>
+        /// <returns></returns>
+        public static WeekEnum GetDayName(this DateTime date)
+        {
+            var days = EnumCommon.ToDescriptionDictionary<WeekEnum>().Select(x => (WeekEnum) x.Key).ToArray();
             return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
         }
 
