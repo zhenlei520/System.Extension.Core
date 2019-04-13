@@ -1,35 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <Version>1.4.0-beta-003</Version>
-        <Authors>zhenlei520</Authors>
-        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-        <Company>zhenlei520</Company>
-        <Description>dotnet core autofac mvc自动注入mysql</Description>
-        <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/src/Ioc/AutoFac</RepositoryUrl>
-        <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.AutoFac.MySql.AspNetCore/</PackageProjectUrl>
-        <Copyright>Copyright ©zhenlei520 2018</Copyright>
-        <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
-        <Title>autofac mvc mysql自动注入</Title>
-        <PackageTags>autofac autofac.mysql </PackageTags>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>2.0.0-beta-001</Version>
+    <Authors>zhenlei520</Authors>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Company>zhenlei520</Company>
+    <Description>dotnet core autofac mvc自动注入mysql</Description>
+    <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/features/1.0/src/Ioc/AutoFac</RepositoryUrl>
+    <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.AutoFac.MySql.AspNetCore/</PackageProjectUrl>
+    <Copyright>Copyright ©zhenlei520 2018</Copyright>
+    <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
+    <Title>autofac mvc mysql自动注入</Title>
+    <PackageTags>autofac autofac.mysql</PackageTags>
+  </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DebugSymbols>true</DebugSymbols>
-      <DocumentationFile>bin\Debug\EInfrastructure.Core.AutoFac.MySql.AspNetCore.xml</DocumentationFile>
-    </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DocumentationFile>bin\Debug\EInfrastructure.Core.AutoFac.MySql.AspNetCore.xml</DocumentationFile>
+  </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\EInfrastructure.Core.AutoFac.MySql.AspNetCore.xml</DocumentationFile>
-    </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DocumentationFile>bin\Release\EInfrastructure.Core.AutoFac.MySql.AspNetCore.xml</DocumentationFile>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\EInfrastructure.Core.AutoFac.MySql\EInfrastructure.Core.AutoFac.MySql.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EInfrastructure.Core.AutoFac.MySql\EInfrastructure.Core.AutoFac.MySql.csproj"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1"/>
+  </ItemGroup>
 
 </Project>

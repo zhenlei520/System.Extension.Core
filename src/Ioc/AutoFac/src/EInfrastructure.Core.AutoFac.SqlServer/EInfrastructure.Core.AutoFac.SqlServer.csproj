@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.4.0-beta</Version>
+    <Version>2.0.0-beta-001</Version>
     <PackageReleaseNotes>sqlserver2012以上数据库</PackageReleaseNotes>
     <Description>dotnet core autofac 与sqlserver自动注入</Description>
     <Copyright>Copyright ©zhenlei520 2018</Copyright>
-    <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/src/Ioc/AutoFac</RepositoryUrl>
+    <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/features/1.0/src/Ioc/AutoFac</RepositoryUrl>
     <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.AutoFac.SqlServer/</PackageProjectUrl>
     <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
     <Title>Autofac sql自动注入</Title>
@@ -22,8 +22,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Database\SqlServer\src\EInfrastructure.Core.SqlServer\EInfrastructure.Core.SqlServer.csproj" />
-    <ProjectReference Include="..\EInfrastructure.Core.AutoFac\EInfrastructure.Core.AutoFac.csproj" />
+    <ProjectReference Include="..\..\..\..\Database\SqlServer\src\EInfrastructure.Core.SqlServer\EInfrastructure.Core.SqlServer.csproj"/>
+    <ProjectReference Include="..\EInfrastructure.Core.AutoFac\EInfrastructure.Core.AutoFac.csproj"/>
   </ItemGroup>
 
 </Project>

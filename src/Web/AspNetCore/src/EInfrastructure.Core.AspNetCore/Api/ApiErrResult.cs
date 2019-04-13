@@ -44,7 +44,7 @@ namespace EInfrastructure.Core.AspNetCore.Api
         /// <summary>
         /// 扩展信息
         /// </summary>
-        [JsonProperty(PropertyName = "extend",DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "extend", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public object Extend { get; set; }
     }
 }

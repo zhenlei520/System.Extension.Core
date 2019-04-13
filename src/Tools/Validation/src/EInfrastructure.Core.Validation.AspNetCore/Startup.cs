@@ -26,7 +26,7 @@ namespace EInfrastructure.Core.Validation.AspNetCore
         {
             services.Configure<ApiBehaviorOptions>(options =>
             {
-                options.InvalidModelStateResponseFactory = (context) =>
+                options.InvalidModelStateResponseFactory = context =>
                 {
                     List<IEnumerable<KeyValuePair<System.Exception, string>>> errors = context.ModelState.Values.Select(
                             x =>
