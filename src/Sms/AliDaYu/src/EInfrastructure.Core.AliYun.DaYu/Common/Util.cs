@@ -43,7 +43,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Common
 
             return signature;
 
-        } 
+        }
         #endregion
 
         #region 编码
@@ -58,7 +58,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Common
                 .Replace("+", "%20")
                 .Replace("*", "%2A")
                 .Replace("%7E", "~");
-        } 
+        }
         #endregion
 
         #region 转为大写
@@ -80,7 +80,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Common
                     }
                 }
             return new string(temp);
-        } 
+        }
         #endregion
 
         #region 排序
@@ -94,7 +94,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Common
             IDictionary<string, string> sortedDictionary =
                 new SortedDictionary<string, string>(dic, StringComparer.Ordinal);
             return sortedDictionary;
-        } 
+        }
         #endregion
 
         #region 构建公共参数
@@ -113,7 +113,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Common
                 {"SignatureNonce", Guid.NewGuid().ToString()}
             };
             return dic;
-        } 
+        }
         #endregion
     }
 }
