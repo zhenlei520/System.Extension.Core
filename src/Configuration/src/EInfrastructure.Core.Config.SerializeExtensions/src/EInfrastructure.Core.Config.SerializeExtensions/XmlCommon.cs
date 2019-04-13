@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace EInfrastructure.Core.HelpCommon.Serialization
+namespace EInfrastructure.Core.Config.SerializeExtensions
 {
     /// <summary>
     /// XML序列化 部分类

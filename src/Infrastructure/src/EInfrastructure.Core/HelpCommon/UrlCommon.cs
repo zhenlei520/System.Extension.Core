@@ -67,7 +67,7 @@ namespace EInfrastructure.Core.HelpCommon
         #region Url解码
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="target">待解密字符串</param>
         /// <returns></returns>

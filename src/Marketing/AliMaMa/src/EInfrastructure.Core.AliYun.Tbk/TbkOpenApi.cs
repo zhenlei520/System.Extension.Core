@@ -7,8 +7,8 @@ using System.Globalization;
 using EInfrastructure.Core.AliYun.Tbk.Param;
 using EInfrastructure.Core.AliYun.Tbk.Respose;
 using EInfrastructure.Core.AliYun.Tbk.Respose.Success;
+using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Exception;
-using EInfrastructure.Core.HelpCommon.Serialization;
 using RestSharp;
 
 namespace EInfrastructure.Core.AliYun.Tbk
@@ -23,7 +23,8 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// </summary>
         /// <param name="appKey">appKey</param>
         /// <param name="appSecret">app秘钥</param>
-        public TbkOpenApi(string appKey, string appSecret) : base(appKey, appSecret)
+        public TbkOpenApi(JsonProvider jsonCommon, string appKey, string appSecret) : base(jsonCommon, appKey,
+            appSecret)
         {
         }
 
@@ -440,7 +441,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
                 });
             if (!response.Contains("error_response"))
             {
-                return new JsonCommon().Deserialize<MaterialDto>(response);
+                return _jsonProvider.Deserialize<MaterialDto>(response);
             }
 
             return null;

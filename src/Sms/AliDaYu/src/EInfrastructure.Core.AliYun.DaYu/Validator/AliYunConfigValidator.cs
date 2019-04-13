@@ -4,7 +4,7 @@
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using FluentValidation;
 
-namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator
+namespace EInfrastructure.Core.AliYun.DaYu.Validator
 {
     /// <summary>
     /// 阿里大于短信配置校验

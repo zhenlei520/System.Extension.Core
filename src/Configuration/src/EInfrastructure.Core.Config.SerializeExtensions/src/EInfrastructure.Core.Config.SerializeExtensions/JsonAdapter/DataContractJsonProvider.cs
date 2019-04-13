@@ -2,11 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Runtime.Serialization.Json;
 using System.Text;
 
-namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
+namespace EInfrastructure.Core.Config.SerializeExtensions.JsonAdapter
 {
     internal class DataContractJsonProvider : IJsonProvider
     {
@@ -14,6 +16,22 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
         /// 默认格式 UTF8
         /// </summary>
         public Encoding EncodingFormat = Encoding.UTF8;
+
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            MethodBase method = new StackTrace().GetFrame(1).GetMethod();
+            return method.ReflectedType.Namespace;
+        }
+
+        #endregion
+
+        #region json序列化
 
         /// <summary>
         /// json序列化
@@ -31,6 +49,9 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
             }
         }
 
+        #endregion
+
+        #region json反序列化
 
         /// <summary>
         /// json反序列化
@@ -46,5 +67,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
                 return serializer.ReadObject(ms);
             }
         }
+
+        #endregion
     }
 }

@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.DaYu.Common;
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.AliYun.DaYu.Model;
+using EInfrastructure.Core.AliYun.DaYu.Validator;
+using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.SmsExtensions;
 using EInfrastructure.Core.Config.SmsExtensions.Dto;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.HelpCommon.Serialization;
 using EInfrastructure.Core.HelpCommon.Systems;
-using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
 using EInfrastructure.Core.Validation.Common;
 using RestSharp;
 
@@ -24,13 +24,15 @@ namespace EInfrastructure.Core.AliYun.DaYu
     public class SmsService : ISmsService, ISingleInstance
     {
         private AliSmsConfig _smsConfig;
+        private readonly JsonProvider _jsonProvider;
 
         /// <summary>
         /// 短信服务
         /// </summary>
-        public SmsService(AliSmsConfig smsConfig)
+        public SmsService(AliSmsConfig smsConfig, JsonProvider jsonProvider)
         {
             _smsConfig = smsConfig;
+            _jsonProvider = jsonProvider;
         }
 
         readonly RestClient _restClient = new RestClient("http://dysmsapi.aliyuncs.com");
@@ -69,7 +71,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
             commonParam.Add("PhoneNumbers", phoneNumbers.ConvertListToString(','));
             commonParam.Add("SignName", GetSmsConfig(smsConfigJson).SignName);
             commonParam.Add("TemplateCode", templateCode);
-            commonParam.Add("TemplateParam", new JsonCommon().Serializer(content));
+            commonParam.Add("TemplateParam", _jsonProvider.Serializer(content));
 
             string sign = Util.CreateSign(commonParam, GetSmsConfig(smsConfigJson).EncryptionKey);
             commonParam.Add("Signature", sign);
@@ -130,7 +132,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         {
             if (!string.IsNullOrEmpty(smsConfigJson))
             {
-                _smsConfig = new JsonCommon().Deserialize<AliSmsConfig>(smsConfigJson);
+                _smsConfig = _jsonProvider.Deserialize<AliSmsConfig>(smsConfigJson);
             }
 
             new AliYunConfigValidator().Validate(_smsConfig).Check();

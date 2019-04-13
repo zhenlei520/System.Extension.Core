@@ -4,13 +4,15 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace EInfrastructure.Core.HelpCommon.Serialization
+namespace EInfrastructure.Core.Config.SerializeExtensions
 {
     /// <summary>
     /// 二进制序列化
     /// </summary>
     public class BinaryCommon
     {
+        #region 序列化对象(二进制)
+
         /// <summary>
         /// 序列化对象(二进制)
         /// </summary>
@@ -25,6 +27,10 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
             }
         }
 
+        #endregion
+
+        #region 反序列化对象(二进制)
+
         /// <summary>
         /// 反序列化对象(二进制)
         /// </summary>
@@ -35,6 +41,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
             {
                 return null;
             }
+
             using (MemoryStream ms = new MemoryStream())
             {
                 ms.Write(bytes, 0, bytes.Length);
@@ -43,5 +50,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
                 return binaryFormatter.Deserialize(ms);
             }
         }
+
+        #endregion
     }
 }

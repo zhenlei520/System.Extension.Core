@@ -1,43 +1,45 @@
-﻿// Copyright (c) zhenlei520 All rights reserved.
+// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter;
+using System.Collections.Generic;
+using System.Linq;
+using EInfrastructure.Core.Configuration.Ioc;
 
-namespace EInfrastructure.Core.HelpCommon.Serialization
+namespace EInfrastructure.Core.Config.SerializeExtensions
 {
     /// <summary>
-    /// json 序列化方式
+    ///
     /// </summary>
-    public class JsonCommon : IJsonProvider
+    public class JsonProvider : IDependency
     {
-        private readonly EnumJsonMode _jsonMode;
+        private readonly IJsonProvider _jsonProvider;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="mode">序列化方式</param>
-        public JsonCommon(EnumJsonMode mode = EnumJsonMode.Newtonsoft)
+        public JsonProvider(ICollection<IJsonProvider> jsonProviders)
         {
-            _jsonMode = mode;
-        }
-
-        private IJsonProvider CreateJsonProvider()
-        {
-            if (_jsonMode == EnumJsonMode.Newtonsoft)
+            if (jsonProviders.Any(x => x.GetIdentify().Contains("NewtonsoftJson")))
             {
-                return new NewtonsoftJsonProvider();
+                _jsonProvider = jsonProviders.FirstOrDefault(x => x.GetIdentify().Contains("NewtonsoftJson"));
             }
-            else if (_jsonMode == EnumJsonMode.DataContract)
+            else
             {
-                return new DataContractJsonProvider();
+                _jsonProvider = jsonProviders.FirstOrDefault();
             }
 
-            throw new System.Exception("未找到相应的json序列化Provider");
+            if (_jsonProvider == null)
+            {
+                throw new Exception("未找到相应的json序列化Provider");
+            }
         }
+
+        #region json序列化
 
         /// <summary>
-        /// jason序列化
+        /// json序列化
         /// </summary>
         /// <param name="o"></param>
         /// <param name="format"></param>
@@ -46,7 +48,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
         {
             try
             {
-                return CreateJsonProvider().Serializer(o, format);
+                return _jsonProvider.Serializer(o, format);
             }
             catch (System.Exception)
             {
@@ -54,8 +56,12 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
             }
         }
 
+        #endregion
+
+        #region json反序列化
+
         /// <summary>
-        /// jason反序列化
+        /// json反序列化
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="s"></param>
@@ -71,7 +77,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
 
             try
             {
-                return (T) CreateJsonProvider().Deserialize(s, typeof(T));
+                return (T) _jsonProvider.Deserialize(s, typeof(T));
             }
             catch (System.Exception ex)
             {
@@ -86,7 +92,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
         }
 
         /// <summary>
-        /// jason反序列化
+        /// json反序列化
         /// </summary>
         /// <param name="s"></param>
         /// <param name="type"></param>
@@ -95,12 +101,14 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
         {
             try
             {
-                return CreateJsonProvider().Deserialize(s, type);
+                return _jsonProvider.Deserialize(s, type);
             }
             catch (System.Exception)
             {
                 throw new System.Exception($"json反序列化出错,jsonMode:{1},内容：{s}");
             }
         }
+
+        #endregion
     }
 }

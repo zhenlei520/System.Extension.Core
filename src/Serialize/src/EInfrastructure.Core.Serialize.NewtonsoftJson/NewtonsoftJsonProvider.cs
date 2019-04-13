@@ -2,13 +2,32 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
+using EInfrastructure.Core.Config.SerializeExtensions;
 using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
+namespace EInfrastructure.Core.Serialize.NewtonsoftJson
 {
-    internal class NewtonsoftJsonProvider : IJsonProvider
+    public class NewtonsoftJsonProvider : IJsonProvider
     {
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            MethodBase method = new StackTrace().GetFrame(1).GetMethod();
+            return method.ReflectedType.Namespace;
+        }
+
+        #endregion
+
+        #region json序列化
+
         /// <summary>
         /// json序列化
         /// </summary>
@@ -51,9 +70,10 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
             }
         }
 
+        #endregion
+
         #region json反序列化
 
-        
         /// <summary>
         /// json反序列化
         /// </summary>

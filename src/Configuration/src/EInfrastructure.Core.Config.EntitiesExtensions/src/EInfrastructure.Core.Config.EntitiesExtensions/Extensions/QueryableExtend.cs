@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Data;
-using EInfrastructure.Core.Exception;
-using EInfrastructure.Core.HelpCommon;
 
-namespace EInfrastructure.Core.Data.EntitiesExtension
+namespace EInfrastructure.Core.Config.EntitiesExtensions.Extensions
 {
     /// <summary>
     /// Queryable扩展方法
@@ -93,18 +91,18 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
         {
             if (pageSize <= 0 && pageSize != -1)
             {
-                throw new BusinessException("页大小必须为正数");
+                throw new Exception("页大小必须为正数");
             }
 
             var totalCount = query.Count() * 1.0d;
             int pageMax = 1;
             if (pageSize != -1)
             {
-                pageMax = Math.Ceiling(totalCount / pageSize).ConvertToInt(1);
+                int.TryParse(Math.Ceiling(totalCount / pageSize).ToString(), out pageMax);
             }
             else
             {
-                pageSize = totalCount.ConvertToInt(0) * -1;
+                int.TryParse((totalCount * -1).ToString(), out pageSize);
             }
 
             for (int index = pageIndex; index <= pageMax; index++)

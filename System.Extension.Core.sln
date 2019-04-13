@@ -120,6 +120,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Config
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Config.EntitiesExtensions", "src\Configuration\src\EInfrastructure.Core.Config.EntitiesExtensions\src\EInfrastructure.Core.Config.EntitiesExtensions\EInfrastructure.Core.Config.EntitiesExtensions.csproj", "{BAD64A1B-0CFF-4DF1-ACF4-B62404841F33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Serialize.NewtonsoftJson", "src\Serialize\src\EInfrastructure.Core.Serialize.NewtonsoftJson\EInfrastructure.Core.Serialize.NewtonsoftJson.csproj", "{D534502F-043D-4E27-B1E9-3389D1521194}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serialize", "Serialize", "{B6DF1AE9-D5EA-4921-8284-F4C252AF0E56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Config.SerializeExtensions", "src\Configuration\src\EInfrastructure.Core.Config.SerializeExtensions\src\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions.csproj", "{75A07E02-A2BF-4AA7-827B-0B53BA3EC788}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Config.SerializeExtensions.Test", "src\Configuration\src\EInfrastructure.Core.Config.SerializeExtensions\test\EInfrastructure.Core.Config.SerializeExtensions.Test\EInfrastructure.Core.Config.SerializeExtensions.Test.csproj", "{9EE9C184-AF86-434A-B1FE-648C7B32E6B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -172,6 +180,9 @@ Global
 		{417AA94D-749F-46FA-B543-87139D8BCFBC} = {42EEC740-C17B-4407-9E7C-92EB37E6A166}
 		{1E55B6FC-195D-4293-A1D7-92E2E3AE8B86} = {42EEC740-C17B-4407-9E7C-92EB37E6A166}
 		{BAD64A1B-0CFF-4DF1-ACF4-B62404841F33} = {42EEC740-C17B-4407-9E7C-92EB37E6A166}
+		{D534502F-043D-4E27-B1E9-3389D1521194} = {B6DF1AE9-D5EA-4921-8284-F4C252AF0E56}
+		{75A07E02-A2BF-4AA7-827B-0B53BA3EC788} = {42EEC740-C17B-4407-9E7C-92EB37E6A166}
+		{9EE9C184-AF86-434A-B1FE-648C7B32E6B7} = {42EEC740-C17B-4407-9E7C-92EB37E6A166}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CE0A6026-DF5B-4EC9-BCB2-046A48F3CCF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -322,5 +333,17 @@ Global
 		{BAD64A1B-0CFF-4DF1-ACF4-B62404841F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAD64A1B-0CFF-4DF1-ACF4-B62404841F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAD64A1B-0CFF-4DF1-ACF4-B62404841F33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D534502F-043D-4E27-B1E9-3389D1521194}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D534502F-043D-4E27-B1E9-3389D1521194}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D534502F-043D-4E27-B1E9-3389D1521194}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D534502F-043D-4E27-B1E9-3389D1521194}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75A07E02-A2BF-4AA7-827B-0B53BA3EC788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75A07E02-A2BF-4AA7-827B-0B53BA3EC788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75A07E02-A2BF-4AA7-827B-0B53BA3EC788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75A07E02-A2BF-4AA7-827B-0B53BA3EC788}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EE9C184-AF86-434A-B1FE-648C7B32E6B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EE9C184-AF86-434A-B1FE-648C7B32E6B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EE9C184-AF86-434A-B1FE-648C7B32E6B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EE9C184-AF86-434A-B1FE-648C7B32E6B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.HelpCommon.Serialization;
 using EInfrastructure.Core.WeChat.Common;
 using EInfrastructure.Core.WeChat.Config;
 using EInfrastructure.Core.WeChat.Enum;
@@ -20,13 +20,15 @@ namespace EInfrastructure.Core.WeChat
     public class WebChatProcessRequest
     {
         private readonly ILogService _logService;
+        private readonly JsonProvider _jsonProvider;
 
-        public WebChatProcessRequest(ILogService logService)
+        public WebChatProcessRequest(ILogService logService, JsonProvider jsonProvider)
         {
             _logService = logService;
+            _jsonProvider = jsonProvider;
         }
-        
-        
+
+
         #region 处理用户消息
 
         /// <summary>
@@ -69,8 +71,8 @@ namespace EInfrastructure.Core.WeChat
         /// <returns></returns>
         public string Auth(WebChatAuthConfig chatAuthConfig, WxConfig wxConfig)
         {
-            string encodingAesKey = wxConfig.EncodingAesKey; //根据自己后台的设置保持一致  
-            string appId = wxConfig.AppId; //根据自己后台的设置保持一致  
+            string encodingAesKey = wxConfig.EncodingAesKey; //根据自己后台的设置保持一致
+            string appId = wxConfig.AppId; //根据自己后台的设置保持一致
             string token = wxConfig.Token; //从配置文件获取Token
             if (string.IsNullOrEmpty(token))
             {
@@ -183,7 +185,7 @@ namespace EInfrastructure.Core.WeChat
                 if (!loginResult.Success)
                 {
                     _logService.Warn("[微信登陆失败]\r\n请求参数：" + getAccessTokenUrl + "\r\n返回参数：" +
-                                   new JsonCommon().Serializer(getAccessTokenResult, true));
+                                     _jsonProvider.Serializer(getAccessTokenResult, true));
                 }
             }
 

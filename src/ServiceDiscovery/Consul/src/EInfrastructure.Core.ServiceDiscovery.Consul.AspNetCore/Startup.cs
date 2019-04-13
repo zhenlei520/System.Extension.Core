@@ -7,7 +7,7 @@ using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EInfrastructure.Core.Consul.AspNetCore
+namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
 {
     /// <summary>
     /// 加载Consul注册服务

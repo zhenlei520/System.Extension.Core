@@ -5,24 +5,27 @@ using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.Tbk.Config;
 using EInfrastructure.Core.AliYun.Tbk.Respose;
-using EInfrastructure.Core.HelpCommon.Serialization;
+using EInfrastructure.Core.Config.SerializeExtensions;
 using RestSharp;
 
 namespace EInfrastructure.Core.AliYun.Tbk
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class OpenApi
     {
+        protected readonly JsonProvider _jsonProvider;
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="appKey">appKey</param>
         /// <param name="appSecret">app秘钥</param>
-        protected OpenApi(string appKey, string appSecret)
+        protected OpenApi(JsonProvider jsonProvider, string appKey, string appSecret)
         {
-            AliConfig = new AliTbkConfig()
+            _jsonProvider = jsonProvider;
+            AliConfig = new AliTbkConfig
             {
                 AppKey = appKey,
                 AppSecret = appSecret
@@ -38,7 +41,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
 //        static readonly RestClient RestClient = new RestClient("http://gw.api.taobao.com/router/rest");
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="apiUrl"></param>
         /// <param name="method"></param>
@@ -80,10 +83,10 @@ namespace EInfrastructure.Core.AliYun.Tbk
         {
             if (response.Contains("error_response"))
             {
-                errAction(new JsonCommon().Deserialize<ErrDto>(response));
+                errAction(_jsonProvider.Deserialize<ErrDto>(response));
             }
 
-            successAction(new JsonCommon().Deserialize<T>(response));
+            successAction(_jsonProvider.Deserialize<T>(response));
         }
 
         #endregion

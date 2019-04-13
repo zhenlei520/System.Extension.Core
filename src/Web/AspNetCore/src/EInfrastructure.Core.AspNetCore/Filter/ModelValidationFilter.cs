@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.AspNetCore.Filter
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="context"></param>
         public void OnActionExecuting(ActionExecutingContext context)

@@ -8,15 +8,15 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace EInfrastructure.Core.HelpCommon.Serialization
+namespace EInfrastructure.Core.Config.SerializeExtensions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class NullToEmptyStringResolver : DefaultContractResolver
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="type"></param>
         /// <param name="memberSerialization"></param>
@@ -34,14 +34,14 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class NullToEmptyStringValueProvider : IValueProvider
     {
         readonly PropertyInfo _memberInfo;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="memberInfo"></param>
         public NullToEmptyStringValueProvider(PropertyInfo memberInfo)
@@ -50,7 +50,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
@@ -71,9 +71,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
 
                 if (!string.IsNullOrEmpty(result.ToString()))
                 {
-                    DateTime? time = result.ConvertToDateTime(null);
-
-                    if (time == null || time == DateTime.MaxValue ||
+                    if (!DateTime.TryParse(result.ToString(), out DateTime time)|| time == DateTime.MaxValue ||
                         time == DateTime.MinValue)
                     {
                         result = "";

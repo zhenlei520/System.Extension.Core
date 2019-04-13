@@ -6,14 +6,14 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Config.CacheExtensions;
+using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.HelpCommon.Serialization;
 using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.Redis.Common;
 using EInfrastructure.Core.Redis.Config;
-using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
+using EInfrastructure.Core.Redis.Validator;
 using EInfrastructure.Core.Validation.Common;
 
 namespace EInfrastructure.Core.Redis
@@ -33,14 +33,17 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         private readonly string _prefix;
 
+        private readonly JsonProvider _jsonProvider;
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        public RedisCacheService(RedisConfig redisConfig)
+        public RedisCacheService(RedisConfig redisConfig, JsonProvider jsonProvider)
         {
             new RedisConfigValidator().Validate(redisConfig).Check();
             _prefix = redisConfig.Name;
             CsRedisHelper.InitializeConfiguration(redisConfig);
+            _jsonProvider = jsonProvider;
         }
 
         #region 得到实现类唯一标示
@@ -55,7 +58,7 @@ namespace EInfrastructure.Core.Redis
         }
 
         #endregion
-        
+
         #region Methods
 
         #region String
@@ -825,7 +828,7 @@ namespace EInfrastructure.Core.Redis
 
         #region Basics
 
-        #region  删除指定Key的缓存    
+        #region  删除指定Key的缓存
 
         /// <summary>
         /// 删除指定Key的缓存
@@ -840,7 +843,7 @@ namespace EInfrastructure.Core.Redis
 
         #endregion
 
-        #region  删除指定Key的缓存    
+        #region  删除指定Key的缓存
 
         /// <summary>
         /// 删除指定Key的缓存
@@ -916,7 +919,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         private string ConvertJson<T>(T value)
         {
-            string result = value is string ? value.ToString() : new JsonCommon().Serializer(value);
+            string result = value is string ? value.ToString() : _jsonProvider.Serializer(value);
             return result;
         }
 
@@ -956,15 +959,15 @@ namespace EInfrastructure.Core.Redis
                 return (T) Convert.ChangeType(value, typeof(T));
             }
 
-            return new JsonCommon().Deserialize<T>(value);
+            return _jsonProvider.Deserialize<T>(value);
         }
 
         #endregion
 
-        #region 将一个object对象序列化，返回一个byte[]  
+        #region 将一个object对象序列化，返回一个byte[]
 
         /// <summary>
-        ///  将一个object对象序列化，返回一个byte[]   
+        ///  将一个object对象序列化，返回一个byte[]
         /// </summary>
         /// <param name="obj">序列化对象</param>
         /// <returns></returns>
@@ -980,13 +983,13 @@ namespace EInfrastructure.Core.Redis
 
         #endregion
 
-        #region 将一个序列化后的byte[]数组还原   
+        #region 将一个序列化后的byte[]数组还原
 
-        /// <summary> 
-        /// 将一个序列化后的byte[]数组还原         
+        /// <summary>
+        /// 将一个序列化后的byte[]数组还原
         /// </summary>
-        /// <param name="bytes"></param>         
-        /// <returns></returns> 
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         public object BytesToObject(byte[] bytes)
         {
             using (MemoryStream ms = new MemoryStream(bytes))

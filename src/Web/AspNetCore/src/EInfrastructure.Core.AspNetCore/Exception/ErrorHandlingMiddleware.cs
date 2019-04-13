@@ -4,8 +4,8 @@
 using System;
 using System.Threading.Tasks;
 using EInfrastructure.Core.AspNetCore.Api;
+using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Exception;
-using EInfrastructure.Core.HelpCommon.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
@@ -23,17 +23,20 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// </summary>
         public static Func<HttpContext, System.Exception, bool> ExceptionAction = null;
 
+        private readonly JsonProvider _jsonProvider;
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="next"></param>
-        public ErrorHandlingMiddleware(RequestDelegate next)
+        public ErrorHandlingMiddleware(RequestDelegate next, JsonProvider jsonProvider)
         {
             this._next = next;
+            _jsonProvider = _jsonProvider;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -59,7 +62,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
 
                 if (ex is BusinessException)
                 {
-                    var data = new JsonCommon().Deserialize<dynamic>(ex.Message);
+                    var data = _jsonProvider.Deserialize<dynamic>(ex.Message);
                     statusCode = data.code;
                     msg = data.content;
                 }
@@ -103,11 +106,11 @@ namespace EInfrastructure.Core.AspNetCore.Exception
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, int statusCode, string msg)
+        private Task HandleExceptionAsync(HttpContext context, int statusCode, string msg)
         {
             var data = new ApiErrResult(statusCode, msg);
 
-            var result = new JsonCommon().Serializer(data);
+            var result = _jsonProvider.Serializer(data);
 
             context.Response.ContentType = "application/json;charset=utf-8";
 

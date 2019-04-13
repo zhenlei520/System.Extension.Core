@@ -1,11 +1,12 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 
-namespace EInfrastructure.Core.Data.EntitiesExtension
+namespace EInfrastructure.Core.Config.EntitiesExtensions.Extensions
 {
     /// <summary>
     /// 

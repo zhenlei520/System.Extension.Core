@@ -31,7 +31,7 @@ namespace EInfrastructure.Core.HelpCommon
                 throw new BusinessException("Aes秘钥异常");
             }
 
-            // 256-AES key    
+            // 256-AES key
             byte[] keyArray = Encoding.UTF8.GetBytes(key);
             byte[] toEncryptArray = Encoding.UTF8.GetBytes(toEncrypt);
 
@@ -69,7 +69,7 @@ namespace EInfrastructure.Core.HelpCommon
             }
             try
             {
-                // 256-AES key    
+                // 256-AES key
                 byte[] keyArray = Encoding.UTF8.GetBytes(key);
                 byte[] toEncryptArray = Convert.FromBase64String(toDecrypt);
 
@@ -195,7 +195,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static string Sha1(string str)
         {
-            var enc = new ASCIIEncoding(); //将mystr转换成byte[] 
+            var enc = new ASCIIEncoding(); //将mystr转换成byte[]
             return GetSha(enc.GetBytes(str), new SHA1CryptoServiceProvider());
         }
 
@@ -230,7 +230,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static string Sha256(string str)
         {
-            var enc = new ASCIIEncoding(); //将mystr转换成byte[] 
+            var enc = new ASCIIEncoding(); //将mystr转换成byte[]
             return GetSha(enc.GetBytes(str), new SHA256CryptoServiceProvider());
         }
 
@@ -265,7 +265,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static string Sha384(string str)
         {
-            var enc = new ASCIIEncoding(); //将mystr转换成byte[] 
+            var enc = new ASCIIEncoding(); //将mystr转换成byte[]
             return GetSha(enc.GetBytes(str), new SHA384CryptoServiceProvider());
         }
 
@@ -300,7 +300,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static string Sha512(string str)
         {
-            var enc = new ASCIIEncoding(); //将mystr转换成byte[] 
+            var enc = new ASCIIEncoding(); //将mystr转换成byte[]
             return GetSha(enc.GetBytes(str), new SHA512CryptoServiceProvider());
         }
 

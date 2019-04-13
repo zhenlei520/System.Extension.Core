@@ -13,7 +13,7 @@ using ICSharpCode.SharpZipLib.Zip;
 namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class BaseZipCompressService : BaseCompressService
     {

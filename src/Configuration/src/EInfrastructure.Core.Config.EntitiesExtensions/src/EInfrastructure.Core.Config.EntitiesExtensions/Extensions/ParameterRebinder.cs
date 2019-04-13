@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace EInfrastructure.Core.Data.EntitiesExtension
+namespace EInfrastructure.Core.Config.EntitiesExtensions.Extensions
 {
     /// <summary>
     /// 

@@ -2,13 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using EInfrastructure.Core.Configuration.Ioc;
 
-namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
+namespace EInfrastructure.Core.Config.SerializeExtensions
 {
     /// <summary>
     /// Json 序列化基础类库
     /// </summary>
-    public interface IJsonProvider
+    public interface IJsonProvider : IIdentify, IDependency
     {
         /// <summary>
         /// jason序列化
@@ -25,21 +26,5 @@ namespace EInfrastructure.Core.HelpCommon.Serialization.JsonAdapter
         /// <param name="type"></param>
         /// <returns></returns>
         object Deserialize(string s, Type type);
-    }
-
-    /// <summary>
-    /// Json序列化方式枚举
-    /// </summary>
-    public enum EnumJsonMode
-    {
-        /// <summary>
-        /// System.Runtime.Serialization.Json
-        /// </summary>
-        DataContract,
-
-        /// <summary>
-        /// Newtonsoft.Json.dll
-        /// </summary>
-        Newtonsoft,
     }
 }

@@ -1,7 +1,7 @@
 using EInfrastructure.Core.Redis.Config;
 using FluentValidation;
 
-namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator
+namespace EInfrastructure.Core.Redis.Validator
 {
     /// <summary>
     /// Redis配置校验

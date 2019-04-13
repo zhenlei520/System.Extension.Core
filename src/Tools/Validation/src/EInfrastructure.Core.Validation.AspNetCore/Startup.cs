@@ -8,7 +8,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EInfrastructure.Core.Validation
+namespace EInfrastructure.Core.Validation.AspNetCore
 {
     /// <summary>
     /// 加载EInfrastructure.Core.Validation校验类服务

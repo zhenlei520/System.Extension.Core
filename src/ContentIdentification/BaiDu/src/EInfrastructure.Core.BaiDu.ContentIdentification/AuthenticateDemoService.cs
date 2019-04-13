@@ -7,10 +7,10 @@ using System.Net;
 using EInfrastructure.Core.Config.IdentificationExtensions;
 using EInfrastructure.Core.Config.IdentificationExtensions.Dto;
 using EInfrastructure.Core.Config.IdentificationExtensions.Enum;
+using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Files;
-using EInfrastructure.Core.HelpCommon.Serialization;
 using EInfrastructure.Core.HelpCommon.Systems;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -23,13 +23,13 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
     /// </summary>
     public class AuthenticateDemoService : IAuthenticateDemoService, IPerRequest
     {
-        private readonly JsonCommon _jsonCommon;
+        private readonly JsonProvider _jsonProvider;
         private readonly RestClient _restClient;
         private readonly RestRequest _request;
 
-        public AuthenticateDemoService()
+        public AuthenticateDemoService(JsonProvider jsonProvider)
         {
-            _jsonCommon = new JsonCommon();
+            _jsonProvider = jsonProvider;
             _restClient = new RestClient("http://ai.baidu.com");
             _restClient.UserAgent =
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36";
@@ -145,7 +145,7 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
                 };
             }
 
-            var data = _jsonCommon.Deserialize<dynamic>(response);
+            var data = _jsonProvider.Deserialize<dynamic>(response);
             if (data == null || data["errno"] != 0)
             {
                 return new ContentInfoDto()
@@ -172,7 +172,7 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
             }
             else if (data["data"]["conclusionType"] == 2)
             {
-                List<ImageResponse> responseList = _jsonCommon.Deserialize<List<ImageResponse>>(data["data"]);
+                List<ImageResponse> responseList = _jsonProvider.Deserialize<List<ImageResponse>>(data["data"]);
                 foreach (var item in responseList)
                 {
                     if (item.Star != null)
