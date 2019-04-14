@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>2.0.0-beta-002</Version>
+    <Version>2.0.0-beta-003</Version>
     <Authors>zhenlei520</Authors>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Company>zhenlei520</Company>
     <Description>dotnet core memorycache缓存类库</Description>
-    <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/features/1.0/src/Cache/MemoryCache</RepositoryUrl>
+    <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/release/features-2.0/src/Cache/MemoryCache</RepositoryUrl>
     <PackageProjectUrl>https://www.nuget.org/packages//EInfrastructure.Core.MemoryCache</PackageProjectUrl>
     <Copyright>Copyright ©zhenlei520 2018</Copyright>
     <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
