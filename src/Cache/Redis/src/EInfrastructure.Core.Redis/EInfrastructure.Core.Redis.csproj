@@ -6,7 +6,7 @@
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <Company>zhenlei520</Company>
         <Description>dotnet core redis缓存类库</Description>
-        <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/src/Cache/Redis</RepositoryUrl>
+        <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/release/features-1.0/src/Cache/Redis</RepositoryUrl>
         <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.Redis/</PackageProjectUrl>
         <Copyright>Copyright ©zhenlei520 2018</Copyright>
         <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>

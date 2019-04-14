@@ -7,7 +7,7 @@
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <Company>zhenlei520</Company>
         <Description>dotnet core 自动注入配置文件</Description>
-        <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/src/AutomationConfiguration</RepositoryUrl>
+        <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/release/features-1.0/src/AutomationConfiguration</RepositoryUrl>
         <PackageProjectUrl></PackageProjectUrl>
         <Copyright>Copyright ©zhenlei520 2018</Copyright>
         <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
