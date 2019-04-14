@@ -15,8 +15,8 @@
     <PackageTags>EInfrastructure.Core Configuration</PackageTags>
   </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj"/>
+  </ItemGroup>
 
 </Project>

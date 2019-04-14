@@ -83,7 +83,7 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         /// the default 500 m,
         /// </summary>
         public decimal Distance { get; set; } = 500;
-        
+
         /// <summary>
         /// min distance,unit：m
         /// the default 0 m
