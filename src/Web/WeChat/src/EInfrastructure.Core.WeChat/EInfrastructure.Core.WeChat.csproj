@@ -7,7 +7,7 @@
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <Company>zhenlei520</Company>
         <Description>dotnet core 微信帮助类库</Description>
-        <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/master/src/Web/WeChat</RepositoryUrl>
+        <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/release/features-1.0/src/Web/WeChat</RepositoryUrl>
         <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.WebChat/</PackageProjectUrl>
         <Copyright>Copyright ©zhenlei520 2018</Copyright>
         <Title>微信公众号帮助类库</Title>
