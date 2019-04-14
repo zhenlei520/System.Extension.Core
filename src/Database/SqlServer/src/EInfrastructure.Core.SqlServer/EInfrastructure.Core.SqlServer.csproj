@@ -6,7 +6,7 @@
     <PackageReleaseNotes>sqlserver2012以上数据库</PackageReleaseNotes>
     <Description>dotnet core 使用sqlserver数据库实现</Description>
     <Copyright>Copyright ©zhenlei520 2018</Copyright>
-    <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/features/1.0/src/Database/SqlServer</RepositoryUrl>
+    <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/release/features-2.0/src/Database/SqlServer</RepositoryUrl>
     <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.SqlServer/</PackageProjectUrl>
     <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
     <Title>sqlserver基础类库，实现基类增删改查方法</Title>
