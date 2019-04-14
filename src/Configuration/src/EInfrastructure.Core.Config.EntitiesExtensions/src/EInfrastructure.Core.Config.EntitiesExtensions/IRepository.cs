@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         /// </summary>
         /// <returns></returns>
         string GetIdentify();
-        
+
         /// <summary>
         /// 根据id得到实体信息
         /// </summary>
