@@ -141,7 +141,7 @@ namespace EInfrastructure.Core.MySql
             stringBuilder.Append(
                 $"((st_distance (point (epointTable.{param.Point.Key}, epointTable.{param.Point.Value}),point({param.Location.Key},{param.Location.Value}) ) / 0.0111)*1000) AS '{param.DistanceAlias}'");
             stringBuilder.Append($" FROM {param.TableName} as {tableAlias}");
-            stringBuilder.Append($" HAVING {param.DistanceAlias}>{param.MinDistance}");
+            stringBuilder.Append($" HAVING {param.DistanceAlias}>=0{param.MinDistance}");
             if (param.Distance != -1)
             {
                 stringBuilder.Append($" And {param.DistanceAlias}<{param.Distance}");
