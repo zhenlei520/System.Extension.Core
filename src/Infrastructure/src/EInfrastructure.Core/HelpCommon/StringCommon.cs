@@ -84,57 +84,6 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
-        #region 在字符串前后增加特殊字符
-
-        /// <summary>
-        /// 在字符串前后增加特殊字符
-        /// </summary>
-        /// <param name="str">字符串</param>
-        /// <param name="c">增加字符串</param>
-        /// <param name="isReturnNull">是否返回空，如果为true，则返回空字符串，否则返回c</param>
-        /// <param name="isAppendStart">字符串开头时否增加特殊字符</param>
-        /// <param name="isAppendEnd">字符串结尾时否增加特殊字符</param>
-        /// <param name="isClearNull">是否清除C之间的空数据</param>
-        /// <returns></returns>
-        public static string AppendChar(string str, char c = ',', bool isReturnNull = false, bool isAppendStart = true,
-            bool isAppendEnd = true, bool isClearNull = true)
-        {
-            if (string.IsNullOrEmpty(str))
-            {
-                return isReturnNull ? "" : (c + "");
-            }
-
-            StringBuilder sb = new StringBuilder();
-            string[] strArray = str.Split(c);
-            int count = 0;
-            for (var i = 0; i < strArray.Length; i++)
-            {
-                if (string.IsNullOrEmpty(strArray[i]) && isClearNull)
-                {
-                    continue;
-                }
-
-                count++;
-                if (isAppendStart && count == 1)
-                {
-                    sb.AppendFormat(c + "{0}" + c, strArray[i]);
-                    continue;
-                }
-
-                if (!isAppendEnd && i == strArray.Length)
-                {
-                    sb.AppendFormat("{0}", strArray[i]);
-                    continue;
-                }
-
-                sb.AppendFormat("{0}" + c, strArray[i]);
-            }
-
-            return sb.ToString();
-        }
-
-        #endregion
-
         #region 隐藏手机
 
         /// <summary>
