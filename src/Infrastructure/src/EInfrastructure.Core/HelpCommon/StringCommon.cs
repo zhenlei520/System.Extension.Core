@@ -146,12 +146,12 @@ namespace EInfrastructure.Core.HelpCommon
             {
                 if (mobile.IsMobile())
                 {
-                    return mobile.Substring(0, 3) + "*****" + mobile.Substring(8);
+                    return EncryptStr(mobile, "*", 3, 4);
                 }
 
                 if (mobile.IsPhone())
                 {
-                    return mobile.Substring(0, mobile.Length - 6) + "***" + mobile.Substring(mobile.Length - 3);
+                    return EncryptStr(mobile, "*", mobile.Length - 6, 3);
                 }
 
                 throw new System.Exception("请输入正确的手机号码");
@@ -179,13 +179,12 @@ namespace EInfrastructure.Core.HelpCommon
                 return "";
             }
 
-            string str = "";
             if (index > param.Length - 1)
             {
                 return param;
             }
 
-            str = param.Substring(0, index);
+            var str = param.Substring(0, index);
             if (length == -1)
             {
                 length = param.Length - index;
@@ -249,9 +248,9 @@ namespace EInfrastructure.Core.HelpCommon
             foreach (string s in strArray)
             {
                 string k = s;
-                if (maxElementLength > 0 && k.Length > maxElementLength)
+                if (maxElementLength > 0 && k.Trim().Length > maxElementLength)
                 {
-                    k = k.Substring(0, maxElementLength);
+                    k = k.Trim().Substring(0, maxElementLength);
                 }
 
                 h[k.Trim()] = s;
