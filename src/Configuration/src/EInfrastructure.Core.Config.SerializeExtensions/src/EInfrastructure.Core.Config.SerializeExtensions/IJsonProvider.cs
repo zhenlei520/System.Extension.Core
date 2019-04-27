@@ -12,7 +12,7 @@ namespace EInfrastructure.Core.Config.SerializeExtensions
     public interface IJsonProvider : IIdentify, IDependency
     {
         /// <summary>
-        /// jason序列化
+        /// json序列化
         /// </summary>
         /// <param name="o"></param>
         /// <param name="format"></param>
@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.Config.SerializeExtensions
         string Serializer(object o, bool format = false);
 
         /// <summary>
-        /// jason反序列化
+        /// json反序列化
         /// </summary>
         /// <param name="s"></param>
         /// <param name="type"></param>

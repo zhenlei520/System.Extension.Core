@@ -14,12 +14,12 @@ namespace EInfrastructure.Core.AspNetCore.Api
         /// 响应码
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public int Code { get; set; } = 200;
+        public virtual int Code { get; set; } = 200;
 
         /// <summary>
         /// 响应信息
         /// </summary>
         [JsonProperty(PropertyName = "response")]
-        public object Data { get; set; } = new { };
+        public virtual object Data { get; set; } = new { };
     }
 }
