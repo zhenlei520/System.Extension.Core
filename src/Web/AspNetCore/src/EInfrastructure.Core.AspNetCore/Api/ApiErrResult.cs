@@ -33,18 +33,18 @@ namespace EInfrastructure.Core.AspNetCore.Api
         /// 错误信息
         /// </summary>
         [JsonProperty(PropertyName = "msg")]
-        public string Msg { get; set; }
+        public virtual string Msg { get; set; }
 
         /// <summary>
         /// 错误码
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public int Code { get; set; }
+        public virtual int Code { get; set; }
 
         /// <summary>
         /// 扩展信息
         /// </summary>
         [JsonProperty(PropertyName = "extend", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public object Extend { get; set; }
+        public virtual object Extend { get; set; }
     }
 }
