@@ -12,7 +12,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright ©zhenlei520 2018")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("dotnet core autofac 与sqlserver自动注入")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("2.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0-beta-003")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0-beta-004")]
 [assembly: System.Reflection.AssemblyProductAttribute("EInfrastructure.Core.AutoFac.SqlServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EInfrastructure.Core.AutoFac.SqlServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("2.0.0.0")]
