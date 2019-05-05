@@ -98,5 +98,20 @@ namespace EInfrastructure.Core.QiNiu.Storage
         }
 
         #endregion
+
+        #region 检查文件是否存在
+
+        /// <summary>
+        /// 检查文件是否存在
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <returns></returns>
+        public bool Exist(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
     }
 }

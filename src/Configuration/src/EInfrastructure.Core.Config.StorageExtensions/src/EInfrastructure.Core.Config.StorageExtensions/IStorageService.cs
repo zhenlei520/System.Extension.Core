@@ -61,7 +61,7 @@ namespace EInfrastructure.Core.Config.StorageExtensions
         /// </summary>
         /// <param name="key">文件key</param>
         /// <returns></returns>
-//        bool Exist(string key);
+        bool Exist(string key);
 
         #endregion
     }
