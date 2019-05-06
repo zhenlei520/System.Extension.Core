@@ -53,5 +53,16 @@ namespace EInfrastructure.Core.Config.StorageExtensions
         string GetUploadCredentials(UploadPersistentOpsParam opsParam, Func<string> func);
 
         #endregion
+
+        #region 检查文件是否存在
+
+        /// <summary>
+        /// 检查文件是否存在
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <returns></returns>
+        bool Exist(string key);
+
+        #endregion
     }
 }

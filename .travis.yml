@@ -2,7 +2,7 @@ language: csharp
 sudo: required
 dist: xenial
 solution: System.Extension.Core.sln
-dotnet: 2.1
+dotnet: 2.1.302
 mono: none
 
 #matrix:
