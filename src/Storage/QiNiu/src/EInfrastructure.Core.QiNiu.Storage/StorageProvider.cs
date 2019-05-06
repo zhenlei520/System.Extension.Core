@@ -52,7 +52,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             FormUploader target = new FormUploader(GetConfig(param.UploadPersistentOps));
             HttpResult result =
                 target.UploadStream(param.Stream, param.Key, token, GetPutExtra(param.UploadPersistentOps));
-            return result.Code == (int) HttpCode.OK;
+            return result.Code == (int)HttpCode.OK;
         }
 
         #endregion
@@ -74,7 +74,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 HttpResult result =
                     target.UploadStream(param.File.OpenReadStream(), param.Key, token,
                         GetPutExtra(param.UploadPersistentOps));
-                return result.Code == (int) HttpCode.OK;
+                return result.Code == (int)HttpCode.OK;
             }
 
             return false;
@@ -109,21 +109,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public bool Exist(string key)
         {
             BucketManager bucketManager = new BucketManager(base.Mac, base.GetConfig());
-
-            bool isExist = false;
-
-            // 存储空间名
-            string Bucket = base.QiNiuConfig.Bucket;
-            //     待查询文件名
-            StatResult statRet = bucketManager.Stat(Bucket, key);
-
-            if (statRet.Code == (int)HttpCode.OK)
-            {
-                isExist = true;
-            }
-
-            return isExist;
-
+            StatResult statRet = bucketManager.Stat(base.QiNiuConfig.Bucket, key);
+            return statRet.Code == (int)HttpCode.OK;
         }
 
         #endregion
