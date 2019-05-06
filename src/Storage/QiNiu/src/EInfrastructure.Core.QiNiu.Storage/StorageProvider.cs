@@ -109,8 +109,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public bool Exist(string key)
         {
             BucketManager bucketManager = new BucketManager(base.Mac, base.GetConfig());
-            StatResult statRet = bucketManager.Stat(base.QiNiuConfig.Bucket, key);
-            return statRet.Code == (int)HttpCode.OK;
+            StatResult statResult = bucketManager.Stat(base.QiNiuConfig.Bucket, key);
+            return statResult.Code == (int)HttpCode.OK;
         }
 
         #endregion
