@@ -1,4 +1,4 @@
-﻿// Copyright (c) zhenlei520 All rights reserved.
+// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -108,7 +108,22 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool Exist(string key)
         {
-            throw new NotImplementedException();
+            BucketManager bucketManager = new BucketManager(base.Mac, base.GetConfig());
+
+            bool isExist = false;
+
+            // 存储空间名
+            string Bucket = base.QiNiuConfig.Bucket;
+            //     待查询文件名
+            StatResult statRet = bucketManager.Stat(Bucket, key);
+
+            if (statRet.Code == (int)HttpCode.OK)
+            {
+                isExist = true;
+            }
+
+            return isExist;
+
         }
 
         #endregion
