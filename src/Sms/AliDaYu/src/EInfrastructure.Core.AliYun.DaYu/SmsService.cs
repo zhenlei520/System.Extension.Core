@@ -31,13 +31,10 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <summary>
         /// 短信服务
         /// </summary>
-        public SmsService(AliSmsConfig smsConfig, IJsonService jsonProvider = null)
+        public SmsService(AliSmsConfig smsConfig, IJsonService jsonProvider)
         {
             _smsConfig = smsConfig;
-            _jsonProvider = jsonProvider ?? new JsonService(new List<IJsonProvider>
-            {
-                new NewtonsoftJsonProvider()
-            });
+            _jsonProvider = jsonProvider;
         }
 
         readonly RestClient _restClient = new RestClient("http://dysmsapi.aliyuncs.com");

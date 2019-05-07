@@ -40,12 +40,9 @@ namespace EInfrastructure.Core.Redis
         /// <summary>
         ///
         /// </summary>
-        public RedisCacheService(RedisConfig redisConfig, IJsonService jsonProvider = null)
+        public RedisCacheService(RedisConfig redisConfig, IJsonService jsonProvider)
         {
-            _jsonProvider = jsonProvider ?? new JsonService(new List<IJsonProvider>
-            {
-                new NewtonsoftJsonProvider()
-            });
+            _jsonProvider = jsonProvider;
             new RedisConfigValidator().Validate(redisConfig).Check();
             _prefix = redisConfig.Name;
             CsRedisHelper.InitializeConfiguration(redisConfig);

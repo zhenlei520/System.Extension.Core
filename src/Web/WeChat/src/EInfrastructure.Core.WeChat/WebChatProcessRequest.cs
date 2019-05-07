@@ -25,13 +25,10 @@ namespace EInfrastructure.Core.WeChat
         private readonly ILogService _logService;
         private readonly IJsonService _jsonProvider;
 
-        public WebChatProcessRequest(ILogService logService, IJsonService jsonProvider = null)
+        public WebChatProcessRequest(ILogService logService, IJsonService jsonProvider)
         {
             _logService = logService;
-            _jsonProvider = jsonProvider ?? new JsonService(new List<IJsonProvider>
-            {
-                new NewtonsoftJsonProvider()
-            });
+            _jsonProvider = jsonProvider;
         }
 
 
