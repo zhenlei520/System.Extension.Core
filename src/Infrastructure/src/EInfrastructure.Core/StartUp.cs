@@ -33,6 +33,7 @@ namespace EInfrastructure.Core
             Config.SmsExtensions.StartUp.Run();
             Config.StorageExtensions.StartUp.Run();
             Config.WordsExtensions.StartUp.Run();
+            Serialize.NewtonsoftJson.StartUp.Run();
         }
 
         #endregion
