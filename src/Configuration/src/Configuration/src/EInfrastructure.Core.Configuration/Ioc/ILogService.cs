@@ -6,7 +6,7 @@ namespace EInfrastructure.Core.Configuration.Ioc
     /// <summary>
     /// 日志服务
     /// </summary>
-    public interface ILogService 
+    public interface ILogService : ISingleInstance
     {
         #region 得到实现类唯一标示
 
@@ -17,7 +17,7 @@ namespace EInfrastructure.Core.Configuration.Ioc
         string GetIdentify();
 
         #endregion
-        
+
         #region 增加error文件日志
 
         /// <summary>

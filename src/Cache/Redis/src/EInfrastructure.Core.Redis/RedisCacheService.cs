@@ -38,12 +38,12 @@ namespace EInfrastructure.Core.Redis
         /// <summary>
         ///
         /// </summary>
-        public RedisCacheService(RedisConfig redisConfig, IJsonService jsonProvider)
+        public RedisCacheService(IJsonService jsonProvider, RedisConfig redisConfig)
         {
+            _jsonProvider = jsonProvider;
             new RedisConfigValidator().Validate(redisConfig).Check();
             _prefix = redisConfig.Name;
             CsRedisHelper.InitializeConfiguration(redisConfig);
-            _jsonProvider = jsonProvider;
         }
 
         #region 得到实现类唯一标示

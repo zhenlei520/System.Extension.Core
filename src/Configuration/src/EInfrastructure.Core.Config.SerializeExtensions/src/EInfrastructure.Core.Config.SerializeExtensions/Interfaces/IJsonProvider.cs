@@ -9,7 +9,7 @@ namespace EInfrastructure.Core.Config.SerializeExtensions.Interfaces
     /// <summary>
     /// Json 序列化基础类库
     /// </summary>
-    public interface IJsonProvider : IIdentify, IDependency
+    public interface IJsonProvider : IIdentify, ISingleInstance
     {
         /// <summary>
         /// json序列化
