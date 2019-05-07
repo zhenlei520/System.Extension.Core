@@ -24,12 +24,12 @@ namespace EInfrastructure.Core.AliYun.DaYu
     public class SmsService : ISmsService, ISingleInstance
     {
         private AliSmsConfig _smsConfig;
-        private readonly JsonProvider _jsonProvider;
+        private readonly IJsonService _jsonProvider;
 
         /// <summary>
         /// 短信服务
         /// </summary>
-        public SmsService(AliSmsConfig smsConfig, JsonProvider jsonProvider)
+        public SmsService(AliSmsConfig smsConfig, IJsonService jsonProvider)
         {
             _smsConfig = smsConfig;
             _jsonProvider = jsonProvider;

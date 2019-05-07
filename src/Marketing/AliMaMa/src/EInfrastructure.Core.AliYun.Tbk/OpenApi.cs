@@ -15,14 +15,14 @@ namespace EInfrastructure.Core.AliYun.Tbk
     /// </summary>
     public class OpenApi
     {
-        protected readonly JsonProvider _jsonProvider;
+        protected readonly IJsonService _jsonProvider;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="appKey">appKey</param>
         /// <param name="appSecret">app秘钥</param>
-        protected OpenApi(JsonProvider jsonProvider, string appKey, string appSecret)
+        protected OpenApi(IJsonService jsonProvider, string appKey, string appSecret)
         {
             _jsonProvider = jsonProvider;
             AliConfig = new AliTbkConfig
@@ -79,7 +79,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <param name="successAction">成功响应</param>
         /// <param name="errAction">失败响应</param>
         /// <typeparam name="T"></typeparam>
-        protected void GetResult<T>(string response, Action<T> successAction, Action<ErrDto> errAction)
+        protected void GetResult<T>(string response, Action<T> successAction, Action<ErrDto> errAction) where T : class, new()
         {
             if (response.Contains("error_response"))
             {

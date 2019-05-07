@@ -33,12 +33,12 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         private readonly string _prefix;
 
-        private readonly JsonProvider _jsonProvider;
+        private readonly IJsonService _jsonProvider;
 
         /// <summary>
         ///
         /// </summary>
-        public RedisCacheService(RedisConfig redisConfig, JsonProvider jsonProvider)
+        public RedisCacheService(RedisConfig redisConfig, IJsonService jsonProvider)
         {
             new RedisConfigValidator().Validate(redisConfig).Check();
             _prefix = redisConfig.Name;
@@ -117,7 +117,7 @@ namespace EInfrastructure.Core.Redis
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        public T StringGet<T>(string key)
+        public T StringGet<T>(string key) where T : class, new()
         {
             return ConvertObj<T>(StringGet(key));
         }
@@ -227,6 +227,8 @@ namespace EInfrastructure.Core.Redis
             return CsRedisHelper.HashExists(key, dataKey);
         }
 
+        #region 存储数据到hash表
+
         /// <summary>
         /// 存储数据到hash表
         /// </summary>
@@ -238,7 +240,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public bool HashSet<T>(string key, string dataKey, T t, long second = -1)
         {
-            string value = CsRedisHelper.HashSet(key, GetExpire(second), dataKey, ConvertJson<T>(t));
+            string value = CsRedisHelper.HashSet(key, GetExpire(second), dataKey, ConvertJson(t));
             bool result = string.Equals(value, "OK",
                 StringComparison.OrdinalIgnoreCase);
             return result;
@@ -265,6 +267,8 @@ namespace EInfrastructure.Core.Redis
                 StringComparison.OrdinalIgnoreCase);
         }
 
+        #endregion
+
 
         /// <summary>
         /// 移除hash中的某值
@@ -288,6 +292,8 @@ namespace EInfrastructure.Core.Redis
             return CsRedisHelper.HashDelete(key, dataKeys.ToArray());
         }
 
+        #region 从hash表获取数据
+
         /// <summary>
         /// 从hash表获取数据
         /// </summary>
@@ -295,7 +301,7 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="dataKey"></param>
         /// <returns></returns>
-        public T HashGet<T>(string key, string dataKey)
+        public T HashGet<T>(string key, string dataKey) where T : class, new()
         {
             var str = HashGet(key, dataKey);
             return ConvertObj<T>(str);
@@ -312,6 +318,8 @@ namespace EInfrastructure.Core.Redis
         {
             return CsRedisHelper.HashGet(key, dataKey);
         }
+
+        #endregion
 
         /// <summary>
         /// 从hash表获取数据
@@ -338,10 +346,8 @@ namespace EInfrastructure.Core.Redis
 
                 return dic;
             }
-            else
-            {
-                return CsRedisHelper.HashGetAll(key);
-            }
+
+            return CsRedisHelper.HashGetAll(key);
         }
 
         /// <summary>
@@ -429,6 +435,8 @@ namespace EInfrastructure.Core.Redis
             return await CsRedisHelper.HashDeleteAsync(key, dataKeys.ToArray());
         }
 
+        #region 从hash表获取数据
+
         /// <summary>
         /// 从hash表获取数据
         /// </summary>
@@ -436,7 +444,7 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="dataKey"></param>
         /// <returns></returns>
-        public async Task<T> HashGetAsync<T>(string key, string dataKey)
+        public async Task<T> HashGetAsync<T>(string key, string dataKey) where T : class, new()
         {
             return ConvertObj<T>(await CsRedisHelper.HashGetAsync(key, dataKey));
         }
@@ -452,6 +460,8 @@ namespace EInfrastructure.Core.Redis
         {
             return CsRedisHelper.HashGetAsync(key, dataKey);
         }
+
+        #endregion
 
         /// <summary>
         /// 为数字增长val
@@ -504,7 +514,20 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public long ListRemove<T>(string key, T value)
         {
-            return CsRedisHelper.LRem(key, int.MaxValue, ConvertJson<T>(value));
+            return CsRedisHelper.LRem(key, int.MaxValue, ConvertJson(value));
+        }
+
+        #region 获取指定key的List
+
+        /// <summary>
+        /// 获取指定key的List
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public List<string> ListRange(string key, long count = 1000)
+        {
+            return CsRedisHelper.LRang(key, 0, count).ToList();
         }
 
         /// <summary>
@@ -513,12 +536,14 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public List<T> ListRange<T>(string key, long count = 1000)
+        public List<T> ListRange<T>(string key, long count = 1000) where T : class, new()
         {
             List<T> list = new List<T>();
-            Enumerable.ToList<string>(CsRedisHelper.LRang(key, 0, count)).ForEach(p => { list.Add(ConvertObj<T>(p)); });
+            CsRedisHelper.LRang(key, 0, count).ToList().ForEach(p => { list.Add(ConvertObj<T>(p)); });
             return list;
         }
+
+        #endregion
 
         /// <summary>
         /// 入队
@@ -530,16 +555,31 @@ namespace EInfrastructure.Core.Redis
             return CsRedisHelper.RPush(key, new string[1] {ConvertJson<T>(value)});
         }
 
+        #region 出队
+
         /// <summary>
         /// 出队
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        public T ListRightPop<T>(string key)
+        public string ListRightPop(string key)
+        {
+            return CsRedisHelper.RPop(key);
+        }
+
+        /// <summary>
+        /// 出队
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public T ListRightPop<T>(string key) where T : class, new()
         {
             return ConvertObj<T>(CsRedisHelper.RPop(key));
         }
+
+        #endregion
 
         /// <summary>
         /// 入栈
@@ -553,16 +593,30 @@ namespace EInfrastructure.Core.Redis
             return CsRedisHelper.LPush(key, new string[1] {ConvertJson<T>(value)});
         }
 
+        #region 出栈
+
+        /// <summary>
+        /// 出栈
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string ListLeftPop(string key)
+        {
+            return CsRedisHelper.LPop(key);
+        }
+
         /// <summary>
         /// 出栈
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        public T ListLeftPop<T>(string key)
+        public T ListLeftPop<T>(string key) where T : class, new()
         {
             return ConvertObj<T>(CsRedisHelper.LPop(key));
         }
+
+        #endregion
 
         /// <summary>
         /// 获取集合中的数量
@@ -586,7 +640,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<long> ListRemoveAsync<T>(string key, T value)
         {
-            return await CsRedisHelper.LRemAsync(key, int.MaxValue, ConvertJson<T>(value));
+            return await CsRedisHelper.LRemAsync(key, int.MaxValue, ConvertJson(value));
         }
 
         /// <summary>
@@ -595,9 +649,20 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public async Task<List<T>> ListRangeAsync<T>(string key, long count = 1000)
+        public async Task<List<string>> ListRangeAsync(string key, long count = 1000)
         {
-            return ConvertListObj<T>(Enumerable.ToList<string>((await CsRedisHelper.LRangAsync(key, 0, count))));
+            return (await CsRedisHelper.LRangAsync(key, 0, count)).ToList();
+        }
+
+        /// <summary>
+        /// 获取指定key的List
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public async Task<List<T>> ListRangeAsync<T>(string key, long count = 1000) where T : class, new()
+        {
+            return ConvertListObj<T>((await CsRedisHelper.LRangAsync(key, 0, count)).ToList());
         }
 
         /// <summary>
@@ -608,7 +673,20 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<long> ListRightPushAsync<T>(string key, T value)
         {
-            return await CsRedisHelper.RPushAsync(key, new string[1] {ConvertJson<T>(value)});
+            return await CsRedisHelper.RPushAsync(key, new[] {ConvertJson(value)});
+        }
+
+        #region 出队
+
+        /// <summary>
+        /// 出队
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<string> ListRightPopAsync(string key)
+        {
+            return await CsRedisHelper.RPopAsync(key);
         }
 
         /// <summary>
@@ -617,10 +695,12 @@ namespace EInfrastructure.Core.Redis
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<T> ListRightPopAsync<T>(string key)
+        public async Task<T> ListRightPopAsync<T>(string key) where T : class, new()
         {
             return ConvertObj<T>(await CsRedisHelper.RPopAsync(key));
         }
+
+        #endregion
 
         /// <summary>
         /// 入栈
@@ -634,16 +714,31 @@ namespace EInfrastructure.Core.Redis
             return await CsRedisHelper.LPushAsync(key, new string[1] {ConvertJson<T>(value)});
         }
 
+        #region 出栈
+
         /// <summary>
         /// 出栈
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<T> ListLeftPopAsync<T>(string key)
+        public async Task<string> ListLeftPopAsync(string key)
+        {
+            return await CsRedisHelper.LPopAsync(key);
+        }
+
+        /// <summary>
+        /// 出栈
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<T> ListLeftPopAsync<T>(string key) where T : class, new()
         {
             return ConvertObj<T>(await CsRedisHelper.LPopAsync(key));
         }
+
+        #endregion
 
         /// <summary>
         /// 获取集合中的数量
@@ -698,9 +793,20 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public List<T> SortedSetRangeByRank<T>(string key, long count = 1000)
+        public List<string> SortedSetRangeByRank(string key, long count = 1000)
         {
-            return ConvertListObj<T>(CsRedisHelper.ZRange(key, 0, count).ToList<string>());
+            return CsRedisHelper.ZRange(key, 0, count).ToList();
+        }
+
+        /// <summary>
+        /// 获取全部
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public List<T> SortedSetRangeByRank<T>(string key, long count = 1000) where T : class, new()
+        {
+            return ConvertListObj<T>(CsRedisHelper.ZRange(key, 0, count).ToList());
         }
 
         /// <summary>
@@ -726,6 +832,8 @@ namespace EInfrastructure.Core.Redis
             return hasKey;
         }
 
+        #region 降序获取指定索引的集合
+
         /// <summary>
         /// 降序获取指定索引的集合
         /// </summary>
@@ -734,9 +842,39 @@ namespace EInfrastructure.Core.Redis
         /// <param name="fromRank"></param>
         /// <param name="toRank"></param>
         /// <returns></returns>
-        public List<T> GetRangeFromSortedSetDesc<T>(string key, long fromRank, long toRank)
+        public List<string> GetRangeFromSortedSetDesc(string key, long fromRank, long toRank)
         {
-            return ConvertListObj<T>(Enumerable.ToList<string>(CsRedisHelper.ZRevRange(key, fromRank, toRank)));
+            return CsRedisHelper.ZRevRange(key, fromRank, toRank).ToList();
+        }
+
+        /// <summary>
+        /// 降序获取指定索引的集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="fromRank"></param>
+        /// <param name="toRank"></param>
+        /// <returns></returns>
+        public List<T> GetRangeFromSortedSetDesc<T>(string key, long fromRank, long toRank) where T : class, new()
+        {
+            return ConvertListObj<T>(CsRedisHelper.ZRevRange(key, fromRank, toRank).ToList());
+        }
+
+        #endregion
+
+        #region 获取指定索引的集合
+
+        /// <summary>
+        /// 获取指定索引的集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="fromRank"></param>
+        /// <param name="toRank"></param>
+        /// <returns></returns>
+        public List<string> GetRangeFromSortedSet(string key, long fromRank, long toRank)
+        {
+            return QuickHelperBase.ZRange(key, fromRank, toRank).ToList();
         }
 
         /// <summary>
@@ -747,10 +885,12 @@ namespace EInfrastructure.Core.Redis
         /// <param name="fromRank"></param>
         /// <param name="toRank"></param>
         /// <returns></returns>
-        public List<T> GetRangeFromSortedSet<T>(string key, long fromRank, long toRank)
+        public List<T> GetRangeFromSortedSet<T>(string key, long fromRank, long toRank) where T : class, new()
         {
-            return ConvertListObj<T>(Enumerable.ToList<string>(CsRedisHelper.ZRange(key, fromRank, toRank)));
+            return ConvertListObj<T>(Enumerable.ToList(CsRedisHelper.ZRange(key, fromRank, toRank)));
         }
+
+        #endregion
 
         /// <summary>
         /// 判断是否存在项
@@ -761,7 +901,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public bool SortedSetExistItem<T>(string key, T value)
         {
-            return CsRedisHelper.ZScore(key, ConvertJson<T>(value)).HasValue;
+            return CsRedisHelper.ZScore(key, ConvertJson(value)).HasValue;
         }
 
         /// <summary>
@@ -798,7 +938,20 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<bool> SortedSetRemoveAsync<T>(string key, T value)
         {
-            return await CsRedisHelper.ZRemAsync(key, new string[1] {ConvertJson<T>(value)}) > 0;
+            return await CsRedisHelper.ZRemAsync(key, ConvertJson(value)) > 0;
+        }
+
+        #region 获取全部
+
+        /// <summary>
+        /// 获取全部
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public async Task<List<string>> SortedSetRangeByRankAsync(string key, long count = 1000)
+        {
+            return (await CsRedisHelper.ZRangeAsync(key, 0, count)).ToList();
         }
 
         /// <summary>
@@ -807,10 +960,14 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public async Task<List<T>> SortedSetRangeByRankAsync<T>(string key, long count = 1000)
+        public async Task<List<T>> SortedSetRangeByRankAsync<T>(string key, long count = 1000) where T : class, new()
         {
-            return ConvertListObj<T>(Enumerable.ToList<string>((await CsRedisHelper.ZRangeAsync(key, 0, count))));
+            return ConvertListObj<T>((await CsRedisHelper.ZRangeAsync(key, 0, count)).ToList());
         }
+
+        #endregion
+
+        #region 获取集合中的数量
 
         /// <summary>
         /// 获取集合中的数量
@@ -821,6 +978,8 @@ namespace EInfrastructure.Core.Redis
         {
             return await CsRedisHelper.ZCardAsync(key);
         }
+
+        #endregion
 
         #endregion 异步方法
 
@@ -933,7 +1092,7 @@ namespace EInfrastructure.Core.Redis
         /// <typeparam name="T"></typeparam>
         /// <param name="values"></param>
         /// <returns></returns>
-        public List<T> ConvertListObj<T>(List<string> values)
+        public List<T> ConvertListObj<T>(List<string> values) where T : class, new()
         {
             List<T> list = new List<T>();
             values.ForEach(p => { list.Add(ConvertObj<T>(p)); });
@@ -946,7 +1105,7 @@ namespace EInfrastructure.Core.Redis
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
-        private T ConvertObj<T>(string value)
+        private T ConvertObj<T>(string value) where T : class, new()
         {
             if (string.IsNullOrWhiteSpace(value))
             {

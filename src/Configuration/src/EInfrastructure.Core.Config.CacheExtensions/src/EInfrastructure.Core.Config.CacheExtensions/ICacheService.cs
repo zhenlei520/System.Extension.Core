@@ -56,7 +56,7 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        T StringGet<T>(string key);
+        T StringGet<T>(string key) where T : class, new();
 
         /// <summary>
         /// 为数字增长val
@@ -181,12 +181,11 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="key"></param>
         /// <param name="dataKey"></param>
         /// <returns></returns>
-        T HashGet<T>(string key, string dataKey);
+        T HashGet<T>(string key, string dataKey) where T : class, new();
 
         /// <summary>
         /// 从hash表获取数据
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="dataKey"></param>
         /// <returns></returns>
@@ -270,12 +269,11 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="key"></param>
         /// <param name="dataKey"></param>
         /// <returns></returns>
-        Task<T> HashGetAsync<T>(string key, string dataKey);
+        Task<T> HashGetAsync<T>(string key, string dataKey) where T : class, new();
 
         /// <summary>
         /// 从hash表获取数据
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="dataKey"></param>
         /// <returns></returns>
@@ -328,7 +326,15 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        List<T> ListRange<T>(string key, long count = 1000);
+        List<string> ListRange(string key, long count = 1000);
+
+        /// <summary>
+        /// 获取指定key的List
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        List<T> ListRange<T>(string key, long count = 1000) where T : class, new();
 
         /// <summary>
         /// 入队
@@ -341,10 +347,17 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <summary>
         /// 出队
         /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        string ListRightPop(string key);
+
+        /// <summary>
+        /// 出队
+        /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        T ListRightPop<T>(string key);
+        T ListRightPop<T>(string key) where T : class, new();
 
         /// <summary>
         /// 入栈
@@ -358,10 +371,17 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <summary>
         /// 出栈
         /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        string ListLeftPop(string key);
+
+        /// <summary>
+        /// 出栈
+        /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        T ListLeftPop<T>(string key);
+        T ListLeftPop<T>(string key) where T : class, new();
 
         /// <summary>
         /// 获取集合中的数量
@@ -388,7 +408,15 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        Task<List<T>> ListRangeAsync<T>(string key, long count = 1000L);
+        Task<List<string>> ListRangeAsync(string key, long count = 1000L);
+
+        /// <summary>
+        /// 获取指定key的List
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        Task<List<T>> ListRangeAsync<T>(string key, long count = 1000L) where T : class, new();
 
         /// <summary>
         /// 入队
@@ -404,7 +432,15 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        Task<T> ListRightPopAsync<T>(string key);
+        Task<string> ListRightPopAsync(string key);
+
+        /// <summary>
+        /// 出队
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task<T> ListRightPopAsync<T>(string key) where T : class, new();
 
         /// <summary>
         /// 入栈
@@ -421,7 +457,15 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        Task<T> ListLeftPopAsync<T>(string key);
+        Task<string> ListLeftPopAsync(string key);
+
+        /// <summary>
+        /// 出栈
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task<T> ListLeftPopAsync<T>(string key) where T : class, new();
 
         /// <summary>
         /// 获取集合中的数量
@@ -462,7 +506,15 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        List<T> SortedSetRangeByRank<T>(string key, long count = 1000L);
+        List<string> SortedSetRangeByRank(string key, long count = 1000L);
+
+        /// <summary>
+        /// 获取全部
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        List<T> SortedSetRangeByRank<T>(string key, long count = 1000L) where T : class, new();
 
         /// <summary>
         /// 获取已过期的hashKey
@@ -479,7 +531,9 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="fromRank"></param>
         /// <param name="toRank"></param>
         /// <returns></returns>
-        List<T> GetRangeFromSortedSetDesc<T>(string key, long fromRank, long toRank);
+        List<T> GetRangeFromSortedSetDesc<T>(string key, long fromRank, long toRank) where T : class, new();
+
+        #region 获取指定索引的集合
 
         /// <summary>
         /// 获取指定索引的集合
@@ -489,7 +543,19 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="fromRank"></param>
         /// <param name="toRank"></param>
         /// <returns></returns>
-        List<T> GetRangeFromSortedSet<T>(string key, long fromRank, long toRank);
+        List<string> GetRangeFromSortedSet(string key, long fromRank, long toRank);
+
+        /// <summary>
+        /// 获取指定索引的集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="fromRank"></param>
+        /// <param name="toRank"></param>
+        /// <returns></returns>
+        List<T> GetRangeFromSortedSet<T>(string key, long fromRank, long toRank) where T : class, new();
+
+        #endregion
 
         /// <summary>
         /// 判断是否存在项
@@ -534,7 +600,15 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="key"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        Task<List<T>> SortedSetRangeByRankAsync<T>(string key, long count = 1000L);
+        Task<List<string>> SortedSetRangeByRankAsync(string key, long count = 1000L);
+
+        /// <summary>
+        /// 获取全部
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        Task<List<T>> SortedSetRangeByRankAsync<T>(string key, long count = 1000L) where T : class, new();
 
         /// <summary>
         /// 获取集合中的数量

@@ -4,7 +4,7 @@
 using System;
 using EInfrastructure.Core.Configuration.Ioc;
 
-namespace EInfrastructure.Core.Config.SerializeExtensions
+namespace EInfrastructure.Core.Config.SerializeExtensions.Interfaces
 {
     /// <summary>
     /// Json 序列化基础类库

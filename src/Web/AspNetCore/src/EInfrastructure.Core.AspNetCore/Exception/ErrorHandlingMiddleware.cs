@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using EInfrastructure.Core.AspNetCore.Api;
 using EInfrastructure.Core.Config.SerializeExtensions;
+using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using Microsoft.AspNetCore.Builder;
@@ -25,13 +26,13 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// </summary>
         public static Func<HttpContext, System.Exception, bool> ExceptionAction = null;
 
-        private readonly JsonProvider _jsonProvider;
+        private readonly IJsonService _jsonProvider;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="next"></param>
-        public ErrorHandlingMiddleware(RequestDelegate next, JsonProvider jsonProvider)
+        public ErrorHandlingMiddleware(RequestDelegate next, IJsonService jsonProvider)
         {
             this._next = next;
             _jsonProvider = jsonProvider;
@@ -132,10 +133,10 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// <param name="exceptionAction">异常委托方法</param>
         /// <returns></returns>
         public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder builder,
-            Func<HttpContext, System.Exception, bool> exceptionAction = null, JsonProvider jsonProvider = null)
+            Func<HttpContext, System.Exception, bool> exceptionAction = null, IJsonService jsonProvider = null)
         {
             ErrorHandlingMiddleware.ExceptionAction = exceptionAction;
-            return builder.UseMiddleware<ErrorHandlingMiddleware>(jsonProvider ?? new JsonProvider(
+            return builder.UseMiddleware<ErrorHandlingMiddleware>(jsonProvider ?? new JsonService(
                                                                       new List<IJsonProvider>
                                                                       {
                                                                           new NewtonsoftJsonProvider()
