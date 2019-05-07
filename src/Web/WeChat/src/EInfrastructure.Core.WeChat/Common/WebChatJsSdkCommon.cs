@@ -46,7 +46,7 @@ namespace EInfrastructure.Core.WeChat.Common
         {
             cacheKey = cacheKey + _config.Type;
 
-            string token = _cacheService.StringGet<string>(cacheKey);
+            string token = _cacheService.StringGet(cacheKey);
 
             if (string.IsNullOrEmpty(token))
             {
@@ -79,7 +79,7 @@ namespace EInfrastructure.Core.WeChat.Common
         /// <exception cref="BusinessException"></exception>
         public string GetJsApiTicket(string tickCacheKey, string tokenCacheKey)
         {
-            string ticket = _cacheService.StringGet<string>(tickCacheKey);
+            string ticket = _cacheService.StringGet(tickCacheKey);
 
             if (string.IsNullOrEmpty(ticket))
             {

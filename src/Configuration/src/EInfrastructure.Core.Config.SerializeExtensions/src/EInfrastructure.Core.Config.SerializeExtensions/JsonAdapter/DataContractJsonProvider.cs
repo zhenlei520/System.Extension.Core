@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
 
 namespace EInfrastructure.Core.Config.SerializeExtensions.JsonAdapter
 {

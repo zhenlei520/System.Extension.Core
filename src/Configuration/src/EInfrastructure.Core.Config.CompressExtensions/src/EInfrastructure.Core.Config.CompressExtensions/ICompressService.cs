@@ -10,18 +10,8 @@ namespace EInfrastructure.Core.Config.CompressExtensions
     /// <summary>
     /// 压缩文件
     /// </summary>
-    public interface ICompressService : ISingleInstance
+    public interface ICompressService : ISingleInstance, IIdentify
     {
-        #region 得到实现类唯一标示
-
-        /// <summary>
-        /// 得到实现类唯一标示
-        /// </summary>
-        /// <returns></returns>
-        string GetIdentify();
-
-        #endregion
-
         #region 压缩文件
 
         /// <summary>

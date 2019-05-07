@@ -8,18 +8,8 @@ namespace EInfrastructure.Core.Config.WordsExtensions
     /// <summary>
     /// 导入词库
     /// </summary>
-    public interface IImportWordService : ISingleInstance
+    public interface IImportWordService : ISingleInstance,IIdentify
     {
-        #region 得到实现类唯一标示
-
-        /// <summary>
-        /// 得到实现类唯一标示
-        /// </summary>
-        /// <returns></returns>
-        string GetIdentify();
-
-        #endregion
-
         #region 导入搜狗词库（导入path下的词库文件）
 
         /// <summary>

@@ -10,18 +10,8 @@ namespace EInfrastructure.Core.Config.WordsExtensions
     /// <summary>
     /// 文字
     /// </summary>
-    public interface IWordService : ISingleInstance
+    public interface IWordService : ISingleInstance, IIdentify
     {
-        #region 得到实现类唯一标示
-
-        /// <summary>
-        /// 得到实现类唯一标示
-        /// </summary>
-        /// <returns></returns>
-        string GetIdentify();
-
-        #endregion
-
         #region 得到文字首字母
 
         /// <summary>

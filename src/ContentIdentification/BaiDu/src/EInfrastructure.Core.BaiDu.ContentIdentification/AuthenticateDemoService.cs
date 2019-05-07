@@ -23,11 +23,11 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
     /// </summary>
     public class AuthenticateDemoService : IAuthenticateDemoService, IPerRequest
     {
-        private readonly JsonProvider _jsonProvider;
+        private readonly IJsonService _jsonProvider;
         private readonly RestClient _restClient;
         private readonly RestRequest _request;
 
-        public AuthenticateDemoService(JsonProvider jsonProvider)
+        public AuthenticateDemoService(IJsonService jsonProvider)
         {
             _jsonProvider = jsonProvider;
             _restClient = new RestClient("http://ai.baidu.com");

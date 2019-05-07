@@ -20,9 +20,9 @@ namespace EInfrastructure.Core.WeChat
     public class WebChatProcessRequest
     {
         private readonly ILogService _logService;
-        private readonly JsonProvider _jsonProvider;
+        private readonly IJsonService _jsonProvider;
 
-        public WebChatProcessRequest(ILogService logService, JsonProvider jsonProvider)
+        public WebChatProcessRequest(ILogService logService, IJsonService jsonProvider)
         {
             _logService = logService;
             _jsonProvider = jsonProvider;
