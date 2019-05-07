@@ -19,8 +19,13 @@ namespace EInfrastructure.Core.Config.SerializeExtensions
         ///
         /// </summary>
         /// <param name="mode">序列化方式</param>
-        public JsonProvider(ICollection<IJsonProvider> jsonProviders)
+        public JsonProvider(ICollection<IJsonProvider> jsonProviders = null)
         {
+            if (jsonProviders == null)
+            {
+                throw new Exception("未找到相应的json序列化Provider");
+            }
+
             if (jsonProviders.Any(x => x.GetIdentify().Contains("NewtonsoftJson")))
             {
                 _jsonProvider = jsonProviders.FirstOrDefault(x => x.GetIdentify().Contains("NewtonsoftJson"));
