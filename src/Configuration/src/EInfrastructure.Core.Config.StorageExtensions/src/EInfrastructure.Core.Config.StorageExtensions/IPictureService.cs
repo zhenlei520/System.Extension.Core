@@ -2,24 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Config.StorageExtensions.Param.Pictures;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Config.StorageExtensions
 {
     /// <summary>
     /// 图片
     /// </summary>
-    public interface IPictureService
+    public interface IPictureService : IIdentify
     {
-        #region 得到实现类唯一标示
-
-        /// <summary>
-        /// 得到实现类唯一标示
-        /// </summary>
-        /// <returns></returns>
-        string GetIdentify();
-
-        #endregion
-
         #region 根据图片base64流上传图片
 
         /// <summary>

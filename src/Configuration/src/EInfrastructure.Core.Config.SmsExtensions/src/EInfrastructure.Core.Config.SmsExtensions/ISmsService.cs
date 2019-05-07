@@ -4,24 +4,15 @@
 using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.Config.SmsExtensions.Dto;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Config.SmsExtensions
 {
     /// <summary>
     /// 短信
     /// </summary>
-    public interface ISmsService
+    public interface ISmsService : IIdentify
     {
-        #region 得到实现类唯一标示
-
-        /// <summary>
-        /// 得到实现类唯一标示
-        /// </summary>
-        /// <returns></returns>
-        string GetIdentify();
-
-        #endregion
-
         #region 指定短信列表发送短信
 
         /// <summary>

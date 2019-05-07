@@ -3,6 +3,7 @@
 
 using System.Net;
 using EInfrastructure.Core.Config.IdentificationExtensions.Dto;
+using EInfrastructure.Core.Configuration.Ioc;
 using Microsoft.AspNetCore.Http;
 
 namespace EInfrastructure.Core.Config.IdentificationExtensions
@@ -10,18 +11,8 @@ namespace EInfrastructure.Core.Config.IdentificationExtensions
     /// <summary>
     /// 鉴定服务（体验版）
     /// </summary>
-    public interface IAuthenticateDemoService
+    public interface IAuthenticateDemoService : IIdentify
     {
-        #region 得到实现类唯一标示
-
-        /// <summary>
-        /// 得到实现类唯一标示
-        /// </summary>
-        /// <returns></returns>
-        string GetIdentify();
-
-        #endregion
-
         #region 鉴定图片信息
 
         /// <summary>

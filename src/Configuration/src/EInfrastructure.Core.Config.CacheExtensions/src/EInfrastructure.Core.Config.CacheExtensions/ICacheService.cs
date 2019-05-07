@@ -4,24 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Config.CacheExtensions
 {
     /// <summary>
     /// 缓存接口
     /// </summary>
-    public interface ICacheService
+    public interface ICacheService : IIdentify
     {
-        #region 得到实现类唯一标示
-
-        /// <summary>
-        /// 得到实现类唯一标示
-        /// </summary>
-        /// <returns></returns>
-        string GetIdentify();
-
-        #endregion
-        
         #region String
 
         #region 同步方法
@@ -200,7 +191,7 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="dataKey"></param>
         /// <returns></returns>
         string HashGet(string key, string dataKey);
-        
+
         /// <summary>
         /// 从hash表获取数据
         /// </summary>
@@ -289,7 +280,7 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="dataKey"></param>
         /// <returns></returns>
         Task<string> HashGetAsync(string key, string dataKey);
-        
+
         /// <summary>
         /// 为数字增长val
         /// </summary>
@@ -572,8 +563,8 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// </summary>
         /// <param name="keys">待删除的Key集合，不含prefix前辍RedisHelper.Name</param>
         /// <returns>返回删除的数量</returns>
-        long Remove(params string[] keys);        
-        
+        long Remove(params string[] keys);
+
         /// <summary>
         /// 检查给定 key 是否存在
         /// </summary>
