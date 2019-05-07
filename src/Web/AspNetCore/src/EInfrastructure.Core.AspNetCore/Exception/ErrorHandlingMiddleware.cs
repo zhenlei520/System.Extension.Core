@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// <summary>
         /// 异常委托
         /// </summary>
-        public static Func<HttpContext, System.Exception, bool> ExceptionAction = null;
+        public static Func<HttpContext, System.Exception, bool> ExceptionAction;
 
         private readonly IJsonService _jsonProvider;
 
@@ -34,7 +34,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// <param name="next"></param>
         public ErrorHandlingMiddleware(RequestDelegate next, IJsonService jsonProvider)
         {
-            this._next = next;
+            _next = next;
             _jsonProvider = jsonProvider;
         }
 

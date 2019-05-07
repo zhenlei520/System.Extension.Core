@@ -4,14 +4,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using EInfrastructure.Core.Config.IdentificationExtensions;
 using EInfrastructure.Core.Config.IdentificationExtensions.Dto;
 using EInfrastructure.Core.Config.IdentificationExtensions.Enum;
 using EInfrastructure.Core.Config.SerializeExtensions;
+using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Files;
-using EInfrastructure.Core.HelpCommon.Systems;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using RestSharp;
@@ -27,9 +29,12 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         private readonly RestClient _restClient;
         private readonly RestRequest _request;
 
-        public AuthenticateDemoService(IJsonService jsonProvider)
+        public AuthenticateDemoService(IJsonService jsonProvider = null)
         {
-            _jsonProvider = jsonProvider;
+            _jsonProvider = jsonProvider ?? new JsonService(new List<IJsonProvider>
+            {
+                new NewtonsoftJsonProvider()
+            });
             _restClient = new RestClient("http://ai.baidu.com");
             _restClient.UserAgent =
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36";
@@ -54,7 +59,8 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         /// <returns></returns>
         public string GetIdentify()
         {
-            return AssemblyCommon.GetReflectedInfo().Namespace;
+            MethodBase method = MethodBase.GetCurrentMethod();
+            return method.ReflectedType.Namespace;
         }
 
         #endregion

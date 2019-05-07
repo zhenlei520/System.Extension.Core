@@ -3,10 +3,10 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using EInfrastructure.Core.Config.StorageExtensions;
 using EInfrastructure.Core.Config.StorageExtensions.Param;
 using EInfrastructure.Core.Configuration.Ioc;
-using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.UCloud.Storage.Config;
 
 namespace EInfrastructure.Core.UCloud.Storage
@@ -32,7 +32,8 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <returns></returns>
         public string GetIdentify()
         {
-            return AssemblyCommon.GetReflectedInfo().Namespace;
+            MethodBase method = MethodBase.GetCurrentMethod();
+            return method.ReflectedType.Namespace;
         }
 
         #endregion

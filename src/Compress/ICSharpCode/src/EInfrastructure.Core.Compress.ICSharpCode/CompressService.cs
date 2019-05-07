@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.IO;
+using System.Reflection;
 using EInfrastructure.Core.Compress.ICSharpCode.Zip;
 using EInfrastructure.Core.Config.CompressExtensions;
 using EInfrastructure.Core.Config.CompressExtensions.Enum;
-using EInfrastructure.Core.HelpCommon.Systems;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode
 {
@@ -22,7 +22,8 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <returns></returns>
         public string GetIdentify()
         {
-            return AssemblyCommon.GetReflectedInfo().Namespace;
+            MethodBase method = MethodBase.GetCurrentMethod();
+            return method.ReflectedType.Namespace;
         }
 
         #endregion

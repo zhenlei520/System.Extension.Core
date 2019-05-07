@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Json;
@@ -26,7 +25,7 @@ namespace EInfrastructure.Core.Config.SerializeExtensions.JsonAdapter
         /// <returns></returns>
         public string GetIdentify()
         {
-            MethodBase method = new StackTrace().GetFrame(1).GetMethod();
+            MethodBase method = MethodBase.GetCurrentMethod();
             return method.ReflectedType.Namespace;
         }
 

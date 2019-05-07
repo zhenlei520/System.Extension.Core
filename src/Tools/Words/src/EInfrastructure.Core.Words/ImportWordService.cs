@@ -1,8 +1,8 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Reflection;
 using EInfrastructure.Core.Config.WordsExtensions;
-using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.Words.Config;
 using EInfrastructure.Core.Words.Enum;
 using EInfrastructure.Core.Words.Extension;
@@ -36,7 +36,8 @@ namespace EInfrastructure.Core.Words
         /// <returns></returns>
         public string GetIdentify()
         {
-            return AssemblyCommon.GetReflectedInfo().Namespace;
+            MethodBase method = MethodBase.GetCurrentMethod();
+            return method.ReflectedType.Namespace;
         }
 
         #endregion

@@ -50,7 +50,7 @@ namespace EInfrastructure.Core.HelpCommon.Systems
         /// <returns></returns>
         public static object CreateInstance(this Type type)
         {
-            return System.Reflection.Assembly.GetAssembly(type).CreateInstance(type.ToString());
+            return Assembly.GetAssembly(type).CreateInstance(type.ToString());
         }
 
         #endregion
