@@ -8,6 +8,5 @@ namespace EInfrastructure.Core.Configuration.Ioc
     /// </summary>
     public interface IDependency
     {
-        
     }
 }

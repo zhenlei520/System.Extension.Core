@@ -3,16 +3,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using EInfrastructure.Core.AliYun.DaYu.Common;
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.AliYun.DaYu.Model;
 using EInfrastructure.Core.AliYun.DaYu.Validator;
 using EInfrastructure.Core.Config.SerializeExtensions;
+using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
 using EInfrastructure.Core.Config.SmsExtensions;
 using EInfrastructure.Core.Config.SmsExtensions.Dto;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.HelpCommon.Systems;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Validation.Common;
 using RestSharp;
 
@@ -45,7 +47,8 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <returns></returns>
         public string GetIdentify()
         {
-            return AssemblyCommon.GetReflectedInfo().Namespace;
+            MethodBase method = MethodBase.GetCurrentMethod();
+            return method.ReflectedType.Namespace;
         }
 
         #endregion

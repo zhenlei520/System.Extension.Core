@@ -8,7 +8,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace EInfrastructure.Core.Config.SerializeExtensions
+namespace EInfrastructure.Core.Serialize.NewtonsoftJson
 {
     /// <summary>
     ///

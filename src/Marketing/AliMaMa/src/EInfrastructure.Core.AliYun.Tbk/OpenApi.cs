@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.Tbk.Config;
 using EInfrastructure.Core.AliYun.Tbk.Respose;
 using EInfrastructure.Core.Config.SerializeExtensions;
+using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using RestSharp;
 
 namespace EInfrastructure.Core.AliYun.Tbk
@@ -22,9 +24,13 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// </summary>
         /// <param name="appKey">appKey</param>
         /// <param name="appSecret">app秘钥</param>
-        protected OpenApi(IJsonService jsonProvider, string appKey, string appSecret)
+        /// <param name="jsonProvider"></param>
+        protected OpenApi(string appKey, string appSecret, IJsonService jsonProvider = null)
         {
-            _jsonProvider = jsonProvider;
+            _jsonProvider = jsonProvider ?? new JsonService(new List<IJsonProvider>()
+            {
+                new NewtonsoftJsonProvider()
+            });
             AliConfig = new AliTbkConfig
             {
                 AppKey = appKey,
@@ -79,7 +85,8 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <param name="successAction">成功响应</param>
         /// <param name="errAction">失败响应</param>
         /// <typeparam name="T"></typeparam>
-        protected void GetResult<T>(string response, Action<T> successAction, Action<ErrDto> errAction) where T : class, new()
+        protected void GetResult<T>(string response, Action<T> successAction, Action<ErrDto> errAction)
+            where T : class, new()
         {
             if (response.Contains("error_response"))
             {

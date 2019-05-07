@@ -2,10 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
 using Newtonsoft.Json;
 
@@ -21,7 +19,7 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
         /// <returns></returns>
         public string GetIdentify()
         {
-            MethodBase method = new StackTrace().GetFrame(1).GetMethod();
+            MethodBase method = MethodBase.GetCurrentMethod();
             return method.ReflectedType.Namespace;
         }
 

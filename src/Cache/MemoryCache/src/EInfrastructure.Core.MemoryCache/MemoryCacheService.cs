@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Config.CacheExtensions;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.HelpCommon.Systems;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace EInfrastructure.Core.MemoryCache
@@ -36,7 +36,8 @@ namespace EInfrastructure.Core.MemoryCache
         /// <returns></returns>
         public string GetIdentify()
         {
-            return AssemblyCommon.GetReflectedInfo().Namespace;
+            MethodBase method = MethodBase.GetCurrentMethod();
+            return method.ReflectedType.Namespace;
         }
 
         #endregion

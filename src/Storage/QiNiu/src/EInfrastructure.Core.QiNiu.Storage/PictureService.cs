@@ -1,11 +1,11 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Reflection;
 using EInfrastructure.Core.Config.StorageExtensions;
 using EInfrastructure.Core.Config.StorageExtensions.Param.Pictures;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Qiniu.Http;
 using Qiniu.Storage;
@@ -33,7 +33,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public string GetIdentify()
         {
-            return AssemblyCommon.GetReflectedInfo().Namespace;
+            MethodBase method = MethodBase.GetCurrentMethod();
+            return method.ReflectedType.Namespace;
         }
 
         #endregion

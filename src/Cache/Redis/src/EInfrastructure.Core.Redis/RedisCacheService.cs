@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Config.CacheExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions;
+using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.Redis.Common;
 using EInfrastructure.Core.Redis.Config;
 using EInfrastructure.Core.Redis.Validator;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Validation.Common;
 
 namespace EInfrastructure.Core.Redis
@@ -40,10 +42,10 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         public RedisCacheService(RedisConfig redisConfig, IJsonService jsonProvider)
         {
+            _jsonProvider = jsonProvider;
             new RedisConfigValidator().Validate(redisConfig).Check();
             _prefix = redisConfig.Name;
             CsRedisHelper.InitializeConfiguration(redisConfig);
-            _jsonProvider = jsonProvider;
         }
 
         #region 得到实现类唯一标示
@@ -54,7 +56,8 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public string GetIdentify()
         {
-            return AssemblyCommon.GetReflectedInfo().Namespace;
+            MethodBase method = MethodBase.GetCurrentMethod();
+            return method.ReflectedType.Namespace;
         }
 
         #endregion

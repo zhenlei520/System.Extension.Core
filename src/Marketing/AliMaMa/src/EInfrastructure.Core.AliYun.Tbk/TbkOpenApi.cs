@@ -23,8 +23,8 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// </summary>
         /// <param name="appKey">appKey</param>
         /// <param name="appSecret">app秘钥</param>
-        public TbkOpenApi(IJsonService jsonCommon, string appKey, string appSecret) : base(jsonCommon, appKey,
-            appSecret)
+        public TbkOpenApi(string appKey, string appSecret, IJsonService jsonCommon = null) : base(appKey,
+            appSecret, jsonCommon)
         {
         }
 

@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Config.WordsExtensions;
 using EInfrastructure.Core.Config.WordsExtensions.Enum;
-using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.Words.Config;
 using EInfrastructure.Core.Words.Extension;
 using EInfrastructure.Core.Words.PinYin;
@@ -36,7 +36,8 @@ namespace EInfrastructure.Core.Words
         /// <returns></returns>
         public string GetIdentify()
         {
-            return AssemblyCommon.GetReflectedInfo().Namespace;
+            MethodBase method = MethodBase.GetCurrentMethod();
+            return method.ReflectedType.Namespace;
         }
 
         #endregion
