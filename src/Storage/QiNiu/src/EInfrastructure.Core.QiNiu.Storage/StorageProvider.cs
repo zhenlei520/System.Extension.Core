@@ -1,4 +1,4 @@
-﻿// Copyright (c) zhenlei520 All rights reserved.
+// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -52,7 +52,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             FormUploader target = new FormUploader(GetConfig(param.UploadPersistentOps));
             HttpResult result =
                 target.UploadStream(param.Stream, param.Key, token, GetPutExtra(param.UploadPersistentOps));
-            return result.Code == (int) HttpCode.OK;
+            return result.Code == (int)HttpCode.OK;
         }
 
         #endregion
@@ -74,7 +74,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 HttpResult result =
                     target.UploadStream(param.File.OpenReadStream(), param.Key, token,
                         GetPutExtra(param.UploadPersistentOps));
-                return result.Code == (int) HttpCode.OK;
+                return result.Code == (int)HttpCode.OK;
             }
 
             return false;
@@ -108,7 +108,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool Exist(string key)
         {
-            throw new NotImplementedException();
+            BucketManager bucketManager = new BucketManager(base.Mac, base.GetConfig());
+            StatResult statResult = bucketManager.Stat(base.QiNiuConfig.Bucket, key);
+            return statResult.Code == (int)HttpCode.OK;
         }
 
         #endregion
