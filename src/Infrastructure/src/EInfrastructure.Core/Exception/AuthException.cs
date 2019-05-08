@@ -15,12 +15,9 @@ namespace EInfrastructure.Core.Exception
         /// 权限校验
         /// </summary>
         /// <param name="msg">提示信息</param>
-        public AuthException(string msg = "")
+        public AuthException(string msg = ""):base(HttpStatusEnum.Unauthorized.GetDescription())
         {
-            if (string.IsNullOrEmpty(msg))
-            {
-                throw new System.Exception(HttpStatusEnum.Unauthorized.GetDescription());
-            }
+
         }
     }
 }
