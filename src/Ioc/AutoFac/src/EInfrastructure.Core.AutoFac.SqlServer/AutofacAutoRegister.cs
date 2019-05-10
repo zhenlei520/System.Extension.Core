@@ -25,7 +25,6 @@ namespace EInfrastructure.Core.AutoFac.SqlServer
         {
             return base.Build(services, (builder) =>
             {
-                Startup.Load();
                 builder.RegisterGeneric(typeof(QueryBase<,>)).As(typeof(IQuery<,>)).PropertiesAutowired()
                     .InstancePerLifetimeScope();
 

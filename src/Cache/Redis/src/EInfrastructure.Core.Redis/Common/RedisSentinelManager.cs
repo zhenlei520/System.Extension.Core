@@ -109,8 +109,7 @@ namespace EInfrastructure.Core.Redis.Common
         /// </summary>
         public void Dispose()
         {
-            if (_redisClient != null)
-                _redisClient.Dispose();
+            _redisClient?.Dispose();
         }
 
         string SetMaster(string name, int timeout)

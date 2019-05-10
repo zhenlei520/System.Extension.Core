@@ -12,22 +12,22 @@ namespace EInfrastructure.Core.Redis.Common
     internal partial class ConnectionPool
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public List<RedisConnection2> AllConnections = new List<RedisConnection2>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Queue<RedisConnection2> FreeConnections = new Queue<RedisConnection2>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Queue<ManualResetEventSlim> GetConnectionQueue = new Queue<ManualResetEventSlim>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Queue<TaskCompletionSource<RedisConnection2>> GetConnectionAsyncQueue =
             new Queue<TaskCompletionSource<RedisConnection2>>();
@@ -106,7 +106,7 @@ namespace EInfrastructure.Core.Redis.Common
             return conn;
         }
 
-        async public Task<RedisConnection2> GetConnectionAsync()
+        public async Task<RedisConnection2> GetConnectionAsync()
         {
             var conn = GetFreeConnection();
             if (conn == null)
@@ -136,6 +136,10 @@ namespace EInfrastructure.Core.Redis.Common
             return conn;
         }
 
+        /// <summary>
+        /// 释放资源
+        /// </summary>
+        /// <param name="conn"></param>
         public void ReleaseConnection(RedisConnection2 conn)
         {
             lock (_lock)
@@ -144,11 +148,20 @@ namespace EInfrastructure.Core.Redis.Common
             bool isAsync = false;
             if (GetConnectionAsyncQueue.Count > 0)
             {
+                //存在异步
                 TaskCompletionSource<RedisConnection2> tcs = null;
                 lock (_lock_GetConnectionQueue)
+                {
                     if (GetConnectionAsyncQueue.Count > 0)
+                    {
                         tcs = GetConnectionAsyncQueue.Dequeue();
-                if (isAsync = (tcs != null)) tcs.SetResult(GetConnectionAsync().Result);
+                    }
+                }
+
+                isAsync = tcs != null;
+
+                if (isAsync)
+                    tcs.SetResult(GetConnectionAsync().Result);
             }
 
             if (isAsync == false && GetConnectionQueue.Count > 0)
@@ -172,7 +185,8 @@ namespace EInfrastructure.Core.Redis.Common
 
         public void Dispose()
         {
-            if (Pool != null) Pool.ReleaseConnection(this);
+            if (Pool != null)
+                Pool.ReleaseConnection(this);
         }
     }
 }
