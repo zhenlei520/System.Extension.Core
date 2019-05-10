@@ -15,7 +15,7 @@ namespace EInfrastructure.Core.AutoFac.SqlServer
     public class AutofacAutoRegister : EInfrastructure.Core.AutoFac.AutofacAutoRegister
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="services"></param>
         /// <param name="action"></param>
@@ -25,6 +25,7 @@ namespace EInfrastructure.Core.AutoFac.SqlServer
         {
             return base.Build(services, (builder) =>
             {
+                Startup.Load();
                 builder.RegisterGeneric(typeof(QueryBase<,>)).As(typeof(IQuery<,>)).PropertiesAutowired()
                     .InstancePerLifetimeScope();
 

@@ -15,27 +15,18 @@ namespace EInfrastructure.Core.Exception
     /// </summary>
     public class BusinessException : System.Exception
     {
-        private static IJsonService _jsonProvider;
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="jsonProvider"></param>
-        public BusinessException(IJsonService jsonProvider = null)
-        {
-            _jsonProvider = jsonProvider ?? new JsonService(new List<IJsonProvider>()
-            {
-                new NewtonsoftJsonProvider()
-            });
-        }
-
         /// <summary>
         /// 业务异常
         /// </summary>
         /// <param name="code">状态码</param>
         /// <param name="content">异常详情</param>
-        public BusinessException(string content, int code = (int) HttpStatusEnum.Err) : base(
-            _jsonProvider.Serializer(new {code, content}))
+        public BusinessException(string content, int code = (int) HttpStatusEnum.Err,
+            IJsonService jsonProvider = null) :
+            base(
+                (jsonProvider ?? new JsonService(new List<IJsonProvider>()
+                {
+                    new NewtonsoftJsonProvider()
+                })).Serializer(new {code, content}))
         {
         }
     }
