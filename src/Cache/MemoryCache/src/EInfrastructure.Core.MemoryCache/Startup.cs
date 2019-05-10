@@ -18,5 +18,16 @@ namespace EInfrastructure.Core.MemoryCache
         {
             return services;
         }
+        
+        #region 强制加载服务
+
+        /// <summary>
+        /// 强制加载服务
+        /// </summary>
+        public static void Load()
+        {
+        }
+
+        #endregion
     }
 }
