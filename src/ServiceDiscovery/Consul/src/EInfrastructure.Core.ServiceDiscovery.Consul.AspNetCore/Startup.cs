@@ -63,5 +63,17 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         }
 
         #endregion
+
+        #region 强制加载服务
+
+        /// <summary>
+        ///强制加载服务
+        /// </summary>
+        public static void Load()
+        {
+
+        }
+
+        #endregion
     }
 }
