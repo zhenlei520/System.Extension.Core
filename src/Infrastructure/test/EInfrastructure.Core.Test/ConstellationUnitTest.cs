@@ -22,6 +22,8 @@ namespace EInfrastructure.Core.Test
         [Theory]
         [InlineData("1993-04-18")]
         [InlineData("1994-11-09")]
+        [InlineData("1994-03-21")]
+        [InlineData("1994-04-19")]
         public void GetConstellationFromBirthday(string date)
         {
             Check.True(ConstellationCommon.GetConstellationFromBirthday(DateTime.Parse(date)) == GetConstellation(date),"constellation is error");
@@ -37,7 +39,9 @@ namespace EInfrastructure.Core.Test
             return new List<KeyValuePair<string, string>>()
             {
                 new KeyValuePair<string, string>("1993-04-18", "白羊座"),
-                new KeyValuePair<string, string>("1994-11-09", "天蝎座")
+                new KeyValuePair<string, string>("1994-11-09", "天蝎座"),
+                new KeyValuePair<string, string>("1994-03-21", "白羊座"),
+                new KeyValuePair<string, string>("1994-04-19", "白羊座")
             }.Where(x => x.Key == date).Select(x => x.Value).FirstOrDefault();
         } 
 
