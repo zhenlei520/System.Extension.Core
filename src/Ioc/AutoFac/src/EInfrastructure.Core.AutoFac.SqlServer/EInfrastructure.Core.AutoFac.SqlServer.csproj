@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>2.0.0-beta-012</Version>
+    <Version>2.0.0-beta-013</Version>
     <PackageReleaseNotes>sqlserver2012以上数据库</PackageReleaseNotes>
     <Description>dotnet core autofac 与sqlserver自动注入</Description>
     <Copyright>Copyright ©zhenlei520 2018</Copyright>
