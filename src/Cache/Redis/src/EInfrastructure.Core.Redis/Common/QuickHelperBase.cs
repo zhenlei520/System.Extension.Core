@@ -7,17 +7,17 @@ using System.Threading;
 namespace EInfrastructure.Core.Redis.Common
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal partial class QuickHelperBase
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static string Name { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static ConnectionPool Instance { get; protected set; }
 
@@ -25,7 +25,7 @@ namespace EInfrastructure.Core.Redis.Common
         private static Random rnd = new Random();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private static readonly int __staticMachine = ((0x00ffffff & Environment.MachineName.GetHashCode()) +
 #if NETSTANDARD1_5 || NETSTANDARD1_6
@@ -36,7 +36,7 @@ namespace EInfrastructure.Core.Redis.Common
                                                       ) & 0x00ffffff;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private static readonly int __staticPid = Process.GetCurrentProcess().Id;
 
@@ -252,13 +252,26 @@ namespace EInfrastructure.Core.Redis.Common
         /// <summary>
         /// 同时将多个 field-value (域-值)对设置到哈希表 key 中
         /// </summary>
-        /// <param name="key">不含prefix前辍RedisHelper.Name</param>
-        /// <param name="expire">过期时间（单位：秒）</param>
-        /// <param name="keyValues">field1 value1 [field2 value2]</param>
+        /// <param name="expire">过期时间</param>
+        /// <param name="keyValues">key dataKey,value</param>
         /// <returns></returns>
-        public static string HashSet(string key, TimeSpan expire, params object[] keyValues)
+        public static string HashSetExpire(Dictionary<string, object[]> keyValues, TimeSpan expire)
         {
-            return HashSetExpire(key, expire, keyValues);
+            using (var conn = Instance.GetConnection())
+            {
+                if (keyValues != null && keyValues.Count > 0)
+                {
+                    foreach (var item in keyValues)
+                    {
+                        string key = string.Concat(Name, item.Key);
+                        var ret = conn.Client.HMSet(key, item.Value.Select(a => string.Concat(a)).ToArray());
+                        if (expire > TimeSpan.Zero) conn.Client.Expire(key, expire);
+                        return ret;
+                    }
+                }
+
+                return "Empty Data";
+            }
         }
 
         /// <summary>
@@ -294,6 +307,12 @@ namespace EInfrastructure.Core.Redis.Common
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
         public static string[] HashGet(string key, params string[] fields)
         {
             key = string.Concat(Name, key);
@@ -301,6 +320,26 @@ namespace EInfrastructure.Core.Redis.Common
             {
                 return conn.Client.HMGet(key, fields);
             }
+        }
+
+        /// <summary>
+        /// 获取存储在哈希表中指定字段的值
+        /// </summary>
+        /// <param name="keyDic"></param>
+        /// <returns></returns>
+        public static Dictionary<string, string[]> HashGet(Dictionary<string, string[]> keyDic)
+        {
+            Dictionary<string, string[]> result = new Dictionary<string, string[]>();
+            using (var conn = Instance.GetConnection())
+            {
+                foreach (var item in keyDic)
+                {
+                    string key = string.Concat(Name, item.Key);
+                    result.Add(key, conn.Client.HMGet(key, item.Value));
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
