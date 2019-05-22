@@ -353,6 +353,18 @@ namespace EInfrastructure.Core.MemoryCache
             return false;
         }
 
+        /// <summary>
+        /// 存储数据到hash表
+        /// </summary>
+        /// <param name="kValues"></param>
+        /// <param name="second"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1)
+        {
+            return false;
+        }
+
         #endregion
 
         #region 移除hash中的某值
@@ -423,6 +435,11 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="dataKeys"></param>
         /// <returns></returns>
         public Dictionary<string, string> HashGet(string key, List<string> dataKeys)
+        {
+            return null;
+        }
+
+        public Dictionary<string, Dictionary<string, string>> HashGet(Dictionary<string, string[]> keys)
         {
             return null;
         }

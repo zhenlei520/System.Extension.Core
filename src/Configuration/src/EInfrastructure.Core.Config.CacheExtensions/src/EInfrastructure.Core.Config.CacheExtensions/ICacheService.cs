@@ -159,6 +159,15 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L);
 
         /// <summary>
+        /// 存储数据到hash表
+        /// </summary>
+        /// <param name="kValues"></param>
+        /// <param name="second"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1);
+
+        /// <summary>
         /// 移除hash中的某值
         /// </summary>
         /// <param name="key"></param>
@@ -198,6 +207,13 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="dataKeys"></param>
         /// <returns></returns>
         Dictionary<string, string> HashGet(string key, List<string> dataKeys);
+
+        /// <summary>
+        /// 从hash表获取数据
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        Dictionary<string, Dictionary<string, string>> HashGet(Dictionary<string, string[]> keys);
 
         /// <summary>
         /// 为数字增长val

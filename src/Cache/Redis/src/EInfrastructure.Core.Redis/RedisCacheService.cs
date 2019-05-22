@@ -77,7 +77,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public bool StringSet(string key, string value, TimeSpan? expiry = default(TimeSpan?))
         {
-            return CsRedisHelper.Set(key, value, expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
+            return QuickHelperBase.Set(key, value, expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public bool StringSet<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?))
         {
-            return CsRedisHelper.Set(key, ConvertJson(obj),
+            return QuickHelperBase.Set(key, ConvertJson(obj),
                 expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
         }
 
@@ -101,7 +101,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public string StringGet(string key)
         {
-            return CsRedisHelper.Get(key);
+            return QuickHelperBase.Get(key);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public List<string> StringGet(List<string> listKeys)
         {
-            return Enumerable.ToList<string>(CsRedisHelper.GetStrings(listKeys.ToArray()));
+            return Enumerable.ToList<string>(QuickHelperBase.GetStrings(listKeys.ToArray()));
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns>增长后的值</returns>
         public long StringIncrement(string key, long val = 1)
         {
-            return CsRedisHelper.Increment(key, val);
+            return QuickHelperBase.Increment(key, val);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns>减少后的值</returns>
         public long StringDecrement(string key, long val = 1)
         {
-            return CsRedisHelper.Increment(key, 0 - val);
+            return QuickHelperBase.Increment(key, 0 - val);
         }
 
         #endregion 同步方法
@@ -160,7 +160,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry = default(TimeSpan?))
         {
-            return await CsRedisHelper.SetAsync(key, value,
+            return await QuickHelperBase.SetAsync(key, value,
                 expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
         }
 
@@ -174,7 +174,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<bool> StringSetAsync<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?))
         {
-            return await CsRedisHelper.SetAsync(key, ConvertJson<T>(obj),
+            return await QuickHelperBase.SetAsync(key, ConvertJson<T>(obj),
                 expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
         }
 
@@ -185,7 +185,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<string> StringGetAsync(string key)
         {
-            return await CsRedisHelper.GetAsync(key);
+            return await QuickHelperBase.GetAsync(key);
         }
 
 
@@ -197,7 +197,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns>增长后的值</returns>
         public async Task<long> StringIncrementAsync(string key, long val = 1)
         {
-            return await CsRedisHelper.IncrementAsync(key, val);
+            return await QuickHelperBase.IncrementAsync(key, val);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns>减少后的值</returns>
         public async Task<long> StringDecrementAsync(string key, long val = 1)
         {
-            return await CsRedisHelper.IncrementAsync(key, 0 - val);
+            return await QuickHelperBase.IncrementAsync(key, 0 - val);
         }
 
         #endregion 异步方法
@@ -227,7 +227,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public bool HashExists(string key, string dataKey)
         {
-            return CsRedisHelper.HashExists(key, dataKey);
+            return QuickHelperBase.HashExists(key, dataKey);
         }
 
         #region 存储数据到hash表
@@ -243,7 +243,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public bool HashSet<T>(string key, string dataKey, T t, long second = -1)
         {
-            string value = CsRedisHelper.HashSet(key, GetExpire(second), dataKey, ConvertJson(t));
+            string value = QuickHelperBase.HashSetExpire(key, GetExpire(second), dataKey, ConvertJson(t));
             bool result = string.Equals(value, "OK",
                 StringComparison.OrdinalIgnoreCase);
             return result;
@@ -266,12 +266,37 @@ namespace EInfrastructure.Core.Redis
                 keyValues.Add(ConvertJson<T>(kvp.Value));
             }
 
-            return string.Equals(CsRedisHelper.HashSet(key, GetExpire(second), keyValues.ToArray()), "OK",
+            return string.Equals(QuickHelperBase.HashSetExpire(key, GetExpire(second), keyValues.ToArray()), "OK",
+                StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// 存储数据到hash表
+        /// </summary>
+        /// <param name="kValues"></param>
+        /// <param name="second"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1)
+        {
+            Dictionary<string, object[]> keyValues = new Dictionary<string, object[]>();
+            foreach (var item in kValues)
+            {
+                List<object> dataKeyValues = new List<object>();
+                foreach (var kvp in item.Value)
+                {
+                    dataKeyValues.Add(kvp.Key);
+                    dataKeyValues.Add(ConvertJson(kvp.Value));
+                }
+
+                keyValues.Add(item.Key, dataKeyValues.ToArray());
+            }
+
+            return string.Equals(QuickHelperBase.HashSetExpire(keyValues, GetExpire(second)), "OK",
                 StringComparison.OrdinalIgnoreCase);
         }
 
         #endregion
-
 
         /// <summary>
         /// 移除hash中的某值
@@ -281,7 +306,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public bool HashDelete(string key, string dataKey)
         {
-            return CsRedisHelper.HashDelete(key, dataKey) >= 0;
+            return QuickHelperBase.HashDelete(key, dataKey) >= 0;
         }
 
         /// <summary>
@@ -292,7 +317,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public long HashDelete(string key, List<string> dataKeys)
         {
-            return CsRedisHelper.HashDelete(key, dataKeys.ToArray());
+            return QuickHelperBase.HashDelete(key, dataKeys.ToArray());
         }
 
         #region 从hash表获取数据
@@ -319,7 +344,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public string HashGet(string key, string dataKey)
         {
-            return CsRedisHelper.HashGet(key, dataKey);
+            return QuickHelperBase.HashGet(key, dataKey);
         }
 
         #endregion
@@ -336,7 +361,7 @@ namespace EInfrastructure.Core.Redis
             if (dataKeys != null && dataKeys.Count > 0)
             {
                 dataKeys = dataKeys.Distinct().ToList();
-                var values = CsRedisHelper.HashGet(key, dataKeys.ToArray()).ToList();
+                var values = QuickHelperBase.HashGet(key, dataKeys.ToArray()).ToList();
 
                 Dictionary<string, string> dic = new Dictionary<string, string>();
                 for (int i = 0; i < dataKeys.Count; i++)
@@ -350,7 +375,42 @@ namespace EInfrastructure.Core.Redis
                 return dic;
             }
 
-            return CsRedisHelper.HashGetAll(key);
+            return QuickHelperBase.HashGetAll(key);
+        }
+
+        /// <summary>
+        /// 从hash表获取数据
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        public Dictionary<string, Dictionary<string, string>> HashGet(Dictionary<string, string[]> keys)
+        {
+            Dictionary<string, Dictionary<string, string>> dic =
+                new Dictionary<string, Dictionary<string, string>>();
+            if (keys != null && keys.Count > 0)
+            {
+                Dictionary<string, string[]> values = QuickHelperBase.HashGet(keys);
+
+                foreach (var item in keys)
+                {
+                    string[] valuesList = values.Where(x => x.Key == item.Key).Select(x => x.Value).FirstOrDefault();
+                    Dictionary<string, string> newDic = new Dictionary<string, string>();
+                    if (valuesList != null && valuesList.Length > 0)
+                    {
+                        for (int i = 0; i < item.Value.Length; i++)
+                        {
+                            if (!newDic.ContainsKey(item.Value[i]) && valuesList[i] != null)
+                            {
+                                newDic.Add(item.Value[i], valuesList[i]);
+                            }
+                        }
+                    }
+
+                    dic.Add(item.Key, newDic);
+                }
+            }
+
+            return dic;
         }
 
         /// <summary>
@@ -362,7 +422,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns>增长后的值</returns>
         public long HashIncrement(string key, string dataKey, long val = 1)
         {
-            return CsRedisHelper.HashIncrement(key, dataKey, val);
+            return QuickHelperBase.HashIncrement(key, dataKey, val);
         }
 
         /// <summary>
@@ -374,7 +434,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns>减少后的值</returns>
         public long HashDecrement(string key, string dataKey, long val = 1)
         {
-            return CsRedisHelper.HashIncrement(key, dataKey, 0 - val);
+            return QuickHelperBase.HashIncrement(key, dataKey, 0 - val);
         }
 
         /// <summary>
@@ -384,7 +444,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public List<string> HashKeys(string key)
         {
-            return Enumerable.ToList<string>(CsRedisHelper.HashKeys(key));
+            return Enumerable.ToList<string>(QuickHelperBase.HashKeys(key));
         }
 
         #endregion 同步方法
@@ -399,7 +459,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<bool> HashExistsAsync(string key, string dataKey)
         {
-            return await CsRedisHelper.HashExistsAsync(key, dataKey);
+            return await QuickHelperBase.HashExistsAsync(key, dataKey);
         }
 
         /// <summary>
@@ -412,7 +472,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<bool> HashSetAsync<T>(string key, string dataKey, T t)
         {
-            return string.Equals(await CsRedisHelper.HashSetAsync(key, dataKey, ConvertJson<T>(t)), "TRUE",
+            return string.Equals(await QuickHelperBase.HashSetAsync(key, dataKey, ConvertJson<T>(t)), "TRUE",
                 StringComparison.OrdinalIgnoreCase);
         }
 
@@ -424,7 +484,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<bool> HashDeleteAsync(string key, string dataKey)
         {
-            return await CsRedisHelper.HashDeleteAsync(key, dataKey) >= 0;
+            return await QuickHelperBase.HashDeleteAsync(key, dataKey) >= 0;
         }
 
         /// <summary>
@@ -435,7 +495,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<long> HashDeleteAsync(string key, List<string> dataKeys)
         {
-            return await CsRedisHelper.HashDeleteAsync(key, dataKeys.ToArray());
+            return await QuickHelperBase.HashDeleteAsync(key, dataKeys.ToArray());
         }
 
         #region 从hash表获取数据
@@ -449,7 +509,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<T> HashGetAsync<T>(string key, string dataKey) where T : class, new()
         {
-            return ConvertObj<T>(await CsRedisHelper.HashGetAsync(key, dataKey));
+            return ConvertObj<T>(await QuickHelperBase.HashGetAsync(key, dataKey));
         }
 
         /// <summary>
@@ -461,7 +521,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public Task<string> HashGetAsync(string key, string dataKey)
         {
-            return CsRedisHelper.HashGetAsync(key, dataKey);
+            return QuickHelperBase.HashGetAsync(key, dataKey);
         }
 
         #endregion
@@ -475,7 +535,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns>增长后的值</returns>
         public async Task<long> HashIncrementAsync(string key, string dataKey, long val = 1)
         {
-            return await CsRedisHelper.HashIncrementAsync(key, dataKey, val);
+            return await QuickHelperBase.HashIncrementAsync(key, dataKey, val);
         }
 
         /// <summary>
@@ -487,7 +547,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns>减少后的值</returns>
         public async Task<long> HashDecrementAsync(string key, string dataKey, long val = 1)
         {
-            return await CsRedisHelper.HashIncrementAsync(key, dataKey, 0 - val);
+            return await QuickHelperBase.HashIncrementAsync(key, dataKey, 0 - val);
         }
 
         /// <summary>
@@ -498,7 +558,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<List<string>> HashKeysAsync(string key)
         {
-            return Enumerable.ToList<string>((await CsRedisHelper.HashKeysAsync(key)));
+            return Enumerable.ToList<string>((await QuickHelperBase.HashKeysAsync(key)));
         }
 
         #endregion 异步方法
@@ -517,7 +577,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public long ListRemove<T>(string key, T value)
         {
-            return CsRedisHelper.LRem(key, int.MaxValue, ConvertJson(value));
+            return QuickHelperBase.LRem(key, int.MaxValue, ConvertJson(value));
         }
 
         #region 获取指定key的List
@@ -530,7 +590,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public List<string> ListRange(string key, long count = 1000)
         {
-            return CsRedisHelper.LRang(key, 0, count).ToList();
+            return QuickHelperBase.LRang(key, 0, count).ToList();
         }
 
         /// <summary>
@@ -542,7 +602,7 @@ namespace EInfrastructure.Core.Redis
         public List<T> ListRange<T>(string key, long count = 1000) where T : class, new()
         {
             List<T> list = new List<T>();
-            CsRedisHelper.LRang(key, 0, count).ToList().ForEach(p => { list.Add(ConvertObj<T>(p)); });
+            QuickHelperBase.LRang(key, 0, count).ToList().ForEach(p => { list.Add(ConvertObj<T>(p)); });
             return list;
         }
 
@@ -555,7 +615,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public long ListRightPush<T>(string key, T value)
         {
-            return CsRedisHelper.RPush(key, new string[1] {ConvertJson<T>(value)});
+            return QuickHelperBase.RPush(key, new string[1] {ConvertJson<T>(value)});
         }
 
         #region 出队
@@ -568,7 +628,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public string ListRightPop(string key)
         {
-            return CsRedisHelper.RPop(key);
+            return QuickHelperBase.RPop(key);
         }
 
         /// <summary>
@@ -579,7 +639,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public T ListRightPop<T>(string key) where T : class, new()
         {
-            return ConvertObj<T>(CsRedisHelper.RPop(key));
+            return ConvertObj<T>(QuickHelperBase.RPop(key));
         }
 
         #endregion
@@ -593,7 +653,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public long ListLeftPush<T>(string key, T value)
         {
-            return CsRedisHelper.LPush(key, new string[1] {ConvertJson<T>(value)});
+            return QuickHelperBase.LPush(key, new string[1] {ConvertJson<T>(value)});
         }
 
         #region 出栈
@@ -605,7 +665,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public string ListLeftPop(string key)
         {
-            return CsRedisHelper.LPop(key);
+            return QuickHelperBase.LPop(key);
         }
 
         /// <summary>
@@ -616,7 +676,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public T ListLeftPop<T>(string key) where T : class, new()
         {
-            return ConvertObj<T>(CsRedisHelper.LPop(key));
+            return ConvertObj<T>(QuickHelperBase.LPop(key));
         }
 
         #endregion
@@ -628,7 +688,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public long ListLength(string key)
         {
-            return CsRedisHelper.LLen(key);
+            return QuickHelperBase.LLen(key);
         }
 
         #endregion 同步方法
@@ -643,7 +703,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<long> ListRemoveAsync<T>(string key, T value)
         {
-            return await CsRedisHelper.LRemAsync(key, int.MaxValue, ConvertJson(value));
+            return await QuickHelperBase.LRemAsync(key, int.MaxValue, ConvertJson(value));
         }
 
         /// <summary>
@@ -654,7 +714,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<List<string>> ListRangeAsync(string key, long count = 1000)
         {
-            return (await CsRedisHelper.LRangAsync(key, 0, count)).ToList();
+            return (await QuickHelperBase.LRangAsync(key, 0, count)).ToList();
         }
 
         /// <summary>
@@ -665,7 +725,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<List<T>> ListRangeAsync<T>(string key, long count = 1000) where T : class, new()
         {
-            return ConvertListObj<T>((await CsRedisHelper.LRangAsync(key, 0, count)).ToList());
+            return ConvertListObj<T>((await QuickHelperBase.LRangAsync(key, 0, count)).ToList());
         }
 
         /// <summary>
@@ -676,7 +736,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<long> ListRightPushAsync<T>(string key, T value)
         {
-            return await CsRedisHelper.RPushAsync(key, new[] {ConvertJson(value)});
+            return await QuickHelperBase.RPushAsync(key, new[] {ConvertJson(value)});
         }
 
         #region 出队
@@ -689,7 +749,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<string> ListRightPopAsync(string key)
         {
-            return await CsRedisHelper.RPopAsync(key);
+            return await QuickHelperBase.RPopAsync(key);
         }
 
         /// <summary>
@@ -700,7 +760,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<T> ListRightPopAsync<T>(string key) where T : class, new()
         {
-            return ConvertObj<T>(await CsRedisHelper.RPopAsync(key));
+            return ConvertObj<T>(await QuickHelperBase.RPopAsync(key));
         }
 
         #endregion
@@ -714,7 +774,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<long> ListLeftPushAsync<T>(string key, T value)
         {
-            return await CsRedisHelper.LPushAsync(key, new string[1] {ConvertJson<T>(value)});
+            return await QuickHelperBase.LPushAsync(key, new string[1] {ConvertJson<T>(value)});
         }
 
         #region 出栈
@@ -727,7 +787,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<string> ListLeftPopAsync(string key)
         {
-            return await CsRedisHelper.LPopAsync(key);
+            return await QuickHelperBase.LPopAsync(key);
         }
 
         /// <summary>
@@ -738,7 +798,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<T> ListLeftPopAsync<T>(string key) where T : class, new()
         {
-            return ConvertObj<T>(await CsRedisHelper.LPopAsync(key));
+            return ConvertObj<T>(await QuickHelperBase.LPopAsync(key));
         }
 
         #endregion
@@ -750,7 +810,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<long> ListLengthAsync(string key)
         {
-            return await CsRedisHelper.LLenAsync(key);
+            return await QuickHelperBase.LLenAsync(key);
         }
 
         #endregion 异步方法
@@ -776,7 +836,7 @@ namespace EInfrastructure.Core.Redis
                 SortedSetRemove<T>(key, value);
             }
 
-            return CsRedisHelper.ZAdd(key, (score, ConvertJson<T>(value))) > 0;
+            return QuickHelperBase.ZAdd(key, (score, ConvertJson<T>(value))) > 0;
         }
 
         /// <summary>
@@ -787,7 +847,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public bool SortedSetRemove<T>(string key, T value)
         {
-            return CsRedisHelper.ZRem(key, new string[1] {ConvertJson<T>(value)}) > 0;
+            return QuickHelperBase.ZRem(key, new string[1] {ConvertJson<T>(value)}) > 0;
         }
 
         /// <summary>
@@ -798,7 +858,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public List<string> SortedSetRangeByRank(string key, long count = 1000)
         {
-            return CsRedisHelper.ZRange(key, 0, count).ToList();
+            return QuickHelperBase.ZRange(key, 0, count).ToList();
         }
 
         /// <summary>
@@ -809,7 +869,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public List<T> SortedSetRangeByRank<T>(string key, long count = 1000) where T : class, new()
         {
-            return ConvertListObj<T>(CsRedisHelper.ZRange(key, 0, count).ToList());
+            return ConvertListObj<T>(QuickHelperBase.ZRange(key, 0, count).ToList());
         }
 
         /// <summary>
@@ -819,7 +879,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public Dictionary<string, string> SortedSetRangeByRankAndOverTime(long count = 1000)
         {
-            var keyList = CsRedisHelper
+            var keyList = QuickHelperBase
                 .ZRevRangeByScore(_overtimeCacheKey, TimeCommon.GetTimeSpan(DateTime.Now), 0, count, null)
                 .ToList<string>(); //得到过期的key集合
 
@@ -847,7 +907,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public List<string> GetRangeFromSortedSetDesc(string key, long fromRank, long toRank)
         {
-            return CsRedisHelper.ZRevRange(key, fromRank, toRank).ToList();
+            return QuickHelperBase.ZRevRange(key, fromRank, toRank).ToList();
         }
 
         /// <summary>
@@ -860,7 +920,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public List<T> GetRangeFromSortedSetDesc<T>(string key, long fromRank, long toRank) where T : class, new()
         {
-            return ConvertListObj<T>(CsRedisHelper.ZRevRange(key, fromRank, toRank).ToList());
+            return ConvertListObj<T>(QuickHelperBase.ZRevRange(key, fromRank, toRank).ToList());
         }
 
         #endregion
@@ -890,7 +950,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public List<T> GetRangeFromSortedSet<T>(string key, long fromRank, long toRank) where T : class, new()
         {
-            return ConvertListObj<T>(Enumerable.ToList(CsRedisHelper.ZRange(key, fromRank, toRank)));
+            return ConvertListObj<T>(Enumerable.ToList(QuickHelperBase.ZRange(key, fromRank, toRank)));
         }
 
         #endregion
@@ -904,7 +964,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public bool SortedSetExistItem<T>(string key, T value)
         {
-            return CsRedisHelper.ZScore(key, ConvertJson(value)).HasValue;
+            return QuickHelperBase.ZScore(key, ConvertJson(value)).HasValue;
         }
 
         /// <summary>
@@ -914,7 +974,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public long SortedSetLength(string key)
         {
-            return CsRedisHelper.ZCard(key);
+            return QuickHelperBase.ZCard(key);
         }
 
         #endregion 同步方法
@@ -930,7 +990,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<bool> SortedSetAddAsync<T>(string key, T value, double score)
         {
-            return await CsRedisHelper.ZAddAsync(key, (score, ConvertJson<T>(value))) > 0;
+            return await QuickHelperBase.ZAddAsync(key, (score, ConvertJson<T>(value))) > 0;
         }
 
         /// <summary>
@@ -941,7 +1001,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<bool> SortedSetRemoveAsync<T>(string key, T value)
         {
-            return await CsRedisHelper.ZRemAsync(key, ConvertJson(value)) > 0;
+            return await QuickHelperBase.ZRemAsync(key, ConvertJson(value)) > 0;
         }
 
         #region 获取全部
@@ -954,7 +1014,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<List<string>> SortedSetRangeByRankAsync(string key, long count = 1000)
         {
-            return (await CsRedisHelper.ZRangeAsync(key, 0, count)).ToList();
+            return (await QuickHelperBase.ZRangeAsync(key, 0, count)).ToList();
         }
 
         /// <summary>
@@ -965,7 +1025,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<List<T>> SortedSetRangeByRankAsync<T>(string key, long count = 1000) where T : class, new()
         {
-            return ConvertListObj<T>((await CsRedisHelper.ZRangeAsync(key, 0, count)).ToList());
+            return ConvertListObj<T>((await QuickHelperBase.ZRangeAsync(key, 0, count)).ToList());
         }
 
         #endregion
@@ -979,7 +1039,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<long> SortedSetLengthAsync(string key)
         {
-            return await CsRedisHelper.ZCardAsync(key);
+            return await QuickHelperBase.ZCardAsync(key);
         }
 
         #endregion
@@ -1000,7 +1060,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns>返回删除的数量</returns>
         public long Remove(List<string> keys)
         {
-            return CsRedisHelper.Remove(keys?.ToArray());
+            return QuickHelperBase.Remove(keys?.ToArray());
         }
 
         #endregion
@@ -1015,7 +1075,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns>返回删除的数量</returns>
         public long Remove(params string[] keys)
         {
-            return CsRedisHelper.Remove(keys);
+            return QuickHelperBase.Remove(keys);
         }
 
         #endregion
@@ -1029,7 +1089,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public bool Exist(string key)
         {
-            return CsRedisHelper.Exists(key);
+            return QuickHelperBase.Exists(key);
         }
 
         #endregion
@@ -1044,7 +1104,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public bool Expire(string key, TimeSpan expire)
         {
-            return CsRedisHelper.Expire(key, expire);
+            return QuickHelperBase.Expire(key, expire);
         }
 
         #endregion
@@ -1059,7 +1119,7 @@ namespace EInfrastructure.Core.Redis
         public List<string> Keys(string pattern)
         {
             var keys = new List<string>();
-            CsRedisHelper.Keys(_prefix + pattern).ToList().ForEach(p => { keys.Add(p.Substring(_prefix.Length)); });
+            QuickHelperBase.Keys(_prefix + pattern).ToList().ForEach(p => { keys.Add(p.Substring(_prefix.Length)); });
             return keys;
         }
 
