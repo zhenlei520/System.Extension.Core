@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Linq;
+using EInfrastructure.Core.Configuration.Enum;
 using EInfrastructure.Core.Exception;
 using FluentValidation.Results;
 
@@ -18,12 +19,13 @@ namespace EInfrastructure.Core.Validation.Common
         /// 检查验证
         /// </summary>
         /// <param name="results"></param>
-        public static void Check(this ValidationResult results)
+        /// <param name="code">异常码</param>
+        public static void Check(this ValidationResult results, int code = (int) HttpStatusEnum.Err)
         {
             if (!results.IsValid)
             {
                 var msg = results.Errors.Select(x => x.ErrorMessage).FirstOrDefault();
-                throw new BusinessException(msg);
+                throw new BusinessException(msg, code);
             }
         }
 

@@ -18,21 +18,24 @@ namespace EInfrastructure.Core.UCloud.Storage
     /// </summary>
     public class BaseStorageProvider
     {
-        protected readonly ILogService _logService;
+        /// <summary>
+        ///
+        /// </summary>
+        protected readonly ILogService LogService;
 
         /// <summary>
         /// UCloud配置
         /// </summary>
-        protected readonly UCloudStorageConfig _uCloudConfig;
+        protected readonly UCloudStorageConfig UCloudConfig;
 
         /// <summary>
         /// 基类UCloud实现
         /// </summary>
         public BaseStorageProvider(ILogService logService, UCloudStorageConfig uCloudConfig)
         {
-            _logService = logService;
-            _uCloudConfig = uCloudConfig;
-            new UCloudConfigValidator().Validate(_uCloudConfig).Check();
+            LogService = logService;
+            UCloudConfig = uCloudConfig;
+            new UCloudConfigValidator().Validate(UCloudConfig).Check();
         }
 
         #region 上传文件
@@ -50,9 +53,9 @@ namespace EInfrastructure.Core.UCloud.Storage
             HttpWebResponse response = null;
             try
             {
-                request = (HttpWebRequest) WebRequest.Create(Utils.GetUrl(_uCloudConfig, key));
+                request = (HttpWebRequest) WebRequest.Create(Utils.GetUrl(UCloudConfig, key));
                 request.KeepAlive = false;
-                Utils.SetHeaders(request, ext, _uCloudConfig, key, "PUT");
+                Utils.SetHeaders(request, ext, UCloudConfig, key, "PUT");
                 Utils.CopyFile(request, stream);
 
                 response = HttpWebResponseExt.GetResponseNoException(request);
@@ -60,13 +63,13 @@ namespace EInfrastructure.Core.UCloud.Storage
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     string e = FormatString(body);
-                    _logService.Error(string.Format("{0} {1}", response.StatusDescription, e));
+                    LogService.Error(string.Format("{0} {1}", response.StatusDescription, e));
                     return false;
                 }
             }
             catch (System.Exception e)
             {
-                _logService.Error(e.ToString());
+                LogService.Error(e.ToString());
                 return false;
             }
             finally
