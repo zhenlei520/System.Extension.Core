@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using EInfrastructure.Core.Configuration.Enum;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
@@ -21,14 +22,15 @@ namespace EInfrastructure.Core.HelpCommon
         /// </summary>
         /// <param name="toEncrypt"></param>
         /// <param name="key"></param>
+        /// <param name="errCode">错误码</param>
         /// <returns></returns>
-        public static string AesEncrypt(string toEncrypt, string key)
+        public static string AesEncrypt(string toEncrypt, string key, int errCode = (int) HttpStatusEnum.Err)
         {
             if (string.IsNullOrWhiteSpace(toEncrypt))
                 return string.Empty;
             if (key.Length != 32)
             {
-                throw new BusinessException("Aes秘钥异常");
+                throw new BusinessException("Aes秘钥异常", errCode);
             }
 
             // 256-AES key
@@ -58,15 +60,17 @@ namespace EInfrastructure.Core.HelpCommon
         /// </summary>
         /// <param name="toDecrypt"></param>
         /// <param name="key"></param>
+        /// <param name="errCode">错误码</param>
         /// <returns></returns>
-        public static string Decrypt(string toDecrypt, string key)
+        public static string Decrypt(string toDecrypt, string key, int errCode = (int) HttpStatusEnum.Err)
         {
             if (string.IsNullOrWhiteSpace(toDecrypt))
                 return string.Empty;
             if (key.Length != 32)
             {
-                throw new BusinessException("Aes秘钥异常");
+                throw new BusinessException("Aes秘钥异常", errCode);
             }
+
             try
             {
                 // 256-AES key

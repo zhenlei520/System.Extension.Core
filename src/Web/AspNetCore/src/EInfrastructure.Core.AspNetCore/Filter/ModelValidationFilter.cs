@@ -1,6 +1,7 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Configuration.Enum;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Exception;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -14,8 +15,16 @@ namespace EInfrastructure.Core.AspNetCore.Filter
     {
         private readonly ILogService _logService;
 
-        public ModelValidationFilter(ILogService logService)
+        private static int ErrCode { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="logService"></param>
+        /// <param name="errCode">错误码</param>
+        public ModelValidationFilter(ILogService logService, int errCode = (int) HttpStatusEnum.Err)
         {
+            ErrCode = errCode;
             _logService = logService;
         }
 
@@ -34,7 +43,7 @@ namespace EInfrastructure.Core.AspNetCore.Filter
                         if (string.IsNullOrEmpty(error.ErrorMessage))
                         {
                             AddLog(context);
-                            throw new BusinessException("请检查参数格式是否正确");
+                            throw new BusinessException("请检查参数格式是否正确", ErrCode);
                         }
 
                         throw new BusinessException(error.ErrorMessage);
@@ -42,7 +51,7 @@ namespace EInfrastructure.Core.AspNetCore.Filter
                 }
 
                 AddLog(context);
-                throw new BusinessException("参数异常");
+                throw new BusinessException("参数异常", ErrCode);
             }
         }
 

@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.RegularExpressions;
+using EInfrastructure.Core.Configuration.Enum;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
@@ -20,13 +21,15 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="str"></param>
         /// <param name="message"></param>
         /// <param name="action"></param>
-        public static void IsNullOrEmptyTip(this string str, string message, Func<bool> action = null)
+        /// <param name="errCode">错误码</param>
+        public static void IsNullOrEmptyTip(this string str, string message, Func<bool> action = null,
+            int errCode = (int) HttpStatusEnum.Err)
         {
             if (string.IsNullOrEmpty(str))
             {
                 if (action == null || action.Invoke())
                 {
-                    throw new BusinessException(message);
+                    throw new BusinessException(message, errCode);
                 }
             }
         }
@@ -41,14 +44,16 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="array"></param>
         /// <param name="message">异常信息</param>
         /// <param name="action">委托，是否执行系统预设的异常</param>
+        /// <param name="errCode">错误码</param>
         /// <exception cref="Exception"></exception>
-        public static void IsNullOrEmptyTip(this object array, string message, Func<bool> action = null)
+        public static void IsNullOrEmptyTip(this object array, string message, Func<bool> action = null,
+            int errCode = (int) HttpStatusEnum.Err)
         {
             if (array == null)
             {
                 if (action == null || action.Invoke())
                 {
-                    throw new BusinessException(message);
+                    throw new BusinessException(message, errCode);
                 }
             }
         }
@@ -59,14 +64,16 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="array"></param>
         /// <param name="message">异常信息</param>
         /// <param name="action">委托，是否执行系统预设的异常</param>
+        /// <param name="errCode">错误码</param>
         /// <exception cref="Exception"></exception>
-        public static void IsNullOrEmptyTip(this object[] array, string message, Func<bool> action = null)
+        public static void IsNullOrEmptyTip(this object[] array, string message, Func<bool> action = null,
+            int errCode = (int) HttpStatusEnum.Err)
         {
             if (array == null || array.Length == 0)
             {
                 if (action == null || action.Invoke())
                 {
-                    throw new System.Exception(message);
+                    throw new BusinessException(message, errCode);
                 }
             }
         }
@@ -80,11 +87,13 @@ namespace EInfrastructure.Core.HelpCommon
         /// </summary>
         /// <param name="status"></param>
         /// <param name="errorMessageFormat"></param>
-        public static void True(bool status, string errorMessageFormat)
+        /// <param name="errCode">错误码</param>
+        public static void True(bool status, string errorMessageFormat,
+            int errCode = (int) HttpStatusEnum.Err)
         {
             if (!status)
             {
-                throw new BusinessException(string.Format(errorMessageFormat));
+                throw new BusinessException(string.Format(errorMessageFormat), errCode);
             }
         }
 
