@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
+using EInfrastructure.Core.Configuration.Enum;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
@@ -40,20 +41,22 @@ namespace EInfrastructure.Core.WeChat
         /// <param name="webChatAuthConfig"></param>
         /// <param name="wxConfig"></param>
         /// <param name="xml"></param>
-        public WebChatMessage ProcessRequest(WebChatAuthConfig webChatAuthConfig, WxConfig wxConfig, string xml)
+        /// <param name="errCode">错误码</param>
+        public WebChatMessage ProcessRequest(WebChatAuthConfig webChatAuthConfig, WxConfig wxConfig, string xml,
+            int errCode = (int) HttpStatusEnum.Err)
         {
             WebChatMessage refundReponse = null;
             try
             {
                 if (!string.IsNullOrEmpty(Auth(webChatAuthConfig, wxConfig)))
                 {
-                    throw new BusinessException("签名错误");
+                    throw new BusinessException("签名错误", errCode);
                 }
 
                 refundReponse = XmlCommon.Deserialize<WebChatMessage>(xml);
                 if (refundReponse == null)
                 {
-                    throw new BusinessException("参数错误");
+                    throw new BusinessException("参数错误", errCode);
                 }
             }
             catch (System.Exception e)
@@ -100,9 +103,10 @@ namespace EInfrastructure.Core.WeChat
         /// </summary>
         /// <param name="config"></param>
         /// <param name="code"></param>
+        /// <param name="errCode">错误码</param>
         /// <returns></returns>
         /// <exception cref="BusinessException"></exception>
-        public LoginResultConfig Login(WxConfig config, string code)
+        public LoginResultConfig Login(WxConfig config, string code, int errCode = (int) HttpStatusEnum.Err)
         {
             LoginResultConfig loginResult = new LoginResultConfig();
 
@@ -110,13 +114,13 @@ namespace EInfrastructure.Core.WeChat
             {
                 if (string.IsNullOrEmpty(code))
                 {
-                    throw new BusinessException("登录失败，授权异常");
+                    throw new BusinessException("登录失败，授权异常", errCode);
                 }
 
                 WxUserInfo wxUserInfo = JsonConvert.DeserializeObject<WxUserInfo>(code);
                 if (wxUserInfo == null)
                 {
-                    throw new BusinessException("登录失败，授权异常");
+                    throw new BusinessException("登录失败，授权异常", errCode);
                 }
 
                 loginResult.Success = !string.IsNullOrEmpty(wxUserInfo.Openid) &&

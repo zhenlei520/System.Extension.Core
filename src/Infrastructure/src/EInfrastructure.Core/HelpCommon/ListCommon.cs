@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Data;
+using EInfrastructure.Core.Configuration.Enum;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
@@ -258,13 +259,14 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="action"></param>
         /// <param name="pageSize">页大小</param>
         /// <param name="pageIndex">当前页数（默认第一页）</param>
+        /// <param name="errCode">错误码</param>
         /// <typeparam name="T"></typeparam>
         public static void ListPager<T>(this ICollection<T> query, Action<List<T>> action, int pageSize = -1,
-            int pageIndex = 1)
+            int pageIndex = 1, int errCode = (int) HttpStatusEnum.Err)
         {
             if (pageSize <= 0 && pageSize != -1)
             {
-                throw new BusinessException("页大小必须为正数");
+                throw new BusinessException("页大小必须为正数", errCode);
             }
 
             var totalCount = query.Count * 1.0d;

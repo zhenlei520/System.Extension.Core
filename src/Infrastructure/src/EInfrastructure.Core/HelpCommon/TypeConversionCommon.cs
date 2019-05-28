@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using EInfrastructure.Core.Configuration.Enum;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
@@ -664,8 +665,10 @@ namespace EInfrastructure.Core.HelpCommon
         /// </summary>
         /// <param name="number">显示N位*,-1默认显示6位</param>
         /// <param name="symbol">特殊符号，默认为*</param>
+        /// <param name="errCode">错误码</param>
         /// <returns></returns>
-        public static string GetContentByEncryption(this char? symbol, int number = 6)
+        public static string GetContentByEncryption(this char? symbol, int number = 6,
+            int errCode = (int) HttpStatusEnum.Err)
         {
             if (symbol == null)
             {
@@ -675,7 +678,7 @@ namespace EInfrastructure.Core.HelpCommon
             string result = ""; //结果
             if (number < 0)
             {
-                throw new BusinessException("number必须为正整数");
+                throw new BusinessException("number必须为正整数", errCode);
             }
 
             for (int i = 0; i < number; i++)
@@ -689,10 +692,12 @@ namespace EInfrastructure.Core.HelpCommon
         /// <summary>
         /// 加密显示以*表示
         /// </summary>
-        /// <param name="number">显示N次*,-1默认显示6位</param>
         /// <param name="symbol">特殊符号，默认为*</param>
+        /// <param name="number">显示N次*,-1默认显示6位</param>
+        /// <param name="errCode">错误码</param>
         /// <returns></returns>
-        public static string GetContentByEncryption(this string symbol, int number = 6)
+        public static string GetContentByEncryption(this string symbol, int number = 6,
+            int errCode = (int) HttpStatusEnum.Err)
         {
             if (string.IsNullOrEmpty(symbol))
             {
@@ -702,7 +707,7 @@ namespace EInfrastructure.Core.HelpCommon
             string result = ""; //结果
             if (number < 0)
             {
-                throw new BusinessException("number必须为正整数");
+                throw new BusinessException("number必须为正整数", errCode);
             }
 
             for (int i = 0; i < number; i++)

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using EInfrastructure.Core.Configuration.Enum;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
@@ -587,13 +588,14 @@ namespace EInfrastructure.Core.HelpCommon
         /// 得到mime类型
         /// </summary>
         /// <param name="extension">扩展名</param>
+        /// <param name="errCode">错误码</param>
         /// <returns></returns>
         /// <exception cref="BusinessException"></exception>
-        public static string GetMimeType(string extension)
+        public static string GetMimeType(string extension, int errCode = (int) HttpStatusEnum.Err)
         {
             if (extension == null)
             {
-                throw new BusinessException("extension");
+                throw new BusinessException("extension",errCode);
             }
 
             if (!extension.StartsWith("."))
