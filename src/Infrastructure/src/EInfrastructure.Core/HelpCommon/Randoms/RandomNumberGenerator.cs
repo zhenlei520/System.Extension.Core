@@ -4,7 +4,6 @@
 using System;
 using System.Text;
 using EInfrastructure.Core.HelpCommon.Randoms.Interface;
-using EInfrastructure.Core.HelpCommon.Systems;
 
 namespace EInfrastructure.Core.HelpCommon.Randoms
 {

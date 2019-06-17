@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Systems;
-using EInfrastructure.Core.Interface;
 using EInfrastructure.Core.Interface.Cache;
 using EInfrastructure.Core.Interface.IOC;
 using Microsoft.Extensions.Caching.Memory;

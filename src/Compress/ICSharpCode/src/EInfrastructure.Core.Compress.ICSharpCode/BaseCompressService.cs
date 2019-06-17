@@ -3,7 +3,6 @@
 
 using System.IO;
 using EInfrastructure.Core.Exception;
-using EInfrastructure.Core.Interface.Compress.Enum;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode
 {
