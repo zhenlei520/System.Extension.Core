@@ -90,7 +90,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             #region 覆盖上传
 
-            if (isAllowOverlap)
+            if (!isAllowOverlap)
             {
                 PutPolicy.Scope = QiNiuConfig.Bucket;
             }
