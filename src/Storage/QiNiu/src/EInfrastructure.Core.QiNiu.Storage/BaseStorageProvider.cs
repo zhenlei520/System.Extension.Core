@@ -79,7 +79,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 设置上传策略
         /// </summary>
-        /// <param name="key"></param>
+        /// <param name="key">文件名</param>
         /// <param name="isAllowOverlap">是否允许覆盖上传</param>
         /// <param name="persistentOps">上传预转持久化</param>
         /// <param name="expireInSeconds">上传策略失效时刻</param>
@@ -88,6 +88,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         protected void SetPutPolicy(string key, bool isAllowOverlap = false, string persistentOps = "",
             int expireInSeconds = 3600, int? deleteAfterDays = null)
         {
+            PutPolicy.SaveKey=key;
+
             #region 覆盖上传
 
             if (!isAllowOverlap)
