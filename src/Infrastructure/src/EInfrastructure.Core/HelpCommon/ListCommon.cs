@@ -131,6 +131,53 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
         /// <returns></returns>
         public static string ConvertListToString<T>(this List<T> s, char c = ',', bool isReplaceEmpty = true,
+            bool isReplaceSpace = true) where T : struct
+        {
+            if (s == null || s.Count == 0)
+            {
+                return "";
+            }
+
+            string temp = "";
+            foreach (var item in s)
+            {
+                if (isReplaceEmpty)
+                {
+                    string itemTemp = "";
+                    if (isReplaceSpace)
+                    {
+                        itemTemp = item.ToString().Trim();
+                    }
+
+                    if (!string.IsNullOrEmpty(itemTemp))
+                    {
+                        temp = temp + itemTemp + c;
+                    }
+                }
+                else
+                {
+                    temp = temp + item + c;
+                }
+            }
+
+            if (temp.Length > 0)
+                temp = temp.Substring(0, temp.Length - 1);
+            return temp;
+        }
+
+        #endregion
+
+        #region List转换为string
+
+        /// <summary>
+        /// List转换为string
+        /// </summary>
+        /// <param name="s">待转换的list集合</param>
+        /// <param name="c">分割字符</param>
+        /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
+        /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
+        /// <returns></returns>
+        public static string ConvertListToString(this List<string> s, char c = ',', bool isReplaceEmpty = true,
             bool isReplaceSpace = true)
         {
             if (s == null || s.Count == 0)
@@ -141,25 +188,22 @@ namespace EInfrastructure.Core.HelpCommon
             string temp = "";
             foreach (var item in s)
             {
-                if (item != null)
+                if (isReplaceEmpty)
                 {
-                    if (isReplaceEmpty)
+                    string itemTemp = "";
+                    if (isReplaceSpace)
                     {
-                        string itemTemp = "";
-                        if (isReplaceSpace)
-                        {
-                            itemTemp = item.ToString().Trim();
-                        }
+                        itemTemp = item.Trim();
+                    }
 
-                        if (!string.IsNullOrEmpty(itemTemp))
-                        {
-                            temp = temp + itemTemp + c;
-                        }
-                    }
-                    else
+                    if (!string.IsNullOrEmpty(itemTemp))
                     {
-                        temp = temp + item.ToString() + c;
+                        temp = temp + itemTemp + c;
                     }
+                }
+                else
+                {
+                    temp = temp + item + c;
                 }
             }
 
@@ -192,34 +236,6 @@ namespace EInfrastructure.Core.HelpCommon
         }
 
         #endregion
-
-        #endregion
-
-        #region 合并两个类型一致的泛型集合
-
-        /// <summary>
-        /// 合并两个类型一致的泛型
-        /// </summary>
-        /// <typeparam name="T">类型</typeparam>
-        /// <param name="a">泛型A</param>
-        /// <param name="b">泛型B</param>
-        /// <returns></returns>
-        public static List<T> ConvertTJoinOtherT<T>(this List<T> a, List<T> b)
-        {
-            if (a == null)
-            {
-                a = new List<T>();
-            }
-
-            if (b == null)
-            {
-                b = new List<T>();
-            }
-
-            List<T> c = a.ToList();
-            c.AddRange(b);
-            return c;
-        }
 
         #endregion
 
