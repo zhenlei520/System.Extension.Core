@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -34,15 +35,26 @@ namespace EInfrastructure.Core.HelpCommon
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
         /// <returns></returns>
-        public T DeepClone<T>(T t)
+        public T DeepClone<T>(T obj)
         {
-            using (Stream objectStream = new MemoryStream())
+            if (obj is string || obj.GetType().IsValueType)
+                return obj;
+
+            object retval = Activator.CreateInstance(obj.GetType());
+            FieldInfo[] fields = obj.GetType()
+                .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+            foreach (var field in fields)
             {
-                IFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(objectStream, t);
-                objectStream.Seek(0, SeekOrigin.Begin);
-                return (T) formatter.Deserialize(objectStream);
+                try
+                {
+                    field.SetValue(retval, DeepClone(field.GetValue(obj)));
+                }
+                catch
+                {
+                }
             }
+
+            return (T) retval;
         }
 
         #endregion

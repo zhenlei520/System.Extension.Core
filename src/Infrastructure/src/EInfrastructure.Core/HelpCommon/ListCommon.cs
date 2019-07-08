@@ -31,7 +31,7 @@ namespace EInfrastructure.Core.HelpCommon
             if (!isCheckRepeat)
                 t1.AddRange(t2);
             else
-                t1.AddCnki(t2);
+                t1 = t1.AddCnki(t2);
             return t1;
         }
 
@@ -42,15 +42,19 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="t1">集合1</param>
         /// <param name="t2">集合2</param>
         /// <returns></returns>
-        private static void AddCnki<T>(this List<T> t1, List<T> t2)
+        private static List<T> AddCnki<T>(this List<T> t1, List<T> t2)
         {
-            List<T> resultList = new CloneableClass().DeepClone(t1);
+            var cloneClass = new CloneableClass();
+            List<T> resultList = new List<T>();
+            t1.ForEach(item => { resultList.Add(cloneClass.DeepClone(item)); });
             foreach (var item in t2)
             {
                 if (t1.Contains(item))
                     continue;
                 resultList.Add(item);
             }
+
+            return resultList;
         }
 
         #endregion
