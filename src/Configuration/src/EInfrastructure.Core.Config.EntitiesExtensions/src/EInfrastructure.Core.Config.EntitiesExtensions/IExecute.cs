@@ -13,6 +13,11 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
     public interface IExecute
     {
         /// <summary>
+        /// 单元模式
+        /// </summary>
+        IUnitOfWork UnitOfWork { get; }
+
+        /// <summary>
         /// 执行Reader
         /// </summary>
         /// <param name="sql">sql语句</param>
