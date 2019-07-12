@@ -20,19 +20,27 @@ namespace EInfrastructure.Core.SqlServer
         where T : IComparable
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected DbContext Dbcontext;
 
+        private readonly IUnitOfWork _unitOfWork;
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork"></param>
         public RepositoryBase(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
             Dbcontext = unitOfWork as DbContext;
         }
-        
+
+        /// <summary>
+        /// 单元模式
+        /// </summary>
+        public IUnitOfWork UnitOfWork => _unitOfWork;
+
         #region 得到唯一标示
 
         /// <summary>

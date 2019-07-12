@@ -80,9 +80,9 @@ namespace EInfrastructure.Core.HelpCommon
         }
         #endregion
 
-        #region 是否数字
+        #region 是否包含数字
         /// <summary>
-        /// 是否数字
+        /// 是否包含数字
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>

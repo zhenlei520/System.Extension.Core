@@ -20,14 +20,22 @@ namespace EInfrastructure.Core.SqlServer
         /// </summary>
         protected DbContext Dbcontext;
 
+        private readonly IUnitOfWork _unitOfWork;
+
         /// <summary>
         ///
         /// </summary>
         /// <param name="unitOfWork">工作单元</param>
         public ExecuteBase(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
             this.Dbcontext = unitOfWork as DbContext;
         }
+
+        /// <summary>
+        /// 单元模式
+        /// </summary>
+        public IUnitOfWork UnitOfWork => _unitOfWork;
 
         #region 执行Reader
 

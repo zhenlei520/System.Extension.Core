@@ -14,6 +14,11 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
     public interface IRepository<TEntity, T> where TEntity : IAggregateRoot<T> where T : IComparable
     {
         /// <summary>
+        /// 单元模式
+        /// </summary>
+        IUnitOfWork UnitOfWork { get; }
+
+        /// <summary>
         /// 得到实现类唯一标示
         /// </summary>
         /// <returns></returns>
