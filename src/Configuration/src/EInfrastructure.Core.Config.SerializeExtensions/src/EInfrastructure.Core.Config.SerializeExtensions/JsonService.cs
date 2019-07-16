@@ -107,7 +107,7 @@ namespace EInfrastructure.Core.Config.SerializeExtensions
             }
             catch (System.Exception)
             {
-                throw new System.Exception($"json反序列化出错,jsonMode:{1},内容：{s}");
+                throw new System.Exception($"json反序列化出错,待序列化的json字符串为：{s}");
             }
         }
 
