@@ -6,6 +6,7 @@ using System.Collections;
 using System.Globalization;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Exception;
 using static System.TimeZone;
 
 namespace EInfrastructure.Core.HelpCommon
@@ -15,6 +16,11 @@ namespace EInfrastructure.Core.HelpCommon
     /// </summary>
     public static class TimeCommon
     {
+        static TimeCommon()
+        {
+            ChinaDate();
+        }
+
         #region 格式化时间
 
         /// <summary>
@@ -41,13 +47,24 @@ namespace EInfrastructure.Core.HelpCommon
         /// <summary>
         /// 将时间格式化成 年月日 的形式,如果时间为null，返回当前系统时间
         /// </summary>
-        /// <param name="dt">年月日分隔符</param>
+        /// <param name="dateTime">年月日分隔符</param>
         /// <param name="separator"></param>
         /// <returns></returns>
-        public static string GetFormatDate(this DateTime dt, char separator)
+        public static string GetFormatDate(this DateTime dateTime, char separator)
         {
             string tem = $"yyyy{separator}MM{separator}dd";
-            return dt.ToString(tem);
+            return dateTime.ToString(tem);
+        }
+
+        /// <summary>
+        /// 将时间格式化成 年月日 的形式,如果时间为null，返回当前系统时间
+        /// </summary>
+        /// <param name="dateTime">年月日分隔符</param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
+        public static string GetFormatDate(this DateTime? dateTime, char separator)
+        {
+            return dateTime?.GetFormatDate(separator);
         }
 
         #endregion
@@ -57,11 +74,23 @@ namespace EInfrastructure.Core.HelpCommon
         /// <summary>
         /// 把秒转换成分钟
         /// </summary>
+        /// <param name="second">秒</param>
+        /// <param name="rectificationType">取整方式</param>
         /// <returns></returns>
-        public static int SecondToMinute(int second)
+        public static int SecondToMinute(int second, RectificationType rectificationType)
         {
             decimal mm = (decimal) second / 60;
-            return Convert.ToInt32(Math.Ceiling(mm));
+            if (rectificationType == RectificationType.Celling)
+            {
+                return Convert.ToInt32(Math.Ceiling(mm));
+            }
+
+            if (rectificationType == RectificationType.Floor)
+            {
+                return Convert.ToInt32(Math.Floor(mm));
+            }
+
+            throw new BusinessException("不支持的取整方式");
         }
 
         #endregion
@@ -243,15 +272,17 @@ namespace EInfrastructure.Core.HelpCommon
         /// <summary>
         /// 返回每月的第一天和最后一天
         /// </summary>
+        /// <param name="year1"></param>
         /// <param name="month"></param>
         /// <param name="firstDay"></param>
         /// <param name="lastDay"></param>
-        public static void ReturnDateFormat(int month, out string firstDay, out string lastDay)
+        public static void ReturnDateFormat(int year, int month, out string firstDay, out string lastDay)
         {
-            int year = DateTime.Now.Year + month / 12;
+            year = year + month / 12;
             if (month != 12)
             {
                 month = month % 12;
+                month = Math.Abs(month);
             }
 
             switch (month)
@@ -262,7 +293,7 @@ namespace EInfrastructure.Core.HelpCommon
                     break;
                 case 2:
                     firstDay = DateTime.Now.ToString(year + "-0" + month + "-01");
-                    lastDay = DateTime.IsLeapYear(DateTime.Now.Year)
+                    lastDay = DateTime.IsLeapYear(year)
                         ? DateTime.Now.ToString(year + "-0" + month + "-29")
                         : DateTime.Now.ToString(year + "-0" + month + "-28");
                     break;
@@ -322,28 +353,48 @@ namespace EInfrastructure.Core.HelpCommon
         public static DateTime Get(this DateTime? dateTime, TimeType timeKey)
         {
             DateTime dateNow = dateTime ?? DateTime.Now.Date; //当前时间
-            switch (timeKey)
+            if (timeKey == TimeType.StartYear)
             {
-                case TimeType.StartYear:
-                    return new DateTime(dateNow.Year, 1, 1); //本年年初
-                case TimeType.EndYear:
-                    return new DateTime(dateNow.Year, 12, 31); //本年年末
-                case TimeType.StartQuarter:
-                    return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day); //本季度初;
-                case TimeType.EndQuarter:
-                    return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day).AddMonths(3)
-                        .AddDays(-1); //本季度末
-                case TimeType.StartMonth:
-                    return dateNow.AddDays(1 - dateNow.Day); //本月月初
-                case TimeType.EndMonth:
-                    return dateNow.AddDays(1 - dateNow.Day).AddMonths(1).AddDays(-1); //本月月末
-                case TimeType.StartWeek:
-                    return dateNow.AddDays(1 - Convert.ToInt32(dateNow.DayOfWeek.ToString("d"))); //本周周一
-                case TimeType.EndWeek:
-                    return dateNow.AddDays(1 - Convert.ToInt32(dateNow.DayOfWeek.ToString("d"))).AddDays(6); //本周周日
-                default:
-                    return dateNow;
+                return new DateTime(dateNow.Year, 1, 1); //本年年初
             }
+
+            if (timeKey == TimeType.EndYear)
+            {
+                return new DateTime(dateNow.Year, 12, 31); //本年年末
+            }
+
+            if (timeKey == TimeType.StartQuarter)
+            {
+                return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day); //本季度初;
+            }
+
+            if (timeKey == TimeType.EndQuarter)
+            {
+                return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day).AddMonths(3)
+                    .AddDays(-1); //本季度末
+            }
+
+            if (timeKey == TimeType.StartMonth)
+            {
+                return dateNow.AddDays(1 - dateNow.Day); //本月月初
+            }
+
+            if (timeKey == TimeType.EndMonth)
+            {
+                return dateNow.AddDays(1 - dateNow.Day).AddMonths(1).AddDays(-1); //本月月末
+            }
+
+            if (timeKey == TimeType.StartWeek)
+            {
+                return dateNow.AddDays(1 - Convert.ToInt32(dateNow.DayOfWeek.ToString("d"))); //本周周一
+            }
+
+            if (timeKey == TimeType.EndWeek)
+            {
+                return dateNow.AddDays(1 - Convert.ToInt32(dateNow.DayOfWeek.ToString("d"))).AddDays(6); //本周周日
+            }
+
+            return dateNow;
         }
 
         #endregion
@@ -491,7 +542,7 @@ namespace EInfrastructure.Core.HelpCommon
             {
                 //日期范围：1901 年 2 月 19 日 - 2101 年 1 月 28 日
                 throw new System.Exception(
-                    $"日期超出范围！必须在{China.MinSupportedDateTime.ToString("yyyy-MM-dd")}到{China.MaxSupportedDateTime.ToString("yyyy-MM-dd")}之间！");
+                    $"日期超出范围！必须在{China.MinSupportedDateTime:yyyy-MM-dd}到{China.MaxSupportedDateTime.ToString($"yyyy-MM-dd")}之间！");
             }
 
             string str = $"{GetYear(dt)} {GetMonth(dt)}{GetDay(dt)}";
@@ -639,10 +690,10 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
-        #region 获取公历节日
+        #region 获取公历(阴历)节日
 
         /// <summary>
-        /// 获取公历节日
+        /// 获取公历(阴历)节日
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
@@ -706,27 +757,73 @@ namespace EInfrastructure.Core.HelpCommon
 
         #region 阴历-阳历-转换
 
-        #region 阴历转为阳历
+        private static ChineseLunisolarCalendar calendar = new ChineseLunisolarCalendar();
+
+        #region 阴历转阳历
 
         /// <summary>
-        /// 阴历转为阳历
+        /// 获取指定年份春节当日（正月初一）的阳历日期
         /// </summary>
-        /// <param name="dt">指定的年份</param>
-        public static DateTime GetLunarYearDate(this DateTime dt)
+        /// <param name="year">指定的年份</param>
+        private static DateTime GetLunarNewYearDate(int year)
         {
-            int cnYear = China.GetYear(dt);
-            int cnMonth = China.GetMonth(dt);
+            DateTime dt = new DateTime(year, 1, 1);
+            int cnYear = calendar.GetYear(dt);
+            int cnMonth = calendar.GetMonth(dt);
 
             int num1 = 0;
-            int num2 = China.IsLeapYear(cnYear) ? 13 : 12;
+            int num2 = calendar.IsLeapYear(cnYear) ? 13 : 12;
 
             while (num2 >= cnMonth)
             {
-                num1 += China.GetDaysInMonth(cnYear, num2--);
+                num1 += calendar.GetDaysInMonth(cnYear, num2--);
             }
 
-            num1 = num1 - China.GetDayOfMonth(dt) + 1;
+            num1 = num1 - calendar.GetDayOfMonth(dt) + 1;
             return dt.AddDays(num1);
+        }
+
+        /// <summary>
+        /// 阴历转阳历
+        /// </summary>
+        /// <param name="year">阴历年</param>
+        /// <param name="month">阴历月</param>
+        /// <param name="day">阴历日</param>
+        /// <param name="IsLeapMonth">是否闰月</param>
+        private static DateTime GetLunarYearDate(int year, int month, int day, bool IsLeapMonth)
+        {
+            if (year < 1902 || year > 2100)
+                throw new BusinessException("只支持1902～2100期间的农历年");
+            if (month < 1 || month > 12)
+                throw new BusinessException("表示月份的数字必须在1～12之间");
+
+            if (day < 1 || day > calendar.GetDaysInMonth(year, month))
+                throw new BusinessException("农历日期输入有误");
+
+            int num1 = 0, num2 = 0;
+            int leapMonth = calendar.GetLeapMonth(year);
+
+            if (((leapMonth == month + 1) && IsLeapMonth) || (leapMonth > 0 && leapMonth <= month))
+                num2 = month;
+            else
+                num2 = month - 1;
+
+            while (num2 > 0)
+            {
+                num1 += calendar.GetDaysInMonth(year, num2--);
+            }
+
+            DateTime dt = GetLunarNewYearDate(year);
+            return dt.AddDays(num1 + day - 1);
+        }
+
+        /// <summary>
+        /// 阴历转阳历
+        /// </summary>
+        /// <param name="date">阴历日期</param>
+        public static DateTime GetLunarYearDate(this DateTime date)
+        {
+            return GetLunarYearDate(date.Year, date.Month, date.Day, DateTime.IsLeapYear(date.Year));
         }
 
         #endregion
@@ -769,56 +866,6 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
-        #region 时间类型
-
-        /// <summary>
-        /// 时间类型
-        /// </summary>
-        public enum TimeType
-        {
-            /// <summary>
-            /// 月初
-            /// </summary>
-            StartMonth = 1,
-
-            /// <summary>
-            /// 月末
-            /// </summary>
-            EndMonth = 2,
-
-            /// <summary>
-            /// 本周周一
-            /// </summary>
-            StartWeek = 3,
-
-            /// <summary>
-            /// 本周周日
-            /// </summary>
-            EndWeek = 4,
-
-            /// <summary>
-            /// 本季初
-            /// </summary>
-            StartQuarter = 5,
-
-            /// <summary>
-            /// 本季末
-            /// </summary>
-            EndQuarter = 6,
-
-            /// <summary>
-            /// 年初
-            /// </summary>
-            StartYear = 7,
-
-            /// <summary>
-            /// 年末
-            /// </summary>
-            EndYear = 8
-        }
-
-        #endregion
-
         #region 得到13位时间戳
 
         /// <summary>
@@ -831,8 +878,19 @@ namespace EInfrastructure.Core.HelpCommon
         {
             if (time == null)
                 time = DateTime.Now;
+            return GetTimeSpan(time.Value, dateTimeKind);
+        }
+
+        /// <summary>
+        /// 得到13位时间戳
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="dateTimeKind"></param>
+        /// <returns></returns>
+        public static long GetTimeSpan(this DateTime time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
+        {
             var startTime = CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind));
-            long t = (time.Value.Ticks - startTime.Ticks) / 10000; //除10000调整为13位
+            long t = (time.Ticks - startTime.Ticks) / 10000; //除10000调整为13位
             return t;
         }
 
@@ -910,14 +968,10 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="jan1St1970"></param>
         /// <param name="dateTimeKind"></param>
         /// <returns></returns>
-        public static long CurrentTimeMillis(DateTime? jan1St1970 = null, DateTimeKind dateTimeKind = DateTimeKind.Utc)
+        public static long CurrentTimeMillis(this DateTime jan1St1970, DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
-            if (jan1St1970 == null)
-            {
-                jan1St1970 = new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind);
-            }
-
-            return (long) ((DateTime.UtcNow - jan1St1970.Value).TotalMilliseconds);
+            DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind);
+            return (long) (jan1St1970 - Jan1st1970).TotalMilliseconds;
         }
 
         #endregion
@@ -935,7 +989,7 @@ namespace EInfrastructure.Core.HelpCommon
         {
             if (days == null)
             {
-                days = new string[]
+                days = new[]
                 {
                     "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"
                 };
@@ -952,12 +1006,11 @@ namespace EInfrastructure.Core.HelpCommon
         /// 获取当前是周几
         /// </summary>
         /// <param name="date"></param>
-        /// <param name="days"></param>
         /// <returns></returns>
-        public static WeekEnum GetDayName(this DateTime date)
+        public static Week GetDayName(this DateTime date)
         {
-            var days = EnumCommon.ToDescriptionDictionary<WeekEnum>().Select(x => (WeekEnum) x.Key).ToArray();
-            return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
+            return Week.GetAll<Week>()
+                .FirstOrDefault(x => x.Id == Convert.ToInt32(date.DayOfWeek.ToString("d")));
         }
 
         #endregion
