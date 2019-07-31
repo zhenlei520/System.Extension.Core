@@ -1,73 +1,77 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.ComponentModel;
+using EInfrastructure.Core.Configuration.SeedWork;
 
 namespace EInfrastructure.Core.Configuration.Enum
 {
     /// <summary>
     /// 生肖信息
     /// </summary>
-    public enum AnimalEnum
+    public class Animal : Enumeration
     {
         /// <summary>
         /// 鼠
         /// </summary>
-        [Description("鼠")] Rat = 0,
+        public static Animal Rat = new Animal(0, "鼠");
 
         /// <summary>
         /// 牛
         /// </summary>
-        [Description("牛")] Ox = 1,
+        public static Animal Ox = new Animal(1, "牛");
 
         /// <summary>
         /// 虎
         /// </summary>
-        [Description("虎")] Tiger = 2,
+        public static Animal Tiger = new Animal(2, "虎");
 
         /// <summary>
         /// 兔
         /// </summary>
-        [Description("兔")] Hare = 3,
+        public static Animal Hare = new Animal(3, "兔");
 
         /// <summary>
         /// 龙
         /// </summary>
-        [Description("龙")] Dragon = 4,
+        public static Animal Dragon = new Animal(4, "龙");
 
         /// <summary>
         /// 蛇
         /// </summary>
-        [Description("蛇")] Snake = 5,
+        public static Animal Snake = new Animal(5, "蛇");
 
         /// <summary>
-        /// 马
+        /// 蛇
         /// </summary>
-        [Description("马")] Horse = 6,
+        public static Animal Horse = new Animal(6, "马");
 
         /// <summary>
-        /// 羊
+        /// 蛇
         /// </summary>
-        [Description("羊")] Sheep = 7,
+        public static Animal Sheep = new Animal(7, "羊");
 
         /// <summary>
         /// 猴
         /// </summary>
-        [Description("猴")] Monkey = 8,
+        public static Animal Monkey = new Animal(8, "猴");
 
         /// <summary>
         /// 鸡
         /// </summary>
-        [Description("鸡")] Cock = 9,
+        public static Animal Cock = new Animal(9, "鸡");
 
         /// <summary>
         /// 狗
         /// </summary>
-        [Description("狗")] Dog = 10,
+        public static Animal Dog = new Animal(10, "狗");
 
         /// <summary>
         /// 猪
         /// </summary>
-        [Description("猪")] Boar = 11
+        public static Animal Boar = new Animal(11, "猪");
+
+        public Animal(int id, string name) : base(id, name)
+        {
+        }
     }
 }

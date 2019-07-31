@@ -45,24 +45,6 @@ namespace EInfrastructure.Core.HelpCommon
         }
         #endregion
 
-        #region 得到枚举字典（key与value与字典值一致）
-        /// <summary>
-        /// 得到枚举字典（key与value与字典值一致）
-        /// </summary>
-        /// <typeparam name="TEnum"></typeparam>
-        /// <returns></returns>
-        public static Dictionary<int, string> ToDictionary<TEnum>()
-        {
-            Array values = Enum.GetValues(typeof(TEnum));
-            Dictionary<int, string> nums = new Dictionary<int, string>();
-            foreach (Enum value in values)
-            {
-                nums.Add(Convert.ToInt32(value), value.ToString());
-            }
-            return nums;
-        }
-        #endregion
-
         #region 返回枚举项的描述信息
         /// <summary>
         /// 返回枚举项的描述信息。
