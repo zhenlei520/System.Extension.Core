@@ -5,7 +5,7 @@
 <<<<<<< HEAD
         <Version>1.4.0-beta-009</Version>
 =======
-        <Version>1.4.0-beta-015</Version>
+        <Version>1.4.0-beta-016</Version>
 >>>>>>> 31114a4f64d06144c228d2ac7730f805fad45867
         <Authors>zhenlei520</Authors>
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
