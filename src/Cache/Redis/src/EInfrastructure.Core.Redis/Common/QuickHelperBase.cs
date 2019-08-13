@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.HelpCommon.Randoms;
+using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.Redis.Common
 {
@@ -11,6 +15,8 @@ namespace EInfrastructure.Core.Redis.Common
     /// </summary>
     internal partial class QuickHelperBase
     {
+        private static RandomNumberGenerator _randomNumberGenerator = new RandomNumberGenerator();
+
         /// <summary>
         ///
         /// </summary>
@@ -249,6 +255,8 @@ namespace EInfrastructure.Core.Redis.Common
 
         #region Hash 操作
 
+        #region 同时将多个 field-value (域-值)对设置到哈希表 key 中
+
         /// <summary>
         /// 同时将多个 field-value (域-值)对设置到哈希表 key 中
         /// </summary>
@@ -259,6 +267,7 @@ namespace EInfrastructure.Core.Redis.Common
         {
             using (var conn = Instance.GetConnection())
             {
+                string result = "Empty Data";
                 if (keyValues != null && keyValues.Count > 0)
                 {
                     foreach (var item in keyValues)
@@ -266,13 +275,52 @@ namespace EInfrastructure.Core.Redis.Common
                         string key = string.Concat(Name, item.Key);
                         var ret = conn.Client.HMSet(key, item.Value.Select(a => string.Concat(a)).ToArray());
                         if (expire > TimeSpan.Zero) conn.Client.Expire(key, expire);
-                        return ret;
+                        if (ret == "OK")
+                        {
+                            result = "OK";
+                        }
                     }
                 }
 
-                return "Empty Data";
+                return result;
             }
         }
+
+        /// <summary>
+        /// 同时将多个 field-value (域-值)对设置到哈希表 key 中
+        /// </summary>
+        /// <param name="expire">过期时间</param>
+        /// <param name="keyValues">key dataKey,value</param>
+        /// <returns></returns>
+        public static string HashSetHashFileExpire(Dictionary<string, object[]> keyValues, TimeSpan expire)
+        {
+            Dictionary<string, List<(double, string)>> dics = new Dictionary<string, List<(double, string)>>();
+            double expireTime = (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0));
+            foreach (var item in keyValues)
+            {
+                var cacheKey = GetCacheFileKey();
+                if (!dics.ContainsKey(cacheKey))
+                {
+                    dics.Add(cacheKey, new List<(double, string)>());
+                }
+
+                var memberScores = dics[cacheKey];
+                for (int i = 0; i < item.Value.Length; i += 2)
+                {
+                    memberScores.Add(new ValueTuple<double, string>(expireTime,
+                        GetOverTimeExpireValue(item.Key, item.Value[i].ToString())));
+                }
+
+                dics[cacheKey] = memberScores;
+            }
+
+            QuickHelperBase.ZAdd(dics);
+            return HashSetExpire(keyValues, TimeSpan.Zero);
+        }
+
+        #endregion
+
+        #region 同时将多个 field-value (域-值)对设置到哈希表 key 中
 
         /// <summary>
         /// 同时将多个 field-value (域-值)对设置到哈希表 key 中
@@ -281,16 +329,58 @@ namespace EInfrastructure.Core.Redis.Common
         /// <param name="expire">过期时间</param>
         /// <param name="keyValues">field1 value1 [field2 value2]</param>
         /// <returns></returns>
-        public static string HashSetExpire(string key, TimeSpan expire, params object[] keyValues)
+        public static string HashSetExpire(string key, TimeSpan expire,
+            params object[] keyValues)
         {
             key = string.Concat(Name, key);
             using (var conn = Instance.GetConnection())
             {
                 var ret = conn.Client.HMSet(key, keyValues.Select(a => string.Concat(a)).ToArray());
-                if (expire > TimeSpan.Zero) conn.Client.Expire(key, expire);
+                if (expire > TimeSpan.Zero)
+                    conn.Client.Expire(key, expire);
                 return ret;
             }
         }
+
+        /// <summary>
+        /// 同时将多个 field-value (域-值)对设置到哈希表 key 中(设置hashkey的过期时间)
+        /// </summary>
+        /// <param name="key">不含prefix前辍RedisHelper.Name</param>
+        /// <param name="HashKey"></param>
+        /// <param name="expire">过期时间</param>
+        /// <param name="value">结果</param>
+        /// <returns></returns>
+        public static string HashSetHashFileExpire(string key, string HashKey, TimeSpan expire, string value)
+        {
+            QuickHelperBase.ZAdd(GetCacheFileKey(),
+                (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0),
+                    GetOverTimeExpireValue(key, HashKey)));
+            return HashSetExpire(key, TimeSpan.Zero, HashKey, value);
+        }
+
+        /// <summary>
+        /// 同时将多个 field-value (域-值)对设置到哈希表 key 中(设置hashkey的过期时间)
+        /// </summary>
+        /// <param name="key">不含prefix前辍RedisHelper.Name</param>
+        /// <param name="HashKey"></param>
+        /// <param name="expire">过期时间</param>
+        /// <param name="value">结果</param>
+        /// <returns></returns>
+        public static string HashSetHashFileExpire(string key, TimeSpan expire, params object[] kvalues)
+        {
+            List<ValueTuple<double, string>> memberScores = new List<ValueTuple<double, string>>();
+            double expireTime = (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0));
+            for (int i = 0; i < kvalues.Length; i += 2)
+            {
+                if (kvalues[i] != null && kvalues[i + 1] != null)
+                    memberScores.Add((expireTime, GetOverTimeExpireValue(key, kvalues[i].ToString())));
+            }
+
+            QuickHelperBase.ZAdd(GetCacheFileKey(), memberScores.ToArray());
+            return HashSetExpire(key, TimeSpan.Zero, kvalues);
+        }
+
+        #endregion
 
         /// <summary>
         /// 获取存储在哈希表中指定字段的值
@@ -654,6 +744,29 @@ namespace EInfrastructure.Core.Redis.Common
         }
 
         /// <summary>
+        /// 向有序集合添加一个或多个成员，或者更新已存在成员的分数
+        /// </summary>
+        /// <typeparam name="TScore">分数类型</typeparam>
+        /// <param name="key">不含prefix前辍RedisHelper.Name</param>
+        /// <param name="memberScores">一个或多个成员分数</param>
+        /// <returns></returns>
+        public static long ZAdd(Dictionary<string, List<(double, string)>> memberScores)
+        {
+            using (var conn = Instance.GetConnection())
+            {
+                long result = 0;
+                foreach (var item in memberScores)
+                {
+                    string key = string.Concat(Name, item.Key);
+                    result += conn.Client.ZAdd<double, string>(key,
+                        item.Value.Select(a => new Tuple<double, string>(a.Item1, a.Item2)).ToArray());
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 获取有序集合的成员数量
         /// </summary>
         /// <param name="key">不含prefix前辍RedisHelper.Name</param>
@@ -930,6 +1043,32 @@ namespace EInfrastructure.Core.Redis.Common
         }
 
         /// <summary>
+        /// 返回有序集中指定分数区间内的成员，分数从高到低排序
+        /// </summary>
+        /// <param name="key">不含prefix前辍RedisHelper.Name</param>
+        /// <param name="minScore">最小分数</param>
+        /// <param name="maxScore">最大分数</param>
+        /// <param name="limit">返回多少成员</param>
+        /// <param name="offset">返回条件偏移位置</param>
+        /// <returns></returns>
+        public static List<ValueTuple<string, string[]>> ZRevRangeByScore(List<string> keys, double maxScore,
+            double minScore, long? limit = null,
+            long? offset = null)
+        {
+            List<ValueTuple<string, string[]>> list = new List<(string, string[])>();
+            using (var conn = Instance.GetConnection())
+            {
+                keys.ForEach(key =>
+                {
+                    key = string.Concat(Name, key);
+                    list.Add((key,
+                        conn.Client.ZRevRangeByScore(key, maxScore, minScore, false, false, false, offset, limit)));
+                });
+                return list;
+            }
+        }
+
+        /// <summary>
         /// 返回有序集合中指定成员的排名，有序集成员按分数值递减(从大到小)排序
         /// </summary>
         /// <param name="key">不含prefix前辍RedisHelper.Name</param>
@@ -958,6 +1097,126 @@ namespace EInfrastructure.Core.Redis.Common
                 return conn.Client.ZScore(key, member);
             }
         }
+
+        #endregion
+
+        #region private methods
+
+        #region hashKey过期策略
+
+        private static string _cacheKeyPre;
+
+        private static List<string> _cacheKeys;
+
+        /// <summary>
+        /// 得到缓存key前缀（Hash过期策略的缓存key）
+        /// </summary>
+        /// <returns></returns>
+        private static string GetCacheFileKey()
+        {
+            return $"{GetCacheFileKeyPre()}_{GetCacheFile()}";
+        }
+
+        /// <summary>
+        /// 得到全部的缓存key
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetCacheFileKeys()
+        {
+            var pre = GetCacheFileKeyPre();
+            return GetCacheFiles().Select(x => pre + "_" + x).ToList();
+        }
+
+        #region 缓存前缀
+
+        /// <summary>
+        /// 得到缓存key前缀
+        /// </summary>
+        /// <returns></returns>
+        private static string GetCacheFileKeyPre()
+        {
+            if (string.IsNullOrEmpty(_cacheKeyPre))
+                _cacheKeyPre = "EInfrastructure.Redis";
+            return _cacheKeyPre;
+        }
+
+        /// <summary>
+        /// 设置 HashKey过期的 缓存key前缀
+        /// </summary>
+        /// <param name="cacheKeyPre"></param>
+        /// <returns></returns>
+        protected static void SetCacheFileKeyPre(string cacheKeyPre)
+        {
+            _cacheKeyPre = cacheKeyPre;
+        }
+
+        #endregion
+
+        #region 缓存key
+
+        /// <summary>
+        /// 设置缓存key
+        /// </summary>
+        /// <param name="cacheKeys"></param>
+        protected static void SetCacheFileKeys(List<string> cacheKeys)
+        {
+            _cacheKeys = cacheKeys;
+        }
+
+        /// <summary>
+        /// 得到缓存key
+        /// </summary>
+        /// <returns></returns>
+        private static List<string> GetCacheFiles()
+        {
+            if (_cacheKeys == null || _cacheKeys.Count == 0)
+            {
+                _cacheKeys = new List<string>();
+                for (int i = 1; i <= 50; i++)
+                {
+                    _cacheKeys.Add(i.ToString());
+                }
+            }
+
+            return _cacheKeys;
+        }
+
+        /// <summary>
+        /// 得到缓存key
+        /// </summary>
+        /// <returns></returns>
+        private static string GetCacheFile()
+        {
+            if (_cacheKeys == null || _cacheKeys.Count == 0)
+            {
+                _cacheKeys = new List<string>();
+                for (int i = 1; i <= 50; i++)
+                {
+                    _cacheKeys.Add(i.ToString());
+                }
+            }
+
+            return _cacheKeys[_randomNumberGenerator.Generate(0, _cacheKeys.Count - 1)];
+        }
+
+        #endregion
+
+        #region 得到SortSet的过期策略的缓存value
+
+        /// <summary>
+        ///得到SortSet的过期策略的缓存value
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashKey"></param>
+        /// <returns></returns>
+        public static string GetOverTimeExpireValue(string key, string hashKey)
+        {
+            return $"{key}~_~{hashKey}";
+        }
+
+        #endregion
+
+        #endregion
 
         #endregion
     }

@@ -120,7 +120,7 @@ namespace EInfrastructure.Core.WeChat.Common
 
             string nonceStr = Guid.NewGuid().ToString().Replace("-", "");
 
-            long timestamp = TimeCommon.CurrentTimeMillis();
+            long timestamp = DateTime.Now.CurrentTimeMillis();
 
             JsSdkConfig config = new JsSdkConfig()
             {

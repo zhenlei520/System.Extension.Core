@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -11,6 +12,7 @@ namespace EInfrastructure.Core.HelpCommon
     /// <summary>
     /// 拷贝类
     /// </summary>
+    [Serializable]
     public class CloneableClass : ICloneable
     {
         #region ICloneable 成员

@@ -26,11 +26,6 @@ namespace EInfrastructure.Core.Redis
     public class RedisCacheService : ICacheService, ISingleInstance
     {
         /// <summary>
-        /// 过期的Hash key
-        /// </summary>
-        private readonly string _overtimeCacheKey = "Cache_HashKey";
-
-        /// <summary>
         /// 前缀
         /// </summary>
         private readonly string _prefix;
@@ -240,10 +235,20 @@ namespace EInfrastructure.Core.Redis
         /// <param name="dataKey"></param>
         /// <param name="t"></param>
         /// <param name="second">秒</param>
+        /// <param name="isSetHashKeyExpire">false：设置key的过期时间，true：设置hashkey的过期时间，默认设置的为HashKey的过期时间。</param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, string dataKey, T t, long second = -1)
+        public bool HashSet<T>(string key, string dataKey, T t, long second = -1, bool isSetHashKeyExpire = true)
         {
-            string value = QuickHelperBase.HashSetExpire(key, GetExpire(second), dataKey, ConvertJson(t));
+            string value = "";
+            if (!isSetHashKeyExpire)
+                value =
+                    QuickHelperBase.HashSetExpire(key, GetExpire(second), dataKey, ConvertJson(t));
+            else
+            {
+                value = QuickHelperBase.HashSetHashFileExpire(GetKey(key), GetKey(dataKey), GetExpire(second),
+                    ConvertJson(t));
+            }
+
             bool result = string.Equals(value, "OK",
                 StringComparison.OrdinalIgnoreCase);
             return result;
@@ -257,13 +262,22 @@ namespace EInfrastructure.Core.Redis
         /// <param name="kvalues"></param>
         /// <param name="second">秒</param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1)
+        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1,
+            bool isSetHashKeyExpire = true)
         {
             List<object> keyValues = new List<object>();
             foreach (var kvp in kvalues)
             {
-                keyValues.Add(kvp.Key);
-                keyValues.Add(ConvertJson<T>(kvp.Value));
+                keyValues.Add(isSetHashKeyExpire ? GetKey(kvp.Key) : kvp.Key);
+                keyValues.Add(ConvertJson(kvp.Value));
+            }
+
+            if (isSetHashKeyExpire)
+            {
+                return string.Equals(
+                    QuickHelperBase.HashSetHashFileExpire(GetKey(key), GetExpire(second), keyValues.ToArray()),
+                    "OK",
+                    StringComparison.OrdinalIgnoreCase);
             }
 
             return string.Equals(QuickHelperBase.HashSetExpire(key, GetExpire(second), keyValues.ToArray()), "OK",
@@ -277,7 +291,8 @@ namespace EInfrastructure.Core.Redis
         /// <param name="second"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1)
+        public bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1,
+            bool isSetHashKeyExpire = true)
         {
             Dictionary<string, object[]> keyValues = new Dictionary<string, object[]>();
             foreach (var item in kValues)
@@ -285,15 +300,45 @@ namespace EInfrastructure.Core.Redis
                 List<object> dataKeyValues = new List<object>();
                 foreach (var kvp in item.Value)
                 {
-                    dataKeyValues.Add(kvp.Key);
+                    dataKeyValues.Add(isSetHashKeyExpire ? GetKey(kvp.Key) : kvp.Key);
                     dataKeyValues.Add(ConvertJson(kvp.Value));
                 }
 
-                keyValues.Add(item.Key, dataKeyValues.ToArray());
+                keyValues.Add(isSetHashKeyExpire ? GetKey(item.Key) : item.Key, dataKeyValues.ToArray());
+            }
+
+            if (isSetHashKeyExpire)
+            {
+                return string.Equals(QuickHelperBase.HashSetHashFileExpire(keyValues, GetExpire(second)), "OK",
+                    StringComparison.OrdinalIgnoreCase);
             }
 
             return string.Equals(QuickHelperBase.HashSetExpire(keyValues, GetExpire(second)), "OK",
                 StringComparison.OrdinalIgnoreCase);
+        }
+
+        #endregion
+
+        #region 清除过期的hashkey(自定义hashkey删除)
+
+        /// <summary>
+        /// 清除过期的hashkey(自定义hashkey删除)
+        /// </summary>
+        /// <param name="count">指定清除指定数量的已过期的hashkey</param>
+        /// <returns></returns>
+        public bool ClearOverTimeHashKey(long count = 1000l)
+        {
+            var list = SortedSetRangeByRankAndOverTime(count);
+            if (list.Count != 0)
+            {
+                list.ForEach(item =>
+                {
+                    HashDelete(item.Item3, item.Item4);
+                    SortedSetRemove(item.Item1, item.Item2);
+                });
+            }
+
+            return true;
         }
 
         #endregion
@@ -393,7 +438,8 @@ namespace EInfrastructure.Core.Redis
 
                 foreach (var item in keys)
                 {
-                    string[] valuesList = values.Where(x => x.Key == string.Concat(QuickHelperBase.Name, item.Key)).Select(x => x.Value).FirstOrDefault();
+                    string[] valuesList = values.Where(x => x.Key == string.Concat(QuickHelperBase.Name, item.Key))
+                        .Select(x => x.Value).FirstOrDefault();
                     Dictionary<string, string> newDic = new Dictionary<string, string>();
                     if (valuesList != null && valuesList.Length > 0)
                     {
@@ -872,28 +918,33 @@ namespace EInfrastructure.Core.Redis
             return ConvertListObj<T>(QuickHelperBase.ZRange(key, 0, count).ToList());
         }
 
+        #region 获取已过期的hashKey
+
         /// <summary>
         /// 获取已过期的hashKey
+        /// 其中Item1为SortSet的Key，Item2为SortSet的Value,Item3为HashSet的Key，Item4为HashSet的HashKey
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
-        public Dictionary<string, string> SortedSetRangeByRankAndOverTime(long count = 1000)
+        public List<ValueTuple<string, string, string, string>> SortedSetRangeByRankAndOverTime(long count = 1000)
         {
             var keyList = QuickHelperBase
-                .ZRevRangeByScore(_overtimeCacheKey, TimeCommon.GetTimeSpan(DateTime.Now), 0, count, null)
-                .ToList<string>(); //得到过期的key集合
-
-            Dictionary<string, string> hasKey = new Dictionary<string, string>();
+                .ZRevRangeByScore(QuickHelperBase.GetCacheFileKeys(), TimeCommon.GetTimeSpan(DateTime.Now), 0, count,
+                    null); //得到过期的key集合
+            List<ValueTuple<string, string, string, string>> result = new List<(string, string, string, string)>();
             keyList.ForEach(item =>
             {
-                var keys = item.Replace("~_~", "!").Split('!');
-                if (!hasKey.ContainsKey(keys[0]))
+                for (int i = 0; i < item.Item2.Length; i += 2)
                 {
-                    hasKey.Add(keys[0], keys[1]);
+                    result.Add((item.Item1.Replace(_prefix,""), item.Item2[i].ToString(),
+                        item.Item2[i].ToString().Replace("~_~", "！").Split('！')[0],
+                        item.Item2[i].ToString().Replace("~_~", "！").Split('！')[1]));
                 }
             });
-            return hasKey;
+            return result;
         }
+
+        #endregion
 
         #region 降序获取指定索引的集合
 
@@ -955,6 +1006,8 @@ namespace EInfrastructure.Core.Redis
 
         #endregion
 
+        #region 判断是否存在项
+
         /// <summary>
         /// 判断是否存在项
         /// </summary>
@@ -967,6 +1020,10 @@ namespace EInfrastructure.Core.Redis
             return QuickHelperBase.ZScore(key, ConvertJson(value)).HasValue;
         }
 
+        #endregion
+
+        #region 获取集合中的数量
+
         /// <summary>
         /// 获取集合中的数量
         /// </summary>
@@ -976,6 +1033,8 @@ namespace EInfrastructure.Core.Redis
         {
             return QuickHelperBase.ZCard(key);
         }
+
+        #endregion
 
         #endregion 同步方法
 
@@ -1254,5 +1313,24 @@ namespace EInfrastructure.Core.Redis
         #endregion
 
         #endregion 辅助方法
+
+        #region private methods
+
+        #region 清理敏感字符
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        private static string GetKey(string key)
+        {
+            key = key.Replace("！", "!");
+            return key;
+        }
+
+        #endregion
+
+        #endregion
     }
 }

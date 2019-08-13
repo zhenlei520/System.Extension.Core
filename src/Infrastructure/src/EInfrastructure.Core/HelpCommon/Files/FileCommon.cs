@@ -160,7 +160,7 @@ namespace EInfrastructure.Core.HelpCommon.Files
                     break;
             }
 
-            return new EInfrastructure.Core.HelpCommon.Files.FileInfo()
+            return new EInfrastructure.Core.HelpCommon.Files.FileInfo
             {
                 Name = formFile.FileName,
                 ConditionCode = conditionCode

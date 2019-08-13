@@ -16,95 +16,95 @@ namespace EInfrastructure.Core.HelpCommon
         /// <summary>
         /// 星座map
         /// </summary>
-        private static List<ConstellationMap> ConstellationMaps = new List<ConstellationMap>()
+        private static readonly List<ConstellationMap> ConstellationMaps = new List<ConstellationMap>
         {
-            new ConstellationMap()
+            new ConstellationMap
             {
-                Key = ConstellationEnum.Aquarius,
+                Key = Constellation.Aquarius,
                 Value = "水瓶座",
                 MinTime = 1.20F,
                 MaxTime = 2.19F
             },
-            new ConstellationMap()
+            new ConstellationMap
             {
-                Key = ConstellationEnum.Pisces,
+                Key = Constellation.Pisces,
                 Value = "双鱼座",
                 MinTime = 2.19F,
                 MaxTime = 3.21F
             },
-            new ConstellationMap()
+            new ConstellationMap
             {
-                Key = ConstellationEnum.Aries,
+                Key = Constellation.Aries,
                 Value = "白羊座",
                 MinTime = 3.21F,
                 MaxTime = 4.20F
             },
-            new ConstellationMap()
+            new ConstellationMap
             {
-                Key = ConstellationEnum.Taurus,
+                Key = Constellation.Taurus,
                 Value = "金牛座",
                 MinTime = 4.20F,
                 MaxTime = 5.21F
             },
-            new ConstellationMap()
+            new ConstellationMap
             {
-                Key = ConstellationEnum.Gemini,
+                Key = Constellation.Gemini,
                 Value = "双子座",
                 MinTime = 5.21F,
                 MaxTime = 6.22F
             },
-            new ConstellationMap()
+            new ConstellationMap
             {
-                Key = ConstellationEnum.Cancer,
+                Key = Constellation.Cancer,
                 Value = "巨蟹座",
                 MinTime = 6.22F,
                 MaxTime = 7.23F
             },
-            new ConstellationMap()
+            new ConstellationMap
             {
-                Key = ConstellationEnum.Leo,
+                Key = Constellation.Leo,
                 Value = "狮子座",
                 MinTime = 7.23F,
                 MaxTime = 8.23F
             },
-            new ConstellationMap()
+            new ConstellationMap
             {
-                Key = ConstellationEnum.Virgo,
+                Key = Constellation.Virgo,
                 Value = "处女座",
                 MinTime = 8.23F,
                 MaxTime = 9.23F
             },
-            new ConstellationMap()
+            new ConstellationMap
             {
-                Key = ConstellationEnum.Libra,
+                Key = Constellation.Libra,
                 Value = "天秤座",
                 MinTime = 9.23F,
                 MaxTime = 10.24F
             },
-            new ConstellationMap()
+            new ConstellationMap
             {
-                Key = ConstellationEnum.Scorpio,
+                Key = Constellation.Scorpio,
                 Value = "天蝎座",
                 MinTime = 10.24F,
                 MaxTime = 11.23F
             },
-            new ConstellationMap()
+            new ConstellationMap
             {
-                Key = ConstellationEnum.Sagittarius,
+                Key = Constellation.Sagittarius,
                 Value = "射手座",
                 MinTime = 11.23F,
                 MaxTime = 12.22F
             },
-            new ConstellationMap()
+            new ConstellationMap
             {
-                Key = ConstellationEnum.Capricornus,
+                Key = Constellation.Capricornus,
                 Value = "魔羯座",
                 MinTime = 12.22F,
                 MaxTime = 12.32F
             },
             new ConstellationMap
             {
-                Key = ConstellationEnum.Capricornus,
+                Key = Constellation.Capricornus,
                 Value = "魔羯座",
                 MinTime = 1.01F,
                 MaxTime = 1.20F
@@ -140,11 +140,11 @@ namespace EInfrastructure.Core.HelpCommon
         /// </summary>
         /// <param name="birthday">日期</param>
         /// <returns></returns>
-        public static ConstellationEnum GetConstellationEnumFromBirthday(DateTime? birthday)
+        public static Constellation GetConstellationEnumFromBirthday(DateTime? birthday)
         {
             if (birthday == null)
             {
-                return ConstellationEnum.Unknow;
+                return Constellation.Unknow;
             }
 
             float fBirthDay = Convert.ToSingle(birthday.Value.ToString("M.dd"));
@@ -167,7 +167,7 @@ namespace EInfrastructure.Core.HelpCommon
             /// <summary>
             /// 星座
             /// </summary>
-            public ConstellationEnum Key { get; set; }
+            public Constellation Key { get; set; }
 
             /// <summary>
             /// 开始时间

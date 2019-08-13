@@ -4,14 +4,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EInfrastructure.Core.Config.SerializeExtensions;
+using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
 using EInfrastructure.Core.Configuration.Data;
 using EInfrastructure.Core.Configuration.Enum;
 using EInfrastructure.Core.Exception;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
 
 namespace EInfrastructure.Core.HelpCommon
 {
     /// <summary>
-    /// 操作帮助类
+    /// List操作帮助类
     /// </summary>
     public static class ListCommon
     {
@@ -30,10 +33,12 @@ namespace EInfrastructure.Core.HelpCommon
         public static List<T> Add<T>(this List<T> t1, List<T> t2, bool isCheckRepeat = false)
         {
             if (!isCheckRepeat)
+            {
                 t1.AddRange(t2);
-            else
-                t1.AddCnki(t2);
-            return t1;
+                return t1;
+            }
+
+            return t1.AddCnki(t2);
         }
 
         /// <summary>
@@ -43,14 +48,46 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="t1">集合1</param>
         /// <param name="t2">集合2</param>
         /// <returns></returns>
-        private static void AddCnki<T>(this List<T> t1, List<T> t2)
+        private static List<T> AddCnki<T>(this List<T> t1, List<T> t2)
         {
             List<T> resultList = new CloneableClass().DeepClone(t1);
+            List<string> resultStrList = new List<string>();
             foreach (var item in t2)
             {
-                if (t1.Contains(item))
+                if (IsExist(item))
                     continue;
                 resultList.Add(item);
+            }
+
+            return resultList;
+
+            bool IsExist(T t)
+            {
+                if (t is string)
+                {
+                    return t1.Contains(t);
+                }
+
+                return GetResultList().Contains(new JsonService(new List<IJsonProvider>()
+                {
+                    new NewtonsoftJsonProvider()
+                }).Serializer(t));
+            }
+
+            List<string> GetResultList()
+            {
+                if (resultStrList.Count == 0 && resultList.Count != 0)
+                {
+                    t1.ForEach(item =>
+                    {
+                        resultStrList.Add(new JsonService(new List<IJsonProvider>
+                        {
+                            new NewtonsoftJsonProvider()
+                        }).Serializer(item));
+                    });
+                }
+
+                return resultStrList;
             }
         }
 
@@ -68,6 +105,53 @@ namespace EInfrastructure.Core.HelpCommon
         public static List<T> Minus<T>(this List<T> t1, List<T> t2)
         {
             return t1.Where(x => !t2.Contains(x)).ToList();
+        }
+
+        /// <summary>
+        /// List实体减法操作
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        /// <param name="t1">集合1</param>
+        /// <param name="t2">集合2</param>
+        /// <returns>排除t1中包含t2的项</returns>
+        public static List<T> Minus<T>(this List<T> t1, List<T> t2, bool isCheckRepeat = false) where T : class, new()
+        {
+            if (!isCheckRepeat)
+                return Minus(t1, t2);
+            return MinusCnki(t1, t2);
+        }
+
+        /// <summary>
+        /// 查重添加
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        /// <param name="t1">集合1</param>
+        /// <param name="t2">集合2</param>
+        /// <returns></returns>
+        private static List<T> MinusCnki<T>(this List<T> t1, List<T> t2) where T : class, new()
+        {
+            JsonService jsonService = new JsonService(new List<IJsonProvider>
+            {
+                new NewtonsoftJsonProvider()
+            });
+
+            List<T> resultList = new CloneableClass().DeepClone(t1);
+            List<string> resultStrList = new List<string>();
+            if (resultStrList.Count == 0 && resultList.Count != 0)
+            {
+                t1.ForEach(item => { resultStrList.Add(jsonService.Serializer(item)); });
+            }
+
+            foreach (var item in t2)
+            {
+                var str = jsonService.Serializer(item);
+                if (resultStrList.Contains(str))
+                {
+                    resultStrList.Remove(str);
+                }
+            }
+
+            return resultStrList.Select(x => jsonService.Deserialize<T>(x)).ToList();
         }
 
         #endregion
@@ -138,31 +222,7 @@ namespace EInfrastructure.Core.HelpCommon
                 return "";
             }
 
-            string temp = "";
-            foreach (var item in s)
-            {
-                if (isReplaceEmpty)
-                {
-                    string itemTemp = "";
-                    if (isReplaceSpace)
-                    {
-                        itemTemp = item.ToString().Trim();
-                    }
-
-                    if (!string.IsNullOrEmpty(itemTemp))
-                    {
-                        temp = temp + itemTemp + c;
-                    }
-                }
-                else
-                {
-                    temp = temp + item + c;
-                }
-            }
-
-            if (temp.Length > 0)
-                temp = temp.Substring(0, temp.Length - 1);
-            return temp;
+            return ConvertListToString(s.Select(x => x.ToString()).ToList(), c, isReplaceEmpty, isReplaceSpace);
         }
 
         #endregion
@@ -269,7 +329,7 @@ namespace EInfrastructure.Core.HelpCommon
         #region 对list集合分页
 
         /// <summary>
-        /// 对list集合分页
+        /// 对list集合分页执行某个方法
         /// </summary>
         /// <param name="query"></param>
         /// <param name="action"></param>
@@ -392,7 +452,7 @@ namespace EInfrastructure.Core.HelpCommon
         public static List<T> RemoveMultNew<T>(this List<T> list, Func<T, bool> condtion)
         {
             List<T> listTemp = list;
-            var items = listTemp.Where(condtion).ToList() ?? new List<T>();
+            var items = listTemp.Where(condtion).ToList();
             foreach (var item in items)
             {
                 listTemp.Remove(item);
