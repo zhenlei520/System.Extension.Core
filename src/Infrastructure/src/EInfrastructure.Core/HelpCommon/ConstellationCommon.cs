@@ -16,7 +16,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <summary>
         /// 星座map
         /// </summary>
-        private static List<ConstellationMap> ConstellationMaps = new List<ConstellationMap>
+        private static readonly List<ConstellationMap> ConstellationMaps = new List<ConstellationMap>
         {
             new ConstellationMap
             {

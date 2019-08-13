@@ -146,7 +146,7 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="t"></param>
         /// <param name="second">秒</param>
         /// <returns></returns>
-        bool HashSet<T>(string key, string dataKey, T t, long second = -1L);
+        bool HashSet<T>(string key, string dataKey, T t, long second = -1L, bool isSetHashKeyExpire = true);
 
         /// <summary>
         ///  存储数据到hash表
@@ -156,7 +156,7 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="kvalues"></param>
         /// <param name="second">秒</param>
         /// <returns></returns>
-        bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L);
+        bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L, bool isSetHashKeyExpire = true);
 
         /// <summary>
         /// 存储数据到hash表
@@ -165,7 +165,15 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// <param name="second"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1);
+        bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1,
+            bool isSetHashKeyExpire = true);
+
+        /// <summary>
+        /// 清除过期的hashkey(自定义hashkey删除)
+        /// </summary>
+        /// <param name="count">指定清除指定数量的已过期的hashkey</param>
+        /// <returns></returns>
+        bool ClearOverTimeHashKey(long count = 1000l);
 
         /// <summary>
         /// 移除hash中的某值
@@ -537,7 +545,7 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
-        Dictionary<string, string> SortedSetRangeByRankAndOverTime(long count = 1000L);
+        List<ValueTuple<string, string, string, string>> SortedSetRangeByRankAndOverTime(long count = 1000l);
 
         /// <summary>
         /// 降序获取指定索引的集合

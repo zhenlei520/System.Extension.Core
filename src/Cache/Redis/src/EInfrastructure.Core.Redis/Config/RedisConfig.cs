@@ -1,4 +1,5 @@
-﻿using EInfrastructure.Core.AutomationConfiguration.Interface;
+﻿using System.Collections.Generic;
+using EInfrastructure.Core.AutomationConfiguration.Interface;
 
 namespace EInfrastructure.Core.Redis.Config
 {
@@ -36,5 +37,15 @@ namespace EInfrastructure.Core.Redis.Config
         /// Redis连接池连接数
         /// </summary>
         public int PoolSize { get; set; }
+
+        /// <summary>
+        /// Redis默认 Hashkey  过期缓存key前缀
+        /// </summary>
+        public string OverTimeCacheKeyPre { get; set; }
+
+        /// <summary>
+        /// Hash缓存key 范围
+        /// </summary>
+        public List<string> OverTimeCacheKeys { get; set; }
     }
 }

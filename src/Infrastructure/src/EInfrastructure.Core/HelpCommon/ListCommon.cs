@@ -329,7 +329,7 @@ namespace EInfrastructure.Core.HelpCommon
         #region 对list集合分页
 
         /// <summary>
-        /// 对list集合分页
+        /// 对list集合分页执行某个方法
         /// </summary>
         /// <param name="query"></param>
         /// <param name="action"></param>
@@ -452,7 +452,7 @@ namespace EInfrastructure.Core.HelpCommon
         public static List<T> RemoveMultNew<T>(this List<T> list, Func<T, bool> condtion)
         {
             List<T> listTemp = list;
-            var items = listTemp.Where(condtion).ToList() ?? new List<T>();
+            var items = listTemp.Where(condtion).ToList();
             foreach (var item in items)
             {
                 listTemp.Remove(item);

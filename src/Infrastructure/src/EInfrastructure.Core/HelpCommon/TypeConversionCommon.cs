@@ -18,10 +18,10 @@ namespace EInfrastructure.Core.HelpCommon
     {
         #region Object转换类型
 
-        #region obj转Guid
+        #region obj转Char
 
         /// <summary>
-        /// obj转Guid
+        /// obj转Char
         /// </summary>
         /// <param name="obj">待转换参数</param>
         /// <param name="defaultVal">默认值</param>
@@ -38,7 +38,7 @@ namespace EInfrastructure.Core.HelpCommon
         }
 
         /// <summary>
-        /// obj转Guid
+        /// obj转Char
         /// </summary>
         /// <param name="obj">待转换参数</param>
         /// <param name="defaultVal">默认值</param>
@@ -460,59 +460,6 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
-        #region Unicode编码
-
-        /// <summary>
-        /// 汉字转换为Unicode编码
-        /// </summary>
-        /// <param name="str">要编码的汉字字符串</param>
-        /// <returns>Unicode编码的的字符串</returns>
-        public static string ConvertStringToUnicode(this string str)
-        {
-            if (string.IsNullOrEmpty(str))
-            {
-                return str;
-            }
-
-            byte[] bts = Encoding.Unicode.GetBytes(str);
-            string r = "";
-            for (int i = 0; i < bts.Length; i += 2)
-                r += "\\u" + bts[i + 1].ToString("x").PadLeft(2, '0') + bts[i].ToString("x").PadLeft(2, '0');
-            return r;
-        }
-
-        #endregion
-
-        #region 将Unicode编码转换为汉字字符串
-
-        /// <summary>
-        /// 将Unicode编码转换为汉字字符串
-        /// </summary>
-        /// <param name="str">Unicode编码字符串</param>
-        /// <returns>汉字字符串</returns>
-        public static string ConvertUnicodeToString(this string str)
-        {
-            if (string.IsNullOrEmpty(str))
-            {
-                return str;
-            }
-
-            string r = "";
-            MatchCollection mc = Regex.Matches(str, @"\\u([\w]{2})([\w]{2})",
-                RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            byte[] bts = new byte[2];
-            foreach (Match m in mc)
-            {
-                bts[0] = (byte) int.Parse(m.Groups[2].Value, NumberStyles.HexNumber);
-                bts[1] = (byte) int.Parse(m.Groups[1].Value, NumberStyles.HexNumber);
-                r += Encoding.Unicode.GetString(bts);
-            }
-
-            return r;
-        }
-
-        #endregion
-
         #endregion
 
         #region 文件类型转换
@@ -717,6 +664,63 @@ namespace EInfrastructure.Core.HelpCommon
 
             return result;
         }
+
+        #endregion
+
+        #region 编码
+
+        #region Unicode编码
+
+        /// <summary>
+        /// 汉字转换为Unicode编码
+        /// </summary>
+        /// <param name="str">要编码的汉字字符串</param>
+        /// <returns>Unicode编码的的字符串</returns>
+        public static string ConvertStringToUnicode(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return str;
+            }
+
+            byte[] bts = Encoding.Unicode.GetBytes(str);
+            string r = "";
+            for (int i = 0; i < bts.Length; i += 2)
+                r += "\\u" + bts[i + 1].ToString("x").PadLeft(2, '0') + bts[i].ToString("x").PadLeft(2, '0');
+            return r;
+        }
+
+        #endregion
+
+        #region 将Unicode编码转换为汉字字符串
+
+        /// <summary>
+        /// 将Unicode编码转换为汉字字符串
+        /// </summary>
+        /// <param name="str">Unicode编码字符串</param>
+        /// <returns>汉字字符串</returns>
+        public static string ConvertUnicodeToString(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return str;
+            }
+
+            string r = "";
+            MatchCollection mc = Regex.Matches(str, @"\\u([\w]{2})([\w]{2})",
+                RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            byte[] bts = new byte[2];
+            foreach (Match m in mc)
+            {
+                bts[0] = (byte) int.Parse(m.Groups[2].Value, NumberStyles.HexNumber);
+                bts[1] = (byte) int.Parse(m.Groups[1].Value, NumberStyles.HexNumber);
+                r += Encoding.Unicode.GetString(bts);
+            }
+
+            return r;
+        }
+
+        #endregion
 
         #endregion
 

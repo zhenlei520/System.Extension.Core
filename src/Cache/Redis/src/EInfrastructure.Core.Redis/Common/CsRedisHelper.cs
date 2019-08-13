@@ -8,7 +8,7 @@ namespace EInfrastructure.Core.Redis.Common
     internal partial class CsRedisHelper: QuickHelperBase
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="redisConfig"></param>
         public static void InitializeConfiguration(RedisConfig redisConfig)
@@ -27,6 +27,8 @@ namespace EInfrastructure.Core.Redis.Common
                 if (!string.IsNullOrEmpty(pass)) rc.Auth(pass);
                 if (database > 0) rc.Select(database);
             };
+            QuickHelperBase.SetCacheFileKeyPre(redisConfig.OverTimeCacheKeyPre);
+            QuickHelperBase.SetCacheFileKeys(redisConfig.OverTimeCacheKeys);
         }
     }
 }

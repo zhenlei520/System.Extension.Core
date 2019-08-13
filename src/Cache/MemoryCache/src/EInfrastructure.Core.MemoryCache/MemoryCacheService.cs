@@ -331,7 +331,7 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="t"></param>
         /// <param name="second"></param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, string dataKey, T t, long second = -1L)
+        public bool HashSet<T>(string key, string dataKey, T t, long second = -1L, bool isSetHashKeyExpire = true)
         {
             return false;
         }
@@ -348,7 +348,8 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="kvalues"></param>
         /// <param name="second">秒</param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L)
+        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L,
+            bool isSetHashKeyExpire = true)
         {
             return false;
         }
@@ -360,10 +361,25 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="second"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1)
+        public bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1,
+            bool isSetHashKeyExpire = true)
         {
             return false;
         }
+
+        #region 清除过期的hashkey(自定义hashkey删除)
+
+        /// <summary>
+        /// 清除过期的hashkey(自定义hashkey删除)
+        /// </summary>
+        /// <param name="count">指定清除指定数量的已过期的hashkey</param>
+        /// <returns></returns>
+        public bool ClearOverTimeHashKey(long count = 1000l)
+        {
+            return false;
+        }
+
+        #endregion
 
         #endregion
 
@@ -973,9 +989,9 @@ namespace EInfrastructure.Core.MemoryCache
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
-        public Dictionary<string, string> SortedSetRangeByRankAndOverTime(long count = 1000L)
+        public List<ValueTuple<string, string, string, string>> SortedSetRangeByRankAndOverTime(long count = 1000l)
         {
-            return default(Dictionary<string, string>);
+            return default(List<ValueTuple<string, string, string, string>>);
         }
 
         #endregion
