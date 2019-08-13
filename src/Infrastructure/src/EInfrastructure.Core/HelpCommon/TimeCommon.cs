@@ -826,13 +826,26 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="time"></param>
         /// <param name="dateTimeKind"></param>
         /// <returns></returns>
-        public static long GetTimeSpan(this DateTime? time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
+        public static long GetTimeSpan(this DateTime time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
             if (time == null)
                 time = DateTime.Now;
             var startTime = CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind));
-            long t = (time.Value.Ticks - startTime.Ticks) / 10000; //除10000调整为13位      
+            long t = (time.Ticks - startTime.Ticks) / 10000; //除10000调整为13位      
             return t;
+        }
+        
+        /// <summary>
+        /// 得到13位时间戳
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="dateTimeKind"></param>
+        /// <returns></returns>
+        public static long GetTimeSpan(this DateTime? time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
+        {
+            if (time == null)
+                time = DateTime.Now;
+            return GetTimeSpan(time.Value,dateTimeKind);
         }
 
         #endregion
