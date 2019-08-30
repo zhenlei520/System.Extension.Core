@@ -6,7 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
@@ -615,7 +615,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
         public static string GetContentByEncryption(this char? symbol, int number = 6,
-            int errCode = (int) HttpStatusEnum.Err)
+            int? errCode = null)
         {
             if (symbol == null)
             {
@@ -625,7 +625,7 @@ namespace EInfrastructure.Core.HelpCommon
             string result = ""; //结果
             if (number < 0)
             {
-                throw new BusinessException("number必须为正整数", errCode);
+                throw new BusinessException("number必须为正整数", errCode ?? HttpStatus.Err.Id);
             }
 
             for (int i = 0; i < number; i++)
@@ -644,7 +644,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
         public static string GetContentByEncryption(this string symbol, int number = 6,
-            int errCode = (int) HttpStatusEnum.Err)
+            int? errCode = null)
         {
             if (string.IsNullOrEmpty(symbol))
             {
@@ -654,7 +654,7 @@ namespace EInfrastructure.Core.HelpCommon
             string result = ""; //结果
             if (number < 0)
             {
-                throw new BusinessException("number必须为正整数", errCode);
+                throw new BusinessException("number必须为正整数", errCode ?? HttpStatus.Err.Id);
             }
 
             for (int i = 0; i < number; i++)

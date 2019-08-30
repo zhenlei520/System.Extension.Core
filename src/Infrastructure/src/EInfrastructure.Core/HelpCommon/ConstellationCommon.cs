@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 
 namespace EInfrastructure.Core.HelpCommon
 {

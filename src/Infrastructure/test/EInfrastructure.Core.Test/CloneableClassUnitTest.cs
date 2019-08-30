@@ -1,7 +1,7 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
 using System;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Test.Base;
 using Xunit;
@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.Test
             Person person = new Person
             {
                 Name = "小明",
-                Gender = GenderEnum.Boy
+                Gender = Gender.Boy
             };
             var newPerson = person.DeepClone(person);
             newPerson.Name = "小明哥";
@@ -38,7 +38,7 @@ namespace EInfrastructure.Core.Test
         {
             public string Name { get; set; }
 
-            public GenderEnum Gender { get; set; }
+            public Gender Gender { get; set; }
         }
     }
 }

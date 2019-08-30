@@ -2,7 +2,7 @@
 
 using System;
 using System.Linq;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Test.Base;
 using Xunit;
@@ -40,7 +40,7 @@ namespace EInfrastructure.Core.Test
         public void GetRandomTime()
         {
             DateTime dateTime = TimeCommon.GetRandomTime(DateTime.Now, DateTime.Now.AddDays(100));
-            var result = dateTime.FormatDate(FormatDateTypeEnum.One);
+            var result = dateTime.FormatDate(FormatDateType.One);
         }
 
         [Theory]
@@ -119,7 +119,7 @@ namespace EInfrastructure.Core.Test
         public void GetLunarYearDate(string dateTime, string dateTime2)
         {
             DateTime result = dateTime.ConvertToDateTime(default(DateTime)).GetLunarYearDate();
-            Check.True(result.FormatDate(FormatDateTypeEnum.Zero) == dateTime2, "方法异常");
+            Check.True(result.FormatDate(FormatDateType.Zero) == dateTime2, "方法异常");
         }
 
         [Theory]
@@ -127,7 +127,7 @@ namespace EInfrastructure.Core.Test
         public void GetSunYearDate(string dateTime, string dateTime2)
         {
             DateTime result = dateTime.ConvertToDateTime(default(DateTime)).GetSunYearDate();
-            Check.True(result.FormatDate(FormatDateTypeEnum.Zero) == dateTime2, "方法异常");
+            Check.True(result.FormatDate(FormatDateType.Zero) == dateTime2, "方法异常");
         }
 
         [Fact]

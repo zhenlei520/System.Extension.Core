@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
@@ -24,13 +24,13 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="key"></param>
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
-        public static string AesEncrypt(string toEncrypt, string key, int errCode = (int) HttpStatusEnum.Err)
+        public static string AesEncrypt(string toEncrypt, string key, int? errCode = null)
         {
             if (string.IsNullOrWhiteSpace(toEncrypt))
                 return string.Empty;
             if (key.Length != 32)
             {
-                throw new BusinessException("Aes秘钥异常", errCode);
+                throw new BusinessException("Aes秘钥异常", errCode??HttpStatus.Err.Id);
             }
 
             // 256-AES key
@@ -62,13 +62,13 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="key"></param>
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
-        public static string Decrypt(string toDecrypt, string key, int errCode = (int) HttpStatusEnum.Err)
+        public static string Decrypt(string toDecrypt, string key, int? errCode = null)
         {
             if (string.IsNullOrWhiteSpace(toDecrypt))
                 return string.Empty;
             if (key.Length != 32)
             {
-                throw new BusinessException("Aes秘钥异常", errCode);
+                throw new BusinessException("Aes秘钥异常", errCode??HttpStatus.Err.Id);
             }
 
             try

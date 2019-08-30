@@ -1,13 +1,11 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
-using EInfrastructure.Core.Configuration.SeedWork;
-
-namespace EInfrastructure.Core.Configuration.Enum
+namespace EInfrastructure.Core.Configuration.Enumeration
 {
     /// <summary>
     /// 星期N
     /// </summary>
-    public class Week : Enumeration
+    public class Week : SeedWork.Enumeration
     {
         /// <summary>
         /// 周一

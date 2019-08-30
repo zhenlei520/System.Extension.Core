@@ -3,7 +3,7 @@
 
 using System;
 using EInfrastructure.Core.Config.CacheExtensions;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.WeChat.Config;
@@ -44,7 +44,7 @@ namespace EInfrastructure.Core.WeChat.Common
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
         /// <exception cref="BusinessException"></exception>
-        public string GetAccessToken(string cacheKey, int errCode = (int) HttpStatusEnum.Err)
+        public string GetAccessToken(string cacheKey, int? errCode = null)
         {
             cacheKey = cacheKey + _config.Type;
 
@@ -59,7 +59,7 @@ namespace EInfrastructure.Core.WeChat.Common
 
                 if (result.Contains("errcode"))
                 {
-                    throw new BusinessException("获取token失败", errCode);
+                    throw new BusinessException("获取token失败", errCode??HttpStatus.Err.Id);
                 }
 
                 JObject obj = JsonConvert.DeserializeObject<dynamic>(result);
@@ -80,7 +80,7 @@ namespace EInfrastructure.Core.WeChat.Common
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
         /// <exception cref="BusinessException"></exception>
-        public string GetJsApiTicket(string tickCacheKey, string tokenCacheKey, int errCode = (int) HttpStatusEnum.Err)
+        public string GetJsApiTicket(string tickCacheKey, string tokenCacheKey, int? errCode = null)
         {
             string ticket = _cacheService.StringGet(tickCacheKey);
 
@@ -94,7 +94,7 @@ namespace EInfrastructure.Core.WeChat.Common
 
                 if (!result.Contains("ok"))
                 {
-                    throw new BusinessException("获取ticket失败", errCode);
+                    throw new BusinessException("获取ticket失败", errCode??HttpStatus.Err.Id);
                 }
 
                 dynamic obj = JsonConvert.DeserializeObject<dynamic>(result);

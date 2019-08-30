@@ -4,7 +4,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
         /// <exception cref="BusinessException"></exception>
-        public static string GetUrl(this string str, int errCode = (int) HttpStatusEnum.Err)
+        public static string GetUrl(this string str, int? errCode = null)
         {
             string regexStr = "[a-zA-z]+://[^\\s]*";
             Regex reg = new Regex(regexStr, RegexOptions.Multiline);
@@ -36,7 +36,7 @@ namespace EInfrastructure.Core.HelpCommon
                 }
             }
 
-            throw new BusinessException("无效的链接", errCode);
+            throw new BusinessException("无效的链接", errCode ?? HttpStatus.Err.Id);
         }
 
         #endregion

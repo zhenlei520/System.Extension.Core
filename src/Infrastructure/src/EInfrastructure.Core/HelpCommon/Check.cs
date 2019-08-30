@@ -3,7 +3,7 @@
 
 using System;
 using System.Text.RegularExpressions;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
@@ -23,13 +23,13 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="action"></param>
         /// <param name="errCode">错误码</param>
         public static void IsNullOrEmptyTip(this string str, string message, Func<bool> action = null,
-            int errCode = (int) HttpStatusEnum.Err)
+            int? errCode = null)
         {
             if (string.IsNullOrEmpty(str))
             {
                 if (action == null || action.Invoke())
                 {
-                    throw new BusinessException(message, errCode);
+                    throw new BusinessException(message, errCode ?? HttpStatus.Err.Id);
                 }
             }
         }
@@ -47,13 +47,13 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="errCode">错误码</param>
         /// <exception cref="Exception"></exception>
         public static void IsNullOrEmptyTip(this object array, string message, Func<bool> action = null,
-            int errCode = (int) HttpStatusEnum.Err)
+            int? errCode = null)
         {
             if (array == null)
             {
                 if (action == null || action.Invoke())
                 {
-                    throw new BusinessException(message, errCode);
+                    throw new BusinessException(message, errCode ?? HttpStatus.Err.Id);
                 }
             }
         }
@@ -67,13 +67,13 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="errCode">错误码</param>
         /// <exception cref="Exception"></exception>
         public static void IsNullOrEmptyTip(this object[] array, string message, Func<bool> action = null,
-            int errCode = (int) HttpStatusEnum.Err)
+            int? errCode = null)
         {
             if (array == null || array.Length == 0)
             {
                 if (action == null || action.Invoke())
                 {
-                    throw new BusinessException(message, errCode);
+                    throw new BusinessException(message, errCode ?? HttpStatus.Err.Id);
                 }
             }
         }
@@ -89,11 +89,11 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="errorMessageFormat"></param>
         /// <param name="errCode">错误码</param>
         public static void True(bool status, string errorMessageFormat,
-            int errCode = (int) HttpStatusEnum.Err)
+            int? errCode = null)
         {
             if (!status)
             {
-                throw new BusinessException(string.Format(errorMessageFormat), errCode);
+                throw new BusinessException(string.Format(errorMessageFormat), errCode ?? HttpStatus.Err.Id);
             }
         }
 

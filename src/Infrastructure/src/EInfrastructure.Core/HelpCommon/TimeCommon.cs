@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using System.Globalization;
 using System.Linq;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Exception;
 using static System.TimeZone;
 
@@ -178,33 +178,14 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="dateTime1">日期时间</param>
         /// <param name="dateMode">显示模式</param>
         /// <returns>0-9种模式的日期</returns>
-        public static string FormatDate(this DateTime dateTime1, FormatDateTypeEnum dateMode = FormatDateTypeEnum.One)
+        public static string FormatDate(this DateTime dateTime1, FormatDateType dateMode=null)
         {
-            switch (dateMode)
+            if (dateMode == null)
             {
-                case FormatDateTypeEnum.Zero:
-                    return dateTime1.ToString("yyyy-MM-dd");
-                case FormatDateTypeEnum.One:
-                    return dateTime1.ToString("yyyy-MM-dd HH:mm:ss");
-                case FormatDateTypeEnum.Two:
-                    return dateTime1.ToString("yyyy/MM/dd");
-                case FormatDateTypeEnum.Three:
-                    return dateTime1.ToString("yyyy年MM月dd日");
-                case FormatDateTypeEnum.Four:
-                    return dateTime1.ToString("MM-dd");
-                case FormatDateTypeEnum.Five:
-                    return dateTime1.ToString("MM/dd");
-                case FormatDateTypeEnum.Six:
-                    return dateTime1.ToString("MM月dd日");
-                case FormatDateTypeEnum.Seven:
-                    return dateTime1.ToString("yyyy-MM");
-                case FormatDateTypeEnum.Eight:
-                    return dateTime1.ToString("yyyy/MM");
-                case FormatDateTypeEnum.Nine:
-                    return dateTime1.ToString("yyyy年MM月");
-                default:
-                    return dateTime1.ToString(CultureInfo.InvariantCulture);
+                dateMode = FormatDateType.One;
             }
+
+            return dateTime1.ToString(dateMode.Name);
         }
 
         #endregion
