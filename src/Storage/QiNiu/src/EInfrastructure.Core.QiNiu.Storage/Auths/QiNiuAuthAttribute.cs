@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Linq;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Microsoft.AspNetCore.Mvc;
@@ -67,11 +67,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
         /// <param name="context"></param>
         private void AuthLose(AuthorizationFilterContext context)
         {
-            context.HttpContext.Response.StatusCode = (int) HttpStatusEnum.Unauthorized;
+            context.HttpContext.Response.StatusCode = HttpStatus.Unauthorized.Id;
             context.Result =
                 new JsonResult(new
                 {
-                    Code = (int) HttpStatusEnum.Unauthorized,
+                    Code = HttpStatus.Unauthorized.Id,
                     Msg = "鉴权失败"
                 });
         }

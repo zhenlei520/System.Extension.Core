@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.HelpCommon;
 using Xunit;
 
@@ -19,7 +19,7 @@ namespace EInfrastructure.Core.Test
         /// Check is Exist
         /// </summary>
         [Theory]
-        [InlineData((int) GenderEnum.Boy, typeof(GenderEnum), true)]
+        [InlineData(1, typeof(Gender), true)]
         public void IsExist(int param, Type type, bool result)
 
         {
@@ -35,7 +35,7 @@ namespace EInfrastructure.Core.Test
         /// </summary>
         public void CheckDescribe()
         {
-            Check.True(GenderEnum.Boy.GetDescription() == "男", "result is error");
+            Check.True(Gender.Boy.Name == "男", "result is error");
         }
 
         #endregion
@@ -48,7 +48,7 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void GetDescriptionDictionary()
         {
-            var result = EnumCommon.ToDescriptionDictionary<GenderEnum>();
+            var result = EnumCommon.ToDescriptionDictionary<Gender>();
         }
 
         #endregion

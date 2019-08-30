@@ -7,7 +7,7 @@ using System.Linq;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
 using EInfrastructure.Core.Configuration.Data;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 
@@ -338,11 +338,11 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="errCode">错误码</param>
         /// <typeparam name="T"></typeparam>
         public static void ListPager<T>(this ICollection<T> query, Action<List<T>> action, int pageSize = -1,
-            int pageIndex = 1, int errCode = (int) HttpStatusEnum.Err)
+            int pageIndex = 1, int? errCode = null)
         {
             if (pageSize <= 0 && pageSize != -1)
             {
-                throw new BusinessException("页大小必须为正数", errCode);
+                throw new BusinessException("页大小必须为正数", errCode??HttpStatus.Err.Id);
             }
 
             var totalCount = query.Count * 1.0d;

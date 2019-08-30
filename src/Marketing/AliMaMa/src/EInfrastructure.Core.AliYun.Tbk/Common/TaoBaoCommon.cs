@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Exception;
 using Newtonsoft.Json;
 using RestSharp;
@@ -74,7 +74,7 @@ namespace EInfrastructure.Core.AliYun.Tbk.Common
         /// <param name="mUrl">口令中的url地址</param>
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
-        private string GetGoodUrl(string mUrl, int errCode = (int) HttpStatusEnum.Err)
+        private string GetGoodUrl(string mUrl, int? errCode = null)
         {
             Uri uri = new Uri(mUrl);
             string host = uri.Host;
@@ -137,7 +137,7 @@ namespace EInfrastructure.Core.AliYun.Tbk.Common
                 }
             }
 
-            throw new BusinessException("获取商品真实地址出错", errCode);
+            throw new BusinessException("获取商品真实地址出错", errCode ?? HttpStatus.Err.Id);
         }
 
         #endregion

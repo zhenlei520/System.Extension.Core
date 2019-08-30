@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.AutomationConfiguration.Interface;
-using EInfrastructure.Core.Config.StorageExtensions.Enum;
+using EInfrastructure.Core.Config.StorageExtensions.Enumeration;
 using EInfrastructure.Core.QiNiu.Storage.Enum;
 using Qiniu.Storage;
 
@@ -105,7 +105,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// <summary>
         /// 回调内容类型
         /// </summary>
-        public CallbackBodyTypeEnum CallbackBodyType { get; set; } = CallbackBodyTypeEnum.Json;
+        public int CallbackBodyType { get; set; } = EInfrastructure.Core.Config.StorageExtensions.Enumeration.CallbackBodyType.Json.Id;
 
         /// <summary>
         /// 鉴权回调

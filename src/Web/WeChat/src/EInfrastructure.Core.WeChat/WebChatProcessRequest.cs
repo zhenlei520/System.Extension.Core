@@ -5,14 +5,14 @@ using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.WeChat.Common;
 using EInfrastructure.Core.WeChat.Config;
-using EInfrastructure.Core.WeChat.Enum;
+using EInfrastructure.Core.WeChat.Enumeration;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -43,20 +43,20 @@ namespace EInfrastructure.Core.WeChat
         /// <param name="xml"></param>
         /// <param name="errCode">错误码</param>
         public WebChatMessage ProcessRequest(WebChatAuthConfig webChatAuthConfig, WxConfig wxConfig, string xml,
-            int errCode = (int) HttpStatusEnum.Err)
+            int? errCode = null)
         {
             WebChatMessage refundReponse = null;
             try
             {
                 if (!string.IsNullOrEmpty(Auth(webChatAuthConfig, wxConfig)))
                 {
-                    throw new BusinessException("签名错误", errCode);
+                    throw new BusinessException("签名错误", errCode??HttpStatus.Err.Id);
                 }
 
                 refundReponse = XmlCommon.Deserialize<WebChatMessage>(xml);
                 if (refundReponse == null)
                 {
-                    throw new BusinessException("参数错误", errCode);
+                    throw new BusinessException("参数错误", errCode??HttpStatus.Err.Id);
                 }
             }
             catch (System.Exception e)
@@ -106,21 +106,21 @@ namespace EInfrastructure.Core.WeChat
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
         /// <exception cref="BusinessException"></exception>
-        public LoginResultConfig Login(WxConfig config, string code, int errCode = (int) HttpStatusEnum.Err)
+        public LoginResultConfig Login(WxConfig config, string code, int? errCode = null)
         {
             LoginResultConfig loginResult = new LoginResultConfig();
 
-            if (config.Type == WebChatTypeEnum.ThirdPartyLogins)
+            if (config.Type == WebChatType.ThirdPartyLogins.Id)
             {
                 if (string.IsNullOrEmpty(code))
                 {
-                    throw new BusinessException("登录失败，授权异常", errCode);
+                    throw new BusinessException("登录失败，授权异常", errCode??HttpStatus.Err.Id);
                 }
 
                 WxUserInfo wxUserInfo = JsonConvert.DeserializeObject<WxUserInfo>(code);
                 if (wxUserInfo == null)
                 {
-                    throw new BusinessException("登录失败，授权异常", errCode);
+                    throw new BusinessException("登录失败，授权异常", errCode??HttpStatus.Err.Id);
                 }
 
                 loginResult.Success = !string.IsNullOrEmpty(wxUserInfo.Openid) &&
@@ -139,7 +139,7 @@ namespace EInfrastructure.Core.WeChat
                 //                                           code + "&grant_type=authorization_code";
 
                 string getAccessTokenUrl;
-                if (config.Type == WebChatTypeEnum.Mweb)
+                if (config.Type == WebChatType.MWeb.Id)
                 {
                     getAccessTokenUrl = "sns/oauth2/access_token?appid=" + config.AppId + "&secret=" +
                                         config.AppSecret + "&code=" +

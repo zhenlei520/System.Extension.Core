@@ -8,7 +8,7 @@ using EInfrastructure.Core.AliYun.Tbk.Param;
 using EInfrastructure.Core.AliYun.Tbk.Respose;
 using EInfrastructure.Core.AliYun.Tbk.Respose.Success;
 using EInfrastructure.Core.Config.SerializeExtensions;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Exception;
 using RestSharp;
 
@@ -57,12 +57,15 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <param name="tbCode"></param>
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
-        public NaughtyPasswordQueryDto TpwdQueryGet(string tbCode, int errCode = (int) HttpStatusEnum.Err)
+        public NaughtyPasswordQueryDto TpwdQueryGet(string tbCode, int? errCode = null)
         {
             var response = TpwdQuery(tbCode);
             NaughtyPasswordQueryDto naughtyPasswordQuery = null;
             GetResult(response, (NaughtyPasswordQueryDto passwordQuery) => { naughtyPasswordQuery = passwordQuery; },
-                (ErrDto err) => { throw new BusinessException(err.ErrorResponse.SubCode, errCode); });
+                (ErrDto err) =>
+                {
+                    throw new BusinessException(err.ErrorResponse.SubCode, errCode ?? HttpStatus.Err.Id);
+                });
             return naughtyPasswordQuery;
         }
 
@@ -127,13 +130,16 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
         public string TpwdCreateString(string url, string text = "超值活动，惊喜活动多多", string logo = "", string userId = "",
-            string ext = "", int errCode = (int) HttpStatusEnum.Err)
+            string ext = "", int? errCode = null)
         {
             var response = TpwdCreate(url, text, logo);
 
             TaobaoTbkTpwdCreateResponseDto tpwdCreateResponse = null;
             GetResult(response, (TaobaoTbkTpwdCreateResponseDto result) => { tpwdCreateResponse = result; },
-                (ErrDto err) => { throw new BusinessException(err.ErrorResponse.SubCode, errCode); });
+                (ErrDto err) =>
+                {
+                    throw new BusinessException(err.ErrorResponse.SubCode, errCode ?? HttpStatus.Err.Id);
+                });
 
             return tpwdCreateResponse.Data.Model;
         }
@@ -154,7 +160,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
         public string TpwdMixCreate(string url, string text, string password, string logo = "", string userId = "",
-            string ext = "", int errCode = (int) HttpStatusEnum.Err)
+            string ext = "", int? errCode = null)
         {
             if (!url.Contains("https:"))
             {
@@ -192,10 +198,10 @@ namespace EInfrastructure.Core.AliYun.Tbk
                 {
                     if (err != null)
                     {
-                        throw new BusinessException(err.ErrorResponse.SubCode, errCode);
+                        throw new BusinessException(err.ErrorResponse.SubCode, errCode ?? HttpStatus.Err.Id);
                     }
 
-                    throw new BusinessException("生成淘口令失败", errCode);
+                    throw new BusinessException("生成淘口令失败", errCode ?? HttpStatus.Err.Id);
                 });
 
             switch (tpwdMixCreateResponse.TaobaoTbkTpwdMixCreate.Data.Status)
@@ -204,9 +210,9 @@ namespace EInfrastructure.Core.AliYun.Tbk
                     return tpwdMixCreateResponse.TaobaoTbkTpwdMixCreate.Data.Password;
                 case "2":
                 default:
-                    throw new BusinessException("生成淘口令失败", errCode);
+                    throw new BusinessException("生成淘口令失败", errCode ?? HttpStatus.Err.Id);
                 case "3":
-                    throw new BusinessException("生成淘口令失败，文本不符合规范", errCode);
+                    throw new BusinessException("生成淘口令失败，文本不符合规范", errCode ?? HttpStatus.Err.Id);
             }
         }
 

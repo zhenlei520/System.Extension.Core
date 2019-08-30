@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.HelpCommon
@@ -591,11 +591,11 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
         /// <exception cref="BusinessException"></exception>
-        public static string GetMimeType(string extension, int errCode = (int) HttpStatusEnum.Err)
+        public static string GetMimeType(string extension, int? errCode =null)
         {
             if (extension == null)
             {
-                throw new BusinessException("extension",errCode);
+                throw new BusinessException("extension",errCode??HttpStatus.Err.Id);
             }
 
             if (!extension.StartsWith("."))

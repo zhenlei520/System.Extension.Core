@@ -8,7 +8,8 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Config.WordsExtensions;
-using EInfrastructure.Core.Config.WordsExtensions.Enum;
+using EInfrastructure.Core.Config.WordsExtensions.Enumeration;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Words.Config;
 using EInfrastructure.Core.Words.Extension;
 using EInfrastructure.Core.Words.PinYin;
@@ -204,7 +205,7 @@ namespace EInfrastructure.Core.Words
         /// <param name="text">文本信息</param>
         /// <param name="wordTypeList">文本类型集合</param>
         /// <returns></returns>
-        public bool IsExist(string text, List<WordTypeEnum> wordTypeList)
+        public bool IsExist(string text, List<WordType> wordTypeList)
         {
             var wordList = UnicodeConfig.AllUnicode.Where(x => wordTypeList.Contains(x.Key)).Select(x => x.Value)
                 .ToList();
@@ -225,13 +226,28 @@ namespace EInfrastructure.Core.Words
         /// <param name="text">文字信息</param>
         /// <param name="textType">文字类型</param>
         /// <returns></returns>
-        public bool IsExist(string text, TextTypesEnum textType)
+        public bool IsExist(string text, TextTypes textType)
         {
-            return IsExist(text, new List<WordTypeEnum>()
+            if (textType.Id == TextTypes.Simplified.Id || textType.Id == TextTypes.Traditional.Id)
             {
-                WordTypeEnum.BaseChinese,
-                WordTypeEnum.BaseChineseExt
-            });
+                return IsExist(text, new List<WordType>()
+                {
+                    WordType.BaseChinese,
+                    WordType.BaseChineseExt
+                });
+            }
+
+            if (textType.Id == TextTypes.Japanese.Id)
+            {
+                return IsExist(text, new List<WordType>()
+                {
+                    WordType.JapaneseHiragana,
+                    WordType.JapaneseKatakana,
+                    WordType.JapaneseKatakanaSpellExt
+                });
+            }
+
+            return false;
         }
 
         #endregion
@@ -264,7 +280,7 @@ namespace EInfrastructure.Core.Words
         /// <param name="text">文本信息</param>
         /// <param name="wordTypeList">文本类型集合</param>
         /// <returns></returns>
-        public bool IsAll(string text, List<WordTypeEnum> wordTypeList)
+        public bool IsAll(string text, List<WordType> wordTypeList)
         {
             var wordList = UnicodeConfig.AllUnicode.Where(x => wordTypeList.Contains(x.Key)).Select(x => x.Value)
                 .ToList();
@@ -285,12 +301,12 @@ namespace EInfrastructure.Core.Words
         /// <param name="text">文字信息</param>
         /// <param name="textType">文字类型</param>
         /// <returns></returns>
-        public bool IsAll(string text, TextTypesEnum textType)
+        public bool IsAll(string text, TextTypes textType)
         {
-            return IsAll(text, new List<WordTypeEnum>()
+            return IsAll(text, new List<WordType>()
             {
-                WordTypeEnum.BaseChinese,
-                WordTypeEnum.BaseChineseExt
+                WordType.BaseChinese,
+                WordType.BaseChineseExt
             });
         }
 

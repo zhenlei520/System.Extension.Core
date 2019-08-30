@@ -5,7 +5,7 @@
 
 using System;
 using System.Collections.Generic;
-using EInfrastructure.Core.Config.WordsExtensions.Enum;
+using EInfrastructure.Core.Config.WordsExtensions.Enumeration;
 
 namespace EInfrastructure.Core.Words.Config
 {
@@ -19,40 +19,40 @@ namespace EInfrastructure.Core.Words.Config
         /// <summary>
         /// 所有的编码范围
         /// </summary>
-        public static List<KeyValuePair<WordTypeEnum, int[]>> AllUnicode = new List<KeyValuePair<WordTypeEnum, int[]>>()
+        public static List<KeyValuePair<WordType, int[]>> AllUnicode = new List<KeyValuePair<WordType, int[]>>()
         {
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.BaseChinese, BaseChinese),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.BaseChineseExt, BaseChineseExt),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseExt1, ChineseExt1),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseExt2, ChineseExt2),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseExt3, ChineseExt3),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseExt4, ChineseExt4),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseExt5, ChineseExt5),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseExt6, ChineseExt6),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseSpecialRadical, ChineseSpecialRadical),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseRadicalExt1, ChineseRadicalExt1),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseCompatibility, ChineseCompatibility),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseCompatibilityExt, ChineseCompatibilityExt),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseGbkPart, ChineseGbkPart),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChinesePartExt, ChinesePartExt),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChinesePuaExt, ChinesePuaExt),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseStroke, ChineseStroke),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseStructure, ChineseStructure),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChinesePhoneticNotation, ChinesePhoneticNotation),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChinesePhoneticNotationExt, ChinesePhoneticNotationExt),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseSpecial, ChineseSpecial),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.JapaneseHiragana, JapaneseHiragana),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.JapaneseKatakana, JapaneseKatakana),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.JapaneseKatakanaSpellExt, JapaneseKatakanaSpellExt),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.KoreanAlphabet, KoreanAlphabet),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.KoreanLetters, KoreanLetters),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.KoreanLettersExt, KoreanLettersExt),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.ChineseVerticalPunctuation, ChineseVerticalPunctuation),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.SpecialSymbols, SpecialSymbols),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.DecorativeSymbols, DecorativeSymbols),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.MiscellaneousSymbols, MiscellaneousSymbols),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.CompatibilitySymbols, CompatibilitySymbols),
-            new KeyValuePair<WordTypeEnum, int[]>(WordTypeEnum.LettersAndMonths, LettersAndMonths)
+            new KeyValuePair<WordType, int[]>(WordType.BaseChinese, BaseChinese),
+            new KeyValuePair<WordType, int[]>(WordType.BaseChineseExt, BaseChineseExt),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseExt1, ChineseExt1),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseExt2, ChineseExt2),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseExt3, ChineseExt3),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseExt4, ChineseExt4),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseExt5, ChineseExt5),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseExt6, ChineseExt6),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseSpecialRadical, ChineseSpecialRadical),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseRadicalExt1, ChineseRadicalExt1),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseCompatibility, ChineseCompatibility),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseCompatibilityExt, ChineseCompatibilityExt),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseGbkPart, ChineseGbkPart),
+            new KeyValuePair<WordType, int[]>(WordType.ChinesePartExt, ChinesePartExt),
+            new KeyValuePair<WordType, int[]>(WordType.ChinesePuaExt, ChinesePuaExt),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseStroke, ChineseStroke),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseStructure, ChineseStructure),
+            new KeyValuePair<WordType, int[]>(WordType.ChinesePhoneticNotation, ChinesePhoneticNotation),
+            new KeyValuePair<WordType, int[]>(WordType.ChinesePhoneticNotationExt, ChinesePhoneticNotationExt),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseSpecial, ChineseSpecial),
+            new KeyValuePair<WordType, int[]>(WordType.JapaneseHiragana, JapaneseHiragana),
+            new KeyValuePair<WordType, int[]>(WordType.JapaneseKatakana, JapaneseKatakana),
+            new KeyValuePair<WordType, int[]>(WordType.JapaneseKatakanaSpellExt, JapaneseKatakanaSpellExt),
+            new KeyValuePair<WordType, int[]>(WordType.KoreanAlphabet, KoreanAlphabet),
+            new KeyValuePair<WordType, int[]>(WordType.KoreanLetters, KoreanLetters),
+            new KeyValuePair<WordType, int[]>(WordType.KoreanLettersExt, KoreanLettersExt),
+            new KeyValuePair<WordType, int[]>(WordType.ChineseVerticalPunctuation, ChineseVerticalPunctuation),
+            new KeyValuePair<WordType, int[]>(WordType.SpecialSymbols, SpecialSymbols),
+            new KeyValuePair<WordType, int[]>(WordType.DecorativeSymbols, DecorativeSymbols),
+            new KeyValuePair<WordType, int[]>(WordType.MiscellaneousSymbols, MiscellaneousSymbols),
+            new KeyValuePair<WordType, int[]>(WordType.CompatibilitySymbols, CompatibilitySymbols),
+            new KeyValuePair<WordType, int[]>(WordType.LettersAndMonths, LettersAndMonths)
         };
 
         #endregion

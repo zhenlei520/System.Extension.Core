@@ -3,26 +3,30 @@
 
 using System.ComponentModel;
 
-namespace EInfrastructure.Core.WeChat.Enum
+namespace EInfrastructure.Core.WeChat.Enumeration
 {
     /// <summary>
     /// 微信类型
     /// </summary>
-    public enum WebChatTypeEnum
+    public class WebChatType : EInfrastructure.Core.Configuration.SeedWork.Enumeration
     {
         /// <summary>
         /// 微信小程序
         /// </summary>
-        [Description("微信小程序")] WeApp = 0,
+        public static WebChatType WeApp=new WebChatType(0,"微信小程序");
 
         /// <summary>
         /// 微信H5
         /// </summary>
-        [Description("微信H5")] Mweb = 1,
+        public static WebChatType MWeb=new WebChatType(1,"微信H5");
 
         /// <summary>
         /// 第三方登录
         /// </summary>
-        [Description("第三方登录")] ThirdPartyLogins = 2
+        public static WebChatType ThirdPartyLogins=new WebChatType(2,"第三方登录");
+
+        public WebChatType(int id, string name) : base(id, name)
+        {
+        }
     }
 }

@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace EInfrastructure.Core.Configuration.Enum
+namespace EInfrastructure.Core.Configuration.Enumeration
 {
     /// <summary>
     /// 民族

@@ -1,14 +1,12 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using EInfrastructure.Core.Configuration.SeedWork;
-
-namespace EInfrastructure.Core.Configuration.Enum
+namespace EInfrastructure.Core.Configuration.Enumeration
 {
     /// <summary>
     /// 生肖信息
     /// </summary>
-    public class Animal : Enumeration
+    public class Animal : SeedWork.Enumeration
     {
         /// <summary>
         /// 鼠

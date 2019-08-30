@@ -1,13 +1,11 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
-using EInfrastructure.Core.Configuration.SeedWork;
-
-namespace EInfrastructure.Core.Configuration.Enum
+namespace EInfrastructure.Core.Configuration.Enumeration
 {
     /// <summary>
     /// 时间类型
     /// </summary>
-    public class TimeType : Enumeration
+    public class TimeType : SeedWork.Enumeration
     {
         /// <summary>
         /// 月初

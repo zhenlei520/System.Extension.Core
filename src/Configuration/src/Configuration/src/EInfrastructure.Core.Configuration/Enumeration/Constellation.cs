@@ -1,15 +1,12 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.ComponentModel;
-using EInfrastructure.Core.Configuration.SeedWork;
-
-namespace EInfrastructure.Core.Configuration.Enum
+namespace EInfrastructure.Core.Configuration.Enumeration
 {
     /// <summary>
     /// 星座
     /// </summary>
-    public class Constellation : Enumeration
+    public class Constellation : SeedWork.Enumeration
     {
         /// <summary>
         /// 未知

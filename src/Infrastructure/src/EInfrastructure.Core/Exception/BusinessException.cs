@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
-using EInfrastructure.Core.Configuration.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 
 namespace EInfrastructure.Core.Exception
@@ -21,13 +21,13 @@ namespace EInfrastructure.Core.Exception
         /// <param name="code">状态码</param>
         /// <param name="content">异常详情</param>
         /// <param name="jsonProvider"></param>
-        public BusinessException(string content, int code = (int) HttpStatusEnum.Err,
+        public BusinessException(string content, int? code = null,
             IJsonService jsonProvider = null) :
             base(
                 (jsonProvider ?? new JsonService(new List<IJsonProvider>()
                 {
                     new NewtonsoftJsonProvider()
-                })).Serializer(new {code, content}))
+                })).Serializer(new {code = code ?? HttpStatus.Err.Id, content}))
         {
         }
     }
