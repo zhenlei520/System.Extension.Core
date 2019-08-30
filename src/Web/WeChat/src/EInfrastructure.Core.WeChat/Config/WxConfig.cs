@@ -1,7 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using EInfrastructure.Core.WeChat.Enum;
+using EInfrastructure.Core.WeChat.Enumeration;
 
 namespace EInfrastructure.Core.WeChat.Config
 {
@@ -14,25 +14,25 @@ namespace EInfrastructure.Core.WeChat.Config
         /// AppId
         /// </summary>
         public string AppId { get; set; }
-        
+
         /// <summary>
         /// AppSecret
         /// </summary>
         public string AppSecret { get; set; }
-        
+
         /// <summary>
         /// 微信授权Token
         /// </summary>
         public string Token { get; set; }
-        
+
         /// <summary>
         /// EncodingAESKey
         /// </summary>
         public string EncodingAesKey { get; set; }
-        
+
         /// <summary>
         /// 微信类型
         /// </summary>
-        public WebChatTypeEnum Type { get; set; }
+        public int Type { get; set; }
     }
 }

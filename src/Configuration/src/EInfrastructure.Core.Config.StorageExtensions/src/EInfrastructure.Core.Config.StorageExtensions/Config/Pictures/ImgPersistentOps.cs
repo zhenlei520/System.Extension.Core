@@ -1,7 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using EInfrastructure.Core.Config.StorageExtensions.Enum;
+using EInfrastructure.Core.Config.StorageExtensions.Enumeration;
 
 namespace EInfrastructure.Core.Config.StorageExtensions.Config.Pictures
 {
@@ -18,20 +18,22 @@ namespace EInfrastructure.Core.Config.StorageExtensions.Config.Pictures
         /// <param name="height">高度</param>
         /// <param name="model">缩放信息</param>
         /// <param name="waterMark">水印信息</param>
-        public ImgPersistentOps(string key, int width = 0, int height = 0, ImageModeEnum model = ImageModeEnum.Nothing,
+        public ImgPersistentOps(string key, int width = 0, int height = 0, int? model = null,
             StorageWaterMark waterMark = null)
         {
             Key = key;
             Width = width;
             Height = height;
-            Mode = model;
+            Mode = model == null
+                ? ImageMode.Nothing
+                : Configuration.SeedWork.Enumeration.FromValue<ImageMode>(model.Value);
             WaterMark = waterMark;
         }
 
         /// <summary>
         /// 图片缩放信息
         /// </summary>
-        public ImageModeEnum Mode { get; set; } = ImageModeEnum.Nothing;
+        public ImageMode Mode { get; set; } = ImageMode.Nothing;
 
         /// <summary>
         /// 图片相对地址

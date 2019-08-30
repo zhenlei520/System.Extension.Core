@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.Test.Base;
+using EInfrastructure.Core.Redis.Test.Base;
 using Xunit;
 using Xunit.Abstractions;
 

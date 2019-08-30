@@ -1,7 +1,7 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using EInfrastructure.Core.Config.StorageExtensions.Enum;
+using EInfrastructure.Core.Config.StorageExtensions.Enumeration;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.QiNiu.Storage.Enum;
@@ -32,7 +32,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator
                 .When(item => !string.IsNullOrEmpty(item.CallbackUrl));
 
             RuleFor(x => (int) x.CallbackBodyType).Cascade(CascadeMode.StopOnFirstFailure)
-                .Must(enums => enums.IsExist(typeof(CallbackBodyTypeEnum))).WithMessage("CallbackBodyType信息异常")
+                .Must(enums => enums.IsExist(typeof(CallbackBodyType))).WithMessage("CallbackBodyType信息异常")
                 .When(item => !string.IsNullOrEmpty(item.CallbackUrl));
         }
     }

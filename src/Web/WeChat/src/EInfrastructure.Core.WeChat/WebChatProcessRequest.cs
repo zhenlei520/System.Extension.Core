@@ -12,7 +12,7 @@ using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.WeChat.Common;
 using EInfrastructure.Core.WeChat.Config;
-using EInfrastructure.Core.WeChat.Enum;
+using EInfrastructure.Core.WeChat.Enumeration;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -110,7 +110,7 @@ namespace EInfrastructure.Core.WeChat
         {
             LoginResultConfig loginResult = new LoginResultConfig();
 
-            if (config.Type == WebChatTypeEnum.ThirdPartyLogins)
+            if (config.Type == WebChatType.ThirdPartyLogins.Id)
             {
                 if (string.IsNullOrEmpty(code))
                 {
@@ -139,7 +139,7 @@ namespace EInfrastructure.Core.WeChat
                 //                                           code + "&grant_type=authorization_code";
 
                 string getAccessTokenUrl;
-                if (config.Type == WebChatTypeEnum.Mweb)
+                if (config.Type == WebChatType.MWeb.Id)
                 {
                     getAccessTokenUrl = "sns/oauth2/access_token?appid=" + config.AppId + "&secret=" +
                                         config.AppSecret + "&code=" +

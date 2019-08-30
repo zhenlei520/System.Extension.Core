@@ -5,12 +5,11 @@
 using System.Collections.Generic;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
-using EInfrastructure.Core.Redis;
 using EInfrastructure.Core.Redis.Config;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using Xunit.Abstractions;
 
-namespace EInfrastructure.Core.Test.Base
+namespace EInfrastructure.Core.Redis.Test.Base
 {
     /// <summary>
     /// base unit test

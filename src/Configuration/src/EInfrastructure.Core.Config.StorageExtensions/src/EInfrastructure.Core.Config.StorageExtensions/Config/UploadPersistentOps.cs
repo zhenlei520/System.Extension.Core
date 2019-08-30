@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using EInfrastructure.Core.Config.StorageExtensions.Enum;
+using EInfrastructure.Core.Config.StorageExtensions.Enumeration;
 
 namespace EInfrastructure.Core.Config.StorageExtensions.Config
 {
@@ -30,7 +30,7 @@ namespace EInfrastructure.Core.Config.StorageExtensions.Config
         /// <summary>
         /// [可选]分片上传默认最大值
         /// </summary>
-        public ChunkUnitEnum ChunkUnit { get; set; } = ChunkUnitEnum.U4096K;
+        public ChunkUnit ChunkUnit { get; set; } = ChunkUnit.U4096K;
 
         /// <summary>
         /// [可选]文件上传后多少天后自动删除
@@ -107,7 +107,7 @@ namespace EInfrastructure.Core.Config.StorageExtensions.Config
         ///
         /// 设置文件上传状态
         /// </summary>
-        public Action<UploadStateEnum> UploadController { set; get; }
+        public Action<UploadState> UploadController { set; get; }
 
         /// <summary>
         /// 最大重试次数
