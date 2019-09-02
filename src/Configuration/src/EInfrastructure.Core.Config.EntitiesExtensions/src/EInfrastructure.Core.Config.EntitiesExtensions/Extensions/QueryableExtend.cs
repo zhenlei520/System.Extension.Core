@@ -41,8 +41,19 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions.Extensions
         /// <returns></returns>
         public static IQueryable<T> QueryPager<T>(this IQueryable<T> query, int pageSize, int pageIndex)
         {
+            if (pageIndex - 1 < 0)
+            {
+                throw new Exception("页码必须大于等于1");
+            }
+
+            query = query.Skip((pageIndex - 1) * pageSize);
             if (pageSize > 0)
-                return query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+                query = query.Take(pageSize);
+            else if (pageSize < 1 && pageSize != -1)
+            {
+                throw new Exception("页大小须等于-1或者大于0");
+            }
+
             return query;
         }
 
