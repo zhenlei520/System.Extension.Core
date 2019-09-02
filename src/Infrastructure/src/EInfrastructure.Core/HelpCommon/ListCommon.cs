@@ -319,7 +319,24 @@ namespace EInfrastructure.Core.HelpCommon
                 list.RowCount = query.Count();
             }
 
-            list.Data = pageSize > 0 ? query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList() : query.ToList();
+            if (pageIndex - 1 < 0)
+            {
+                throw new BusinessException("页码必须大于等于1");
+            }
+
+            query = query.Skip((pageIndex - 1) * pageSize).ToList();
+            if (pageSize > 0)
+            {
+                list.Data = query.Take(pageSize).ToList();
+            }
+            else if (pageSize < 1 && pageSize != -1)
+            {
+                throw new BusinessException("页大小须等于-1或者大于0");
+            }
+            else
+            {
+                list.Data = query.ToList();
+            }
 
             return list;
         }
@@ -342,7 +359,7 @@ namespace EInfrastructure.Core.HelpCommon
         {
             if (pageSize <= 0 && pageSize != -1)
             {
-                throw new BusinessException("页大小必须为正数", errCode??HttpStatus.Err.Id);
+                throw new BusinessException("页大小必须为正数", errCode ?? HttpStatus.Err.Id);
             }
 
             var totalCount = query.Count * 1.0d;
@@ -353,7 +370,7 @@ namespace EInfrastructure.Core.HelpCommon
             }
             else
             {
-                pageSize = totalCount.ConvertToInt(0) * -1;
+                pageSize = totalCount.ConvertToInt(0) * 1;
             }
 
             for (int index = pageIndex; index <= pageMax; index++)
