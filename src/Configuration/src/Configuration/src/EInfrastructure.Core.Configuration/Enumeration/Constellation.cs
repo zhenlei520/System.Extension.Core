@@ -11,7 +11,7 @@ namespace EInfrastructure.Core.Configuration.Enumeration
         /// <summary>
         /// 未知
         /// </summary>
-        public static Constellation Unknow = new Constellation(-2, "未知");
+        public static Constellation Unknow = new Constellation(0, "未知");
 
         /// <summary>
         /// 白羊座
