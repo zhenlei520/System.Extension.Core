@@ -430,10 +430,10 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
-        #region HMacSha256
+        #region HMacSha512
 
         /// <summary>
-        /// HMacSha256
+        /// HMacSha512
         /// </summary>
         /// <param name="text"></param>
         /// <param name="key"></param>
