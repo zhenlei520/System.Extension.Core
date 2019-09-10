@@ -233,8 +233,10 @@ namespace EInfrastructure.Core.Redis
         {
             string value = "";
             if (!isSetHashKeyExpire)
+            {
                 value =
                     QuickHelperBase.HashSetExpire(key, GetExpire(second), dataKey, ConvertJson(t));
+            }
             else
             {
                 value = QuickHelperBase.HashSetHashFileExpire(GetKey(key), GetKey(dataKey), GetExpire(second),
@@ -253,6 +255,7 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="kvalues"></param>
         /// <param name="second">秒</param>
+        /// <param name="isSetHashKeyExpire"></param>
         /// <returns></returns>
         public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1,
             bool isSetHashKeyExpire = true)

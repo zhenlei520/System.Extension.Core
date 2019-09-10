@@ -252,7 +252,6 @@ namespace EInfrastructure.Core.Redis.Common
 
         #region 同一key下的操作
 
-        
         /// <summary>
         /// 同时将多个 field-value (域-值)对设置到哈希表 key 中
         /// </summary>
@@ -293,9 +292,13 @@ namespace EInfrastructure.Core.Redis.Common
         /// <returns></returns>
         public static string HashSetHashFileExpire(string key, string HashKey, TimeSpan expire, string value)
         {
-            QuickHelperBase.ZAdd(GetCacheFileKey(),
-                (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0),
-                    GetOverTimeExpireValue(key, HashKey)));
+            if (expire > TimeSpan.Zero)
+            {
+                QuickHelperBase.ZAdd(GetCacheFileKey(),
+                    (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0),
+                        GetOverTimeExpireValue(key, HashKey)));
+            }
+
             return HashSetExpire(key, TimeSpan.Zero, HashKey, value);
         }
 
@@ -309,15 +312,19 @@ namespace EInfrastructure.Core.Redis.Common
         /// <returns></returns>
         public static string HashSetHashFileExpire(string key, TimeSpan expire, params object[] kvalues)
         {
-            List<ValueTuple<double, string>> memberScores = new List<ValueTuple<double, string>>();
-            double expireTime = DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0);
-            for (int i = 0; i < kvalues.Length; i += 2)
+            if (expire > TimeSpan.Zero)
             {
-                if (kvalues[i] != null && kvalues[i + 1] != null)
-                    memberScores.Add((expireTime, GetOverTimeExpireValue(key, kvalues[i].ToString())));
+                List<ValueTuple<double, string>> memberScores = new List<ValueTuple<double, string>>();
+                double expireTime = DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0);
+                for (int i = 0; i < kvalues.Length; i += 2)
+                {
+                    if (kvalues[i] != null && kvalues[i + 1] != null)
+                        memberScores.Add((expireTime, GetOverTimeExpireValue(key, kvalues[i].ToString())));
+                }
+
+                QuickHelperBase.ZAdd(GetCacheFileKey(), memberScores.ToArray());
             }
 
-            QuickHelperBase.ZAdd(GetCacheFileKey(), memberScores.ToArray());
             return HashSetExpire(key, TimeSpan.Zero, kvalues);
         }
 
@@ -326,72 +333,76 @@ namespace EInfrastructure.Core.Redis.Common
         #region 不同key的操作
 
         #region 同时将多个 field-value (域-值)对设置到哈希表 key 中
-        
-                /// <summary>
-                /// 同时将多个 field-value (域-值)对设置到哈希表 key 中
-                /// </summary>
-                /// <param name="expire">过期时间</param>
-                /// <param name="keyValues">key dataKey,value</param>
-                /// <returns></returns>
-                public static string HashSetExpire(Dictionary<string, object[]> keyValues, TimeSpan expire)
+
+        /// <summary>
+        /// 同时将多个 field-value (域-值)对设置到哈希表 key 中
+        /// </summary>
+        /// <param name="expire">过期时间</param>
+        /// <param name="keyValues">key dataKey,value</param>
+        /// <returns></returns>
+        public static string HashSetExpire(Dictionary<string, object[]> keyValues, TimeSpan expire)
+        {
+            using (var conn = Instance.GetConnection())
+            {
+                string result = "Empty Data";
+                if (keyValues != null && keyValues.Count > 0)
                 {
-                    using (var conn = Instance.GetConnection())
-                    {
-                        string result = "Empty Data";
-                        if (keyValues != null && keyValues.Count > 0)
-                        {
-                            foreach (var item in keyValues)
-                            {
-                                string key = string.Concat(Name, item.Key);
-                                var ret = conn.Client.HMSet(key, item.Value.Select(a => string.Concat(a)).ToArray());
-                                if (expire > TimeSpan.Zero) conn.Client.Expire(key, expire);
-                                if (ret == "OK")
-                                {
-                                    result = "OK";
-                                }
-                            }
-                        }
-        
-                        return result;
-                    }
-                }
-        
-                /// <summary>
-                /// 同时将多个 field-value (域-值)对设置到哈希表 key 中
-                /// </summary>
-                /// <param name="expire">过期时间</param>
-                /// <param name="keyValues">key dataKey,value</param>
-                /// <returns></returns>
-                public static string HashSetHashFileExpire(Dictionary<string, object[]> keyValues, TimeSpan expire)
-                {
-                    Dictionary<string, List<(double, string)>> dics = new Dictionary<string, List<(double, string)>>();
-                    double expireTime = (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0));
                     foreach (var item in keyValues)
                     {
-                        var cacheKey = GetCacheFileKey();
-                        if (!dics.ContainsKey(cacheKey))
+                        string key = string.Concat(Name, item.Key);
+                        var ret = conn.Client.HMSet(key, item.Value.Select(a => string.Concat(a)).ToArray());
+                        if (expire > TimeSpan.Zero) conn.Client.Expire(key, expire);
+                        if (ret == "OK")
                         {
-                            dics.Add(cacheKey, new List<(double, string)>());
+                            result = "OK";
                         }
-        
-                        var memberScores = dics[cacheKey];
-                        for (int i = 0; i < item.Value.Length; i += 2)
-                        {
-                            memberScores.Add(new ValueTuple<double, string>(expireTime,
-                                GetOverTimeExpireValue(item.Key, item.Value[i].ToString())));
-                        }
-        
-                        dics[cacheKey] = memberScores;
                     }
-        
-                    QuickHelperBase.ZAdd(dics);
-                    return HashSetExpire(keyValues, TimeSpan.Zero);
                 }
-        
-                #endregion
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 同时将多个 field-value (域-值)对设置到哈希表 key 中
+        /// </summary>
+        /// <param name="expire">过期时间</param>
+        /// <param name="keyValues">key dataKey,value</param>
+        /// <returns></returns>
+        public static string HashSetHashFileExpire(Dictionary<string, object[]> keyValues, TimeSpan expire)
+        {
+            if (expire > TimeSpan.Zero)
+            {
+                Dictionary<string, List<(double, string)>> dics = new Dictionary<string, List<(double, string)>>();
+                double expireTime = (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0));
+                foreach (var item in keyValues)
+                {
+                    var cacheKey = GetCacheFileKey();
+                    if (!dics.ContainsKey(cacheKey))
+                    {
+                        dics.Add(cacheKey, new List<(double, string)>());
+                    }
+
+                    var memberScores = dics[cacheKey];
+                    for (int i = 0; i < item.Value.Length; i += 2)
+                    {
+                        memberScores.Add(new ValueTuple<double, string>(expireTime,
+                            GetOverTimeExpireValue(item.Key, item.Value[i].ToString())));
+                    }
+
+                    dics[cacheKey] = memberScores;
+                }
+
+                QuickHelperBase.ZAdd(dics);
+            }
+
+            return HashSetExpire(keyValues, TimeSpan.Zero);
+        }
 
         #endregion
-        
+
+        #endregion
+
         /// <summary>
         /// 获取存储在哈希表中指定字段的值
         /// </summary>
@@ -726,7 +737,7 @@ namespace EInfrastructure.Core.Redis.Common
                     memberScores.Select(a => new Tuple<double, string>(a.Item1, a.Item2)).ToArray());
             }
         }
-        
+
         /// <summary>
         /// 向有序集合添加一个或多个成员，或者更新已存在成员的分数
         /// </summary>
@@ -1025,7 +1036,7 @@ namespace EInfrastructure.Core.Redis.Common
                 return conn.Client.ZRevRangeByScore(key, maxScore, minScore, false, false, false, offset, limit);
             }
         }
-        
+
         /// <summary>
         /// 返回有序集中指定分数区间内的成员，分数从高到低排序
         /// </summary>
@@ -1083,8 +1094,8 @@ namespace EInfrastructure.Core.Redis.Common
         }
 
         #endregion
-        
-         #region private methods
+
+        #region private methods
 
         #region hashKey过期策略
 
