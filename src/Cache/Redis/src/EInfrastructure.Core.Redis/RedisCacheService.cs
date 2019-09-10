@@ -235,14 +235,16 @@ namespace EInfrastructure.Core.Redis
         /// <param name="dataKey"></param>
         /// <param name="t"></param>
         /// <param name="second">秒</param>
-        /// <param name="isSetHashKeyExpire">false：设置key的过期时间，true：设置hashkey的过期时间，默认设置的为HashKey的过期时间。</param>
+        /// <param name="isSetHashKeyExpire">false：设置key的过期时间（整个键使用一个过期时间），true：设置hashkey的过期时间，默认设置的为HashKey的过期时间（单个datakey使用一个过期时间）。</param>
         /// <returns></returns>
         public bool HashSet<T>(string key, string dataKey, T t, long second = -1, bool isSetHashKeyExpire = true)
         {
             string value = "";
             if (!isSetHashKeyExpire)
+            {
                 value =
                     QuickHelperBase.HashSetExpire(key, GetExpire(second), dataKey, ConvertJson(t));
+            }
             else
             {
                 value = QuickHelperBase.HashSetHashFileExpire(GetKey(key), GetKey(dataKey), GetExpire(second),
@@ -261,6 +263,7 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="kvalues"></param>
         /// <param name="second">秒</param>
+        /// <param name="isSetHashKeyExpire"></param>
         /// <returns></returns>
         public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1,
             bool isSetHashKeyExpire = true)
