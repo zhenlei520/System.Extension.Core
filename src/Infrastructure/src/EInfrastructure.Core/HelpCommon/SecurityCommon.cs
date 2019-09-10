@@ -30,7 +30,7 @@ namespace EInfrastructure.Core.HelpCommon
                 return string.Empty;
             if (key.Length != 32)
             {
-                throw new BusinessException("Aes秘钥异常", errCode??HttpStatus.Err.Id);
+                throw new BusinessException("Aes秘钥异常", errCode ?? HttpStatus.Err.Id);
             }
 
             // 256-AES key
@@ -68,7 +68,7 @@ namespace EInfrastructure.Core.HelpCommon
                 return string.Empty;
             if (key.Length != 32)
             {
-                throw new BusinessException("Aes秘钥异常", errCode??HttpStatus.Err.Id);
+                throw new BusinessException("Aes秘钥异常", errCode ?? HttpStatus.Err.Id);
             }
 
             try
@@ -358,6 +358,9 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
+
+        #region HMACSHA加密
+
         #region HMacSha1加密
 
         /// <summary>
@@ -368,11 +371,87 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         public static string HMacSha1(string text, string key)
         {
-            HMACSHA1 myhmacsha1 = new HMACSHA1(Encoding.UTF8.GetBytes(key));
-            byte[] byteArray = Encoding.UTF8.GetBytes(text);
-            MemoryStream stream = new MemoryStream(byteArray);
-            return Convert.ToBase64String(myhmacsha1.ComputeHash(stream));
+            key = key ?? "";
+            var encoding = new ASCIIEncoding();
+            byte[] keyByte = encoding.GetBytes(key);
+            byte[] messageBytes = encoding.GetBytes(text);
+            using (var hmacsha1 = new HMACSHA1(keyByte))
+            {
+                byte[] hashmessage = hmacsha1.ComputeHash(messageBytes);
+                return Convert.ToBase64String(hashmessage);
+            }
         }
+
+        #endregion
+
+        #region HMacSha256
+
+        /// <summary>
+        /// HMacSha256
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string HMacSha256(string text, string key)
+        {
+            key = key ?? "";
+            var encoding = new ASCIIEncoding();
+            byte[] keyByte = encoding.GetBytes(key);
+            byte[] messageBytes = encoding.GetBytes(text);
+            using (var hmacsha256 = new HMACSHA256(keyByte))
+            {
+                byte[] hashmessage = hmacsha256.ComputeHash(messageBytes);
+                return Convert.ToBase64String(hashmessage);
+            }
+        }
+
+        #endregion
+
+        #region HMacSha384
+
+        /// <summary>
+        /// HMacSha384
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string HMacSha384(string text, string key)
+        {
+            key = key ?? "";
+            var encoding = new System.Text.ASCIIEncoding();
+            byte[] keyByte = encoding.GetBytes(key);
+            byte[] messageBytes = encoding.GetBytes(text);
+            using (var hmacsha384 = new HMACSHA384(keyByte))
+            {
+                byte[] hashmessage = hmacsha384.ComputeHash(messageBytes);
+                return Convert.ToBase64String(hashmessage);
+            }
+        }
+
+        #endregion
+
+        #region HMacSha512
+
+        /// <summary>
+        /// HMacSha512
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string HMacSha512(string text, string key)
+        {
+            key = key ?? "";
+            var encoding = new ASCIIEncoding();
+            byte[] keyByte = encoding.GetBytes(key);
+            byte[] messageBytes = encoding.GetBytes(text);
+            using (var hmacsha512 = new HMACSHA512(keyByte))
+            {
+                byte[] hashmessage = hmacsha512.ComputeHash(messageBytes);
+                return Convert.ToBase64String(hashmessage);
+            }
+        }
+
+        #endregion
 
         #endregion
 

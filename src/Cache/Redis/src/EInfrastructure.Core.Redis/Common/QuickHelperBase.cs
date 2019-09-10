@@ -294,27 +294,31 @@ namespace EInfrastructure.Core.Redis.Common
         /// <returns></returns>
         public static string HashSetHashFileExpire(Dictionary<string, object[]> keyValues, TimeSpan expire)
         {
-            Dictionary<string, List<(double, string)>> dics = new Dictionary<string, List<(double, string)>>();
-            double expireTime = (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0));
-            foreach (var item in keyValues)
+            if (expire > TimeSpan.Zero)
             {
-                var cacheKey = GetCacheFileKey();
-                if (!dics.ContainsKey(cacheKey))
+                Dictionary<string, List<(double, string)>> dics = new Dictionary<string, List<(double, string)>>();
+                double expireTime = (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0));
+                foreach (var item in keyValues)
                 {
-                    dics.Add(cacheKey, new List<(double, string)>());
+                    var cacheKey = GetCacheFileKey();
+                    if (!dics.ContainsKey(cacheKey))
+                    {
+                        dics.Add(cacheKey, new List<(double, string)>());
+                    }
+
+                    var memberScores = dics[cacheKey];
+                    for (int i = 0; i < item.Value.Length; i += 2)
+                    {
+                        memberScores.Add(new ValueTuple<double, string>(expireTime,
+                            GetOverTimeExpireValue(item.Key, item.Value[i].ToString())));
+                    }
+
+                    dics[cacheKey] = memberScores;
                 }
 
-                var memberScores = dics[cacheKey];
-                for (int i = 0; i < item.Value.Length; i += 2)
-                {
-                    memberScores.Add(new ValueTuple<double, string>(expireTime,
-                        GetOverTimeExpireValue(item.Key, item.Value[i].ToString())));
-                }
-
-                dics[cacheKey] = memberScores;
+                ZAdd(dics);
             }
 
-            QuickHelperBase.ZAdd(dics);
             return HashSetExpire(keyValues, TimeSpan.Zero);
         }
 
@@ -352,9 +356,13 @@ namespace EInfrastructure.Core.Redis.Common
         /// <returns></returns>
         public static string HashSetHashFileExpire(string key, string HashKey, TimeSpan expire, string value)
         {
-            QuickHelperBase.ZAdd(GetCacheFileKey(),
-                (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0),
-                    GetOverTimeExpireValue(key, HashKey)));
+            if (expire > TimeSpan.Zero)
+            {
+                QuickHelperBase.ZAdd(GetCacheFileKey(),
+                    (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0),
+                        GetOverTimeExpireValue(key, HashKey)));
+            }
+
             return HashSetExpire(key, TimeSpan.Zero, HashKey, value);
         }
 
@@ -362,21 +370,24 @@ namespace EInfrastructure.Core.Redis.Common
         /// 同时将多个 field-value (域-值)对设置到哈希表 key 中(设置hashkey的过期时间)
         /// </summary>
         /// <param name="key">不含prefix前辍RedisHelper.Name</param>
-        /// <param name="HashKey"></param>
         /// <param name="expire">过期时间</param>
-        /// <param name="value">结果</param>
+        /// <param name="kvalues">结果</param>
         /// <returns></returns>
         public static string HashSetHashFileExpire(string key, TimeSpan expire, params object[] kvalues)
         {
-            List<ValueTuple<double, string>> memberScores = new List<ValueTuple<double, string>>();
-            double expireTime = (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0));
-            for (int i = 0; i < kvalues.Length; i += 2)
+            if (expire > TimeSpan.Zero)
             {
-                if (kvalues[i] != null && kvalues[i + 1] != null)
-                    memberScores.Add((expireTime, GetOverTimeExpireValue(key, kvalues[i].ToString())));
+                List<ValueTuple<double, string>> memberScores = new List<ValueTuple<double, string>>();
+                double expireTime = (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0));
+                for (int i = 0; i < kvalues.Length; i += 2)
+                {
+                    if (kvalues[i] != null && kvalues[i + 1] != null)
+                        memberScores.Add((expireTime, GetOverTimeExpireValue(key, kvalues[i].ToString())));
+                }
+
+                ZAdd(GetCacheFileKey(), memberScores.ToArray());
             }
 
-            QuickHelperBase.ZAdd(GetCacheFileKey(), memberScores.ToArray());
             return HashSetExpire(key, TimeSpan.Zero, kvalues);
         }
 
