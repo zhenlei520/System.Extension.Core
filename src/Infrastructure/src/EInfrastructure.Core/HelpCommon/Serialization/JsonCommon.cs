@@ -50,7 +50,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
             }
             catch (System.Exception)
             {
-                throw new System.Exception($"json序列化出错,jsonMode:{1},序列化类型：{o.GetType().FullName}");
+                throw new System.Exception($"json序列化出错,序列化类型：{o.GetType().FullName}");
             }
         }
 
