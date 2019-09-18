@@ -44,6 +44,38 @@ namespace EInfrastructure.Core.HelpCommon.Files
             return md5;
         }
 
+        /// <summary>
+        /// 根据本地文件地址得到文件md5
+        /// </summary>
+        /// <param name="localFilePath">文件绝对地址</param>
+        /// <returns></returns>
+        public static string GetMd5(string localFilePath)
+        {
+            String hashMd5 = String.Empty;
+            //检查文件是否存在，如果文件存在则进行计算，否则返回空值
+            if (File.Exists(localFilePath))
+            {
+                using (FileStream fileStream =
+                    new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
+                {
+                    //计算文件的MD5值
+                    MD5 calculator = MD5.Create();
+                    Byte[] buffer = calculator.ComputeHash(fileStream);
+                    calculator.Clear();
+                    //将字节数组转换成十六进制的字符串形式
+                    StringBuilder stringBuilder = new StringBuilder();
+                    foreach (var t in buffer)
+                    {
+                        stringBuilder.Append(t.ToString("x2"));
+                    }
+
+                    hashMd5 = stringBuilder.ToString();
+                }
+            }
+
+            return hashMd5;
+        }
+
         #endregion
 
         #region 得到文件的Sha1
@@ -56,6 +88,20 @@ namespace EInfrastructure.Core.HelpCommon.Files
         public static string GetSha1(IFormFile file)
         {
             return GetSha(file, new SHA1CryptoServiceProvider());
+        }
+
+        /// <summary>
+        /// 根据本地文件地址得到文件的Sha1
+        /// </summary>
+        /// <param name="localFilePath">文件绝对地址</param>
+        /// <returns></returns>
+        public static string GetSha1(string localFilePath)
+        {
+            using (FileStream fileStream =
+                new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
+            {
+                return GetSha(fileStream, new SHA1CryptoServiceProvider());
+            }
         }
 
         #endregion
@@ -72,6 +118,20 @@ namespace EInfrastructure.Core.HelpCommon.Files
             return GetSha(file, new SHA256CryptoServiceProvider());
         }
 
+        /// <summary>
+        /// 根据本地文件地址得到文件的Sha256
+        /// </summary>
+        /// <param name="localFilePath">文件绝对地址</param>
+        /// <returns></returns>
+        public static string GetSha256(string localFilePath)
+        {
+            using (FileStream fileStream =
+                new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
+            {
+                return GetSha(fileStream, new SHA256CryptoServiceProvider());
+            }
+        }
+
         #endregion
 
         #region 得到文件的Sha384
@@ -86,6 +146,20 @@ namespace EInfrastructure.Core.HelpCommon.Files
             return GetSha(file, new SHA384CryptoServiceProvider());
         }
 
+        /// <summary>
+        /// 根据本地文件地址得到文件的Sha384
+        /// </summary>
+        /// <param name="localFilePath">文件绝对地址</param>
+        /// <returns></returns>
+        public static string GetSha384(string localFilePath)
+        {
+            using (FileStream fileStream =
+                new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
+            {
+                return GetSha(fileStream, new SHA384CryptoServiceProvider());
+            }
+        }
+
         #endregion
 
         #region 得到文件的Sha512
@@ -98,6 +172,20 @@ namespace EInfrastructure.Core.HelpCommon.Files
         public static string GetSha512(IFormFile file)
         {
             return GetSha(file, new SHA512CryptoServiceProvider());
+        }
+
+        /// <summary>
+        /// 根据本地文件地址得到文件的Sha512
+        /// </summary>
+        /// <param name="localFilePath">文件绝对地址</param>
+        /// <returns></returns>
+        public static string GetSha512(string localFilePath)
+        {
+            using (FileStream fileStream =
+                new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
+            {
+                return GetSha(fileStream, new SHA512CryptoServiceProvider());
+            }
         }
 
         #endregion
@@ -116,14 +204,19 @@ namespace EInfrastructure.Core.HelpCommon.Files
             byte[] retval = hashAlgorithm.ComputeHash(stream);
             stream.Close();
             return SecurityCommon.GetSha(retval, hashAlgorithm);
+        }
 
-            StringBuilder sc = new StringBuilder();
-            for (int i = 0; i < retval.Length; i++)
-            {
-                sc.Append(retval[i].ToString("X2"));
-            }
-
-            return sc.ToString();
+        /// <summary>
+        /// 得到sha系列加密信息
+        /// </summary>
+        /// <param name="fileStream"></param>
+        /// <param name="hashAlgorithm"></param>
+        /// <returns></returns>
+        private static string GetSha(FileStream fileStream, HashAlgorithm hashAlgorithm)
+        {
+            byte[] retval = hashAlgorithm.ComputeHash(fileStream);
+            fileStream?.Close();
+            return SecurityCommon.GetSha(retval, hashAlgorithm);
         }
 
         #endregion
@@ -160,7 +253,7 @@ namespace EInfrastructure.Core.HelpCommon.Files
                     break;
             }
 
-            return new EInfrastructure.Core.HelpCommon.Files.FileInfo
+            return new FileInfo
             {
                 Name = formFile.FileName,
                 ConditionCode = conditionCode
@@ -178,7 +271,7 @@ namespace EInfrastructure.Core.HelpCommon.Files
         /// <returns></returns>
         public static string[] GetFiles(string path)
         {
-            return System.IO.Directory.GetFiles(path);
+            return Directory.GetFiles(path);
         }
 
         /// <summary>
@@ -191,7 +284,7 @@ namespace EInfrastructure.Core.HelpCommon.Files
         public static string[] GetFiles(string path, string searchPattern,
             SearchOption searchOption = SearchOption.TopDirectoryOnly)
         {
-            return System.IO.Directory.GetFiles(path, searchPattern, searchOption);
+            return Directory.GetFiles(path, searchPattern, searchOption);
         }
 
         #endregion
@@ -222,7 +315,66 @@ namespace EInfrastructure.Core.HelpCommon.Files
         }
 
         #endregion
-        
+
+        #region 将文件转换为byte数组
+
+        #region 将文件转换成byte[]数组
+
+        /// <summary>
+        /// 将文件转换成byte[]数组
+        /// </summary>
+        /// <param name="localFilePath">文件路径文件名称</param>
+        /// <returns>byte[]数组</returns>
+        public static byte[] ConvertFileToByte(string localFilePath)
+        {
+            try
+            {
+                using (FileStream fs = new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
+                {
+                    byte[] byteArray = new byte[fs.Length];
+                    fs.Read(byteArray, 0, byteArray.Length);
+                    return byteArray;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        #endregion
+
+        #region 将byte[]数组保存成文件
+
+        /// <summary>
+        /// 将byte[]数组保存成文件
+        /// </summary>
+        /// <param name="byteArray">byte[]数组</param>
+        /// <param name="localFilePath">保存至硬盘的文件路径</param>
+        /// <returns></returns>
+        public static bool SaveByteToFile(byte[] byteArray, string localFilePath)
+        {
+            bool result = false;
+            try
+            {
+                using (FileStream fs = new FileStream(localFilePath, FileMode.OpenOrCreate, FileAccess.Write))
+                {
+                    fs.Write(byteArray, 0, byteArray.Length);
+                    result = true;
+                }
+            }
+            catch
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #endregion
+
         #region 获取文件内容
 
         /// <summary>
