@@ -44,15 +44,21 @@ namespace EInfrastructure.Core.Config.SerializeExtensions
         /// </summary>
         /// <param name="o"></param>
         /// <param name="format"></param>
+        /// <param name="action">委托方法</param>
         /// <returns></returns>
-        public string Serializer(object o, bool format = false)
+        public string Serializer(object o, bool format = false, Func<Exception, string> action = null)
         {
             try
             {
                 return _jsonProvider.Serializer(o, format);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
+                if (action != null)
+                {
+                    return action.Invoke(ex);
+                }
+
                 throw new System.Exception($"json序列化出错,序列化类型：{o.GetType().FullName}");
             }
         }
@@ -98,15 +104,21 @@ namespace EInfrastructure.Core.Config.SerializeExtensions
         /// </summary>
         /// <param name="s"></param>
         /// <param name="type"></param>
+        /// <param name="action">委托方法</param>
         /// <returns></returns>
-        public object Deserialize(string s, Type type)
+        public object Deserialize(string s, Type type, Func<Exception, object> action = null)
         {
             try
             {
                 return _jsonProvider.Deserialize(s, type);
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                if (action != null)
+                {
+                    return action.Invoke(ex);
+                }
+
                 throw new System.Exception($"json反序列化出错,待序列化的json字符串为：{s}");
             }
         }

@@ -84,7 +84,6 @@ namespace EInfrastructure.Core.MySql
         /// 执行Query
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="dbContext"></param>
         /// <param name="sql"></param>
         /// <returns></returns>
         public List<T> SqlQuery<T>(string sql)
@@ -128,7 +127,6 @@ namespace EInfrastructure.Core.MySql
         /// <summary>
         /// 执行Sql命令
         /// </summary>
-        /// <param name="dbContext"></param>
         /// <param name="sql"></param>
         /// <returns></returns>
         public int ExecuteSql(string sql)
