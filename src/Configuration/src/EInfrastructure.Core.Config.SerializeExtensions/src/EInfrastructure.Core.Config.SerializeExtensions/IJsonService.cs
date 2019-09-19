@@ -16,8 +16,9 @@ namespace EInfrastructure.Core.Config.SerializeExtensions
         /// </summary>
         /// <param name="o"></param>
         /// <param name="format"></param>
+        /// <param name="action">委托方法</param>
         /// <returns></returns>
-        string Serializer(object o, bool format = false);
+        string Serializer(object o, bool format = false, Func<Exception,string> action = null);
 
         /// <summary>
         /// json反序列化
@@ -35,7 +36,8 @@ namespace EInfrastructure.Core.Config.SerializeExtensions
         /// </summary>
         /// <param name="s"></param>
         /// <param name="type"></param>
+        /// <param name="action">委托方法</param>
         /// <returns></returns>
-        object Deserialize(string s, Type type);
+        object Deserialize(string s, Type type, Func<Exception, object> action = null);
     }
 }
