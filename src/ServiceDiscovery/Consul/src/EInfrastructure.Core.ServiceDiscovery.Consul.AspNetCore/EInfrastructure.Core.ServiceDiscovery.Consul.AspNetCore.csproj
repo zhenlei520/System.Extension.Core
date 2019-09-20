@@ -20,8 +20,8 @@
       <DocumentationFile>bin\Release\EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Consul">
-            <Version>0.7.2.6</Version>
+        <PackageReference Include="Consul.DotNet">
+          <Version>0.8.2.7</Version>
         </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.Mvc">
             <Version>2.1.1</Version>
