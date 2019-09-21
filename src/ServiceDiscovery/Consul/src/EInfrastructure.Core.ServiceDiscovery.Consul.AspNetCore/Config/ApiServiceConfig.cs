@@ -32,5 +32,15 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config
         /// 标签信息（非必填）
         /// </summary>
         public string[] Tags { get; set; } = null;
+        
+        /// <summary>
+        /// Providing a datacenter overwrites the DC provided by the Config
+        /// </summary>
+        public string Datacenter { get; set; }
+
+        /// <summary>
+        /// Token is used to provide a per-request ACL token which overrides the agent's default token.
+        /// </summary>
+        public string Token { get; set; }
     }
 }
