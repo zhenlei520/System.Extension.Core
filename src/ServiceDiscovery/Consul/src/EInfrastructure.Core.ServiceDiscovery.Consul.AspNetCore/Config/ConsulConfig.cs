@@ -1,12 +1,14 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Interface.IOC;
+
 namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config
 {
     /// <summary>
     /// Consul配置文件
     /// </summary>
-    public class ConsulConfig
+    public class ConsulConfig : ISingleInstance
     {
         /// <summary>
         /// Consul 服务器地址
