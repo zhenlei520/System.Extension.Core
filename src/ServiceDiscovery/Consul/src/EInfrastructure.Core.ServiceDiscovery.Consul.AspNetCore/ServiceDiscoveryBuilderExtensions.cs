@@ -9,6 +9,7 @@ using EInfrastructure.Core.Validation.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
 {
@@ -27,7 +28,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// <returns></returns>
         public static IApplicationBuilder UseConsul(this IApplicationBuilder app, IApplicationLifetime lifetime)
         {
-            var consulConfig = app.ApplicationServices.GetService<ConsulConfig>();
+            var consulConfig = app.ApplicationServices.GetService<IOptions<ConsulConfig>>().Value;
             new ApiServiceConfigValidator().Validate(consulConfig.ApiServiceConfig).Check();
             new ApiServiceHealthyConfigValidator().Validate(consulConfig.ApiServiceHealthyConfig).Check();
 
