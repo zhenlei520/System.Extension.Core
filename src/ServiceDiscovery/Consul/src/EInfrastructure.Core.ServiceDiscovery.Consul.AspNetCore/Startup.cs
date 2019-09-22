@@ -53,7 +53,7 @@ namespace EInfrastructure.Core.Consul.AspNetCore
         /// 加载Consul服务
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="action">Consul 配置</param>
+        /// <param name="configuration"></param>
         /// <returns></returns>
         public static IServiceCollection AddConsul(this IServiceCollection services,
             IConfiguration configuration)
