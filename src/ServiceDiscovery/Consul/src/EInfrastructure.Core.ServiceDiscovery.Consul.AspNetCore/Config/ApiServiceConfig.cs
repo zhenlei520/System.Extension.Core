@@ -1,12 +1,14 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Configuration.Ioc;
+
 namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config
 {
     /// <summary>
     /// api服务配置
     /// </summary>
-    public class ApiServiceConfig
+    public class ApiServiceConfig : ISingleInstance
     {
         /// <summary>
         /// 服务id（非必填）
