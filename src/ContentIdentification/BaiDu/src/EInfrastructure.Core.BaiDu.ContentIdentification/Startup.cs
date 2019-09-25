@@ -20,6 +20,8 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         public static IServiceCollection AddBaiduContentIdentification(this IServiceCollection services,
             Action<BaiDuConfig> action = null)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             services.Configure(action);
             return services;
         }

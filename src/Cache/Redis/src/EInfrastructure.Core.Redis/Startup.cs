@@ -19,6 +19,8 @@ namespace EInfrastructure.Core.Redis
         /// <param name="services"></param>
         public static IServiceCollection AddRedis(this IServiceCollection services)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration) service.ImplementationInstance;
             return AddRedis(services, configuration);
@@ -36,6 +38,8 @@ namespace EInfrastructure.Core.Redis
         public static IServiceCollection AddRedis(this IServiceCollection services,
             Action<RedisConfig> action)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             services.Configure(action);
             return services;
         }
@@ -48,10 +52,12 @@ namespace EInfrastructure.Core.Redis
         /// 加载Redis服务
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="action"></param>
+        /// <param name="configuration"></param>
         public static IServiceCollection AddRedis(this IServiceCollection services,
             IConfiguration configuration)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             services.Configure<RedisConfig>(configuration);
             return services;
         }

@@ -16,7 +16,7 @@ namespace EInfrastructure.Core.AutoFac
     public class AutofacAutoRegister
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="services"></param>
         /// <param name="action"></param>
@@ -24,6 +24,8 @@ namespace EInfrastructure.Core.AutoFac
         public virtual IServiceProvider Build(IServiceCollection services,
             Action<ContainerBuilder> action)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             var builder = new ContainerBuilder();
             var assemblys = AppDomain.CurrentDomain.GetAssemblies().ToArray();
 
