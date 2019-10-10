@@ -22,6 +22,8 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <param name="services"></param>
         public static IServiceCollection AddAliDaYu(this IServiceCollection services)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration) service.ImplementationInstance;
             return AddAliDaYu(services, configuration);
@@ -39,6 +41,8 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public static IServiceCollection AddAliDaYu(this IServiceCollection services,
             Action<AliSmsConfig> action)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             services.Configure(action);
             return services;
         }
@@ -55,6 +59,8 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public static IServiceCollection AddAliDaYu(this IServiceCollection services,
             IConfiguration configuration)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             services.Configure<AliSmsConfig>(configuration);
             return services;
         }

@@ -16,6 +16,8 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <param name="services"></param>
         public static IServiceCollection AddSystemsCompress(this IServiceCollection services)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             return services;
         }
     }

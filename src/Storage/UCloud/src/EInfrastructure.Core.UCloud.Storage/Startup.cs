@@ -23,6 +23,8 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <param name="configuration"></param>
         public static IServiceCollection AddUCloudStorage(this IServiceCollection services)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration) service.ImplementationInstance;
             return AddUCloudStorage(services, configuration);
@@ -40,6 +42,8 @@ namespace EInfrastructure.Core.UCloud.Storage
         public static IServiceCollection AddUCloudStorage(this IServiceCollection services,
             Action<UCloudStorageConfig> action)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             services.Configure(action);
             return services;
         }
@@ -56,6 +60,8 @@ namespace EInfrastructure.Core.UCloud.Storage
         public static IServiceCollection AddUCloudStorage(this IServiceCollection services,
             IConfiguration configuration)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             services.Configure<UCloudStorageConfig>(configuration);
             return services;
         }

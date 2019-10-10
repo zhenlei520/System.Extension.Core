@@ -23,6 +23,8 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// <returns></returns>
         public static IServiceCollection AddConsul(this IServiceCollection services)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration) service.ImplementationInstance;
             return AddConsul(services, configuration);
@@ -41,6 +43,8 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         public static IServiceCollection AddConsul(this IServiceCollection services,
             Action<ConsulConfig> action)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             services.Configure(action);
             return services;
         }
@@ -53,11 +57,13 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// 加载Consul服务
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="action">Consul 配置</param>
+        /// <param name="configuration">Consul 配置</param>
         /// <returns></returns>
         public static IServiceCollection AddConsul(this IServiceCollection services,
             IConfiguration configuration)
         {
+            EInfrastructure.Core.StartUp.Run();
+
             services.Configure<ConsulConfig>(configuration);
             return services;
         }
