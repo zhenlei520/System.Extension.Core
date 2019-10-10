@@ -1,25 +1,29 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Newtonsoft.Json;
+using EInfrastructure.Core.AspNetCore.Api.Common;
 
 namespace EInfrastructure.Core.AspNetCore.Api
 {
     /// <summary>
-    /// 正常响应信息
+    /// 接口信息
     /// </summary>
-    public class ApiResult
+    public class ApiResult : ApiResult<int>
     {
         /// <summary>
-        /// 响应码
+        ///
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public virtual int Code { get; set; } = 200;
+        public ApiResult() : base()
+        {
+        }
 
         /// <summary>
-        /// 响应信息
+        ///
         /// </summary>
-        [JsonProperty(PropertyName = "response")]
-        public virtual object Data { get; set; } = new { };
+        /// <param name="code"></param>
+        /// <param name="data"></param>
+        public ApiResult(int code = 200, object data = null) : base(code, data)
+        {
+        }
     }
 }
