@@ -381,17 +381,18 @@ namespace EInfrastructure.Core.HelpCommon.Files
         /// 获取文件内容
         /// </summary>
         /// <param name="filePath">文件地址</param>
+        /// <param name="encoding">编码格式,默认为Encoding.Default</param>
         /// <returns></returns>
-        public static string GetFileContent(string filePath)
+        public static string GetFileContent(string filePath, Encoding encoding = null)
         {
             string result = "";
             try
             {
                 using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    using (StreamReader reader = new StreamReader(fs))
+                    using (StreamReader reader = new StreamReader(fs, encoding ?? Encoding.Default))
                     {
-                        result = reader.ReadLine();
+                        result = reader.ReadToEnd();
                     }
                 }
             }
