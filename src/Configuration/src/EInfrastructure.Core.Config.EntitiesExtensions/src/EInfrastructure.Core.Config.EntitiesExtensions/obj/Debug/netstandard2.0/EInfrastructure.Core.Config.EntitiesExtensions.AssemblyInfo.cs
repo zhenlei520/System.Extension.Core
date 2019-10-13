@@ -12,7 +12,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright ©zhenlei520 2019")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("dotnet core entities configuration")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("2.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0-beta-032")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0-beta-034")]
 [assembly: System.Reflection.AssemblyProductAttribute("EInfrastructure.Core.Config.EntitiesExtensions")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EInfrastructure.Core.Config.EntitiesExtensions")]
 [assembly: System.Reflection.AssemblyVersionAttribute("2.0.0.0")]
