@@ -16,7 +16,7 @@ namespace EInfrastructure.Core.AspNetCore.Api
         /// <param name="code"></param>
         /// <param name="msg"></param>
         /// <param name="extend"></param>
-        public ApiErrResult(int code, string msg, object extend = null)
+        public ApiErrResult(int code, string msg, object extend = null) : base(code, msg, extend)
         {
         }
     }
