@@ -12,7 +12,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright ©zhenlei520 2018")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("dotnet core autofac自动注入")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("2.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0-beta-034")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0-beta-035")]
 [assembly: System.Reflection.AssemblyProductAttribute("EInfrastructure.Core.AutoFac.MySql")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EInfrastructure.Core.AutoFac.MySql")]
 [assembly: System.Reflection.AssemblyVersionAttribute("2.0.0.0")]
