@@ -23,8 +23,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator
             RuleFor(x => x.SecretKey).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
                 .WithMessage("SecretKey信息异常");
 
-            RuleFor(x => (int) x.Zones)
-                .Must(enums => enums.IsExist(typeof(ZoneEnum))).WithMessage("Zones 信息异常");
+            RuleFor(x => (int) x.Zones).IsInEnum().WithMessage("Zones 信息异常");
 
             RuleFor(x => x.Bucket).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
                 .WithMessage("Bucket信息异常");
