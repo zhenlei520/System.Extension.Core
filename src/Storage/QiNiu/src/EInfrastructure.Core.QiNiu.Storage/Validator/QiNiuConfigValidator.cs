@@ -20,8 +20,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator
                 .WithMessage("AccessKey信息异常");
             RuleFor(x => x.SecretKey).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
                 .WithMessage("SecretKey信息异常");
-            RuleFor(x => x.Zones).Cascade(CascadeMode.StopOnFirstFailure)
-                .Must(item => !((int) item).IsExist(typeof(ZoneEnum))).WithMessage("AccessKey Secret信息异常");
+            RuleFor(x => x.Zones).Cascade(CascadeMode.StopOnFirstFailure).IsInEnum().WithMessage("Zones信息配置异常");
             RuleFor(x => x.Bucket).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
                 .WithMessage("Bucket信息异常");
 
