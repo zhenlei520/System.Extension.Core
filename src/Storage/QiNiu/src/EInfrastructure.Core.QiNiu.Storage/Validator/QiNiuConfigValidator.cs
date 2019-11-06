@@ -18,21 +18,22 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator
     {
         public QiNiuConfigValidator()
         {
-            RuleFor(x => x.AccessKey).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
+            CascadeMode = CascadeMode.StopOnFirstFailure;;
+            RuleFor(x => x.AccessKey).NotNull()
                 .WithMessage("AccessKey信息异常");
-            RuleFor(x => x.SecretKey).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
+            RuleFor(x => x.SecretKey).NotNull()
                 .WithMessage("SecretKey信息异常");
 
             RuleFor(x => (int) x.Zones).IsInEnum().WithMessage("Zones 信息异常");
 
-            RuleFor(x => x.Bucket).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
+            RuleFor(x => x.Bucket).NotNull()
                 .WithMessage("Bucket信息异常");
 
-            RuleFor(x => x.CallbackBody).Cascade(CascadeMode.StopOnFirstFailure)
+            RuleFor(x => x.CallbackBody)
                 .Must(item => !string.IsNullOrEmpty(item)).WithMessage("CallbackBody信息异常")
                 .When(item => !string.IsNullOrEmpty(item.CallbackUrl));
 
-            RuleFor(x => (int) x.CallbackBodyType).Cascade(CascadeMode.StopOnFirstFailure)
+            RuleFor(x => (int) x.CallbackBodyType)
                 .Must(x => Enumeration.GetAll<CallbackBodyType>().Any(y => y.Id == x)).WithMessage(
                     "CallbackBodyType信息异常")
                 .When(item => !string.IsNullOrEmpty(item.CallbackUrl));
