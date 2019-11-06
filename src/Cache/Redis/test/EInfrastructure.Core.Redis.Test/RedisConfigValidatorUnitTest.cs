@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Redis.Config;
-using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
+using EInfrastructure.Core.Redis.Validator;
 using EInfrastructure.Core.Validation.Common;
 using Xunit;
 

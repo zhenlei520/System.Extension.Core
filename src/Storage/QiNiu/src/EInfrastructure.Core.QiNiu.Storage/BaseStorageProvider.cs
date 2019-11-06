@@ -6,7 +6,7 @@ using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.Interface.Storage.Config;
 using EInfrastructure.Core.Interface.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Config;
-using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
+using EInfrastructure.Core.QiNiu.Storage.Validator;
 using EInfrastructure.Core.Validation.Common;
 using Qiniu.Storage;
 using Qiniu.Util;

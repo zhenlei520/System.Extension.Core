@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.DaYu.Common;
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.AliYun.DaYu.Model;
+using EInfrastructure.Core.AliYun.DaYu.Validator;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Serialization;
 using EInfrastructure.Core.HelpCommon.Systems;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Sms;
 using EInfrastructure.Core.Interface.Sms.Dto;
-using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
 using EInfrastructure.Core.Validation.Common;
 using RestSharp;
 
