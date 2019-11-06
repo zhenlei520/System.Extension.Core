@@ -37,13 +37,28 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="query"></param>
-        /// <param name="pageSize">每页多少条数据</param>
+        /// <param name="pageSize">每页多少条数据（页大小须等于-1或者大于0）</param>
         /// <param name="pageIndex">当前页</param>
         /// <returns></returns>
         public static IQueryable<T> QueryPager<T>(this IQueryable<T> query, int pageSize, int pageIndex)
         {
+            if (pageSize <= 0 && pageSize != -1)
+            {
+                throw new BusinessException("页大小设置有误");
+            }
+
+            if (pageIndex - 1 < 0 && pageSize != -1)
+            {
+                throw new BusinessException("页码必须大于等于1");
+            }
+
+            if (pageIndex - 1 >= 0 && pageSize > 0)
+            {
+                query = query.Skip((pageIndex - 1) * pageSize);
+            }
             if (pageSize > 0)
-                return query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+                query = query.Take(pageSize);
+
             return query;
         }
 
@@ -95,20 +110,23 @@ namespace EInfrastructure.Core.Data.EntitiesExtension
                 throw new BusinessException("页大小必须为正数");
             }
 
+            if (pageIndex - 1 < 0 && pageSize != -1)
+            {
+                throw new BusinessException("页码必须大于等于1");
+            }
+
             var totalCount = query.Count() * 1.0d;
-            int pageMax = 1;
             if (pageSize != -1)
             {
-                pageMax = Math.Ceiling(totalCount / pageSize).ConvertToInt(1);
+                var pageMax = Math.Ceiling(totalCount / pageSize).ConvertToInt(1);
+                for (int index = pageIndex; index <= pageMax; index++)
+                {
+                    action(query.Skip((index - 1) * pageSize).Take(pageSize).ToList());
+                }
             }
             else
             {
-                pageSize = totalCount.ConvertToInt(0) * -1;
-            }
-
-            for (int index = pageIndex; index <= pageMax; index++)
-            {
-                action(query.Skip((index - 1) * pageSize).Take(pageSize).ToList());
+                action(query.ToList());
             }
         }
 

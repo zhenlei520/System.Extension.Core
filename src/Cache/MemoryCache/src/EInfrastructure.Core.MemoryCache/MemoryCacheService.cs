@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Systems;
-using EInfrastructure.Core.Interface;
 using EInfrastructure.Core.Interface.Cache;
 using EInfrastructure.Core.Interface.IOC;
 using Microsoft.Extensions.Caching.Memory;
@@ -28,7 +27,7 @@ namespace EInfrastructure.Core.MemoryCache
         {
             _cache = cache;
         }
-        
+
         #region 得到实现类唯一标示
 
         /// <summary>
@@ -330,8 +329,9 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="dataKey"></param>
         /// <param name="t"></param>
         /// <param name="second"></param>
+        /// <param name="isSetHashKeyExpire">false：设置key的过期时间，true：设置hashkey的过期时间，默认设置的为HashKey的过期时间。</param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, string dataKey, T t, long second = -1L)
+        public bool HashSet<T>(string key, string dataKey, T t, long second = -1L, bool isSetHashKeyExpire = true)
         {
             return false;
         }
@@ -347,8 +347,28 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="key"></param>
         /// <param name="kvalues"></param>
         /// <param name="second">秒</param>
+        /// <param name="isSetHashKeyExpire">false：设置key的过期时间，true：设置hashkey的过期时间，默认设置的为HashKey的过期时间。</param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L)
+        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L,
+            bool isSetHashKeyExpire = true)
+        {
+            return false;
+        }
+
+        #endregion
+
+        #region 存储数据到hash表
+
+        /// <summary>
+        /// 存储数据到hash表
+        /// </summary>
+        /// <param name="kValues"></param>
+        /// <param name="second"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="isSetHashKeyExpire">false：设置key的过期时间，true：设置hashkey的过期时间，默认设置的为HashKey的过期时间。</param>
+        /// <returns></returns>
+        public bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1,
+            bool isSetHashKeyExpire = true)
         {
             return false;
         }
@@ -364,6 +384,21 @@ namespace EInfrastructure.Core.MemoryCache
         /// <param name="dataKey"></param>
         /// <returns></returns>
         public bool HashDelete(string key, string dataKey)
+        {
+            return false;
+        }
+
+        #endregion
+
+        #region 清除过期的hashkey(自定义hashkey删除)
+
+        
+        /// <summary>
+        /// 清除过期的hashkey(自定义hashkey删除)
+        /// </summary>
+        /// <param name="count">指定清除指定数量的已过期的hashkey</param>
+        /// <returns></returns>
+        public bool ClearOverTimeHashKey(long count = 1000l)
         {
             return false;
         }
@@ -566,6 +601,7 @@ namespace EInfrastructure.Core.MemoryCache
         {
             throw new NotImplementedException();
         }
+
         #endregion
 
         #region 为数字增长val
@@ -916,9 +952,9 @@ namespace EInfrastructure.Core.MemoryCache
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
-        public Dictionary<string, string> SortedSetRangeByRankAndOverTime(long count = 1000L)
+        public List<ValueTuple<string, string, string, string>> SortedSetRangeByRankAndOverTime(long count = 1000)
         {
-            return default(Dictionary<string, string>);
+            return default(List<ValueTuple<string, string, string, string>>);
         }
 
         #endregion
@@ -1063,6 +1099,7 @@ namespace EInfrastructure.Core.MemoryCache
         {
             throw new NotImplementedException();
         }
+
         #endregion
 
         #region 检查给定 key 是否存在

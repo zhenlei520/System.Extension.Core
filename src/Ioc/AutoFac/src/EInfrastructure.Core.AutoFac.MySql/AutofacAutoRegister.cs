@@ -25,6 +25,7 @@ namespace EInfrastructure.Core.AutoFac.MySql
         {
             return base.Build(services, (builder) =>
             {
+                EInfrastructure.Core.MySql.Startup.Load();
                 builder.RegisterGeneric(typeof(QueryBase<,>)).As(typeof(IQuery<,>)).PropertiesAutowired()
                     .InstancePerLifetimeScope();
 

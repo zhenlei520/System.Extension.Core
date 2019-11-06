@@ -50,7 +50,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
             }
             catch (System.Exception)
             {
-                throw new System.Exception($"json序列化出错,jsonMode:{1},序列化类型：{o.GetType().FullName}");
+                throw new System.Exception($"json序列化出错,序列化类型：{o.GetType().FullName}");
             }
         }
 
@@ -77,7 +77,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
             {
                 if (action == null)
                 {
-                    throw new System.Exception($"json反序列化出错,jsonMode:{1},内容：{s}");
+                    throw new System.Exception($"json反序列化出错,待序列化的json字符串为：{s}");
                 }
 
                 action.Invoke(ex);
@@ -99,7 +99,7 @@ namespace EInfrastructure.Core.HelpCommon.Serialization
             }
             catch (System.Exception)
             {
-                throw new System.Exception($"json反序列化出错,jsonMode:{1},内容：{s}");
+                throw new System.Exception($"json反序列化出错,待序列化的json字符串为：{s}");
             }
         }
     }

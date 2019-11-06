@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.Interface.Cache
         string GetIdentify();
 
         #endregion
-        
+
         #region String
 
         #region 同步方法
@@ -154,8 +154,9 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="dataKey"></param>
         /// <param name="t"></param>
         /// <param name="second">秒</param>
+        /// <param name="isSetHashKeyExpire">false：设置key的过期时间，true：设置hashkey的过期时间，默认设置的为HashKey的过期时间。</param>
         /// <returns></returns>
-        bool HashSet<T>(string key, string dataKey, T t, long second = -1L);
+        bool HashSet<T>(string key, string dataKey, T t, long second = -1L, bool isSetHashKeyExpire = true);
 
         /// <summary>
         ///  存储数据到hash表
@@ -164,9 +165,28 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="key"></param>
         /// <param name="kvalues"></param>
         /// <param name="second">秒</param>
+        /// <param name="isSetHashKeyExpire">false：设置key的过期时间，true：设置hashkey的过期时间，默认设置的为HashKey的过期时间。</param>
         /// <returns></returns>
-        bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L);
+        bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L, bool isSetHashKeyExpire = true);
 
+        /// <summary>
+        /// 存储数据到hash表
+        /// </summary>
+        /// <param name="kValues"></param>
+        /// <param name="second"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="isSetHashKeyExpire">false：设置key的过期时间，true：设置hashkey的过期时间，默认设置的为HashKey的过期时间。</param>
+        /// <returns></returns>
+        bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1,
+            bool isSetHashKeyExpire = true);
+
+        /// <summary>
+        /// 清除过期的hashkey(自定义hashkey删除)
+        /// </summary>
+        /// <param name="count">指定清除指定数量的已过期的hashkey</param>
+        /// <returns></returns>
+        bool ClearOverTimeHashKey(long count = 1000l);
+        
         /// <summary>
         /// 移除hash中的某值
         /// </summary>
@@ -200,7 +220,7 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="dataKey"></param>
         /// <returns></returns>
         string HashGet(string key, string dataKey);
-        
+
         /// <summary>
         /// 从hash表获取数据
         /// </summary>
@@ -289,7 +309,7 @@ namespace EInfrastructure.Core.Interface.Cache
         /// <param name="dataKey"></param>
         /// <returns></returns>
         Task<string> HashGetAsync(string key, string dataKey);
-        
+
         /// <summary>
         /// 为数字增长val
         /// </summary>
@@ -475,10 +495,11 @@ namespace EInfrastructure.Core.Interface.Cache
 
         /// <summary>
         /// 获取已过期的hashKey
+        /// 其中Item1为SortSet的Key，Item2为SortSet的Value,Item3为HashSet的Key，Item4为HashSet的HashKey
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
-        Dictionary<string, string> SortedSetRangeByRankAndOverTime(long count = 1000L);
+        List<ValueTuple<string, string, string, string>> SortedSetRangeByRankAndOverTime(long count = 1000);
 
         /// <summary>
         /// 降序获取指定索引的集合
@@ -572,8 +593,8 @@ namespace EInfrastructure.Core.Interface.Cache
         /// </summary>
         /// <param name="keys">待删除的Key集合，不含prefix前辍RedisHelper.Name</param>
         /// <returns>返回删除的数量</returns>
-        long Remove(params string[] keys);        
-        
+        long Remove(params string[] keys);
+
         /// <summary>
         /// 检查给定 key 是否存在
         /// </summary>

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.Tbk.Config;
 using EInfrastructure.Core.AliYun.Tbk.Respose;
-using EInfrastructure.Core.AliYun.Tbk.Respose.Success;
 using EInfrastructure.Core.HelpCommon.Serialization;
 using RestSharp;
 

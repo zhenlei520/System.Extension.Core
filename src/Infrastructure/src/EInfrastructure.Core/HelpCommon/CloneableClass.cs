@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -34,12 +35,12 @@ namespace EInfrastructure.Core.HelpCommon
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
         /// <returns></returns>
-        public T DeepClone<T>(T t)
+        public T DeepClone<T>(T obj)
         {
             using (Stream objectStream = new MemoryStream())
             {
                 IFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(objectStream, t);
+                formatter.Serialize(objectStream, obj);
                 objectStream.Seek(0, SeekOrigin.Begin);
                 return (T) formatter.Deserialize(objectStream);
             }

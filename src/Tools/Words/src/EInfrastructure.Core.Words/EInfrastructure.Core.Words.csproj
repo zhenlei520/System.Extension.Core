@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <Version>1.4.0-beta-005</Version>
+        <Version>1.4.0-beta-023</Version>
         <Authors>zhenlei520</Authors>
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <Company>zhenlei520</Company>
@@ -24,49 +24,69 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\AutomationConfiguration\src\EInfrastructure.Core.AutomationConfiguration\EInfrastructure.Core.AutomationConfiguration.csproj" />
-      <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj" />
+        <ProjectReference Include="..\..\..\..\AutomationConfiguration\src\EInfrastructure.Core.AutomationConfiguration\EInfrastructure.Core.AutomationConfiguration.csproj"/>
+        <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="Dict\Text\initial.txt" />
         <Content Include="Dict\Text\initial.txt">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <PackageFlatten>true</PackageFlatten>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Dict\Text\simplified.txt" />
         <Content Include="Dict\Text\simplified.txt">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <PackageFlatten>true</PackageFlatten>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Dict\Text\specialNumber.txt" />
         <Content Include="Dict\Text\specialNumber.txt">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <PackageFlatten>true</PackageFlatten>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Dict\Text\traditional.txt" />
         <Content Include="Dict\Text\traditional.txt">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <PackageFlatten>true</PackageFlatten>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Dict\Text\transcodingNumber.txt" />
         <Content Include="Dict\Text\transcodingNumber.txt">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <PackageFlatten>true</PackageFlatten>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Dict\PinYin\pinyinData.txt" />
         <Content Include="Dict\PinYin\pinyinData.txt">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <PackageFlatten>true</PackageFlatten>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Dict\PinYin\pinyinIndex.txt" />
         <Content Include="Dict\PinYin\pinyinIndex.txt">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <PackageFlatten>true</PackageFlatten>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Dict\PinYin\pinyinName.txt" />
         <Content Include="Dict\PinYin\pinyinName.txt">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <PackageFlatten>true</PackageFlatten>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Dict\PinYin\wordPinyin.txt" />
         <Content Include="Dict\PinYin\wordPinyin.txt">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <PackageFlatten>true</PackageFlatten>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Dict\PinYin\pinyinWord.txt" />
         <Content Include="Dict\PinYin\pinyinWord.txt">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <PackageFlatten>true</PackageFlatten>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
