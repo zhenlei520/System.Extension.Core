@@ -4,31 +4,34 @@
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Interface.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Config;
-using EInfrastructure.Core.QiNiu.Storage.Enum;
 using FluentValidation;
 
-namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator
+namespace EInfrastructure.Core.QiNiu.Storage.Validator
 {
     /// <summary>
     /// 七牛配置信息校验
     /// </summary>
     public class QiNiuConfigValidator : AbstractValidator<QiNiuStorageConfig>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public QiNiuConfigValidator()
         {
-            RuleFor(x => x.AccessKey).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
+            CascadeMode = CascadeMode.StopOnFirstFailure;
+
+            RuleFor(x => x.AccessKey).NotNull()
                 .WithMessage("AccessKey信息异常");
-            RuleFor(x => x.SecretKey).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
+            RuleFor(x => x.SecretKey).NotNull()
                 .WithMessage("SecretKey信息异常");
-            RuleFor(x => x.Zones).Cascade(CascadeMode.StopOnFirstFailure)
-                .Must(item => !((int) item).IsExist(typeof(ZoneEnum))).WithMessage("AccessKey Secret信息异常");
-            RuleFor(x => x.Bucket).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
+            RuleFor(x => x.Zones).IsInEnum().WithMessage("Zones信息配置异常");
+            RuleFor(x => x.Bucket).NotNull()
                 .WithMessage("Bucket信息异常");
 
-            RuleFor(x => x.CallbackBody).Cascade(CascadeMode.StopOnFirstFailure)
+            RuleFor(x => x.CallbackBody)
                 .Must(string.IsNullOrEmpty).WithMessage("CallbackBody信息异常")
                 .When(item => !string.IsNullOrEmpty(item.CallbackUrl));
-            RuleFor(x => x.CallbackBodyType).Cascade(CascadeMode.StopOnFirstFailure)
+            RuleFor(x => x.CallbackBodyType)
                 .Must(item => !((int) item).IsExist(typeof(CallbackBodyTypeEnum))).WithMessage("CallbackBodyType信息异常")
                 .When(item => !string.IsNullOrEmpty(item.CallbackUrl));
         }

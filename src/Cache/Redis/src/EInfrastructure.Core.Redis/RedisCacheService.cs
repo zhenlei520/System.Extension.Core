@@ -13,7 +13,7 @@ using EInfrastructure.Core.Interface.Cache;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Redis.Common;
 using EInfrastructure.Core.Redis.Config;
-using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
+using EInfrastructure.Core.Redis.Validator;
 using EInfrastructure.Core.Validation.Common;
 
 namespace EInfrastructure.Core.Redis
