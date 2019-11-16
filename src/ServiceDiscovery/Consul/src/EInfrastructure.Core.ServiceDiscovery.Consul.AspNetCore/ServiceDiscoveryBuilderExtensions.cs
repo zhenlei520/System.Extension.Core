@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using Consul;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
@@ -28,7 +29,27 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// <returns></returns>
         public static IApplicationBuilder UseConsul(this IApplicationBuilder app, IApplicationLifetime lifetime)
         {
-            var consulConfig = app.ApplicationServices.GetService<IOptions<ConsulConfig>>().Value;
+            var consulConfigs = app.ApplicationServices.GetService<IOptions<List<ConsulConfig>>>().Value;
+            if (consulConfigs.Count == 0)
+            {
+                consulConfigs=new List<ConsulConfig>()
+                {
+                    app.ApplicationServices.GetService<IOptions<ConsulConfig>>().Value
+                };
+            }
+
+            consulConfigs.ForEach(consulConfig => { consulConfig.UseConsul(lifetime); });
+            return app;
+        }
+
+        /// <summary>
+        /// 服务注册
+        /// </summary>
+        /// <param name="consulConfig">配置信息</param>
+        /// <param name="lifetime"></param>
+        /// <returns></returns>
+        private static void UseConsul(this ConsulConfig consulConfig, IApplicationLifetime lifetime)
+        {
             new ApiServiceConfigValidator().Validate(consulConfig.ApiServiceConfig).Check();
             new ApiServiceHealthyConfigValidator().Validate(consulConfig.ApiServiceHealthyConfig).Check();
 
@@ -72,7 +93,6 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
                     ? new[] {$"urlprefix-/{consulConfig.ApiServiceConfig.Name}"}
                     : consulConfig.ApiServiceConfig.Tags //添加 urlprefix-/servicename 格式的 tag 标签，以便 Fabio 识别
             };
-
             consulClient.Agent.ServiceRegister(registration)
                 .Wait(); //服务启动时注册，内部实现其实就是使用 Consul API 进行注册（HttpClient发起）
 
@@ -80,8 +100,6 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
             {
                 consulClient.Agent.ServiceDeregister(registration.ID).Wait(); //服务停止时取消注册
             });
-
-            return app;
         }
 
         #endregion
