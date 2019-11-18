@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config;
 using Microsoft.Extensions.Configuration;
@@ -45,6 +46,19 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
             return services;
         }
 
+        /// <summary>
+        /// 加载Consul服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action">Consul 配置</param>
+        /// <returns></returns>
+        public static IServiceCollection AddConsul(this IServiceCollection services,
+            Action<List<ConsulConfig>> action)
+        {
+            services.Configure(action);
+            return services;
+        }
+
         #endregion
 
         #region 加载Consul服务
@@ -53,7 +67,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// 加载Consul服务
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="configuration"></param>
+        /// <param name="configuration">Consul 配置</param>
         /// <returns></returns>
         public static IServiceCollection AddConsul(this IServiceCollection services,
             IConfiguration configuration)
