@@ -67,16 +67,17 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public bool Send(List<string> phoneNumbers, string templateCode, object content,
             Action<SendSmsLoseDto> loseAction = null, string smsConfigJson = "")
         {
-            Dictionary<string, string> commonParam = Util.BuildCommonParam(GetSmsConfig(smsConfigJson).AccessKey);
+            var smsConfig = GetSmsConfig(smsConfigJson);
+            Dictionary<string, string> commonParam = Util.BuildCommonParam(smsConfig.AccessKey);
             commonParam.Add("Action", "SendSms");
             commonParam.Add("Version", "2017-05-25");
             commonParam.Add("RegionId", "cn-hangzhou");
             commonParam.Add("PhoneNumbers", phoneNumbers.ConvertListToString(','));
-            commonParam.Add("SignName", GetSmsConfig(smsConfigJson).SignName);
+            commonParam.Add("SignName", smsConfig.SignName);
             commonParam.Add("TemplateCode", templateCode);
             commonParam.Add("TemplateParam", _jsonProvider.Serializer(content));
 
-            string sign = Util.CreateSign(commonParam, GetSmsConfig(smsConfigJson).EncryptionKey);
+            string sign = Util.CreateSign(commonParam, smsConfig.EncryptionKey);
             commonParam.Add("Signature", sign);
             RestRequest request = new RestRequest(Method.GET);
             foreach (var key in commonParam.Keys)

@@ -13,11 +13,12 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator
     {
         public ApiServiceConfigValidator()
         {
-            RuleFor(x => x.Name).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
+            CascadeMode = CascadeMode.StopOnFirstFailure;
+            RuleFor(x => x.Name).NotNull()
                 .WithMessage("服务名称配置异常");
-            RuleFor(x => x.Ip).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
+            RuleFor(x => x.Ip).NotNull()
                 .WithMessage("服务器ip配置异常");
-            RuleFor(x => x.Port).Cascade(CascadeMode.StopOnFirstFailure).NotEqual(0)
+            RuleFor(x => x.Port).NotEqual(0)
                 .WithMessage("服务器端口配置异常");
         }
     }

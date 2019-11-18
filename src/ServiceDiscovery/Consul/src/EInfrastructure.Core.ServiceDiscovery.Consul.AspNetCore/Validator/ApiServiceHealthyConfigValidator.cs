@@ -13,7 +13,9 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator
     {
         public ApiServiceHealthyConfigValidator()
         {
-            RuleFor(x => x.CheckApi).Cascade(CascadeMode.StopOnFirstFailure).NotNull()
+            CascadeMode = CascadeMode.StopOnFirstFailure;
+
+            RuleFor(x => x.CheckApi).NotNull()
                 .WithMessage("校验api不能为空");
         }
     }
