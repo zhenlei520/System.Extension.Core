@@ -8,7 +8,7 @@ namespace EInfrastructure.Core.Config.StorageExtensions.Param
     /// <summary>
     /// 上传文件（前端上传，后台生成策略信息）
     /// </summary>
-    public class UploadPersistentOpsParam
+    public class UploadPersistentOpsParam : UploadParam
     {
         /// <summary>
         /// 上传文件（前端上传，后台生成策略信息）

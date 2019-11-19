@@ -3,6 +3,7 @@
 
 using System;
 using System.Reflection;
+using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.StorageExtensions;
 using EInfrastructure.Core.Config.StorageExtensions.Param;
 using EInfrastructure.Core.Configuration.Ioc;
@@ -16,12 +17,14 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// <summary>
     /// 文件实现类
     /// </summary>
-    public class StorageProvider : BaseStorageProvider, IStorageService, ISingleInstance
+    public class StorageProvider : BaseStorageProvider, IStorageService, IPerRequest
     {
         /// <summary>
         /// 文件实现类
         /// </summary>
-        public StorageProvider(ILogService logService, QiNiuStorageConfig qiNiuConfig) : base(logService, qiNiuConfig)
+        public StorageProvider(IJsonService jsonService, ILogService logService = null,
+            QiNiuStorageConfig qiNiuConfig = null) : base(jsonService, logService,
+            qiNiuConfig)
         {
         }
 
@@ -48,12 +51,13 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool UploadStream(UploadByStreamParam param)
         {
-            SetPutPolicy(param.Key, param.UploadPersistentOps.IsAllowOverlap, param.UploadPersistentOps.PersistentOps);
-            string token = Auth.CreateUploadToken(Mac, PutPolicy.ToJsonString());
+            var qiNiuConfig = GetQiNiuConfig(param.Json);
+            string token = GetUploadCredentials(qiNiuConfig,
+                new UploadPersistentOpsParam(param.Key, param.UploadPersistentOps));
             FormUploader target = new FormUploader(GetConfig(param.UploadPersistentOps));
             HttpResult result =
                 target.UploadStream(param.Stream, param.Key, token, GetPutExtra(param.UploadPersistentOps));
-            return result.Code == (int)HttpCode.OK;
+            return result.Code == (int) HttpCode.OK;
         }
 
         #endregion
@@ -67,15 +71,16 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool UploadFile(UploadByFormFileParam param)
         {
-            SetPutPolicy(param.Key, param.UploadPersistentOps.IsAllowOverlap, param.UploadPersistentOps.PersistentOps);
-            string token = Auth.CreateUploadToken(Mac, PutPolicy.ToJsonString());
+            var qiNiuConfig = GetQiNiuConfig(param.Json);
+            string token = base.GetUploadCredentials(qiNiuConfig,
+                new UploadPersistentOpsParam(param.Key, param.UploadPersistentOps));
             FormUploader target = new FormUploader(GetConfig(param.UploadPersistentOps));
             if (param.File != null)
             {
                 HttpResult result =
                     target.UploadStream(param.File.OpenReadStream(), param.Key, token,
                         GetPutExtra(param.UploadPersistentOps));
-                return result.Code == (int)HttpCode.OK;
+                return result.Code == (int) HttpCode.OK;
             }
 
             return false;
@@ -92,10 +97,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <param name="func"></param>
         public string GetUploadCredentials(UploadPersistentOpsParam opsParam, Func<string> func)
         {
-            SetPutPolicy(opsParam.Key, opsParam.UploadPersistentOps.IsAllowOverlap,
-                opsParam.UploadPersistentOps.PersistentOps);
-            PutPolicy.CallbackBody = func?.Invoke();
-            return Auth.CreateUploadToken(Mac, PutPolicy.ToJsonString());
+            var qiNiuConfig = GetQiNiuConfig(opsParam.Json);
+            return base.GetUploadCredentials(qiNiuConfig, opsParam,
+                (putPolicy) => { putPolicy.CallbackBody = func?.Invoke(); });
         }
 
         #endregion
@@ -109,12 +113,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool Exist(string key)
         {
-            BucketManager bucketManager = new BucketManager(base.Mac, base.GetConfig());
-            StatResult statResult = bucketManager.Stat(base.QiNiuConfig.Bucket, key);
-            return statResult.Code == (int)HttpCode.OK;
+            var qiNiuConfig = GetQiNiuConfig();
+            BucketManager bucketManager = new BucketManager(qiNiuConfig.GetMac(), base.GetConfig());
+            StatResult statResult = bucketManager.Stat(qiNiuConfig.Bucket, key);
+            return statResult.Code == (int) HttpCode.OK;
         }
 
         #endregion
-
     }
 }
