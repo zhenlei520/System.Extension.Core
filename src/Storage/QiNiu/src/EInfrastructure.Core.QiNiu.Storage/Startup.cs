@@ -23,7 +23,6 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public static IServiceCollection AddQiNiuStorage(this IServiceCollection services)
         {
             EInfrastructure.Core.StartUp.Run();
-
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration) service.ImplementationInstance;
             return AddQiNiuStorage(services, configuration);
@@ -42,7 +41,6 @@ namespace EInfrastructure.Core.QiNiu.Storage
             Action<QiNiuStorageConfig> action)
         {
             EInfrastructure.Core.StartUp.Run();
-
             services.Configure(action);
             return services;
         }
@@ -60,7 +58,6 @@ namespace EInfrastructure.Core.QiNiu.Storage
             IConfiguration configuration)
         {
             EInfrastructure.Core.StartUp.Run();
-
             services.Configure<QiNiuStorageConfig>(configuration);
             return services;
         }

@@ -2,7 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Reflection;
+using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.StorageExtensions;
+using EInfrastructure.Core.Config.StorageExtensions.Config;
+using EInfrastructure.Core.Config.StorageExtensions.Param;
 using EInfrastructure.Core.Config.StorageExtensions.Param.Pictures;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon;
@@ -21,7 +24,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 图片服务
         /// </summary>
-        public PictureService(ILogService logService,QiNiuStorageConfig qiNiuConfig) : base(logService,qiNiuConfig)
+        public PictureService(IJsonService jsonService, ILogService logService = null,
+            QiNiuStorageConfig qiNiuConfig = null) : base(jsonService, logService,
+            qiNiuConfig)
         {
         }
 
@@ -48,9 +53,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool Upload(UploadByBase64Param param)
         {
-            SetPutPolicy(param.ImgPersistentOps.Key, param.ImgPersistentOps.IsAllowOverlap,
-                "");
-            string token = Auth.CreateUploadToken(Mac, PutPolicy.ToJsonString());
+            var qiNiuConfig = GetQiNiuConfig(param.Json);
+            string token = base.GetUploadCredentials(qiNiuConfig,
+                new UploadPersistentOpsParam(param.ImgPersistentOps.Key, new UploadPersistentOps()
+                {
+                    IsAllowOverlap = param.ImgPersistentOps.IsAllowOverlap
+                }));
             FormUploader target = new FormUploader(GetConfig());
             HttpResult result =
                 target.UploadData(param.Base64.ConvertToByte(), param.ImgPersistentOps.Key, token,
@@ -69,13 +77,14 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool FetchFile(FetchFileParam fetchFileParam)
         {
+            var qiNiuConfig = GetQiNiuConfig(fetchFileParam.Json);
             FetchResult ret = GetBucketManager()
-                .Fetch(fetchFileParam.SourceFileKey, QiNiuConfig.Bucket, fetchFileParam.Key);
+                .Fetch(fetchFileParam.SourceFileKey, qiNiuConfig.Bucket, fetchFileParam.Key);
             switch (ret.Code)
             {
                 case (int) HttpCode.OK:
                 case (int) HttpCode.CALLBACK_FAILED:
-                    _logService.Info($"上传code为：{ret.Code}");
+                    LogService?.Info($"上传code为：{ret.Code}");
                     return true;
                 default:
                     return false;

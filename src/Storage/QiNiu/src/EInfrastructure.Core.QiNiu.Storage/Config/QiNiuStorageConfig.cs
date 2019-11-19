@@ -1,10 +1,18 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using EInfrastructure.Core.AutomationConfiguration.Interface;
+using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.StorageExtensions.Enumeration;
+using EInfrastructure.Core.Configuration.SeedWork;
+using EInfrastructure.Core.Exception;
+using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.QiNiu.Storage.Enum;
+using EInfrastructure.Core.QiNiu.Storage.Validator;
+using EInfrastructure.Core.Validation.Common;
 using Qiniu.Storage;
+using Qiniu.Util;
 
 namespace EInfrastructure.Core.QiNiu.Storage.Config
 {
@@ -105,7 +113,8 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// <summary>
         /// 回调内容类型
         /// </summary>
-        public int CallbackBodyType { get; set; } = EInfrastructure.Core.Config.StorageExtensions.Enumeration.CallbackBodyType.Json.Id;
+        public int CallbackBodyType { get; set; } =
+            EInfrastructure.Core.Config.StorageExtensions.Enumeration.CallbackBodyType.Json.Id;
 
         /// <summary>
         /// 鉴权回调
@@ -130,5 +139,43 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
                     return Zone.ZONE_US_North;
             }
         }
+
+        #region 得到七牛配置
+
+        /// <summary>
+        /// 得到七牛配置
+        /// </summary>
+        /// <param name="jsonService">json服务</param>
+        /// <param name="json">七牛配置文件</param>
+        /// <returns></returns>
+        public static QiNiuStorageConfig GetQiNiuConfig(IJsonService jsonService, string json)
+        {
+            if (!string.IsNullOrEmpty(json))
+            {
+                var qiNiuConfig = jsonService.Deserialize<QiNiuStorageConfig>(json);
+                Check.True(qiNiuConfig != null, "自定义七牛配置文件信息错误");
+                new QiNiuConfigValidator().Validate(qiNiuConfig).Check();
+                return qiNiuConfig;
+            }
+
+            throw new BusinessException("自定义七牛配置文件信息错误");
+        }
+
+        #endregion
+
+        #region 得到Mac
+
+        private Mac _mac;
+
+        /// <summary>
+        /// 得到Mac
+        /// </summary>
+        /// <returns></returns>
+        internal Mac GetMac()
+        {
+            return _mac ?? (_mac = new Mac(this.AccessKey, this.SecretKey));
+        }
+
+        #endregion
     }
 }

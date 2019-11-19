@@ -31,6 +31,7 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
     <PackageReference Include="Qiniu" Version="7.3.1.1" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
+    
   </ItemGroup>
 
   <ItemGroup>
@@ -41,4 +42,9 @@
     <ProjectReference Include="..\..\..\..\AutomationConfiguration\src\EInfrastructure.Core.AutomationConfiguration\EInfrastructure.Core.AutomationConfiguration.csproj" />
     <ProjectReference Include="..\..\..\..\Tools\Validation\src\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common" />
+  </ItemGroup>
+ 
 </Project>

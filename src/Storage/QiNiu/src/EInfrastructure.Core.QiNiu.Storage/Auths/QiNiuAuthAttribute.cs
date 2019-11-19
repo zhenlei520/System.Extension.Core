@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Linq;
+using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.QiNiu.Storage.Config;
@@ -32,13 +33,25 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
     {
         private readonly QiNiuStorageConfig _qiNiuConfig;
         private readonly ILogService _logService;
+        protected readonly IJsonService _jsonService;
 
-        public ClaimQiNiuRequirementFilter(ILogService logService, QiNiuStorageConfig qiNiuConfig)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="logService"></param>
+        /// <param name="qiNiuConfig"></param>
+        public ClaimQiNiuRequirementFilter(ILogService logService, QiNiuStorageConfig qiNiuConfig,
+            IJsonService jsonService)
         {
             _qiNiuConfig = qiNiuConfig;
             _logService = logService;
+            _jsonService = jsonService;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="context"></param>
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             if (context.Filters.Any(item => item is IAllowAnonymousFilter))
@@ -52,12 +65,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
 
             string callbackUrl = _qiNiuConfig.CallbackAuthHost + context.HttpContext.Request.Path.Value;
             string authorization =
-                new Auth(new BaseStorageProvider(_logService, _qiNiuConfig).Mac).CreateManageToken(callbackUrl);
+                new Auth(_qiNiuConfig.GetMac()).CreateManageToken(callbackUrl);
 
             if (authorization != qiNiuAuthorization)
             {
                 AuthLose(context);
-                return;
             }
         }
 
