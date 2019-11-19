@@ -18,13 +18,14 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator
     {
         public QiNiuConfigValidator()
         {
-            CascadeMode = CascadeMode.StopOnFirstFailure;;
+            CascadeMode = CascadeMode.StopOnFirstFailure;
+            ;
             RuleFor(x => x.AccessKey).NotNull()
                 .WithMessage("AccessKey信息异常");
             RuleFor(x => x.SecretKey).NotNull()
                 .WithMessage("SecretKey信息异常");
 
-            RuleFor(x => (int) x.Zones).IsInEnum().WithMessage("Zones 信息异常");
+            RuleFor(x => x.Zones).IsInEnum().WithMessage("Zones 信息异常");
 
             RuleFor(x => x.Bucket).NotNull()
                 .WithMessage("Bucket信息异常");
