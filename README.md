@@ -7,4 +7,7 @@
     <img src="./jetbrains.png" width="50" height="50">
 </a>
 
-[See the help](https://github.com/zhenlei520/System.Extension.Core.Doc/blob/1.0/README.md)
+[See the help](https://zhenlei520.github.io/System.Extension.Core.Doc)
+
+
+[update history](https://github.com/zhenlei520/System.Extension.Core.Doc/blob/2.0/docs/Update.md)
