@@ -1,10 +1,12 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using EInfrastructure.Core.HelpCommon;
+using System;
+using EInfrastructure.Core.HelpCommon.Serialization;
 using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.Interface.Storage.Config;
 using EInfrastructure.Core.Interface.Storage.Enum;
+using EInfrastructure.Core.Interface.Storage.Param;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.QiNiu.Storage.Validator;
 using EInfrastructure.Core.Validation.Common;
@@ -16,114 +18,55 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// <summary>
     /// 基类存储实现类
     /// </summary>
-    public class BaseStorageProvider
+    public partial class BaseStorageProvider
     {
-        protected readonly ILogService _logService;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public BaseStorageProvider(ILogService logService, QiNiuStorageConfig qiNiuConfig)
-        {
-            _logService = logService;
-            
-            QiNiuConfig = qiNiuConfig;
-            new QiNiuConfigValidator().Validate(qiNiuConfig).Check();
-
-            Mac = new Mac(QiNiuConfig.AccessKey, QiNiuConfig.SecretKey);
-
-            #region 上传策略
-
-            PutPolicy = new PutPolicy();
-
-            #region 上传成功后通知
-
-            if (!string.IsNullOrEmpty(QiNiuConfig.CallbackBody))
-            {
-                PutPolicy.PersistentNotifyUrl = QiNiuConfig.PersistentNotifyUrl;
-                PutPolicy.CallbackBody = QiNiuConfig.CallbackBody;
-                PutPolicy.CallbackBodyType = QiNiuConfig.CallbackBodyType.GetDescription();
-                PutPolicy.CallbackUrl = QiNiuConfig.CallbackUrl;
-            }
-
-            if (!string.IsNullOrEmpty(QiNiuConfig.PersistentPipeline))
-            {
-                PutPolicy.PersistentPipeline = QiNiuConfig.PersistentPipeline;
-            }
-
-            #endregion
-
-
-            #endregion
-        }
-
         /// <summary>
         /// 存储配置文件
         /// </summary>
-        internal QiNiuStorageConfig QiNiuConfig;
+        private readonly QiNiuStorageConfig _qiNiuConfig;
 
         /// <summary>
-        /// 
+        /// 日志服务
         /// </summary>
-        internal Mac Mac;
+        protected readonly ILogService LogService;
 
         /// <summary>
-        /// 上传策略
+        /// json服务
         /// </summary>
-        internal PutPolicy PutPolicy = null;
-
-        #region 得到上传策略
-
-        #region 设置上传策略
+        protected readonly JsonCommon JsonService;
 
         /// <summary>
-        /// 设置上传策略
+        ///
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="isAllowOverlap">是否允许覆盖上传</param>
-        /// <param name="persistentOps">上传预转持久化</param>
-        /// <param name="expireInSeconds">上传策略失效时刻</param>
-        /// <param name="deleteAfterDays">文件上传后多少天后自动删除</param>
-        /// <returns></returns>
-        protected void SetPutPolicy(string key, bool isAllowOverlap = false, string persistentOps = "",
-            int expireInSeconds = 3600, int? deleteAfterDays = null)
+        public BaseStorageProvider(ILogService logService, QiNiuStorageConfig qiNiuConfig)
         {
-            #region 覆盖上传
-
-            if (isAllowOverlap)
+            JsonService = new JsonCommon();
+            LogService = logService;
+            _qiNiuConfig = qiNiuConfig;
+            if (qiNiuConfig != null)
             {
-                PutPolicy.Scope = QiNiuConfig.Bucket;
+                new QiNiuConfigValidator().Validate(qiNiuConfig).Check();
             }
-            else
-            {
-                PutPolicy.Scope = QiNiuConfig.Bucket + ":" + key;
-            }
+        }
 
-            #endregion
+        #region 得到七牛配置（方法内不要重复获取此方法，以免产生不同的配置信息）
 
-            #region 带数据处理的凭证
-
-            if (!string.IsNullOrEmpty(persistentOps))
-            {
-                PutPolicy.PersistentOps = persistentOps;
-            }
-
-            #endregion
-
-            #region 设置过期时间
-
-            PutPolicy.SetExpires(expireInSeconds);
-
-            #endregion
-
-            #region 多少天后自动删除
-
-            PutPolicy.DeleteAfterDays = deleteAfterDays;
-
-            #endregion
+        /// <summary>
+        /// 得到七牛配置（方法内不要重复获取此方法，以免产生不同的配置信息）
+        /// </summary>
+        /// <param name="config">七牛配置文件json对象(默认查询公共的配置)</param>
+        /// <returns></returns>
+        internal QiNiuStorageConfig GetQiNiuConfig(string config = null)
+        {
+            var qiniuConfig = !string.IsNullOrEmpty(config)
+                ? QiNiuStorageConfig.GetQiNiuConfig(JsonService, config)
+                : _qiNiuConfig;
+            return qiniuConfig;
         }
 
         #endregion
+
+        #region 设置上传策略
 
         #region 得到文件上传额外参数
 
@@ -163,7 +106,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 if (uploadPersistentOps.UploadController != null)
                 {
                     var state = putExtra.UploadController();
-                    UploadStateEnum uploadState;
+                    UploadStateEnum  uploadState;
                     if (state == UploadControllerAction.Activated)
                     {
                         uploadState = UploadStateEnum.Activated;
@@ -197,11 +140,11 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// 得到七牛配置文件
         /// </summary>
         /// <returns></returns>
-        public Qiniu.Storage.Config GetConfig(UploadPersistentOps uploadPersistentOps = null)
+        internal Qiniu.Storage.Config GetConfig(UploadPersistentOps uploadPersistentOps = null)
         {
             var config = new Qiniu.Storage.Config()
             {
-                Zone = QiNiuConfig.GetZone(),
+                Zone = _qiNiuConfig.GetZone(),
             };
             if (uploadPersistentOps != null)
             {
@@ -221,7 +164,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
 
             ChunkUnit Get(ChunkUnitEnum chunkUnit)
             {
-                int chunkUnits = (int) chunkUnit;
+                int chunkUnits = (int)chunkUnit;
                 return (ChunkUnit) chunkUnits;
             }
 
@@ -240,7 +183,29 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         protected BucketManager GetBucketManager()
         {
-            return new BucketManager(Mac, GetConfig());
+            return new BucketManager(_qiNiuConfig.GetMac(), GetConfig());
+        }
+
+        #endregion
+
+        #region 得到上传凭证
+
+        /// <summary>
+        /// 得到上传凭证
+        /// </summary>
+        /// <param name="qiNiuConfig">七牛配置文件</param>
+        /// <param name="opsParam">上传策略</param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        protected string GetUploadCredentials(QiNiuStorageConfig qiNiuConfig, UploadPersistentOpsParam opsParam,
+            Action<PutPolicy> action = null)
+        {
+            PutPolicyConfig putPolicyConfig = new PutPolicyConfig(qiNiuConfig);
+            putPolicyConfig.SetPutPolicy(opsParam.Key,
+                opsParam.UploadPersistentOps.IsAllowOverlap,
+                opsParam.UploadPersistentOps.PersistentOps);
+            action?.Invoke(putPolicyConfig.GetPutPolicy());
+            return Auth.CreateUploadToken(qiNiuConfig.GetMac(), putPolicyConfig.GetPutPolicy().ToJsonString());
         }
 
         #endregion

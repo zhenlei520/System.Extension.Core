@@ -6,7 +6,7 @@ namespace EInfrastructure.Core.Interface.Storage.Param.Pictures
     /// <summary>
     /// 图片抓取
     /// </summary>
-    public class FetchFileParam
+    public class FetchFileParam:UploadParam
     {
         /// <summary>
         /// 源图（必填）

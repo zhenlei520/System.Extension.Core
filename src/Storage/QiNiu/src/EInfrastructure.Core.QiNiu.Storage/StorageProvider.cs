@@ -1,8 +1,8 @@
-﻿// Copyright (c) zhenlei520 All rights reserved.
+// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using EInfrastructure.Core.HelpCommon.Systems;
+using System.Reflection;
 using EInfrastructure.Core.Interface.IOC;
 using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.Interface.Storage;
@@ -10,22 +10,23 @@ using EInfrastructure.Core.Interface.Storage.Param;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Qiniu.Http;
 using Qiniu.Storage;
-using Qiniu.Util;
 
 namespace EInfrastructure.Core.QiNiu.Storage
 {
     /// <summary>
     /// 文件实现类
     /// </summary>
-    public class StorageProvider : BaseStorageProvider, IStorageService, ISingleInstance
+    public class StorageProvider : BaseStorageProvider, IStorageService, IPerRequest
     {
         /// <summary>
         /// 文件实现类
         /// </summary>
-        public StorageProvider(ILogService logService, QiNiuStorageConfig qiNiuConfig) : base(logService, qiNiuConfig)
+        public StorageProvider(ILogService logService = null,
+            QiNiuStorageConfig qiNiuConfig = null) : base(logService,
+            qiNiuConfig)
         {
         }
-        
+
         #region 得到实现类唯一标示
 
         /// <summary>
@@ -34,7 +35,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public string GetIdentify()
         {
-            return AssemblyCommon.GetReflectedInfo().Namespace;
+            MethodBase method = MethodBase.GetCurrentMethod();
+            return method.ReflectedType.Namespace;
         }
 
         #endregion
@@ -48,8 +50,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool UploadStream(UploadByStreamParam param)
         {
-            SetPutPolicy(param.Key, param.UploadPersistentOps.IsAllowOverlap, param.UploadPersistentOps.PersistentOps);
-            string token = Auth.CreateUploadToken(Mac, PutPolicy.ToJsonString());
+            var qiNiuConfig = GetQiNiuConfig(param.Json);
+            string token = GetUploadCredentials(qiNiuConfig,
+                new UploadPersistentOpsParam(param.Key, param.UploadPersistentOps));
             FormUploader target = new FormUploader(GetConfig(param.UploadPersistentOps));
             HttpResult result =
                 target.UploadStream(param.Stream, param.Key, token, GetPutExtra(param.UploadPersistentOps));
@@ -67,8 +70,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool UploadFile(UploadByFormFileParam param)
         {
-            SetPutPolicy(param.Key, param.UploadPersistentOps.IsAllowOverlap, param.UploadPersistentOps.PersistentOps);
-            string token = Auth.CreateUploadToken(Mac, PutPolicy.ToJsonString());
+            var qiNiuConfig = GetQiNiuConfig(param.Json);
+            string token = base.GetUploadCredentials(qiNiuConfig,
+                new UploadPersistentOpsParam(param.Key, param.UploadPersistentOps));
             FormUploader target = new FormUploader(GetConfig(param.UploadPersistentOps));
             if (param.File != null)
             {
@@ -92,10 +96,26 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <param name="func"></param>
         public string GetUploadCredentials(UploadPersistentOpsParam opsParam, Func<string> func)
         {
-            SetPutPolicy(opsParam.Key, opsParam.UploadPersistentOps.IsAllowOverlap,
-                opsParam.UploadPersistentOps.PersistentOps);
-            PutPolicy.CallbackBody = func?.Invoke();
-            return Auth.CreateUploadToken(Mac, PutPolicy.ToJsonString());
+            var qiNiuConfig = GetQiNiuConfig(opsParam.Json);
+            return base.GetUploadCredentials(qiNiuConfig, opsParam,
+                (putPolicy) => { putPolicy.CallbackBody = func?.Invoke(); });
+        }
+
+        #endregion
+
+        #region 检查文件是否存在
+
+        /// <summary>
+        /// 检查文件是否存在
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <returns></returns>
+        public bool Exist(string key)
+        {
+            var qiNiuConfig = GetQiNiuConfig();
+            BucketManager bucketManager = new BucketManager(qiNiuConfig.GetMac(), base.GetConfig());
+            StatResult statResult = bucketManager.Stat(qiNiuConfig.Bucket, key);
+            return statResult.Code == (int) HttpCode.OK;
         }
 
         #endregion

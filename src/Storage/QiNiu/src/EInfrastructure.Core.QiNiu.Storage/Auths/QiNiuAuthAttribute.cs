@@ -3,6 +3,7 @@
 
 using System.Linq;
 using EInfrastructure.Core.Configuration.Key;
+using EInfrastructure.Core.HelpCommon.Serialization;
 using EInfrastructure.Core.Interface.Log;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
     public class QiNiuAuthAttribute : TypeFilterAttribute
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public QiNiuAuthAttribute() : base(typeof(ClaimQiNiuRequirementFilter))
         {
@@ -26,19 +27,30 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class ClaimQiNiuRequirementFilter : IAuthorizationFilter
     {
         private readonly QiNiuStorageConfig _qiNiuConfig;
         private readonly ILogService _logService;
+        protected readonly JsonCommon _jsonService;
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="logService"></param>
+        /// <param name="qiNiuConfig"></param>
         public ClaimQiNiuRequirementFilter(ILogService logService, QiNiuStorageConfig qiNiuConfig)
         {
             _qiNiuConfig = qiNiuConfig;
             _logService = logService;
+            _jsonService = new JsonCommon();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="context"></param>
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             if (context.Filters.Any(item => item is IAllowAnonymousFilter))
@@ -52,12 +64,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
 
             string callbackUrl = _qiNiuConfig.CallbackAuthHost + context.HttpContext.Request.Path.Value;
             string authorization =
-                new Auth(new BaseStorageProvider(_logService, _qiNiuConfig).Mac).CreateManageToken(callbackUrl);
+                new Auth(_qiNiuConfig.GetMac()).CreateManageToken(callbackUrl);
 
             if (authorization != qiNiuAuthorization)
             {
                 AuthLose(context);
-                return;
             }
         }
 
@@ -67,11 +78,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
         /// <param name="context"></param>
         private void AuthLose(AuthorizationFilterContext context)
         {
-            context.HttpContext.Response.StatusCode = (int) CodeKey.NoAuthorization;
+            context.HttpContext.Response.StatusCode =CodeKey.NoAuthorization;
             context.Result =
                 new JsonResult(new
                 {
-                    Code = (int) CodeKey.NoAuthorization,
+                    Code = CodeKey.NoAuthorization,
                     Msg = "鉴权失败"
                 });
         }
