@@ -1,6 +1,3 @@
-// Copyright (c) zhenlei520 All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,27 +7,27 @@ using EInfrastructure.Core.Configuration.Data;
 using EInfrastructure.Core.HelpCommon;
 using Microsoft.EntityFrameworkCore;
 
-namespace EInfrastructure.Core.MySql
+namespace EInfrastructure.Core.MySql.Common
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
-    public class SpatialDimensionQuery<TEntity, T>
+    public class SpatialDimensionBaseQuery<TEntity, T>
         : ISpatialDimensionQuery<TEntity, T> where TEntity : class, IEntity<T>
         where T : IComparable
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected DbContext Dbcontext;
 
         private readonly IExecute _execute;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork">unitwork</param>
-        public SpatialDimensionQuery(IUnitOfWork unitOfWork, IExecute execute)
+        public SpatialDimensionBaseQuery(IUnitOfWork unitOfWork, IExecute execute)
         {
             Dbcontext = unitOfWork as DbContext;
             _execute = execute;

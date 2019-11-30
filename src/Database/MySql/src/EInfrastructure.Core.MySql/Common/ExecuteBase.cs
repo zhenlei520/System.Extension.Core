@@ -8,7 +8,7 @@ using EInfrastructure.Core.Config.EntitiesExtensions;
 using EInfrastructure.Core.HelpCommon;
 using Microsoft.EntityFrameworkCore;
 
-namespace EInfrastructure.Core.MySql
+namespace EInfrastructure.Core.MySql.Common
 {
     /// <summary>
     /// 执行Sql语句

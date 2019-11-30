@@ -3,6 +3,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using EInfrastructure.Core.Config.EntitiesExtensions.Configuration;
 
 namespace EInfrastructure.Core.Config.EntitiesExtensions
 {
@@ -30,5 +31,13 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken));
+    }
+
+    /// <summary>
+    /// 单元模式，可以指定数据库
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IUnitOfWork<T> where T : DbContext, IUnitOfWork
+    {
     }
 }

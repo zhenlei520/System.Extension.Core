@@ -10,7 +10,7 @@ using EInfrastructure.Core.Configuration.Data;
 using EInfrastructure.Core.HelpCommon.Systems;
 using Microsoft.EntityFrameworkCore;
 
-namespace EInfrastructure.Core.MySql
+namespace EInfrastructure.Core.MySql.Common
 {
     /// <summary>
     /// 基类查询仓储
@@ -62,12 +62,9 @@ namespace EInfrastructure.Core.MySql
             {
                 return Dbcontext.GetOne<TEntity, T>(condition);
             }
-            else
-            {
 
-                return Dbcontext.Set<TEntity>().AsNoTracking()
-                    .FirstOrDefault(condition);
-            }
+            return Dbcontext.Set<TEntity>().AsNoTracking()
+                .FirstOrDefault(condition);
         }
 
         #endregion

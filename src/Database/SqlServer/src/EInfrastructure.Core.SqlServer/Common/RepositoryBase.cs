@@ -9,7 +9,7 @@ using EInfrastructure.Core.Config.EntitiesExtensions;
 using EInfrastructure.Core.HelpCommon.Systems;
 using Microsoft.EntityFrameworkCore;
 
-namespace EInfrastructure.Core.SqlServer
+namespace EInfrastructure.Core.SqlServer.Common
 {
     /// <summary>
     /// 基类增删改仓储实现类

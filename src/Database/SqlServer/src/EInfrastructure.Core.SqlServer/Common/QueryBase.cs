@@ -10,7 +10,7 @@ using EInfrastructure.Core.Configuration.Data;
 using EInfrastructure.Core.HelpCommon.Systems;
 using Microsoft.EntityFrameworkCore;
 
-namespace EInfrastructure.Core.SqlServer
+namespace EInfrastructure.Core.SqlServer.Common
 {
     /// <summary>
     /// 基类查询仓储
@@ -22,12 +22,12 @@ namespace EInfrastructure.Core.SqlServer
         where T : IComparable
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected DbContext Dbcontext;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork">工作单元</param>
         public QueryBase(IUnitOfWork unitOfWork)
@@ -79,8 +79,7 @@ namespace EInfrastructure.Core.SqlServer
         /// <param name="pageindex">页码</param>
         /// <param name="istotal">是否计算总数</param>
         /// <returns></returns>
-        public PageData<TEntity> GetList(Expression<Func<TEntity, bool>> condition, int pagesize, int pageindex,
-            bool istotal)
+        public PageData<TEntity> GetList(Expression<Func<TEntity, bool>> condition, int pagesize, int pageindex, bool istotal)
         {
             return Dbcontext.GetList<TEntity, T>(condition, pagesize, pageindex, istotal);
         }

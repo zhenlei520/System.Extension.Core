@@ -8,27 +8,27 @@ using EInfrastructure.Core.Config.EntitiesExtensions;
 using EInfrastructure.Core.Configuration.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace EInfrastructure.Core.SqlServer
+namespace EInfrastructure.Core.SqlServer.Common
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
-    public class SpatialDimensionQuery<TEntity, T>
+    public class SpatialDimensionBaseQuery<TEntity, T>
         : ISpatialDimensionQuery<TEntity, T> where TEntity : class, IEntity<T>
         where T : IComparable
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected DbContext Dbcontext;
 
         private readonly IExecute _execute;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork">unitwork</param>
-        public SpatialDimensionQuery(IUnitOfWork unitOfWork, IExecute execute)
+        public SpatialDimensionBaseQuery(IUnitOfWork unitOfWork, IExecute execute)
         {
             this.Dbcontext = unitOfWork as DbContext;
             _execute = execute;
@@ -48,7 +48,7 @@ namespace EInfrastructure.Core.SqlServer
         }
 
         #endregion
-        
+
         /// <summary>
         /// get list
         /// </summary>
@@ -59,7 +59,7 @@ namespace EInfrastructure.Core.SqlServer
         {
             throw new System.NotImplementedException();
         }
-        
+
         #region get IQueryable
 
         /// <summary>

@@ -9,7 +9,7 @@ using EInfrastructure.Core.Config.EntitiesExtensions;
 using EInfrastructure.Core.HelpCommon.Systems;
 using Microsoft.EntityFrameworkCore;
 
-namespace EInfrastructure.Core.MySql
+namespace EInfrastructure.Core.MySql.Common
 {
     /// <summary>
     /// 基类增删改仓储实现类
@@ -30,9 +30,10 @@ namespace EInfrastructure.Core.MySql
         ///
         /// </summary>
         /// <param name="unitOfWork"></param>
-        public RepositoryBase(IUnitOfWork unitOfWork)
+        protected RepositoryBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            // ReSharper disable once SuspiciousTypeConversion.Global
             Dbcontext = unitOfWork as DbContext;
         }
 
