@@ -10,7 +10,7 @@ namespace EInfrastructure.Core.MySql.Repository
     /// <summary>
     ///
     /// </summary>
-    public class SpatialDimensionMultQuery<TEntity, T, TDbContext>
+    public class SpatialDimensionQuery<TEntity, T, TDbContext>
         : SpatialDimensionBaseQuery<TEntity, T>
         where TEntity : class, IEntity<T>
         where T : IComparable
@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.MySql.Repository
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="execute"></param>
-        public SpatialDimensionMultQuery(IUnitOfWork unitOfWork, IExecute execute) : base(unitOfWork, execute)
+        public SpatialDimensionQuery(IUnitOfWork unitOfWork, IExecute execute) : base(unitOfWork, execute)
         {
         }
     }

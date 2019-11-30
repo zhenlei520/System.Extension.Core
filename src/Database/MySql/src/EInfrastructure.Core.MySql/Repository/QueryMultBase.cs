@@ -11,7 +11,7 @@ namespace EInfrastructure.Core.MySql.Repository
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="T"></typeparam>
-    public class QueryMultBase<TEntity, T, TDbContext>
+    public class QueryBase<TEntity, T, TDbContext>
         : Common.QueryBase<TEntity, T> where TEntity : class, IEntity<T>
         where T : IComparable
         where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.MySql.Repository
         ///
         /// </summary>
         /// <param name="unitOfWork"></param>
-        public QueryMultBase(IUnitOfWork<TDbContext> unitOfWork) : base(unitOfWork as IUnitOfWork)
+        public QueryBase(IUnitOfWork<TDbContext> unitOfWork) : base(unitOfWork as IUnitOfWork)
         {
         }
     }
