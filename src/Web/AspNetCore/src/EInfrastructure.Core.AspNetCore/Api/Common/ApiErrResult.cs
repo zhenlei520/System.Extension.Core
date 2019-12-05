@@ -7,7 +7,7 @@ namespace EInfrastructure.Core.AspNetCore.Api.Common
     /// 异常响应信息
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class ApiErrResult<T> where T : struct
+    public abstract class ApiErrResult<T>
     {
         /// <summary>
         /// 异常响应信息
