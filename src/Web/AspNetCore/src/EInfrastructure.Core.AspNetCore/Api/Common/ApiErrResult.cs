@@ -57,24 +57,24 @@ namespace EInfrastructure.Core.AspNetCore.Api.Common
         /// 错误信息
         /// </summary>
         [JsonProperty(PropertyName = "msg")]
-        public abstract string Msg { get; set; }
+        public virtual string Msg { get; set; }
 
         /// <summary>
         /// 错误码
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public abstract T Code { get; set; }
+        public virtual T Code { get; set; }
 
         /// <summary>
         /// 扩展信息
         /// </summary>
         [JsonProperty(PropertyName = "extend", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public abstract object Extend { get; set; }
+        public virtual object Extend { get; set; }
 
         /// <summary>
         /// 当前时间
         /// </summary>
         [JsonProperty(PropertyName = "current_time", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public abstract DateTime? CurrentTime { get; set; }
+        public virtual DateTime? CurrentTime { get; set; }
     }
 }

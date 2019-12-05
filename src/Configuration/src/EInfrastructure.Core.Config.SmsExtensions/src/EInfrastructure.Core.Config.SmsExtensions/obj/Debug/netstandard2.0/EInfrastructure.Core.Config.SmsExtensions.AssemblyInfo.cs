@@ -12,7 +12,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright ©zhenlei520 2019")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("dotnet core sms configuration")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("2.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0-beta-038")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("2.0.0-beta-039-beta")]
 [assembly: System.Reflection.AssemblyProductAttribute("EInfrastructure.Core.Config.SmsExtensions")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EInfrastructure.Core.Config.SmsExtensions")]
 [assembly: System.Reflection.AssemblyVersionAttribute("2.0.0.0")]
