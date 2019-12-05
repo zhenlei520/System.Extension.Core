@@ -26,7 +26,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
                 case CompressTypeEnum.Zip:
                     return new Zip.ZipCompressService();
                 default:
-                    throw new BusinessException("暂不支持的压缩方式", HttpStatus.Err.Id);
+                    throw new BusinessException("暂不支持的压缩方式");
             }
         }
 

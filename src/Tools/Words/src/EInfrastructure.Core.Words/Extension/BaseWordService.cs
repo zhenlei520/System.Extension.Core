@@ -145,7 +145,7 @@ namespace EInfrastructure.Core.Words.Extension
             }
             catch (System.Exception ex)
             {
-                throw new BusinessException($"词语词库异常：{ex}", HttpStatus.Err.Id);
+                throw new BusinessException($"词语词库异常：{ex}");
             }
         }
 

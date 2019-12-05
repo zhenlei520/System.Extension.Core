@@ -1308,7 +1308,7 @@ namespace EInfrastructure.Core.Redis
             }
             else
             {
-                throw new BusinessException("过期时间设置有误", HttpStatus.Err.Id);
+                throw new BusinessException("过期时间设置有误");
             }
 
             return timeSpan;

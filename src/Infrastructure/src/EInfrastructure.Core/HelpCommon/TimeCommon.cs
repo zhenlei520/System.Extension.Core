@@ -90,7 +90,7 @@ namespace EInfrastructure.Core.HelpCommon
                 return Convert.ToInt32(Math.Floor(mm));
             }
 
-            throw new BusinessException("不支持的取整方式", HttpStatus.Err.Id);
+            throw new BusinessException("不支持的取整方式");
         }
 
         #endregion
@@ -774,12 +774,12 @@ namespace EInfrastructure.Core.HelpCommon
         private static DateTime GetLunarYearDate(int year, int month, int day, bool IsLeapMonth)
         {
             if (year < 1902 || year > 2100)
-                throw new BusinessException("只支持1902～2100期间的农历年", HttpStatus.Err.Id);
+                throw new BusinessException("只支持1902～2100期间的农历年");
             if (month < 1 || month > 12)
-                throw new BusinessException("表示月份的数字必须在1～12之间", HttpStatus.Err.Id);
+                throw new BusinessException("表示月份的数字必须在1～12之间");
 
             if (day < 1 || day > calendar.GetDaysInMonth(year, month))
-                throw new BusinessException("农历日期输入有误", HttpStatus.Err.Id);
+                throw new BusinessException("农历日期输入有误");
 
             int num1 = 0, num2 = 0;
             int leapMonth = calendar.GetLeapMonth(year);

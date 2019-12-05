@@ -46,7 +46,7 @@ namespace EInfrastructure.Core.AspNetCore.Filter
                             throw new BusinessException("请检查参数格式是否正确", ErrCode);
                         }
 
-                        throw new BusinessException(error.ErrorMessage, HttpStatus.Err.Id);
+                        throw new BusinessException(error.ErrorMessage);
                     }
                 }
 

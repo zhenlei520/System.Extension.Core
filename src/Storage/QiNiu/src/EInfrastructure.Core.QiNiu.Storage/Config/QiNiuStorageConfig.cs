@@ -159,7 +159,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
                 return qiNiuConfig;
             }
 
-            throw new BusinessException("自定义七牛配置文件信息错误", HttpStatus.Err.Id);
+            throw new BusinessException("自定义七牛配置文件信息错误");
         }
 
         #endregion
