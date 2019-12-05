@@ -8,7 +8,7 @@ using EInfrastructure.Core.Config.EntitiesExtensions;
 using EInfrastructure.Core.HelpCommon;
 using Microsoft.EntityFrameworkCore;
 
-namespace EInfrastructure.Core.SqlServer
+namespace EInfrastructure.Core.SqlServer.Common
 {
     /// <summary>
     /// 执行Sql语句
@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.SqlServer
         public ExecuteBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            this.Dbcontext = unitOfWork as DbContext;
+            Dbcontext = unitOfWork as DbContext;
         }
 
         /// <summary>
@@ -84,7 +84,6 @@ namespace EInfrastructure.Core.SqlServer
         /// 执行Query
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="dbContext"></param>
         /// <param name="sql"></param>
         /// <returns></returns>
         public List<T> SqlQuery<T>(string sql)
@@ -128,7 +127,6 @@ namespace EInfrastructure.Core.SqlServer
         /// <summary>
         /// 执行Sql命令
         /// </summary>
-        /// <param name="dbContext"></param>
         /// <param name="sql"></param>
         /// <returns></returns>
         public int ExecuteSql(string sql)

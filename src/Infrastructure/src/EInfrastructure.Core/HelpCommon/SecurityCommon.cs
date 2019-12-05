@@ -358,7 +358,6 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
-
         #region HMACSHA加密
 
         #region HMacSha1加密

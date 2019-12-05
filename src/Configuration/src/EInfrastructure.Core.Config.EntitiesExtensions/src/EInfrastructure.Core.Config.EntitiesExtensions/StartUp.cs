@@ -9,7 +9,7 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         /// </summary>
         public static void Run()
         {
-            Configuration.StartUp.Run();
+            EInfrastructure.Core.Configuration.StartUp.Run();
         }
     }
 }

@@ -6,6 +6,7 @@ using EInfrastructure.Core.MySql;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using EInfrastructure.Core.Config.EntitiesExtensions;
+using EInfrastructure.Core.MySql.Repository;
 
 namespace EInfrastructure.Core.AutoFac.MySql
 {

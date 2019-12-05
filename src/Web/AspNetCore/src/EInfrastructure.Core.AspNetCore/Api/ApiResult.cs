@@ -3,6 +3,7 @@
 
 using System;
 using EInfrastructure.Core.AspNetCore.Api.Common;
+using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.AspNetCore.Api
 {
@@ -40,16 +41,19 @@ namespace EInfrastructure.Core.AspNetCore.Api
         /// <summary>
         /// 状态码
         /// </summary>
+        [JsonProperty(PropertyName = "code")]
         public override int Code { get; set; }
 
         /// <summary>
         /// 数据
         /// </summary>
+        [JsonProperty(PropertyName = "response")]
         public override object Data { get; set; }
 
         /// <summary>
         /// 当前时间
         /// </summary>
+        [JsonProperty(PropertyName = "current_time", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public override DateTime? CurrentTime { get; set; }
     }
 }
