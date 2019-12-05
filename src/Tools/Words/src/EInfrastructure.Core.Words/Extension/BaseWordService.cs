@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Words.Config;
@@ -144,7 +145,7 @@ namespace EInfrastructure.Core.Words.Extension
             }
             catch (System.Exception ex)
             {
-                throw new BusinessException($"词语词库异常：{ex}");
+                throw new BusinessException($"词语词库异常：{ex}", HttpStatus.Err.Id);
             }
         }
 
@@ -174,7 +175,7 @@ namespace EInfrastructure.Core.Words.Extension
             }
             catch (System.Exception ex)
             {
-                throw new BusinessException($"拼音词库异常：{ex}");
+                throw new BusinessException($"拼音词库异常：{ex}",HttpStatus.Err.Id);
             }
         }
 

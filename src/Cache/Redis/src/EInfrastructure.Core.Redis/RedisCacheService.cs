@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using EInfrastructure.Core.Config.CacheExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
@@ -939,7 +940,7 @@ namespace EInfrastructure.Core.Redis
             {
                 for (int i = 0; i < item.Item2.Length; i += 2)
                 {
-                    result.Add((item.Item1.Replace(_prefix,""), item.Item2[i].ToString(),
+                    result.Add((item.Item1.Replace(_prefix, ""), item.Item2[i].ToString(),
                         item.Item2[i].ToString().Replace("~_~", "！").Split('！')[0],
                         item.Item2[i].ToString().Replace("~_~", "！").Split('！')[1]));
                 }
@@ -1307,7 +1308,7 @@ namespace EInfrastructure.Core.Redis
             }
             else
             {
-                throw new BusinessException("过期时间设置有误");
+                throw new BusinessException("过期时间设置有误", HttpStatus.Err.Id);
             }
 
             return timeSpan;

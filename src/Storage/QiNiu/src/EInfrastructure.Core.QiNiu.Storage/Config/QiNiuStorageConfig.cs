@@ -5,6 +5,7 @@ using System;
 using EInfrastructure.Core.AutomationConfiguration.Interface;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.StorageExtensions.Enumeration;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Configuration.SeedWork;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
@@ -158,7 +159,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
                 return qiNiuConfig;
             }
 
-            throw new BusinessException("自定义七牛配置文件信息错误");
+            throw new BusinessException("自定义七牛配置文件信息错误", HttpStatus.Err.Id);
         }
 
         #endregion

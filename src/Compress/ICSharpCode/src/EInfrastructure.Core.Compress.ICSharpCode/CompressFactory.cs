@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Config.CompressExtensions.Enum;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode
@@ -25,7 +26,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
                 case CompressTypeEnum.Zip:
                     return new Zip.ZipCompressService();
                 default:
-                    throw new BusinessException("暂不支持的压缩方式");
+                    throw new BusinessException("暂不支持的压缩方式", HttpStatus.Err.Id);
             }
         }
 

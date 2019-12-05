@@ -21,13 +21,28 @@ namespace EInfrastructure.Core.Exception
         /// <param name="code">状态码</param>
         /// <param name="content">异常详情</param>
         /// <param name="jsonProvider"></param>
-        public BusinessException(string content, int? code = null,
+        public BusinessException(string content, int code = 201,
             IJsonService jsonProvider = null) :
             base(
                 (jsonProvider ?? new JsonService(new List<IJsonProvider>()
                 {
                     new NewtonsoftJsonProvider()
-                })).Serializer(new {code = code ?? HttpStatus.Err.Id, content}))
+                })).Serializer(new {code = code, content}))
+        {
+        }
+
+        /// <summary>
+        /// 业务异常
+        /// </summary>
+        /// <param name="code">状态码</param>
+        /// <param name="content">异常详情</param>
+        /// <param name="jsonProvider"></param>
+        public BusinessException(string content, string code = null,
+            IJsonService jsonProvider = null) :
+            base((jsonProvider ?? new JsonService(new List<IJsonProvider>()
+                {
+                    new NewtonsoftJsonProvider()
+                })).Serializer(new {code = code ?? HttpStatus.Err.Name, content}))
         {
         }
     }

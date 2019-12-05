@@ -321,7 +321,7 @@ namespace EInfrastructure.Core.HelpCommon
 
             if (pageIndex - 1 < 0)
             {
-                throw new BusinessException("页码必须大于等于1");
+                throw new BusinessException("页码必须大于等于1", HttpStatus.Err.Id);
             }
 
             query = query.Skip((pageIndex - 1) * pageSize).ToList();
@@ -331,7 +331,7 @@ namespace EInfrastructure.Core.HelpCommon
             }
             else if (pageSize < 1 && pageSize != -1)
             {
-                throw new BusinessException("页大小须等于-1或者大于0");
+                throw new BusinessException("页大小须等于-1或者大于0", HttpStatus.Err.Id);
             }
             else
             {
