@@ -120,11 +120,6 @@ namespace EInfrastructure.Core.Config.StorageExtensions.Config
         /// </summary>
         public virtual string PersistentPipeline { get; set; }
 
-        /// <summary>
-        /// 自定义资源名。支持魔法变量和自定义变量。forceSaveKey 为false时，这个字段仅当用户上传的时候没有主动指定 key 时起作用；forceSaveKey 为true时，将强制按这个字段的格式命名。
-        /// </summary>
-        public virtual string SaveKey { get; set; }
-
         #endregion
 
         #region 上传进度相关

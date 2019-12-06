@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.Config.StorageExtensions.Param
         public UploadPersistentOpsParam(string key, UploadPersistentOps uploadPersistentOps = null)
         {
             Key = key;
-            UploadPersistentOps = uploadPersistentOps;
+            UploadPersistentOps = uploadPersistentOps ?? new UploadPersistentOps();
         }
 
         /// <summary>
