@@ -39,14 +39,13 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// 加载Consul服务
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="action">Consul 配置</param>
+        /// <param name="func">Consul 配置</param>
         /// <returns></returns>
         public static IServiceCollection AddConsul(this IServiceCollection services,
-            Action<ConsulConfig> action)
+            Func<ConsulConfig> func)
         {
             EInfrastructure.Core.StartUp.Run();
-
-            services.Configure(action);
+            services.AddSingleton(func?.Invoke());
             return services;
         }
 

@@ -55,10 +55,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             var qiNiuConfig = GetQiNiuConfig(param.Json);
             string token = base.GetUploadCredentials(qiNiuConfig,
-                new UploadPersistentOpsParam(param.ImgPersistentOps.Key, new UploadPersistentOps()
-                {
-                    IsAllowOverlap = param.ImgPersistentOps.IsAllowOverlap
-                }));
+                new UploadPersistentOpsParam(param.ImgPersistentOps.Key, param.ImgPersistentOps));
             FormUploader target = new FormUploader(GetConfig());
             HttpResult result =
                 target.UploadData(param.Base64.ConvertToByte(), param.ImgPersistentOps.Key, token,

@@ -40,6 +40,12 @@ namespace EInfrastructure.Core.Config.StorageExtensions
         /// 得到上传文件策略信息
         /// </summary>
         /// <param name="opsParam">上传信息</param>
+        string GetUploadCredentials(UploadPersistentOpsParam opsParam);
+
+        /// <summary>
+        /// 得到上传文件策略信息
+        /// </summary>
+        /// <param name="opsParam">上传信息</param>
         /// <param name="func"></param>
         string GetUploadCredentials(UploadPersistentOpsParam opsParam, Func<string> func);
 

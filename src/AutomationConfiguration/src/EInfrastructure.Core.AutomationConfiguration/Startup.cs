@@ -53,6 +53,7 @@ namespace EInfrastructure.Core.AutomationConfiguration
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
         /// <param name="action"></param>
         /// <param name="errConfigAction">配置信息错误回调</param>
+        /// <param name="isUpdate">是否更新</param>
         /// <returns></returns>
         public static IServiceCollection AddAutoConfig(this IServiceCollection services,
             IConfiguration configuration,

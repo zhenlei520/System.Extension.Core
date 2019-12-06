@@ -1,12 +1,8 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using EInfrastructure.Core.AutomationConfiguration.Interface;
 using EInfrastructure.Core.Config.SerializeExtensions;
-using EInfrastructure.Core.Config.StorageExtensions.Enumeration;
-using EInfrastructure.Core.Configuration.Enumeration;
-using EInfrastructure.Core.Configuration.SeedWork;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.QiNiu.Storage.Enum;

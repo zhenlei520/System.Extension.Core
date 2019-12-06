@@ -35,11 +35,11 @@ namespace EInfrastructure.Core.Words
         /// 加载单词服务
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="action"></param>
+        /// <param name="func"></param>
         public static IServiceCollection AddWords(this IServiceCollection services,
-            Action<EWordConfig> action = null)
+            Func<EWordConfig> func)
         {
-            services.Configure(action);
+            services.AddSingleton(func?.Invoke());
             return services;
         }
 

@@ -108,6 +108,8 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
             _putPolicy.DeleteAfterDays = deleteAfterDays;
 
             #endregion
+
+
         }
 
         #endregion

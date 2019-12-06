@@ -44,6 +44,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// 根据文件流上传
         /// </summary>
         /// <param name="param"></param>
+        /// <param name="func"></param>
         /// <returns></returns>
         public bool UploadStream(UploadByStreamParam param)
         {
@@ -76,10 +77,6 @@ namespace EInfrastructure.Core.UCloud.Storage
         {
             throw new System.NotImplementedException();
         }
-
-        #endregion
-
-        #region 得到上传文件策略信息
 
         /// <summary>
         /// 得到上传文件策略信息
