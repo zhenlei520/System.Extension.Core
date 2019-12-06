@@ -5,11 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using EInfrastructure.Core.Data;
+using EInfrastructure.Core.Data.EntitiesExtension;
 using EInfrastructure.Core.Ddd;
 using EInfrastructure.Core.HelpCommon.Systems;
-using Microsoft.EntityFrameworkCore;
+using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
-namespace EInfrastructure.Core.MySql
+namespace EInfrastructure.Core.SqlServer.Common
 {
     /// <summary>
     /// 基类增删改仓储实现类
@@ -20,19 +22,27 @@ namespace EInfrastructure.Core.MySql
         where T : IComparable
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected DbContext Dbcontext;
 
+        private readonly IUnitOfWork _unitOfWork;
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork"></param>
         public RepositoryBase(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
             Dbcontext = unitOfWork as DbContext;
         }
-        
+
+        /// <summary>
+        /// 单元模式
+        /// </summary>
+        public IUnitOfWork UnitOfWork => _unitOfWork;
+
         #region 得到唯一标示
 
         /// <summary>

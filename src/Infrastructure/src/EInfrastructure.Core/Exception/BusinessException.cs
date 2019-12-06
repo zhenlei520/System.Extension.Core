@@ -18,9 +18,25 @@ namespace EInfrastructure.Core.Exception
         /// <param name="code">状态码</param>
         /// <param name="content">异常详情</param>
         public BusinessException(string content, int code = CodeKey.Err) :
-            base(new JsonCommon().Serializer(new { code = (int)code, content = content }))
+            base(new JsonCommon().Serializer(new {code = (int) code, content = content}))
         {
+        }
+    }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class BusinessException<T> : System.Exception
+    {
+        /// <summary>
+        /// 业务异常
+        /// </summary>
+        /// <param name="code">状态码</param>
+        /// <param name="content">异常详情</param>
+        public BusinessException(string content, T code = default(T)) :
+            base((new JsonCommon().Serializer(new {code = code, content = content})))
+        {
         }
     }
 }

@@ -7,8 +7,9 @@ using System.Data.Common;
 using EInfrastructure.Core.Ddd;
 using EInfrastructure.Core.HelpCommon;
 using Microsoft.EntityFrameworkCore;
+using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
-namespace EInfrastructure.Core.MySql
+namespace EInfrastructure.Core.MySql.Common
 {
     /// <summary>
     /// 执行Sql语句
@@ -16,18 +17,26 @@ namespace EInfrastructure.Core.MySql
     public class ExecuteBase : IExecute
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected DbContext Dbcontext;
 
+        private readonly IUnitOfWork _unitOfWork;
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork">工作单元</param>
         public ExecuteBase(IUnitOfWork unitOfWork)
         {
-            this.Dbcontext = unitOfWork as DbContext;
+            _unitOfWork = unitOfWork;
+            Dbcontext = unitOfWork as DbContext;
         }
+
+        /// <summary>
+        /// 单元模式
+        /// </summary>
+        public IUnitOfWork UnitOfWork => _unitOfWork;
 
         #region 执行Reader
 
@@ -76,7 +85,6 @@ namespace EInfrastructure.Core.MySql
         /// 执行Query
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="dbContext"></param>
         /// <param name="sql"></param>
         /// <returns></returns>
         public List<T> SqlQuery<T>(string sql)
@@ -120,7 +128,6 @@ namespace EInfrastructure.Core.MySql
         /// <summary>
         /// 执行Sql命令
         /// </summary>
-        /// <param name="dbContext"></param>
         /// <param name="sql"></param>
         /// <returns></returns>
         public int ExecuteSql(string sql)

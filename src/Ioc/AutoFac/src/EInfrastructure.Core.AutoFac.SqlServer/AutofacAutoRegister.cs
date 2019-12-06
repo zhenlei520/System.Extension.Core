@@ -6,6 +6,7 @@ using EInfrastructure.Core.Ddd;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using EInfrastructure.Core.SqlServer;
+using EInfrastructure.Core.SqlServer.Common;
 
 namespace EInfrastructure.Core.AutoFac.SqlServer
 {

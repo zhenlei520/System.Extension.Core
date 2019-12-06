@@ -9,8 +9,9 @@ using EInfrastructure.Core.Data;
 using EInfrastructure.Core.Ddd;
 using EInfrastructure.Core.HelpCommon.Systems;
 using Microsoft.EntityFrameworkCore;
+using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
-namespace EInfrastructure.Core.MySql
+namespace EInfrastructure.Core.SqlServer.Common
 {
     /// <summary>
     /// 基类查询仓储
@@ -22,19 +23,19 @@ namespace EInfrastructure.Core.MySql
         where T : IComparable
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected DbContext Dbcontext;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork">工作单元</param>
         public QueryBase(IUnitOfWork unitOfWork)
         {
             this.Dbcontext = unitOfWork as DbContext;
         }
-        
+
         #region 得到唯一标示
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace EInfrastructure.Core.MySql
         }
 
         #endregion
-        
+
         #region 根据条件得到满足条件的单条信息
 
         /// <summary>
@@ -62,12 +63,9 @@ namespace EInfrastructure.Core.MySql
             {
                 return Dbcontext.GetOne<TEntity, T>(condition);
             }
-            else
-            {
-               
-                return Dbcontext.Set<TEntity>().AsNoTracking()
-                    .FirstOrDefault(condition);
-            }
+
+            return Dbcontext.Set<TEntity>().AsNoTracking()
+                .FirstOrDefault(condition);
         }
 
         #endregion

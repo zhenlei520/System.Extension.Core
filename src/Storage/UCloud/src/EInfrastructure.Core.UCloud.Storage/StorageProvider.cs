@@ -37,7 +37,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         }
 
         #endregion
-        
+
         #region 根据文件流上传
 
         /// <summary>
@@ -77,10 +77,6 @@ namespace EInfrastructure.Core.UCloud.Storage
             throw new System.NotImplementedException();
         }
 
-        #endregion
-
-        #region 得到上传文件策略信息
-
         /// <summary>
         /// 得到上传文件策略信息
         /// </summary>
@@ -92,5 +88,10 @@ namespace EInfrastructure.Core.UCloud.Storage
         }
 
         #endregion
+
+        public bool Exist(string key)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

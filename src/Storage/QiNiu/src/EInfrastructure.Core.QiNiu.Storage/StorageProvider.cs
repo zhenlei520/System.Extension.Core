@@ -93,6 +93,16 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// 得到上传文件策略信息
         /// </summary>
         /// <param name="opsParam">上传信息</param>
+        public string GetUploadCredentials(UploadPersistentOpsParam opsParam)
+        {
+            var qiNiuConfig = GetQiNiuConfig(opsParam.Json);
+            return base.GetUploadCredentials(qiNiuConfig, opsParam);
+        }
+
+        /// <summary>
+        /// 得到上传文件策略信息
+        /// </summary>
+        /// <param name="opsParam">上传信息</param>
         /// <param name="func"></param>
         public string GetUploadCredentials(UploadPersistentOpsParam opsParam, Func<string> func)
         {

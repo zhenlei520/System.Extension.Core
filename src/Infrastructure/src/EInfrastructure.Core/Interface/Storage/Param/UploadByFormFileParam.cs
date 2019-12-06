@@ -9,10 +9,10 @@ namespace EInfrastructure.Core.Interface.Storage.Param
     /// <summary>
     /// 根据文件上传
     /// </summary>
-    public class UploadByFormFileParam:UploadParam
+    public class UploadByFormFileParam: UploadParam
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="key">文件key</param>
         /// <param name="file">文件信息</param>

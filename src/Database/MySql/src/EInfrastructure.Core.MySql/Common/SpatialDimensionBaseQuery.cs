@@ -1,36 +1,35 @@
-// Copyright (c) zhenlei520 All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
-
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using EInfrastructure.Core.Data;
 using EInfrastructure.Core.Ddd;
 using EInfrastructure.Core.HelpCommon;
 using Microsoft.EntityFrameworkCore;
+using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
-namespace EInfrastructure.Core.MySql
+namespace EInfrastructure.Core.MySql.Common
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
-    public class SpatialDimensionQuery<TEntity, T>
+    public class SpatialDimensionBaseQuery<TEntity, T>
         : ISpatialDimensionQuery<TEntity, T> where TEntity : class, IEntity<T>
         where T : IComparable
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected DbContext Dbcontext;
 
         private readonly IExecute _execute;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork">unitwork</param>
-        public SpatialDimensionQuery(IUnitOfWork unitOfWork, IExecute execute)
+        public SpatialDimensionBaseQuery(IUnitOfWork unitOfWork, IExecute execute)
         {
             Dbcontext = unitOfWork as DbContext;
             _execute = execute;
@@ -141,7 +140,7 @@ namespace EInfrastructure.Core.MySql
             stringBuilder.Append(
                 $"((st_distance (point (epointTable.{param.Point.Key}, epointTable.{param.Point.Value}),point({param.Location.Key},{param.Location.Value}) ) / 0.0111)*1000) AS '{param.DistanceAlias}'");
             stringBuilder.Append($" FROM {param.TableName} as {tableAlias}");
-            stringBuilder.Append($" HAVING {param.DistanceAlias}>=0{param.MinDistance}");
+            stringBuilder.Append($" HAVING {param.DistanceAlias}>{param.MinDistance}");
             if (param.Distance != -1)
             {
                 stringBuilder.Append($" And {param.DistanceAlias}<{param.Distance}");

@@ -1,12 +1,12 @@
-﻿namespace EInfrastructure.Core.Interface.Storage.Param
+namespace EInfrastructure.Core.Interface.Storage.Param
 {
     /// <summary>
-    /// 上传参数
+    /// 上传文件基础类
     /// </summary>
     public class UploadParam
     {
         /// <summary>
-        /// 云存储配置文件
+        /// 云空间配置信息
         /// </summary>
         public string Json { get; set; }
     }

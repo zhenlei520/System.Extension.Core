@@ -35,11 +35,11 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// 加载阿里大于短信服务
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="action"></param>
+        /// <param name="func"></param>
         public static IServiceCollection AddAliDaYu(this IServiceCollection services,
-            Action<AliSmsConfig> action)
+            Func<AliSmsConfig> func)
         {
-            services.Configure(action);
+            services.AddSingleton(func?.Invoke());
             return services;
         }
 

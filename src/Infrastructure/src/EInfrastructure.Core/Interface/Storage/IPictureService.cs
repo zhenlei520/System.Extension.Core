@@ -10,16 +10,6 @@ namespace EInfrastructure.Core.Interface.Storage
     /// </summary>
     public interface IPictureService
     {
-        #region 得到实现类唯一标示
-
-        /// <summary>
-        /// 得到实现类唯一标示
-        /// </summary>
-        /// <returns></returns>
-        string GetIdentify();
-
-        #endregion
-
         #region 根据图片base64流上传图片
 
         /// <summary>

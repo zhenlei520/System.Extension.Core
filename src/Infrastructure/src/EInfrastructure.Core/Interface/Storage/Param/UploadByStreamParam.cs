@@ -9,7 +9,7 @@ namespace EInfrastructure.Core.Interface.Storage.Param
     /// <summary>
     /// 根据文件流上传
     /// </summary>
-    public class UploadByStreamParam:UploadParam
+    public class UploadByStreamParam : UploadParam
     {
         /// <summary>
         /// 根据文件流上传

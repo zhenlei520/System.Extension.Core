@@ -8,7 +8,7 @@ namespace EInfrastructure.Core.Interface.Storage.Param
     /// <summary>
     /// 上传文件（前端上传，后台生成策略信息）
     /// </summary>
-    public class UploadPersistentOpsParam:UploadParam
+    public class UploadPersistentOpsParam : UploadParam
     {
         /// <summary>
         /// 上传文件（前端上传，后台生成策略信息）
@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.Interface.Storage.Param
         public UploadPersistentOpsParam(string key, UploadPersistentOps uploadPersistentOps = null)
         {
             Key = key;
-            UploadPersistentOps = uploadPersistentOps;
+            UploadPersistentOps = uploadPersistentOps ?? new UploadPersistentOps();
         }
 
         /// <summary>
