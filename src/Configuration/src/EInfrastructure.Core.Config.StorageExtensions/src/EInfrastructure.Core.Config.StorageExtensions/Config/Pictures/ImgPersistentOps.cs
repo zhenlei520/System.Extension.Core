@@ -8,7 +8,7 @@ namespace EInfrastructure.Core.Config.StorageExtensions.Config.Pictures
     /// <summary>
     /// 上传策略
     /// </summary>
-    public class ImgPersistentOps
+    public class ImgPersistentOps : UploadPersistentOps
     {
         /// <summary>
         /// 上传策略
@@ -33,31 +33,31 @@ namespace EInfrastructure.Core.Config.StorageExtensions.Config.Pictures
         /// <summary>
         /// 图片缩放信息
         /// </summary>
-        public ImageMode Mode { get; set; } = ImageMode.Nothing;
+        public virtual ImageMode Mode { get; set; } = ImageMode.Nothing;
 
         /// <summary>
         /// 图片相对地址
         /// </summary>
-        public string Key { get; set; }
+        public virtual string Key { get; set; }
 
         /// <summary>
         /// 宽
         /// </summary>
-        public int Width { get; set; } = 0;
+        public virtual int Width { get; set; } = 0;
 
         /// <summary>
         /// 高
         /// </summary>
-        public int Height { get; set; } = 0;
+        public virtual int Height { get; set; } = 0;
 
         /// <summary>
         /// 是否覆盖上传
         /// </summary>
-        public bool IsAllowOverlap { get; set; } = true;
+        public override bool IsAllowOverlap { get; set; } = true;
 
         /// <summary>
         /// 水印信息
         /// </summary>
-        public StorageWaterMark WaterMark { get; set; } = null;
+        public virtual StorageWaterMark WaterMark { get; set; } = null;
     }
 }

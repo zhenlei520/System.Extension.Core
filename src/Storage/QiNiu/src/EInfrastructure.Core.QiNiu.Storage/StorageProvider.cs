@@ -69,6 +69,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// 根据文件上传
         /// </summary>
         /// <param name="param"></param>
+        /// <param name="func"></param>
         /// <returns></returns>
         public bool UploadFile(UploadByFormFileParam param)
         {
@@ -91,6 +92,16 @@ namespace EInfrastructure.Core.QiNiu.Storage
         #endregion
 
         #region 得到上传文件策略信息
+
+        /// <summary>
+        /// 得到上传文件策略信息
+        /// </summary>
+        /// <param name="opsParam">上传信息</param>
+        public string GetUploadCredentials(UploadPersistentOpsParam opsParam)
+        {
+            var qiNiuConfig = GetQiNiuConfig(opsParam.Json);
+            return base.GetUploadCredentials(qiNiuConfig, opsParam);
+        }
 
         /// <summary>
         /// 得到上传文件策略信息
