@@ -11,12 +11,12 @@ using Microsoft.Extensions.Logging;
 namespace EInfrastructure.Core.SqlServer
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static class Ext
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="optionsBuilder"></param>
         public static void EnableDebugTrace(this DbContextOptionsBuilder optionsBuilder)
@@ -61,36 +61,36 @@ namespace EInfrastructure.Core.SqlServer
 
                 // Create the mapping type and do the mapping
                 var mapper = Activator.CreateInstance(mappingType);
-                mapper.GetType().GetMethod("Map").Invoke(mapper, new[] {entityBuilder});
+                mapper.GetType().GetMethod("Map")?.Invoke(mapper, new[] {entityBuilder});
             }
         }
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class TraceLogger : ILogger
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly string categoryName;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="categoryName"></param>
         public TraceLogger(string categoryName) => this.categoryName = categoryName;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="logLevel"></param>
         /// <returns></returns>
         public bool IsEnabled(LogLevel logLevel) => true;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="logLevel"></param>
         /// <param name="eventId"></param>
@@ -105,12 +105,12 @@ namespace EInfrastructure.Core.SqlServer
             System.Exception exception,
             Func<TState, System.Exception, string> formatter)
         {
-            Trace.WriteLine($"{DateTime.Now.ToString("o")} {logLevel} {eventId.Id} {this.categoryName}");
+            Trace.WriteLine($"{DateTime.Now:o} {logLevel} {eventId.Id} {this.categoryName}");
             Trace.WriteLine(formatter(state, exception));
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="state"></param>
         /// <typeparam name="TState"></typeparam>
@@ -119,19 +119,19 @@ namespace EInfrastructure.Core.SqlServer
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class TraceLoggerProvider : ILoggerProvider
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="categoryName"></param>
         /// <returns></returns>
         public ILogger CreateLogger(string categoryName) => new TraceLogger(categoryName);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void Dispose()
         {

@@ -3,13 +3,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using EInfrastructure.Core.Ddd;
+using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Systems;
 using Microsoft.EntityFrameworkCore;
+using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
-namespace EInfrastructure.Core.SqlServer
+namespace EInfrastructure.Core.MySql.Common
 {
     /// <summary>
     /// 基类增删改仓储实现类
@@ -20,19 +23,28 @@ namespace EInfrastructure.Core.SqlServer
         where T : IComparable
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected DbContext Dbcontext;
 
+        private readonly IUnitOfWork _unitOfWork;
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork"></param>
-        public RepositoryBase(IUnitOfWork unitOfWork)
+        protected RepositoryBase(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
+            // ReSharper disable once SuspiciousTypeConversion.Global
             Dbcontext = unitOfWork as DbContext;
         }
-        
+
+        /// <summary>
+        /// 单元模式
+        /// </summary>
+        public IUnitOfWork UnitOfWork => _unitOfWork;
+
         #region 得到唯一标示
 
         /// <summary>

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using EInfrastructure.Core.Data;
 using EInfrastructure.Core.Data.EntitiesExtension;
 using EInfrastructure.Core.Ddd;
-using Microsoft.EntityFrameworkCore;
+using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
 namespace EInfrastructure.Core.SqlServer
 {

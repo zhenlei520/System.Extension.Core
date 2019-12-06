@@ -6,6 +6,8 @@ using EInfrastructure.Core.Ddd;
 using EInfrastructure.Core.MySql;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using EInfrastructure.Core.MySql.Repository;
+using ExecuteBase = EInfrastructure.Core.MySql.Common.ExecuteBase;
 
 namespace EInfrastructure.Core.AutoFac.MySql
 {
@@ -26,10 +28,10 @@ namespace EInfrastructure.Core.AutoFac.MySql
             return base.Build(services, (builder) =>
             {
                 EInfrastructure.Core.MySql.Startup.Load();
-                builder.RegisterGeneric(typeof(QueryBase<,>)).As(typeof(IQuery<,>)).PropertiesAutowired()
+                builder.RegisterGeneric(typeof(Core.MySql.Common.QueryBase<,>)).As(typeof(IQuery<,>)).PropertiesAutowired()
                     .InstancePerLifetimeScope();
 
-                builder.RegisterGeneric(typeof(RepositoryBase<,>)).As(typeof(IRepository<,>)).PropertiesAutowired()
+                builder.RegisterGeneric(typeof(Core.MySql.Common.RepositoryBase<,>)).As(typeof(IRepository<,>)).PropertiesAutowired()
                     .InstancePerLifetimeScope();
 
                 builder.RegisterType<ExecuteBase>().As<IExecute>().PropertiesAutowired()
