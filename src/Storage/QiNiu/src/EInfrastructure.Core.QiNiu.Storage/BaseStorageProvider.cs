@@ -202,9 +202,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             Action<PutPolicy> action = null)
         {
             PutPolicyConfig putPolicyConfig = new PutPolicyConfig(qiNiuConfig);
-            putPolicyConfig.SetPutPolicy(opsParam.Key,
-                opsParam.UploadPersistentOps.IsAllowOverlap,
-                opsParam.UploadPersistentOps.PersistentOps);
+            putPolicyConfig.SetPutPolicy(opsParam);
             action?.Invoke(putPolicyConfig.GetPutPolicy());
             return Auth.CreateUploadToken(qiNiuConfig.GetMac(), putPolicyConfig.GetPutPolicy().ToJsonString());
         }
