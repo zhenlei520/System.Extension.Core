@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.AspNetCore.Api.Common
@@ -6,7 +6,7 @@ namespace EInfrastructure.Core.AspNetCore.Api.Common
     /// <summary>
     /// 正常响应信息
     /// </summary>
-    public abstract class ApiResult<T> where T : struct
+    public abstract class ApiResult<T>
     {
         /// <summary>
         ///
@@ -52,18 +52,18 @@ namespace EInfrastructure.Core.AspNetCore.Api.Common
         /// 响应码
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public abstract T Code { get; set; }
+        public virtual T Code { get; set; }
 
         /// <summary>
         /// 响应信息
         /// </summary>
         [JsonProperty(PropertyName = "response")]
-        public abstract object Data { get; set; }
+        public virtual object Data { get; set; }
 
         /// <summary>
         /// 当前时间
         /// </summary>
         [JsonProperty(PropertyName = "current_time", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public abstract DateTime? CurrentTime { get; set; }
+        public virtual DateTime? CurrentTime { get; set; }
     }
 }

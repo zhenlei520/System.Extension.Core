@@ -36,11 +36,11 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// 加载UCloud服务
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="action"></param>
+        /// <param name="func"></param>
         public static IServiceCollection AddUCloudStorage(this IServiceCollection services,
-            Action<UCloudStorageConfig> action)
+            Func<UCloudStorageConfig> func)
         {
-            services.Configure(action);
+            services.AddSingleton(func?.Invoke());
             return services;
         }
 
