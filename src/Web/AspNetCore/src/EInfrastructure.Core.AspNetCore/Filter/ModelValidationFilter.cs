@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.AspNetCore.Filter
         /// <param name="errCode">错误码</param>
         public ModelValidationFilter(ILogService logService, int? errCode = null)
         {
-            ErrCode = errCode??HttpStatus.Err.Id;
+            ErrCode = errCode ?? HttpStatus.Err.Id;
             _logService = logService;
         }
 

@@ -17,7 +17,7 @@ namespace EInfrastructure.Core.Configuration.Enumeration
         /// <summary>
         /// 错误
         /// </summary>
-        public static HttpStatus Err = new HttpStatus(201, "Error", "错误");
+        public static HttpStatus Err = new HttpStatus(201, "error", "错误");
 
         /// <summary>
         /// 未授权

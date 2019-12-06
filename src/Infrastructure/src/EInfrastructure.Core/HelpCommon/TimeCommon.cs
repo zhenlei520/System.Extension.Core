@@ -178,7 +178,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="dateTime1">日期时间</param>
         /// <param name="dateMode">显示模式</param>
         /// <returns>0-9种模式的日期</returns>
-        public static string FormatDate(this DateTime dateTime1, FormatDateType dateMode=null)
+        public static string FormatDate(this DateTime dateTime1, FormatDateType dateMode = null)
         {
             if (dateMode == null)
             {

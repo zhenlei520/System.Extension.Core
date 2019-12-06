@@ -5,6 +5,7 @@ using System;
 using EInfrastructure.Core.AutomationConfiguration.Interface;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.StorageExtensions.Enumeration;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Configuration.SeedWork;
 using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;

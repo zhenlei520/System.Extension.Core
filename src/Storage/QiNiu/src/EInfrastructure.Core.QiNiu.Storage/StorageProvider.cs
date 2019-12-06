@@ -51,12 +51,13 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool UploadStream(UploadByStreamParam param)
         {
+            var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
             var qiNiuConfig = GetQiNiuConfig(param.Json);
             string token = GetUploadCredentials(qiNiuConfig,
-                new UploadPersistentOpsParam(param.Key, param.UploadPersistentOps));
-            FormUploader target = new FormUploader(GetConfig(param.UploadPersistentOps));
+                new UploadPersistentOpsParam(param.Key, uploadPersistentOps));
+            FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
             HttpResult result =
-                target.UploadStream(param.Stream, param.Key, token, GetPutExtra(param.UploadPersistentOps));
+                target.UploadStream(param.Stream, param.Key, token, GetPutExtra(uploadPersistentOps));
             return result.Code == (int) HttpCode.OK;
         }
 
@@ -71,15 +72,16 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool UploadFile(UploadByFormFileParam param)
         {
+            var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
             var qiNiuConfig = GetQiNiuConfig(param.Json);
             string token = base.GetUploadCredentials(qiNiuConfig,
-                new UploadPersistentOpsParam(param.Key, param.UploadPersistentOps));
-            FormUploader target = new FormUploader(GetConfig(param.UploadPersistentOps));
+                new UploadPersistentOpsParam(param.Key, uploadPersistentOps));
+            FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
             if (param.File != null)
             {
                 HttpResult result =
                     target.UploadStream(param.File.OpenReadStream(), param.Key, token,
-                        GetPutExtra(param.UploadPersistentOps));
+                        GetPutExtra(uploadPersistentOps));
                 return result.Code == (int) HttpCode.OK;
             }
 

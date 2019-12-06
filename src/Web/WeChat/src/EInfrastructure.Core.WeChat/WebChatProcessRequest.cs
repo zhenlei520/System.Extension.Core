@@ -50,13 +50,13 @@ namespace EInfrastructure.Core.WeChat
             {
                 if (!string.IsNullOrEmpty(Auth(webChatAuthConfig, wxConfig)))
                 {
-                    throw new BusinessException("签名错误", errCode??HttpStatus.Err.Id);
+                    throw new BusinessException("签名错误");
                 }
 
                 refundReponse = XmlCommon.Deserialize<WebChatMessage>(xml);
                 if (refundReponse == null)
                 {
-                    throw new BusinessException("参数错误", errCode??HttpStatus.Err.Id);
+                    throw new BusinessException("参数错误");
                 }
             }
             catch (System.Exception e)

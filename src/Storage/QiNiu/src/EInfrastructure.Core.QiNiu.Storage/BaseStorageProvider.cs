@@ -210,5 +210,19 @@ namespace EInfrastructure.Core.QiNiu.Storage
         }
 
         #endregion
+
+        #region 得到上传策略
+
+        /// <summary>
+        /// 得到上传策略
+        /// </summary>
+        /// <param name="uploadPersistentOps">上传策略</param>
+        /// <returns></returns>
+        protected UploadPersistentOps GetUploadPersistentOps(UploadPersistentOps uploadPersistentOps)
+        {
+            return uploadPersistentOps ?? new UploadPersistentOps();
+        }
+
+        #endregion
     }
 }

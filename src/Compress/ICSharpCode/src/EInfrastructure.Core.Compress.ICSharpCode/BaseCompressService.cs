@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.IO;
+using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Exception;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode
@@ -30,7 +31,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
             bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int blockSize = 2048)
         {
-            throw new BusinessException("不支持的压缩方式");
+            throw new BusinessException("不支持的压缩方式",HttpStatus.Err.Id);
         }
 
         #endregion
@@ -54,7 +55,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
             bool overWrite = true, bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048)
         {
-            throw new BusinessException("不支持的压缩方式");
+            throw new BusinessException("不支持的压缩方式",HttpStatus.Err.Id);
         }
 
         #endregion
@@ -81,7 +82,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
             SearchOption searchOption = SearchOption.AllDirectories, bool overWrite = true, bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048)
         {
-            throw new BusinessException("不支持的压缩方式");
+            throw new BusinessException("不支持的压缩方式",HttpStatus.Err.Id);
         }
 
         #endregion
@@ -104,7 +105,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
             bool isRecursive = true, bool overWrite = true, bool isEncrypt = false,
             string password = "", int compressionLevel = 5)
         {
-            throw new BusinessException("不支持的压缩方式");
+            throw new BusinessException("不支持的压缩方式",HttpStatus.Err.Id);
         }
 
         #endregion
@@ -120,7 +121,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <param name="overWrite">是否覆盖</param>
         public virtual void DeCompress(string zipFile, string targetDirectory, string password = "", bool overWrite = true)
         {
-            throw new BusinessException("不支持的压缩方式");
+            throw new BusinessException("不支持的压缩方式",HttpStatus.Err.Id);
         }
 
         #endregion
