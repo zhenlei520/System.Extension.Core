@@ -36,12 +36,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// 加载七牛云存储
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="action">委托</param>
+        /// <param name="func">委托</param>
         public static IServiceCollection AddQiNiuStorage(this IServiceCollection services,
-            Action<QiNiuStorageConfig> action)
+            Func<QiNiuStorageConfig> func)
         {
             EInfrastructure.Core.StartUp.Run();
-            services.Configure(action);
+            services.AddSingleton(func?.Invoke());
             return services;
         }
 

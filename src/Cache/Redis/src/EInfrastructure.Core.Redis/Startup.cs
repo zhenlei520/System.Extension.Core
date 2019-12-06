@@ -34,13 +34,12 @@ namespace EInfrastructure.Core.Redis
         /// 加载Redis服务
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="action"></param>
+        /// <param name="func"></param>
         public static IServiceCollection AddRedis(this IServiceCollection services,
-            Action<RedisConfig> action)
+            Func<RedisConfig> func)
         {
             EInfrastructure.Core.StartUp.Run();
-
-            services.Configure(action);
+            services.AddSingleton(func?.Invoke());
             return services;
         }
 
