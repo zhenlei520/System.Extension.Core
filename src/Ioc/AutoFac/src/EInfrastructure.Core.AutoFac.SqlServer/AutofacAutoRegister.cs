@@ -26,6 +26,8 @@ namespace EInfrastructure.Core.AutoFac.SqlServer
         {
             return base.Build(services, (builder) =>
             {
+                #region 单数据库查询
+
                 builder.RegisterGeneric(typeof(QueryBase<,>)).As(typeof(IQuery<,>)).PropertiesAutowired()
                     .InstancePerLifetimeScope();
 
@@ -34,6 +36,30 @@ namespace EInfrastructure.Core.AutoFac.SqlServer
 
                 builder.RegisterType<ExecuteBase>().As<IExecute>().PropertiesAutowired()
                     .InstancePerLifetimeScope();
+
+                builder.RegisterGeneric(typeof(SpatialDimensionQuery<,>)).As(typeof(ISpatialDimensionQuery<,>))
+                    .PropertiesAutowired()
+                    .InstancePerLifetimeScope();
+
+                #endregion
+
+                #region 多数据库查询
+
+                builder.RegisterGeneric(typeof(QueryBase<,,>)).As(typeof(IQuery<,,>)).PropertiesAutowired()
+                    .InstancePerLifetimeScope();
+
+                builder.RegisterGeneric(typeof(RepositoryBase<,,>)).As(typeof(IRepository<,,>)).PropertiesAutowired()
+                    .InstancePerLifetimeScope();
+
+                builder.RegisterGeneric(typeof(ExecuteBase<>)).As(typeof(IExecute<>)).PropertiesAutowired()
+                    .InstancePerLifetimeScope();
+
+                builder.RegisterGeneric(typeof(SpatialDimensionQuery<,,>)).As(typeof(ISpatialDimensionQuery<,,>))
+                    .PropertiesAutowired()
+                    .InstancePerLifetimeScope();
+
+                #endregion
+
                 action(builder);
             });
         }
