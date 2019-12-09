@@ -37,7 +37,8 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
     /// 单元模式，可以指定数据库
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IUnitOfWork<T> where T : DbContext, IUnitOfWork
+    public interface IUnitOfWork<T> : IUnitOfWork
+        where T : DbContext
     {
     }
 }
