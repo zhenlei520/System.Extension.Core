@@ -11,8 +11,10 @@ namespace EInfrastructure.Core.SqlServer.Repository
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TDbContext"></typeparam>
     public class QueryBase<TEntity, T, TDbContext>
-        : Common.QueryBase<TEntity, T> where TEntity : class, IEntity<T>
+        : Common.QueryBase<TEntity, T> where TEntity : class, IEntity<T>,
+        IQuery<TEntity, T, TDbContext>
         where T : IComparable
         where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
     {

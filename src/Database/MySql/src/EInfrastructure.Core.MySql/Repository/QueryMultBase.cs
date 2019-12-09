@@ -11,8 +11,10 @@ namespace EInfrastructure.Core.MySql.Repository
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="T"></typeparam>
-    public class QueryBase<TEntity, T, TDbContext>
-        : Common.QueryBase<TEntity, T> where TEntity : class, IEntity<T>
+    /// <typeparam name="TDbContext"></typeparam>
+    public class QueryBase<TEntity, T, TDbContext> :
+        Common.QueryBase<TEntity, T>,
+        IQuery<TEntity, T, TDbContext> where TEntity : class, IEntity<T>
         where T : IComparable
         where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
     {

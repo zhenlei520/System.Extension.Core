@@ -8,7 +8,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
     /// <summary>
     /// 执行Sql语句
     /// </summary>
-    public class ExecuteBase<TDbContext> : Common.ExecuteBase
+    public class ExecuteBase<TDbContext> : Common.ExecuteBase, IExecute<TDbContext>
         where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
     {
         /// <summary>

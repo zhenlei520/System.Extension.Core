@@ -62,4 +62,18 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         /// <returns></returns>
         TEntity LoadIntegrate(T id);
     }
+
+    /// <summary>
+    /// 基类增删改仓储接口（支持多数据库）
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TDbContext"></typeparam>
+    public interface IRepository<TEntity, T, TDbContext> :
+        IRepository<TEntity, T>
+        where TEntity : IAggregateRoot<T>
+        where T : IComparable
+        where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
+    {
+    }
 }
