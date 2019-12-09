@@ -39,4 +39,13 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         /// <returns></returns>
         int ExecuteSql(string sql);
     }
+
+    /// <summary>
+    /// 执行Sql语句（多数据库）
+    /// </summary>
+    /// <typeparam name="TDbContext"></typeparam>
+    public interface IExecute<TDbContext> : IExecute
+        where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
+    {
+    }
 }

@@ -106,10 +106,13 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
 
             _putPolicy.FileType = opsParam.UploadPersistentOps.FileType;
             _putPolicy.DetectMime = opsParam.UploadPersistentOps.DetectMime;
-            _putPolicy.MimeLimit = opsParam.UploadPersistentOps.MimeLimit;
+            if (!string.IsNullOrEmpty(opsParam.UploadPersistentOps.MimeLimit))
+            {
+                _putPolicy.MimeLimit = opsParam.UploadPersistentOps.MimeLimit;
+            }
             _putPolicy.FsizeMin = opsParam.UploadPersistentOps.FsizeMin;
             _putPolicy.FsizeLimit = opsParam.UploadPersistentOps.FsizeLimit;
-            
+
             if (!string.IsNullOrEmpty(opsParam.UploadPersistentOps.ReturnUrl))
             {
                 _putPolicy.ReturnUrl = opsParam.UploadPersistentOps.ReturnUrl;

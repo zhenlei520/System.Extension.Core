@@ -11,7 +11,7 @@ namespace EInfrastructure.Core.MySql.Repository
     ///
     /// </summary>
     public class SpatialDimensionQuery<TEntity, T, TDbContext>
-        : SpatialDimensionBaseQuery<TEntity, T>
+        : SpatialDimensionBaseQuery<TEntity, T>,ISpatialDimensionQuery<TEntity, T, TDbContext>
         where TEntity : class, IEntity<T>
         where T : IComparable
         where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork

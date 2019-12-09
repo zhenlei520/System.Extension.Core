@@ -37,6 +37,20 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
     }
 
     /// <summary>
+    /// 空间维度查询（支持多数据库）
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TDbContext"></typeparam>
+    public interface ISpatialDimensionQuery<TEntity, T, TDbContext>
+        : ISpatialDimensionQuery<TEntity, T>
+        where TEntity : IEntity<T>
+        where T : IComparable
+        where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
+    {
+    }
+
+    /// <summary>
     /// Spatial param
     /// </summary>
     public class SpatialDimensionParam
@@ -92,7 +106,7 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class SpatialDimensionPagingParam : SpatialDimensionParam
     {

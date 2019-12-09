@@ -9,7 +9,8 @@ namespace EInfrastructure.Core.SqlServer.Repository
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TDbContext"></typeparam>
-    public class RepositoryBase<TEntity, T, TDbContext> : Common.RepositoryBase<TEntity, T>
+    public class RepositoryBase<TEntity, T, TDbContext> : Common.RepositoryBase<TEntity, T>,
+        IRepository<TEntity, T, TDbContext>
         where TEntity : Entity<T>, IAggregateRoot<T>
         where T : IComparable
         where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork

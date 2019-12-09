@@ -82,4 +82,18 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         /// <returns></returns>
         int Count(Expression<Func<TEntity, bool>> condition);
     }
+
+    /// <summary>
+    /// 基类查询仓储(支持多数据库)
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TDbContext"></typeparam>
+    public interface IQuery<TEntity, T, TDbContext> : IQuery<TEntity, T>
+        where TEntity : IEntity<T>
+        where T : IComparable
+        where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
+    {
+
+    }
 }

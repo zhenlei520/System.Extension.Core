@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>2.0.0-beta-042</Version>
+    <Version>2.0.0-beta-042-multdb</Version>
     <PackageReleaseNotes>sqlserver2012以上数据库</PackageReleaseNotes>
     <Description>dotnet core 使用sqlserver数据库实现</Description>
     <Copyright>Copyright ©zhenlei520 2018</Copyright>
