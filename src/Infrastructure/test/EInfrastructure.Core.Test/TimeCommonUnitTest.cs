@@ -179,5 +179,20 @@ namespace EInfrastructure.Core.Test
             });
             Check.True(time == dateStr, "方法异常");
         }
+
+        [Theory]
+        [InlineData("2019-12-9")]
+        [InlineData("2019-12-14")]
+        [InlineData("2019-12-15")]
+        [InlineData("2019-12-18")]
+        [InlineData("2019-1-18")]
+        [InlineData("2019-2-18")]
+        public void Get(string time)
+        {
+            var result = TimeCommon.Get(DateTime.Parse(time), TimeType.StartWeek);
+            result = TimeCommon.Get(DateTime.Parse(time), TimeType.EndWeek);
+            result = TimeCommon.Get(DateTime.Parse(time), TimeType.StartQuarter);
+            result = TimeCommon.Get(DateTime.Parse(time), TimeType.EndQuarter);
+        }
     }
 }

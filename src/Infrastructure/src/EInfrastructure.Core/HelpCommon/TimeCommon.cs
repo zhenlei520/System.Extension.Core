@@ -367,12 +367,17 @@ namespace EInfrastructure.Core.HelpCommon
 
             if (timeKey == TimeType.StartWeek)
             {
-                return dateNow.AddDays(1 - Convert.ToInt32(dateNow.DayOfWeek.ToString("d"))); //本周周一
+                int count = dateNow.DayOfWeek-DayOfWeek.Monday;
+                if (count == -1) count = 6;
+                return new DateTime(dateNow.Year, dateNow.Month, dateNow.Day).AddDays(-count);//本周周一
             }
 
             if (timeKey == TimeType.EndWeek)
             {
-                return dateNow.AddDays(1 - Convert.ToInt32(dateNow.DayOfWeek.ToString("d"))).AddDays(6); //本周周日
+                int count = dateNow.DayOfWeek - DayOfWeek.Sunday;
+                if (count != 0) count = 7 - count;
+
+                return new DateTime(dateNow.Year, dateNow.Month, dateNow.Day).AddDays(count);//本周周日
             }
 
             return dateNow;

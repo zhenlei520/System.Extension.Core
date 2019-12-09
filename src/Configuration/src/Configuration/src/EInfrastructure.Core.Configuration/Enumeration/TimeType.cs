@@ -28,7 +28,7 @@ namespace EInfrastructure.Core.Configuration.Enumeration
         public static TimeType EndWeek = new TimeType(4, "本周周日");
 
         /// <summary>
-        ///本季初
+        /// 本季初
         /// </summary>
         public static TimeType StartQuarter = new TimeType(5, "本季初");
 
