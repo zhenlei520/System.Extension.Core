@@ -24,8 +24,6 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// <returns></returns>
         public static IServiceCollection AddConsul(this IServiceCollection services)
         {
-            EInfrastructure.Core.StartUp.Run();
-
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration) service.ImplementationInstance;
             return AddConsul(services, configuration);
@@ -45,7 +43,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
             Func<ConsulConfig> func)
         {
             EInfrastructure.Core.StartUp.Run();
-            services.AddSingleton(func?.Invoke());
+            services.AddSingleton(func.Invoke());
             return services;
         }
 
@@ -58,10 +56,9 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         public static IServiceCollection AddConsul(this IServiceCollection services,
             Action<List<ConsulConfig>> action)
         {
-            EInfrastructure.Core.StartUp.Run();
-
-            services.Configure(action);
-            return services;
+            List<ConsulConfig> consulConfigs = new List<ConsulConfig>();
+            action.Invoke(consulConfigs);
+            return services.AddConsul(() => consulConfigs);
         }
 
         /// <summary>
@@ -74,7 +71,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
             Func<List<ConsulConfig>> action)
         {
             EInfrastructure.Core.StartUp.Run();
-            services.AddSingleton(action?.Invoke());
+            services.AddSingleton(action.Invoke());
             return services;
         }
 

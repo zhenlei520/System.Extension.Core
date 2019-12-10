@@ -22,8 +22,6 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <param name="services"></param>
         public static IServiceCollection AddUCloudStorage(this IServiceCollection services)
         {
-            EInfrastructure.Core.StartUp.Run();
-
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration) service.ImplementationInstance;
             return AddUCloudStorage(services, configuration);
@@ -42,8 +40,21 @@ namespace EInfrastructure.Core.UCloud.Storage
             Func<UCloudStorageConfig> func)
         {
             EInfrastructure.Core.StartUp.Run();
-            services.AddSingleton(func?.Invoke());
+            services.AddSingleton(func.Invoke());
             return services;
+        }
+
+        /// <summary>
+        /// 加载UCloud服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action"></param>
+        public static IServiceCollection AddUCloudStorage(this IServiceCollection services,
+            Action<UCloudStorageConfig> action)
+        {
+            UCloudStorageConfig uCloudStorageConfig = new UCloudStorageConfig();
+            action.Invoke(uCloudStorageConfig);
+            return services.AddUCloudStorage(()=>uCloudStorageConfig);
         }
 
         #endregion
@@ -59,7 +70,6 @@ namespace EInfrastructure.Core.UCloud.Storage
             IConfiguration configuration)
         {
             EInfrastructure.Core.StartUp.Run();
-
             services.Configure<UCloudStorageConfig>(configuration);
             return services;
         }

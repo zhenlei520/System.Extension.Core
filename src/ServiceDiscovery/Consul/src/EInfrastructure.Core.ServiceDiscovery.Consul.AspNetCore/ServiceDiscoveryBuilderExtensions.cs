@@ -29,12 +29,12 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// <returns></returns>
         public static IApplicationBuilder UseConsul(this IApplicationBuilder app, IApplicationLifetime lifetime)
         {
-            var consulConfigs = app.ApplicationServices.GetService<IOptions<List<ConsulConfig>>>().Value;
+            var consulConfigs = app.ApplicationServices.GetService<List<ConsulConfig>>();
             if (consulConfigs.Count == 0)
             {
                 consulConfigs=new List<ConsulConfig>()
                 {
-                    app.ApplicationServices.GetService<IOptions<ConsulConfig>>().Value
+                    app.ApplicationServices.GetService<ConsulConfig>()
                 };
             }
 

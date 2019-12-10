@@ -22,7 +22,6 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         /// <param name="services"></param>
         public static IServiceCollection AddBaiduContentIdentification(this IServiceCollection services)
         {
-            EInfrastructure.Core.StartUp.Run();
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration) service.ImplementationInstance;
             return AddBaiduContentIdentification(services, configuration);
@@ -41,8 +40,21 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
             Func<BaiDuConfig> func)
         {
             EInfrastructure.Core.StartUp.Run();
-            services.AddSingleton(func?.Invoke());
+            services.AddSingleton(func.Invoke());
             return services;
+        }
+
+        /// <summary>
+        /// 加载百度鉴黄服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action"></param>
+        public static IServiceCollection AddBaiduContentIdentification(this IServiceCollection services,
+            Action<BaiDuConfig> action)
+        {
+            BaiDuConfig baiDuConfig=new BaiDuConfig();
+            action.Invoke(baiDuConfig);
+            return services.AddBaiduContentIdentification(() => baiDuConfig);
         }
 
         #endregion
