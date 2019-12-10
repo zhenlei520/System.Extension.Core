@@ -22,8 +22,6 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <param name="services"></param>
         public static IServiceCollection AddAliDaYu(this IServiceCollection services)
         {
-            EInfrastructure.Core.StartUp.Run();
-
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration) service.ImplementationInstance;
             return AddAliDaYu(services, configuration);
@@ -44,6 +42,19 @@ namespace EInfrastructure.Core.AliYun.DaYu
             EInfrastructure.Core.StartUp.Run();
             services.AddSingleton(func?.Invoke());
             return services;
+        }
+
+        /// <summary>
+        /// 加载阿里大于短信服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action"></param>
+        public static IServiceCollection AddAliDaYu(this IServiceCollection services,
+            Action<AliSmsConfig> action)
+        {
+            AliSmsConfig aliSmsConfig = new AliSmsConfig();
+            action.Invoke(aliSmsConfig);
+            return services.AddAliDaYu(() => aliSmsConfig);
         }
 
         #endregion

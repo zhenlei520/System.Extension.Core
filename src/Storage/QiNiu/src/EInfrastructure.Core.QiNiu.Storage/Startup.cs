@@ -22,7 +22,6 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <param name="services"></param>
         public static IServiceCollection AddQiNiuStorage(this IServiceCollection services)
         {
-            EInfrastructure.Core.StartUp.Run();
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration) service.ImplementationInstance;
             return AddQiNiuStorage(services, configuration);
@@ -43,6 +42,19 @@ namespace EInfrastructure.Core.QiNiu.Storage
             EInfrastructure.Core.StartUp.Run();
             services.AddSingleton(func?.Invoke());
             return services;
+        }
+
+        /// <summary>
+        /// 加载七牛云存储
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action">委托</param>
+        public static IServiceCollection AddQiNiuStorage(this IServiceCollection services,
+            Action<QiNiuStorageConfig> action)
+        {
+            QiNiuStorageConfig qiNiuStorageConfig = new QiNiuStorageConfig();
+            action.Invoke(qiNiuStorageConfig);
+            return services.AddQiNiuStorage(() => qiNiuStorageConfig);
         }
 
         #endregion
