@@ -40,7 +40,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
             Func<AliSmsConfig> func)
         {
             EInfrastructure.Core.StartUp.Run();
-            services.AddSingleton(func?.Invoke());
+            services.AddSingleton(func.Invoke());
             return services;
         }
 

@@ -40,7 +40,7 @@ namespace EInfrastructure.Core.UCloud.Storage
             Func<UCloudStorageConfig> func)
         {
             EInfrastructure.Core.StartUp.Run();
-            services.AddSingleton(func?.Invoke());
+            services.AddSingleton(func.Invoke());
             return services;
         }
 

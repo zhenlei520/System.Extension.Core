@@ -43,7 +43,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
             Func<ConsulConfig> func)
         {
             EInfrastructure.Core.StartUp.Run();
-            services.AddSingleton(func?.Invoke());
+            services.AddSingleton(func.Invoke());
             return services;
         }
 
@@ -71,7 +71,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
             Func<List<ConsulConfig>> action)
         {
             EInfrastructure.Core.StartUp.Run();
-            services.AddSingleton(action?.Invoke());
+            services.AddSingleton(action.Invoke());
             return services;
         }
 

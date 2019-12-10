@@ -37,7 +37,7 @@ namespace EInfrastructure.Core.Redis
             Func<RedisConfig> func)
         {
             EInfrastructure.Core.StartUp.Run();
-            services.AddSingleton(func?.Invoke());
+            services.AddSingleton(func.Invoke());
             return services;
         }
 
