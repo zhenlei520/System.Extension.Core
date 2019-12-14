@@ -1294,7 +1294,7 @@ namespace EInfrastructure.Core.Redis
         /// <param name="second"></param>
         private TimeSpan GetExpire(long second = -1)
         {
-            TimeSpan timeSpan;
+            TimeSpan timeSpan = default(TimeSpan);
             if (second == 0)
             {
                 timeSpan = TimeSpan.Zero;

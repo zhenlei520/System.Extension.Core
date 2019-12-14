@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>2.0.0-beta-046</Version>
+    <Version>2.0.0-beta-047</Version>
     <Authors>zhenlei520</Authors>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Company>zhenlei520</Company>
@@ -12,10 +12,15 @@
     <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
     <Title>configuration</Title>
     <PackageTags>EInfrastructure.Core Configuration</PackageTags>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2"/>
   </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+  </ItemGroup>
+
+
 </Project>

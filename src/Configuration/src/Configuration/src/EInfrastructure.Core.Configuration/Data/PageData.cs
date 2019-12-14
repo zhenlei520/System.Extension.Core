@@ -2,9 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-#if NETSTANDARD
-
-#endif
 using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.Configuration.Data
