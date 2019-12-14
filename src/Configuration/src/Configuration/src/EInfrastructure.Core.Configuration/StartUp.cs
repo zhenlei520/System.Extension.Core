@@ -4,16 +4,16 @@ namespace EInfrastructure.Core.Configuration
 {
     public static class StartUp
     {
-        private static bool IsStartUp;
+        private static bool _isStartUp;
 
         /// <summary>
         /// 启用配置
         /// </summary>
         public static void Run()
         {
-            if (!IsStartUp)
+            if (!_isStartUp)
             {
-                IsStartUp = true;
+                _isStartUp = true;
             }
         }
     }
