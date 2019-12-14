@@ -14,7 +14,7 @@
     <Title>configuration</Title>
     <PackageTags>EInfrastructure.Core Configuration</PackageTags>
   </PropertyGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.1" />
   </ItemGroup>
   <ItemGroup>
