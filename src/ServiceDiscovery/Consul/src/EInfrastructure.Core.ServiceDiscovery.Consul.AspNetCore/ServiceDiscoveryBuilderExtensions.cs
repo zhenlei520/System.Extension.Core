@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Consul;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
@@ -25,20 +26,23 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// 服务注册
         /// </summary>
         /// <param name="app"></param>
-        /// <param name="lifetime"></param>
+        /// <param name="cancellationToken">停止</param>
         /// <returns></returns>
-        public static IApplicationBuilder UseConsul(this IApplicationBuilder app, IApplicationLifetime lifetime)
+        public static IApplicationBuilder UseConsul(this IApplicationBuilder app, CancellationToken cancellationToken)
         {
             var consulConfigs = app.ApplicationServices.GetService<List<ConsulConfig>>();
-            if (consulConfigs.Count == 0)
+            if (consulConfigs == null || consulConfigs.Count == 0)
             {
-                consulConfigs=new List<ConsulConfig>()
+                consulConfigs = new List<ConsulConfig>()
                 {
                     app.ApplicationServices.GetService<ConsulConfig>()
                 };
             }
 
-            consulConfigs.ForEach(consulConfig => { consulConfig.UseConsul(lifetime); });
+            consulConfigs.ForEach(consulConfig =>
+            {
+                consulConfig.UseConsul(cancellationToken);
+            });
             return app;
         }
 
@@ -46,9 +50,9 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// 服务注册
         /// </summary>
         /// <param name="consulConfig">配置信息</param>
-        /// <param name="lifetime"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        private static void UseConsul(this ConsulConfig consulConfig, IApplicationLifetime lifetime)
+        private static void UseConsul(this ConsulConfig consulConfig, CancellationToken cancellationToken)
         {
             new ApiServiceConfigValidator().Validate(consulConfig.ApiServiceConfig).Check();
             new ApiServiceHealthyConfigValidator().Validate(consulConfig.ApiServiceHealthyConfig).Check();
@@ -96,9 +100,9 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
             consulClient.Agent.ServiceRegister(registration)
                 .Wait(); //服务启动时注册，内部实现其实就是使用 Consul API 进行注册（HttpClient发起）
 
-            lifetime.ApplicationStopping.Register(() =>
+            cancellationToken.Register(() =>
             {
-                consulClient.Agent.ServiceDeregister(registration.ID).Wait(); //服务停止时取消注册
+                consulClient.Agent.ServiceDeregister(registration.ID, cancellationToken).Wait(cancellationToken); //服务停止时取消注册
             });
         }
 

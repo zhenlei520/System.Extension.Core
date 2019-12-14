@@ -69,7 +69,6 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// 根据文件上传
         /// </summary>
         /// <param name="param"></param>
-        /// <param name="func"></param>
         /// <returns></returns>
         public bool UploadFile(UploadByFormFileParam param)
         {

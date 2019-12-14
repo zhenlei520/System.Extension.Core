@@ -15,9 +15,8 @@ namespace EInfrastructure.Core.Exception
         /// 权限校验
         /// </summary>
         /// <param name="msg">提示信息</param>
-        public AuthException(string msg = ""):base(HttpStatus.Unauthorized.Name)
+        public AuthException(string msg = "") : base(HttpStatus.Unauthorized.Name)
         {
-
         }
     }
 }

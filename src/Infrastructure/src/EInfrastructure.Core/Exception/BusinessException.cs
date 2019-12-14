@@ -27,7 +27,7 @@ namespace EInfrastructure.Core.Exception
                 (jsonProvider ?? new JsonService(new List<IJsonProvider>()
                 {
                     new NewtonsoftJsonProvider()
-                })).Serializer(new {code = code, content}))
+                })).Serializer(new {code = code ?? HttpStatus.Err.Id, content}))
         {
         }
     }
