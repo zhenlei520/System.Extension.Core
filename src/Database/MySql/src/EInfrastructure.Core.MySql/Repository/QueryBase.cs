@@ -22,5 +22,7 @@ namespace EInfrastructure.Core.MySql.Repository
         public QueryBase(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
+
+
     }
 }

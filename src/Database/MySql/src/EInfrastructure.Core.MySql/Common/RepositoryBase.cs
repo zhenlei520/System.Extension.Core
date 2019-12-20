@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using EInfrastructure.Core.Config.EntitiesExtensions;
 using EInfrastructure.Core.HelpCommon.Systems;
 using Microsoft.EntityFrameworkCore;
@@ -67,6 +68,16 @@ namespace EInfrastructure.Core.MySql.Common
             return Dbcontext.Set<TEntity>().Find(id);
         }
 
+        /// <summary>
+        /// 根据id得到实体信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<TEntity> FindByIdAsync(T id)
+        {
+            return Dbcontext.Set<TEntity>().FindAsync(id);
+        }
+
         #endregion
 
         #region 添加单个实体信息
@@ -80,6 +91,15 @@ namespace EInfrastructure.Core.MySql.Common
             Dbcontext.Set<TEntity>().Add(entity);
         }
 
+        /// <summary>
+        /// 添加单个实体信息
+        /// </summary>
+        /// <param name="entity"></param>
+        public void AddAsync(TEntity entity)
+        {
+            Dbcontext.Set<TEntity>().AddAsync(entity);
+        }
+
         #endregion
 
         #region 添加集合
@@ -91,6 +111,15 @@ namespace EInfrastructure.Core.MySql.Common
         public void AddRange(List<TEntity> entities)
         {
             Dbcontext.Set<TEntity>().AddRange(entities);
+        }
+
+        /// <summary>
+        /// 添加集合
+        /// </summary>
+        /// <param name="entities"></param>
+        public void AddRangeAsync(List<TEntity> entities)
+        {
+            Dbcontext.Set<TEntity>().AddRangeAsync(entities);
         }
 
         #endregion
