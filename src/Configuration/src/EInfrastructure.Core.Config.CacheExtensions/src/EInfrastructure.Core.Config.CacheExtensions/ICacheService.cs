@@ -163,6 +163,7 @@ namespace EInfrastructure.Core.Config.CacheExtensions
         /// </summary>
         /// <param name="kValues"></param>
         /// <param name="second"></param>
+        /// <param name="isSetHashKeyExpire"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1,
