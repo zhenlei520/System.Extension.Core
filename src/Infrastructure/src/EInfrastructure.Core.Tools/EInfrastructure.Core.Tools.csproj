@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Configuration\src\Configuration\src\EInfrastructure.Core.Config.ExceptionExtensions\EInfrastructure.Core.Config.ExceptionExtensions.csproj" />
+    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.EntitiesExtensions\src\EInfrastructure.Core.Config.EntitiesExtensions\EInfrastructure.Core.Config.EntitiesExtensions.csproj" />
+    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.EnumerationExtensions\EInfrastructure.Core.Config.EnumerationExtensions.csproj" />
+  </ItemGroup>
+
+</Project>
