@@ -4,7 +4,7 @@
 using System;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.StorageExtensions.Config;
-using EInfrastructure.Core.Config.StorageExtensions.Enumeration;
+using EInfrastructure.Core.Config.StorageExtensions.Enumerations;
 using EInfrastructure.Core.Config.StorageExtensions.Param;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.QiNiu.Storage.Config;
@@ -12,7 +12,7 @@ using EInfrastructure.Core.QiNiu.Storage.Validator;
 using EInfrastructure.Core.Validation.Common;
 using Qiniu.Storage;
 using Qiniu.Util;
-using ChunkUnit = EInfrastructure.Core.Config.StorageExtensions.Enumeration.ChunkUnit;
+using ChunkUnit = EInfrastructure.Core.Config.StorageExtensions.Enumerations.ChunkUnit;
 
 namespace EInfrastructure.Core.QiNiu.Storage
 {

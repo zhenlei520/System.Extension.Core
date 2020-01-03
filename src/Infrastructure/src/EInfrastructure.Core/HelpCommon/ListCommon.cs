@@ -4,12 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EInfrastructure.Core.Config.Entities.Data;
+using EInfrastructure.Core.Config.EnumerationExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
-using EInfrastructure.Core.Configuration.Data;
-using EInfrastructure.Core.Configuration.Enumeration;
-using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
+using EInfrastructure.Core.Tools;
 
 namespace EInfrastructure.Core.HelpCommon
 {
@@ -113,7 +114,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <typeparam name="T">类型</typeparam>
         /// <param name="t1">集合1</param>
         /// <param name="t2">集合2</param>
-        /// <returns>排除t1中包含t2的项</returns>
+        /// <param name="isCheckRepeat">排除t1中包含t2的项</param>
         public static List<T> Minus<T>(this List<T> t1, List<T> t2, bool isCheckRepeat = false) where T : class, new()
         {
             if (!isCheckRepeat)

@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Randoms;
-using Newtonsoft.Json;
+using EInfrastructure.Core.Tools;
 
 namespace EInfrastructure.Core.Redis.Common
 {

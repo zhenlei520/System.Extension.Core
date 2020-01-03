@@ -3,9 +3,10 @@
 
 using System;
 using EInfrastructure.Core.Config.CacheExtensions;
-using EInfrastructure.Core.Configuration.Enumeration;
-using EInfrastructure.Core.Exception;
+using EInfrastructure.Core.Config.EnumerationExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions;
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.WeChat.Config;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

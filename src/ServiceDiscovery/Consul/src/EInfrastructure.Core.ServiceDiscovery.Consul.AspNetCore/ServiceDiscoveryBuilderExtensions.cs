@@ -9,9 +9,7 @@ using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
 using EInfrastructure.Core.Validation.Common;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
 {

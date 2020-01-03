@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EInfrastructure.Core.Config.Entities.Configuration;
 
 namespace EInfrastructure.Core.Config.EntitiesExtensions
 {
@@ -93,7 +94,7 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         IRepository<TEntity, T>
         where TEntity : IAggregateRoot<T>
         where T : IComparable
-        where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
+        where TDbContext : IDbContext, IUnitOfWork
     {
     }
 }

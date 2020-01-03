@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Text;
 using EInfrastructure.Core.HelpCommon.Randoms.Interface;
+using EInfrastructure.Core.Tools;
 
 namespace EInfrastructure.Core.HelpCommon.Randoms
 {

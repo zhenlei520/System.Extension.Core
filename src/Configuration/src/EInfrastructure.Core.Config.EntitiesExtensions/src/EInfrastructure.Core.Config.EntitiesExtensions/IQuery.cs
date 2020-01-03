@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using EInfrastructure.Core.Configuration.Data;
+using EInfrastructure.Core.Config.Entities.Configuration;
+using EInfrastructure.Core.Config.Entities.Data;
 
 namespace EInfrastructure.Core.Config.EntitiesExtensions
 {
@@ -134,7 +135,7 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
     public interface IQuery<TEntity, T, TDbContext> : IQuery<TEntity, T>
         where TEntity : IEntity<T>
         where T : IComparable
-        where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
+        where TDbContext : IDbContext, IUnitOfWork
     {
     }
 }

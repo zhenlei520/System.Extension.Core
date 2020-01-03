@@ -2,8 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Config.CompressExtensions.Enum;
-using EInfrastructure.Core.Configuration.Enumeration;
-using EInfrastructure.Core.Exception;
+using EInfrastructure.Core.Config.ExceptionExtensions;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode
 {

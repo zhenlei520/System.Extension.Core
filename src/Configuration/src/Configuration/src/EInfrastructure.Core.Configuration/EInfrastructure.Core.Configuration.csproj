@@ -22,5 +22,11 @@
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Infrastructure\src\EInfrastructure.Core.Tools\EInfrastructure.Core.Tools.csproj" />
+    <ProjectReference Include="..\EInfrastructure.Core.Config.Basic\EInfrastructure.Core.Config.Basic.csproj" />
+    <ProjectReference Include="..\EInfrastructure.Core.Config.ExceptionExtensions\EInfrastructure.Core.Config.ExceptionExtensions.csproj" />
+  </ItemGroup>
+
 
 </Project>

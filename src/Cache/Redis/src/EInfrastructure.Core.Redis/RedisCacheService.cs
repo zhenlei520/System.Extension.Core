@@ -7,16 +7,13 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Config.CacheExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions;
-using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
-using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Configuration.Ioc;
-using EInfrastructure.Core.Exception;
-using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Redis.Common;
 using EInfrastructure.Core.Redis.Config;
 using EInfrastructure.Core.Redis.Validator;
-using EInfrastructure.Core.Serialize.NewtonsoftJson;
+using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Validation.Common;
 
 namespace EInfrastructure.Core.Redis

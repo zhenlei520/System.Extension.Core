@@ -10,7 +10,6 @@ using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Qiniu.Http;
 using Qiniu.Storage;
-using Qiniu.Util;
 
 namespace EInfrastructure.Core.QiNiu.Storage
 {

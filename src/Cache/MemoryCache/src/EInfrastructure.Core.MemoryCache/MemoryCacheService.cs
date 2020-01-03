@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Config.CacheExtensions;
 using EInfrastructure.Core.Configuration.Ioc;
-using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Tools;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace EInfrastructure.Core.MemoryCache

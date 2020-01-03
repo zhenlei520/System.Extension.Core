@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using EInfrastructure.Core.Configuration.Enumeration;
-using EInfrastructure.Core.Exception;
+using EInfrastructure.Core.Config.EnumerationExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Extensions;

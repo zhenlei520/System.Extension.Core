@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Tools;
 
 namespace EInfrastructure.Core.AliYun.Tbk
 {

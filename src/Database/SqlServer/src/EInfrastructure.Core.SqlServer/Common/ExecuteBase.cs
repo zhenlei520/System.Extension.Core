@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using EInfrastructure.Core.Config.EntitiesExtensions;
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Tools;
 using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.SqlServer.Common

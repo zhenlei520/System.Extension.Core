@@ -5,8 +5,9 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
-using EInfrastructure.Core.Exception;
+using EInfrastructure.Core.Config.ExceptionExtensions;
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Tools;
 using ICSharpCode.SharpZipLib.Checksum;
 using ICSharpCode.SharpZipLib.Zip;
 

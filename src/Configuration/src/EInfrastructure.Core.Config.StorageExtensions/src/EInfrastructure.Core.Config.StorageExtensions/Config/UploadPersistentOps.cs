@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using EInfrastructure.Core.Config.StorageExtensions.Enumeration;
+using EInfrastructure.Core.Config.StorageExtensions.Enumerations;
 
 namespace EInfrastructure.Core.Config.StorageExtensions.Config
 {

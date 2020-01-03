@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using EInfrastructure.Core.Config.Entities.Configuration;
 using EInfrastructure.Core.Config.EntitiesExtensions;
 using EInfrastructure.Core.MySql.Common;
 
@@ -14,7 +15,7 @@ namespace EInfrastructure.Core.MySql.Repository
         : SpatialDimensionBaseQuery<TEntity, T>,ISpatialDimensionQuery<TEntity, T, TDbContext>
         where TEntity : class, IEntity<T>
         where T : IComparable
-        where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
+        where TDbContext : IDbContext, IUnitOfWork
     {
         /// <summary>
         ///

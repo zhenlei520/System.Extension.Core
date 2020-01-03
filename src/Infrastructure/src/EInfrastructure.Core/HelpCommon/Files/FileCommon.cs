@@ -5,6 +5,8 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Enumerations;
 using Microsoft.AspNetCore.Http;
 
 namespace EInfrastructure.Core.HelpCommon.Files
@@ -12,7 +14,7 @@ namespace EInfrastructure.Core.HelpCommon.Files
     /// <summary>
     /// 文件帮助类
     /// </summary>
-    public class FileCommon
+    public class FileCommon : Tools.Files.FileCommon
     {
         #region 得到文件md5
 
@@ -44,38 +46,6 @@ namespace EInfrastructure.Core.HelpCommon.Files
             return md5;
         }
 
-        /// <summary>
-        /// 根据本地文件地址得到文件md5
-        /// </summary>
-        /// <param name="localFilePath">文件绝对地址</param>
-        /// <returns></returns>
-        public static string GetMd5(string localFilePath)
-        {
-            String hashMd5 = String.Empty;
-            //检查文件是否存在，如果文件存在则进行计算，否则返回空值
-            if (File.Exists(localFilePath))
-            {
-                using (FileStream fileStream =
-                    new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
-                {
-                    //计算文件的MD5值
-                    MD5 calculator = MD5.Create();
-                    Byte[] buffer = calculator.ComputeHash(fileStream);
-                    calculator.Clear();
-                    //将字节数组转换成十六进制的字符串形式
-                    StringBuilder stringBuilder = new StringBuilder();
-                    foreach (var t in buffer)
-                    {
-                        stringBuilder.Append(t.ToString("x2"));
-                    }
-
-                    hashMd5 = stringBuilder.ToString();
-                }
-            }
-
-            return hashMd5;
-        }
-
         #endregion
 
         #region 得到文件的Sha1
@@ -88,20 +58,6 @@ namespace EInfrastructure.Core.HelpCommon.Files
         public static string GetSha1(IFormFile file)
         {
             return GetSha(file, new SHA1CryptoServiceProvider());
-        }
-
-        /// <summary>
-        /// 根据本地文件地址得到文件的Sha1
-        /// </summary>
-        /// <param name="localFilePath">文件绝对地址</param>
-        /// <returns></returns>
-        public static string GetSha1(string localFilePath)
-        {
-            using (FileStream fileStream =
-                new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
-            {
-                return GetSha(fileStream, new SHA1CryptoServiceProvider());
-            }
         }
 
         #endregion
@@ -118,20 +74,6 @@ namespace EInfrastructure.Core.HelpCommon.Files
             return GetSha(file, new SHA256CryptoServiceProvider());
         }
 
-        /// <summary>
-        /// 根据本地文件地址得到文件的Sha256
-        /// </summary>
-        /// <param name="localFilePath">文件绝对地址</param>
-        /// <returns></returns>
-        public static string GetSha256(string localFilePath)
-        {
-            using (FileStream fileStream =
-                new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
-            {
-                return GetSha(fileStream, new SHA256CryptoServiceProvider());
-            }
-        }
-
         #endregion
 
         #region 得到文件的Sha384
@@ -146,20 +88,6 @@ namespace EInfrastructure.Core.HelpCommon.Files
             return GetSha(file, new SHA384CryptoServiceProvider());
         }
 
-        /// <summary>
-        /// 根据本地文件地址得到文件的Sha384
-        /// </summary>
-        /// <param name="localFilePath">文件绝对地址</param>
-        /// <returns></returns>
-        public static string GetSha384(string localFilePath)
-        {
-            using (FileStream fileStream =
-                new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
-            {
-                return GetSha(fileStream, new SHA384CryptoServiceProvider());
-            }
-        }
-
         #endregion
 
         #region 得到文件的Sha512
@@ -172,20 +100,6 @@ namespace EInfrastructure.Core.HelpCommon.Files
         public static string GetSha512(IFormFile file)
         {
             return GetSha(file, new SHA512CryptoServiceProvider());
-        }
-
-        /// <summary>
-        /// 根据本地文件地址得到文件的Sha512
-        /// </summary>
-        /// <param name="localFilePath">文件绝对地址</param>
-        /// <returns></returns>
-        public static string GetSha512(string localFilePath)
-        {
-            using (FileStream fileStream =
-                new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
-            {
-                return GetSha(fileStream, new SHA512CryptoServiceProvider());
-            }
         }
 
         #endregion
@@ -206,19 +120,6 @@ namespace EInfrastructure.Core.HelpCommon.Files
             return SecurityCommon.GetSha(retval, hashAlgorithm);
         }
 
-        /// <summary>
-        /// 得到sha系列加密信息
-        /// </summary>
-        /// <param name="fileStream"></param>
-        /// <param name="hashAlgorithm"></param>
-        /// <returns></returns>
-        private static string GetSha(FileStream fileStream, HashAlgorithm hashAlgorithm)
-        {
-            byte[] retval = hashAlgorithm.ComputeHash(fileStream);
-            fileStream?.Close();
-            return SecurityCommon.GetSha(retval, hashAlgorithm);
-        }
-
         #endregion
 
         #region 得到文件信息
@@ -229,35 +130,39 @@ namespace EInfrastructure.Core.HelpCommon.Files
         /// <param name="formFile"></param>
         /// <param name="encryptType">加密方式，默认加密方式为Sha256</param>
         /// <returns></returns>
-        public static FileInfo Get(IFormFile formFile,
-            EncryptTypeEnum encryptType = EncryptTypeEnum.Sha256)
+        public static EInfrastructure.Core.Tools.Files.FileInfo Get(IFormFile formFile,
+            EncryptType encryptType = null)
         {
-            string conditionCode;
-            switch (encryptType)
+            string conditionCode = "";
+            if (encryptType != null)
             {
-                case EncryptTypeEnum.Md5:
+                if (encryptType.Id == EncryptType.Md5.Id)
+                {
                     conditionCode = GetMd5(formFile);
-                    break;
-                case EncryptTypeEnum.Sha1:
+                }
+                else if (encryptType.Id == EncryptType.Sha1.Id)
+                {
                     conditionCode = GetSha1(formFile);
-                    break;
-                case EncryptTypeEnum.Sha256:
-                default:
+                }
+                else if (encryptType.Id == EncryptType.Sha256.Id)
+                {
                     conditionCode = GetSha256(formFile);
-                    break;
-                case EncryptTypeEnum.Sha384:
+                }
+                else if (encryptType.Id == EncryptType.Sha384.Id)
+                {
                     conditionCode = GetSha384(formFile);
-                    break;
-                case EncryptTypeEnum.Sha512:
+                }
+                else if (encryptType.Id == EncryptType.Sha512.Id)
+                {
                     conditionCode = GetSha512(formFile);
-                    break;
+                }
+            }
+            else
+            {
+                conditionCode = GetSha256(formFile);
             }
 
-            return new FileInfo
-            {
-                Name = formFile.FileName,
-                ConditionCode = conditionCode
-            };
+            return new EInfrastructure.Core.Tools.Files.FileInfo(formFile.FileName, conditionCode);
         }
 
         #endregion

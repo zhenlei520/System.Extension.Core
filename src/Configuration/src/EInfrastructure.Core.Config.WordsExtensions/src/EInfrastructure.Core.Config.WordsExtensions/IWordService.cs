@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using EInfrastructure.Core.Config.WordsExtensions.Enumeration;
-using EInfrastructure.Core.Configuration.Enumeration;
+using EInfrastructure.Core.Config.EnumerationExtensions;
+using EInfrastructure.Core.Config.WordsExtensions.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Config.WordsExtensions

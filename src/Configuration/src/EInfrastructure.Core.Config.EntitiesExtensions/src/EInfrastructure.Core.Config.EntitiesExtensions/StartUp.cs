@@ -4,12 +4,17 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
 {
     public static class StartUp
     {
+        private static bool _isStartUp;
+
         /// <summary>
         /// 启用配置
         /// </summary>
         public static void Run()
         {
-            EInfrastructure.Core.Configuration.StartUp.Run();
+            if (!_isStartUp)
+            {
+                _isStartUp = true;
+            }
         }
     }
 }

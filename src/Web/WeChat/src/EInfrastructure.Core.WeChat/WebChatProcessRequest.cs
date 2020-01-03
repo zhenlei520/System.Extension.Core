@@ -2,17 +2,16 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
+using EInfrastructure.Core.Config.EnumerationExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions;
-using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
-using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Configuration.Ioc;
-using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.Serialize.NewtonsoftJson;
+using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.WeChat.Common;
 using EInfrastructure.Core.WeChat.Config;
 using EInfrastructure.Core.WeChat.Enumeration;
+using EInfrastructure.Core.WeChat.Enumerations;
 using Newtonsoft.Json;
 using RestSharp;
 

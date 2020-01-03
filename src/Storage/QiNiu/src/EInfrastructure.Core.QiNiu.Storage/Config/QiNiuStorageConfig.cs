@@ -2,11 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.AutomationConfiguration.Interface;
+using EInfrastructure.Core.Config.ExceptionExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions;
-using EInfrastructure.Core.Exception;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.QiNiu.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Validator;
+using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Validation.Common;
 using Qiniu.Storage;
 using Qiniu.Util;
@@ -111,7 +112,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// 回调内容类型
         /// </summary>
         public int CallbackBodyType { get; set; } =
-            EInfrastructure.Core.Config.StorageExtensions.Enumeration.CallbackBodyType.Json.Id;
+            Core.Config.StorageExtensions.Enumerations.CallbackBodyType.Json.Id;
 
         /// <summary>
         /// 鉴权回调

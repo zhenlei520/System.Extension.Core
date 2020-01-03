@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using EInfrastructure.Core.Config.Entities.Data;
 using EInfrastructure.Core.Config.EntitiesExtensions;
-using EInfrastructure.Core.Configuration.Data;
-using EInfrastructure.Core.HelpCommon.Systems;
+using EInfrastructure.Core.Tools.Systems;
 using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.MySql.Common

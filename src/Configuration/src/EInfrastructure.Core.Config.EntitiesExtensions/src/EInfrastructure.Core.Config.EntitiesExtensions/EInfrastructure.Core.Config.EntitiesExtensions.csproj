@@ -16,7 +16,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.Entities\EInfrastructure.Core.Config.Entities.csproj" />
+  </ItemGroup>
 </Project>

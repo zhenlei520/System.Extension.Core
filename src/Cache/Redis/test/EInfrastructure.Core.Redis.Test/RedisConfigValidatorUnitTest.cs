@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Redis.Test.Base;
+using EInfrastructure.Core.Tools;
 using Xunit;
 using Xunit.Abstractions;
 

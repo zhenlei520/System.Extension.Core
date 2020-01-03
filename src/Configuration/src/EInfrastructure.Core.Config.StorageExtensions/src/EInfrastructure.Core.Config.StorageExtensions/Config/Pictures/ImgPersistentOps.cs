@@ -1,7 +1,8 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using EInfrastructure.Core.Config.StorageExtensions.Enumeration;
+using EInfrastructure.Core.Config.EntitiesExtensions.SeedWork;
+using EInfrastructure.Core.Config.StorageExtensions.Enumerations;
 
 namespace EInfrastructure.Core.Config.StorageExtensions.Config.Pictures
 {
@@ -26,7 +27,7 @@ namespace EInfrastructure.Core.Config.StorageExtensions.Config.Pictures
             Height = height;
             Mode = model == null
                 ? ImageMode.Nothing
-                : Configuration.SeedWork.Enumeration.FromValue<ImageMode>(model.Value);
+                : Enumeration.FromValue<ImageMode>(model.Value);
             WaterMark = waterMark;
         }
 

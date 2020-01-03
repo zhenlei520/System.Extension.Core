@@ -2,13 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using EInfrastructure.Core.Config.EntitiesExtensions;
-using EInfrastructure.Core.Configuration.Data;
-using EInfrastructure.Core.HelpCommon.Systems;
-using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.SqlServer.Repository
 {
