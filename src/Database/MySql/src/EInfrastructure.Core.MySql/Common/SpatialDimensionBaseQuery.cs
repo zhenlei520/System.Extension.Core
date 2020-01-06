@@ -88,7 +88,6 @@ namespace EInfrastructure.Core.MySql.Common
         /// <summary>
         /// get list
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public IQueryable<TEntity> GetQueryable(SpatialDimensionParam param)
         {

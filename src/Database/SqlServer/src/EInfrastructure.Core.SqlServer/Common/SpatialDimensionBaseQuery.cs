@@ -28,6 +28,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         ///
         /// </summary>
         /// <param name="unitOfWork">unitwork</param>
+        /// <param name="execute"></param>
         public SpatialDimensionBaseQuery(IUnitOfWork unitOfWork, IExecute execute)
         {
             this.Dbcontext = unitOfWork as DbContext;

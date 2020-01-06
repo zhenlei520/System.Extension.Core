@@ -32,6 +32,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         ///
         /// </summary>
         /// <param name="next"></param>
+        /// <param name="jsonProvider"></param>
         public ErrorHandlingMiddleware(RequestDelegate next, IJsonService jsonProvider)
         {
             _next = next;
@@ -131,6 +132,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="exceptionAction">异常委托方法</param>
+        /// <param name="jsonProvider"></param>
         /// <returns></returns>
         public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder builder,
             Func<HttpContext, System.Exception, bool> exceptionAction = null, IJsonService jsonProvider = null)
