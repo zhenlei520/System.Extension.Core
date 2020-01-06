@@ -34,7 +34,7 @@ namespace EInfrastructure.Core.Config.ExceptionExtensions.Exception
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("{\"code\":{0},\"content\":{1}}", GetResult(Code), GetResult(Content));
+            return "{" + string.Format("\"code\":{0},\"content\":{1}", GetResult(Code), GetResult(Content)) + "}";
         }
 
         /// <summary>
@@ -42,9 +42,9 @@ namespace EInfrastructure.Core.Config.ExceptionExtensions.Exception
         /// </summary>
         private bool Check<TResult>(TResult param)
         {
-            return (Code is int || Code is short || Code is byte || Code is ushort || Code is decimal ||
-                    Code is float ||
-                    Code is double);
+            return (param is int || param is short || param is byte || param is ushort || param is decimal ||
+                    param is float ||
+                    param is double);
         }
 
         /// <summary>
