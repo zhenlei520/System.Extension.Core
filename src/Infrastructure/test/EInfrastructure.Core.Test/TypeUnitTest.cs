@@ -18,7 +18,9 @@ namespace EInfrastructure.Core.Test
         [InlineData(1, 1)]
         public void ConvertToShort(int num, short s)
         {
-            Check.True(1.ConvertToShort() == s,"方法有误");
+            string res = SecurityCommon.GetMd5Hash("123456");
+            string res2 = SecurityCommon.GetMd5HashBy16("123456");
+            Check.True(1.ConvertToShort() == s, "方法有误");
         }
     }
 }

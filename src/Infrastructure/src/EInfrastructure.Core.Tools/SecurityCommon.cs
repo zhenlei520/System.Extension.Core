@@ -101,35 +101,62 @@ namespace EInfrastructure.Core.Tools
         #region MD5加密
 
         /// <summary>
-        /// MD5加密
+        /// Md5加密，返回16位结果
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="encoding"></param>
+        /// <param name="input">待加密字符串</param>
+        /// <param name="encoding">编码方式</param>
+        /// <param name="isUpper">是否转大写</param>
+        public static string GetMd5HashBy16(string input, Encoding encoding = null, bool isUpper = true)
+        {
+            return GetMd5Hash(input, true, encoding, isUpper);
+        }
+
+        /// <summary>
+        /// MD5加密(32位)
+        /// </summary>
+        /// <param name="input">待加密字符串</param>
+        /// <param name="encoding">编码方式</param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string GetMd5Hash(string input, Encoding encoding = null)
+        public static string GetMd5Hash(string input, Encoding encoding = null, bool isUpper = true)
+        {
+            return GetMd5Hash(input, false, encoding, isUpper);
+        }
+
+        /// <summary>
+        /// 得到md5加密结果
+        /// </summary>
+        /// <param name="input">待加密字符串</param>
+        /// <param name="is16">是否16位加密，是否32位加密</param>
+        /// <param name="encoding">编码方式</param>
+        /// <param name="isUpper">是否转大写</param>
+        /// <returns></returns>
+        private static string GetMd5Hash(string input, bool is16, Encoding encoding = null, bool isUpper = true)
         {
             if (encoding == null)
             {
                 encoding = Encoding.UTF8;
             }
 
-
             MD5 myMd5 = new MD5CryptoServiceProvider();
-            byte[] signed = myMd5.ComputeHash(encoding.GetBytes(input));
-            string signResult = Byte2Mac(signed);
-            return signResult.ToUpper();
+            var signed = myMd5.ComputeHash(encoding.GetBytes(input));
+            string signResult = is16 ? GetSignResult(signed, 4, 8) : GetSignResult(signed);
+            return isUpper ? signResult.ToUpper() : signResult.ToLower();
         }
 
-        //MD5加密方法
-        private static string Byte2Mac(byte[] signed)
+        /// <summary>
+        /// MD5加密方法
+        /// startIndex为空为32位加密
+        /// </summary>
+        /// <param name="signed"></param>
+        /// <param name="startIndex"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private static string GetSignResult(byte[] signed, int? startIndex = null, int? length = null)
         {
-            StringBuilder enText = new StringBuilder();
-            foreach (byte Byte in signed)
-            {
-                enText.AppendFormat("{0:x2}", Byte);
-            }
-
-            return enText.ToString();
+            return (startIndex == null
+                ? BitConverter.ToString(signed)
+                : BitConverter.ToString(signed, (int) startIndex, length ?? default(int))).Replace("-", "");
         }
 
         #endregion
