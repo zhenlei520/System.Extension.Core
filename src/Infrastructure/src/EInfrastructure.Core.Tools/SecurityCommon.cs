@@ -330,8 +330,6 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region private methods
-
         #region 得到sha系列加密信息
 
         /// <summary>
@@ -352,7 +350,23 @@ namespace EInfrastructure.Core.Tools
             return sc.ToString();
         }
 
-        #endregion
+        /// <summary>
+        /// 得到sha系列加密信息
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <param name="hashAlgorithm">加密方式</param>
+        /// <returns></returns>
+        public static string GetSha(Stream stream, HashAlgorithm hashAlgorithm)
+        {
+            if (stream == null)
+            {
+                throw new BusinessException("FileStream is Null");
+            }
+
+            byte[] retval = hashAlgorithm.ComputeHash(stream);
+            stream.Close();
+            return SecurityCommon.GetSha(retval, hashAlgorithm);
+        }
 
         #endregion
 
@@ -454,7 +468,7 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region  JS Aes解密
+        #region JS Aes解密
 
         /// <summary>
         /// JS Aes解密

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace EInfrastructure.Core.HelpCommon.Attributes
+namespace EInfrastructure.Core.Tools.Attributes
 {
     /// <summary>
     /// 版本信息

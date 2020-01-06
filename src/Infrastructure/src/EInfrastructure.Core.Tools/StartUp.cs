@@ -1,6 +1,6 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
-namespace EInfrastructure.Core.Config.EntitiesExtensions
+namespace EInfrastructure.Core.Tools
 {
     public static class StartUp
     {
@@ -15,7 +15,7 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
             {
                 _isStartUp = true;
             }
-            EInfrastructure.Core.Config.Entities.StartUp.Run();
+            EInfrastructure.Core.Config.ExceptionExtensions.StartUp.Run();
         }
     }
 }

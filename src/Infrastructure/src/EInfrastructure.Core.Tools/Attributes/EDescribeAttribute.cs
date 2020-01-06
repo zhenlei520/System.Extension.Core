@@ -3,7 +3,7 @@
 
 using System;
 
-namespace EInfrastructure.Core.HelpCommon.Attributes
+namespace EInfrastructure.Core.Tools.Attributes
 {
     /// <summary>
     /// 描述信息
@@ -14,7 +14,7 @@ namespace EInfrastructure.Core.HelpCommon.Attributes
         private readonly string _describe;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public virtual string Describe => _describe;
 

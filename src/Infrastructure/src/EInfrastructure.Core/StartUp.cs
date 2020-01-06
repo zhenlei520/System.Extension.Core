@@ -34,6 +34,7 @@ namespace EInfrastructure.Core
             Config.StorageExtensions.StartUp.Run();
             Config.WordsExtensions.StartUp.Run();
             Serialize.NewtonsoftJson.StartUp.Run();
+            Tools.StartUp.Run();
         }
 
         #endregion

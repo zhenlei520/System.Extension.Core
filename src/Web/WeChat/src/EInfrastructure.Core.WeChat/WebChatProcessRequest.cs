@@ -10,7 +10,6 @@ using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.WeChat.Common;
 using EInfrastructure.Core.WeChat.Config;
-using EInfrastructure.Core.WeChat.Enumeration;
 using EInfrastructure.Core.WeChat.Enumerations;
 using Newtonsoft.Json;
 using RestSharp;

@@ -62,7 +62,7 @@ namespace EInfrastructure.Core.Tools.Files
             using (FileStream fileStream =
                 new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
             {
-                return GetSha(fileStream, new SHA1CryptoServiceProvider());
+                return SecurityCommon.GetSha(fileStream, new SHA1CryptoServiceProvider());
             }
         }
 
@@ -80,7 +80,7 @@ namespace EInfrastructure.Core.Tools.Files
             using (FileStream fileStream =
                 new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
             {
-                return GetSha(fileStream, new SHA256CryptoServiceProvider());
+                return SecurityCommon.GetSha(fileStream, new SHA256CryptoServiceProvider());
             }
         }
 
@@ -98,7 +98,7 @@ namespace EInfrastructure.Core.Tools.Files
             using (FileStream fileStream =
                 new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
             {
-                return GetSha(fileStream, new SHA384CryptoServiceProvider());
+                return SecurityCommon.GetSha(fileStream, new SHA384CryptoServiceProvider());
             }
         }
 
@@ -116,30 +116,8 @@ namespace EInfrastructure.Core.Tools.Files
             using (FileStream fileStream =
                 new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
             {
-                return GetSha(fileStream, new SHA512CryptoServiceProvider());
+                return SecurityCommon.GetSha(fileStream, new SHA512CryptoServiceProvider());
             }
-        }
-
-        #endregion
-
-        #region 得到sha系列加密信息
-
-        /// <summary>
-        /// 得到sha系列加密信息
-        /// </summary>
-        /// <param name="fileStream"></param>
-        /// <param name="hashAlgorithm"></param>
-        /// <returns></returns>
-        private static string GetSha(FileStream fileStream, HashAlgorithm hashAlgorithm)
-        {
-            if (fileStream == null)
-            {
-                throw new BusinessException("FileStream is Null");
-            }
-
-            byte[] retval = hashAlgorithm.ComputeHash(fileStream);
-            fileStream.Close();
-            return SecurityCommon.GetSha(retval, hashAlgorithm);
         }
 
         #endregion
