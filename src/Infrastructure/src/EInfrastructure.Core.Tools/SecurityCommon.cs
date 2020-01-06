@@ -223,31 +223,34 @@ namespace EInfrastructure.Core.Tools
         /// Sha1
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string Sha1(string str)
+        public static string Sha1(string str, bool isUpper = true)
         {
             var enc = new ASCIIEncoding(); //将mystr转换成byte[]
-            return GetSha(enc.GetBytes(str), new SHA1CryptoServiceProvider());
+            return GetSha(enc.GetBytes(str), new SHA1CryptoServiceProvider(), isUpper);
         }
 
         /// <summary>
         /// Sha1
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string Sha1(Stream str)
+        public static string Sha1(Stream str, bool isUpper = true)
         {
-            return GetSha(str.ConvertToByteArray(), new SHA1CryptoServiceProvider());
+            return GetSha(str.ConvertToByteArray(), new SHA1CryptoServiceProvider(), isUpper);
         }
 
         /// <summary>
         /// Sha1
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string Sha1(byte[] str)
+        public static string Sha1(byte[] str, bool isUpper = true)
         {
-            return GetSha(str, new SHA1CryptoServiceProvider());
+            return GetSha(str, new SHA1CryptoServiceProvider(), isUpper);
         }
 
         #endregion
@@ -258,31 +261,34 @@ namespace EInfrastructure.Core.Tools
         /// Sha256
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string Sha256(string str)
+        public static string Sha256(string str, bool isUpper = true)
         {
             var enc = new ASCIIEncoding(); //将mystr转换成byte[]
-            return GetSha(enc.GetBytes(str), new SHA256CryptoServiceProvider());
+            return GetSha(enc.GetBytes(str), new SHA256CryptoServiceProvider(), isUpper);
         }
 
         /// <summary>
         /// Sha256
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string Sha256(Stream str)
+        public static string Sha256(Stream str, bool isUpper = true)
         {
-            return GetSha(str.ConvertToByteArray(), new SHA256CryptoServiceProvider());
+            return GetSha(str.ConvertToByteArray(), new SHA256CryptoServiceProvider(), isUpper);
         }
 
         /// <summary>
         /// Sha256
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string Sha256(byte[] str)
+        public static string Sha256(byte[] str, bool isUpper = true)
         {
-            return GetSha(str, new SHA256CryptoServiceProvider());
+            return GetSha(str, new SHA256CryptoServiceProvider(), isUpper);
         }
 
         #endregion
@@ -293,31 +299,34 @@ namespace EInfrastructure.Core.Tools
         /// Sha384
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string Sha384(string str)
+        public static string Sha384(string str, bool isUpper = true)
         {
             var enc = new ASCIIEncoding(); //将mystr转换成byte[]
-            return GetSha(enc.GetBytes(str), new SHA384CryptoServiceProvider());
+            return GetSha(enc.GetBytes(str), new SHA384CryptoServiceProvider(), isUpper);
         }
 
         /// <summary>
         /// Sha384
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string Sha384(Stream str)
+        public static string Sha384(Stream str, bool isUpper = true)
         {
-            return GetSha(str.ConvertToByteArray(), new SHA384CryptoServiceProvider());
+            return GetSha(str.ConvertToByteArray(), new SHA384CryptoServiceProvider(), isUpper);
         }
 
         /// <summary>
         /// Sha384
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string Sha384(byte[] str)
+        public static string Sha384(byte[] str, bool isUpper = true)
         {
-            return GetSha(str, new SHA384CryptoServiceProvider());
+            return GetSha(str, new SHA384CryptoServiceProvider(), isUpper);
         }
 
         #endregion
@@ -328,31 +337,34 @@ namespace EInfrastructure.Core.Tools
         /// Sha512加密
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string Sha512(string str)
+        public static string Sha512(string str, bool isUpper = true)
         {
             var enc = new ASCIIEncoding(); //将mystr转换成byte[]
-            return GetSha(enc.GetBytes(str), new SHA512CryptoServiceProvider());
+            return GetSha(enc.GetBytes(str), new SHA512CryptoServiceProvider(), isUpper);
         }
 
         /// <summary>
         /// Sha512加密
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string Sha512(Stream str)
+        public static string Sha512(Stream str, bool isUpper = true)
         {
-            return GetSha(str.ConvertToByteArray(), new SHA512CryptoServiceProvider());
+            return GetSha(str.ConvertToByteArray(), new SHA512CryptoServiceProvider(), isUpper);
         }
 
         /// <summary>
         /// Sha512加密
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string Sha512(byte[] str)
+        public static string Sha512(byte[] str, bool isUpper = true)
         {
-            return GetSha(str, new SHA512CryptoServiceProvider());
+            return GetSha(str, new SHA512CryptoServiceProvider(), isUpper);
         }
 
         #endregion
@@ -364,14 +376,15 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="retval"></param>
         /// <param name="hashAlgorithm"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string GetSha(byte[] retval, HashAlgorithm hashAlgorithm)
+        public static string GetSha(byte[] retval, HashAlgorithm hashAlgorithm, bool isUpper)
         {
             var data = hashAlgorithm.ComputeHash(retval);
             StringBuilder sc = new StringBuilder();
             foreach (var t in data)
             {
-                sc.Append(t.ToString("X2"));
+                sc.Append(isUpper ? t.ToString("X2") : t.ToString("x2"));
             }
 
             return sc.ToString();
@@ -382,8 +395,9 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="stream">文件流</param>
         /// <param name="hashAlgorithm">加密方式</param>
+        /// <param name="isUpper">是否大写</param>
         /// <returns></returns>
-        public static string GetSha(Stream stream, HashAlgorithm hashAlgorithm)
+        public static string GetSha(Stream stream, HashAlgorithm hashAlgorithm, bool isUpper = true)
         {
             if (stream == null)
             {
@@ -392,7 +406,7 @@ namespace EInfrastructure.Core.Tools
 
             byte[] retval = hashAlgorithm.ComputeHash(stream);
             stream.Close();
-            return SecurityCommon.GetSha(retval, hashAlgorithm);
+            return SecurityCommon.GetSha(retval, hashAlgorithm, isUpper);
         }
 
         #endregion

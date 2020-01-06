@@ -54,10 +54,11 @@ namespace EInfrastructure.Core.HelpCommon.Files
         /// 得到文件的Sha1
         /// </summary>
         /// <param name="file"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string GetSha1(IFormFile file)
+        public static string GetSha1(IFormFile file, bool isUpper = true)
         {
-            return GetSha(file, new SHA1CryptoServiceProvider());
+            return GetSha(file, new SHA1CryptoServiceProvider(), isUpper);
         }
 
         #endregion
@@ -68,10 +69,11 @@ namespace EInfrastructure.Core.HelpCommon.Files
         /// 得到文件的Sha256
         /// </summary>
         /// <param name="file"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string GetSha256(IFormFile file)
+        public static string GetSha256(IFormFile file, bool isUpper = true)
         {
-            return GetSha(file, new SHA256CryptoServiceProvider());
+            return GetSha(file, new SHA256CryptoServiceProvider(), isUpper);
         }
 
         #endregion
@@ -82,10 +84,11 @@ namespace EInfrastructure.Core.HelpCommon.Files
         /// 得到文件的Sha512
         /// </summary>
         /// <param name="file"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string GetSha384(IFormFile file)
+        public static string GetSha384(IFormFile file, bool isUpper = true)
         {
-            return GetSha(file, new SHA384CryptoServiceProvider());
+            return GetSha(file, new SHA384CryptoServiceProvider(), isUpper);
         }
 
         #endregion
@@ -96,10 +99,11 @@ namespace EInfrastructure.Core.HelpCommon.Files
         /// 得到文件的Sha512
         /// </summary>
         /// <param name="file"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string GetSha512(IFormFile file)
+        public static string GetSha512(IFormFile file, bool isUpper = true)
         {
-            return GetSha(file, new SHA512CryptoServiceProvider());
+            return GetSha(file, new SHA512CryptoServiceProvider(), isUpper);
         }
 
         #endregion
@@ -111,13 +115,14 @@ namespace EInfrastructure.Core.HelpCommon.Files
         /// </summary>
         /// <param name="formFile"></param>
         /// <param name="hashAlgorithm"></param>
+        /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        private static string GetSha(IFormFile formFile, HashAlgorithm hashAlgorithm)
+        private static string GetSha(IFormFile formFile, HashAlgorithm hashAlgorithm, bool isUpper)
         {
             var stream = formFile.OpenReadStream();
             byte[] retval = hashAlgorithm.ComputeHash(stream);
             stream.Close();
-            return SecurityCommon.GetSha(retval, hashAlgorithm);
+            return SecurityCommon.GetSha(retval, hashAlgorithm, isUpper);
         }
 
         #endregion

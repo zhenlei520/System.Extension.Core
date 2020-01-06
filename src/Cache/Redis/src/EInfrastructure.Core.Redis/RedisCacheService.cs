@@ -327,7 +327,7 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         /// <param name="count">指定清除指定数量的已过期的hashkey</param>
         /// <returns></returns>
-        public bool ClearOverTimeHashKey(long count = 1000l)
+        public bool ClearOverTimeHashKey(long count = 1000L)
         {
             var list = SortedSetRangeByRankAndOverTime(count);
             if (list.Count != 0)
