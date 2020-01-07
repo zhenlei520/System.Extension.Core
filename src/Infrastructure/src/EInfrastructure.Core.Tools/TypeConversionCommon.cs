@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using EInfrastructure.Core.Config.ExceptionExtensions;
 
 namespace EInfrastructure.Core.Tools
@@ -27,13 +28,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static char ConvertToChar(this object obj, char defaultVal)
         {
-            char result;
-            if (obj != null)
-                if (char.TryParse(obj.ToString(), out result))
-                    return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return obj.ConvertToChar(() => defaultVal).Value;
         }
 
         /// <summary>
@@ -44,13 +39,21 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static char? ConvertToChar(this object obj, char? defaultVal = null)
         {
-            char result;
+            return obj.ConvertToChar(() => defaultVal);
+        }
+
+        /// <summary>
+        /// obj转Char
+        /// </summary>
+        /// <param name="obj">待转换参数</param>
+        /// <param name="func">默认值</param>
+        /// <returns></returns>
+        private static char? ConvertToChar(this object obj, Func<char?> func)
+        {
             if (obj != null)
-                if (char.TryParse(obj.ToString(), out result))
+                if (char.TryParse(obj.ToString(), out var result))
                     return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return func.Invoke();
         }
 
         #endregion
@@ -65,13 +68,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static Guid ConvertToGuid(this object obj, Guid defaultVal)
         {
-            Guid result;
-            if (obj != null)
-                if (Guid.TryParse(obj.ToString(), out result))
-                    return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return obj.ConvertToGuid(() => defaultVal).Value;
         }
 
         /// <summary>
@@ -82,51 +79,21 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static Guid? ConvertToGuid(this object obj, Guid? defaultVal = null)
         {
-            Guid result;
-            if (obj != null)
-                if (Guid.TryParse(obj.ToString(), out result))
-                    return result;
-                else
-                    return defaultVal;
-            return defaultVal;
-        }
-
-        #endregion
-
-        #region obj转Int
-
-        /// <summary>
-        /// obj转Int
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="defaultVal">默认值</param>
-        /// <returns></returns>
-        public static int ConvertToInt(this object obj, int defaultVal)
-        {
-            int result;
-            if (obj != null)
-                if (int.TryParse(obj.ToString(), out result))
-                    return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return obj.ConvertToGuid(() => defaultVal);
         }
 
         /// <summary>
-        /// obj转Int
+        /// obj转Guid
         /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="defaultVal">默认值</param>
+        /// <param name="obj">待转换参数</param>
+        /// <param name="func">默认值</param>
         /// <returns></returns>
-        public static int? ConvertToInt(this object obj, int? defaultVal = null)
+        private static Guid? ConvertToGuid(this object obj, Func<Guid?> func)
         {
-            int result;
             if (obj != null)
-                if (int.TryParse(obj.ToString(), out result))
+                if (Guid.TryParse(obj.ToString(), out var result))
                     return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return func.Invoke();
         }
 
         #endregion
@@ -141,13 +108,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static short ConvertToShort(this object obj, short defaultVal)
         {
-            short result;
-            if (obj != null)
-                if (short.TryParse(obj.ToString(), out result))
-                    return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return obj.ConvertToShort(()=>defaultVal).Value;
         }
 
         /// <summary>
@@ -158,13 +119,100 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static short? ConvertToShort(this object obj, short? defaultVal = null)
         {
-            short result;
+            return obj.ConvertToShort(()=>defaultVal);
+        }
+
+        /// <summary>
+        /// obj转Int
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="func">默认值</param>
+        /// <returns></returns>
+        private static short? ConvertToShort(this object obj, Func<short?> func)
+        {
             if (obj != null)
-                if (short.TryParse(obj.ToString(), out result))
+                if (short.TryParse(obj.ToString(), out var result))
                     return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return func.Invoke();
+        }
+        #endregion
+
+        #region obj转Int
+
+        /// <summary>
+        /// obj转Int
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="defaultVal">默认值</param>
+        /// <returns></returns>
+        public static int ConvertToInt(this object obj, int defaultVal)
+        {
+            return obj.ConvertToInt(() => defaultVal).Value;
+        }
+
+        /// <summary>
+        /// obj转Int
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="defaultVal">默认值</param>
+        /// <returns></returns>
+        public static int? ConvertToInt(this object obj, int? defaultVal = null)
+        {
+            return obj.ConvertToInt(() => defaultVal);
+        }
+
+        /// <summary>
+        /// obj转Int
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="func">默认值</param>
+        /// <returns></returns>
+        private static int? ConvertToInt(this object obj, Func<int?> func)
+        {
+            if (obj != null)
+                if (int.TryParse(obj.ToString(), out var result))
+                    return result;
+            return func.Invoke();
+        }
+
+        #endregion
+
+        #region obj转long
+
+        /// <summary>
+        /// obj转long
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="defaultVal">默认值</param>
+        /// <returns></returns>
+        public static long ConvertToLong(this object obj, long defaultVal = default(long))
+        {
+            return obj.ConvertToLong(() => defaultVal).Value;
+        }
+
+        /// <summary>
+        /// obj转long
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="defaultVal">默认值</param>
+        /// <returns></returns>
+        public static long? ConvertToLong(this object obj, long? defaultVal = null)
+        {
+            return obj.ConvertToLong(() => defaultVal);
+        }
+
+        /// <summary>
+        /// obj转long
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        private static long? ConvertToLong(this object obj, Func<long?> func)
+        {
+            if (obj != null)
+                if (long.TryParse(obj.ToString(), out var result))
+                    return result;
+            return func.Invoke();
         }
 
         #endregion
@@ -179,30 +227,32 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static decimal ConvertToDecimal(this object obj, decimal defaultVal)
         {
-            decimal result;
-            if (obj != null)
-                if (decimal.TryParse(obj.ToString(), out result))
-                    return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return obj.ConvertToDecimal(() => defaultVal).Value;
         }
 
         /// <summary>
-        /// obj转Int
+        /// obj转decimal
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="defaultVal">默认值</param>
         /// <returns></returns>
         public static decimal? ConvertToDecimal(this object obj, decimal? defaultVal = null)
         {
-            decimal result;
+            return obj.ConvertToDecimal(() => defaultVal);
+        }
+
+        /// <summary>
+        /// obj转decimal
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="func">默认值</param>
+        /// <returns></returns>
+        private static decimal? ConvertToDecimal(this object obj, Func<decimal?> func)
+        {
             if (obj != null)
-                if (decimal.TryParse(obj.ToString(), out result))
+                if (decimal.TryParse(obj.ToString(), out var result))
                     return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return func.Invoke();
         }
 
         #endregion
@@ -217,30 +267,32 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static double ConvertToDouble(this object obj, double defaultVal)
         {
-            double result;
-            if (obj != null)
-                if (double.TryParse(obj.ToString(), out result))
-                    return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return obj.ConvertToDouble(() => defaultVal).Value;
         }
 
         /// <summary>
-        /// obj转Int
+        /// obj转double
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="defaultVal">默认值</param>
         /// <returns></returns>
         public static double? ConvertToDouble(this object obj, double? defaultVal = null)
         {
-            double result;
+            return obj.ConvertToDouble(() => defaultVal);
+        }
+
+        /// <summary>
+        /// obj转Int
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="func">默认值</param>
+        /// <returns></returns>
+        private static double? ConvertToDouble(this object obj, Func<double?> func)
+        {
             if (obj != null)
-                if (double.TryParse(obj.ToString(), out result))
+                if (double.TryParse(obj.ToString(), out var result))
                     return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return func.Invoke();
         }
 
         #endregion
@@ -255,30 +307,32 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static float ConvertToFloat(this object obj, float defaultVal)
         {
-            float result;
-            if (obj != null)
-                if (float.TryParse(obj.ToString(), out result))
-                    return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return obj.ConvertToFloat(() => defaultVal).Value;
         }
 
         /// <summary>
-        /// obj转Int
+        /// obj转float
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="defaultVal">默认值</param>
         /// <returns></returns>
         public static float? ConvertToFloat(this object obj, float? defaultVal = null)
         {
-            float result;
+            return obj.ConvertToFloat(() => defaultVal);
+        }
+
+        /// <summary>
+        /// obj转float
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="func">默认值</param>
+        /// <returns></returns>
+        private static float? ConvertToFloat(this object obj, Func<float?> func)
+        {
             if (obj != null)
-                if (float.TryParse(obj.ToString(), out result))
+                if (float.TryParse(obj.ToString(), out var result))
                     return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return func.Invoke();
         }
 
         #endregion
@@ -293,13 +347,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static DateTime ConvertToDateTime(this object obj, DateTime defaultVal)
         {
-            DateTime result;
-            if (obj != null)
-                if (DateTime.TryParse(obj.ToString(), out result))
-                    return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return obj.ConvertToDateTime(() => defaultVal).Value;
         }
 
         /// <summary>
@@ -310,13 +358,21 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static DateTime? ConvertToDateTime(this object obj, DateTime? defaultVal = null)
         {
-            DateTime result;
+            return obj.ConvertToDateTime(() => defaultVal);
+        }
+
+        /// <summary>
+        /// obj转dateTime
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="func">默认值</param>
+        /// <returns></returns>
+        private static DateTime? ConvertToDateTime(this object obj, Func<DateTime?> func)
+        {
             if (obj != null)
-                if (DateTime.TryParse(obj.ToString(), out result))
+                if (DateTime.TryParse(obj.ToString(), out var result))
                     return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return func.Invoke();
         }
 
         #endregion
@@ -331,35 +387,8 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static byte ConvertToByte(this object obj, byte defaultVal)
         {
-            byte result;
-            if (obj != null)
-                if (byte.TryParse(obj.ToString(), out result))
-                    return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return obj.ConvertToByte(() => defaultVal).Value;
         }
-
-        /// <summary>
-        /// obj转Int
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="defaultVal">默认值</param>
-        /// <returns></returns>
-        public static byte? ConvertToByte(this object obj, byte? defaultVal = null)
-        {
-            byte result;
-            if (obj != null)
-                if (byte.TryParse(obj.ToString(), out result))
-                    return result;
-                else
-                    return defaultVal;
-            return defaultVal;
-        }
-
-        #endregion
-
-        #region obj转sbyte
 
         /// <summary>
         /// obj转byte
@@ -367,32 +396,63 @@ namespace EInfrastructure.Core.Tools
         /// <param name="obj"></param>
         /// <param name="defaultVal">默认值</param>
         /// <returns></returns>
-        public static sbyte ConvertToSByte(this object obj, sbyte defaultVal)
+        public static byte? ConvertToByte(this object obj, byte? defaultVal = null)
         {
-            sbyte result;
-            if (obj != null)
-                if (sbyte.TryParse(obj.ToString(), out result))
-                    return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return obj.ConvertToByte(() => defaultVal);
         }
 
         /// <summary>
         /// obj转Int
         /// </summary>
         /// <param name="obj"></param>
+        /// <param name="func">默认值</param>
+        /// <returns></returns>
+        private static byte? ConvertToByte(this object obj, Func<byte?> func)
+        {
+            if (obj != null)
+                if (byte.TryParse(obj.ToString(), out var result))
+                    return result;
+            return func.Invoke();
+        }
+
+        #endregion
+
+        #region obj转sbyte
+
+        /// <summary>
+        /// obj转sbyte
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="defaultVal">默认值</param>
+        /// <returns></returns>
+        public static sbyte ConvertToSByte(this object obj, sbyte defaultVal)
+        {
+            return obj.ConvertToSByte(() => defaultVal).Value;
+        }
+
+        /// <summary>
+        /// obj转sbyte
+        /// </summary>
+        /// <param name="obj"></param>
         /// <param name="defaultVal">默认值</param>
         /// <returns></returns>
         public static sbyte? ConvertToSByte(this object obj, sbyte? defaultVal = null)
         {
-            sbyte result;
+            return obj.ConvertToSByte(() => defaultVal);
+        }
+
+        /// <summary>
+        /// obj转sbyte
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="func">默认值</param>
+        /// <returns></returns>
+        private static sbyte? ConvertToSByte(this object obj, Func<sbyte?> func)
+        {
             if (obj != null)
-                if (sbyte.TryParse(obj.ToString(), out result))
+                if (sbyte.TryParse(obj.ToString(), out var result))
                     return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return func.Invoke();
         }
 
         #endregion
@@ -407,30 +467,32 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool ConvertToBool(this object obj, bool defaultVal)
         {
-            bool result;
-            if (obj != null)
-                if (bool.TryParse(obj.ToString(), out result))
-                    return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return obj.ConvertToBool(()=>defaultVal).Value;
         }
 
         /// <summary>
-        /// obj转Int
+        /// obj转bool
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="defaultVal">默认值</param>
         /// <returns></returns>
         public static bool? ConvertToBool(this object obj, bool? defaultVal = null)
         {
-            bool result;
+            return obj.ConvertToBool(()=>defaultVal);
+        }
+
+        /// <summary>
+        /// obj转bool
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="func">默认值</param>
+        /// <returns></returns>
+        private static bool? ConvertToBool(this object obj, Func<bool?> func)
+        {
             if (obj != null)
-                if (bool.TryParse(obj.ToString(), out result))
+                if (bool.TryParse(obj.ToString(), out var result))
                     return result;
-                else
-                    return defaultVal;
-            return defaultVal;
+            return func.Invoke();
         }
 
         #endregion
@@ -474,9 +536,46 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static byte[] ConvertToByteArray(this Stream stream)
         {
-            byte[] bytes = new byte[stream.Length];
-            stream.Read(bytes, 0, bytes.Length);
-            // 设置当前流的位置为流的开始
+            return stream.ConvertToByteArrayAsync(true).Result;
+        }
+
+        /// <summary>
+        /// 流转换为字节流
+        /// </summary>
+        /// <param name="stream">流</param>
+        public static async Task<byte[]> ConvertToByteArrayAsync(Stream stream)
+        {
+            return await stream.ConvertToByteArrayAsync(false);
+        }
+
+        /// <summary>
+        /// 流转换为字节流
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="isSync"></param>
+        /// <returns></returns>
+        private static async Task<byte[]> ConvertToByteArrayAsync(this Stream stream, bool isSync)
+        {
+            if (stream == null || stream.CanRead)
+            {
+                return new byte[] { };
+            }
+
+            if (!stream.CanSeek)
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+            }
+
+            var bytes = new byte[stream.Length];
+            if (isSync)
+            {
+                stream.Read(bytes, 0, bytes.Length);
+            }
+            else
+            {
+                await stream.ReadAsync(bytes, 0, bytes.Length);
+            }
+
             stream.Seek(0, SeekOrigin.Begin);
             return bytes;
         }
@@ -492,8 +591,20 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static byte[] ConvertToByteArray(this string para)
         {
-            UnicodeEncoding converter = new UnicodeEncoding();
-            return converter.GetBytes(para);
+            return para.ConvertToByteArray(Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// String转换为Byte数组
+        /// </summary>
+        /// <param name="para">待转换参数</param>
+        /// <param name="encoding">编码格式</param>
+        /// <returns></returns>
+        public static byte[] ConvertToByteArray(this string para, Encoding encoding)
+        {
+            if (string.IsNullOrWhiteSpace(para))
+                return new byte[] { };
+            return encoding.GetBytes(para);
         }
 
         #endregion
@@ -520,6 +631,85 @@ namespace EInfrastructure.Core.Tools
         #endregion
 
         #region 转换为String
+
+        #region 文件流转字符串
+
+        /// <summary>
+        /// 文件流转字符串
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <returns></returns>
+        public static string ConvertToString(this Stream stream)
+        {
+            return stream.ConvertToString(Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// 文件流转字符串
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <param name="encoding">编码格式</param>
+        /// <param name="bufferSize">缓冲区大小</param>
+        /// <param name="isCloseStream">是否自动释放文件</param>
+        /// <returns></returns>
+        public static string ConvertToString(this Stream stream, Encoding encoding, int bufferSize = 1024 * 2,
+            bool isCloseStream = true)
+        {
+            return stream.ConvertToStringAsync(encoding, true, bufferSize, isCloseStream).Result;
+        }
+
+        /// <summary>
+        /// 文件流转字符串
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <returns></returns>
+        public static async Task<string> ConvertToStringAsync(this Stream stream)
+        {
+            return await stream.ConvertToStringAsync(Encoding.UTF8, false);
+        }
+
+        /// <summary>
+        /// 文件流转字符串
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <param name="encoding">编码格式</param>
+        /// <param name="bufferSize">缓冲区大小</param>
+        /// <param name="isCloseStream">是否自动释放文件</param>
+        /// <returns></returns>
+        public static async Task<string> ConvertToStringAsync(this Stream stream, Encoding encoding,
+            int bufferSize = 1024 * 2,
+            bool isCloseStream = true)
+        {
+            return await stream.ConvertToStringAsync(encoding, false, bufferSize, isCloseStream);
+        }
+
+        /// <summary>
+        /// 文件流转字符串
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <param name="encoding">编码格式</param>
+        /// <param name="isSync">是否同步</param>
+        /// <param name="bufferSize">缓冲区大小</param>
+        /// <param name="isCloseStream">是否自动释放文件</param>
+        /// <returns></returns>
+        private static async Task<string> ConvertToStringAsync(this Stream stream, Encoding encoding, bool isSync,
+            int bufferSize = 1024 * 2,
+            bool isCloseStream = true)
+        {
+            if (stream == null || encoding == null || stream.CanRead == false)
+                return string.Empty;
+            using (var reader = new StreamReader(stream, encoding, true, bufferSize, !isCloseStream))
+            {
+                if (stream.CanSeek)
+                    stream.Seek(0, SeekOrigin.Begin);
+                var result = isSync ? reader.ReadToEnd() : await reader.ReadToEndAsync();
+                if (stream.CanSeek)
+                    stream.Seek(0, SeekOrigin.Begin);
+                return result;
+            }
+        }
+
+        #endregion
 
         #region byte数组转换为string
 

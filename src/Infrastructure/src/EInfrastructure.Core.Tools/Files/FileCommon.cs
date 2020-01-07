@@ -59,6 +59,11 @@ namespace EInfrastructure.Core.Tools.Files
         /// <returns></returns>
         public static string GetSha1(string localFilePath)
         {
+            if (!File.Exists(localFilePath))
+            {
+                return "";
+            }
+
             using (FileStream fileStream =
                 new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
             {
@@ -77,6 +82,10 @@ namespace EInfrastructure.Core.Tools.Files
         /// <returns></returns>
         public static string GetSha256(string localFilePath)
         {
+            if (!File.Exists(localFilePath))
+            {
+                return "";
+            }
             using (FileStream fileStream =
                 new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
             {
@@ -95,6 +104,10 @@ namespace EInfrastructure.Core.Tools.Files
         /// <returns></returns>
         public static string GetSha384(string localFilePath)
         {
+            if (!File.Exists(localFilePath))
+            {
+                return "";
+            }
             using (FileStream fileStream =
                 new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
             {
@@ -113,6 +126,10 @@ namespace EInfrastructure.Core.Tools.Files
         /// <returns></returns>
         public static string GetSha512(string localFilePath)
         {
+            if (!File.Exists(localFilePath))
+            {
+                return "";
+            }
             using (FileStream fileStream =
                 new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
             {
@@ -154,13 +171,15 @@ namespace EInfrastructure.Core.Tools.Files
         /// <summary>
         /// 将文件转换成Base64格式
         /// </summary>
-        /// <param name="filePath">文件地址</param>
+        /// <param name="filePath">本地文件绝对地址</param>
         /// <returns></returns>
         public static string FileToBase64(string filePath)
         {
             string result = "";
             try
             {
+                if (!System.IO.File.Exists(filePath))
+                    return String.Empty;
                 using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
                     return fs.ConvertToBase64();
@@ -183,13 +202,15 @@ namespace EInfrastructure.Core.Tools.Files
         /// <summary>
         /// 将文件转换成byte[]数组
         /// </summary>
-        /// <param name="localFilePath">文件路径文件名称</param>
+        /// <param name="filePath">本地文件绝对地址</param>
         /// <returns>byte[]数组</returns>
-        public static byte[] ConvertFileToByte(string localFilePath)
+        public static byte[] ConvertFileToByte(string filePath)
         {
             try
             {
-                using (FileStream fs = new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
+                if (!System.IO.File.Exists(filePath))
+                    return new byte[] { };
+                using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
                     byte[] byteArray = new byte[fs.Length];
                     fs.Read(byteArray, 0, byteArray.Length);
@@ -240,7 +261,7 @@ namespace EInfrastructure.Core.Tools.Files
         /// <summary>
         /// 获取文件内容
         /// </summary>
-        /// <param name="filePath">文件地址</param>
+        /// <param name="filePath">本地文件绝对地址</param>
         /// <param name="encoding">编码格式,默认为Encoding.Default</param>
         /// <returns></returns>
         public static string GetFileContent(string filePath, Encoding encoding = null)
@@ -248,6 +269,8 @@ namespace EInfrastructure.Core.Tools.Files
             string result = "";
             try
             {
+                if (!System.IO.File.Exists(filePath))
+                    return string.Empty;
                 using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
                     using (StreamReader reader = new StreamReader(fs, encoding ?? Encoding.Default))

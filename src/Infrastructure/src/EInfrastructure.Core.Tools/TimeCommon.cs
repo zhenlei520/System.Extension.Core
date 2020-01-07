@@ -852,6 +852,25 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 获取时间戳
+
+        #region DateTime时间格式转换为10位不带毫秒的Unix时间戳
+
+        /// <summary>
+        /// DateTime时间格式转换为10位不带毫秒的Unix时间戳
+        /// </summary>
+        /// <param name="time"> DateTime时间格式</param>
+        /// <param name="dateTimeKind"></param>
+        /// <returns>Unix时间戳格式</returns>
+        public static int ConvertDateTimeInt(this DateTime time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
+        {
+            DateTime startTime =
+                TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind), TimeZoneInfo.Local);
+            return (int) (time - startTime).TotalSeconds;
+        }
+
+        #endregion
+
         #region 得到13位时间戳
 
         /// <summary>
@@ -883,38 +902,9 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region DateTime时间格式转换为10位不带毫秒的Unix时间戳
-
-        /// <summary>
-        /// DateTime时间格式转换为10位不带毫秒的Unix时间戳
-        /// </summary>
-        /// <param name="time"> DateTime时间格式</param>
-        /// <param name="dateTimeKind"></param>
-        /// <returns>Unix时间戳格式</returns>
-        public static int ConvertDateTimeInt(this DateTime time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
-        {
-            DateTime startTime =
-                TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind), TimeZoneInfo.Local);
-            return (int) (time - startTime).TotalSeconds;
-        }
-
         #endregion
 
-        #region 将当前Utc时间转换为总秒数
-
-        /// <summary>
-        /// 将当前Utc时间转换为总秒数
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="dateTimeKind"></param>
-        /// <returns></returns>
-        public static long ToUnixTimestamp(this DateTime target, DateTimeKind dateTimeKind = DateTimeKind.Utc)
-        {
-            return Convert.ToInt64((TimeZoneInfo.ConvertTimeToUtc(target) -
-                                    new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind)).TotalSeconds);
-        }
-
-        #endregion
+        #region 时间戳转时间
 
         #region 将10位时间戳转时间
 
@@ -933,6 +923,10 @@ namespace EInfrastructure.Core.Tools
             return dtDateTime;
         }
 
+        #endregion
+
+        #region 将13位时间戳转为时间
+
         /// <summary>
         /// 将13位时间戳转为时间
         /// </summary>
@@ -948,18 +942,35 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #endregion
+
         #region 获得总秒数
 
         /// <summary>
         /// 获得总秒数
         /// </summary>
-        /// <param name="jan1St1970"></param>
+        /// <param name="target"></param>
         /// <param name="dateTimeKind"></param>
         /// <returns></returns>
-        public static long CurrentTimeMillis(this DateTime jan1St1970, DateTimeKind dateTimeKind = DateTimeKind.Utc)
+        public static long CurrentTimeMillis(this DateTime target, DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
-            DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind);
-            return (long) (jan1St1970 - Jan1st1970).TotalMilliseconds;
+            return (long) (TimeZoneInfo.ConvertTimeToUtc(target) - new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind)).TotalSeconds;
+        }
+
+        #endregion
+
+        #region 将当前Utc时间转换为总毫秒数
+
+        /// <summary>
+        /// 将当前Utc时间转换为总毫秒数
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="dateTimeKind"></param>
+        /// <returns></returns>
+        public static long ToUnixTimestamp(this DateTime target, DateTimeKind dateTimeKind = DateTimeKind.Utc)
+        {
+            return (TimeZoneInfo.ConvertTimeToUtc(target) -
+                                    new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind)).TotalMilliseconds.ConvertToLong(0);
         }
 
         #endregion
@@ -973,14 +984,11 @@ namespace EInfrastructure.Core.Tools
         /// <param name="days"></param>
         /// <returns></returns>
         public static string GetDayName(this DateTime date,
-            string[] days = null)
+            string[] days)
         {
-            if (days == null)
+            if (days == null || days.Length != 7)
             {
-                days = new[]
-                {
-                    "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"
-                };
+                return "";
             }
 
             return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
@@ -1012,7 +1020,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="days">从周日到周六</param>
         /// <returns></returns>
         public static Enum GetDayName(this DateTime date,
-            Enum[] days = null)
+            Enum[] days)
         {
             return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
         }
