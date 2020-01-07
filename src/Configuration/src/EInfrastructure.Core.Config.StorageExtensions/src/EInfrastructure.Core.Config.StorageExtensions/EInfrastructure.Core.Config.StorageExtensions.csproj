@@ -20,6 +20,6 @@
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
+    <ProjectReference Include="..\..\..\Configuration\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
   </ItemGroup>
 </Project>

@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Configuration\src\Configuration\src\EInfrastructure.Core.Config.ExceptionExtensions\EInfrastructure.Core.Config.ExceptionExtensions.csproj" />
+    <ProjectReference Include="..\..\..\Configuration\src\Configuration\EInfrastructure.Core.Config.ExceptionExtensions\EInfrastructure.Core.Config.ExceptionExtensions.csproj" />
   </ItemGroup>
 
 </Project>

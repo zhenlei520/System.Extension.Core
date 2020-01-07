@@ -27,12 +27,12 @@
     <None Remove="nlog.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Configuration\src\Configuration\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
+    <ProjectReference Include="..\..\..\Configuration\src\Configuration\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
     <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.CacheExtensions\src\EInfrastructure.Core.Config.CacheExtensions\EInfrastructure.Core.Config.CacheExtensions.csproj" />
     <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.CompressExtensions\src\EInfrastructure.Core.Config.CompressExtensions\EInfrastructure.Core.Config.CompressExtensions.csproj" />
     <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.EntitiesExtensions\src\EInfrastructure.Core.Config.EntitiesExtensions\EInfrastructure.Core.Config.EntitiesExtensions.csproj" />
-    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.IdentificationExtensions\src\EInfrastructure.Core.Config.IdentificationExtensions\EInfrastructure.Core.Config.IdentificationExtensions.csproj" />
-    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.SerializeExtensions\src\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions.csproj" />
+    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.IdentificationExtensions\EInfrastructure.Core.Config.IdentificationExtensions.csproj" />
+    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions.csproj" />
     <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.SmsExtensions\src\EInfrastructure.Core.Config.SmsExtensions\EInfrastructure.Core.Config.SmsExtensions.csproj" />
     <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.StorageExtensions\src\EInfrastructure.Core.Config.StorageExtensions\EInfrastructure.Core.Config.StorageExtensions.csproj" />
     <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.WordsExtensions\src\EInfrastructure.Core.Config.WordsExtensions\EInfrastructure.Core.Config.WordsExtensions.csproj" />

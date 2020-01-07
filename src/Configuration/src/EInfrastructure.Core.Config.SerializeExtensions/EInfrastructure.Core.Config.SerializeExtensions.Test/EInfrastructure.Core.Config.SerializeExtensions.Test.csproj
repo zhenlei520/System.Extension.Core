@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Serialize\src\EInfrastructure.Core.Serialize.NewtonsoftJson\EInfrastructure.Core.Serialize.NewtonsoftJson.csproj" />
-    <ProjectReference Include="..\..\src\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions.csproj" />
+    <ProjectReference Include="..\..\..\..\Serialize\src\EInfrastructure.Core.Serialize.NewtonsoftJson\EInfrastructure.Core.Serialize.NewtonsoftJson.csproj" />
+    <ProjectReference Include="..\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions.csproj" />
   </ItemGroup>
 
 </Project>

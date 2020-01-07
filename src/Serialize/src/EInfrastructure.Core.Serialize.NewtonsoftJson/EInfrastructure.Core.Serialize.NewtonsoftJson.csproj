@@ -18,7 +18,8 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.SerializeExtensions\src\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions.csproj" />
+    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions.csproj" />
   </ItemGroup>
 </Project>

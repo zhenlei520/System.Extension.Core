@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Version>2.0.0</Version>
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Infrastructure\src\EInfrastructure.Core.Tools\EInfrastructure.Core.Tools.csproj" />
+    <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core.Tools\EInfrastructure.Core.Tools.csproj" />
     <ProjectReference Include="..\EInfrastructure.Core.Config.ExceptionExtensions\EInfrastructure.Core.Config.ExceptionExtensions.csproj" />
   </ItemGroup>
 

@@ -14,7 +14,8 @@
     <Title>自定义异常配置</Title>
     <PackageTags>EInfrastructure.Core.Config.ExceptionExtensions EInfrastructure ECommon</PackageTags>
   </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\..\..\EInfrastructure.Core.Config.EnumerationExtensions\EInfrastructure.Core.Config.EnumerationExtensions.csproj"/>
+    <ProjectReference Include="..\..\EInfrastructure.Core.Config.EnumerationExtensions\src\EInfrastructure.Core.Config.EnumerationExtensions.csproj" />
   </ItemGroup>
 </Project>
