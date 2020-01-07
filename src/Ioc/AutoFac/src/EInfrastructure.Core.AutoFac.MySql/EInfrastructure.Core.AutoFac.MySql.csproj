@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>2.0.0-beta-047</Version>
+    <Version>2.0.0</Version>
     <Authors>zhenlei520</Authors>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Company>zhenlei520</Company>
     <Description>dotnet core autofac自动注入</Description>
     <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/release/features-2.0/src/Ioc/AutoFac</RepositoryUrl>
     <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.AutoFac.MySql/</PackageProjectUrl>
-    <Copyright>Copyright ©zhenlei520 2018</Copyright>
+    <Copyright>Copyright ©zhenlei520 2020</Copyright>
     <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
     <Title>Autofac mysql自动注入</Title>
     <PackageTags>autofac mysql</PackageTags>
