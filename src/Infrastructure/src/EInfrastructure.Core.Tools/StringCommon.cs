@@ -233,6 +233,36 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 首字母小写
+
+        /// <summary>
+        /// 首字母小写
+        /// </summary>
+        /// <param name="value">值</param>
+        public static string FirstLowerCase(this string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return string.Empty;
+            return $"{value.Substring(0, 1).ToLower()}{value.Substring(1)}";
+        }
+
+        #endregion
+
+        #region 首字母大写
+
+        /// <summary>
+        /// 首字母大写
+        /// </summary>
+        /// <param name="value">值</param>
+        public static string FirstUpperCase(this string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return string.Empty;
+            return $"{value.Substring(0, 1).ToUpper()}{value.Substring(1)}";
+        }
+
+        #endregion
+
         #region 操作
 
         #region 清除字符串数组中的重复项
