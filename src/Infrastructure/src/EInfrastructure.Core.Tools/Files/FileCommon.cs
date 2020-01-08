@@ -391,7 +391,6 @@ namespace EInfrastructure.Core.Tools.Files
         /// 获取文件内容（每行读取）
         /// </summary>
         /// <param name="filePath">本地文件绝对地址</param>
-        /// <param name="isSync">是否同步</param>
         /// <param name="encoding">编码格式,默认为Encoding.Default</param>
         /// <returns></returns>
         private static async Task<List<string>> GetFileContentAsyncByLine(string filePath,
