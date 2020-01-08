@@ -5,6 +5,7 @@ using System;
 using System.Reflection;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.StorageExtensions;
+using EInfrastructure.Core.Config.StorageExtensions.Dto;
 using EInfrastructure.Core.Config.StorageExtensions.Param;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.QiNiu.Storage.Config;
@@ -128,6 +129,44 @@ namespace EInfrastructure.Core.QiNiu.Storage
             BucketManager bucketManager = new BucketManager(qiNiuConfig.GetMac(), base.GetConfig());
             StatResult statResult = bucketManager.Stat(qiNiuConfig.Bucket, key);
             return statResult.Code == (int) HttpCode.OK;
+        }
+
+        #endregion
+
+        #region 获取文件信息
+
+        /// <summary>
+        /// 获取文件信息
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="json">七牛云配置 QiNiuStorageConfig的序列化后的json</param>
+        /// <returns></returns>
+        public FileInfoDto Get(string key, string json = "")
+        {
+            var qiNiuConfig = GetQiNiuConfig(json);
+            BucketManager bucketManager = new BucketManager(qiNiuConfig.GetMac(), base.GetConfig());
+            StatResult statRet = bucketManager.Stat(qiNiuConfig.Bucket, key);
+            if (statRet.Code != (int) HttpCode.OK)
+            {
+                return new FileInfoDto()
+                {
+                    Success = false,
+                    Msg = statRet.Text
+                };
+            }
+
+            return new FileInfoDto()
+            {
+                Size = statRet.Result.Fsize,
+                Hash = statRet.Result.Hash,
+                MimeType = statRet.Result.MimeType,
+                PutTime = statRet.Result.PutTime,
+                FileType = statRet.Result.FileType,
+                Success = true,
+                Host = qiNiuConfig.Host,
+                Path = key,
+
+            };
         }
 
         #endregion

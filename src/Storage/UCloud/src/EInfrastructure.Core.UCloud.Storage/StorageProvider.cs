@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using EInfrastructure.Core.Config.StorageExtensions;
+using EInfrastructure.Core.Config.StorageExtensions.Dto;
 using EInfrastructure.Core.Config.StorageExtensions.Param;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.UCloud.Storage.Config;
@@ -98,6 +99,21 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <param name="key">文件key</param>
         /// <returns></returns>
         public bool Exist(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 获取文件信息
+
+        /// <summary>
+        /// 获取文件信息
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="json">七牛云配置 QiNiuStorageConfig的序列化后的json</param>
+        /// <returns></returns>
+        public FileInfoDto Get(string key, string json = "")
         {
             throw new NotImplementedException();
         }

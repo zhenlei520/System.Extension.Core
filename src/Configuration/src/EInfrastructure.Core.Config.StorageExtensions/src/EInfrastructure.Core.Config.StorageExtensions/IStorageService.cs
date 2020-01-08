@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using EInfrastructure.Core.Config.StorageExtensions.Dto;
 using EInfrastructure.Core.Config.StorageExtensions.Param;
 using EInfrastructure.Core.Configuration.Ioc;
 
@@ -59,6 +60,18 @@ namespace EInfrastructure.Core.Config.StorageExtensions
         /// <param name="key">文件key</param>
         /// <returns></returns>
         bool Exist(string key);
+
+        #endregion
+
+        #region 获取文件信息
+
+        /// <summary>
+        /// 获取文件信息
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="json">七牛云配置 QiNiuStorageConfig的序列化后的json</param>
+        /// <returns></returns>
+        FileInfoDto Get(string key, string json = "");
 
         #endregion
     }
