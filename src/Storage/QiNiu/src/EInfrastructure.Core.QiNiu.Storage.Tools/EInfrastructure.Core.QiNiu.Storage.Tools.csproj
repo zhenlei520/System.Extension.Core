@@ -1,17 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>2.0.0</Version>
-    <Authors>zhenlei520</Authors>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Company>zhenlei520</Company>
-    <Description>dotnet core 七牛存储类库</Description>
-    <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core/tree/release/features-2.0/src/Storage/QiNiu</RepositoryUrl>
-    <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.QiNiu.Storage/</PackageProjectUrl>
-    <Copyright>Copyright ©zhenlei520 2020</Copyright>
-    <Title>七牛存储类库</Title>
-    <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
-    <PackageTags>Storage QiNiu</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -21,7 +11,6 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DocumentationFile>bin\Release\EInfrastructure.Core.QiNiu.Storage.xml</DocumentationFile>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
@@ -29,11 +18,8 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
 
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\AutomationConfiguration\src\EInfrastructure.Core.AutomationConfiguration\EInfrastructure.Core.AutomationConfiguration.csproj" />
     <ProjectReference Include="..\..\..\..\Tools\Validation\src\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj" />
-    <ProjectReference Include="..\EInfrastructure.Core.QiNiu.Storage.Tools\EInfrastructure.Core.QiNiu.Storage.Tools.csproj" />
   </ItemGroup>
-
 </Project>
