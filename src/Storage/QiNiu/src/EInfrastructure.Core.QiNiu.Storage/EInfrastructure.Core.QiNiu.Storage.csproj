@@ -39,8 +39,4 @@
     <ProjectReference Include="..\..\..\..\Tools\Validation\src\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Common" />
-  </ItemGroup>
-
 </Project>
