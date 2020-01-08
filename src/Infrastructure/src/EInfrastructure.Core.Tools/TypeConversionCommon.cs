@@ -768,6 +768,16 @@ namespace EInfrastructure.Core.Tools
             return ConvertToBase64(stream.ConvertToByteArray());
         }
 
+        /// <summary>
+        /// 文件流转换为base64
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <returns></returns>
+        public static async Task<string> ConvertToBase64Async(this Stream stream)
+        {
+            return  ConvertToBase64(await stream.ConvertToByteArrayAsync(false));
+        }
+
         #endregion
 
         #endregion
