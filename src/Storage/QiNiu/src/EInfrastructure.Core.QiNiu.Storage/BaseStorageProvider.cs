@@ -2,11 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.StorageExtensions.Config;
 using EInfrastructure.Core.Config.StorageExtensions.Enumerations;
 using EInfrastructure.Core.Config.StorageExtensions.Param;
-using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.QiNiu.Storage.Validator;
 using EInfrastructure.Core.Validation.Common;
@@ -27,22 +25,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
         private readonly QiNiuStorageConfig _qiNiuConfig;
 
         /// <summary>
-        /// 日志服务
-        /// </summary>
-        protected readonly ILogService LogService;
-
-        /// <summary>
-        /// json服务
-        /// </summary>
-        protected readonly IJsonService JsonService;
-
-        /// <summary>
         ///
         /// </summary>
-        public BaseStorageProvider(IJsonService jsonService, ILogService logService, QiNiuStorageConfig qiNiuConfig)
+        public BaseStorageProvider(QiNiuStorageConfig qiNiuConfig)
         {
-            JsonService = jsonService;
-            LogService = logService;
             _qiNiuConfig = qiNiuConfig;
             if (qiNiuConfig != null)
             {
@@ -55,15 +41,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 得到七牛配置（方法内不要重复获取此方法，以免产生不同的配置信息）
         /// </summary>
-        /// <param name="config">七牛配置文件json对象(默认查询公共的配置)</param>
         /// <returns></returns>
-        internal QiNiuStorageConfig GetQiNiuConfig(string config = null)
-        {
-            var qiniuConfig = !string.IsNullOrEmpty(config)
-                ? QiNiuStorageConfig.GetQiNiuConfig(JsonService, config)
-                : _qiNiuConfig;
-            return qiniuConfig;
-        }
+        internal QiNiuStorageConfig QiNiuConfig => _qiNiuConfig;
 
         #endregion
 

@@ -33,7 +33,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\AutomationConfiguration\src\EInfrastructure.Core.AutomationConfiguration\EInfrastructure.Core.AutomationConfiguration.csproj" />
     <ProjectReference Include="..\..\..\..\Tools\Validation\src\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj" />
-    <ProjectReference Include="..\EInfrastructure.Core.QiNiu.Storage.Tools\EInfrastructure.Core.QiNiu.Storage.Tools.csproj" />
   </ItemGroup>
 
 </Project>

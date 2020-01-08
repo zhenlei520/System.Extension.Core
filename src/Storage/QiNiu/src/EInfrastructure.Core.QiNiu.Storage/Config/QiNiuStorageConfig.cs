@@ -138,29 +138,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
             }
         }
 
-        #region 得到七牛配置
-
-        /// <summary>
-        /// 得到七牛配置
-        /// </summary>
-        /// <param name="jsonService">json服务</param>
-        /// <param name="json">七牛配置文件</param>
-        /// <returns></returns>
-        public static QiNiuStorageConfig GetQiNiuConfig(IJsonService jsonService, string json)
-        {
-            if (!string.IsNullOrEmpty(json))
-            {
-                var qiNiuConfig = jsonService.Deserialize<QiNiuStorageConfig>(json);
-                Check.True(qiNiuConfig != null, "自定义七牛配置文件信息错误");
-                new QiNiuConfigValidator().Validate(qiNiuConfig).Check();
-                return qiNiuConfig;
-            }
-
-            throw new BusinessException("自定义七牛配置文件信息错误");
-        }
-
-        #endregion
-
         #region 得到Mac
 
         private Mac _mac;

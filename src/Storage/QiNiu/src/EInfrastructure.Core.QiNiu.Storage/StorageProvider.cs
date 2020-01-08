@@ -22,9 +22,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 文件实现类
         /// </summary>
-        public StorageProvider(IJsonService jsonService, ILogService logService = null,
-            QiNiuStorageConfig qiNiuConfig = null) : base(jsonService, logService,
-            qiNiuConfig)
+        public StorageProvider(QiNiuStorageConfig qiNiuConfig = null) : base(qiNiuConfig)
         {
         }
 
@@ -52,8 +50,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public bool UploadStream(UploadByStreamParam param)
         {
             var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
-            var qiNiuConfig = GetQiNiuConfig(param.Json);
-            string token = GetUploadCredentials(qiNiuConfig,
+            string token = GetUploadCredentials(QiNiuConfig,
                 new UploadPersistentOpsParam(param.Key, uploadPersistentOps));
             FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
             HttpResult result =
@@ -73,8 +70,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public bool UploadFile(UploadByFormFileParam param)
         {
             var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
-            var qiNiuConfig = GetQiNiuConfig(param.Json);
-            string token = base.GetUploadCredentials(qiNiuConfig,
+            string token = base.GetUploadCredentials(QiNiuConfig,
                 new UploadPersistentOpsParam(param.Key, uploadPersistentOps));
             FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
             if (param.File != null)
@@ -98,8 +94,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <param name="opsParam">上传信息</param>
         public string GetUploadCredentials(UploadPersistentOpsParam opsParam)
         {
-            var qiNiuConfig = GetQiNiuConfig(opsParam.Json);
-            return base.GetUploadCredentials(qiNiuConfig, opsParam);
+            return base.GetUploadCredentials(QiNiuConfig, opsParam);
         }
 
         /// <summary>
@@ -109,8 +104,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <param name="func"></param>
         public string GetUploadCredentials(UploadPersistentOpsParam opsParam, Func<string> func)
         {
-            var qiNiuConfig = GetQiNiuConfig(opsParam.Json);
-            return base.GetUploadCredentials(qiNiuConfig, opsParam,
+            return base.GetUploadCredentials(QiNiuConfig, opsParam,
                 (putPolicy) => { putPolicy.CallbackBody = func?.Invoke(); });
         }
 
@@ -125,9 +119,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool Exist(string key)
         {
-            var qiNiuConfig = GetQiNiuConfig();
-            BucketManager bucketManager = new BucketManager(qiNiuConfig.GetMac(), base.GetConfig());
-            StatResult statResult = bucketManager.Stat(qiNiuConfig.Bucket, key);
+            BucketManager bucketManager = new BucketManager(QiNiuConfig.GetMac(), base.GetConfig());
+            StatResult statResult = bucketManager.Stat(QiNiuConfig.Bucket, key);
             return statResult.Code == (int) HttpCode.OK;
         }
 
@@ -143,9 +136,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public FileInfoDto Get(string key, string json = "")
         {
-            var qiNiuConfig = GetQiNiuConfig(json);
-            BucketManager bucketManager = new BucketManager(qiNiuConfig.GetMac(), base.GetConfig());
-            StatResult statRet = bucketManager.Stat(qiNiuConfig.Bucket, key);
+            BucketManager bucketManager = new BucketManager(QiNiuConfig.GetMac(), base.GetConfig());
+            StatResult statRet = bucketManager.Stat(QiNiuConfig.Bucket, key);
             if (statRet.Code != (int) HttpCode.OK)
             {
                 return new FileInfoDto()
@@ -163,7 +155,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 PutTime = statRet.Result.PutTime,
                 FileType = statRet.Result.FileType,
                 Success = true,
-                Host = qiNiuConfig.Host,
+                Host = QiNiuConfig.Host,
                 Path = key,
 
             };
