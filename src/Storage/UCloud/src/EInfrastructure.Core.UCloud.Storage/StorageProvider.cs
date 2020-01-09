@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using EInfrastructure.Core.Config.StorageExtensions;
@@ -45,11 +46,11 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// 根据文件流上传
         /// </summary>
         /// <param name="param"></param>
-        /// <param name="func"></param>
         /// <returns></returns>
-        public bool UploadStream(UploadByStreamParam param)
+        public UploadResultDto UploadStream(UploadByStreamParam param)
         {
-            return base.UploadFile(param.Stream, param.Key, Path.GetExtension(param.Key));
+            var res = base.UploadFile(param.Stream, param.Key, Path.GetExtension(param.Key));
+            return new UploadResultDto(res, res ? "上传成功" : "上传失败");
         }
 
         #endregion
@@ -61,7 +62,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="param">文件上传配置</param>
         /// <returns></returns>
-        public bool UploadFile(UploadByFormFileParam param)
+        public UploadResultDto UploadFile(UploadByFormFileParam param)
         {
             throw new System.NotImplementedException();
         }
@@ -98,7 +99,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="key">文件key</param>
         /// <returns></returns>
-        public bool Exist(string key)
+        public OperateResultDto Exist(string key)
         {
             throw new NotImplementedException();
         }
@@ -111,9 +112,90 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// 获取文件信息
         /// </summary>
         /// <param name="key">文件key</param>
-        /// <param name="json">七牛云配置 QiNiuStorageConfig的序列化后的json</param>
         /// <returns></returns>
-        public FileInfoDto Get(string key, string json = "")
+        public FileInfoDto Get(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 获取文件信息集合
+        /// </summary>
+        /// <param name="keyList">文件key集合</param>
+        /// <returns></returns>
+        public IEnumerable<FileInfoDto> GetList(IEnumerable<string> keyList)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 删除文件
+
+        /// <summary>
+        /// 根据文件key删除
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <returns></returns>
+        public DeleteResultDto Del(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 根据文件key集合删除
+        /// </summary>
+        /// <param name="keyList">文件key集合</param>
+        /// <returns></returns>
+        public IEnumerable<DeleteResultDto> DelList(IEnumerable<string> keyList)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 批量复制文件
+
+        /// <summary>
+        /// 复制文件（两个文件需要在同一账号下）
+        /// </summary>
+        /// <param name="copyFileParam">复制到新空间的参数</param>
+        /// <returns></returns>
+        public CopyFileResultDto CopyTo(CopyFileParam copyFileParam)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 复制文件（两个文件需要在同一账号下）
+        /// </summary>
+        /// <param name="copyFileParam">复制到新空间的参数</param>
+        /// <returns></returns>
+        public IEnumerable<CopyFileResultDto> CopyToList(ICollection<CopyFileParam> copyFileParam)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 批量移动文件（两个文件需要在同一账号下）
+
+        /// <summary>
+        /// 移动文件（两个文件需要在同一账号下）
+        /// </summary>
+        /// <param name="moveFileParam"></param>
+        /// <returns></returns>
+        public MoveFileResultDto Move(MoveFileParam moveFileParam)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 移动文件（两个文件需要在同一账号下）
+        /// </summary>
+        /// <param name="moveFileParamList"></param>
+        /// <returns></returns>
+        public IEnumerable<MoveFileResultDto> MoveList(List<MoveFileParam> moveFileParamList)
         {
             throw new NotImplementedException();
         }

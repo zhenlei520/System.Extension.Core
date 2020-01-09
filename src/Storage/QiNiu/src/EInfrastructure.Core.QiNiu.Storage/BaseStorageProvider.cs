@@ -7,7 +7,6 @@ using EInfrastructure.Core.Config.StorageExtensions.Config;
 using EInfrastructure.Core.Config.StorageExtensions.Enumerations;
 using EInfrastructure.Core.Config.StorageExtensions.Param;
 using EInfrastructure.Core.QiNiu.Storage.Config;
-using EInfrastructure.Core.QiNiu.Storage.Validator;
 using EInfrastructure.Core.Validation.Common;
 using Qiniu.Storage;
 using Qiniu.Util;
@@ -31,7 +30,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public BaseStorageProvider(QiNiuStorageConfig qiNiuConfig)
         {
             _qiNiuConfig = qiNiuConfig;
-            qiNiuConfig.Check("七牛云存储配置异常",HttpStatus.Err.Name);
+            qiNiuConfig.Check("七牛云存储配置异常", HttpStatus.Err.Name);
         }
 
         #region 得到七牛配置（方法内不要重复获取此方法，以免产生不同的配置信息）
@@ -155,13 +154,17 @@ namespace EInfrastructure.Core.QiNiu.Storage
 
         #region 得到资源管理
 
+        private BucketManager _bucketManager;
+
         /// <summary>
         /// 得到资源管理
         /// </summary>
         /// <returns></returns>
         protected BucketManager GetBucketManager()
         {
-            return new BucketManager(_qiNiuConfig.GetMac(), GetConfig());
+            if (_bucketManager == null)
+                _bucketManager = new BucketManager(_qiNiuConfig.GetMac(), GetConfig());
+            return _bucketManager;
         }
 
         #endregion

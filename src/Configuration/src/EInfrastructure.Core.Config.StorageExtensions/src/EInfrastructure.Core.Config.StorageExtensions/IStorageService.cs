@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using EInfrastructure.Core.Config.StorageExtensions.Dto;
 using EInfrastructure.Core.Config.StorageExtensions.Param;
 using EInfrastructure.Core.Configuration.Ioc;
@@ -20,7 +21,7 @@ namespace EInfrastructure.Core.Config.StorageExtensions
         /// </summary>
         /// <param name="param">文件流上传配置</param>
         /// <returns></returns>
-        bool UploadStream(UploadByStreamParam param);
+        UploadResultDto UploadStream(UploadByStreamParam param);
 
         #endregion
 
@@ -31,7 +32,7 @@ namespace EInfrastructure.Core.Config.StorageExtensions
         /// </summary>
         /// <param name="param">文件上传配置</param>
         /// <returns></returns>
-        bool UploadFile(UploadByFormFileParam param);
+        UploadResultDto UploadFile(UploadByFormFileParam param);
 
         #endregion
 
@@ -59,7 +60,7 @@ namespace EInfrastructure.Core.Config.StorageExtensions
         /// </summary>
         /// <param name="key">文件key</param>
         /// <returns></returns>
-        bool Exist(string key);
+        OperateResultDto Exist(string key);
 
         #endregion
 
@@ -69,9 +70,69 @@ namespace EInfrastructure.Core.Config.StorageExtensions
         /// 获取文件信息
         /// </summary>
         /// <param name="key">文件key</param>
-        /// <param name="json">七牛云配置 QiNiuStorageConfig的序列化后的json</param>
         /// <returns></returns>
-        FileInfoDto Get(string key, string json = "");
+        FileInfoDto Get(string key);
+
+        /// <summary>
+        /// 获取文件信息
+        /// </summary>
+        /// <param name="keyList">文件key集合</param>
+        /// <returns></returns>
+        IEnumerable<FileInfoDto> GetList(IEnumerable<string> keyList);
+
+        #endregion
+
+        #region 删除文件
+
+        /// <summary>
+        /// 根据文件key删除
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <returns></returns>
+        DeleteResultDto Del(string key);
+
+        /// <summary>
+        /// 根据文件key集合删除
+        /// </summary>
+        /// <param name="keyList">文件key集合</param>
+        /// <returns></returns>
+        IEnumerable<DeleteResultDto> DelList(IEnumerable<string> keyList);
+
+        #endregion
+
+        #region 复制文件
+
+        /// <summary>
+        /// 复制文件（两个文件需要在同一账号下）
+        /// </summary>
+        /// <param name="copyFileParam">复制到新空间的参数</param>
+        /// <returns></returns>
+        CopyFileResultDto CopyTo(CopyFileParam copyFileParam);
+
+        /// <summary>
+        /// 复制文件（两个文件需要在同一账号下）
+        /// </summary>
+        /// <param name="copyFileParam">复制到新空间的参数</param>
+        /// <returns></returns>
+        IEnumerable<CopyFileResultDto> CopyToList(ICollection<CopyFileParam> copyFileParam);
+
+        #endregion
+
+        #region 移动文件
+
+        /// <summary>
+        /// 移动文件（两个文件需要在同一账号下）
+        /// </summary>
+        /// <param name="moveFileParam"></param>
+        /// <returns></returns>
+        MoveFileResultDto Move(MoveFileParam moveFileParam);
+
+        /// <summary>
+        /// 移动文件（两个文件需要在同一账号下）
+        /// </summary>
+        /// <param name="moveFileParamList"></param>
+        /// <returns></returns>
+        IEnumerable<MoveFileResultDto> MoveList(List<MoveFileParam> moveFileParamList);
 
         #endregion
     }

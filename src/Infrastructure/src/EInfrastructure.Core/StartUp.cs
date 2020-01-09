@@ -2,8 +2,14 @@
 
 namespace EInfrastructure.Core
 {
+    /// <summary>
+    ///
+    /// </summary>
     public static class StartUp
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private static bool IsStartUp;
 
         /// <summary>
