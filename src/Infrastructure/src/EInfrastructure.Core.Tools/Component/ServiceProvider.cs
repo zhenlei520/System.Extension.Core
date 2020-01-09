@@ -24,14 +24,12 @@ namespace EInfrastructure.Core.Tools.Component
         {
             var types = AssemblyCommon.GetAssemblies().SelectMany(x =>
                 x.GetTypes().Where(y => y.GetInterfaces().Contains(typeof(TService)))).ToList();
-            List<TService> list = new List<TService>();
             foreach (var type in types)
             {
-                list.Add(Activator.CreateInstance(type) as TService);
-                // yield return Activator.CreateInstance(type);
+                yield return Activator.CreateInstance(type) as TService;
             }
 
-            return list;
+            // return list;
         }
 
         #endregion
