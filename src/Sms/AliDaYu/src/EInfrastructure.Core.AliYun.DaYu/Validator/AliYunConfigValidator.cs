@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.AliYun.DaYu.Config;
+using EInfrastructure.Core.Validation;
 using FluentValidation;
 
 namespace EInfrastructure.Core.AliYun.DaYu.Validator
@@ -9,7 +10,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Validator
     /// <summary>
     /// 阿里大于短信配置校验
     /// </summary>
-    public class AliYunConfigValidator : AbstractValidator<AliSmsConfig>
+    public class AliYunConfigValidator : AbstractValidator<AliSmsConfig>, IFluentlValidator<AliSmsConfig>
     {
         /// <summary>
         ///

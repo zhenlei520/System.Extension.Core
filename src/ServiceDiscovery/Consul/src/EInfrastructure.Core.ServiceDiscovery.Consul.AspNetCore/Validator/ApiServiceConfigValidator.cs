@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config;
+using EInfrastructure.Core.Validation;
 using FluentValidation;
 
 namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator
@@ -9,8 +10,11 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator
     /// <summary>
     /// ApiService配置校验
     /// </summary>
-    public class ApiServiceConfigValidator : AbstractValidator<ApiServiceConfig>
+    public class ApiServiceConfigValidator : AbstractValidator<ApiServiceConfig>, IFluentlValidator<ApiServiceConfig>
     {
+        /// <summary>
+        ///
+        /// </summary>
         public ApiServiceConfigValidator()
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;

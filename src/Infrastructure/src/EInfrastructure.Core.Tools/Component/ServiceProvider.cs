@@ -16,18 +16,22 @@ namespace EInfrastructure.Core.Tools.Component
         #region 得到服务
 
         /// <summary>
-        /// 得到服务
+        /// 得到服务集合
         /// </summary>
-        /// <param name="serviceType">接口类</param>
+        /// <typeparam name="TService"></typeparam>
         /// <returns>得到继承serviceType的实现类</returns>
-        public IEnumerable<object> GetService(Type serviceType)
+        public IEnumerable<TService> GetServices<TService>() where TService : class
         {
             var types = AssemblyCommon.GetAssemblies().SelectMany(x =>
-                x.GetTypes().Where(y => y.GetInterfaces().Contains(serviceType))).ToList();
+                x.GetTypes().Where(y => y.GetInterfaces().Contains(typeof(TService)))).ToList();
+            List<TService> list = new List<TService>();
             foreach (var type in types)
             {
-                yield return Activator.CreateInstance(type);
+                list.Add(Activator.CreateInstance(type) as TService);
+                // yield return Activator.CreateInstance(type);
             }
+
+            return list;
         }
 
         #endregion
@@ -38,9 +42,9 @@ namespace EInfrastructure.Core.Tools.Component
         /// 得到服务
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<TService> GetService<TService>()
+        public TService GetService<TService>() where TService : class
         {
-            return (IEnumerable<TService>) GetService(typeof(TService));
+            return GetServices<TService>().FirstOrDefault();
         }
 
         #endregion

@@ -28,9 +28,12 @@ namespace EInfrastructure.Core.Validation.Common
             where TEntity : IFluentlValidatorEntity
         {
             Tools.Check.True(entity != null, msg);
-            new ServiceProvider().GetService<IFluentlValidator<TEntity>>().FirstOrDefault()
-                ?.Validate(entity)
-                .Check(code);
+            var validatotor = new ServiceProvider().GetService<IFluentlValidator<TEntity>>();
+            if (validatotor != null)
+            {
+                validatotor.Validate(entity)
+                    .Check(code);
+            }
         }
 
         #endregion

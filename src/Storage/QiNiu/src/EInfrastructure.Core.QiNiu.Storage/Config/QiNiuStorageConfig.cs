@@ -8,6 +8,7 @@ using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.QiNiu.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Validator;
 using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Validation;
 using EInfrastructure.Core.Validation.Common;
 using Qiniu.Storage;
 using Qiniu.Util;
@@ -17,7 +18,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
     /// <summary>
     /// 七牛配置
     /// </summary>
-    public class QiNiuStorageConfig : ISingletonConfigModel
+    public class QiNiuStorageConfig : ISingletonConfigModel, IFluentlValidatorEntity
     {
         /// <summary>
         /// 代理

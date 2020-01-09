@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.StorageExtensions.Config;
 using EInfrastructure.Core.Config.StorageExtensions.Enumerations;
 using EInfrastructure.Core.Config.StorageExtensions.Param;
@@ -30,10 +31,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public BaseStorageProvider(QiNiuStorageConfig qiNiuConfig)
         {
             _qiNiuConfig = qiNiuConfig;
-            if (qiNiuConfig != null)
-            {
-                new QiNiuConfigValidator().Validate(qiNiuConfig).Check();
-            }
+            qiNiuConfig.Check("七牛云存储配置异常",HttpStatus.Err.Name);
         }
 
         #region 得到七牛配置（方法内不要重复获取此方法，以免产生不同的配置信息）

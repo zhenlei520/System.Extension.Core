@@ -1,4 +1,5 @@
 using EInfrastructure.Core.Redis.Config;
+using EInfrastructure.Core.Validation;
 using FluentValidation;
 
 namespace EInfrastructure.Core.Redis.Validator
@@ -6,8 +7,11 @@ namespace EInfrastructure.Core.Redis.Validator
     /// <summary>
     /// Redis配置校验
     /// </summary>
-    public class RedisConfigValidator : AbstractValidator<RedisConfig>
+    public class RedisConfigValidator : AbstractValidator<RedisConfig>, IFluentlValidator<RedisConfig>
     {
+        /// <summary>
+        ///
+        /// </summary>
         public RedisConfigValidator()
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;

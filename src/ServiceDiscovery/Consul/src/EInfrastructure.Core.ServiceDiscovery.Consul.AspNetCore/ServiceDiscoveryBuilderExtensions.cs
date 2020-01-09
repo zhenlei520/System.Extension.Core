@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Consul;
+using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
 using EInfrastructure.Core.Validation.Common;
@@ -52,8 +53,8 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// <returns></returns>
         private static void UseConsul(this ConsulConfig consulConfig, CancellationToken cancellationToken)
         {
-            new ApiServiceConfigValidator().Validate(consulConfig.ApiServiceConfig).Check();
-            new ApiServiceHealthyConfigValidator().Validate(consulConfig.ApiServiceHealthyConfig).Check();
+            consulConfig.ApiServiceConfig.Check("consul service 配置异常",HttpStatus.Err.Name);
+            consulConfig.ApiServiceHealthyConfig.Check("consul healthy service 配置异常",HttpStatus.Err.Name);
 
             var consulClient =
                 new ConsulClient(x =>

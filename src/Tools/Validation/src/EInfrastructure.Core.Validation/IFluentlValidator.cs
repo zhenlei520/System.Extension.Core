@@ -4,6 +4,10 @@ using FluentValidation;
 
 namespace EInfrastructure.Core.Validation
 {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     public interface IFluentlValidator<TEntity> : IValidator
         where TEntity : IFluentlValidatorEntity
     {

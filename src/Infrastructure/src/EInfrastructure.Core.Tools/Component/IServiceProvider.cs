@@ -12,16 +12,17 @@ namespace EInfrastructure.Core.Tools.Component
     public interface IServiceProvider
     {
         /// <summary>
-        /// 得到服务
+        /// 得到服务集合
         /// </summary>
-        /// <param name="serviceType">服务类</param>
+        /// <typeparam name="TService">服务类型</typeparam>
         /// <returns></returns>
-        IEnumerable<object> GetService(Type serviceType);
+        IEnumerable<TService> GetServices<TService>() where TService : class;
 
         /// <summary>
         /// 得到服务
         /// </summary>
+        /// <typeparam name="TService">服务类型</typeparam>
         /// <returns></returns>
-        IEnumerable<TService> GetService<TService>();
+        TService GetService<TService>() where TService : class;
     }
 }

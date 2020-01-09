@@ -155,6 +155,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Config
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Config.SerializeExtensions", "src\Configuration\src\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions.csproj", "{520AC6AD-CF74-49EB-BFA9-8AD2D9A2F7DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AliYun.DaYu.Test", "src\Sms\AliDaYu\tests\EInfrastructure.Core.AliYun.DaYu.Test\EInfrastructure.Core.AliYun.DaYu.Test.csproj", "{1B62590C-A547-4158-BCD8-A836802205CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -345,6 +347,10 @@ Global
 		{520AC6AD-CF74-49EB-BFA9-8AD2D9A2F7DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{520AC6AD-CF74-49EB-BFA9-8AD2D9A2F7DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{520AC6AD-CF74-49EB-BFA9-8AD2D9A2F7DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B62590C-A547-4158-BCD8-A836802205CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B62590C-A547-4158-BCD8-A836802205CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B62590C-A547-4158-BCD8-A836802205CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B62590C-A547-4158-BCD8-A836802205CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -410,6 +416,7 @@ Global
 		{8BA56715-95DA-4089-A361-F0F3A2A3235F} = {880442AE-448F-4B72-AFAD-EE41074B2B39}
 		{7A224A5D-83A5-4C4D-B967-2C32598792C3} = {880442AE-448F-4B72-AFAD-EE41074B2B39}
 		{520AC6AD-CF74-49EB-BFA9-8AD2D9A2F7DB} = {880442AE-448F-4B72-AFAD-EE41074B2B39}
+		{1B62590C-A547-4158-BCD8-A836802205CD} = {CAAF2F71-3989-4EBC-B78F-68C358ACE60C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {474DA97F-4548-4B18-8AB9-44B6CCC66B6D}

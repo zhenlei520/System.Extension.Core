@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Config.CacheExtensions;
+using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.ExceptionExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Configuration.Ioc;
@@ -36,6 +37,7 @@ namespace EInfrastructure.Core.Redis
         public RedisCacheService(RedisConfig redisConfig, IJsonService jsonProvider)
         {
             _jsonProvider = jsonProvider;
+            redisConfig.Check("redis配置异常",HttpStatus.Err.Name);
             new RedisConfigValidator().Validate(redisConfig).Check();
             _prefix = redisConfig.Name;
             CsRedisHelper.InitializeConfiguration(redisConfig);
