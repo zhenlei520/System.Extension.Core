@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <Version>2.0.0</Version>
+    <OWNER>zhenlei520</OWNER>
     <PackageReleaseNotes>sqlserver2012以上数据库</PackageReleaseNotes>
     <Description>dotnet core 使用sqlserver数据库实现</Description>
     <Copyright>Copyright ©zhenlei520 2020</Copyright>
