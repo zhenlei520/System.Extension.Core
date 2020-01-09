@@ -8,7 +8,7 @@ namespace EInfrastructure.Core.Config.StorageExtensions.Param.Pictures
     /// <summary>
     /// 根据图片base64上传图片
     /// </summary>
-    public class UploadByBase64Param : UploadParam
+    public class UploadByBase64Param
     {
         /// <summary>
         /// 图片Base64编码

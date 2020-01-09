@@ -5,7 +5,6 @@ using Autofac;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using EInfrastructure.Core.Config.EntitiesExtensions;
-using EInfrastructure.Core.SqlServer;
 using EInfrastructure.Core.SqlServer.Repository;
 
 namespace EInfrastructure.Core.AutoFac.SqlServer

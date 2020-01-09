@@ -46,6 +46,8 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// <param name="env">环境信息</param>
         /// <param name="useEnvironment">是否使用环境变量</param>
         /// <param name="configPathList">自定义配置列表</param>
+        /// <param name="isOptional"></param>
+        /// <param name="reloadOnChange"></param>
         /// <returns></returns>
         public static IConfigurationRoot UseAppsettings(this IHostingEnvironment env, bool useEnvironment = true,
             List<string> configPathList = null, bool isOptional = true, bool reloadOnChange = true)

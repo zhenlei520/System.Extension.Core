@@ -1,9 +1,10 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
 using System;
-using EInfrastructure.Core.Configuration.Enumeration;
+using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Test.Base;
+using EInfrastructure.Core.Tools;
 using Xunit;
 using Xunit.Abstractions;
 

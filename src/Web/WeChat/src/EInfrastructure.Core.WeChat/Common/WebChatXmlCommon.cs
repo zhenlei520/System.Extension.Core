@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Tools;
 
 namespace EInfrastructure.Core.WeChat.Common
 {

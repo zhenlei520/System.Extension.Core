@@ -27,5 +27,10 @@ namespace EInfrastructure.Core.Config.StorageExtensions.Dto
         /// 文件MIME类型
         /// </summary>
         public string MimeType { get; set; }
+
+        /// <summary>
+        /// 文件类型
+        /// </summary>
+        public int FileType { get; set; }
     }
 }

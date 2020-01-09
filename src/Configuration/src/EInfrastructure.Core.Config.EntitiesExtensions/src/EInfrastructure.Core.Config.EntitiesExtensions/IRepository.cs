@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using EInfrastructure.Core.Config.Entities.Configuration;
 
 namespace EInfrastructure.Core.Config.EntitiesExtensions
 {
@@ -32,16 +34,35 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         TEntity FindById(T id);
 
         /// <summary>
+        /// 根据id得到实体信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<TEntity> FindByIdAsync(T id);
+
+        /// <summary>
         /// 添加单个实体信息
         /// </summary>
         /// <param name="entity"></param>
         void Add(TEntity entity);
 
         /// <summary>
+        /// 添加单个实体信息
+        /// </summary>
+        /// <param name="entity"></param>
+        void AddAsync(TEntity entity);
+
+        /// <summary>
         /// 添加集合
         /// </summary>
         /// <param name="entities"></param>
         void AddRange(List<TEntity> entities);
+
+        /// <summary>
+        /// 添加集合
+        /// </summary>
+        /// <param name="entities"></param>
+        void AddRangeAsync(List<TEntity> entities);
 
         /// <summary>
         /// 移除数据
@@ -73,7 +94,7 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         IRepository<TEntity, T>
         where TEntity : IAggregateRoot<T>
         where T : IComparable
-        where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
+        where TDbContext : IDbContext, IUnitOfWork
     {
     }
 }

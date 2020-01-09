@@ -7,14 +7,14 @@ using System.Reflection;
 using EInfrastructure.Core.AliYun.DaYu.Common;
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.AliYun.DaYu.Model;
-using EInfrastructure.Core.AliYun.DaYu.Validator;
+using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
 using EInfrastructure.Core.Config.SmsExtensions;
 using EInfrastructure.Core.Config.SmsExtensions.Dto;
 using EInfrastructure.Core.Configuration.Ioc;
-using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
+using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Validation.Common;
 using RestSharp;
 
@@ -31,10 +31,25 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <summary>
         /// 短信服务
         /// </summary>
+        public SmsService(AliSmsConfig smsConfig) : this(smsConfig, new JsonService(new List<IJsonProvider>()
+        {
+            new NewtonsoftJsonProvider()
+        }))
+        {
+        }
+
+        /// <summary>
+        /// 短信服务
+        /// </summary>
         public SmsService(AliSmsConfig smsConfig, IJsonService jsonProvider)
         {
             _smsConfig = smsConfig;
             _jsonProvider = jsonProvider;
+            smsConfig.Check("请完善阿里云短信配置信息",HttpStatus.Err.Name);
+            if (_jsonProvider == null)
+            {
+                throw new ArgumentNullException(nameof(jsonProvider));
+            }
         }
 
         readonly RestClient _restClient = new RestClient("http://dysmsapi.aliyuncs.com");
@@ -62,22 +77,20 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <param name="templateCode">短信模板</param>
         /// <param name="content">内容</param>
         /// <param name="loseAction">失败回调函数</param>
-        /// <param name="smsConfigJson">短信配置Json串</param>
         /// <returns></returns>
         public bool Send(List<string> phoneNumbers, string templateCode, object content,
-            Action<SendSmsLoseDto> loseAction = null, string smsConfigJson = "")
+            Action<SendSmsLoseDto> loseAction = null)
         {
-            var smsConfig = GetSmsConfig(smsConfigJson);
-            Dictionary<string, string> commonParam = Util.BuildCommonParam(smsConfig.AccessKey);
+            Dictionary<string, string> commonParam = Util.BuildCommonParam(_smsConfig.AccessKey);
             commonParam.Add("Action", "SendSms");
             commonParam.Add("Version", "2017-05-25");
             commonParam.Add("RegionId", "cn-hangzhou");
             commonParam.Add("PhoneNumbers", phoneNumbers.ConvertListToString(','));
-            commonParam.Add("SignName", smsConfig.SignName);
+            commonParam.Add("SignName", _smsConfig.SignName);
             commonParam.Add("TemplateCode", templateCode);
             commonParam.Add("TemplateParam", _jsonProvider.Serializer(content));
 
-            string sign = Util.CreateSign(commonParam, smsConfig.EncryptionKey);
+            string sign = Util.CreateSign(commonParam, _smsConfig.EncryptionKey);
             commonParam.Add("Signature", sign);
             RestRequest request = new RestRequest(Method.GET);
             foreach (var key in commonParam.Keys)
@@ -113,37 +126,12 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <param name="templateCode">短信模板</param>
         /// <param name="content">内容</param>
         /// <param name="loseAction">失败回调函数</param>
-        /// <param name="smsConfigJson">短信配置Json串</param>
         /// <returns></returns>
         public bool Send(string phoneNumber, string templateCode, object content,
-            Action<SendSmsLoseDto> loseAction = null, string smsConfigJson = "")
+            Action<SendSmsLoseDto> loseAction = null)
         {
-            return Send(new List<string>() {phoneNumber}, templateCode, content, loseAction, smsConfigJson);
+            return Send(new List<string>() {phoneNumber}, templateCode, content, loseAction);
         }
-
-        #endregion
-
-        #region private methods
-
-        #region 获取阿里大于配置
-
-        /// <summary>
-        /// 获取阿里大于配置
-        /// </summary>
-        /// <param name="smsConfigJson">自定义短信配置</param>
-        /// <returns></returns>
-        public AliSmsConfig GetSmsConfig(string smsConfigJson)
-        {
-            if (!string.IsNullOrEmpty(smsConfigJson))
-            {
-                _smsConfig = _jsonProvider.Deserialize<AliSmsConfig>(smsConfigJson);
-            }
-
-            new AliYunConfigValidator().Validate(_smsConfig).Check();
-            return _smsConfig;
-        }
-
-        #endregion
 
         #endregion
     }

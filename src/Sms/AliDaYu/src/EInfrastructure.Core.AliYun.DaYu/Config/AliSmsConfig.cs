@@ -2,13 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.AutomationConfiguration.Interface;
+using EInfrastructure.Core.Validation;
 
 namespace EInfrastructure.Core.AliYun.DaYu.Config
 {
     /// <summary>
     /// 短信配置
     /// </summary>
-    public class AliSmsConfig : ISingletonConfigModel
+    public class AliSmsConfig : ISingletonConfigModel, IFluentlValidatorEntity
     {
         /// <summary>
         /// 签名名称

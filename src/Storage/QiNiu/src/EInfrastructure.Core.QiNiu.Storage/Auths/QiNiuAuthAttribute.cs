@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Linq;
+using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions;
-using EInfrastructure.Core.Configuration.Enumeration;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Microsoft.AspNetCore.Mvc;

@@ -1,9 +1,9 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using EInfrastructure.Core.Configuration.Enumeration;
+using EInfrastructure.Core.Config.EnumerationExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions;
 using EInfrastructure.Core.Configuration.Ioc;
-using EInfrastructure.Core.Exception;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace EInfrastructure.Core.AspNetCore.Filter

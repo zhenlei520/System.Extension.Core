@@ -4,15 +4,13 @@
 using System.Reflection;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.StorageExtensions;
-using EInfrastructure.Core.Config.StorageExtensions.Config;
 using EInfrastructure.Core.Config.StorageExtensions.Param;
 using EInfrastructure.Core.Config.StorageExtensions.Param.Pictures;
 using EInfrastructure.Core.Configuration.Ioc;
-using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.QiNiu.Storage.Config;
+using EInfrastructure.Core.Tools;
 using Qiniu.Http;
 using Qiniu.Storage;
-using Qiniu.Util;
 
 namespace EInfrastructure.Core.QiNiu.Storage
 {
@@ -24,8 +22,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 图片服务
         /// </summary>
-        public PictureService(IJsonService jsonService, ILogService logService = null,
-            QiNiuStorageConfig qiNiuConfig = null) : base(jsonService, logService,
+        public PictureService(QiNiuStorageConfig qiNiuConfig = null) : base(
             qiNiuConfig)
         {
         }
@@ -53,8 +50,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool Upload(UploadByBase64Param param)
         {
-            var qiNiuConfig = GetQiNiuConfig(param.Json);
-            string token = base.GetUploadCredentials(qiNiuConfig,
+            string token = base.GetUploadCredentials(QiNiuConfig,
                 new UploadPersistentOpsParam(param.ImgPersistentOps.Key, param.ImgPersistentOps));
             FormUploader target = new FormUploader(GetConfig());
             HttpResult result =
@@ -74,14 +70,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool FetchFile(FetchFileParam fetchFileParam)
         {
-            var qiNiuConfig = GetQiNiuConfig(fetchFileParam.Json);
             FetchResult ret = GetBucketManager()
-                .Fetch(fetchFileParam.SourceFileKey, qiNiuConfig.Bucket, fetchFileParam.Key);
+                .Fetch(fetchFileParam.SourceFileKey, QiNiuConfig.Bucket, fetchFileParam.Key);
             switch (ret.Code)
             {
                 case (int) HttpCode.OK:
                 case (int) HttpCode.CALLBACK_FAILED:
-                    LogService?.Info($"上传code为：{ret.Code}");
                     return true;
                 default:
                     return false;

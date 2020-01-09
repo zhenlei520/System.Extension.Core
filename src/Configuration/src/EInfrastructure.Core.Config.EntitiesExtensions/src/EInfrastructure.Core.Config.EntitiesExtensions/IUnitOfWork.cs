@@ -3,7 +3,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using EInfrastructure.Core.Config.EntitiesExtensions.Configuration;
+using EInfrastructure.Core.Config.Entities.Configuration;
 
 namespace EInfrastructure.Core.Config.EntitiesExtensions
 {
@@ -38,7 +38,7 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public interface IUnitOfWork<T> : IUnitOfWork
-        where T : DbContext
+        where T : IDbContext
     {
     }
 }

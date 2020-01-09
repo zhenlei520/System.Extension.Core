@@ -1,4 +1,5 @@
 using System;
+using EInfrastructure.Core.Config.Entities.Configuration;
 using EInfrastructure.Core.Config.EntitiesExtensions;
 
 namespace EInfrastructure.Core.SqlServer.Repository
@@ -13,7 +14,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
         IRepository<TEntity, T, TDbContext>
         where TEntity : Entity<T>, IAggregateRoot<T>
         where T : IComparable
-        where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
+        where TDbContext : IDbContext, IUnitOfWork
     {
         /// <summary>
         ///

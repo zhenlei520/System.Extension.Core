@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using EInfrastructure.Core.Configuration.Data;
+using System.Threading.Tasks;
+using EInfrastructure.Core.Config.Entities.Configuration;
+using EInfrastructure.Core.Config.Entities.Data;
 
 namespace EInfrastructure.Core.Config.EntitiesExtensions
 {
@@ -31,14 +33,33 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         TEntity GetOne(Expression<Func<TEntity, bool>> condition, bool isTracking = true);
 
         /// <summary>
+        /// 根据条件得到满足条件的单条信息
+        /// </summary>
+        /// <param name="condition">条件</param>
+        /// <param name="isTracking">是否跟踪</param>
+        /// <returns></returns>
+        Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> condition, bool isTracking = true);
+
+        /// <summary>
         /// 根据条件对实体进行分页
         /// </summary>
         /// <param name="condition">条件</param>
-        /// <param name="pagesize">页大小</param>
-        /// <param name="pageindex">页码</param>
-        /// <param name="istotal">是否计算总数</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="isTotal">是否计算总数</param>
         /// <returns></returns>
-        PageData<TEntity> GetList(Expression<Func<TEntity, bool>> condition, int pagesize, int pageindex, bool istotal);
+        PageData<TEntity> GetList(Expression<Func<TEntity, bool>> condition, int pageSize, int pageIndex, bool isTotal);
+
+        /// <summary>
+        /// 根据条件对实体进行分页
+        /// </summary>
+        /// <param name="condition">条件</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="isTotal">是否计算总数</param>
+        /// <returns></returns>
+        Task<PageData<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> condition, int pageSize,
+            int pageIndex, bool isTotal);
 
         /// <summary>
         /// 根据条件获取实体列表
@@ -48,11 +69,25 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         List<TEntity> GetList(Expression<Func<TEntity, bool>> condition);
 
         /// <summary>
+        /// 根据条件获取实体列表
+        /// </summary>
+        /// <param name="condition">条件</param>
+        /// <returns></returns>
+        Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> condition);
+
+        /// <summary>
         /// 判断是否存在
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
         bool Exists(Expression<Func<TEntity, bool>> condition);
+
+        /// <summary>
+        /// 判断是否存在
+        /// </summary>
+        /// <param name="condition">条件</param>
+        /// <returns></returns>
+        Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> condition);
 
         /// <summary>
         /// 根据条件得到前N项实体列表
@@ -61,6 +96,14 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         /// <param name="topN">前N条记录</param>
         /// <returns></returns>
         List<TEntity> TopN(Expression<Func<TEntity, bool>> condition, int topN);
+
+        /// <summary>
+        /// 根据条件得到前N项实体列表
+        /// </summary>
+        /// <param name="condition">条件</param>
+        /// <param name="topN">前N条记录</param>
+        /// <returns></returns>
+        Task<List<TEntity>> TopNAsync(Expression<Func<TEntity, bool>> condition, int topN);
 
         /// <summary>
         /// 根据条件查询返回值为IQueryable
@@ -92,8 +135,7 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
     public interface IQuery<TEntity, T, TDbContext> : IQuery<TEntity, T>
         where TEntity : IEntity<T>
         where T : IComparable
-        where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
+        where TDbContext : IDbContext, IUnitOfWork
     {
-
     }
 }

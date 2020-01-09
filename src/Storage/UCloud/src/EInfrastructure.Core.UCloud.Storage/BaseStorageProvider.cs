@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
+using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.UCloud.Storage.Common;
 using EInfrastructure.Core.UCloud.Storage.Config;
@@ -35,7 +36,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         {
             LogService = logService;
             UCloudConfig = uCloudConfig;
-            new UCloudConfigValidator().Validate(UCloudConfig).Check();
+            uCloudConfig.Check("七牛云存储配置异常",HttpStatus.Err.Name);
         }
 
         #region 上传文件

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Test.Base;
+using EInfrastructure.Core.Tools;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -66,8 +67,8 @@ namespace EInfrastructure.Core.Test
                     Name = "小明花"
                 }
             };
-            var persons = personList.Minus(personList2);
-            persons = personList.Minus(personList2, true);
+            var persons = personList.Except(personList2);
+            persons = personList.Except(personList2, true);
         }
 
         [Fact]

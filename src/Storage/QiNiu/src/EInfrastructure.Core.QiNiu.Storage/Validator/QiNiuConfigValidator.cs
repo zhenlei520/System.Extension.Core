@@ -2,11 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Linq;
-using EInfrastructure.Core.Config.StorageExtensions.Enumeration;
-using EInfrastructure.Core.Configuration.SeedWork;
-using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Config.EntitiesExtensions.SeedWork;
+using EInfrastructure.Core.Config.StorageExtensions.Enumerations;
 using EInfrastructure.Core.QiNiu.Storage.Config;
-using EInfrastructure.Core.QiNiu.Storage.Enum;
+using EInfrastructure.Core.Validation;
 using FluentValidation;
 
 namespace EInfrastructure.Core.QiNiu.Storage.Validator
@@ -14,8 +13,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator
     /// <summary>
     /// 七牛配置信息校验
     /// </summary>
-    public class QiNiuConfigValidator : AbstractValidator<QiNiuStorageConfig>
+    public class QiNiuConfigValidator : AbstractValidator<QiNiuStorageConfig>,IFluentlValidator<QiNiuStorageConfig>
     {
+        /// <summary>
+        ///
+        /// </summary>
         public QiNiuConfigValidator()
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;

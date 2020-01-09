@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EInfrastructure.Core.Config.Entities.Data;
 using EInfrastructure.Core.Config.EntitiesExtensions;
-using EInfrastructure.Core.Configuration.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.SqlServer.Common
@@ -28,6 +28,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         ///
         /// </summary>
         /// <param name="unitOfWork">unitwork</param>
+        /// <param name="execute"></param>
         public SpatialDimensionBaseQuery(IUnitOfWork unitOfWork, IExecute execute)
         {
             this.Dbcontext = unitOfWork as DbContext;

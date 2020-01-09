@@ -4,6 +4,7 @@
 using System.IO;
 using System.Net;
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.UCloud.Storage.Config;
 
 namespace EInfrastructure.Core.UCloud.Storage.Common

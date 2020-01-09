@@ -4,7 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EInfrastructure.Core.Configuration.Data;
+using EInfrastructure.Core.Config.Entities.Configuration;
+using EInfrastructure.Core.Config.Entities.Data;
 
 namespace EInfrastructure.Core.Config.EntitiesExtensions
 {
@@ -46,7 +47,7 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
         : ISpatialDimensionQuery<TEntity, T>
         where TEntity : IEntity<T>
         where T : IComparable
-        where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
+        where TDbContext : IDbContext, IUnitOfWork
     {
     }
 

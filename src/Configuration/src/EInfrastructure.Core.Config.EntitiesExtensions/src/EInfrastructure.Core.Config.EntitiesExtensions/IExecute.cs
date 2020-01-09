@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using EInfrastructure.Core.Config.Entities.Configuration;
 
 namespace EInfrastructure.Core.Config.EntitiesExtensions
 {
@@ -45,7 +46,7 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions
     /// </summary>
     /// <typeparam name="TDbContext"></typeparam>
     public interface IExecute<TDbContext> : IExecute
-        where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
+        where TDbContext : IDbContext, IUnitOfWork
     {
     }
 }

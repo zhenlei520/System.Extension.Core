@@ -2,6 +2,7 @@
 
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Test.Base;
+using EInfrastructure.Core.Tools;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -17,7 +18,7 @@ namespace EInfrastructure.Core.Test
         [InlineData(1, 1)]
         public void ConvertToShort(int num, short s)
         {
-            Check.True(1.ConvertToShort() == s,"方法有误");
+            Check.True(1.ConvertToShort() == s, "方法有误");
         }
     }
 }

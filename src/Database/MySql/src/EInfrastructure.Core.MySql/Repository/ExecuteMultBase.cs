@@ -1,6 +1,7 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Config.Entities.Configuration;
 using EInfrastructure.Core.Config.EntitiesExtensions;
 
 namespace EInfrastructure.Core.MySql.Repository
@@ -9,7 +10,7 @@ namespace EInfrastructure.Core.MySql.Repository
     /// 执行Sql语句
     /// </summary>
     public class ExecuteBase<TDbContext> : Common.ExecuteBase, IExecute<TDbContext>
-        where TDbContext : EInfrastructure.Core.Config.EntitiesExtensions.Configuration.DbContext, IUnitOfWork
+        where TDbContext : IDbContext, IUnitOfWork
     {
         /// <summary>
         ///

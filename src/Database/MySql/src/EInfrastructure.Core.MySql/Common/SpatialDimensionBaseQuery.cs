@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using EInfrastructure.Core.Config.Entities.Data;
 using EInfrastructure.Core.Config.EntitiesExtensions;
-using EInfrastructure.Core.Configuration.Data;
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Tools;
 using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.MySql.Common
@@ -87,7 +88,6 @@ namespace EInfrastructure.Core.MySql.Common
         /// <summary>
         /// get list
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public IQueryable<TEntity> GetQueryable(SpatialDimensionParam param)
         {

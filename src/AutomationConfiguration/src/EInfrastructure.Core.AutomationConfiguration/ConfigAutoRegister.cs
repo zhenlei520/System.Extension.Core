@@ -62,7 +62,6 @@ namespace EInfrastructure.Core.AutomationConfiguration
             bool isCompleteName = false,
             Action<string> errConfigAction = null)
         {
-            IConfiguration configuration = null;
             AddConfig<IScopedConfigModel>(services,
                 type =>
                 {

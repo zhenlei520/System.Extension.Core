@@ -2,13 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Validation;
 
 namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config
 {
     /// <summary>
     /// Api服务健康检查
     /// </summary>
-    public class ApiServiceHealthyConfig : ISingleInstance
+    public class ApiServiceHealthyConfig : ISingleInstance,IFluentlValidatorEntity
     {
         /// <summary>
         /// 检查Api接口地址(HttpStatus为200代表正常)

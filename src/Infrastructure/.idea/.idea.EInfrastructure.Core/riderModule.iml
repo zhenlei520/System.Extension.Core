@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="RIDER_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
+  <component name="NewModuleRootManager">
     <content url="file://$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.4.0/build/netcoreapp1.0/xunit.runner.reporters.netcoreapp10.dll" />
     <content url="file://$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.4.0/build/netcoreapp1.0/xunit.runner.utility.netcoreapp10.dll" />
     <content url="file://$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.4.0/build/netcoreapp1.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll" />
+    <content url="file://$MODULE_DIR$/../../../Configuration/src/Configuration/src/EInfrastructure.Core.Config.Entities" />
+    <content url="file://$MODULE_DIR$/../../../Configuration/src/Configuration/src/EInfrastructure.Core.Config.ExceptionExtensions" />
+    <content url="file://$MODULE_DIR$/../../../Configuration/src/Configuration/src/EInfrastructure.Core.Configuration" />
+    <content url="file://$MODULE_DIR$/../../../Configuration/src/EInfrastructure.Core.Config.CacheExtensions/src/EInfrastructure.Core.Config.CacheExtensions" />
+    <content url="file://$MODULE_DIR$/../../../Configuration/src/EInfrastructure.Core.Config.CompressExtensions/src/EInfrastructure.Core.Config.CompressExtensions" />
+    <content url="file://$MODULE_DIR$/../../../Configuration/src/EInfrastructure.Core.Config.EntitiesExtensions/src/EInfrastructure.Core.Config.EntitiesExtensions" />
+    <content url="file://$MODULE_DIR$/../../../Configuration/src/EInfrastructure.Core.Config.EnumerationExtensions" />
+    <content url="file://$MODULE_DIR$/../../../Configuration/src/EInfrastructure.Core.Config.IdentificationExtensions/src/EInfrastructure.Core.Config.IdentificationExtensions" />
+    <content url="file://$MODULE_DIR$/../../../Configuration/src/EInfrastructure.Core.Config.SerializeExtensions/src/EInfrastructure.Core.Config.SerializeExtensions" />
+    <content url="file://$MODULE_DIR$/../../../Configuration/src/EInfrastructure.Core.Config.SmsExtensions/src/EInfrastructure.Core.Config.SmsExtensions" />
+    <content url="file://$MODULE_DIR$/../../../Configuration/src/EInfrastructure.Core.Config.StorageExtensions/src/EInfrastructure.Core.Config.StorageExtensions" />
+    <content url="file://$MODULE_DIR$/../../../Configuration/src/EInfrastructure.Core.Config.WordsExtensions/src/EInfrastructure.Core.Config.WordsExtensions" />
     <content url="file://$MODULE_DIR$/../.." />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

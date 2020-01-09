@@ -2,13 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Validation;
 
 namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config
 {
     /// <summary>
     /// api服务配置
     /// </summary>
-    public class ApiServiceConfig : ISingleInstance
+    public class ApiServiceConfig : ISingleInstance,IFluentlValidatorEntity
     {
         /// <summary>
         /// 服务id（非必填）
