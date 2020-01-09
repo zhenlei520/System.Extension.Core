@@ -11,10 +11,13 @@ namespace EInfrastructure.Core.AliYun.DaYu.Validator
     /// </summary>
     public class AliYunConfigValidator : AbstractValidator<AliSmsConfig>
     {
+        /// <summary>
+        ///
+        /// </summary>
         public AliYunConfigValidator()
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
-            
+
             RuleFor(x => x.SignName).NotNull()
                 .WithMessage("短信签名不能为空");
             RuleFor(x => x.AccessKey).NotNull()

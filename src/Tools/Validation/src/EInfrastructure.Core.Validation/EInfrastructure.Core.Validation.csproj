@@ -21,11 +21,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="8.1.3"/>
+    <PackageReference Include="FluentValidation" Version="8.1.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj"/>
+    <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj" />
   </ItemGroup>
 
 </Project>

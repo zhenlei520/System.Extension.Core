@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 
 namespace EInfrastructure.Core.Tools.Systems
@@ -37,6 +38,26 @@ namespace EInfrastructure.Core.Tools.Systems
         public static string GetAssemblyCopyright()
         {
             return AssemblyFileVersion.LegalCopyright;
+        }
+
+        #endregion
+
+        #region 得到当前应用的程序集
+
+        private static Assembly[] _assemblys;
+
+        /// <summary>
+        /// 得到当前应用的程序集
+        /// </summary>
+        /// <returns></returns>
+        public static Assembly[] GetAssemblies()
+        {
+            if (_assemblys == null)
+            {
+                _assemblys = AppDomain.CurrentDomain.GetAssemblies().ToArray();
+            }
+
+            return _assemblys;
         }
 
         #endregion

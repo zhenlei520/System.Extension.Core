@@ -22,10 +22,9 @@ namespace EInfrastructure.Core.Config.SmsExtensions
         /// <param name="templateCode">短信模板</param>
         /// <param name="content">内容</param>
         /// <param name="loseAction">失败回调函数</param>
-        /// <param name="smsConfigJson">短信配置Json串（优先使用此配置）</param>
         /// <returns></returns>
         bool Send(List<string> phoneNumbers, string templateCode, object content,
-            Action<SendSmsLoseDto> loseAction = null, string smsConfigJson = "");
+            Action<SendSmsLoseDto> loseAction = null);
 
         #endregion
 
@@ -38,10 +37,8 @@ namespace EInfrastructure.Core.Config.SmsExtensions
         /// <param name="templateCode">短信模板</param>
         /// <param name="content">内容</param>
         /// <param name="loseAction">失败回调函数</param>
-        /// <param name="smsConfigJson">短信配置Json串（优先使用此配置）</param>
         /// <returns></returns>
-        bool Send(string phoneNumber, string templateCode, object content, Action<SendSmsLoseDto> loseAction = null,
-            string smsConfigJson = "");
+        bool Send(string phoneNumber, string templateCode, object content, Action<SendSmsLoseDto> loseAction = null);
 
         #endregion
     }
