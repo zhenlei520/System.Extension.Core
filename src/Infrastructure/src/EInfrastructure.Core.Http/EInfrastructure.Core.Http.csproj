@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RestSharp" Version="106.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Enumerations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Configuration\src\Configuration\EInfrastructure.Core.Config.Attributes\EInfrastructure.Core.Config.Attributes.csproj" />
+    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.EnumerationExtensions\src\EInfrastructure.Core.Config.EnumerationExtensions.csproj" />
+    <ProjectReference Include="..\..\..\Serialize\src\EInfrastructure.Core.Serialize.NewtonsoftJson\EInfrastructure.Core.Serialize.NewtonsoftJson.csproj" />
+    <ProjectReference Include="..\..\..\Serialize\src\EInfrastructure.Core.Serialize.Xml\EInfrastructure.Core.Serialize.Xml.csproj" />
+  </ItemGroup>
+
+</Project>

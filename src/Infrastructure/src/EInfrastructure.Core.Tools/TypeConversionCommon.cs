@@ -525,6 +525,8 @@ namespace EInfrastructure.Core.Tools
 
         #region 文件类型转换
 
+
+
         #region 转换为Byte数组
 
         #region Stream转换为Byte数组

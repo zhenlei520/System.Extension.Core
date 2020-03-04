@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core.Tools\EInfrastructure.Core.Tools.csproj" />
+    <ProjectReference Include="..\EInfrastructure.Core.Config.Attributes\EInfrastructure.Core.Config.Attributes.csproj" />
     <ProjectReference Include="..\EInfrastructure.Core.Config.ExceptionExtensions\EInfrastructure.Core.Config.ExceptionExtensions.csproj" />
   </ItemGroup>
 

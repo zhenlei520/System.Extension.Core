@@ -9,12 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace EInfrastructure.Core.Config.SerializeExtensions
+namespace EInfrastructure.Core.Serialize.Xml
 {
     /// <summary>
     /// XML序列化 部分类
     /// </summary>
-    public class XmlCommon
+    public class XmlProvider
     {
         #region xml字符串序列化与反序列化
 

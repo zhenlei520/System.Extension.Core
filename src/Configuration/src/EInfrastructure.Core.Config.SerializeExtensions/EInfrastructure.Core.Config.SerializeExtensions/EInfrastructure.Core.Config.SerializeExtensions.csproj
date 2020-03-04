@@ -16,6 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Serialize\src\EInfrastructure.Core.Serialize.Xml\EInfrastructure.Core.Serialize.Xml.csproj" />
     <ProjectReference Include="..\..\Configuration\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
   </ItemGroup>
 

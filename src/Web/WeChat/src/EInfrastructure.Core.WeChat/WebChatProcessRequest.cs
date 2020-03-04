@@ -7,6 +7,7 @@ using EInfrastructure.Core.Config.ExceptionExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Serialize.Xml;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.WeChat.Common;
 using EInfrastructure.Core.WeChat.Config;
@@ -51,7 +52,7 @@ namespace EInfrastructure.Core.WeChat
                     throw new BusinessException("签名错误");
                 }
 
-                refundReponse = XmlCommon.Deserialize<WebChatMessage>(xml);
+                refundReponse = XmlProvider.Deserialize<WebChatMessage>(xml);
                 if (refundReponse == null)
                 {
                     throw new BusinessException("参数错误");

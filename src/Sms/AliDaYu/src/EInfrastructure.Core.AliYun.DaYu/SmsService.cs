@@ -14,6 +14,7 @@ using EInfrastructure.Core.Config.SmsExtensions;
 using EInfrastructure.Core.Config.SmsExtensions.Dto;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
+using EInfrastructure.Core.Serialize.Xml;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Validation.Common;
 using RestSharp;
@@ -99,7 +100,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
             }
 
             var response = _restClient.Execute(request);
-            SendSmsResponse result = XmlCommon.Deserialize<SendSmsResponse>(response.Content);
+            SendSmsResponse result = XmlProvider.Deserialize<SendSmsResponse>(response.Content);
             if (result.Code == "OK")
             {
                 return true;
