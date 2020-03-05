@@ -1,11 +1,13 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
+using EInfrastructure.Core.Config.EnumerationExtensions.SeedWork;
+
 namespace EInfrastructure.Core.Config.EnumerationExtensions
 {
     /// <summary>
     /// 取整方式
     /// </summary>
-    public class RectificationType : EntitiesExtensions.SeedWork.Enumeration
+    public class RectificationType : Enumeration
     {
         /// <summary>
         /// 向上取整

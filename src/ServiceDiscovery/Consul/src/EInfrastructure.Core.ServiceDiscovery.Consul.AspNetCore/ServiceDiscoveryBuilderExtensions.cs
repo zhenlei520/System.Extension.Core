@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Consul;
 using EInfrastructure.Core.Config.EnumerationExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator;
 using EInfrastructure.Core.Validation.Common;

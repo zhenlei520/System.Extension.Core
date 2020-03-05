@@ -5,6 +5,7 @@ using System;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 
 namespace EInfrastructure.Core.Tools
 {

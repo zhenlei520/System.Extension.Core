@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 
 namespace EInfrastructure.Core.Tools
 {

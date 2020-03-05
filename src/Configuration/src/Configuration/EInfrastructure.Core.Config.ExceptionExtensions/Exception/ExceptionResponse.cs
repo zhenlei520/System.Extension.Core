@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace EInfrastructure.Core.Config.ExceptionExtensions.Exception
+﻿namespace EInfrastructure.Core.Config.ExceptionExtensions.Exception
 {
     /// <summary>
     /// 异常
@@ -34,7 +32,7 @@ namespace EInfrastructure.Core.Config.ExceptionExtensions.Exception
         /// <returns></returns>
         public override string ToString()
         {
-            return "{" + string.Format("\"code\":{0},\"content\":{1}", GetResult(Code), GetResult(Content)) + "}";
+            return "{" + $"\"code\":{GetResult(Code)},\"content\":{GetResult(Content)}" + "}";
         }
 
         /// <summary>

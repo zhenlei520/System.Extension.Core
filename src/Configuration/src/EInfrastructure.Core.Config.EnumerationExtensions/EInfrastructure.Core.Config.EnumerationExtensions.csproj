@@ -14,9 +14,4 @@
     <Title>configuration,enum</Title>
     <PackageTags>EInfrastructure.Core Configuration</PackageTags>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\EInfrastructure.Core.Config.EntitiesExtensions\src\EInfrastructure.Core.Config.EntitiesExtensions\EInfrastructure.Core.Config.EntitiesExtensions.csproj" />
-  </ItemGroup>
-
 </Project>

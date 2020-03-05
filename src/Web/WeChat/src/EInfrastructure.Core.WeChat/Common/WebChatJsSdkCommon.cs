@@ -5,6 +5,7 @@ using System;
 using EInfrastructure.Core.Config.CacheExtensions;
 using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.WeChat.Config;

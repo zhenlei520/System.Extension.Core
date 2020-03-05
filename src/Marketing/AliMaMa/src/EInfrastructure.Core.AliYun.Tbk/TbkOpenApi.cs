@@ -9,6 +9,7 @@ using EInfrastructure.Core.AliYun.Tbk.Respose;
 using EInfrastructure.Core.AliYun.Tbk.Respose.Success;
 using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using RestSharp;
 

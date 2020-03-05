@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using EInfrastructure.Core.Config.CacheExtensions;
 using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Redis.Common;

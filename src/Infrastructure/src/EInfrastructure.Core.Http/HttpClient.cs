@@ -3,12 +3,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EInfrastructure.Core.Config.Attributes.Attributes;
 using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 using EInfrastructure.Core.Http.Enumerations;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Serialize.Xml;
+using EInfrastructure.Core.Tools.Attributes;
 using RestSharp;
 
 namespace EInfrastructure.Core.Http

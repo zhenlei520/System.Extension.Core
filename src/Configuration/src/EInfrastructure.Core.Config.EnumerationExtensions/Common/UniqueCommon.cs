@@ -1,12 +1,12 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace EInfrastructure.Core.Config.EntitiesExtensions.Common
+namespace EInfrastructure.Core.Config.EnumerationExtensions.Common
 {
     /// <summary>
     /// 唯一方法实现
     /// </summary>
-    public static class UniqueCommon
+    internal static class UniqueCommon
     {
         #region 重写HashCode方法
 
@@ -15,7 +15,7 @@ namespace EInfrastructure.Core.Config.EntitiesExtensions.Common
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static int GetHashCode(this string str)
+        internal static int GetHashCode(this string str)
         {
             unchecked
             {

@@ -3,6 +3,7 @@
 
 using System;
 using EInfrastructure.Core.Config.EnumerationExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 using EInfrastructure.Core.Config.StorageExtensions.Config;
 using EInfrastructure.Core.Config.StorageExtensions.Enumerations;
 using EInfrastructure.Core.Config.StorageExtensions.Param;

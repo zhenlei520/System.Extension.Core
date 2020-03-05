@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Configuration\src\Configuration\EInfrastructure.Core.Config.Attributes\EInfrastructure.Core.Config.Attributes.csproj" />
     <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.EnumerationExtensions\src\EInfrastructure.Core.Config.EnumerationExtensions.csproj" />
     <ProjectReference Include="..\..\..\Serialize\src\EInfrastructure.Core.Serialize.NewtonsoftJson\EInfrastructure.Core.Serialize.NewtonsoftJson.csproj" />
     <ProjectReference Include="..\..\..\Serialize\src\EInfrastructure.Core.Serialize.Xml\EInfrastructure.Core.Serialize.Xml.csproj" />

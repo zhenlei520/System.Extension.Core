@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Config.EnumerationExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 using EInfrastructure.Core.Config.ExceptionExtensions.Exception;
 
 namespace EInfrastructure.Core.Config.ExceptionExtensions

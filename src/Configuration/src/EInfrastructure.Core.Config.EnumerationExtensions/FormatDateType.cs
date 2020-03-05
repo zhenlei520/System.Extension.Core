@@ -1,12 +1,14 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Config.EnumerationExtensions.SeedWork;
+
 namespace EInfrastructure.Core.Config.EnumerationExtensions
 {
     /// <summary>
     /// 格式化时间类型
     /// </summary>
-    public class FormatDateType : EntitiesExtensions.SeedWork.Enumeration
+    public class FormatDateType : Enumeration
     {
         /// <summary>
         /// yyyy-MM-dd

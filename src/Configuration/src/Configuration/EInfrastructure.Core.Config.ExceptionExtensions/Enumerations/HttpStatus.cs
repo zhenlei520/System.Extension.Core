@@ -1,6 +1,6 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
-namespace EInfrastructure.Core.Config.EnumerationExtensions
+namespace EInfrastructure.Core.Config.ExceptionExtensions.Enumerations
 {
     /// <summary>
     /// httpstatus

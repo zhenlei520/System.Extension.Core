@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 using EInfrastructure.Core.Tools.Component;
 using FluentValidation.Results;
 

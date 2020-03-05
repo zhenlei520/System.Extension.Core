@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using EInfrastructure.Core.Config.EnumerationExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.StorageExtensions;
 using EInfrastructure.Core.Config.StorageExtensions.Dto;

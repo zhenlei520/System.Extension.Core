@@ -8,6 +8,7 @@ using EInfrastructure.Core.AliYun.DaYu.Common;
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.AliYun.DaYu.Model;
 using EInfrastructure.Core.Config.EnumerationExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
 using EInfrastructure.Core.Config.SmsExtensions;

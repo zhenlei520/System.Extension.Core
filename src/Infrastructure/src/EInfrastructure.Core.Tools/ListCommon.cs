@@ -8,6 +8,7 @@ using EInfrastructure.Core.Config.Entities.Data;
 using EInfrastructure.Core.Config.EntitiesExtensions;
 using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 
 namespace EInfrastructure.Core.Tools
 {

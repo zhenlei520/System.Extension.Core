@@ -15,7 +15,6 @@ namespace EInfrastructure.Core.Config.EnumerationExtensions
             {
                 _isStartUp = true;
             }
-            EInfrastructure.Core.Config.EntitiesExtensions.StartUp.Run();
         }
     }
 }

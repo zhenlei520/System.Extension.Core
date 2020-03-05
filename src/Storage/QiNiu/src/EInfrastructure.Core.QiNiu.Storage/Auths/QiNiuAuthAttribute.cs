@@ -3,6 +3,7 @@
 
 using System.Linq;
 using EInfrastructure.Core.Config.EnumerationExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.QiNiu.Storage.Config;

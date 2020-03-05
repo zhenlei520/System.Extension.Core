@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UniqueCommon = EInfrastructure.Core.Config.EntitiesExtensions.Common.UniqueCommon;
+using EInfrastructure.Core.Config.EnumerationExtensions.Common;
 
-namespace EInfrastructure.Core.Config.EntitiesExtensions.SeedWork.Configurations
+namespace EInfrastructure.Core.Config.EnumerationExtensions.SeedWork.Configurations
 {
     /// <summary>
     ///

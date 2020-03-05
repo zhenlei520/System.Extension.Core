@@ -3,6 +3,7 @@
 
 using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

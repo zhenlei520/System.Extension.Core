@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using EInfrastructure.Core.Config.EnumerationExtensions;
 using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Words.Config;
 using EInfrastructure.Core.Words.Config.PinYin;
