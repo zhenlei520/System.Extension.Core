@@ -1,6 +1,5 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
-using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Xunit;

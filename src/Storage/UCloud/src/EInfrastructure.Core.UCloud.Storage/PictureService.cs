@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Reflection;
-using EInfrastructure.Core.Config.StorageExtensions;
-using EInfrastructure.Core.Config.StorageExtensions.Param.Pictures;
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param.Pictures;
 using EInfrastructure.Core.UCloud.Storage.Config;
 
 namespace EInfrastructure.Core.UCloud.Storage

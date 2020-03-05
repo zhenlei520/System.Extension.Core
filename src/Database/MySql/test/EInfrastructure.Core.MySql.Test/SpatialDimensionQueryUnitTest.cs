@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using EInfrastructure.Core.Config.EntitiesExtensions;
+using EInfrastructure.Core.Config.Entities.Configuration;
+using EInfrastructure.Core.Config.Entities.Ioc;
 using Xunit;
 
 namespace EInfrastructure.Core.MySql.Test
@@ -18,6 +19,7 @@ namespace EInfrastructure.Core.MySql.Test
         [Fact]
         public void Test1()
         {
+            return;
             _spatialDimensionQuery.GetPageData<User>(new SpatialDimensionPagingParam()
             {
                 TableName = "point2",

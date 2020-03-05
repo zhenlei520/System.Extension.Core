@@ -1,5 +1,4 @@
-using EInfrastructure.Core.Config.EntitiesExtensions.SeedWork;
-using EInfrastructure.Core.Config.EnumerationExtensions.SeedWork;
+using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
 
 namespace EInfrastructure.Core.Http.Enumerations
 {

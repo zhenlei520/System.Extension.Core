@@ -3,8 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using EInfrastructure.Core.Config.SerializeExtensions;
-using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Tools;
 
@@ -65,10 +64,7 @@ namespace EInfrastructure.Core.HelpCommon
                     return t1.Contains(t);
                 }
 
-                return GetResultList().Contains(new JsonService(new List<IJsonProvider>()
-                {
-                    new NewtonsoftJsonProvider()
-                }).Serializer(t));
+                return GetResultList().Contains(new NewtonsoftJsonProvider().Serializer(t));
             }
 
             List<string> GetResultList()
@@ -77,10 +73,7 @@ namespace EInfrastructure.Core.HelpCommon
                 {
                     t1.ForEach(item =>
                     {
-                        resultStrList.Add(new JsonService(new List<IJsonProvider>
-                        {
-                            new NewtonsoftJsonProvider()
-                        }).Serializer(item));
+                        resultStrList.Add(new NewtonsoftJsonProvider().Serializer(item));
                     });
                 }
 
@@ -115,28 +108,25 @@ namespace EInfrastructure.Core.HelpCommon
         /// <returns></returns>
         private static List<T> MinusExcept<T>(this List<T> t1, List<T> t2) where T : class, new()
         {
-            JsonService jsonService = new JsonService(new List<IJsonProvider>
-            {
-                new NewtonsoftJsonProvider()
-            });
+            IJsonProvider jsonProvider = new NewtonsoftJsonProvider();
 
             List<T> resultList = new CloneableClass().DeepClone(t1);
             List<string> resultStrList = new List<string>();
             if (resultStrList.Count == 0 && resultList.Count != 0)
             {
-                t1.ForEach(item => { resultStrList.Add(jsonService.Serializer(item)); });
+                t1.ForEach(item => { resultStrList.Add(jsonProvider.Serializer(item)); });
             }
 
             foreach (var item in t2)
             {
-                var str = jsonService.Serializer(item);
+                var str = jsonProvider.Serializer(item);
                 if (resultStrList.Contains(str))
                 {
                     resultStrList.Remove(str);
                 }
             }
 
-            return resultStrList.Select(x => jsonService.Deserialize<T>(x)).ToList();
+            return resultStrList.Select(x => jsonProvider.Deserialize<T>(x)).ToList();
         }
 
         #endregion

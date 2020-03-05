@@ -4,7 +4,7 @@
 using Autofac;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using EInfrastructure.Core.Config.EntitiesExtensions;
+using EInfrastructure.Core.Config.Entities.Ioc;
 using EInfrastructure.Core.SqlServer.Repository;
 
 namespace EInfrastructure.Core.AutoFac.SqlServer

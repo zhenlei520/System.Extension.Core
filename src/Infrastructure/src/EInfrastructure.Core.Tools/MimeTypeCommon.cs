@@ -3,9 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using EInfrastructure.Core.Config.EnumerationExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
+using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
 
 namespace EInfrastructure.Core.Tools
 {

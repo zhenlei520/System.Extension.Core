@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Linq;
-using EInfrastructure.Core.Tools.Enumerations;
+using EInfrastructure.Core.Configuration.Enumerations;
 
 namespace EInfrastructure.Core.Tools
 {

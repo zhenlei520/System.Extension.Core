@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Reflection;
-using EInfrastructure.Core.Config.WordsExtensions;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Words;
 using EInfrastructure.Core.Words.Config;
 using EInfrastructure.Core.Words.Enum;
 using EInfrastructure.Core.Words.Extension;

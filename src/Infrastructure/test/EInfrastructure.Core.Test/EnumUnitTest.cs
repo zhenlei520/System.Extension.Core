@@ -2,8 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using EInfrastructure.Core.Config.EnumerationExtensions;
-using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Tools;
 using Xunit;
 

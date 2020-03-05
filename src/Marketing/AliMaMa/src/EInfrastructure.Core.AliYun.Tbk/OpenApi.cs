@@ -5,8 +5,7 @@ using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.Tbk.Config;
 using EInfrastructure.Core.AliYun.Tbk.Respose;
-using EInfrastructure.Core.Config.SerializeExtensions;
-using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using RestSharp;
 
@@ -17,7 +16,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
     /// </summary>
     public class OpenApi
     {
-        protected readonly IJsonService _jsonProvider;
+        protected readonly IJsonProvider _jsonProvider;
 
         /// <summary>
         ///
@@ -25,12 +24,9 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <param name="appKey">appKey</param>
         /// <param name="appSecret">app秘钥</param>
         /// <param name="jsonProvider"></param>
-        protected OpenApi(string appKey, string appSecret, IJsonService jsonProvider = null)
+        protected OpenApi(string appKey, string appSecret, IJsonProvider jsonProvider = null)
         {
-            _jsonProvider = jsonProvider ?? new JsonService(new List<IJsonProvider>()
-            {
-                new NewtonsoftJsonProvider()
-            });
+            _jsonProvider = jsonProvider ?? new NewtonsoftJsonProvider();
             AliConfig = new AliTbkConfig
             {
                 AppKey = appKey,

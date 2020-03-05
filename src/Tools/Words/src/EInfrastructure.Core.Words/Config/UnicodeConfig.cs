@@ -5,7 +5,7 @@
 
 using System;
 using System.Collections.Generic;
-using EInfrastructure.Core.Config.WordsExtensions.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Words.Enumerations;
 
 namespace EInfrastructure.Core.Words.Config
 {

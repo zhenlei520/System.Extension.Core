@@ -1,8 +1,8 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using EInfrastructure.Core.Config.CompressExtensions.Enum;
-using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode
 {
@@ -18,15 +18,14 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// </summary>
         /// <param name="compressType">压缩方式</param>
         /// <returns></returns>
-        internal static BaseCompressService GetProvider(CompressTypeEnum compressType = CompressTypeEnum.Zip)
+        internal static BaseCompressService GetProvider(CompressType compressType)
         {
-            switch (compressType)
+            if (compressType.Id == CompressType.Zip.Id)
             {
-                case CompressTypeEnum.Zip:
-                    return new Zip.ZipCompressService();
-                default:
-                    throw new BusinessException("暂不支持的压缩方式");
+                return new Zip.ZipCompressService();
             }
+
+            throw new BusinessException("暂不支持的压缩方式");
         }
 
         #endregion

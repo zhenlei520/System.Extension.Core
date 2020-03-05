@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Linq;
-using EInfrastructure.Core.Config.EntitiesExtensions.SeedWork;
-using EInfrastructure.Core.Config.StorageExtensions.Enumerations;
+using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.Validation;
 using FluentValidation;

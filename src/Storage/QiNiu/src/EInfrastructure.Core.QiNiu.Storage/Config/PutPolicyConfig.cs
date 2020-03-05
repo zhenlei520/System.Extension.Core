@@ -1,6 +1,6 @@
-using EInfrastructure.Core.Config.EntitiesExtensions.SeedWork;
-using EInfrastructure.Core.Config.StorageExtensions.Enumerations;
-using EInfrastructure.Core.Config.StorageExtensions.Param;
+using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
 using Qiniu.Storage;
 
 namespace EInfrastructure.Core.QiNiu.Storage.Config

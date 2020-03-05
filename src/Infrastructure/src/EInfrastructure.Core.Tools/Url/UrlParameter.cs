@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using EInfrastructure.Core.Config.EnumerationExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Tools.Systems;
 using Newtonsoft.Json;
 

@@ -5,12 +5,10 @@ using System;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
-using EInfrastructure.Core.Config.EnumerationExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
+using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.UCloud.Storage.Common;
 using EInfrastructure.Core.UCloud.Storage.Config;
-using EInfrastructure.Core.UCloud.Storage.Validator;
 using EInfrastructure.Core.Validation.Common;
 
 namespace EInfrastructure.Core.UCloud.Storage

@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-using EInfrastructure.Core.Config.CacheExtensions;
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Tools;
 using Microsoft.Extensions.Caching.Memory;
 

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using EInfrastructure.Core.Config.EntitiesExtensions.SeedWork;
+using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
 
 namespace EInfrastructure.Core.Tools.Enumerations
 {

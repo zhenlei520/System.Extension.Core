@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using EInfrastructure.Core.Config.StorageExtensions;
-using EInfrastructure.Core.Config.StorageExtensions.Dto;
-using EInfrastructure.Core.Config.StorageExtensions.Param;
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
 using EInfrastructure.Core.UCloud.Storage.Config;
 
 namespace EInfrastructure.Core.UCloud.Storage

@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 using System.Reflection;
-using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.Serialize.NewtonsoftJson
@@ -33,39 +33,51 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
         /// <param name="o"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public string Serializer(object o, bool format = false)
+        public string Serializer(object o, bool format = false, Func<Exception, string> action = null)
         {
-            using (StringWriter sw = new StringWriter())
+            try
             {
-                JsonSerializer serializer = JsonSerializer.Create(
-                    new JsonSerializerSettings
+                using (StringWriter sw = new StringWriter())
+                {
+                    JsonSerializer serializer = JsonSerializer.Create(
+                        new JsonSerializerSettings
+                        {
+                            DateFormatHandling = DateFormatHandling.MicrosoftDateFormat,
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        }
+                    );
+                    serializer.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                    JsonWriter jsonWriter;
+                    if (format)
                     {
-                        DateFormatHandling = DateFormatHandling.MicrosoftDateFormat,
-                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        jsonWriter = new JsonTextWriter(sw)
+                        {
+                            Formatting = Formatting.Indented,
+                            Indentation = 4,
+                            IndentChar = ' '
+                        };
                     }
-                );
-                serializer.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                JsonWriter jsonWriter;
-                if (format)
-                {
-                    jsonWriter = new JsonTextWriter(sw)
+                    else
                     {
-                        Formatting = Formatting.Indented,
-                        Indentation = 4,
-                        IndentChar = ' '
-                    };
+                        jsonWriter = new JsonTextWriter(sw);
+                    }
+
+                    using (jsonWriter)
+                    {
+                        serializer.Serialize(jsonWriter, o);
+                    }
+
+                    return sw.ToString();
                 }
-                else
+            }
+            catch (Exception ex)
+            {
+                if (action != null)
                 {
-                    jsonWriter = new JsonTextWriter(sw);
+                    return action.Invoke(ex);
                 }
 
-                using (jsonWriter)
-                {
-                    serializer.Serialize(jsonWriter, o);
-                }
-
-                return sw.ToString();
+                throw new System.Exception($"json序列化出错,序列化类型：{o.GetType().FullName}");
             }
         }
 
@@ -76,12 +88,53 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
         /// <summary>
         /// json反序列化
         /// </summary>
-        /// <param name="s"></param>
+        /// <param name="str"></param>
         /// <param name="type"></param>
+        /// <param name="action">委托方法</param>
         /// <returns></returns>
-        public object Deserialize(string s, Type type)
+        public object Deserialize(string str, Type type, Func<Exception, object> action = null)
         {
-            return JsonConvert.DeserializeObject(s, type);
+            try
+            {
+                return JsonConvert.DeserializeObject(str, type);
+            }
+
+            catch (System.Exception ex)
+            {
+                if (action != null)
+                {
+                    return action.Invoke(ex);
+                }
+
+                throw new System.Exception($"json反序列化出错,待反序列化的json字符串为：{str}");
+            }
+        }
+
+        /// <summary>
+        /// json反序列化
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="str"></param>
+        /// <param name="defaultResult">反序列化异常</param>
+        /// <param name="action">委托方法</param>
+        /// <returns></returns>
+        public T Deserialize<T>(string str, T defaultResult = default(T), Action<Exception> action = null)
+            where T : class, new()
+        {
+            try
+            {
+                return (T) Deserialize(str, typeof(T));
+            }
+            catch (Exception ex)
+            {
+                if (action == null)
+                {
+                    throw new Exception($"json反序列化出错，反序列化对象默认值为：{new T()},内容：{str}");
+                }
+
+                action.Invoke(ex);
+                return defaultResult;
+            }
         }
 
         #endregion

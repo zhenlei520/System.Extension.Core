@@ -1,6 +1,6 @@
 using System;
 using EInfrastructure.Core.Config.Entities.Configuration;
-using EInfrastructure.Core.Config.EntitiesExtensions;
+using EInfrastructure.Core.Config.Entities.Ioc;
 
 namespace EInfrastructure.Core.SqlServer.Repository
 {

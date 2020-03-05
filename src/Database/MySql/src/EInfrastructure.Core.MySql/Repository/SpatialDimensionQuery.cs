@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using EInfrastructure.Core.Config.EntitiesExtensions;
+using EInfrastructure.Core.Config.Entities.Ioc;
 using EInfrastructure.Core.MySql.Common;
 
 namespace EInfrastructure.Core.MySql.Repository

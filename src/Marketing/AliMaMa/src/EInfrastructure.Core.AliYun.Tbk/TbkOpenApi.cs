@@ -7,10 +7,9 @@ using System.Globalization;
 using EInfrastructure.Core.AliYun.Tbk.Param;
 using EInfrastructure.Core.AliYun.Tbk.Respose;
 using EInfrastructure.Core.AliYun.Tbk.Respose.Success;
-using EInfrastructure.Core.Config.EnumerationExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
-using EInfrastructure.Core.Config.SerializeExtensions;
+using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using RestSharp;
 
 namespace EInfrastructure.Core.AliYun.Tbk
@@ -25,8 +24,8 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// </summary>
         /// <param name="appKey">appKey</param>
         /// <param name="appSecret">app秘钥</param>
-        public TbkOpenApi(string appKey, string appSecret, IJsonService jsonCommon = null) : base(appKey,
-            appSecret, jsonCommon)
+        public TbkOpenApi(string appKey, string appSecret, IJsonProvider jsonProvider = null) : base(appKey,
+            appSecret, jsonProvider)
         {
         }
 

@@ -15,7 +15,7 @@ namespace EInfrastructure.Core.Tools
             {
                 _isStartUp = true;
             }
-            EInfrastructure.Core.Config.ExceptionExtensions.StartUp.Run();
+            EInfrastructure.Core.Config.Entities.StartUp.Run();
         }
     }
 }

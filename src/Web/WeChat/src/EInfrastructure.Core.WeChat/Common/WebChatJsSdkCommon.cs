@@ -2,11 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using EInfrastructure.Core.Config.CacheExtensions;
-using EInfrastructure.Core.Config.EnumerationExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
-using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.WeChat.Config;
 using Newtonsoft.Json;

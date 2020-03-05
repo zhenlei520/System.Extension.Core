@@ -4,7 +4,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Configuration.Exception;
 
 namespace EInfrastructure.Core.Tools
 {

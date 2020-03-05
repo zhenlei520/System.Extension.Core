@@ -7,13 +7,9 @@ using System.Reflection;
 using EInfrastructure.Core.AliYun.DaYu.Common;
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.AliYun.DaYu.Model;
-using EInfrastructure.Core.Config.EnumerationExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
-using EInfrastructure.Core.Config.SerializeExtensions;
-using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
-using EInfrastructure.Core.Config.SmsExtensions;
-using EInfrastructure.Core.Config.SmsExtensions.Dto;
+using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Serialize.Xml;
 using EInfrastructure.Core.Tools;
@@ -28,22 +24,19 @@ namespace EInfrastructure.Core.AliYun.DaYu
     public class SmsService : ISmsService, ISingleInstance
     {
         private AliSmsConfig _smsConfig;
-        private readonly IJsonService _jsonProvider;
+        private readonly IJsonProvider _jsonProvider;
 
         /// <summary>
         /// 短信服务
         /// </summary>
-        public SmsService(AliSmsConfig smsConfig) : this(smsConfig, new JsonService(new List<IJsonProvider>()
-        {
-            new NewtonsoftJsonProvider()
-        }))
+        public SmsService(AliSmsConfig smsConfig) : this(smsConfig, new NewtonsoftJsonProvider())
         {
         }
 
         /// <summary>
         /// 短信服务
         /// </summary>
-        public SmsService(AliSmsConfig smsConfig, IJsonService jsonProvider)
+        public SmsService(AliSmsConfig smsConfig, IJsonProvider jsonProvider)
         {
             _smsConfig = smsConfig;
             _jsonProvider = jsonProvider;

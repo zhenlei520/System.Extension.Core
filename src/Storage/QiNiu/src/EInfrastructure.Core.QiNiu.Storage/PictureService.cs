@@ -2,11 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Reflection;
-using EInfrastructure.Core.Config.SerializeExtensions;
-using EInfrastructure.Core.Config.StorageExtensions;
-using EInfrastructure.Core.Config.StorageExtensions.Param;
-using EInfrastructure.Core.Config.StorageExtensions.Param.Pictures;
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param.Pictures;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.Tools;
 using Qiniu.Http;

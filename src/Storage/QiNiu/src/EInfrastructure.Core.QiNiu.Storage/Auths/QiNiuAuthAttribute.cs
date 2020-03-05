@@ -2,10 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Linq;
-using EInfrastructure.Core.Config.EnumerationExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
-using EInfrastructure.Core.Config.SerializeExtensions;
+using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -34,7 +33,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
     {
         private readonly QiNiuStorageConfig _qiNiuConfig;
         private readonly ILogService _logService;
-        protected readonly IJsonService _jsonService;
+        protected readonly IJsonProvider _jsonProvider;
 
         /// <summary>
         ///
@@ -42,11 +41,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
         /// <param name="logService"></param>
         /// <param name="qiNiuConfig"></param>
         public ClaimQiNiuRequirementFilter(ILogService logService, QiNiuStorageConfig qiNiuConfig,
-            IJsonService jsonService)
+            IJsonProvider jsonProvider)
         {
             _qiNiuConfig = qiNiuConfig;
             _logService = logService;
-            _jsonService = jsonService;
+            _jsonProvider = jsonProvider;
         }
 
         /// <summary>

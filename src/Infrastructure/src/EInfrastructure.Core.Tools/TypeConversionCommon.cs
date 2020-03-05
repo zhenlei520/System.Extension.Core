@@ -7,7 +7,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Configuration.Exception;
 
 namespace EInfrastructure.Core.Tools
 {

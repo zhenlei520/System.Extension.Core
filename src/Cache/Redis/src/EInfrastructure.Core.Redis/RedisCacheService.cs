@@ -6,12 +6,10 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
-using EInfrastructure.Core.Config.CacheExtensions;
-using EInfrastructure.Core.Config.EnumerationExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
-using EInfrastructure.Core.Config.SerializeExtensions;
+using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Redis.Common;
 using EInfrastructure.Core.Redis.Config;
 using EInfrastructure.Core.Redis.Validator;
@@ -30,12 +28,12 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         private readonly string _prefix;
 
-        private readonly IJsonService _jsonProvider;
+        private readonly IJsonProvider _jsonProvider;
 
         /// <summary>
         ///
         /// </summary>
-        public RedisCacheService(RedisConfig redisConfig, IJsonService jsonProvider)
+        public RedisCacheService(RedisConfig redisConfig, IJsonProvider jsonProvider)
         {
             _jsonProvider = jsonProvider;
             redisConfig.Check("redis配置异常",HttpStatus.Err.Name);

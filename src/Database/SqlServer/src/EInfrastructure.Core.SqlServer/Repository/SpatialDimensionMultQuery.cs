@@ -3,7 +3,7 @@
 
 using System;
 using EInfrastructure.Core.Config.Entities.Configuration;
-using EInfrastructure.Core.Config.EntitiesExtensions;
+using EInfrastructure.Core.Config.Entities.Ioc;
 using EInfrastructure.Core.SqlServer.Common;
 
 namespace EInfrastructure.Core.SqlServer.Repository

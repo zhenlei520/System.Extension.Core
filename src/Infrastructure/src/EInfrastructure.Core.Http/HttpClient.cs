@@ -3,13 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EInfrastructure.Core.Config.EnumerationExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
-using EInfrastructure.Core.Http.Enumerations;
+using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Serialize.Xml;
-using EInfrastructure.Core.Tools.Attributes;
+using Newtonsoft.Json.Serialization;
 using RestSharp;
 
 namespace EInfrastructure.Core.Http
@@ -504,9 +502,9 @@ namespace EInfrastructure.Core.Http
             foreach (var property in properties)
             {
                 string name;
-                if (property.CustomAttributes.Any(x => x.AttributeType == typeof(ENameAttribute)))
+                if (property.CustomAttributes.Any(x => x.AttributeType == typeof(JsonProperty)))
                 {
-                    var namedargument = property.CustomAttributes.Where(x => x.AttributeType == typeof(ENameAttribute))
+                    var namedargument = property.CustomAttributes.Where(x => x.AttributeType == typeof(JsonProperty))
                         .Select(x => x.NamedArguments).FirstOrDefault();
                     name = namedargument.Select(x => x.TypedValue.Value).FirstOrDefault()?.ToString();
                 }

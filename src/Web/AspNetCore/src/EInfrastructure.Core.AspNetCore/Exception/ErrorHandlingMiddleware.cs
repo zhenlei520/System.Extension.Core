@@ -2,12 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using EInfrastructure.Core.AspNetCore.Api;
-using EInfrastructure.Core.Config.ExceptionExtensions;
-using EInfrastructure.Core.Config.SerializeExtensions;
-using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
+using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -26,14 +24,14 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// </summary>
         public static Func<HttpContext, System.Exception, bool> ExceptionAction;
 
-        private readonly IJsonService _jsonProvider;
+        private readonly IJsonProvider _jsonProvider;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="next"></param>
         /// <param name="jsonProvider"></param>
-        public ErrorHandlingMiddleware(RequestDelegate next, IJsonService jsonProvider)
+        public ErrorHandlingMiddleware(RequestDelegate next, IJsonProvider jsonProvider)
         {
             _next = next;
             _jsonProvider = jsonProvider;
@@ -135,14 +133,10 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// <param name="jsonProvider"></param>
         /// <returns></returns>
         public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder builder,
-            Func<HttpContext, System.Exception, bool> exceptionAction = null, IJsonService jsonProvider = null)
+            Func<HttpContext, System.Exception, bool> exceptionAction = null, IJsonProvider jsonProvider = null)
         {
             ErrorHandlingMiddleware.ExceptionAction = exceptionAction;
-            return builder.UseMiddleware<ErrorHandlingMiddleware>(jsonProvider ?? new JsonService(
-                                                                      new List<IJsonProvider>
-                                                                      {
-                                                                          new NewtonsoftJsonProvider()
-                                                                      }));
+            return builder.UseMiddleware<ErrorHandlingMiddleware>(jsonProvider ?? new NewtonsoftJsonProvider());
         }
     }
 }

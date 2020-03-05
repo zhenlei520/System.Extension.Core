@@ -8,7 +8,7 @@ namespace EInfrastructure.Core
     public static class StartUp
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private static bool IsStartUp;
 
@@ -31,15 +31,7 @@ namespace EInfrastructure.Core
         /// </summary>
         private static void Load()
         {
-            Config.CacheExtensions.StartUp.Run();
-            Config.CompressExtensions.StartUp.Run();
-            Config.EntitiesExtensions.StartUp.Run();
             Config.IdentificationExtensions.StartUp.Run();
-            Config.SerializeExtensions.StartUp.Run();
-            Config.SmsExtensions.StartUp.Run();
-            Config.StorageExtensions.StartUp.Run();
-            Config.WordsExtensions.StartUp.Run();
-            Serialize.NewtonsoftJson.StartUp.Run();
             Tools.StartUp.Run();
         }
 

@@ -5,8 +5,8 @@ using System;
 using System.Collections;
 using System.Globalization;
 using System.Linq;
-using EInfrastructure.Core.Config.EnumerationExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions;
+using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
 using TimeType = EInfrastructure.Core.Tools.Enumerations.TimeType;
 
 namespace EInfrastructure.Core.Tools

@@ -8,9 +8,8 @@ using System.Reflection;
 using EInfrastructure.Core.Config.IdentificationExtensions;
 using EInfrastructure.Core.Config.IdentificationExtensions.Dto;
 using EInfrastructure.Core.Config.IdentificationExtensions.Enum;
-using EInfrastructure.Core.Config.SerializeExtensions;
 using EInfrastructure.Core.Configuration.Ioc;
-using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.HelpCommon.Files;
 using EInfrastructure.Core.Tools;
 using Microsoft.AspNetCore.Http;
@@ -24,11 +23,11 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
     /// </summary>
     public class AuthenticateDemoService : IAuthenticateDemoService, IPerRequest
     {
-        private readonly IJsonService _jsonProvider;
+        private readonly IJsonProvider _jsonProvider;
         private readonly RestClient _restClient;
         private readonly RestRequest _request;
 
-        public AuthenticateDemoService(IJsonService jsonProvider)
+        public AuthenticateDemoService(IJsonProvider jsonProvider)
         {
             _jsonProvider = jsonProvider;
             _restClient = new RestClient("http://ai.baidu.com");

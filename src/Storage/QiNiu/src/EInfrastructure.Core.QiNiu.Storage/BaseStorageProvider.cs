@@ -2,16 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using EInfrastructure.Core.Config.EnumerationExtensions;
-using EInfrastructure.Core.Config.ExceptionExtensions.Enumerations;
-using EInfrastructure.Core.Config.StorageExtensions.Config;
-using EInfrastructure.Core.Config.StorageExtensions.Enumerations;
-using EInfrastructure.Core.Config.StorageExtensions.Param;
+using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.Validation.Common;
 using Qiniu.Storage;
 using Qiniu.Util;
-using ChunkUnit = EInfrastructure.Core.Config.StorageExtensions.Enumerations.ChunkUnit;
 
 namespace EInfrastructure.Core.QiNiu.Storage
 {

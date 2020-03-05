@@ -2,9 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 
-using System.Collections.Generic;
-using EInfrastructure.Core.Config.SerializeExtensions;
-using EInfrastructure.Core.Config.SerializeExtensions.Interfaces;
 using EInfrastructure.Core.Redis.Config;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using Xunit.Abstractions;
@@ -29,10 +26,7 @@ namespace EInfrastructure.Core.Redis.Test.Base
                 Password = "dysh_enjoy",
                 PoolSize = 1,
                 OverTimeCacheKeyPre = "OverTime_HashSet",
-            }, new JsonService(new List<IJsonProvider>()
-            {
-                new NewtonsoftJsonProvider()
-            }));
+            },  new NewtonsoftJsonProvider());
 //            var connectionString = "";
 //            var services = new ServiceCollection();
 //            this.output = output;

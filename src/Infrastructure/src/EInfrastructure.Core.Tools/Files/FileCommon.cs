@@ -7,7 +7,6 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using EInfrastructure.Core.Config.ExceptionExtensions;
 
 namespace EInfrastructure.Core.Tools.Files
 {

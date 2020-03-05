@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Redis.Test.Base;
 using EInfrastructure.Core.Tools;
 using Xunit;

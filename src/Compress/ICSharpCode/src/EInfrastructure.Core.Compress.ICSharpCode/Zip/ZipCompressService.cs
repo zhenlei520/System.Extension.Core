@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Files;
 using EInfrastructure.Core.Tools;
 using ICSharpCode.SharpZipLib.Zip;
