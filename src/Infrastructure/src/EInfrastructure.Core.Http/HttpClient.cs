@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -113,7 +114,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public T GetFromJson<T>(string url, object data, Dictionary<string, string> headers = null, int? timeOut = null)
         {
-            var res = Get(SetUrlParam(url, data), headers, timeOut).Content;
+            var res = Get(SetUrlParam(url, GetParams(data)), headers, timeOut).Content;
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -154,7 +155,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public T GetFromXml<T>(string url, object data, Dictionary<string, string> headers = null, int? timeOut = null)
         {
-            var res = Get(SetUrlParam(url, data), headers, timeOut).Content;
+            var res = Get(SetUrlParam(url, GetParams(data)), headers, timeOut).Content;
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -191,7 +192,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public string GetString(string url, object data, Dictionary<string, string> headers = null, int? timeOut = null)
         {
-            return Get(SetUrlParam(url, data), headers, timeOut).Content;
+            return Get(SetUrlParam(url, GetParams(data)), headers, timeOut).Content;
         }
 
         #endregion
@@ -220,7 +221,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public byte[] GetBytes(string url, object data, Dictionary<string, string> headers = null, int? timeOut = null)
         {
-            return Get(SetUrlParam(url, data), headers, timeOut).RawBytes;
+            return Get(SetUrlParam(url, GetParams(data)), headers, timeOut).RawBytes;
         }
 
         #endregion
@@ -249,7 +250,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public Stream GetStream(string url, object data, Dictionary<string, string> headers = null, int? timeOut = null)
         {
-            return new MemoryStream(GetBytes(SetUrlParam(url, data), headers, timeOut));
+            return new MemoryStream(GetBytes(SetUrlParam(url, GetParams(data)), headers, timeOut));
         }
 
         #endregion
@@ -374,7 +375,7 @@ namespace EInfrastructure.Core.Http
         public async Task<string> GetStringAsync(string url, object data, Dictionary<string, string> headers = null,
             int? timeOut = null)
         {
-            return (await GetAsync(SetUrlParam(url, data), headers, timeOut)).Content;
+            return (await GetAsync(SetUrlParam(url, GetParams(data)), headers, timeOut)).Content;
         }
 
         #endregion
@@ -405,7 +406,7 @@ namespace EInfrastructure.Core.Http
         public async Task<byte[]> GetBytesAsync(string url, object data, Dictionary<string, string> headers = null,
             int? timeOut = null)
         {
-            return (await GetAsync(SetUrlParam(url, data), headers, timeOut)).RawBytes;
+            return (await GetAsync(SetUrlParam(url, GetParams(data)), headers, timeOut)).RawBytes;
         }
 
         #endregion
@@ -436,7 +437,7 @@ namespace EInfrastructure.Core.Http
         public async Task<Stream> GetStreamAsync(string url, object data, Dictionary<string, string> headers = null,
             int? timeOut = null)
         {
-            return new MemoryStream(await GetBytesAsync(SetUrlParam(url, data), headers, timeOut));
+            return new MemoryStream(await GetBytesAsync(SetUrlParam(url, GetParams(data)), headers, timeOut));
         }
 
         #endregion
@@ -487,18 +488,104 @@ namespace EInfrastructure.Core.Http
         /// 得到url
         /// </summary>
         /// <param name="url"></param>
-        /// <param name="paramObj"></param>
+        /// <param name="properties"></param>
         /// <returns></returns>
-        private static string SetUrlParam(string url, object paramObj)
+        private static string SetUrlParam(string url, Dictionary<string,string> properties)
         {
-            if (paramObj == null)
+            foreach (var property in properties)
             {
-                return url;
+                string value = property.Value??"";
+
+                if (!url.Contains("?"))
+                {
+                    url = url + "?" + property.Key + "=" + value;
+                }
+                else
+                {
+                    url = url + "&" + property.Key + "=" + value;
+                }
             }
 
-            var type = paramObj.GetType();
+            return url;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Post请求
+
+        #region 同步
+
+        #endregion
+
+        #region private methods
+
+        /// <summary>
+        /// Get请求
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求对象</param>
+        /// <param name="headers">请求头（可为空）</param>
+        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <returns></returns>
+        private IRestResponse Post(string url, object data, Dictionary<string, string> headers = null,
+            int? timeOut = null)
+        {
+            var res = PostAsync(url, data, headers, timeOut);
+            return res.Result;
+        }
+
+        /// <summary>
+        /// Get请求 异步
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求对象</param>
+        /// <param name="headers">请求头（可为空）</param>
+        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <returns></returns>
+        private async Task<IRestResponse> PostAsync(string url, object data, Dictionary<string, string> headers = null,
+            int? timeOut = null)
+        {
+            RestRequest request = new RestRequest(url, RestSharp.Method.POST) {Timeout = timeOut ?? TimeOut};
+            if (headers != null)
+            {
+                foreach (var key in headers.Keys)
+                {
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        request.AddHeader(key, headers[key]);
+                    }
+                }
+            }
+
+            return await RestClient.ExecuteTaskAsync(request);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region private methods
+
+        #region 得到参数
+
+        /// <summary>
+        /// 得到参数
+        /// </summary>
+        /// <param name="data">对象 允许自定义参数名，可以从JsonProperty的属性中获取</param>
+        /// <returns></returns>
+        private Dictionary<string, string> GetParams(object data)
+        {
+            if (data == null || data is string || !data.GetType().IsClass)
+            {
+                return new Dictionary<string, string>();
+            }
+
+            var type = data.GetType();
             var properties = type.GetProperties();
 
+            Dictionary<string, string> objectDic = new Dictionary<string, string>();
             foreach (var property in properties)
             {
                 string name;
@@ -513,26 +600,13 @@ namespace EInfrastructure.Core.Http
                     name = property.Name;
                 }
 
-                object valueObj = property.GetValue(paramObj, null);
-
-                if (valueObj == null)
+                if (objectDic.All(x => x.Key != name) && name != null)
                 {
-                    continue;
-                }
-
-                string value = valueObj.ToString();
-
-                if (!url.Contains("?"))
-                {
-                    url = url + "?" + name + "=" + value;
-                }
-                else
-                {
-                    url = url + "&" + name + "=" + value;
+                    objectDic.Add(name, property.GetValue(data, null)?.ToString() ?? "");
                 }
             }
 
-            return url;
+            return objectDic;
         }
 
         #endregion

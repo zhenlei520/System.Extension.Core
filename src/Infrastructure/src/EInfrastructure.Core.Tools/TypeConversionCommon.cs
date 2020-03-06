@@ -28,7 +28,13 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static char ConvertToChar(this object obj, char defaultVal)
         {
-            return obj.ConvertToChar(() => defaultVal).Value;
+            var result = obj.ConvertToChar(() => defaultVal);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
+            return defaultVal;
         }
 
         /// <summary>
@@ -68,7 +74,13 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static Guid ConvertToGuid(this object obj, Guid defaultVal)
         {
-            return obj.ConvertToGuid(() => defaultVal).Value;
+            var result = obj.ConvertToGuid(() => defaultVal);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
+            return defaultVal;
         }
 
         /// <summary>
@@ -108,7 +120,13 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static short ConvertToShort(this object obj, short defaultVal)
         {
-            return obj.ConvertToShort(()=>defaultVal).Value;
+            var result = obj.ConvertToShort(() => defaultVal);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
+            return defaultVal;
         }
 
         /// <summary>
@@ -119,7 +137,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static short? ConvertToShort(this object obj, short? defaultVal = null)
         {
-            return obj.ConvertToShort(()=>defaultVal);
+            return obj.ConvertToShort(() => defaultVal);
         }
 
         /// <summary>
@@ -135,6 +153,7 @@ namespace EInfrastructure.Core.Tools
                     return result;
             return func.Invoke();
         }
+
         #endregion
 
         #region obj转Int
@@ -147,7 +166,13 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static int ConvertToInt(this object obj, int defaultVal)
         {
-            return obj.ConvertToInt(() => defaultVal).Value;
+            var result = obj.ConvertToInt(() => defaultVal);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
+            return defaultVal;
         }
 
         /// <summary>
@@ -187,7 +212,13 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static long ConvertToLong(this object obj, long defaultVal = default(long))
         {
-            return obj.ConvertToLong(() => defaultVal).Value;
+            var result = obj.ConvertToLong(() => defaultVal);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
+            return defaultVal;
         }
 
         /// <summary>
@@ -227,7 +258,13 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static decimal ConvertToDecimal(this object obj, decimal defaultVal)
         {
-            return obj.ConvertToDecimal(() => defaultVal).Value;
+            var result = obj.ConvertToDecimal(() => defaultVal);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
+            return defaultVal;
         }
 
         /// <summary>
@@ -267,7 +304,13 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static double ConvertToDouble(this object obj, double defaultVal)
         {
-            return obj.ConvertToDouble(() => defaultVal).Value;
+            var result = obj.ConvertToDouble(() => defaultVal);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
+            return defaultVal;
         }
 
         /// <summary>
@@ -307,7 +350,13 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static float ConvertToFloat(this object obj, float defaultVal)
         {
-            return obj.ConvertToFloat(() => defaultVal).Value;
+            var result = obj.ConvertToFloat(() => defaultVal);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
+            return default(float);
         }
 
         /// <summary>
@@ -347,7 +396,13 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static DateTime ConvertToDateTime(this object obj, DateTime defaultVal)
         {
-            return obj.ConvertToDateTime(() => defaultVal).Value;
+            var result = obj.ConvertToDateTime(() => defaultVal);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
+            return defaultVal;
         }
 
         /// <summary>
@@ -387,7 +442,13 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static byte ConvertToByte(this object obj, byte defaultVal)
         {
-            return obj.ConvertToByte(() => defaultVal).Value;
+            var result = obj.ConvertToByte(() => defaultVal);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
+            return defaultVal;
         }
 
         /// <summary>
@@ -427,7 +488,13 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static sbyte ConvertToSByte(this object obj, sbyte defaultVal)
         {
-            return obj.ConvertToSByte(() => defaultVal).Value;
+            var result = obj.ConvertToSByte(() => defaultVal);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
+            return defaultVal;
         }
 
         /// <summary>
@@ -467,7 +534,13 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool ConvertToBool(this object obj, bool defaultVal)
         {
-            return obj.ConvertToBool(()=>defaultVal).Value;
+            var result = obj.ConvertToBool(() => defaultVal);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
+            return defaultVal;
         }
 
         /// <summary>
@@ -478,7 +551,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool? ConvertToBool(this object obj, bool? defaultVal = null)
         {
-            return obj.ConvertToBool(()=>defaultVal);
+            return obj.ConvertToBool(() => defaultVal);
         }
 
         /// <summary>
@@ -524,8 +597,6 @@ namespace EInfrastructure.Core.Tools
         #endregion
 
         #region 文件类型转换
-
-
 
         #region 转换为Byte数组
 
@@ -777,7 +848,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static async Task<string> ConvertToBase64Async(this Stream stream)
         {
-            return  ConvertToBase64(await stream.ConvertToByteArrayAsync(false));
+            return ConvertToBase64(await stream.ConvertToByteArrayAsync(false));
         }
 
         #endregion
