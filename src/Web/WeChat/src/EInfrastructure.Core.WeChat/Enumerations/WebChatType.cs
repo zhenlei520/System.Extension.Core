@@ -1,12 +1,14 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
+
 namespace EInfrastructure.Core.WeChat.Enumerations
 {
     /// <summary>
     /// 微信类型
     /// </summary>
-    public class WebChatType : Core.Config.EntitiesExtensions.SeedWork.Enumeration
+    public class WebChatType : Enumeration
     {
         /// <summary>
         /// 微信小程序

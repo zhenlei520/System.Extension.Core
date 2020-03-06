@@ -55,20 +55,6 @@ namespace EInfrastructure.Core.UCloud.Storage
 
         #endregion
 
-        #region 根据文件上传
-
-        /// <summary>
-        /// 根据文件上传
-        /// </summary>
-        /// <param name="param">文件上传配置</param>
-        /// <returns></returns>
-        public UploadResultDto UploadFile(UploadByFormFileParam param)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
-
         #region 得到上传文件策略信息
 
         /// <summary>

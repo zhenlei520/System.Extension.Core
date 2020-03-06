@@ -47,7 +47,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
             bool overWrite = true,
             bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int blockSize = 2048,
-            CompressType? compressType = null)
+            CompressType compressType = null)
         {
             return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressSingle(sourceFilePath,
                 zipDirectory, zipName,
@@ -76,7 +76,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         public string[] CompressMulti(string[] sourceFileList, string zipDirectory, string zipName,
             bool overWrite = true, bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048,
-            CompressType? compressType = null)
+            CompressType compressType = null)
         {
             return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressMulti(sourceFileList,
                 zipDirectory, zipName,
@@ -107,7 +107,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
             string searchPattern = "*.*",
             SearchOption searchOption = SearchOption.AllDirectories, bool overWrite = true, bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048,
-            CompressType? compressType = null)
+            CompressType compressType = null)
         {
             return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressCatalogAndFiltrate(
                 sourceFilePath, zipDirectory,
@@ -134,7 +134,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <returns></returns>
         public string CompressCatalog(string sourceFilePath, string zipDirectory, string zipName,
             bool isRecursive = true, bool overWrite = true, bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, CompressType? compressType = null)
+            string password = "", int compressionLevel = 5, CompressType compressType = null)
         {
             return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressCatalog(sourceFilePath,
                 zipDirectory, zipName,
@@ -154,7 +154,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <param name="overWrite">是否覆盖</param>
         /// <param name="compressType">压缩方式（默认zip）</param>
         public void DeCompress(string zipFile, string targetDirectory, string password = "", bool overWrite = true,
-            CompressType? compressType = null)
+            CompressType compressType = null)
         {
             CompressFactory.GetProvider(compressType ?? CompressType.Zip)
                 .DeCompress(zipFile, targetDirectory, password, overWrite);

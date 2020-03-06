@@ -1,12 +1,14 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
+
 namespace EInfrastructure.Core.WeChat.Enumerations
 {
     /// <summary>
     /// 事件类型
     /// </summary>
-    public class EventType : Core.Config.EntitiesExtensions.SeedWork.Enumeration
+    public class EventType : Enumeration
     {
         /// <summary>
         /// 未知

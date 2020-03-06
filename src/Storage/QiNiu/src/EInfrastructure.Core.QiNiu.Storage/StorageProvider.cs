@@ -66,33 +66,6 @@ namespace EInfrastructure.Core.QiNiu.Storage
 
         #endregion
 
-        #region 根据文件上传
-
-        /// <summary>
-        /// 根据文件上传
-        /// </summary>
-        /// <param name="param"></param>
-        /// <returns></returns>
-        public UploadResultDto UploadFile(UploadByFormFileParam param)
-        {
-            var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
-            string token = base.GetUploadCredentials(QiNiuConfig,
-                new UploadPersistentOpsParam(param.Key, uploadPersistentOps));
-            FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
-            if (param.File != null)
-            {
-                HttpResult result =
-                    target.UploadStream(param.File.OpenReadStream(), param.Key, token,
-                        GetPutExtra(uploadPersistentOps));
-                var res = result.Code == (int) HttpCode.OK;
-                return new UploadResultDto(res, res ? "成功" : result.Text);
-            }
-
-            return new UploadResultDto(false, "上传文件不存在");
-        }
-
-        #endregion
-
         #region 得到上传文件策略信息
 
         /// <summary>

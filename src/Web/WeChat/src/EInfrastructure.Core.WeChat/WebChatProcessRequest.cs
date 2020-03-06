@@ -5,6 +5,7 @@ using System;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Serialize.Xml;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.WeChat.Common;
@@ -21,9 +22,14 @@ namespace EInfrastructure.Core.WeChat
     public class WebChatProcessRequest
     {
         private readonly ILogService _logService;
-        private readonly IJsonService _jsonProvider;
+        private readonly IJsonProvider _jsonProvider;
 
-        public WebChatProcessRequest(ILogService logService, IJsonService jsonProvider)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="logService"></param>
+        /// <param name="jsonProvider"></param>
+        public WebChatProcessRequest(ILogService logService, IJsonProvider jsonProvider)
         {
             _logService = logService;
             _jsonProvider = jsonProvider;

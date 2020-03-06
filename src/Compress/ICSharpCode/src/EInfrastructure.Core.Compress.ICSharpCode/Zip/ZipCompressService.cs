@@ -152,7 +152,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
                 using (FileStream zipFile = File.Create(fileZipPath))
                 {
                     Encoding encoding = Encoding.UTF8;
-                    ZipConstants.DefaultCodePage = encoding.CodePage;
+                    ZipStrings.CodePage = encoding.CodePage;
                     using (ZipOutputStream stream = new ZipOutputStream(zipFile))
                     {
                         if (isEncrypt)

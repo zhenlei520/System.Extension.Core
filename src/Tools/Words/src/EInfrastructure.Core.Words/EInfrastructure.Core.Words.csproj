@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Version>2.0.0</Version>
-<Authors>zhenlei520</Authors>
+    <Authors>zhenlei520</Authors>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Company>zhenlei520</Company>
     <Description>dotnet core words，pinyin词语类库</Description>
@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\AutomationConfiguration\src\EInfrastructure.Core.AutomationConfiguration\EInfrastructure.Core.AutomationConfiguration.csproj"/>
-    <ProjectReference Include="..\..\..\..\Configuration\src\EInfrastructure.Core.Config.WordsExtensions\src\EInfrastructure.Core.Config.WordsExtensions\EInfrastructure.Core.Config.WordsExtensions.csproj"/>
     <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj"/>
   </ItemGroup>
 

@@ -138,7 +138,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 }
             }
 
-            Qiniu.Storage.ChunkUnit Get(ChunkUnit chunkUnit)
+            Qiniu.Storage.ChunkUnit Get(EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit chunkUnit)
             {
                 int chunkUnits = chunkUnit.Id;
                 return (Qiniu.Storage.ChunkUnit) chunkUnits;
