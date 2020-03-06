@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.Http.Enumerations;
+using EInfrastructure.Core.Http.Params;
+using EInfrastructure.Core.Http.Provider;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Serialize.Xml;
 using Newtonsoft.Json.Serialization;
@@ -31,9 +34,12 @@ namespace EInfrastructure.Core.Http
 
             Host = host;
             TimeOut = 30000;
-            RestClient = new RestClient(Host);
-            JsonProvider = new NewtonsoftJsonProvider();
-            Encoding = Encoding.UTF8;
+            _restClient = new RestClient(Host);
+            _jsonProvider = new NewtonsoftJsonProvider();
+            _xmlProvider = new XmlProvider();
+            _encoding = Encoding.UTF8;
+            _files = new List<RequestMultDataParam>();
+            _requestBodyType = RequestBodyType.ApplicationJson;
         }
 
         /// <summary>
@@ -41,10 +47,15 @@ namespace EInfrastructure.Core.Http
         /// </summary>
         /// <param name="host">域名</param>
         /// <param name="timeOut">超时时间</param>
-        public HttpClient(string host, int timeOut) : this(host)
+        /// <param name="jsonProvider"></param>
+        /// <param name="requestBodyType"></param>
+        public HttpClient(string host, int timeOut, IJsonProvider jsonProvider = null,
+            RequestBodyType requestBodyType = null) : this(host)
         {
             Host = host;
             TimeOut = timeOut;
+            _jsonProvider = jsonProvider ?? new NewtonsoftJsonProvider();
+            _requestBodyType = requestBodyType ?? RequestBodyType.ApplicationJson;
         }
 
         /// <summary>
@@ -52,31 +63,119 @@ namespace EInfrastructure.Core.Http
         /// </summary>
         /// <param name="host">域名</param>
         /// <param name="timeOut">超时时间</param>
-        public HttpClient(string host, int timeOut, Encoding encoding) : this(host, timeOut)
+        /// <param name="xmlProvider"></param>
+        /// <param name="requestBodyType"></param>
+        public HttpClient(string host, int timeOut, IXmlProvider xmlProvider = null,
+            RequestBodyType requestBodyType = null) : this(host)
         {
             Host = host;
-            Encoding = encoding;
+            TimeOut = timeOut;
+            _xmlProvider = xmlProvider ?? new XmlProvider();
+            _requestBodyType = requestBodyType ?? RequestBodyType.ApplicationJson;
+        }
+
+        /// <summary>
+        /// 请求接口域
+        /// </summary>
+        /// <param name="host">域名</param>
+        /// <param name="timeOut">超时时间</param>
+        /// <param name="encoding">编码格式 默认Utf8</param>
+        /// <param name="jsonProvider"></param>
+        public HttpClient(string host, int timeOut, Encoding encoding, IJsonProvider jsonProvider = null) : this(host,
+            timeOut, jsonProvider ?? new NewtonsoftJsonProvider())
+        {
+            Host = host;
+            _encoding = encoding ?? Encoding.UTF8;
+        }
+
+        /// <summary>
+        /// 请求接口域
+        /// </summary>
+        /// <param name="host">域名</param>
+        /// <param name="timeOut">超时时间</param>
+        /// <param name="encoding">编码格式 默认Utf8</param>
+        /// <param name="xmlProvider"></param>
+        public HttpClient(string host, int timeOut, Encoding encoding, IXmlProvider xmlProvider = null) : this(host,
+            timeOut, xmlProvider ?? new XmlProvider())
+        {
+            Host = host;
+            _encoding = encoding ?? Encoding.UTF8;
         }
 
         /// <summary>
         ///
         /// </summary>
-        public string Host { get; private set; }
+        /// <returns></returns>
+        /// <exception cref="BusinessException"></exception>
+        IProvider GetProvider()
+        {
+            if (_requestBodyType.Id == RequestBodyType.ApplicationJson.Id)
+            {
+                return new PostByApplicationJsonProvider();
+            }
+
+            if (_requestBodyType.Id == RequestBodyType.ApplicationXWwwFormUrlencoded.Id)
+            {
+                return new PostByApplicationXWwwFormUrlencodedProvider();
+            }
+
+            if (_requestBodyType.Id == RequestBodyType.MultipartFormData.Id)
+            {
+                return new PostByMultipartFormDataProvider();
+            }
+
+            if (_requestBodyType.Id == RequestBodyType.Text.Id)
+            {
+                return new PostByTextProvider();
+            }
+
+            if (_requestBodyType.Id == RequestBodyType.TextXml.Id)
+            {
+                return new PostByTextXmlProvider();
+            }
+
+            throw new BusinessException("不支持的请求");
+        }
+
+        /// <summary>
+        ///域
+        /// </summary>
+        public string Host { get; }
 
         /// <summary>
         /// 超时时间 默认30000s
         /// </summary>
-        public int TimeOut { get; private set; }
+        public int TimeOut { get; }
 
-        public Encoding Encoding { get; private set; }
+        /// <summary>
+        /// 编码格式
+        /// </summary>
+        private Encoding _encoding;
 
         /// <summary>
         ///
         /// </summary>
-        private RestClient RestClient;
+        private RestClient _restClient;
 
-        private NewtonsoftJsonProvider JsonProvider;
+        /// <summary>
+        ///
+        /// </summary>
+        private IJsonProvider _jsonProvider;
 
+        /// <summary>
+        ///
+        /// </summary>
+        private IXmlProvider _xmlProvider;
+
+        /// <summary>
+        /// 文件信息
+        /// </summary>
+        private List<RequestMultDataParam> _files;
+
+        /// <summary>
+        /// body请求类型
+        /// </summary>
+        private readonly RequestBodyType _requestBodyType;
 
         #region Get请求
 
@@ -101,7 +200,7 @@ namespace EInfrastructure.Core.Http
                 return default(T);
             }
 
-            return (T) JsonProvider.Deserialize(res, typeof(T));
+            return (T) _jsonProvider.Deserialize(res, typeof(T));
         }
 
         /// <summary>
@@ -120,7 +219,7 @@ namespace EInfrastructure.Core.Http
                 return default(T);
             }
 
-            return (T) JsonProvider.Deserialize(res, typeof(T));
+            return (T) _jsonProvider.Deserialize(res, typeof(T));
         }
 
         #endregion
@@ -142,7 +241,7 @@ namespace EInfrastructure.Core.Http
                 return default(T);
             }
 
-            return XmlProvider.Deserialize<T>(res, Encoding);
+            return _xmlProvider.Deserialize<T>(res, _encoding);
         }
 
         /// <summary>
@@ -161,7 +260,7 @@ namespace EInfrastructure.Core.Http
                 return default(T);
             }
 
-            return XmlProvider.Deserialize<T>(res, Encoding);
+            return _xmlProvider.Deserialize<T>(res, _encoding);
         }
 
         #endregion
@@ -279,7 +378,7 @@ namespace EInfrastructure.Core.Http
                 return default(T);
             }
 
-            return (T) JsonProvider.Deserialize(res, typeof(T));
+            return (T) _jsonProvider.Deserialize(res, typeof(T));
         }
 
         /// <summary>
@@ -293,13 +392,13 @@ namespace EInfrastructure.Core.Http
         public async Task<T> GetFromJsonAsync<T>(string url, object data, Dictionary<string, string> headers = null,
             int? timeOut = null)
         {
-            var res = await GetStringAsync(url, headers, timeOut);
+            var res = await GetStringAsync(url, data, headers, timeOut);
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
             }
 
-            return (T) JsonProvider.Deserialize(res, typeof(T));
+            return (T) _jsonProvider.Deserialize(res, typeof(T));
         }
 
         #endregion
@@ -322,7 +421,7 @@ namespace EInfrastructure.Core.Http
                 return default(T);
             }
 
-            return XmlProvider.Deserialize<T>(res, Encoding);
+            return _xmlProvider.Deserialize<T>(res, _encoding);
         }
 
         /// <summary>
@@ -336,13 +435,13 @@ namespace EInfrastructure.Core.Http
         public async Task<T> GetFromXmlAsync<T>(string url, object data, Dictionary<string, string> headers = null,
             int? timeOut = null)
         {
-            var res = await GetStringAsync(url, headers, timeOut);
+            var res = await GetStringAsync(url, data, headers, timeOut);
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
             }
 
-            return XmlProvider.Deserialize<T>(res, Encoding);
+            return _xmlProvider.Deserialize<T>(res, _encoding);
         }
 
         #endregion
@@ -469,19 +568,9 @@ namespace EInfrastructure.Core.Http
         private async Task<IRestResponse> GetAsync(string url, Dictionary<string, string> headers = null,
             int? timeOut = null)
         {
-            RestRequest request = new RestRequest(url, RestSharp.Method.GET) {Timeout = timeOut ?? TimeOut};
-            if (headers != null)
-            {
-                foreach (var key in headers.Keys)
-                {
-                    if (!string.IsNullOrEmpty(key))
-                    {
-                        request.AddHeader(key, headers[key]);
-                    }
-                }
-            }
-
-            return await RestClient.ExecuteTaskAsync(request);
+            RestRequest request = GetProvider()
+                .GetRequest(Method.GET, url, new RequestBody(null), headers, timeOut ?? TimeOut);
+            return await _restClient.ExecuteTaskAsync(request);
         }
 
         /// <summary>
@@ -490,11 +579,11 @@ namespace EInfrastructure.Core.Http
         /// <param name="url"></param>
         /// <param name="properties"></param>
         /// <returns></returns>
-        private static string SetUrlParam(string url, Dictionary<string,string> properties)
+        private static string SetUrlParam(string url, Dictionary<string, string> properties)
         {
             foreach (var property in properties)
             {
-                string value = property.Value??"";
+                string value = property.Value ?? "";
 
                 if (!url.Contains("?"))
                 {
@@ -517,22 +606,62 @@ namespace EInfrastructure.Core.Http
 
         #region 同步
 
+        #region Post请求得到byte数组
+
+        /// <summary>
+        /// Post请求
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数 可通过EName 属性为参数重命名</param>
+        /// <param name="headers">请求头（可为空）</param>
+        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
+        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <returns></returns>
+        public byte[] PostByBytes(string url, object data, Dictionary<string, string> headers = null,
+            RequestBodyFormat requestBodyFormat = null, int? timeOut = null)
+        {
+            return Post(url, data, headers, requestBodyFormat, timeOut).RawBytes;
+        }
+
+        #endregion
+
+        #region Post请求得到响应流
+
+        /// <summary>
+        /// Post请求得到响应流
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data"></param>
+        /// <param name="headers">请求头（可为空）</param>
+        /// <param name="requestBodyFormat"></param>
+        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <returns></returns>
+        public Stream PostByStream(string url, object data, Dictionary<string, string> headers = null,
+            RequestBodyFormat requestBodyFormat = null, int? timeOut = null)
+        {
+            return new MemoryStream(PostByBytes(url, data, headers, requestBodyFormat, timeOut));
+        }
+
+        #endregion
+
         #endregion
 
         #region private methods
 
         /// <summary>
-        /// Get请求
+        /// Post请求
         /// </summary>
         /// <param name="url">请求地址</param>
         /// <param name="data">请求对象</param>
         /// <param name="headers">请求头（可为空）</param>
+        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
         /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
         private IRestResponse Post(string url, object data, Dictionary<string, string> headers = null,
+            RequestBodyFormat requestBodyFormat = null,
             int? timeOut = null)
         {
-            var res = PostAsync(url, data, headers, timeOut);
+            var res = PostAsync(url, data, headers, requestBodyFormat, timeOut);
             return res.Result;
         }
 
@@ -540,26 +669,25 @@ namespace EInfrastructure.Core.Http
         /// Get请求 异步
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="data">请求对象</param>
+        /// <param name="data">请求文本对象</param>
         /// <param name="headers">请求头（可为空）</param>
+        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
         /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        private async Task<IRestResponse> PostAsync(string url, object data, Dictionary<string, string> headers = null,
+        private async Task<IRestResponse> PostAsync(string url, object data,
+            Dictionary<string, string> headers = null,
+            RequestBodyFormat requestBodyFormat = null,
             int? timeOut = null)
         {
-            RestRequest request = new RestRequest(url, RestSharp.Method.POST) {Timeout = timeOut ?? TimeOut};
-            if (headers != null)
+            var body = data;
+            if (_requestBodyType.Id == RequestBodyType.TextXml.Id)
             {
-                foreach (var key in headers.Keys)
-                {
-                    if (!string.IsNullOrEmpty(key))
-                    {
-                        request.AddHeader(key, headers[key]);
-                    }
-                }
+                body = _xmlProvider.Serializer(data);
             }
 
-            return await RestClient.ExecuteTaskAsync(request);
+            var request = GetProvider().GetRequest(Method.POST, url, new RequestBody(body, requestBodyFormat, _files),
+                headers, timeOut ?? TimeOut);
+            return await _restClient.ExecuteTaskAsync(request);
         }
 
         #endregion

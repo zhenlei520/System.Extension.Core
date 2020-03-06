@@ -25,26 +25,34 @@ namespace EInfrastructure.Core.AliYun.DaYu
     {
         private AliSmsConfig _smsConfig;
         private readonly IJsonProvider _jsonProvider;
+        private readonly IXmlProvider _xmlProvider;
 
         /// <summary>
         /// 短信服务
         /// </summary>
-        public SmsService(AliSmsConfig smsConfig) : this(smsConfig, new NewtonsoftJsonProvider())
+        public SmsService(AliSmsConfig smsConfig) : this(smsConfig, new NewtonsoftJsonProvider(), new XmlProvider())
         {
         }
 
         /// <summary>
         /// 短信服务
         /// </summary>
-        public SmsService(AliSmsConfig smsConfig, IJsonProvider jsonProvider)
+        public SmsService(AliSmsConfig smsConfig, IJsonProvider jsonProvider, IXmlProvider xmlProvider)
         {
             _smsConfig = smsConfig;
             _jsonProvider = jsonProvider;
-            smsConfig.Check("请完善阿里云短信配置信息",HttpStatus.Err.Name);
+            smsConfig.Check("请完善阿里云短信配置信息", HttpStatus.Err.Name);
             if (_jsonProvider == null)
             {
                 throw new ArgumentNullException(nameof(jsonProvider));
             }
+
+            if (_xmlProvider == null)
+            {
+                throw new ArgumentNullException(nameof(xmlProvider));
+            }
+
+            _xmlProvider = xmlProvider;
         }
 
         readonly RestClient _restClient = new RestClient("http://dysmsapi.aliyuncs.com");
@@ -94,7 +102,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
             }
 
             var response = _restClient.Execute(request);
-            SendSmsResponse result = XmlProvider.Deserialize<SendSmsResponse>(response.Content);
+            SendSmsResponse result = _xmlProvider.Deserialize<SendSmsResponse>(response.Content);
             if (result.Code == "OK")
             {
                 return true;

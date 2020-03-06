@@ -7,7 +7,6 @@ namespace EInfrastructure.Core.Http.Enumerations
     /// </summary>
     public class RequestBodyType : Enumeration
     {
-
         /// <summary>
         /// application/json
         /// </summary>
@@ -24,12 +23,17 @@ namespace EInfrastructure.Core.Http.Enumerations
         public static RequestBodyType MultipartFormData = new RequestBodyType(3, "multipart/form-data");
 
         /// <summary>
-        /// text/xml
+        /// text
         /// </summary>
-        public static RequestBodyType TextXml = new RequestBodyType(4, "text/xml");
+        public static RequestBodyType Text = new RequestBodyType(4, "text");
 
         /// <summary>
-        /// 
+        /// text/xml
+        /// </summary>
+        public static RequestBodyType TextXml = new RequestBodyType(5, "text/xml");
+
+        /// <summary>
+        ///
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>

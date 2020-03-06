@@ -6,7 +6,6 @@ using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
-using EInfrastructure.Core.Serialize.Xml;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.WeChat.Common;
 using EInfrastructure.Core.WeChat.Config;
@@ -23,16 +22,19 @@ namespace EInfrastructure.Core.WeChat
     {
         private readonly ILogService _logService;
         private readonly IJsonProvider _jsonProvider;
+        private readonly IXmlProvider _xmlProvider;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="logService"></param>
         /// <param name="jsonProvider"></param>
-        public WebChatProcessRequest(ILogService logService, IJsonProvider jsonProvider)
+        /// <param name="xmlProvider"></param>
+        public WebChatProcessRequest(ILogService logService, IJsonProvider jsonProvider,IXmlProvider xmlProvider)
         {
             _logService = logService;
             _jsonProvider = jsonProvider;
+            _xmlProvider = xmlProvider;
         }
 
 
@@ -56,7 +58,7 @@ namespace EInfrastructure.Core.WeChat
                     throw new BusinessException("签名错误");
                 }
 
-                refundReponse = XmlProvider.Deserialize<WebChatMessage>(xml);
+                refundReponse = _xmlProvider.Deserialize<WebChatMessage>(xml);
                 if (refundReponse == null)
                 {
                     throw new BusinessException("参数错误");
