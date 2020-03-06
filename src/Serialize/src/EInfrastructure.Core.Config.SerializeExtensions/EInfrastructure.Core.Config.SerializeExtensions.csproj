@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Configuration\src\Configuration\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
+    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
   </ItemGroup>
 
 </Project>

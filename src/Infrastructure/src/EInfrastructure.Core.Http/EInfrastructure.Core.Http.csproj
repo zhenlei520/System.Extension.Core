@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Configuration\src\Configuration\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
     <ProjectReference Include="..\..\..\Serialize\src\EInfrastructure.Core.Serialize.NewtonsoftJson\EInfrastructure.Core.Serialize.NewtonsoftJson.csproj" />
     <ProjectReference Include="..\..\..\Serialize\src\EInfrastructure.Core.Serialize.Xml\EInfrastructure.Core.Serialize.Xml.csproj" />
+    <ProjectReference Include="..\EInfrastructure.Core\EInfrastructure.Core.csproj" />
   </ItemGroup>
 
 </Project>
