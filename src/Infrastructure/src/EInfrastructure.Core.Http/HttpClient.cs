@@ -33,12 +33,12 @@ namespace EInfrastructure.Core.Http
             }
 
             Host = host;
-            TimeOut = 30000;
             _restClient = new RestClient(Host);
             _jsonProvider = new NewtonsoftJsonProvider();
             _xmlProvider = new XmlProvider();
             _encoding = Encoding.UTF8;
             _files = new List<RequestMultDataParam>();
+            Headers = new Dictionary<string, string>();
             _requestBodyType = RequestBodyType.ApplicationJson;
         }
 
@@ -49,11 +49,10 @@ namespace EInfrastructure.Core.Http
         /// <param name="timeOut">超时时间</param>
         /// <param name="jsonProvider"></param>
         /// <param name="requestBodyType"></param>
-        public HttpClient(string host, int timeOut, IJsonProvider jsonProvider = null,
+        public HttpClient(string host, IJsonProvider jsonProvider = null,
             RequestBodyType requestBodyType = null) : this(host)
         {
             Host = host;
-            TimeOut = timeOut;
             _jsonProvider = jsonProvider ?? new NewtonsoftJsonProvider();
             _requestBodyType = requestBodyType ?? RequestBodyType.ApplicationJson;
         }
@@ -65,11 +64,10 @@ namespace EInfrastructure.Core.Http
         /// <param name="timeOut">超时时间</param>
         /// <param name="xmlProvider"></param>
         /// <param name="requestBodyType"></param>
-        public HttpClient(string host, int timeOut, IXmlProvider xmlProvider = null,
+        public HttpClient(string host, IXmlProvider xmlProvider = null,
             RequestBodyType requestBodyType = null) : this(host)
         {
             Host = host;
-            TimeOut = timeOut;
             _xmlProvider = xmlProvider ?? new XmlProvider();
             _requestBodyType = requestBodyType ?? RequestBodyType.ApplicationJson;
         }
@@ -81,8 +79,8 @@ namespace EInfrastructure.Core.Http
         /// <param name="timeOut">超时时间</param>
         /// <param name="encoding">编码格式 默认Utf8</param>
         /// <param name="jsonProvider"></param>
-        public HttpClient(string host, int timeOut, Encoding encoding, IJsonProvider jsonProvider = null) : this(host,
-            timeOut, jsonProvider ?? new NewtonsoftJsonProvider())
+        public HttpClient(string host, Encoding encoding, IJsonProvider jsonProvider = null) : this(host,
+            jsonProvider ?? new NewtonsoftJsonProvider())
         {
             Host = host;
             _encoding = encoding ?? Encoding.UTF8;
@@ -96,7 +94,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="encoding">编码格式 默认Utf8</param>
         /// <param name="xmlProvider"></param>
         public HttpClient(string host, int timeOut, Encoding encoding, IXmlProvider xmlProvider = null) : this(host,
-            timeOut, xmlProvider ?? new XmlProvider())
+            xmlProvider ?? new XmlProvider())
         {
             Host = host;
             _encoding = encoding ?? Encoding.UTF8;
@@ -143,29 +141,29 @@ namespace EInfrastructure.Core.Http
         public string Host { get; }
 
         /// <summary>
-        /// 超时时间 默认30000s
+        /// 超时时间 默认30000 ms
         /// </summary>
-        public int TimeOut { get; }
+        public int? TimeOut;
 
         /// <summary>
         /// 编码格式
         /// </summary>
-        private Encoding _encoding;
+        private readonly Encoding _encoding;
 
         /// <summary>
         ///
         /// </summary>
-        private RestClient _restClient;
+        private readonly RestClient _restClient;
 
         /// <summary>
         ///
         /// </summary>
-        private IJsonProvider _jsonProvider;
+        private readonly IJsonProvider _jsonProvider;
 
         /// <summary>
         ///
         /// </summary>
-        private IXmlProvider _xmlProvider;
+        private readonly IXmlProvider _xmlProvider;
 
         /// <summary>
         /// 文件信息
@@ -176,6 +174,11 @@ namespace EInfrastructure.Core.Http
         /// body请求类型
         /// </summary>
         private readonly RequestBodyType _requestBodyType;
+
+        /// <summary>
+        /// 请求头
+        /// </summary>
+        public Dictionary<string, string> Headers;
 
         #region Get请求
 
@@ -189,12 +192,10 @@ namespace EInfrastructure.Core.Http
         /// Get请求 得到响应字符串
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        public T GetFromJson<T>(string url, Dictionary<string, string> headers = null, int? timeOut = null)
+        public T GetJson<T>(string url)
         {
-            var res = Get(url, headers, timeOut).Content;
+            var res = Get(url).Content;
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -207,13 +208,11 @@ namespace EInfrastructure.Core.Http
         /// Get请求 得到响应字符串
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数 可通过EName 属性为参数重命名</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public T GetFromJson<T>(string url, object data, Dictionary<string, string> headers = null, int? timeOut = null)
+        public T GetFromJson<T>(string url, object data)
         {
-            var res = Get(SetUrlParam(url, GetParams(data)), headers, timeOut).Content;
+            var res = Get(SetUrlParam(url, GetParams(data))).Content;
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -230,12 +229,10 @@ namespace EInfrastructure.Core.Http
         /// Get请求 得到响应字符串
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        public T GetFromXml<T>(string url, Dictionary<string, string> headers = null, int? timeOut = null)
+        public T GetXml<T>(string url)
         {
-            var res = Get(url, headers, timeOut).Content;
+            var res = Get(url).Content;
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -248,13 +245,11 @@ namespace EInfrastructure.Core.Http
         /// Get请求 得到响应字符串
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数 可通过EName 属性为参数重命名</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public T GetFromXml<T>(string url, object data, Dictionary<string, string> headers = null, int? timeOut = null)
+        public T GetFromXml<T>(string url, object data)
         {
-            var res = Get(SetUrlParam(url, GetParams(data)), headers, timeOut).Content;
+            var res = Get(SetUrlParam(url, GetParams(data))).Content;
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -273,25 +268,22 @@ namespace EInfrastructure.Core.Http
         /// Get请求 得到响应字符串
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="headers">请求头（可为空）</param>
         /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        public string GetString(string url, Dictionary<string, string> headers = null, int? timeOut = null)
+        public string GetString(string url, int? timeOut = null)
         {
-            return Get(url, headers, timeOut).Content;
+            return Get(url).Content;
         }
 
         /// <summary>
         /// Get请求
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数 可通过EName 属性为参数重命名</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public string GetString(string url, object data, Dictionary<string, string> headers = null, int? timeOut = null)
+        public string GetString(string url, object data)
         {
-            return Get(SetUrlParam(url, GetParams(data)), headers, timeOut).Content;
+            return Get(SetUrlParam(url, GetParams(data))).Content;
         }
 
         #endregion
@@ -302,25 +294,21 @@ namespace EInfrastructure.Core.Http
         /// get请求得到byte数组
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        public byte[] GetBytes(string url, Dictionary<string, string> headers = null, int? timeOut = null)
+        public byte[] GetBytes(string url)
         {
-            return Get(url, headers, timeOut).RawBytes;
+            return Get(url).RawBytes;
         }
 
         /// <summary>
         /// Get请求
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数 可通过EName 属性为参数重命名</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public byte[] GetBytes(string url, object data, Dictionary<string, string> headers = null, int? timeOut = null)
+        public byte[] GetBytes(string url, object data)
         {
-            return Get(SetUrlParam(url, GetParams(data)), headers, timeOut).RawBytes;
+            return Get(SetUrlParam(url, GetParams(data))).RawBytes;
         }
 
         #endregion
@@ -331,25 +319,21 @@ namespace EInfrastructure.Core.Http
         /// get请求得到响应流
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        public Stream GetStream(string url, Dictionary<string, string> headers = null, int? timeOut = null)
+        public Stream GetStream(string url)
         {
-            return new MemoryStream(GetBytes(url, headers, timeOut));
+            return new MemoryStream(GetBytes(url));
         }
 
         /// <summary>
         /// Get请求
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数 可通过EName 属性为参数重命名</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public Stream GetStream(string url, object data, Dictionary<string, string> headers = null, int? timeOut = null)
+        public Stream GetStream(string url, object data)
         {
-            return new MemoryStream(GetBytes(SetUrlParam(url, GetParams(data)), headers, timeOut));
+            return new MemoryStream(GetBytes(SetUrlParam(url, GetParams(data))));
         }
 
         #endregion
@@ -366,13 +350,10 @@ namespace EInfrastructure.Core.Http
         /// Get请求 得到响应字符串
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        public async Task<T> GetFromJsonAsync<T>(string url, Dictionary<string, string> headers = null,
-            int? timeOut = null)
+        public async Task<T> GetJsonAsync<T>(string url)
         {
-            var res = await GetStringAsync(url, headers, timeOut);
+            var res = await GetStringAsync(url, GetHeaders());
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -385,14 +366,11 @@ namespace EInfrastructure.Core.Http
         /// Get请求 得到响应字符串
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数 可通过EName 属性为参数重命名</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public async Task<T> GetFromJsonAsync<T>(string url, object data, Dictionary<string, string> headers = null,
-            int? timeOut = null)
+        public async Task<T> GetFromJsonAsync<T>(string url, object data)
         {
-            var res = await GetStringAsync(url, data, headers, timeOut);
+            var res = await GetStringAsync(url, data);
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -409,13 +387,10 @@ namespace EInfrastructure.Core.Http
         /// Get请求 得到响应字符串
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        public async Task<T> GetFromXmlAsync<T>(string url, Dictionary<string, string> headers = null,
-            int? timeOut = null)
+        public async Task<T> GetXmlAsync<T>(string url)
         {
-            var res = await GetStringAsync(url, headers, timeOut);
+            var res = await GetStringAsync(url);
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -428,14 +403,11 @@ namespace EInfrastructure.Core.Http
         /// Get请求 得到响应字符串
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数 可通过EName 属性为参数重命名</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public async Task<T> GetFromXmlAsync<T>(string url, object data, Dictionary<string, string> headers = null,
-            int? timeOut = null)
+        public async Task<T> GetFromXmlAsync<T>(string url, object data)
         {
-            var res = await GetStringAsync(url, data, headers, timeOut);
+            var res = await GetStringAsync(url, data);
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -454,27 +426,21 @@ namespace EInfrastructure.Core.Http
         /// Get请求 得到响应字符串
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        public async Task<string> GetStringAsync(string url, Dictionary<string, string> headers = null,
-            int? timeOut = null)
+        public async Task<string> GetStringAsync(string url)
         {
-            return (await GetAsync(url, headers, timeOut)).Content;
+            return (await GetAsync(url)).Content;
         }
 
         /// <summary>
         /// Get请求 得到响应字符串
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数 可通过EName 属性为参数重命名</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public async Task<string> GetStringAsync(string url, object data, Dictionary<string, string> headers = null,
-            int? timeOut = null)
+        public async Task<string> GetStringAsync(string url, object data)
         {
-            return (await GetAsync(SetUrlParam(url, GetParams(data)), headers, timeOut)).Content;
+            return (await GetAsync(SetUrlParam(url, GetParams(data)))).Content;
         }
 
         #endregion
@@ -485,27 +451,21 @@ namespace EInfrastructure.Core.Http
         /// get请求得到byte数组
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        public async Task<byte[]> GetBytesAsync(string url, Dictionary<string, string> headers = null,
-            int? timeOut = null)
+        public async Task<byte[]> GetBytesAsync(string url)
         {
-            return (await GetAsync(url, headers, timeOut)).RawBytes;
+            return (await GetAsync(url)).RawBytes;
         }
 
         /// <summary>
         /// get请求得到byte数组
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数 可通过EName 属性为参数重命名</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public async Task<byte[]> GetBytesAsync(string url, object data, Dictionary<string, string> headers = null,
-            int? timeOut = null)
+        public async Task<byte[]> GetBytesAsync(string url, object data)
         {
-            return (await GetAsync(SetUrlParam(url, GetParams(data)), headers, timeOut)).RawBytes;
+            return (await GetAsync(SetUrlParam(url, GetParams(data)))).RawBytes;
         }
 
         #endregion
@@ -516,27 +476,21 @@ namespace EInfrastructure.Core.Http
         /// get请求得到响应流
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        public async Task<Stream> GetStreamAsync(string url, Dictionary<string, string> headers = null,
-            int? timeOut = null)
+        public async Task<Stream> GetStreamAsync(string url)
         {
-            return new MemoryStream(await GetBytesAsync(url, headers, timeOut));
+            return new MemoryStream(await GetBytesAsync(url));
         }
 
         /// <summary>
         /// get请求得到响应流
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数 可通过EName 属性为参数重命名</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
+        /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public async Task<Stream> GetStreamAsync(string url, object data, Dictionary<string, string> headers = null,
-            int? timeOut = null)
+        public async Task<Stream> GetStreamAsync(string url, object data)
         {
-            return new MemoryStream(await GetBytesAsync(SetUrlParam(url, GetParams(data)), headers, timeOut));
+            return new MemoryStream(await GetBytesAsync(SetUrlParam(url, GetParams(data))));
         }
 
         #endregion
@@ -549,12 +503,10 @@ namespace EInfrastructure.Core.Http
         /// Get请求
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        private IRestResponse Get(string url, Dictionary<string, string> headers = null, int? timeOut = null)
+        private IRestResponse Get(string url)
         {
-            var res = GetAsync(url, headers, timeOut);
+            var res = GetAsync(url);
             return res.Result;
         }
 
@@ -562,14 +514,11 @@ namespace EInfrastructure.Core.Http
         /// Get请求 异步
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="headers">请求头（可为空）</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        private async Task<IRestResponse> GetAsync(string url, Dictionary<string, string> headers = null,
-            int? timeOut = null)
+        private async Task<IRestResponse> GetAsync(string url)
         {
             RestRequest request = GetProvider()
-                .GetRequest(Method.GET, url, new RequestBody(null), headers, timeOut ?? TimeOut);
+                .GetRequest(Method.GET, url, new RequestBody(null), GetHeaders(), GetTimeOut());
             return await _restClient.ExecuteTaskAsync(request);
         }
 
@@ -606,21 +555,84 @@ namespace EInfrastructure.Core.Http
 
         #region 同步
 
+        #region Post请求得到响应信息为Json对象
+
+        /// <summary>
+        /// Post请求得到响应信息为Json对象
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数</param>
+        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetJsonByPost<T>(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
+        {
+            var res = GetStringByPost(url, data, requestBodyFormat);
+            if (string.IsNullOrEmpty(res))
+            {
+                return default(T);
+            }
+
+            return (T) _jsonProvider.Deserialize(res, typeof(T));
+        }
+
+        #endregion
+
+        #region Post请求得到响应信息为Xml对象
+
+        /// <summary>
+        /// Post请求得到响应信息为Xml对象
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数 </param>
+        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetXmlByPost<T>(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
+        {
+            var res = GetStringByPost(url, data, requestBodyFormat);
+            if (string.IsNullOrEmpty(res))
+            {
+                return default(T);
+            }
+
+            return _xmlProvider.Deserialize<T>(res, _encoding);
+        }
+
+        #endregion
+
+        #region Post请求得到响应内容
+
+        /// <summary>
+        /// Post请求得到响应内容
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数</param>
+        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
+        /// <returns></returns>
+        public string GetStringByPost(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
+        {
+            return GetByPost(url, data, requestBodyFormat).Content;
+        }
+
+        #endregion
+
         #region Post请求得到byte数组
 
         /// <summary>
         /// Post请求
         /// </summary>
         /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数 可通过EName 属性为参数重命名</param>
-        /// <param name="headers">请求头（可为空）</param>
+        /// <param name="data">请求参数</param>
         /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        public byte[] PostByBytes(string url, object data, Dictionary<string, string> headers = null,
-            RequestBodyFormat requestBodyFormat = null, int? timeOut = null)
+        public byte[] GetBytesByPost(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
         {
-            return Post(url, data, headers, requestBodyFormat, timeOut).RawBytes;
+            return GetByPost(url, data, requestBodyFormat).RawBytes;
         }
 
         #endregion
@@ -632,14 +644,117 @@ namespace EInfrastructure.Core.Http
         /// </summary>
         /// <param name="url">请求地址</param>
         /// <param name="data"></param>
-        /// <param name="headers">请求头（可为空）</param>
         /// <param name="requestBodyFormat"></param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        public Stream PostByStream(string url, object data, Dictionary<string, string> headers = null,
-            RequestBodyFormat requestBodyFormat = null, int? timeOut = null)
+        public Stream GetStreamByPost(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
         {
-            return new MemoryStream(PostByBytes(url, data, headers, requestBodyFormat, timeOut));
+            return new MemoryStream(GetBytesByPost(url, data, requestBodyFormat));
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 异步请求
+
+        #region Post请求得到响应信息为Json对象
+
+        /// <summary>
+        /// Post请求得到响应信息为Json对象
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数</param>
+        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public async Task<T> PostByJsonAsync<T>(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
+        {
+            var res = await PostByStringAsync(url, data, requestBodyFormat);
+            if (string.IsNullOrEmpty(res))
+            {
+                return default;
+            }
+
+            return (T) _jsonProvider.Deserialize(res, typeof(T));
+        }
+
+        #endregion
+
+        #region Post请求得到响应信息为Xml对象
+
+        /// <summary>
+        /// Post请求得到响应信息为Xml对象
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数 </param>
+        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public async Task<T> PostByXmlAsync<T>(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
+        {
+            var res = await PostByStringAsync(url, data, requestBodyFormat);
+            if (string.IsNullOrEmpty(res))
+            {
+                return default(T);
+            }
+
+            return _xmlProvider.Deserialize<T>(res, _encoding);
+        }
+
+        #endregion
+
+        #region Post请求得到响应内容
+
+        /// <summary>
+        /// Post请求得到响应内容
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数</param>
+        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
+        /// <returns></returns>
+        public async Task<string> PostByStringAsync(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
+        {
+            var res = await GetByPostAsync(url, data, requestBodyFormat);
+            return res.Content;
+        }
+
+        #endregion
+
+        #region Post请求得到byte数组
+
+        /// <summary>
+        /// Post请求
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数</param>
+        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
+        /// <returns></returns>
+        public async Task<byte[]> PostByBytesAsync(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
+        {
+            var res = await GetByPostAsync(url, data, requestBodyFormat);
+            return res.RawBytes;
+        }
+
+        #endregion
+
+        #region Post请求得到响应流
+
+        /// <summary>
+        /// Post请求得到响应流
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data"></param>
+        /// <param name="requestBodyFormat"></param>
+        /// <returns></returns>
+        public async Task<Stream> PostByStreamAsync(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
+        {
+            return new MemoryStream(await PostByBytesAsync(url, data, requestBodyFormat));
         }
 
         #endregion
@@ -653,31 +768,24 @@ namespace EInfrastructure.Core.Http
         /// </summary>
         /// <param name="url">请求地址</param>
         /// <param name="data">请求对象</param>
-        /// <param name="headers">请求头（可为空）</param>
         /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        private IRestResponse Post(string url, object data, Dictionary<string, string> headers = null,
-            RequestBodyFormat requestBodyFormat = null,
-            int? timeOut = null)
+        private IRestResponse GetByPost(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
         {
-            var res = PostAsync(url, data, headers, requestBodyFormat, timeOut);
+            var res = GetByPostAsync(url, data, requestBodyFormat);
             return res.Result;
         }
 
         /// <summary>
-        /// Get请求 异步
+        /// Post请求 异步
         /// </summary>
         /// <param name="url">请求地址</param>
         /// <param name="data">请求文本对象</param>
-        /// <param name="headers">请求头（可为空）</param>
         /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
         /// <returns></returns>
-        private async Task<IRestResponse> PostAsync(string url, object data,
-            Dictionary<string, string> headers = null,
-            RequestBodyFormat requestBodyFormat = null,
-            int? timeOut = null)
+        private async Task<IRestResponse> GetByPostAsync(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
         {
             var body = data;
             if (_requestBodyType.Id == RequestBodyType.TextXml.Id)
@@ -686,11 +794,37 @@ namespace EInfrastructure.Core.Http
             }
 
             var request = GetProvider().GetRequest(Method.POST, url, new RequestBody(body, requestBodyFormat, _files),
-                headers, timeOut ?? TimeOut);
+                GetHeaders(), GetTimeOut());
             return await _restClient.ExecuteTaskAsync(request);
         }
 
         #endregion
+
+        #endregion
+
+        #region 添加文件
+
+        /// <summary>
+        /// 添加文件
+        /// </summary>
+        /// <param name="file">文件信息</param>
+        public void AddFile(RequestMultDataParam file)
+        {
+            _files.Add(file);
+        }
+
+        #endregion
+
+        #region 重置请求
+
+        /// <summary>
+        /// 重置请求
+        /// </summary>
+        public void Reset()
+        {
+            _files = new List<RequestMultDataParam>();
+            Headers = new Dictionary<string, string>();
+        }
 
         #endregion
 
@@ -735,6 +869,32 @@ namespace EInfrastructure.Core.Http
             }
 
             return objectDic;
+        }
+
+        #endregion
+
+        #region 得到请求Headers
+
+        /// <summary>
+        /// 得到请求Headers
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<string, string> GetHeaders()
+        {
+            return Headers ?? new Dictionary<string, string>();
+        }
+
+        #endregion
+
+        #region 得到超时时间
+
+        /// <summary>
+        /// 得到超时时间
+        /// </summary>
+        /// <returns></returns>
+        private int GetTimeOut()
+        {
+            return (TimeOut ?? 30000);
         }
 
         #endregion
