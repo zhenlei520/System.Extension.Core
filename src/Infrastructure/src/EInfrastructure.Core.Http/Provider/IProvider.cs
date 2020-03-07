@@ -21,7 +21,8 @@ namespace EInfrastructure.Core.Http.Provider
         /// <param name="headers">请求头</param>
         /// <param name="timeOut">超时限制</param>
         /// <returns></returns>
-        RestRequest GetRequest(Method method, string url, RequestBody requestBody, Dictionary<string, string> headers, int timeOut);
+        RestRequest GetRequest(Method method, string url, RequestBody requestBody, Dictionary<string, string> headers,
+            int timeOut);
     }
 
     /// <summary>
@@ -118,7 +119,7 @@ namespace EInfrastructure.Core.Http.Provider
         {
             Data = data;
             RequestBodyFormat = requestBodyFormat ?? RequestBodyFormat.None;
-            Files = files;
+            Files = files ?? new List<RequestMultDataParam>();
         }
 
         /// <summary>

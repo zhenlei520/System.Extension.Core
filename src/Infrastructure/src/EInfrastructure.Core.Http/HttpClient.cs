@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -103,33 +104,41 @@ namespace EInfrastructure.Core.Http
         /// <summary>
         ///
         /// </summary>
+        /// <param name="requestType"></param>
         /// <returns></returns>
         /// <exception cref="BusinessException"></exception>
-        IProvider GetProvider()
+        IProvider GetProvider(RequestType requestType)
         {
-            if (_requestBodyType.Id == RequestBodyType.ApplicationJson.Id)
+            if (requestType.Id == RequestType.Get.Id)
             {
-                return new PostByApplicationJsonProvider();
+                return new GetProvider();
             }
-
-            if (_requestBodyType.Id == RequestBodyType.ApplicationXWwwFormUrlencoded.Id)
+            else if (requestType.Id == RequestType.Post.Id)
             {
-                return new PostByApplicationXWwwFormUrlencodedProvider();
-            }
+                if (_requestBodyType.Id == RequestBodyType.ApplicationJson.Id)
+                {
+                    return new PostByApplicationJsonProvider();
+                }
 
-            if (_requestBodyType.Id == RequestBodyType.MultipartFormData.Id)
-            {
-                return new PostByMultipartFormDataProvider();
-            }
+                if (_requestBodyType.Id == RequestBodyType.ApplicationXWwwFormUrlencoded.Id)
+                {
+                    return new PostByApplicationXWwwFormUrlencodedProvider();
+                }
 
-            if (_requestBodyType.Id == RequestBodyType.Text.Id)
-            {
-                return new PostByTextProvider();
-            }
+                if (_requestBodyType.Id == RequestBodyType.MultipartFormData.Id)
+                {
+                    return new PostByMultipartFormDataProvider();
+                }
 
-            if (_requestBodyType.Id == RequestBodyType.TextXml.Id)
-            {
-                return new PostByTextXmlProvider();
+                if (_requestBodyType.Id == RequestBodyType.Text.Id)
+                {
+                    return new PostByTextProvider();
+                }
+
+                if (_requestBodyType.Id == RequestBodyType.TextXml.Id)
+                {
+                    return new PostByTextXmlProvider();
+                }
             }
 
             throw new BusinessException("不支持的请求");
@@ -179,6 +188,21 @@ namespace EInfrastructure.Core.Http
         /// 请求头
         /// </summary>
         public Dictionary<string, string> Headers;
+
+        /// <summary>
+        /// 代理
+        /// </summary>
+        public WebProxy Proxy;
+
+        /// <summary>
+        /// UserAgent
+        /// </summary>
+        public string UserAgent;
+
+        /// <summary>
+        /// 是否启用Https
+        /// </summary>
+        public bool IsHttps;
 
         #region Get请求
 
@@ -517,9 +541,14 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         private async Task<IRestResponse> GetAsync(string url)
         {
-            RestRequest request = GetProvider()
+            RestRequest request = GetProvider(RequestType.Get)
                 .GetRequest(Method.GET, url, new RequestBody(null), GetHeaders(), GetTimeOut());
-            return await _restClient.ExecuteTaskAsync(request);
+            if (Proxy != null)
+            {
+                _restClient.Proxy = Proxy;
+            }
+
+            return await GetClient().ExecuteTaskAsync(request);
         }
 
         /// <summary>
@@ -793,12 +822,55 @@ namespace EInfrastructure.Core.Http
                 body = _xmlProvider.Serializer(data);
             }
 
-            var request = GetProvider().GetRequest(Method.POST, url, new RequestBody(body, requestBodyFormat, _files),
+            var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
+                new RequestBody(body, requestBodyFormat, _files),
                 GetHeaders(), GetTimeOut());
-            return await _restClient.ExecuteTaskAsync(request);
+
+            return await GetClient().ExecuteTaskAsync(request);
         }
 
         #endregion
+
+        #endregion
+
+        #region 设置Headers
+
+        /// <summary>
+        /// 设置headers
+        /// </summary>
+        /// <param name="name">请求头名称</param>
+        /// <param name="value">请求头值</param>
+        /// <param name="isOverload">是否覆盖 默认覆盖</param>
+        public void AddHeaders(string name, string value, bool isOverload = true)
+        {
+            Headers = GetHeaders();
+            if (Headers.Any(x => x.Key == name))
+            {
+                if (isOverload)
+                {
+                    Headers.Remove(name);
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            Headers.Add(name, value);
+        }
+
+        /// <summary>
+        /// 移除Headers
+        /// </summary>
+        /// <param name="name">请求头名称</param>
+        public void RemoveHeaders(string name)
+        {
+            var headers = GetHeaders();
+            if (headers.Any(x => x.Key == name))
+            {
+                headers.Remove(name);
+            }
+        }
 
         #endregion
 
@@ -819,11 +891,14 @@ namespace EInfrastructure.Core.Http
 
         /// <summary>
         /// 重置请求
+        /// 仅重置上传文件以及请求头信息、代理信息
+        /// UserAgent以及编码格式不重置
         /// </summary>
         public void Reset()
         {
             _files = new List<RequestMultDataParam>();
             Headers = new Dictionary<string, string>();
+            Proxy = null;
         }
 
         #endregion
@@ -895,6 +970,36 @@ namespace EInfrastructure.Core.Http
         private int GetTimeOut()
         {
             return (TimeOut ?? 30000);
+        }
+
+        #endregion
+
+        #region 得到RestClient
+
+        /// <summary>
+        /// 得到RestClient
+        /// </summary>
+        /// <returns></returns>
+        private RestClient GetClient()
+        {
+            if (Proxy != null)
+            {
+                _restClient.Proxy = Proxy;
+            }
+
+            if (IsHttps)
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls |
+                                                       SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            }
+
+            _restClient.Encoding = _encoding;
+            if (!string.IsNullOrEmpty(UserAgent))
+            {
+                _restClient.UserAgent = UserAgent;
+            }
+
+            return _restClient;
         }
 
         #endregion
