@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -989,6 +991,10 @@ namespace EInfrastructure.Core.Http
 
             if (IsHttps)
             {
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback((object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) =>
+                {
+                    return true; //总是接受
+                });
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls |
                                                        SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             }
