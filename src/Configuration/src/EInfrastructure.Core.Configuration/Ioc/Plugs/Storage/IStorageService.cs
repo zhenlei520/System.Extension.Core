@@ -22,6 +22,24 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <returns></returns>
         UploadResultDto UploadStream(UploadByStreamParam param);
 
+        /// <summary>
+        /// 根据文件字节数组上传
+        /// </summary>
+        /// <param name="param">文件流上传配置</param>
+        /// <returns></returns>
+        UploadResultDto UploadByteArray(UploadByByteArrayParam param);
+
+        #endregion
+
+        #region 根据文件流以及文件字节数组上传
+
+        /// <summary>
+        /// 根据文件流以及文件字节数组上传
+        /// </summary>
+        /// <param name="param">文件流上传配置</param>
+        /// <returns></returns>
+        UploadResultDto UploadByToken(UploadByTokenParam param);
+
         #endregion
 
         #region 得到上传文件策略信息

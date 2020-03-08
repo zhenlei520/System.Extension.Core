@@ -66,6 +66,62 @@ namespace EInfrastructure.Core.QiNiu.Storage
 
         #endregion
 
+        #region 根据文件字节数组上传
+
+        /// <summary>
+        /// 根据文件字节数组上传
+        /// </summary>
+        /// <param name="param">文件流上传配置</param>
+        /// <returns></returns>
+        public UploadResultDto UploadByteArray(UploadByByteArrayParam param)
+        {
+            var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
+            string token = GetUploadCredentials(QiNiuConfig,
+                new UploadPersistentOpsParam(param.Key, uploadPersistentOps));
+            FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
+            HttpResult result =
+                target.UploadData(param.ByteArray, param.Key, token, GetPutExtra(uploadPersistentOps));
+            bool res = result.Code == (int) HttpCode.OK;
+            return new UploadResultDto(res, res ? "成功" : result.ToString());
+        }
+
+        #endregion
+
+        #region 根据文件token上传
+
+        /// <summary>
+        /// 根据文件流以及文件字节数组上传
+        /// </summary>
+        /// <param name="param">文件流上传配置</param>
+        /// <returns></returns>
+        public UploadResultDto UploadByToken(UploadByTokenParam param)
+        {
+            var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
+            FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
+            HttpResult result = null;
+            if (param.Stream == null)
+            {
+                result =
+                    target.UploadStream(param.Stream, param.Key, param.Token, GetPutExtra(uploadPersistentOps));
+
+                bool res = result.Code == (int) HttpCode.OK;
+                return new UploadResultDto(res, res ? "成功" : result.ToString());
+            }
+
+            if (param.ByteArray == null)
+            {
+                result =
+                    target.UploadData(param.ByteArray, param.Key, param.Token, GetPutExtra(uploadPersistentOps));
+
+                bool res = result.Code == (int) HttpCode.OK;
+                return new UploadResultDto(res, res ? "成功" : result.ToString());
+            }
+
+            return new UploadResultDto(false, "不支持的上传方式");
+        }
+
+        #endregion
+
         #region 得到上传文件策略信息
 
         /// <summary>

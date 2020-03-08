@@ -47,7 +47,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public bool Upload(UploadByBase64Param param)
+        public bool  Upload(UploadByBase64Param param)
         {
             string token = base.GetUploadCredentials(QiNiuConfig,
                 new UploadPersistentOpsParam(param.ImgPersistentOps.Key, param.ImgPersistentOps));

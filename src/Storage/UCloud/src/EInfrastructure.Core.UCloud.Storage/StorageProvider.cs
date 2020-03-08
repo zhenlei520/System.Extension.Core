@@ -9,6 +9,7 @@ using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
+using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.UCloud.Storage.Config;
 
 namespace EInfrastructure.Core.UCloud.Storage
@@ -51,6 +52,35 @@ namespace EInfrastructure.Core.UCloud.Storage
         {
             var res = base.UploadFile(param.Stream, param.Key, Path.GetExtension(param.Key));
             return new UploadResultDto(res, res ? "上传成功" : "上传失败");
+        }
+
+        #endregion
+
+        #region 根据文件字节数组上传
+
+        /// <summary>
+        /// 根据文件字节数组上传
+        /// </summary>
+        /// <param name="param">文件流上传配置</param>
+        /// <returns></returns>
+        public UploadResultDto UploadByteArray(UploadByByteArrayParam param)
+        {
+            var res = base.UploadFile(param.ByteArray.ConvertToStream(), param.Key, Path.GetExtension(param.Key));
+            return new UploadResultDto(res, res ? "上传成功" : "上传失败");
+        }
+
+        #endregion
+
+        #region 根据文件token上传
+
+        /// <summary>
+        /// 根据文件流以及文件字节数组上传
+        /// </summary>
+        /// <param name="param">文件流上传配置</param>
+        /// <returns></returns>
+        public UploadResultDto UploadByToken(UploadByTokenParam param)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
