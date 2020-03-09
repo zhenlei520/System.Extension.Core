@@ -2,10 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.WeChat.Common;
 using EInfrastructure.Core.WeChat.Config;
@@ -27,14 +29,15 @@ namespace EInfrastructure.Core.WeChat
         /// <summary>
         ///
         /// </summary>
-        /// <param name="logService"></param>
-        /// <param name="jsonProvider"></param>
-        /// <param name="xmlProvider"></param>
-        public WebChatProcessRequest(ILogService logService, IJsonProvider jsonProvider,IXmlProvider xmlProvider)
+        /// <param name="logServices"></param>
+        /// <param name="jsonProviders"></param>
+        /// <param name="xmlProviders"></param>
+        public WebChatProcessRequest(ICollection<ILogService> logServices, ICollection<IJsonProvider> jsonProviders,
+            ICollection<IXmlProvider> xmlProviders)
         {
-            _logService = logService;
-            _jsonProvider = jsonProvider;
-            _xmlProvider = xmlProvider;
+            _logService = InjectionSelectionCommon.GetImplement(logServices);
+            _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
+            _xmlProvider = InjectionSelectionCommon.GetImplement(xmlProviders);
         }
 
 
@@ -119,13 +122,13 @@ namespace EInfrastructure.Core.WeChat
             {
                 if (string.IsNullOrEmpty(code))
                 {
-                    throw new BusinessException("登录失败，授权异常", errCode??HttpStatus.Err.Id);
+                    throw new BusinessException("登录失败，授权异常", errCode ?? HttpStatus.Err.Id);
                 }
 
                 WxUserInfo wxUserInfo = JsonConvert.DeserializeObject<WxUserInfo>(code);
                 if (wxUserInfo == null)
                 {
-                    throw new BusinessException("登录失败，授权异常", errCode??HttpStatus.Err.Id);
+                    throw new BusinessException("登录失败，授权异常", errCode ?? HttpStatus.Err.Id);
                 }
 
                 loginResult.Success = !string.IsNullOrEmpty(wxUserInfo.Openid) &&

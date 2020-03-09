@@ -428,5 +428,18 @@ namespace EInfrastructure.Core.Words
         #endregion
 
         #endregion
+
+        #region 返回权重
+
+        /// <summary>
+        /// 返回权重
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 99;
+        }
+
+        #endregion
     }
 }

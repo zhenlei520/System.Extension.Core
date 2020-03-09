@@ -1,10 +1,12 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -40,12 +42,13 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
         /// </summary>
         /// <param name="logService"></param>
         /// <param name="qiNiuConfig"></param>
-        public ClaimQiNiuRequirementFilter(ILogService logService, QiNiuStorageConfig qiNiuConfig,
-            IJsonProvider jsonProvider)
+        /// <param name="jsonProviders"></param>
+        public ClaimQiNiuRequirementFilter(ICollection<ILogService> logService, QiNiuStorageConfig qiNiuConfig,
+            ICollection<IJsonProvider> jsonProviders)
         {
             _qiNiuConfig = qiNiuConfig;
-            _logService = logService;
-            _jsonProvider = jsonProvider;
+            _logService = InjectionSelectionCommon.GetImplement(logService);
+            _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
         }
 
         /// <summary>

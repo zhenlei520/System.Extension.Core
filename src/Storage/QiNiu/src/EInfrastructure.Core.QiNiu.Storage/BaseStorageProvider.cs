@@ -201,5 +201,18 @@ namespace EInfrastructure.Core.QiNiu.Storage
         }
 
         #endregion
+
+        #region 返回权重
+
+        /// <summary>
+        /// 返回权重
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 99;
+        }
+
+        #endregion
     }
 }

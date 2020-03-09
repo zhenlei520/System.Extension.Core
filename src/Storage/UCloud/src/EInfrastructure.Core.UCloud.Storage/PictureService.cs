@@ -1,6 +1,7 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.Reflection;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
@@ -14,7 +15,12 @@ namespace EInfrastructure.Core.UCloud.Storage
     /// </summary>
     public class PictureService : BaseStorageProvider, IPictureService, ISingleInstance
     {
-        public PictureService(ILogService logService, UCloudStorageConfig uCloudConfig) : base(logService,
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="logService"></param>
+        /// <param name="uCloudConfig"></param>
+        public PictureService(ICollection<ILogService> logService, UCloudStorageConfig uCloudConfig) : base(logService,
             uCloudConfig)
         {
         }

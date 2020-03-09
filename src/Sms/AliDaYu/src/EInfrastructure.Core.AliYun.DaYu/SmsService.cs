@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using EInfrastructure.Core.AliYun.DaYu.Common;
 using EInfrastructure.Core.AliYun.DaYu.Config;
@@ -10,6 +11,7 @@ using EInfrastructure.Core.AliYun.DaYu.Model;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Serialize.Xml;
 using EInfrastructure.Core.Tools;
@@ -30,29 +32,13 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <summary>
         /// 短信服务
         /// </summary>
-        public SmsService(AliSmsConfig smsConfig) : this(smsConfig, new NewtonsoftJsonProvider(), new XmlProvider())
-        {
-        }
-
-        /// <summary>
-        /// 短信服务
-        /// </summary>
-        public SmsService(AliSmsConfig smsConfig, IJsonProvider jsonProvider, IXmlProvider xmlProvider)
+        public SmsService(AliSmsConfig smsConfig, ICollection<IJsonProvider> jsonProviders,
+            ICollection<IXmlProvider> xmlProviders)
         {
             _smsConfig = smsConfig;
-            _jsonProvider = jsonProvider;
+            _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
+            _xmlProvider = InjectionSelectionCommon.GetImplement(xmlProviders);
             smsConfig.Check("请完善阿里云短信配置信息", HttpStatus.Err.Name);
-            if (_jsonProvider == null)
-            {
-                throw new ArgumentNullException(nameof(jsonProvider));
-            }
-
-            if (_xmlProvider == null)
-            {
-                throw new ArgumentNullException(nameof(xmlProvider));
-            }
-
-            _xmlProvider = xmlProvider;
         }
 
         readonly RestClient _restClient = new RestClient("http://dysmsapi.aliyuncs.com");
@@ -134,6 +120,19 @@ namespace EInfrastructure.Core.AliYun.DaYu
             Action<SendSmsLoseDto> loseAction = null)
         {
             return Send(new List<string>() {phoneNumber}, templateCode, content, loseAction);
+        }
+
+        #endregion
+
+        #region 返回权重
+
+        /// <summary>
+        /// 返回权重
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 99;
         }
 
         #endregion

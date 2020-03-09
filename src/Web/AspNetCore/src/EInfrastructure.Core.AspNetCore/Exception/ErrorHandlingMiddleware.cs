@@ -2,10 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using EInfrastructure.Core.AspNetCore.Api;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -30,11 +32,11 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         ///
         /// </summary>
         /// <param name="next"></param>
-        /// <param name="jsonProvider"></param>
-        public ErrorHandlingMiddleware(RequestDelegate next, IJsonProvider jsonProvider)
+        /// <param name="jsonProviders"></param>
+        public ErrorHandlingMiddleware(RequestDelegate next, ICollection<IJsonProvider> jsonProviders)
         {
             _next = next;
-            _jsonProvider = jsonProvider;
+            _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
         }
 
         /// <summary>

@@ -4,6 +4,9 @@
 using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.DaYu.Config;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
+using EInfrastructure.Core.Serialize.Xml;
 using Xunit;
 
 namespace EInfrastructure.Core.AliYun.DaYu.Test
@@ -21,7 +24,13 @@ namespace EInfrastructure.Core.AliYun.DaYu.Test
         {
             try
             {
-                new SmsService(new AliSmsConfig()).Send(new List<string>(), "", "");
+                new SmsService(new AliSmsConfig(), new List<IJsonProvider>()
+                {
+                    new NewtonsoftJsonProvider()
+                }, new List<IXmlProvider>()
+                {
+                    new XmlProvider()
+                }).Send(new List<string>(), "", "");
             }
             catch (Exception ex)
             {

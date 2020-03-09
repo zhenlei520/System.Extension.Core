@@ -42,6 +42,19 @@ namespace EInfrastructure.Core.Words
 
         #endregion
 
+        #region 返回权重
+
+        /// <summary>
+        /// 返回权重
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 99;
+        }
+
+        #endregion
+
         #region 导入搜狗词库（导入path下的词库文件）
 
         /// <summary>

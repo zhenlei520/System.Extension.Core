@@ -95,6 +95,8 @@ namespace EInfrastructure.Core.Serialize.Xml
 
         #endregion
 
+        #region 得到实现类唯一标示
+
         /// <summary>
         /// 得到实现类唯一标示
         /// </summary>
@@ -105,5 +107,20 @@ namespace EInfrastructure.Core.Serialize.Xml
             if (method.ReflectedType != null) return method.ReflectedType.Namespace;
             return "EInfrastructure.Core.Serialize.Xml";
         }
+
+        #endregion
+
+        #region 返回权重
+
+        /// <summary>
+        /// 返回权重
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 99;
+        }
+
+        #endregion
     }
 }

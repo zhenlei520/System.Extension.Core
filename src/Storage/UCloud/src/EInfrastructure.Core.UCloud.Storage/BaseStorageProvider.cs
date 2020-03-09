@@ -2,11 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.UCloud.Storage.Common;
 using EInfrastructure.Core.UCloud.Storage.Config;
 using EInfrastructure.Core.Validation.Common;
@@ -31,9 +33,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 基类UCloud实现
         /// </summary>
-        public BaseStorageProvider(ILogService logService, UCloudStorageConfig uCloudConfig)
+        public BaseStorageProvider(ICollection<ILogService> logServices, UCloudStorageConfig uCloudConfig)
         {
-            LogService = logService;
+            LogService = InjectionSelectionCommon.GetImplement(logServices);
             UCloudConfig = uCloudConfig;
             uCloudConfig.Check("七牛云存储配置异常",HttpStatus.Err.Name);
         }
@@ -79,6 +81,19 @@ namespace EInfrastructure.Core.UCloud.Storage
             }
 
             return true;
+        }
+
+        #endregion
+
+        #region 返回权重
+
+        /// <summary>
+        /// 返回权重
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 99;
         }
 
         #endregion

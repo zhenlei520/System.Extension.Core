@@ -6,7 +6,7 @@ namespace EInfrastructure.Core.Configuration.Ioc
     /// <summary>
     /// 日志服务
     /// </summary>
-    public interface ILogService : ISingleInstance
+    public interface ILogService : ISingleInstance, IIdentify
     {
         #region 得到实现类唯一标示
 

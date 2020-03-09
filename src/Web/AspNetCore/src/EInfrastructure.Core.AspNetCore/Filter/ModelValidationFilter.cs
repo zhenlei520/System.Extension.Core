@@ -1,9 +1,11 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.HelpCommon;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace EInfrastructure.Core.AspNetCore.Filter
@@ -20,12 +22,12 @@ namespace EInfrastructure.Core.AspNetCore.Filter
         /// <summary>
         ///
         /// </summary>
-        /// <param name="logService"></param>
+        /// <param name="logServices"></param>
         /// <param name="errCode">错误码</param>
-        public ModelValidationFilter(ILogService logService, int? errCode = null)
+        public ModelValidationFilter(ICollection<ILogService> logServices, int? errCode = null)
         {
             ErrCode = errCode ?? HttpStatus.Err.Id;
-            _logService = logService;
+            _logService = InjectionSelectionCommon.GetImplement(logServices);
         }
 
         /// <summary>

@@ -10,6 +10,7 @@ using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Redis.Common;
 using EInfrastructure.Core.Redis.Config;
 using EInfrastructure.Core.Redis.Validator;
@@ -33,10 +34,10 @@ namespace EInfrastructure.Core.Redis
         /// <summary>
         ///
         /// </summary>
-        public RedisCacheService(RedisConfig redisConfig, IJsonProvider jsonProvider)
+        public RedisCacheService(RedisConfig redisConfig, ICollection<IJsonProvider> jsonProviders)
         {
-            _jsonProvider = jsonProvider;
-            redisConfig.Check("redis配置异常",HttpStatus.Err.Name);
+            _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
+            redisConfig.Check("redis配置异常", HttpStatus.Err.Name);
             new RedisConfigValidator().Validate(redisConfig).Check();
             _prefix = redisConfig.Name;
             CsRedisHelper.InitializeConfiguration(redisConfig);
@@ -1111,7 +1112,7 @@ namespace EInfrastructure.Core.Redis
 
         #region Basics
 
-        #region  删除指定Key的缓存
+        #region 删除指定Key的缓存
 
         /// <summary>
         /// 删除指定Key的缓存
@@ -1126,7 +1127,7 @@ namespace EInfrastructure.Core.Redis
 
         #endregion
 
-        #region  删除指定Key的缓存
+        #region 删除指定Key的缓存
 
         /// <summary>
         /// 删除指定Key的缓存
@@ -1315,6 +1316,19 @@ namespace EInfrastructure.Core.Redis
         #endregion
 
         #endregion 辅助方法
+
+        #region 返回权重
+
+        /// <summary>
+        /// 返回权重
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 99;
+        }
+
+        #endregion
 
         #region private methods
 

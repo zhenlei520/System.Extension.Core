@@ -1117,6 +1117,19 @@ namespace EInfrastructure.Core.MemoryCache
 
         #endregion SortedSet 有序集合
 
+        #region 返回权重
+
+        /// <summary>
+        /// 返回权重
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 98;
+        }
+
+        #endregion
+
         #region Basics
 
         #region  删除指定Key的缓存

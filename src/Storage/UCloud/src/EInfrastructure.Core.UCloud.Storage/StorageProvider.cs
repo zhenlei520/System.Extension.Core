@@ -22,7 +22,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// UCloud存储实现类
         /// </summary>
-        public StorageProvider(ILogService logService, UCloudStorageConfig uCloudStorageConfig) : base(logService,
+        public StorageProvider(ICollection<ILogService> logService, UCloudStorageConfig uCloudStorageConfig) : base(logService,
             uCloudStorageConfig)
         {
         }

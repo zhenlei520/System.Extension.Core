@@ -1,6 +1,7 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,6 +11,7 @@ using EInfrastructure.Core.Config.IdentificationExtensions.Dto;
 using EInfrastructure.Core.Config.IdentificationExtensions.Enum;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.HelpCommon.Files;
 using EInfrastructure.Core.Tools;
 using Microsoft.AspNetCore.Http;
@@ -27,9 +29,9 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         private readonly RestClient _restClient;
         private readonly RestRequest _request;
 
-        public AuthenticateDemoService(IJsonProvider jsonProvider)
+        public AuthenticateDemoService(ICollection<IJsonProvider> jsonProviders)
         {
-            _jsonProvider = jsonProvider;
+            _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
             _restClient = new RestClient("http://ai.baidu.com");
             _restClient.UserAgent =
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36";
@@ -123,6 +125,19 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         }
 
         #endregion
+
+        #endregion
+
+        #region 返回权重
+
+        /// <summary>
+        /// 返回权重
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 99;
+        }
 
         #endregion
 

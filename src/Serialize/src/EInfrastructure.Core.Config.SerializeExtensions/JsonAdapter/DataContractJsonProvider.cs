@@ -121,5 +121,18 @@ namespace EInfrastructure.Core.Config.SerializeExtensions.JsonAdapter
         }
 
         #endregion
+
+        #region 返回权重
+
+        /// <summary>
+        /// 返回权重
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 98;
+        }
+
+        #endregion
     }
 }
