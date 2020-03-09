@@ -236,7 +236,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="url">请求地址</param>
         /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public T GetFromJson<T>(string url, object data)
+        public T GetJson<T>(string url, object data)
         {
             var res = Get(SetUrlParam(url, GetParams(data))).Content;
             if (string.IsNullOrEmpty(res))
@@ -273,7 +273,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="url">请求地址</param>
         /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public T GetFromXml<T>(string url, object data)
+        public T GetXml<T>(string url, object data)
         {
             var res = Get(SetUrlParam(url, GetParams(data))).Content;
             if (string.IsNullOrEmpty(res))
