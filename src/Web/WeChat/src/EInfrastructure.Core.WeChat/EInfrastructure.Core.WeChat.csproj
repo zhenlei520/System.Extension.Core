@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Version>2.0.1-beta-001</Version>
 <Authors>zhenlei520</Authors>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>zhenlei520</Company>
     <Description>dotnet core 微信帮助类库</Description>
     <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core</RepositoryUrl>

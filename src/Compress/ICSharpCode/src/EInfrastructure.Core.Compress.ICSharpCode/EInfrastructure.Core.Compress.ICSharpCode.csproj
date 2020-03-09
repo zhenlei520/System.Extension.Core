@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Version>2.0.1-beta-001</Version>
     <Authors>zhenlei520</Authors>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>zhenlei520</Company>
     <Description>dotnet core 压缩包类库（父类ICSharpCode.SharpZipLib），通过进一步封装ICSharpCode.SharpZipLib实现压缩与解压功能，中文乱码问题已修复</Description>
     <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core</RepositoryUrl>
