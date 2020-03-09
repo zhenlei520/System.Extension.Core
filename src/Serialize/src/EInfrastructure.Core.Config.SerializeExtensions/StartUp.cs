@@ -2,6 +2,9 @@
 
 namespace EInfrastructure.Core.Config.SerializeExtensions
 {
+    /// <summary>
+    ///
+    /// </summary>
     public static class StartUp
     {
         /// <summary>

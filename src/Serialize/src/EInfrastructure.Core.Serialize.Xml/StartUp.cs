@@ -1,6 +1,6 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
-namespace EInfrastructure.Core
+namespace EInfrastructure.Core.Serialize.Xml
 {
     /// <summary>
     ///
@@ -31,11 +31,6 @@ namespace EInfrastructure.Core
         /// </summary>
         private static void Load()
         {
-            Config.IdentificationExtensions.StartUp.Run();
-            EInfrastructure.Core.Serialize.Xml.StartUp.Run();
-            EInfrastructure.Core.Serialize.NewtonsoftJson.StartUp.Run();
-            EInfrastructure.Core.Config.SerializeExtensions.StartUp.Run();
-            Tools.StartUp.Run();
         }
 
         #endregion

@@ -2,6 +2,9 @@
 
 namespace EInfrastructure.Core.Serialize.NewtonsoftJson
 {
+    /// <summary>
+    ///
+    /// </summary>
     public static class StartUp
     {
         private static bool IsStartUp;
