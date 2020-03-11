@@ -629,7 +629,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         private static async Task<byte[]> ConvertToByteArrayAsync(this Stream stream, bool isSync)
         {
-            if (stream == null || stream.CanRead)
+            if (stream == null || !stream.CanRead)
             {
                 return new byte[] { };
             }
