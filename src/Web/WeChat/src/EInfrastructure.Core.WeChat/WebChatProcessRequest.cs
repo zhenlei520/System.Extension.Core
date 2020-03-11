@@ -40,7 +40,6 @@ namespace EInfrastructure.Core.WeChat
             _xmlProvider = InjectionSelectionCommon.GetImplement(xmlProviders);
         }
 
-
         #region 处理用户消息
 
         /// <summary>

@@ -16,6 +16,9 @@ namespace EInfrastructure.Core.AliYun.Tbk
     /// </summary>
     public class OpenApi
     {
+        /// <summary>
+        ///
+        /// </summary>
         protected readonly IJsonProvider _jsonProvider;
 
         /// <summary>
@@ -26,7 +29,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <param name="jsonProvider"></param>
         protected OpenApi(string appKey, string appSecret, IJsonProvider jsonProvider = null)
         {
-            _jsonProvider = jsonProvider ?? new NewtonsoftJsonProvider();
+            this._jsonProvider = jsonProvider ?? new NewtonsoftJsonProvider();
             AliConfig = new AliTbkConfig
             {
                 AppKey = appKey,

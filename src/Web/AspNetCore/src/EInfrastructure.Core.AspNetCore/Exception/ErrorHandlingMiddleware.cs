@@ -138,7 +138,18 @@ namespace EInfrastructure.Core.AspNetCore.Exception
             Func<HttpContext, System.Exception, bool> exceptionAction = null, IJsonProvider jsonProvider = null)
         {
             ErrorHandlingMiddleware.ExceptionAction = exceptionAction;
-            return builder.UseMiddleware<ErrorHandlingMiddleware>(jsonProvider ?? new NewtonsoftJsonProvider());
+            if (jsonProvider == null)
+            {
+                return builder.UseMiddleware<ErrorHandlingMiddleware>(new List<IJsonProvider>()
+                {
+                    new NewtonsoftJsonProvider()
+                });
+            }
+
+            return builder.UseMiddleware<ErrorHandlingMiddleware>(new List<IJsonProvider>()
+            {
+                jsonProvider
+            });
         }
     }
 }

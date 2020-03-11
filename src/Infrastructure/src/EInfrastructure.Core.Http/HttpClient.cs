@@ -49,7 +49,6 @@ namespace EInfrastructure.Core.Http
         /// 请求接口域
         /// </summary>
         /// <param name="host">域名</param>
-        /// <param name="timeOut">超时时间</param>
         /// <param name="jsonProvider"></param>
         /// <param name="requestBodyType"></param>
         public HttpClient(string host, IJsonProvider jsonProvider = null,
@@ -64,7 +63,6 @@ namespace EInfrastructure.Core.Http
         /// 请求接口域
         /// </summary>
         /// <param name="host">域名</param>
-        /// <param name="timeOut">超时时间</param>
         /// <param name="xmlProvider"></param>
         /// <param name="requestBodyType"></param>
         public HttpClient(string host, IXmlProvider xmlProvider = null,
@@ -79,7 +77,6 @@ namespace EInfrastructure.Core.Http
         /// 请求接口域
         /// </summary>
         /// <param name="host">域名</param>
-        /// <param name="timeOut">超时时间</param>
         /// <param name="encoding">编码格式 默认Utf8</param>
         /// <param name="jsonProvider"></param>
         public HttpClient(string host, Encoding encoding, IJsonProvider jsonProvider = null) : this(host,
@@ -93,10 +90,9 @@ namespace EInfrastructure.Core.Http
         /// 请求接口域
         /// </summary>
         /// <param name="host">域名</param>
-        /// <param name="timeOut">超时时间</param>
         /// <param name="encoding">编码格式 默认Utf8</param>
         /// <param name="xmlProvider"></param>
-        public HttpClient(string host, int timeOut, Encoding encoding, IXmlProvider xmlProvider = null) : this(host,
+        public HttpClient(string host, Encoding encoding, IXmlProvider xmlProvider = null) : this(host,
             xmlProvider ?? new XmlProvider())
         {
             Host = host;
@@ -115,7 +111,8 @@ namespace EInfrastructure.Core.Http
             {
                 return new GetProvider();
             }
-            else if (requestType.Id == RequestType.Post.Id)
+
+            if (requestType.Id == RequestType.Post.Id)
             {
                 if (_requestBodyType.Id == RequestBodyType.ApplicationJson.Id)
                 {
@@ -991,10 +988,11 @@ namespace EInfrastructure.Core.Http
 
             if (IsHttps)
             {
-                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback((object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) =>
-                {
-                    return true; //总是接受
-                });
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(
+                    (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) =>
+                    {
+                        return true; //总是接受
+                    });
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls |
                                                        SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             }
