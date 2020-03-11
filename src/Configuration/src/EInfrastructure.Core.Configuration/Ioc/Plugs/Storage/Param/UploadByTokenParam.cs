@@ -16,10 +16,9 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param
         /// <param name="stream">文件流</param>
         /// <param name="token"></param>
         /// <param name="uploadPersistentOps"></param>
-        public UploadByTokenParam(string key, Stream stream, string token,
-            UploadPersistentOps uploadPersistentOps = null)
+        public UploadByTokenParam(string key, Stream stream, string token,UploadPersistentOps uploadPersistentOps = null)
         {
-            if (Stream == null)
+            if (stream == null)
             {
                 throw new ArgumentNullException(stream.GetType().Name);
             }
@@ -37,8 +36,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param
         /// <param name="byteArray">文件字符数组</param>
         /// <param name="token">文件Token</param>
         /// <param name="uploadPersistentOps">上传策略</param>
-        public UploadByTokenParam(string key, byte[] byteArray, string token,
-            UploadPersistentOps uploadPersistentOps = null)
+        public UploadByTokenParam(string key, byte[] byteArray, string token,UploadPersistentOps uploadPersistentOps = null)
         {
             if (byteArray == null || byteArray.Length == 0)
             {
