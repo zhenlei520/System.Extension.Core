@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public BaseStorageProvider(QiNiuStorageConfig qiNiuConfig)
         {
             _qiNiuConfig = qiNiuConfig;
-            qiNiuConfig.Check("七牛云存储配置异常", HttpStatus.Err.Name);
+            ValidationCommon.Check(qiNiuConfig, "七牛云存储配置异常", HttpStatus.Err.Name);
         }
 
         #region 得到七牛配置（方法内不要重复获取此方法，以免产生不同的配置信息）
@@ -138,7 +138,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 }
             }
 
-            Qiniu.Storage.ChunkUnit Get(EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit chunkUnit)
+            Qiniu.Storage.ChunkUnit Get(
+                EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit chunkUnit)
             {
                 int chunkUnits = chunkUnit.Id;
                 return (Qiniu.Storage.ChunkUnit) chunkUnits;

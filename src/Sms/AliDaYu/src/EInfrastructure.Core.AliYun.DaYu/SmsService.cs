@@ -38,7 +38,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
             _smsConfig = smsConfig;
             _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
             _xmlProvider = InjectionSelectionCommon.GetImplement(xmlProviders);
-            smsConfig.Check("请完善阿里云短信配置信息", HttpStatus.Err.Name);
+            ValidationCommon.Check(smsConfig, "请完善阿里云短信配置信息", HttpStatus.Err.Name);
         }
 
         readonly RestClient _restClient = new RestClient("http://dysmsapi.aliyuncs.com");

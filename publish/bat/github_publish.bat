@@ -22,9 +22,9 @@ for /r %%i in (%project%) do (
     echo %%~pi
     echo %%~di
     cd %batPath%
-    call publish.bat %%~di%%~pi,%%~ni,nuget.org
+    call publish.bat %%~di%%~pi,%%~ni,github
 )
 
 echo.  
-echo 发布成功
+echo 发布成功  
 pause >nul 

@@ -37,7 +37,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         {
             LogService = InjectionSelectionCommon.GetImplement(logServices);
             UCloudConfig = uCloudConfig;
-            uCloudConfig.Check("七牛云存储配置异常",HttpStatus.Err.Name);
+            ValidationCommon.Check(uCloudConfig,"Uc云存储配置异常",HttpStatus.Err.Name);
         }
 
         #region 上传文件

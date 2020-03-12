@@ -37,7 +37,7 @@ namespace EInfrastructure.Core.Redis
         public RedisCacheService(RedisConfig redisConfig, ICollection<IJsonProvider> jsonProviders)
         {
             _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
-            redisConfig.Check("redis配置异常", HttpStatus.Err.Name);
+            ValidationCommon.Check(redisConfig, "redis配置异常", HttpStatus.Err.Name);
             new RedisConfigValidator().Validate(redisConfig).Check();
             _prefix = redisConfig.Name;
             CsRedisHelper.InitializeConfiguration(redisConfig);
