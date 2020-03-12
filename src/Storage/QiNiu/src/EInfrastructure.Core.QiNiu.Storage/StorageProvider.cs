@@ -98,8 +98,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
             FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
-            HttpResult result = null;
-            if (param.Stream == null)
+            HttpResult result;
+            if (param.Stream != null)
             {
                 result =
                     target.UploadStream(param.Stream, param.Key, param.Token, GetPutExtra(uploadPersistentOps));
@@ -108,7 +108,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 return new UploadResultDto(res, res ? "成功" : result.ToString());
             }
 
-            if (param.ByteArray == null)
+            if (param.ByteArray != null)
             {
                 result =
                     target.UploadData(param.ByteArray, param.Key, param.Token, GetPutExtra(uploadPersistentOps));
