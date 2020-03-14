@@ -51,9 +51,11 @@ namespace EInfrastructure.Core.Http.Provider
             foreach (var property in properties)
             {
                 string name;
-                if (property.CustomAttributes.Any(x => x.AttributeType == typeof(JsonProperty)))
+                if (property.CustomAttributes.Any(x =>
+                    x.AttributeType == typeof(Newtonsoft.Json.JsonPropertyAttribute)))
                 {
-                    var namedargument = property.CustomAttributes.Where(x => x.AttributeType == typeof(JsonProperty))
+                    var namedargument = property.CustomAttributes
+                        .Where(x => x.AttributeType == typeof(Newtonsoft.Json.JsonPropertyAttribute))
                         .Select(x => x.NamedArguments).FirstOrDefault();
                     name = namedargument.Select(x => x.TypedValue.Value).FirstOrDefault()?.ToString();
                 }
