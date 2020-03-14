@@ -16,9 +16,17 @@
     <NeutralLanguage>zh-CN</NeutralLanguage>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DocumentationFile>bin\Debug\EInfrastructure.Core.Validation.AspNetCore.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DocumentationFile>bin\Release\EInfrastructure.Core.Validation.AspNetCore.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Web\AspNetCore\src\EInfrastructure.Core.AspNetCore\EInfrastructure.Core.AspNetCore.csproj"/>
-    <ProjectReference Include="..\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj"/>
+    <ProjectReference Include="..\..\..\..\Web\AspNetCore\src\EInfrastructure.Core.AspNetCore\EInfrastructure.Core.AspNetCore.csproj" />
+    <ProjectReference Include="..\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj" />
   </ItemGroup>
 
 </Project>

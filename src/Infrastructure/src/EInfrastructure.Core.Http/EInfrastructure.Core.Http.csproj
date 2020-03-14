@@ -16,6 +16,14 @@
     <NeutralLanguage>zh-CN</NeutralLanguage>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DocumentationFile>bin\Debug\EInfrastructure.Core.Http.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DocumentationFile>bin\Release\EInfrastructure.Core.Http.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="RestSharp" Version="106.3.0" />
   </ItemGroup>

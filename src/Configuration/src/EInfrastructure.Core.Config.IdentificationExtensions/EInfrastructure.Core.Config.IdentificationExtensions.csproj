@@ -15,6 +15,14 @@
     <PackageTags>EInfrastructure.Core Configuration</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
   </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DocumentationFile>bin\Debug\EInfrastructure.Core.Config.IdentificationExtensions.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DocumentationFile>bin\Release\EInfrastructure.Core.Config.IdentificationExtensions.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.1" />
   </ItemGroup>
