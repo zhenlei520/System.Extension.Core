@@ -13,6 +13,7 @@
     <Title>Autofac自动注入类库</Title>
     <PackageTags>Autofac Ioc</PackageTags>
     <PackageReleaseNotes>彻底与数据库等无用类库分离</PackageReleaseNotes>
+    <NeutralLanguage>zh-CN</NeutralLanguage>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DocumentationFile>bin\Debug\EInfrastructure.Core.AutoFac.xml</DocumentationFile>

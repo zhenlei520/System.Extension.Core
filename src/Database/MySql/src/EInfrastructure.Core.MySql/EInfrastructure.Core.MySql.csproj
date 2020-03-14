@@ -12,6 +12,7 @@
     <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
     <Title>mysql基础类库，实现基类增删改查方法</Title>
     <PackageTags>EInfrastructure EInfrastructure.Mysql</PackageTags>
+    <NeutralLanguage>zh-CN</NeutralLanguage>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DocumentationFile>bin\Debug\EInfrastructure.Core.MySql.xml</DocumentationFile>

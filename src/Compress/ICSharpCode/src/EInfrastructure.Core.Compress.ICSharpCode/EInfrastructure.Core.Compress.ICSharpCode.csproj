@@ -13,6 +13,7 @@
     <Title>DotnetCore压缩包类库</Title>
     <PackageTags>Compress ICSharpCode</PackageTags>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <NeutralLanguage>zh-CN</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
