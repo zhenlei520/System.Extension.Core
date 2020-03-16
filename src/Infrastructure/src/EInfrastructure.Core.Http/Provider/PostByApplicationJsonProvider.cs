@@ -23,17 +23,16 @@ namespace EInfrastructure.Core.Http.Provider
         /// <param name="headers">请求头</param>
         /// <param name="timeOut">超时限制</param>
         /// <returns></returns>
-        public RestRequest GetRequest(Method method, string url, RequestBody requestBody, Dictionary<string, string> headers,
+        public RestRequest GetRequest(Method method, string url, RequestBody requestBody,
+            Dictionary<string, string> headers,
             int timeOut)
         {
             RestRequest request = base.GetRestRequest(url, method, timeOut, headers);
-            var bodyDic = base.GetParams(requestBody.Data);
             request.RequestFormat =
                 requestBody.RequestBodyFormat.Id == RequestBodyFormat.Json.Id ? DataFormat.Json : DataFormat.Xml;
-            foreach (var item in bodyDic)
-            {
-                request.AddParameter(item.Key, item.Value);
-            }
+
+            request.AddParameter("application/json; charset=utf-8;", requestBody._jsonProvider.Serializer(requestBody.Data),
+                ParameterType.RequestBody);
 
             return request;
         }

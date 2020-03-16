@@ -2,11 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using EInfrastructure.Core.Http.Enumerations;
 using RestSharp;
 
 namespace EInfrastructure.Core.Http.Provider
 {
+    /// <summary>
+    ///
+    /// </summary>
     public class PostByTextXmlProvider : BaseProvider, IProvider
     {
         /// <summary>

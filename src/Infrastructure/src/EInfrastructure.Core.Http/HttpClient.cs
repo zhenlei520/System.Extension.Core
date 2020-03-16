@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.Http.Common;
 using EInfrastructure.Core.Http.Enumerations;
 using EInfrastructure.Core.Http.Params;
 using EInfrastructure.Core.Http.Provider;
@@ -529,8 +530,14 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         private IRestResponse Get(string url)
         {
-            var res = GetAsync(url);
-            return res.Result;
+            RestRequest request = GetProvider(RequestType.Get)
+                .GetRequest(Method.GET, url, new RequestBody(null), GetHeaders(), GetTimeOut());
+            if (Proxy != null)
+            {
+                _restClient.Proxy = Proxy;
+            }
+
+            return GetClient().Execute(request);
         }
 
         /// <summary>
@@ -801,8 +808,17 @@ namespace EInfrastructure.Core.Http
         private IRestResponse GetByPost(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
-            var res = GetByPostAsync(url, data, requestBodyFormat);
-            return res.Result;
+            var body = data;
+            if (_requestBodyType.Id == RequestBodyType.TextXml.Id)
+            {
+                body = _xmlProvider.Serializer(data);
+            }
+
+            var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
+                new RequestBody(body, requestBodyFormat, _files, _jsonProvider, _xmlProvider),
+                GetHeaders(), GetTimeOut());
+
+            return GetClient().Execute(request);
         }
 
         /// <summary>
@@ -822,7 +838,7 @@ namespace EInfrastructure.Core.Http
             }
 
             var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
-                new RequestBody(body, requestBodyFormat, _files),
+                new RequestBody(body, requestBodyFormat, _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());
 
             return await GetClient().ExecuteTaskAsync(request);
@@ -913,36 +929,8 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         private Dictionary<string, string> GetParams(object data)
         {
-            if (data == null || data is string || !data.GetType().IsClass)
-            {
-                return new Dictionary<string, string>();
-            }
-
-            var type = data.GetType();
-            var properties = type.GetProperties();
-
-            Dictionary<string, string> objectDic = new Dictionary<string, string>();
-            foreach (var property in properties)
-            {
-                string name;
-                if (property.CustomAttributes.Any(x => x.AttributeType == typeof(JsonProperty)))
-                {
-                    var namedargument = property.CustomAttributes.Where(x => x.AttributeType == typeof(JsonProperty))
-                        .Select(x => x.NamedArguments).FirstOrDefault();
-                    name = namedargument.Select(x => x.TypedValue.Value).FirstOrDefault()?.ToString();
-                }
-                else
-                {
-                    name = property.Name;
-                }
-
-                if (objectDic.All(x => x.Key != name) && name != null)
-                {
-                    objectDic.Add(name, property.GetValue(data, null)?.ToString() ?? "");
-                }
-            }
-
-            return objectDic;
+            return ObjectCommon.GetParams(data, (res) => _jsonProvider.Serializer(data))
+                .ToDictionary(x => x.Key, x => x.Value.ToString());
         }
 
         #endregion
