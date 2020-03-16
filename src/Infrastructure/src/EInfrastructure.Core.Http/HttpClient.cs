@@ -15,7 +15,6 @@ using EInfrastructure.Core.Http.Params;
 using EInfrastructure.Core.Http.Provider;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Serialize.Xml;
-using Newtonsoft.Json.Serialization;
 using RestSharp;
 
 namespace EInfrastructure.Core.Http
@@ -44,6 +43,7 @@ namespace EInfrastructure.Core.Http
             _files = new List<RequestMultDataParam>();
             Headers = new Dictionary<string, string>();
             _requestBodyType = RequestBodyType.ApplicationJson;
+            _requestBodyFormat = null;
         }
 
         /// <summary>
@@ -52,12 +52,15 @@ namespace EInfrastructure.Core.Http
         /// <param name="host">域名</param>
         /// <param name="jsonProvider"></param>
         /// <param name="requestBodyType"></param>
+        /// <param name="requestBodyFormat">等待响应的数据类型</param>
         public HttpClient(string host, IJsonProvider jsonProvider = null,
-            RequestBodyType requestBodyType = null) : this(host)
+            RequestBodyType requestBodyType = null,
+            RequestBodyFormat requestBodyFormat = null) : this(host)
         {
             Host = host;
             _jsonProvider = jsonProvider ?? new NewtonsoftJsonProvider();
             _requestBodyType = requestBodyType ?? RequestBodyType.ApplicationJson;
+            _requestBodyFormat = requestBodyFormat;
         }
 
         /// <summary>
@@ -65,13 +68,16 @@ namespace EInfrastructure.Core.Http
         /// </summary>
         /// <param name="host">域名</param>
         /// <param name="xmlProvider"></param>
-        /// <param name="requestBodyType"></param>
+        /// <param name="requestBodyType">请求类型</param>
+        /// <param name="requestBodyFormat">等待响应的数据类型</param>
         public HttpClient(string host, IXmlProvider xmlProvider = null,
-            RequestBodyType requestBodyType = null) : this(host)
+            RequestBodyType requestBodyType = null,
+            RequestBodyFormat requestBodyFormat = null) : this(host)
         {
             Host = host;
             _xmlProvider = xmlProvider ?? new XmlProvider();
             _requestBodyType = requestBodyType ?? RequestBodyType.ApplicationJson;
+            _requestBodyFormat = requestBodyFormat;
         }
 
         /// <summary>
@@ -80,8 +86,12 @@ namespace EInfrastructure.Core.Http
         /// <param name="host">域名</param>
         /// <param name="encoding">编码格式 默认Utf8</param>
         /// <param name="jsonProvider"></param>
-        public HttpClient(string host, Encoding encoding, IJsonProvider jsonProvider = null) : this(host,
-            jsonProvider ?? new NewtonsoftJsonProvider())
+        /// <param name="requestBodyType">请求类型</param>
+        /// <param name="requestBodyFormat">等待响应的数据类型</param>
+        public HttpClient(string host, Encoding encoding, IJsonProvider jsonProvider = null,
+            RequestBodyType requestBodyType = null,
+            RequestBodyFormat requestBodyFormat = null) : this(host,
+            jsonProvider ?? new NewtonsoftJsonProvider(), requestBodyType, requestBodyFormat)
         {
             Host = host;
             _encoding = encoding ?? Encoding.UTF8;
@@ -93,11 +103,16 @@ namespace EInfrastructure.Core.Http
         /// <param name="host">域名</param>
         /// <param name="encoding">编码格式 默认Utf8</param>
         /// <param name="xmlProvider"></param>
-        public HttpClient(string host, Encoding encoding, IXmlProvider xmlProvider = null) : this(host,
-            xmlProvider ?? new XmlProvider())
+        /// <param name="requestBodyType">请求类型</param>
+        /// <param name="requestBodyFormat">等待响应的数据类型</param>
+        public HttpClient(string host, Encoding encoding, IXmlProvider xmlProvider = null,
+            RequestBodyType requestBodyType = null,
+            RequestBodyFormat requestBodyFormat = null) : this(host,
+            xmlProvider ?? new XmlProvider(), requestBodyType, requestBodyFormat)
         {
             Host = host;
             _encoding = encoding ?? Encoding.UTF8;
+            _requestBodyFormat = requestBodyFormat;
         }
 
         /// <summary>
@@ -183,6 +198,11 @@ namespace EInfrastructure.Core.Http
         /// body请求类型
         /// </summary>
         private readonly RequestBodyType _requestBodyType;
+
+        /// <summary>
+        /// 得到响应的数据类型
+        /// </summary>
+        private RequestBodyFormat _requestBodyFormat;
 
         /// <summary>
         /// 请求头
@@ -815,7 +835,7 @@ namespace EInfrastructure.Core.Http
             }
 
             var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
-                new RequestBody(body, requestBodyFormat, _files, _jsonProvider, _xmlProvider),
+                new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());
 
             return GetClient().Execute(request);
@@ -838,7 +858,7 @@ namespace EInfrastructure.Core.Http
             }
 
             var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
-                new RequestBody(body, requestBodyFormat, _files, _jsonProvider, _xmlProvider),
+                new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());
 
             return await GetClient().ExecuteTaskAsync(request);
@@ -914,6 +934,7 @@ namespace EInfrastructure.Core.Http
             _files = new List<RequestMultDataParam>();
             Headers = new Dictionary<string, string>();
             Proxy = null;
+            _requestBodyFormat = null;
         }
 
         #endregion
@@ -976,11 +997,7 @@ namespace EInfrastructure.Core.Http
 
             if (IsHttps)
             {
-                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(
-                    (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) =>
-                    {
-                        return true; //总是接受
-                    });
+                ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls |
                                                        SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             }
@@ -992,6 +1009,20 @@ namespace EInfrastructure.Core.Http
             }
 
             return _restClient;
+        }
+
+        #endregion
+
+        #region 得到RequestBodyFormat
+
+        /// <summary>
+        /// 得到RequestBodyFormat
+        /// </summary>
+        /// <param name="requestBodyFormat">数据响应类型</param>
+        /// <returns></returns>
+        private RequestBodyFormat GetRequestBody(RequestBodyFormat requestBodyFormat)
+        {
+            return requestBodyFormat ?? _requestBodyFormat;
         }
 
         #endregion
