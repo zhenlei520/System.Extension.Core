@@ -950,7 +950,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         private Dictionary<string, string> GetParams(object data)
         {
-            return ObjectCommon.GetParams(data, (res) => _jsonProvider.Serializer(data))
+            return ObjectCommon.GetParams(data, "Microsoft.AspNetCore.Mvc.FromQueryAttribute,Microsoft.AspNetCore.Mvc.Core",(res) => _jsonProvider.Serializer(data))
                 .ToDictionary(x => x.Key, x => x.Value.ToString());
         }
 
