@@ -76,6 +76,23 @@ namespace EInfrastructure.Core.Tools.Systems
 
         #endregion
 
+        #region 获取类型信息
+
+        /// <summary>
+        /// 获取类型信息
+        /// </summary>
+        /// <param name="fullName">完整的类名地址：命名空间.类名</param>
+        /// <param name="package">包名</param>
+        /// <returns></returns>
+        public static Type GetType(string fullName, string package)
+        {
+            Check.True(!string.IsNullOrEmpty(fullName),"fullName is not empty");
+            Check.True(!string.IsNullOrEmpty(package),"package is not empty");
+            return Type.GetType($"{fullName},{package}");
+        }
+
+        #endregion
+
         #region 得到调用者信息
 
         /// <summary>
