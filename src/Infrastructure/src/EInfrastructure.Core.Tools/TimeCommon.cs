@@ -80,12 +80,12 @@ namespace EInfrastructure.Core.Tools
         public static int SecondToMinute(int second, RectificationType rectificationType)
         {
             decimal mm = (decimal) second / 60;
-            if (rectificationType == RectificationType.Celling)
+            if (rectificationType.Id == RectificationType.Celling.Id)
             {
                 return Convert.ToInt32(Math.Ceiling(mm));
             }
 
-            if (rectificationType == RectificationType.Floor)
+            if (rectificationType.Id == RectificationType.Floor.Id)
             {
                 return Convert.ToInt32(Math.Floor(mm));
             }
@@ -253,7 +253,7 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 返回每月的第一天和最后一天
         /// </summary>
-        /// <param name="year1"></param>
+        /// <param name="year"></param>
         /// <param name="month"></param>
         /// <param name="firstDay"></param>
         /// <param name="lastDay"></param>
@@ -334,45 +334,45 @@ namespace EInfrastructure.Core.Tools
         public static DateTime Get(this DateTime? dateTime, TimeType timeKey)
         {
             DateTime dateNow = dateTime ?? DateTime.Now.Date; //当前时间
-            if (timeKey == TimeType.StartYear)
+            if (timeKey.Id == TimeType.StartYear.Id)
             {
                 return new DateTime(dateNow.Year, 1, 1); //本年年初
             }
 
-            if (timeKey == TimeType.EndYear)
+            if (timeKey.Id == TimeType.EndYear.Id)
             {
                 return new DateTime(dateNow.Year, 12, 31); //本年年末
             }
 
-            if (timeKey == TimeType.StartQuarter)
+            if (timeKey.Id == TimeType.StartQuarter.Id)
             {
                 return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day); //本季度初;
             }
 
-            if (timeKey == TimeType.EndQuarter)
+            if (timeKey.Id == TimeType.EndQuarter.Id)
             {
                 return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day).AddMonths(3)
                     .AddDays(-1); //本季度末
             }
 
-            if (timeKey == TimeType.StartMonth)
+            if (timeKey.Id == TimeType.StartMonth.Id)
             {
                 return dateNow.AddDays(1 - dateNow.Day); //本月月初
             }
 
-            if (timeKey == TimeType.EndMonth)
+            if (timeKey.Id == TimeType.EndMonth.Id)
             {
                 return dateNow.AddDays(1 - dateNow.Day).AddMonths(1).AddDays(-1); //本月月末
             }
 
-            if (timeKey == TimeType.StartWeek)
+            if (timeKey.Id == TimeType.StartWeek.Id)
             {
                 int count = dateNow.DayOfWeek - DayOfWeek.Monday;
                 if (count == -1) count = 6;
                 return new DateTime(dateNow.Year, dateNow.Month, dateNow.Day).AddDays(-count); //本周周一
             }
 
-            if (timeKey == TimeType.EndWeek)
+            if (timeKey.Id == TimeType.EndWeek.Id)
             {
                 int count = dateNow.DayOfWeek - DayOfWeek.Sunday;
                 if (count != 0) count = 7 - count;
@@ -775,8 +775,8 @@ namespace EInfrastructure.Core.Tools
         /// <param name="year">阴历年</param>
         /// <param name="month">阴历月</param>
         /// <param name="day">阴历日</param>
-        /// <param name="IsLeapMonth">是否闰月</param>
-        private static DateTime GetLunarYearDate(int year, int month, int day, bool IsLeapMonth)
+        /// <param name="isLeapMonth">是否闰月</param>
+        private static DateTime GetLunarYearDate(int year, int month, int day, bool isLeapMonth)
         {
             if (year < 1902 || year > 2100)
                 throw new BusinessException("只支持1902～2100期间的农历年");
@@ -789,7 +789,7 @@ namespace EInfrastructure.Core.Tools
             int num1 = 0, num2 = 0;
             int leapMonth = calendar.GetLeapMonth(year);
 
-            if (((leapMonth == month + 1) && IsLeapMonth) || (leapMonth > 0 && leapMonth <= month))
+            if (((leapMonth == month + 1) && isLeapMonth) || (leapMonth > 0 && leapMonth <= month))
                 num2 = month;
             else
                 num2 = month - 1;
