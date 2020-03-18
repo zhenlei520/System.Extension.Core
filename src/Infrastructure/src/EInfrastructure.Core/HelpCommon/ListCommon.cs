@@ -95,7 +95,7 @@ namespace EInfrastructure.Core.HelpCommon
         public static List<T> Except<T>(this List<T> t1, List<T> t2, bool isCheckRepeat ) where T : class, new()
         {
             if (!isCheckRepeat)
-                return Tools.ListCommon.Except(t1, t2);
+                return t1.ExceptNew(t2);
             return MinusExcept(t1, t2);
         }
 
