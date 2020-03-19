@@ -146,12 +146,23 @@ namespace EInfrastructure.Core.Tools
             {
                 if (mobile.IsMobile())
                 {
-                    return mobile.Substring(0, 3) + "*****" + mobile.Substring(8);
+                    return EncryptStr(mobile, "*", 3, 4);
                 }
 
                 if (mobile.IsPhone())
                 {
-                    return mobile.Substring(0, mobile.Length - 6) + "***" + mobile.Substring(mobile.Length - 3);
+                    var strArray = mobile.Split('-');
+                    if (strArray.Length == 2)
+                    {
+                        return strArray[0] + "-" + EncryptStr(strArray[1], "*", 2, -1);
+                    }
+
+                    if (mobile.Length <= 7)
+                    {
+                        return EncryptStr(mobile, "*", 2, 3);
+                    }
+
+                    return EncryptStr(mobile, "*", mobile.Length - 6, 3);
                 }
 
                 throw new System.Exception("请输入正确的手机号码");
@@ -265,13 +276,13 @@ namespace EInfrastructure.Core.Tools
 
         #region 操作
 
-        #region 清除字符串数组中的重复项
+        #region 清除字符串数组中的重复项以及对字符串进行剪切
 
         /// <summary>
-        /// 清除字符串数组中的重复项
+        /// 清除字符串数组中的重复项以及对字符串进行剪切
         /// </summary>
         /// <param name="strArray">字符串数组</param>
-        /// <param name="maxElementLength">字符串数组中单个元素的最大长度</param>
+        /// <param name="maxElementLength">字符串数组中单个元素的最大长度 当其值大于0时，对其进行剪切</param>
         /// <returns></returns>
         public static string[] DistinctStringArray(string[] strArray, int maxElementLength)
         {
@@ -289,7 +300,7 @@ namespace EInfrastructure.Core.Tools
 
             string[] result = new string[h.Count];
             h.Keys.CopyTo(result, 0);
-            return result;
+            return result.Where(x=>!string.IsNullOrEmpty(x)).ToArray();
         }
 
         #endregion

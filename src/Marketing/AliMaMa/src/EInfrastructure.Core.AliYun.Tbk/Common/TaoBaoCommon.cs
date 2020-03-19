@@ -147,12 +147,12 @@ namespace EInfrastructure.Core.AliYun.Tbk.Common
         /// <summary>
         /// 判断是否是淘口令
         /// </summary>
-        /// <param name="str"></param>
-        /// <param name="code"></param>
+        /// <param name="str">待校验的字符串</param>
+        /// <param name="code">淘口令</param>
         /// <returns></returns>
-        public static bool IsAmoyPsd(string str, ref string code)
+        public static bool IsAmoyPsdTip(string str, ref string code)
         {
-            Regex reg = new Regex("￥.*￥", RegexOptions.Multiline);
+            Regex reg = new Regex("(￥|€|《).*(￥|€|《)", RegexOptions.Multiline);
             MatchCollection matchs = reg.Matches(str);
             foreach (Match item in matchs)
             {
