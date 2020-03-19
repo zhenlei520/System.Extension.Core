@@ -858,7 +858,7 @@ namespace EInfrastructure.Core.Tools
         #region 清空小数点后0
 
         /// <summary>
-        /// 清楚小数点后的0
+        /// 保留两位小数并对其四舍五入，如果最后的两位小数为*.00则去除小数位，否则保留两位小数
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>

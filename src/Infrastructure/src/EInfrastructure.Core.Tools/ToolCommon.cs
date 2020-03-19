@@ -18,9 +18,10 @@ namespace EInfrastructure.Core.Tools
         /// 得到参数
         /// </summary>
         /// <param name="data">对象 允许自定义参数名，可以从JsonProperty的属性中获取</param>
+        /// <param name="customerAttributeTypeName"></param>
         /// <param name="func">委托方法，当属性类型为泛型时，可以修改最后的value返回值</param>
         /// <returns></returns>
-        public static Dictionary<string, object> GetParams(object data, Func<object, object> func = null)
+        public static Dictionary<string, object> GetParams(object data,string customerAttributeTypeName = "Newtonsoft.Json.JsonPropertyAttribute,Newtonsoft.Json", Func<object, object> func = null)
         {
             if (data == null || data is string || !data.GetType().IsClass)
             {
@@ -35,11 +36,13 @@ namespace EInfrastructure.Core.Tools
             {
                 object value;
                 string name;
+
+                var customerAttributeType = Type.GetType(customerAttributeTypeName);
                 if (property.CustomAttributes.Any(x =>
-                    x.AttributeType == typeof(Newtonsoft.Json.JsonPropertyAttribute)))
+                    x.AttributeType == customerAttributeType))
                 {
                     var namedargument = property.CustomAttributes
-                        .Where(x => x.AttributeType == typeof(Newtonsoft.Json.JsonPropertyAttribute))
+                        .Where(x => x.AttributeType == customerAttributeType)
                         .Select(x => x.NamedArguments).FirstOrDefault();
                     name = namedargument.Select(x => x.TypedValue.Value).FirstOrDefault()?.ToString();
                 }
