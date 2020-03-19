@@ -29,6 +29,10 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
         private readonly RestClient _restClient;
         private readonly RestRequest _request;
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="jsonProviders"></param>
         public AuthenticateDemoService(ICollection<IJsonProvider> jsonProviders)
         {
             _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
