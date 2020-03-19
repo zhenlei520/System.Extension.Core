@@ -23,9 +23,11 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DocumentationFile>bin\Release\EInfrastructure.Core.Words.xml</DocumentationFile>
   </PropertyGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\AutomationConfiguration\src\EInfrastructure.Core.AutomationConfiguration\EInfrastructure.Core.AutomationConfiguration.csproj"/>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.1.1"/>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj"/>
   </ItemGroup>
 

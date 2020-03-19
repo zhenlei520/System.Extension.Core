@@ -28,12 +28,8 @@
     <None Remove="nlog.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.Entities\EInfrastructure.Core.Config.Entities.csproj" />
     <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.IdentificationExtensions\EInfrastructure.Core.Config.IdentificationExtensions.csproj" />
-    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
     <ProjectReference Include="..\..\..\Serialize\src\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions.csproj" />
-    <ProjectReference Include="..\..\..\Serialize\src\EInfrastructure.Core.Serialize.NewtonsoftJson\EInfrastructure.Core.Serialize.NewtonsoftJson.csproj" />
-    <ProjectReference Include="..\..\..\Serialize\src\EInfrastructure.Core.Serialize.Xml\EInfrastructure.Core.Serialize.Xml.csproj" />
     <ProjectReference Include="..\EInfrastructure.Core.Tools\EInfrastructure.Core.Tools.csproj" />
   </ItemGroup>
 </Project>

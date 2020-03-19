@@ -26,9 +26,12 @@
   <ItemGroup>
     <None Remove="ucloud.json"/>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.1.1" />
+  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\AutomationConfiguration\src\EInfrastructure.Core.AutomationConfiguration\EInfrastructure.Core.AutomationConfiguration.csproj"/>
     <ProjectReference Include="..\..\..\..\Tools\Validation\src\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj"/>
   </ItemGroup>
 
