@@ -14,6 +14,7 @@
     <Title>基础模型配置</Title>
     <PackageTags>EInfrastructure.Core.Config.Entities EInfrastructure ECommon</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

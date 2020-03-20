@@ -14,6 +14,7 @@
     <Title>autofac mvc mysql自动注入</Title>
     <PackageTags>autofac autofac.mysql</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -26,11 +27,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EInfrastructure.Core.AutoFac.MySql\EInfrastructure.Core.AutoFac.MySql.csproj"/>
+    <ProjectReference Include="..\EInfrastructure.Core.AutoFac.MySql\EInfrastructure.Core.AutoFac.MySql.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
   </ItemGroup>
 
 </Project>

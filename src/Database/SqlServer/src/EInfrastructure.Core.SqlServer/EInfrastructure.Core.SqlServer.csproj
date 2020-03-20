@@ -13,6 +13,7 @@
     <PackageTags>EInfrastructure EInfrastructure.SqlServer</PackageTags>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <NeutralLanguage>zh-CN</NeutralLanguage>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

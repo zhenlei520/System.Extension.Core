@@ -14,6 +14,7 @@
     <Title>autofac sqlserver mvc自动注入</Title>
     <PackageTags>autofac autofac.sqlserver</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -25,11 +26,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EInfrastructure.Core.AutoFac.SqlServer\EInfrastructure.Core.AutoFac.SqlServer.csproj"/>
+    <ProjectReference Include="..\EInfrastructure.Core.AutoFac.SqlServer\EInfrastructure.Core.AutoFac.SqlServer.csproj" />
   </ItemGroup>
 
 </Project>

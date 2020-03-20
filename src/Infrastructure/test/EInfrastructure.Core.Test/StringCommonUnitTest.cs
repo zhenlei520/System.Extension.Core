@@ -4,6 +4,7 @@ using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Enumerable;
 using EInfrastructure.Core.Tools.Systems;
+using EInfrastructure.Core.Tools.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -31,11 +32,17 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void DistinctStringArray()
         {
+
             List<string> list = new List<string>()
             {
                 "", "123"
             };
             var stringArray = StringCommon.DistinctStringArray(list.ToArray(), 2);
+        }
+
+        public class Users
+        {
+            public string Name { get; set; }
         }
     }
 }

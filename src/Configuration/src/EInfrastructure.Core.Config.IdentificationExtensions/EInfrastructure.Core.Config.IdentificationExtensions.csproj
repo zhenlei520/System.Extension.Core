@@ -14,6 +14,7 @@
     <Title>configuration</Title>
     <PackageTags>EInfrastructure.Core Configuration</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

@@ -14,6 +14,7 @@
     <Title>memorycache缓存类库</Title>
     <PackageTags>EInfrastructure ECommon MemoryCache </PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
