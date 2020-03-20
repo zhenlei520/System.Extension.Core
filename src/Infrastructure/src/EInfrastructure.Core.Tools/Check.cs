@@ -83,9 +83,9 @@ namespace EInfrastructure.Core.Tools
         #region 检查是否为假
 
         /// <summary>
-        /// 检查是否为假
+        /// 检查是否为假 若status为false，则抛出异常
         /// </summary>
-        /// <param name="status"></param>
+        /// <param name="status">状态</param>
         /// <param name="errorMessageFormat"></param>
         /// <param name="errCode">错误码</param>
         public static void True(bool status, string errorMessageFormat,
@@ -95,32 +95,6 @@ namespace EInfrastructure.Core.Tools
             {
                 throw new BusinessException(string.Format(errorMessageFormat), errCode ?? HttpStatus.Err.Id);
             }
-        }
-
-        #endregion
-
-        #region 判断是否是淘口令
-
-        /// <summary>
-        /// 判断是否是淘口令
-        /// </summary>
-        /// <param name="str">待校验的字符串</param>
-        /// <param name="code">淘口令</param>
-        /// <returns></returns>
-        public static bool IsAmoyPsdTip(string str, ref string code)
-        {
-            Regex reg = new Regex("(￥|€|《).*(￥|€|《)", RegexOptions.Multiline);
-            MatchCollection matchs = reg.Matches(str);
-            foreach (Match item in matchs)
-            {
-                if (item.Success)
-                {
-                    code = item.Value;
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         #endregion
