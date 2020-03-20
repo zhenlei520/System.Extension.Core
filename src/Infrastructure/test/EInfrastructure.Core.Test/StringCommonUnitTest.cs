@@ -39,10 +39,5 @@ namespace EInfrastructure.Core.Test
             };
             var stringArray = StringCommon.DistinctStringArray(list.ToArray(), 2);
         }
-
-        public class Users
-        {
-            public string Name { get; set; }
-        }
     }
 }
