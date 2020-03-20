@@ -8,6 +8,7 @@ using EInfrastructure.Core.Http;
 using EInfrastructure.Core.Http.Params;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
@@ -25,10 +26,51 @@ namespace EInfrastructure.Core.Test
 
         #region Get请求
 
-        [Fact]
-        public string GetString()
+        /// <summary>
+        /// 得到client
+        /// </summary>
+        /// <returns></returns>
+        private HttpClient GetClient()
         {
-            HttpClient client = new HttpClient("https://api.weixin.qq.com");
+            return new HttpClient("https://api.weixin.qq.com");
+        }
+
+        /// <summary>
+        /// 得到AccessToken的请求参数
+        /// </summary>
+        public class AccessTokenParam
+        {
+            /// <summary>
+            ///
+            /// </summary>
+            [FromQuery(Name = "appid")]
+            public string Appid { get; set; }
+
+            /// <summary>
+            /// 秘钥
+            /// </summary>
+            [FromQuery(Name = "secret")]
+            public string Secret { get; set; }
+
+            /// <summary>
+            ///
+            /// </summary>
+            [FromQuery(Name = "grant_type")]
+            public string GrantType { get; set; }
+        }
+
+        #region Get请求 得到响应字符串
+
+        #region Get请求 得到响应字符串
+
+        /// <summary>
+        /// Get请求 得到响应字符串
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public string GetString1()
+        {
+            HttpClient client = GetClient();
             string client_credential = "";
             string appid = "";
             string secret = "";
@@ -36,9 +78,70 @@ namespace EInfrastructure.Core.Test
             return str;
         }
 
+        #endregion
 
+        #region Get请求 得到响应字符串
+
+        /// <summary>
+        /// Get请求 得到响应字符串
+        /// </summary>
+        /// <returns></returns>
         [Fact]
-        public WeChatResponseDto GetJson()
+        public string GetString2()
+        {
+            HttpClient client = GetClient();
+            string client_credential = "";
+            string appid = "";
+            string secret = "";
+            var str = client.GetString($"cgi-bin/token",
+                new
+                {
+                    grant_type = client_credential,
+                    appid = appid,
+                    secret = secret
+                });
+            return str;
+        }
+
+        #endregion
+
+        #region Get请求 得到响应字符串
+
+        /// <summary>
+        /// Get请求 得到响应字符串
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public string GetString3()
+        {
+            HttpClient client = GetClient();
+            string client_credential = "";
+            string appid = "";
+            string secret = "";
+            var str = client.GetString($"cgi-bin/token",
+                new AccessTokenParam
+                {
+                    GrantType = client_credential,
+                    Appid = appid,
+                    Secret = secret
+                });
+            return str;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Get请求 得到响应Json对象
+
+        #region Get请求 得到响应Json对象
+
+        /// <summary>
+        /// Get请求 得到响应Json对象
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public WeChatResponseDto GetJson1()
         {
             HttpClient client = new HttpClient("https://api.weixin.qq.com");
             string client_credential = "";
@@ -49,12 +152,67 @@ namespace EInfrastructure.Core.Test
             return res;
         }
 
+        #endregion
+
+        #region Get请求 得到响应Json对象
+
+        /// <summary>
+        /// Get请求 得到响应Json对象
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public WeChatResponseDto GetJson2()
+        {
+            HttpClient client = new HttpClient("https://api.weixin.qq.com");
+            string client_credential = "";
+            string appid = "";
+            string secret = "";
+            var res = client.GetJson<WeChatResponseDto>(
+                $"cgi-bin/token", new
+                {
+                    grant_type = client_credential,
+                    appid = appid,
+                    secret = secret
+                });
+            return res;
+        }
+
+        #endregion
+
+        #region Get请求 得到响应Json对象
+
+        /// <summary>
+        /// Get请求 得到响应Json对象
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public WeChatResponseDto GetJson3()
+        {
+            HttpClient client = new HttpClient("https://api.weixin.qq.com");
+            string client_credential = "";
+            string appid = "";
+            string secret = "";
+            var res = client.GetJson<WeChatResponseDto>(
+                $"cgi-bin/token", new AccessTokenParam
+                {
+                    GrantType = client_credential,
+                    Appid = appid,
+                    Secret = secret
+                });
+            return res;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 微信响应信息
+        /// </summary>
         public class WeChatResponseDto
         {
             /// <summary>
             /// AccessToken
             /// </summary>
-            [JsonProperty(PropertyName = "access_token",DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty(PropertyName = "access_token", DefaultValueHandling = DefaultValueHandling.Ignore)]
             public string AccessToken { get; set; }
 
             /// <summary>
@@ -66,15 +224,17 @@ namespace EInfrastructure.Core.Test
             /// <summary>
             /// 错误码
             /// </summary>
-            [JsonProperty(PropertyName = "errcode",DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty(PropertyName = "errcode", DefaultValueHandling = DefaultValueHandling.Ignore)]
             public int? Errcode { get; set; }
 
             /// <summary>
             /// 错误原因
             /// </summary>
-            [JsonProperty(PropertyName = "errmsg",DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty(PropertyName = "errmsg", DefaultValueHandling = DefaultValueHandling.Ignore)]
             public string Errmsg { get; set; }
         }
+
+        #endregion
 
         #endregion
 

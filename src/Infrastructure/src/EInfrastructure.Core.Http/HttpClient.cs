@@ -55,7 +55,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="jsonProvider"></param>
         public HttpClient(string host,
             RequestBodyType requestBodyType = null,
-            RequestBodyFormat requestBodyFormat = null,IJsonProvider jsonProvider = null) : this(host)
+            RequestBodyFormat requestBodyFormat = null, IJsonProvider jsonProvider = null) : this(host)
         {
             Host = host;
             _jsonProvider = jsonProvider ?? new NewtonsoftJsonProvider();
@@ -90,7 +90,8 @@ namespace EInfrastructure.Core.Http
         /// <param name="jsonProvider"></param>
         public HttpClient(string host, Encoding encoding,
             RequestBodyType requestBodyType = null,
-            RequestBodyFormat requestBodyFormat = null, IJsonProvider jsonProvider = null) : this(host, requestBodyType, requestBodyFormat,
+            RequestBodyFormat requestBodyFormat = null, IJsonProvider jsonProvider = null) : this(host, requestBodyType,
+            requestBodyFormat,
             jsonProvider ?? new NewtonsoftJsonProvider())
         {
             Host = host;
@@ -107,7 +108,8 @@ namespace EInfrastructure.Core.Http
         /// <param name="xmlProvider"></param>
         public HttpClient(string host, Encoding encoding,
             RequestBodyType requestBodyType = null,
-            RequestBodyFormat requestBodyFormat = null, IXmlProvider xmlProvider = null) : this(host, requestBodyType, requestBodyFormat,
+            RequestBodyFormat requestBodyFormat = null, IXmlProvider xmlProvider = null) : this(host, requestBodyType,
+            requestBodyFormat,
             xmlProvider ?? new XmlProvider())
         {
             Host = host;
@@ -228,6 +230,31 @@ namespace EInfrastructure.Core.Http
 
         #region 同步
 
+        #region Get请求 得到响应字符串
+
+        /// <summary>
+        /// Get请求 得到响应字符串
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <returns></returns>
+        public string GetString(string url)
+        {
+            return Get(url).Content;
+        }
+
+        /// <summary>
+        /// Get请求
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数</param>
+        /// <returns></returns>
+        public string GetString(string url, object data)
+        {
+            return Get(SetUrlParam(url, GetParams(data))).Content;
+        }
+
+        #endregion
+
         #region 得到响应对象
 
         #region 响应信息为Json对象
@@ -306,32 +333,6 @@ namespace EInfrastructure.Core.Http
 
         #endregion
 
-        #region Get请求 得到响应字符串
-
-        /// <summary>
-        /// Get请求 得到响应字符串
-        /// </summary>
-        /// <param name="url">请求地址</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
-        /// <returns></returns>
-        public string GetString(string url, int? timeOut = null)
-        {
-            return Get(url).Content;
-        }
-
-        /// <summary>
-        /// Get请求
-        /// </summary>
-        /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数</param>
-        /// <returns></returns>
-        public string GetString(string url, object data)
-        {
-            return Get(SetUrlParam(url, GetParams(data))).Content;
-        }
-
-        #endregion
-
         #region get请求得到byte数组
 
         /// <summary>
@@ -385,6 +386,31 @@ namespace EInfrastructure.Core.Http
         #endregion
 
         #region 异步
+
+        #region Get请求 得到响应字符串
+
+        /// <summary>
+        /// Get请求 得到响应字符串
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <returns></returns>
+        public async Task<string> GetStringAsync(string url)
+        {
+            return (await GetAsync(url)).Content;
+        }
+
+        /// <summary>
+        /// Get请求 得到响应字符串
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数</param>
+        /// <returns></returns>
+        public async Task<string> GetStringAsync(string url, object data)
+        {
+            return (await GetAsync(SetUrlParam(url, GetParams(data)))).Content;
+        }
+
+        #endregion
 
         #region 得到响应对象
 
@@ -461,31 +487,6 @@ namespace EInfrastructure.Core.Http
         }
 
         #endregion
-
-        #endregion
-
-        #region Get请求 得到响应字符串
-
-        /// <summary>
-        /// Get请求 得到响应字符串
-        /// </summary>
-        /// <param name="url">请求地址</param>
-        /// <returns></returns>
-        public async Task<string> GetStringAsync(string url)
-        {
-            return (await GetAsync(url)).Content;
-        }
-
-        /// <summary>
-        /// Get请求 得到响应字符串
-        /// </summary>
-        /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数</param>
-        /// <returns></returns>
-        public async Task<string> GetStringAsync(string url, object data)
-        {
-            return (await GetAsync(SetUrlParam(url, GetParams(data)))).Content;
-        }
 
         #endregion
 
@@ -713,6 +714,24 @@ namespace EInfrastructure.Core.Http
 
         #region 异步请求
 
+        #region Post请求得到响应内容
+
+        /// <summary>
+        /// Post请求得到响应内容
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数</param>
+        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
+        /// <returns></returns>
+        public async Task<string> GetPostByStringAsync(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
+        {
+            var res = await GetByPostAsync(url, data, requestBodyFormat);
+            return res.Content;
+        }
+
+        #endregion
+
         #region Post请求得到响应信息为Json对象
 
         /// <summary>
@@ -723,10 +742,10 @@ namespace EInfrastructure.Core.Http
         /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public async Task<T> PostByJsonAsync<T>(string url, object data,
+        public async Task<T> GetJsonByPostAsync<T>(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
-            var res = await PostByStringAsync(url, data, requestBodyFormat);
+            var res = await GetPostByStringAsync(url, data, requestBodyFormat);
             if (string.IsNullOrEmpty(res))
             {
                 return default;
@@ -747,34 +766,16 @@ namespace EInfrastructure.Core.Http
         /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public async Task<T> PostByXmlAsync<T>(string url, object data,
+        public async Task<T> GetXmlByPostAsync<T>(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
-            var res = await PostByStringAsync(url, data, requestBodyFormat);
+            var res = await GetPostByStringAsync(url, data, requestBodyFormat);
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
             }
 
             return _xmlProvider.Deserialize<T>(res, _encoding);
-        }
-
-        #endregion
-
-        #region Post请求得到响应内容
-
-        /// <summary>
-        /// Post请求得到响应内容
-        /// </summary>
-        /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数</param>
-        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
-        /// <returns></returns>
-        public async Task<string> PostByStringAsync(string url, object data,
-            RequestBodyFormat requestBodyFormat = null)
-        {
-            var res = await GetByPostAsync(url, data, requestBodyFormat);
-            return res.Content;
         }
 
         #endregion
@@ -788,7 +789,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="data">请求参数</param>
         /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
         /// <returns></returns>
-        public async Task<byte[]> PostByBytesAsync(string url, object data,
+        public async Task<byte[]> GetBytesByPostAsync(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
             var res = await GetByPostAsync(url, data, requestBodyFormat);
@@ -806,10 +807,10 @@ namespace EInfrastructure.Core.Http
         /// <param name="data"></param>
         /// <param name="requestBodyFormat"></param>
         /// <returns></returns>
-        public async Task<Stream> PostByStreamAsync(string url, object data,
+        public async Task<Stream> GetStreamByPostAsync(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
-            return new MemoryStream(await PostByBytesAsync(url, data, requestBodyFormat));
+            return new MemoryStream(await GetBytesByPostAsync(url, data, requestBodyFormat));
         }
 
         #endregion
@@ -828,16 +829,12 @@ namespace EInfrastructure.Core.Http
         private IRestResponse GetByPost(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
-            var body = data;
-            if (_requestBodyType.Id == RequestBodyType.TextXml.Id)
-            {
-                body = _xmlProvider.Serializer(data);
-            }
-
+            var body = _requestBodyType.Id == RequestBodyType.TextXml.Id
+                ? _xmlProvider.Serializer(data)
+                : _jsonProvider.Serializer((data ?? new { }));
             var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
                 new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());
-
             return GetClient().Execute(request);
         }
 
@@ -851,16 +848,12 @@ namespace EInfrastructure.Core.Http
         private async Task<IRestResponse> GetByPostAsync(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
-            var body = data;
-            if (_requestBodyType.Id == RequestBodyType.TextXml.Id)
-            {
-                body = _xmlProvider.Serializer(data);
-            }
-
+            var body = _requestBodyType.Id == RequestBodyType.TextXml.Id
+                ? _xmlProvider.Serializer(data)
+                : _jsonProvider.Serializer((data ?? new { }));
             var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
                 new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());
-
             return await GetClient().ExecuteTaskAsync(request);
         }
 
@@ -950,7 +943,9 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         private Dictionary<string, string> GetParams(object data)
         {
-            return ObjectCommon.GetParams(data, "Microsoft.AspNetCore.Mvc.FromQueryAttribute,Microsoft.AspNetCore.Mvc.Core",(res) => _jsonProvider.Serializer(data))
+            return ObjectCommon.GetParams(data,
+                    "Microsoft.AspNetCore.Mvc.FromQueryAttribute,Microsoft.AspNetCore.Mvc.Core",
+                    (res) => _jsonProvider.Serializer(data))
                 .ToDictionary(x => x.Key, x => x.Value.ToString());
         }
 

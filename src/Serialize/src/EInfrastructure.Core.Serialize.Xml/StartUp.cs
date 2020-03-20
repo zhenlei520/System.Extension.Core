@@ -15,24 +15,13 @@ namespace EInfrastructure.Core.Serialize.Xml
         /// <summary>
         /// 启用配置
         /// </summary>
-        public static void Run()
+        /// <param name="enableLog">默认不启用日志</param>
+        public static void Run(bool enableLog = false)
         {
             if (!IsStartUp)
             {
                 IsStartUp = true;
-                Load();
             }
         }
-
-        #region private methods
-
-        /// <summary>
-        /// load配置类库
-        /// </summary>
-        private static void Load()
-        {
-        }
-
-        #endregion
     }
 }
