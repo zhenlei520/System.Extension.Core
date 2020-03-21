@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>2.0.1-beta-012</Version>
+    <Version>2.0.1-beta-014</Version>
     <PackageReleaseNotes>sqlserver2012以上数据库</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>dotnet core autofac 与sqlserver自动注入</Description>
@@ -13,6 +13,7 @@
     <Title>Autofac sql自动注入</Title>
     <PackageTags>autofac autofac.sqlserver</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
+
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -24,8 +25,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Database\SqlServer\src\EInfrastructure.Core.SqlServer\EInfrastructure.Core.SqlServer.csproj"/>
-    <ProjectReference Include="..\EInfrastructure.Core.AutoFac\EInfrastructure.Core.AutoFac.csproj"/>
+    <ProjectReference Include="..\..\..\..\Database\SqlServer\src\EInfrastructure.Core.SqlServer\EInfrastructure.Core.SqlServer.csproj" />
+    <ProjectReference Include="..\EInfrastructure.Core.AutoFac\EInfrastructure.Core.AutoFac.csproj" />
   </ItemGroup>
 
 </Project>

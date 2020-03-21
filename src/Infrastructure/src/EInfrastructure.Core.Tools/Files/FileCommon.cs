@@ -381,7 +381,7 @@ namespace EInfrastructure.Core.Tools.Files
         /// <param name="filePath">本地文件绝对地址</param>
         /// <param name="encoding">编码格式,默认为Encoding.Default</param>
         /// <returns></returns>
-        public static List<string> IFormFile(string filePath, Encoding encoding = null)
+        public static List<string> GetContentFormFile(string filePath, Encoding encoding = null)
         {
             return GetFileContentByLine(filePath, true, encoding).Result;
         }
@@ -392,7 +392,7 @@ namespace EInfrastructure.Core.Tools.Files
         /// <param name="filePath">本地文件绝对地址</param>
         /// <param name="encoding">编码格式,默认为Encoding.Default</param>
         /// <returns></returns>
-        private static async Task<List<string>> GetFileContentAsyncByLine(string filePath,
+        private static async Task<List<string>> GetContenFormFileAsync(string filePath,
             Encoding encoding = null)
         {
             return await GetFileContentByLine(filePath, false, encoding);

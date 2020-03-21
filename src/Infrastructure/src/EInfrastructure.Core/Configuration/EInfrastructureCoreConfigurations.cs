@@ -1,14 +1,13 @@
-// Copyright (c) zhenlei520 All rights reserved.
+﻿// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace EInfrastructure.Core.Configuration
 {
     /// <summary>
-    ///
+    /// 基础配置
     /// </summary>
-    public static class StartUp
+    internal static class EInfrastructureCoreConfigurations
     {
-        #region 日志配置
-
         /// <summary>
         /// 设置是否启用日志
         /// </summary>
@@ -23,22 +22,5 @@ namespace EInfrastructure.Core.Configuration
         /// 是否启用日志
         /// </summary>
         internal static bool EnableLog { get; private set; }
-
-        #endregion
-
-        private static bool _isStartUp;
-
-        /// <summary>
-        /// 启用配置
-        /// </summary>
-        /// <param name="enableLog">默认不启用日志</param>
-        public static void Run(bool enableLog = false)
-        {
-            if (!_isStartUp)
-            {
-                SetLog(enableLog);
-                _isStartUp = true;
-            }
-        }
     }
 }

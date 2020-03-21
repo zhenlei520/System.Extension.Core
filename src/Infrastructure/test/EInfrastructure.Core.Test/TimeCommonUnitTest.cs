@@ -131,34 +131,21 @@ namespace EInfrastructure.Core.Test
             Check.True(result.FormatDate(FormatDateType.Zero) == dateTime2, "方法异常");
         }
 
-        [Fact]
-        public void GetTimeSpan()
-        {
-            long test = DateTime.Now.GetTimeSpan(DateTimeKind.Utc);
-        }
-
-        [Fact]
-        public void ConvertDateTimeInt()
-        {
-            long test = DateTime.Now.ConvertDateTimeInt();
-        }
 
         [Fact]
         public void ToUnixTimestamp()
         {
-            long test = DateTime.Now.ToUnixTimestamp();
+            long test = DateTime.Now.ToUnixTimestamp(TimestampType.Millisecond);
         }
 
         [Fact]
         public void UnixTimeStampToDateTime()
         {
-            var time = TimeCommon.UnixTimeStampToDateTime(DateTime.Now.ToUnixTimestamp());
-        }
+            var time = DateTime.Now.ToUnixTimestamp(TimestampType.Millisecond);
+            var time2 = DateTime.Now.ToUnixTimestamp(TimestampType.Second);
 
-        [Fact]
-        public void CurrentTimeMillis()
-        {
-            var time = DateTime.Now.CurrentTimeMillis();
+            var time3 = TimeCommon.UnixTimeStampToDateTime(time);
+            var time4= TimeCommon.UnixTimeStampToDateTime(time2);
         }
 
         [Theory]

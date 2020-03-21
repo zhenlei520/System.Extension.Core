@@ -82,7 +82,7 @@ namespace EInfrastructure.Core.Http.Provider
         public RequestBody(object data, RequestBodyFormat requestBodyFormat = null,
             List<RequestMultDataParam> files = null, IJsonProvider jsonProvider = null, IXmlProvider xmlProvider = null)
         {
-            Data = data ?? new { };
+            Data = data;
             RequestBodyFormat = requestBodyFormat ?? RequestBodyFormat.None;
             Files = files ?? new List<RequestMultDataParam>();
             _jsonProvider = jsonProvider;

@@ -15,6 +15,7 @@ using EInfrastructure.Core.Redis.Common;
 using EInfrastructure.Core.Redis.Config;
 using EInfrastructure.Core.Redis.Validator;
 using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Enumerations;
 using EInfrastructure.Core.Validation.Common;
 
 namespace EInfrastructure.Core.Redis
@@ -932,7 +933,7 @@ namespace EInfrastructure.Core.Redis
         public List<ValueTuple<string, string, string, string>> SortedSetRangeByRankAndOverTime(long count = 1000)
         {
             var keyList = QuickHelperBase
-                .ZRevRangeByScore(QuickHelperBase.GetCacheFileKeys(), TimeCommon.GetTimeSpan(DateTime.Now), 0, count,
+                .ZRevRangeByScore(QuickHelperBase.GetCacheFileKeys(), TimeCommon.ToUnixTimestamp(DateTime.Now,TimestampType.Millisecond), 0, count,
                     null); //得到过期的key集合
             List<ValueTuple<string, string, string, string>> result = new List<(string, string, string, string)>();
             keyList.ForEach(item =>

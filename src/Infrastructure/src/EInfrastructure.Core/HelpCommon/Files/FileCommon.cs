@@ -80,7 +80,7 @@ namespace EInfrastructure.Core.HelpCommon.Files
         #region 得到文件的Sha384
 
         /// <summary>
-        /// 得到文件的Sha512
+        /// 得到文件的Sha384
         /// </summary>
         /// <param name="file"></param>
         /// <param name="isUpper">是否转大写</param>

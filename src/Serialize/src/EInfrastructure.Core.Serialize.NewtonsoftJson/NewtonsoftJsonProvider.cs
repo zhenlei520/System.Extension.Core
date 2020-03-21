@@ -2,15 +2,41 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.Serialize.NewtonsoftJson
 {
+    /// <summary>
+    ///
+    /// </summary>
     public class NewtonsoftJsonProvider : IJsonProvider
     {
+        /// <summary>
+        ///
+        /// </summary>
+        public NewtonsoftJsonProvider()
+        {
+        }
+
+        private readonly ILogService _logService;
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="providers"></param>
+        public NewtonsoftJsonProvider(ICollection<ILogService> providers) : this()
+        {
+            _logService = providers.Count == 1
+                ? providers.FirstOrDefault()
+                : providers.OrderByDescending(x => x.GetWeights()).FirstOrDefault();
+        }
+
         #region 得到实现类唯一标示
 
         /// <summary>
@@ -32,11 +58,17 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
         /// </summary>
         /// <param name="o"></param>
         /// <param name="format"></param>
+        /// <param name="action"></param>
         /// <returns></returns>
         public string Serializer(object o, bool format = false, Func<Exception, string> action = null)
         {
             try
             {
+                if (o == null)
+                {
+                    return string.Empty;
+                }
+
                 using (StringWriter sw = new StringWriter())
                 {
                     JsonSerializer serializer = JsonSerializer.Create(
@@ -101,12 +133,17 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
 
             catch (System.Exception ex)
             {
+                if (StartUp.EnableLog)
+                {
+                    _logService?.Info($"反序列化失败，待转字符串str：{str}" + "，异常信息：" + ex.Message);
+                }
+
                 if (action != null)
                 {
                     return action.Invoke(ex);
                 }
 
-                throw new System.Exception($"json反序列化出错,待反序列化的json字符串为：{str}");
+                throw;
             }
         }
 
@@ -123,16 +160,16 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
         {
             try
             {
-                return (T) Deserialize(str, typeof(T));
+                object obj = Deserialize(str, typeof(T), (exception =>
+                {
+                    action?.Invoke(exception);
+                    return defaultResult;
+                }));
+                return (T) obj;
             }
             catch (Exception ex)
             {
-                if (action == null)
-                {
-                    throw new Exception($"json反序列化出错，反序列化对象默认值为：{new T()},内容：{str}");
-                }
-
-                action.Invoke(ex);
+                action?.Invoke(ex);
                 return defaultResult;
             }
         }

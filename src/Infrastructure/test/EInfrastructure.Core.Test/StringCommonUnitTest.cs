@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Enumerable;
 using EInfrastructure.Core.Tools.Systems;
+using EInfrastructure.Core.Tools.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 

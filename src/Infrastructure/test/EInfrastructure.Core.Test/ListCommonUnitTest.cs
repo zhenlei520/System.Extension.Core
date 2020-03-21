@@ -68,7 +68,7 @@ namespace EInfrastructure.Core.Test
                 }
             };
             var persons = personList.ExceptNew(personList2);
-            persons = personList.Except(personList2, true);
+            persons = personList.Except(personList2);
         }
 
         [Fact]

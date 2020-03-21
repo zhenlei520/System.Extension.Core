@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Tools.Enumerations;
 using TimeType = EInfrastructure.Core.Tools.Enumerations.TimeType;
 
 namespace EInfrastructure.Core.Tools
@@ -809,125 +810,57 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 获取时间戳
-
-        #region DateTime时间格式转换为10位不带毫秒的Unix时间戳
+        #region 将时间戳转时间
 
         /// <summary>
-        /// DateTime时间格式转换为10位不带毫秒的Unix时间戳
+        /// 将时间戳转时间
         /// </summary>
-        /// <param name="time"> DateTime时间格式</param>
-        /// <param name="dateTimeKind"></param>
-        /// <returns>Unix时间戳格式</returns>
-        public static int ConvertDateTimeInt(this DateTime time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
-        {
-            DateTime startTime =
-                TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind), TimeZoneInfo.Local);
-            return (int) (time - startTime).TotalSeconds;
-        }
-
-        #endregion
-
-        #region 得到13位时间戳
-
-        /// <summary>
-        /// 得到13位时间戳
-        /// </summary>
-        /// <param name="time"></param>
+        /// <param name="unixTimeStamp">待转时间戳</param>
         /// <param name="dateTimeKind"></param>
         /// <returns></returns>
-        public static long GetTimeSpan(this DateTime? time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
-        {
-            if (time == null)
-                time = DateTime.Now;
-            return GetTimeSpan(time.Value, dateTimeKind);
-        }
-
-        /// <summary>
-        /// 得到13位时间戳
-        /// </summary>
-        /// <param name="time"></param>
-        /// <param name="dateTimeKind"></param>
-        /// <returns></returns>
-        public static long GetTimeSpan(this DateTime time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
-        {
-            var startTime =
-                TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind), TimeZoneInfo.Local);
-            long t = (time.Ticks - startTime.Ticks) / 10000; //除10000调整为13位
-            return t;
-        }
-
-        #endregion
-
-        #endregion
-
-        #region 时间戳转时间
-
-        #region 将10位时间戳转时间
-
-        /// <summary>
-        /// 将10位时间戳转时间
-        /// </summary>
-        /// <param name="unixTimeStamp"></param>
-        /// <param name="dateTimeKind"></param>
-        /// <returns></returns>
-        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp,
+        public static DateTime UnixTimeStampToDateTime(long unixTimeStamp,
             DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
-            // Unix timestamp is seconds past epoch
             System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind);
-            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            switch (unixTimeStamp.ToString(CultureInfo.InvariantCulture).Length)
+            {
+                case 10:
+                    dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+                    break;
+                case 13:
+                    dtDateTime = dtDateTime.AddMilliseconds(unixTimeStamp).ToLocalTime();
+                    break;
+            }
+
             return dtDateTime;
         }
 
         #endregion
 
-        #region 将13位时间戳转为时间
+        #region 生成时间戳
 
         /// <summary>
-        /// 将13位时间戳转为时间
+        /// 生成时间戳
         /// </summary>
-        /// <param name="javaTimeStamp"></param>
+        /// <param name="target">待转换的时间</param>
+        /// <param name="timestampType">时间戳类型：10位或者13位</param>
         /// <param name="dateTimeKind"></param>
         /// <returns></returns>
-        public static DateTime JsTimeStampToDateTime(double javaTimeStamp, DateTimeKind dateTimeKind = DateTimeKind.Utc)
+        public static long ToUnixTimestamp(this DateTime target, TimestampType timestampType,
+            DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
-            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind);
-            dtDateTime = dtDateTime.AddMilliseconds(javaTimeStamp).ToLocalTime();
-            return dtDateTime;
-        }
+            if (timestampType.Id == TimestampType.Millisecond.Id)
+            {
+                return (TimeZoneInfo.ConvertTimeToUtc(target).Ticks - TimeZoneInfo.ConvertTimeToUtc(new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind)).Ticks) / 10000; //除10000调整为13位
+            }
 
-        #endregion
+            if (timestampType.Id == TimestampType.Second.Id)
+            {
+                return (long) (TimeZoneInfo.ConvertTimeToUtc(target) - new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind))
+                    .TotalSeconds;
+            }
 
-        #endregion
-
-        #region 获得总秒数
-
-        /// <summary>
-        /// 获得总秒数
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="dateTimeKind"></param>
-        /// <returns></returns>
-        public static long CurrentTimeMillis(this DateTime target, DateTimeKind dateTimeKind = DateTimeKind.Utc)
-        {
-            return (long) (TimeZoneInfo.ConvertTimeToUtc(target) - new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind)).TotalSeconds;
-        }
-
-        #endregion
-
-        #region 将当前Utc时间转换为总毫秒数
-
-        /// <summary>
-        /// 将当前Utc时间转换为总毫秒数
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="dateTimeKind"></param>
-        /// <returns></returns>
-        public static long ToUnixTimestamp(this DateTime target, DateTimeKind dateTimeKind = DateTimeKind.Utc)
-        {
-            return (TimeZoneInfo.ConvertTimeToUtc(target) -
-                                    new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind)).TotalMilliseconds.ConvertToLong(0);
+            throw new BusinessException("不支持的类型");
         }
 
         #endregion
