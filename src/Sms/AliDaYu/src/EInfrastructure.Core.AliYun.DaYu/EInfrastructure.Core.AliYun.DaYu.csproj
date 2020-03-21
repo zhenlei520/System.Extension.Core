@@ -34,8 +34,4 @@
     <ProjectReference Include="..\..\..\..\Tools\Validation\src\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="alidayu.json" />
-  </ItemGroup>
-
 </Project>
