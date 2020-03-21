@@ -14,7 +14,7 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
         /// </summary>
         /// <param name="enableLog">启用日志</param>
         /// <returns></returns>
-        internal static void SetLog(bool enableLog)
+        internal static void SetLog(bool enableLog = false)
         {
             EnableLog = enableLog;
         }
@@ -35,7 +35,7 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
         /// 启用配置
         /// </summary>
         /// <param name="enableLog">启用日志</param>
-        public static void Run(bool enableLog)
+        public static void Run(bool enableLog = false)
         {
             if (!_isStartUp)
             {

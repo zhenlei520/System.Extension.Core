@@ -13,7 +13,7 @@ namespace EInfrastructure.Core.Configuration
         /// </summary>
         /// <param name="enableLog">启用日志</param>
         /// <returns></returns>
-        internal static void SetLog(bool enableLog)
+        internal static void SetLog(bool enableLog= false)
         {
             EnableLog = enableLog;
         }
