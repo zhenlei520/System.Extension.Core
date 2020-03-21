@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Enumerable;
@@ -32,7 +33,6 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void DistinctStringArray()
         {
-
             List<string> list = new List<string>()
             {
                 "", "123"

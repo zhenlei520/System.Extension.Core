@@ -64,6 +64,11 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
         {
             try
             {
+                if (o == null)
+                {
+                    return string.Empty;
+                }
+
                 using (StringWriter sw = new StringWriter())
                 {
                     JsonSerializer serializer = JsonSerializer.Create(
