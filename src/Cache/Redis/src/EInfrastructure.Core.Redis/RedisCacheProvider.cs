@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.Redis
     /// <summary>
     /// Redis缓存服务
     /// </summary>
-    public class RedisCacheService : ICacheService, ISingleInstance
+    public class RedisCacheProvider : ICacheProvider, ISingleInstance
     {
         /// <summary>
         /// 前缀
@@ -35,7 +35,7 @@ namespace EInfrastructure.Core.Redis
         /// <summary>
         ///
         /// </summary>
-        public RedisCacheService(RedisConfig redisConfig, ICollection<IJsonProvider> jsonProviders)
+        public RedisCacheProvider(RedisConfig redisConfig, ICollection<IJsonProvider> jsonProviders)
         {
             _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
             ValidationCommon.Check(redisConfig, "redis配置异常", HttpStatus.Err.Name);

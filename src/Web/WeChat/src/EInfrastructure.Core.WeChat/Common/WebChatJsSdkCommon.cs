@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.WeChat.Common
     public class WebChatJsSdkCommon
     {
         private readonly WxConfig _config;
-        private readonly ICacheService _cacheService;
+        private readonly ICacheProvider _cacheService;
 
         /// <summary>
         ///
@@ -32,7 +32,7 @@ namespace EInfrastructure.Core.WeChat.Common
         /// </summary>
         /// <param name="config"></param>
         /// <param name="cacheService"></param>
-        public WebChatJsSdkCommon(WxConfig config, ICacheService cacheService)
+        public WebChatJsSdkCommon(WxConfig config, ICacheProvider cacheService)
         {
             _config = config;
             _cacheService = cacheService;

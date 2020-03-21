@@ -22,7 +22,7 @@ namespace EInfrastructure.Core.WeChat
     /// </summary>
     public class WebChatProcessRequest
     {
-        private readonly ILogService _logService;
+        private readonly ILogProvider _logService;
         private readonly IJsonProvider _jsonProvider;
         private readonly IXmlProvider _xmlProvider;
 
@@ -32,7 +32,7 @@ namespace EInfrastructure.Core.WeChat
         /// <param name="logServices"></param>
         /// <param name="jsonProviders"></param>
         /// <param name="xmlProviders"></param>
-        public WebChatProcessRequest(ICollection<ILogService> logServices, ICollection<IJsonProvider> jsonProviders,
+        public WebChatProcessRequest(ICollection<ILogProvider> logServices, ICollection<IJsonProvider> jsonProviders,
             ICollection<IXmlProvider> xmlProviders)
         {
             _logService = InjectionSelectionCommon.GetImplement(logServices);

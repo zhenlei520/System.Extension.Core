@@ -11,7 +11,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
     /// <summary>
     /// 文件存储
     /// </summary>
-    public interface IStorageService : IIdentify
+    public interface IStorageProvider : IIdentify
     {
         #region 根据文件流上传
 

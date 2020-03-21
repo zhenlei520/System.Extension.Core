@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         ///
         /// </summary>
-        protected readonly ILogService LogService;
+        protected readonly ILogProvider LogService;
 
         /// <summary>
         /// UCloud配置
@@ -33,7 +33,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 基类UCloud实现
         /// </summary>
-        public BaseStorageProvider(ICollection<ILogService> logServices, UCloudStorageConfig uCloudConfig)
+        public BaseStorageProvider(ICollection<ILogProvider> logServices, UCloudStorageConfig uCloudConfig)
         {
             LogService = InjectionSelectionCommon.GetImplement(logServices);
             UCloudConfig = uCloudConfig;

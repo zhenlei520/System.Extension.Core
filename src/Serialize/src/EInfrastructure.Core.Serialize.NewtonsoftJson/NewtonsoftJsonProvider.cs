@@ -24,13 +24,13 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
         {
         }
 
-        private readonly ILogService _logService;
+        private readonly ILogProvider _logService;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="providers"></param>
-        public NewtonsoftJsonProvider(ICollection<ILogService> providers) : this()
+        public NewtonsoftJsonProvider(ICollection<ILogProvider> providers) : this()
         {
             _logService = providers.Count == 1
                 ? providers.FirstOrDefault()

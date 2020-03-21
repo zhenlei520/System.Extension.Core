@@ -2,32 +2,16 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.IO;
-using System.Reflection;
-using EInfrastructure.Core.Compress.ICSharpCode.Zip;
 using EInfrastructure.Core.Configuration.Enumerations;
-using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.Configuration.Exception;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode
 {
     /// <summary>
-    /// 系统压缩
+    /// 基类压缩方法
     /// </summary>
-    public class CompressService : BaseZipCompressService, ICompressService
+    public abstract class BaseCompressProvider
     {
-        #region 得到实现类唯一标示
-
-        /// <summary>
-        /// 得到实现类唯一标示
-        /// </summary>
-        /// <returns></returns>
-        public string GetIdentify()
-        {
-            MethodBase method = MethodBase.GetCurrentMethod();
-            return method.ReflectedType.Namespace;
-        }
-
-        #endregion
-
         #region 压缩文件
 
         /// <summary>
@@ -41,18 +25,13 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <param name="password">密码</param>
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
-        /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
-        public string CompressSingle(string sourceFilePath, string zipDirectory = "", string zipName = "",
+        public virtual string CompressSingle(string sourceFilePath, string zipDirectory = "", string zipName = "",
             bool overWrite = true,
             bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, int blockSize = 2048,
-            CompressType compressType = null)
+            string password = "", int compressionLevel = 5, int blockSize = 2048)
         {
-            return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressSingle(sourceFilePath,
-                zipDirectory, zipName,
-                overWrite,
-                isEncrypt, password, compressionLevel, blockSize);
+            throw new BusinessException("不支持的压缩方式",HttpStatus.Err.Id);
         }
 
         #endregion
@@ -71,16 +50,12 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="zipMaxFile">压缩包内最多文件数量(-1不限)</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
-        /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
-        public string[] CompressMulti(string[] sourceFileList, string zipDirectory, string zipName,
+        public virtual string[] CompressMulti(string[] sourceFileList, string zipDirectory, string zipName,
             bool overWrite = true, bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048,
-            CompressType compressType = null)
+            string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048)
         {
-            return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressMulti(sourceFileList,
-                zipDirectory, zipName,
-                overWrite, isEncrypt, password, compressionLevel, zipMaxFile, blockSize);
+            throw new BusinessException("不支持的压缩方式",HttpStatus.Err.Id);
         }
 
         #endregion
@@ -101,18 +76,13 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="zipMaxFile">压缩包内最多文件数量(-1不限)</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
-        /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
-        public string[] CompressCatalogAndFiltrate(string sourceFilePath, string zipDirectory, string zipName,
+        public virtual string[] CompressCatalogAndFiltrate(string sourceFilePath, string zipDirectory, string zipName,
             string searchPattern = "*.*",
             SearchOption searchOption = SearchOption.AllDirectories, bool overWrite = true, bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048,
-            CompressType compressType = null)
+            string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048)
         {
-            return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressCatalogAndFiltrate(
-                sourceFilePath, zipDirectory,
-                zipName, searchPattern, searchOption, overWrite, isEncrypt, password, compressionLevel, zipMaxFile,
-                blockSize);
+            throw new BusinessException("不支持的压缩方式",HttpStatus.Err.Id);
         }
 
         #endregion
@@ -130,15 +100,12 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <param name="isEncrypt">是否加密</param>
         /// <param name="password">密码</param>
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
-        /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
-        public string CompressCatalog(string sourceFilePath, string zipDirectory, string zipName,
+        public virtual string CompressCatalog(string sourceFilePath, string zipDirectory, string zipName,
             bool isRecursive = true, bool overWrite = true, bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, CompressType compressType = null)
+            string password = "", int compressionLevel = 5)
         {
-            return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressCatalog(sourceFilePath,
-                zipDirectory, zipName,
-                isRecursive, overWrite, isEncrypt, password, compressionLevel);
+            throw new BusinessException("不支持的压缩方式",HttpStatus.Err.Id);
         }
 
         #endregion
@@ -152,25 +119,9 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <param name="targetDirectory">解压目录</param>
         /// <param name="password">密码</param>
         /// <param name="overWrite">是否覆盖</param>
-        /// <param name="compressType">压缩方式（默认zip）</param>
-        public void DeCompress(string zipFile, string targetDirectory, string password = "", bool overWrite = true,
-            CompressType compressType = null)
+        public virtual void DeCompress(string zipFile, string targetDirectory, string password = "", bool overWrite = true)
         {
-            CompressFactory.GetProvider(compressType ?? CompressType.Zip)
-                .DeCompress(zipFile, targetDirectory, password, overWrite);
-        }
-
-        #endregion
-
-        #region 返回权重
-
-        /// <summary>
-        /// 返回权重
-        /// </summary>
-        /// <returns></returns>
-        public int GetWeights()
-        {
-            return 99;
+            throw new BusinessException("不支持的压缩方式",HttpStatus.Err.Id);
         }
 
         #endregion

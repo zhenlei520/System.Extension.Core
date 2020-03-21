@@ -15,9 +15,9 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict
     /// </summary>
     internal class ImportSouGouCommon
     {
-        private static IWordService _wordService;
+        private static IWordProvider _wordService;
 
-        internal static void Initialize(IWordService wordService, string path)
+        internal static void Initialize(IWordProvider wordService, string path)
         {
             _wordService = wordService;
             var files = FileCommon.GetFiles(path, "*.scel");

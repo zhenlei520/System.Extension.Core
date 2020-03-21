@@ -15,11 +15,11 @@ namespace EInfrastructure.Core.Redis.Test.Base
     /// </summary>
     public class BaseUnitTest
     {
-        protected readonly RedisCacheService _redisCacheService;
+        protected readonly RedisCacheProvider _redisCacheService;
 
         public BaseUnitTest(ITestOutputHelper output)
         {
-            _redisCacheService = new RedisCacheService(new RedisConfig()
+            _redisCacheService = new RedisCacheProvider(new RedisConfig()
             {
                 Ip = "122.114.19.229",
                 Port = 6379,

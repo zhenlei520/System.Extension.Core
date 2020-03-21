@@ -13,17 +13,17 @@ namespace EInfrastructure.Core.Words
     /// <summary>
     /// 导入词库
     /// </summary>
-    public class ImportWordService : BaseWordService, IImportWordService
+    public class ImportWordProvider : BaseWordService, IImportWordProvider
     {
-        private readonly IWordService _wordService;
+        private readonly IWordProvider _wordService;
 
         /// <summary>
         /// 导入词库
         /// </summary>
         /// <param name="wordConfig"></param>
         /// <param name="wordService"></param>
-        public ImportWordService(EWordConfig wordConfig,
-            IWordService wordService) : base(wordConfig)
+        public ImportWordProvider(EWordConfig wordConfig,
+            IWordProvider wordService) : base(wordConfig)
         {
             _wordService = wordService;
         }

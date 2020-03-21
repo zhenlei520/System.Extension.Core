@@ -2,15 +2,32 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.IO;
+using System.Reflection;
+using EInfrastructure.Core.Compress.ICSharpCode.Zip;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs
+namespace EInfrastructure.Core.Compress.ICSharpCode
 {
     /// <summary>
-    /// 压缩文件
+    /// 系统压缩
     /// </summary>
-    public interface ICompressService : ISingleInstance, IIdentify
+    public class CompressProvider : BaseZipCompressService, ICompressProvider
     {
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            MethodBase method = MethodBase.GetCurrentMethod();
+            return method.ReflectedType.Namespace;
+        }
+
+        #endregion
+
         #region 压缩文件
 
         /// <summary>
@@ -26,11 +43,17 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
         /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
-        string CompressSingle(string sourceFilePath, string zipDirectory = "", string zipName = "",
+        public string CompressSingle(string sourceFilePath, string zipDirectory = "", string zipName = "",
             bool overWrite = true,
             bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int blockSize = 2048,
-            CompressType compressType = null);
+            CompressType compressType = null)
+        {
+            return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressSingle(sourceFilePath,
+                zipDirectory, zipName,
+                overWrite,
+                isEncrypt, password, compressionLevel, blockSize);
+        }
 
         #endregion
 
@@ -50,10 +73,15 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
         /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
-        string[] CompressMulti(string[] sourceFileList, string zipDirectory, string zipName,
+        public string[] CompressMulti(string[] sourceFileList, string zipDirectory, string zipName,
             bool overWrite = true, bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048,
-            CompressType compressType  = null);
+            CompressType compressType = null)
+        {
+            return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressMulti(sourceFileList,
+                zipDirectory, zipName,
+                overWrite, isEncrypt, password, compressionLevel, zipMaxFile, blockSize);
+        }
 
         #endregion
 
@@ -75,11 +103,17 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
         /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
-        string[] CompressCatalogAndFiltrate(string sourceFilePath, string zipDirectory, string zipName,
+        public string[] CompressCatalogAndFiltrate(string sourceFilePath, string zipDirectory, string zipName,
             string searchPattern = "*.*",
             SearchOption searchOption = SearchOption.AllDirectories, bool overWrite = true, bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048,
-            CompressType compressType = null);
+            CompressType compressType = null)
+        {
+            return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressCatalogAndFiltrate(
+                sourceFilePath, zipDirectory,
+                zipName, searchPattern, searchOption, overWrite, isEncrypt, password, compressionLevel, zipMaxFile,
+                blockSize);
+        }
 
         #endregion
 
@@ -98,10 +132,14 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
-        string CompressCatalog(string sourceFilePath, string zipDirectory, string zipName,
+        public string CompressCatalog(string sourceFilePath, string zipDirectory, string zipName,
             bool isRecursive = true, bool overWrite = true, bool isEncrypt = false,
-            string password = "", int compressionLevel = 5,
-            CompressType compressType = null);
+            string password = "", int compressionLevel = 5, CompressType compressType = null)
+        {
+            return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressCatalog(sourceFilePath,
+                zipDirectory, zipName,
+                isRecursive, overWrite, isEncrypt, password, compressionLevel);
+        }
 
         #endregion
 
@@ -115,8 +153,25 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <param name="password">密码</param>
         /// <param name="overWrite">是否覆盖</param>
         /// <param name="compressType">压缩方式（默认zip）</param>
-        void DeCompress(string zipFile, string targetDirectory, string password = "", bool overWrite = true,
-            CompressType compressType = null);
+        public void DeCompress(string zipFile, string targetDirectory, string password = "", bool overWrite = true,
+            CompressType compressType = null)
+        {
+            CompressFactory.GetProvider(compressType ?? CompressType.Zip)
+                .DeCompress(zipFile, targetDirectory, password, overWrite);
+        }
+
+        #endregion
+
+        #region 返回权重
+
+        /// <summary>
+        /// 返回权重
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 99;
+        }
 
         #endregion
     }

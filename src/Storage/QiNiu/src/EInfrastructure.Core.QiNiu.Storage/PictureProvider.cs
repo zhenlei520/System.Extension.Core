@@ -16,12 +16,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// <summary>
     /// 图片服务
     /// </summary>
-    public class PictureService : BaseStorageProvider, IPictureService, ISingleInstance
+    public class PictureProvider : BaseStorageProvider, IPictureProvider, ISingleInstance
     {
         /// <summary>
         /// 图片服务
         /// </summary>
-        public PictureService(QiNiuStorageConfig qiNiuConfig = null) : base(
+        public PictureProvider(QiNiuStorageConfig qiNiuConfig = null) : base(
             qiNiuConfig)
         {
         }

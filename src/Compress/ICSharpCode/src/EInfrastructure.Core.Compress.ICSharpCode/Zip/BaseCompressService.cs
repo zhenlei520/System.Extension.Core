@@ -15,7 +15,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
     /// <summary>
     ///
     /// </summary>
-    public class BaseZipCompressService : BaseCompressService
+    public class BaseZipCompressService : BaseCompressProvider
     {
         #region 检查是否存在
 

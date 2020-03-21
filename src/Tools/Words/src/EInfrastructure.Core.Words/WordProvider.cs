@@ -19,13 +19,13 @@ namespace EInfrastructure.Core.Words
     /// <summary>
     /// 单词帮助类
     /// </summary>
-    public class WordService : BaseWordService, IWordService
+    public class WordProvider : BaseWordService, IWordProvider
     {
         /// <summary>
         ///
         /// </summary>
         /// <param name="wordConfig"></param>
-        public WordService(EWordConfig wordConfig) : base(wordConfig)
+        public WordProvider(EWordConfig wordConfig) : base(wordConfig)
         {
         }
 

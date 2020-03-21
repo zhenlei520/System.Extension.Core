@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Test
         {
             try
             {
-                new SmsService(new AliSmsConfig(), new List<IJsonProvider>()
+                new SmsProvider(new AliSmsConfig(), new List<IJsonProvider>()
                 {
                     new NewtonsoftJsonProvider()
                 }, new List<IXmlProvider>()

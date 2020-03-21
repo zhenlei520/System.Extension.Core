@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// </summary>
         /// <param name="compressType">压缩方式</param>
         /// <returns></returns>
-        internal static BaseCompressService GetProvider(CompressType compressType)
+        internal static BaseCompressProvider GetProvider(CompressType compressType)
         {
             if (compressType.Id == CompressType.Zip.Id)
             {

@@ -13,14 +13,14 @@ namespace EInfrastructure.Core.UCloud.Storage
     /// <summary>
     /// 图片服务
     /// </summary>
-    public class PictureService : BaseStorageProvider, IPictureService, ISingleInstance
+    public class PictureProvider : BaseStorageProvider, IPictureProvider, ISingleInstance
     {
         /// <summary>
         ///
         /// </summary>
         /// <param name="logService"></param>
         /// <param name="uCloudConfig"></param>
-        public PictureService(ICollection<ILogService> logService, UCloudStorageConfig uCloudConfig) : base(logService,
+        public PictureProvider(ICollection<ILogProvider> logService, UCloudStorageConfig uCloudConfig) : base(logService,
             uCloudConfig)
         {
         }

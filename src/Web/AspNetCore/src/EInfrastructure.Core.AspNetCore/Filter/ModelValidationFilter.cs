@@ -15,7 +15,7 @@ namespace EInfrastructure.Core.AspNetCore.Filter
     /// </summary>
     public class ModelValidationFilter
     {
-        private readonly ILogService _logService;
+        private readonly ILogProvider _logService;
 
         private static int ErrCode { get; set; }
 
@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.AspNetCore.Filter
         /// </summary>
         /// <param name="logServices"></param>
         /// <param name="errCode">错误码</param>
-        public ModelValidationFilter(ICollection<ILogService> logServices, int? errCode = null)
+        public ModelValidationFilter(ICollection<ILogProvider> logServices, int? errCode = null)
         {
             ErrCode = errCode ?? HttpStatus.Err.Id;
             _logService = InjectionSelectionCommon.GetImplement(logServices);

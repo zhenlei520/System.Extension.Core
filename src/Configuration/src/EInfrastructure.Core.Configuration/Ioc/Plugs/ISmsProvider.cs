@@ -10,7 +10,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
     /// <summary>
     /// 短信
     /// </summary>
-    public interface ISmsService : IIdentify
+    public interface ISmsProvider : IIdentify
     {
         #region 指定短信列表发送短信
 

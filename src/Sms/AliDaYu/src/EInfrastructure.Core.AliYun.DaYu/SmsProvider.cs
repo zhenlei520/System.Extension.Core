@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
     /// <summary>
     /// 短信
     /// </summary>
-    public class SmsService : ISmsService, ISingleInstance
+    public class SmsProvider : ISmsProvider, ISingleInstance
     {
         private AliSmsConfig _smsConfig;
         private readonly IJsonProvider _jsonProvider;
@@ -32,7 +32,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <summary>
         /// 短信服务
         /// </summary>
-        public SmsService(AliSmsConfig smsConfig, ICollection<IJsonProvider> jsonProviders,
+        public SmsProvider(AliSmsConfig smsConfig, ICollection<IJsonProvider> jsonProviders,
             ICollection<IXmlProvider> xmlProviders)
         {
             _smsConfig = smsConfig;

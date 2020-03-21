@@ -10,7 +10,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Words
     /// <summary>
     /// 文字
     /// </summary>
-    public interface IWordService : ISingleInstance, IIdentify
+    public interface IWordProvider : ISingleInstance, IIdentify
     {
         #region 得到文字首字母
 

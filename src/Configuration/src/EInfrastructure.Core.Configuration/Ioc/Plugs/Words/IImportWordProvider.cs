@@ -6,7 +6,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Words
     /// <summary>
     /// 导入词库
     /// </summary>
-    public interface IImportWordService : ISingleInstance,IIdentify
+    public interface IImportWordProvider : ISingleInstance,IIdentify
     {
         #region 导入搜狗词库（导入path下的词库文件）
 
