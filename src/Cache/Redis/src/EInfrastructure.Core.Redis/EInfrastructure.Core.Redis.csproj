@@ -13,7 +13,7 @@
     <Title>Redis类库</Title>
     <PackageTags>EInfrastructure ECommon Redis</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
-    <LangVersion>8.0</LangVersion>
+
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

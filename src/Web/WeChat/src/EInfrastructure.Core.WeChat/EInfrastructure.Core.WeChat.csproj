@@ -14,7 +14,7 @@
     <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
     <PackageTags>wechat</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
-    <LangVersion>8.0</LangVersion>
+
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DocumentationFile>bin\Debug\EInfrastructure.Core.WebChat.xml</DocumentationFile>

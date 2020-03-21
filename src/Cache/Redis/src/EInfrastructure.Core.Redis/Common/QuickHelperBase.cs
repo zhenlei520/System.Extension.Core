@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using EInfrastructure.Core.HelpCommon.Randoms;
 using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Enumerations;
 
 namespace EInfrastructure.Core.Redis.Common
 {
@@ -295,7 +296,7 @@ namespace EInfrastructure.Core.Redis.Common
             if (expire > TimeSpan.Zero)
             {
                 Dictionary<string, List<(double, string)>> dics = new Dictionary<string, List<(double, string)>>();
-                double expireTime = (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0));
+                double expireTime = (DateTime.Now.AddSeconds(expire.TotalSeconds).ToUnixTimestamp(TimestampType.Millisecond).ConvertToDouble(0));
                 foreach (var item in keyValues)
                 {
                     var cacheKey = GetCacheFileKey();
@@ -357,7 +358,7 @@ namespace EInfrastructure.Core.Redis.Common
             if (expire > TimeSpan.Zero)
             {
                 QuickHelperBase.ZAdd(GetCacheFileKey(),
-                    (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0),
+                    (DateTime.Now.AddSeconds(expire.TotalSeconds).ToUnixTimestamp(TimestampType.Millisecond).ConvertToDouble(0),
                         GetOverTimeExpireValue(key, HashKey)));
             }
 
@@ -376,7 +377,7 @@ namespace EInfrastructure.Core.Redis.Common
             if (expire > TimeSpan.Zero)
             {
                 List<ValueTuple<double, string>> memberScores = new List<ValueTuple<double, string>>();
-                double expireTime = (DateTime.Now.AddSeconds(expire.TotalSeconds).GetTimeSpan().ConvertToDouble(0));
+                double expireTime = (DateTime.Now.AddSeconds(expire.TotalSeconds).ToUnixTimestamp(TimestampType.Millisecond).ConvertToDouble(0));
                 for (int i = 0; i < kvalues.Length; i += 2)
                 {
                     if (kvalues[i] != null && kvalues[i + 1] != null)

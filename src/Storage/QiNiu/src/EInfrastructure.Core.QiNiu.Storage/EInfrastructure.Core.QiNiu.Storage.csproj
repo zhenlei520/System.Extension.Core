@@ -13,7 +13,7 @@
     <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
     <PackageTags>Storage QiNiu</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
-    <LangVersion>8.0</LangVersion>
+
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

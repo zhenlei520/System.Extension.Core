@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace EInfrastructure.Core.Tools.Tasks
 {
-   /// <summary>
-   /// 多线程任务（有响应值）
-   /// </summary>
-   /// <typeparam name="T">传入任务参数</typeparam>
-   /// <typeparam name="T2">任务响应的信息</typeparam>
+    /// <summary>
+    /// 多线程任务（有响应值）
+    /// </summary>
+    /// <typeparam name="T">传入任务参数</typeparam>
+    /// <typeparam name="T2">任务响应的信息</typeparam>
     public class TaskCommon<T, T2> : TaskBaseCommon
     {
         /// <summary>
@@ -91,12 +91,16 @@ namespace EInfrastructure.Core.Tools.Tasks
                         }
                         else if (res.Exception != null)
                         {
-                            taskFinishAction?.Invoke(false, res.Result ?? default(T2),
+                            taskFinishAction?.Invoke(false,ObjectCommon.SafeObject(res.Result != null,()=>
+                                    ValueTuple.Create(res.Result, default(T2))),
                                 res.Exception);
                         }
                         else
                         {
-                            taskFinishAction?.Invoke(true, res.Result ?? default(T2), null);
+                            taskFinishAction?.Invoke(true,
+                                ObjectCommon.SafeObject(res.Result != null,()=>
+                                    ValueTuple.Create(res.Result, default(T2))),
+                                    null);
                         }
                     }
                     catch (Exception ex)
@@ -222,7 +226,6 @@ namespace EInfrastructure.Core.Tools.Tasks
                 {
                     try
                     {
-
                     }
                     catch (Exception ex)
                     {

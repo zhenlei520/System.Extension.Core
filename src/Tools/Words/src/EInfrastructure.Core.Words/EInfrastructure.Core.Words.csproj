@@ -14,7 +14,7 @@
     <Title>pinyin词语、文字类库</Title>
     <PackageTags>words pinyin fanyi</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
-    <LangVersion>8.0</LangVersion>
+
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

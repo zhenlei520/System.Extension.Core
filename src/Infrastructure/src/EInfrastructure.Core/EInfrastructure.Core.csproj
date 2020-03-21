@@ -13,7 +13,7 @@
     <Title>基础类库</Title>
     <PackageTags>EInfrastructure.Core EInfrastructure ECommon</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
-    <LangVersion>8.0</LangVersion>
+
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DocumentationFile>bin\Debug\EInfrastructure.Core.xml</DocumentationFile>

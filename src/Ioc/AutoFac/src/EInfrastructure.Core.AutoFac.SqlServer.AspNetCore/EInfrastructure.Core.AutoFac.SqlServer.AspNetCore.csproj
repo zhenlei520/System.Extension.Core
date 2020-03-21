@@ -14,7 +14,7 @@
     <Title>autofac sqlserver mvc自动注入</Title>
     <PackageTags>autofac autofac.sqlserver</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
-    <LangVersion>8.0</LangVersion>
+
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

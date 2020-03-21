@@ -13,7 +13,7 @@
     <Title>mysql基础类库，实现基类增删改查方法</Title>
     <PackageTags>EInfrastructure EInfrastructure.Mysql</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
-    <LangVersion>8.0</LangVersion>
+
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DocumentationFile>bin\Debug\EInfrastructure.Core.MySql.xml</DocumentationFile>

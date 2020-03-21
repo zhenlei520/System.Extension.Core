@@ -14,7 +14,7 @@
     <Title>xml序列化类库</Title>
     <PackageTags>System.Extension.Core Serialize</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
-    <LangVersion>8.0</LangVersion>
+
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

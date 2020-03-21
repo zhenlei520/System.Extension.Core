@@ -13,7 +13,7 @@
     <Title>Consul服务自动注册</Title>
     <PackageTags>EInfrastructure.Core Consul</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
-    <LangVersion>8.0</LangVersion>
+
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DocumentationFile>bin\Debug\EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.xml</DocumentationFile>

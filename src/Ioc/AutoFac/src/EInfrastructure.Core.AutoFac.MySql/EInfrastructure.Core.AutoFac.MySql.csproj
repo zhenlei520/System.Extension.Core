@@ -13,7 +13,7 @@
     <Title>Autofac mysql自动注入</Title>
     <PackageTags>autofac mysql</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
-    <LangVersion>8.0</LangVersion>
+
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DocumentationFile>bin\Debug\EInfrastructure.Core.AutoFac.MySql.xml</DocumentationFile>
