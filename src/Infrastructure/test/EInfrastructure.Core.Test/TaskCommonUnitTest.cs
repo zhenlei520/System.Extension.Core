@@ -50,6 +50,33 @@ namespace EInfrastructure.Core.Test
             }
         }
 
+        /// <summary>
+        /// 多线程输出名字
+        /// </summary>
+        [Fact]
+        public void Test2()
+        {
+            TaskCommon<string> taskCommon = new TaskCommon<string>(20);
+
+            List<Users> userses = new List<Users>();
+            for (var i = 0; i < 30; i++)
+            {
+                userses.Add(new Users()
+                {
+                    Name = "我的名字是" + i
+                });
+            }
+
+            foreach (var item in userses)
+            {
+                taskCommon.Add(item.Name, (name) =>
+                {
+                    Console.WriteLine("我的名字是：" + name);
+                    Thread.Sleep(new Random().Next(1000, 3999));
+                });
+            }
+        }
+
         public class Users
         {
             public string Name { get; set; }
