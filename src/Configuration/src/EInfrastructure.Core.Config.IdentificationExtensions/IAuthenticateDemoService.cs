@@ -11,7 +11,7 @@ namespace EInfrastructure.Core.Config.IdentificationExtensions
     /// <summary>
     /// 鉴定服务（体验版）
     /// </summary>
-    public interface IAuthenticateDemoService : IIdentify
+    public interface IAuthenticateDemoService : IPerRequest, IIdentify
     {
         #region 鉴定图片信息
 

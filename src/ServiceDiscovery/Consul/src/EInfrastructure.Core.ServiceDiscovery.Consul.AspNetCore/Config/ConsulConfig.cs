@@ -8,7 +8,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config
     /// <summary>
     /// Consul配置文件
     /// </summary>
-    public class ConsulConfig : ISingleInstance
+    public class ConsulConfig
     {
         /// <summary>
         /// Consul 服务器地址

@@ -15,7 +15,7 @@ namespace EInfrastructure.Core.MemoryCache
     /// <summary>
     /// MemoryCache缓存实现类
     /// </summary>
-    public class MemoryCacheProvider : ICacheProvider, ISingleInstance
+    public class MemoryCacheProvider : ICacheProvider
     {
         private readonly IMemoryCache _cache;
 

@@ -8,7 +8,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
     /// <summary>
     /// 图片
     /// </summary>
-    public interface IPictureProvider : IIdentify
+    public interface IPictureProvider : ISingleInstance, IIdentify
     {
         #region 根据图片base64流上传图片
 

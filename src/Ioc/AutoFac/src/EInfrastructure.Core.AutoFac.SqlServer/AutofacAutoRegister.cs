@@ -20,10 +20,23 @@ namespace EInfrastructure.Core.AutoFac.SqlServer
         /// <param name="services"></param>
         /// <param name="action"></param>
         /// <returns></returns>
+        [Obsolete("Use the EInfrastructure.Core.AutoFac.SqlServer.AutofacAutoRegister.Use method instead")]
         public override IServiceProvider Build(IServiceCollection services,
-            Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action=null)
         {
-            return base.Build(services, (builder) =>
+            return AutofacAutoRegister.Use(services, action);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static IServiceProvider Use(IServiceCollection services,
+            Action<ContainerBuilder> action=null)
+        {
+            return EInfrastructure.Core.AutoFac.AutofacAutoRegister.Use(services, (builder) =>
             {
                 #region 单数据库查询
 
@@ -59,7 +72,7 @@ namespace EInfrastructure.Core.AutoFac.SqlServer
 
                 #endregion
 
-                action(builder);
+                action?.Invoke(builder);
             });
         }
     }

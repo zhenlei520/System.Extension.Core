@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
     /// <summary>
     /// 短信
     /// </summary>
-    public class SmsProvider : ISmsProvider, ISingleInstance
+    public class SmsProvider : ISmsProvider
     {
         private AliSmsConfig _smsConfig;
         private readonly IJsonProvider _jsonProvider;

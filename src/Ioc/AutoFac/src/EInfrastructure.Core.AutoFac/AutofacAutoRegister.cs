@@ -21,8 +21,21 @@ namespace EInfrastructure.Core.AutoFac
         /// <param name="services"></param>
         /// <param name="action"></param>
         /// <returns></returns>
+        [Obsolete("Use the EInfrastructure.Core.AutoFac.AutofacAutoRegister.Use method instead")]
         public virtual IServiceProvider Build(IServiceCollection services,
-            Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action = null)
+        {
+            return AutofacAutoRegister.Use(services, action);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static IServiceProvider Use(IServiceCollection services,
+            Action<ContainerBuilder> action=null)
         {
             EInfrastructure.Core.StartUp.Run();
 
@@ -50,7 +63,7 @@ namespace EInfrastructure.Core.AutoFac
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
-            action(builder);
+            action?.Invoke(builder);
 
             builder.Populate(services);
 

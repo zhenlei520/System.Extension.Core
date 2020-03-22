@@ -17,7 +17,7 @@ namespace EInfrastructure.Core.UCloud.Storage
     /// <summary>
     /// UCloud存储实现类
     /// </summary>
-    public class StorageProvider : BaseStorageProvider, IStorageProvider, ISingleInstance
+    public class StorageProvider : BaseStorageProvider, IStorageProvider
     {
         /// <summary>
         /// UCloud存储实现类

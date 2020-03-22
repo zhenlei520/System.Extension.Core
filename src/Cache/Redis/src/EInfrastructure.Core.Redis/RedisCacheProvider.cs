@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.Redis
     /// <summary>
     /// Redis缓存服务
     /// </summary>
-    public class RedisCacheProvider : ICacheProvider, ISingleInstance
+    public class RedisCacheProvider : ICacheProvider
     {
         /// <summary>
         /// 前缀

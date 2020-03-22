@@ -13,7 +13,7 @@ namespace EInfrastructure.Core.UCloud.Storage
     /// <summary>
     /// 图片服务
     /// </summary>
-    public class PictureProvider : BaseStorageProvider, IPictureProvider, ISingleInstance
+    public class PictureProvider : BaseStorageProvider, IPictureProvider
     {
         /// <summary>
         ///
