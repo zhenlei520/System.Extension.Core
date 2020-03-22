@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
     /// <summary>
     /// 鉴定服务
     /// </summary>
-    public class AuthenticateDemoService : IAuthenticateDemoService, IPerRequest
+    public class AuthenticateDemoService : IAuthenticateDemoService
     {
         private readonly IJsonProvider _jsonProvider;
         private readonly RestClient _restClient;

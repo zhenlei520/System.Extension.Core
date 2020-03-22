@@ -22,7 +22,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// <summary>
     /// 文件实现类
     /// </summary>
-    public class StorageProvider : BaseStorageProvider, IStorageProvider, IPerRequest
+    public class StorageProvider : BaseStorageProvider, IStorageProvider
     {
         /// <summary>
         /// 文件实现类

@@ -13,18 +13,31 @@ namespace EInfrastructure.Core.AutoFac.MySql.AspNetCore
     public class AutofacAutoRegister : EInfrastructure.Core.AutoFac.MySql.AutofacAutoRegister
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="services"></param>
         /// <param name="action"></param>
         /// <returns></returns>
+        [Obsolete("Use the EInfrastructure.Core.AutoFac.MySql.AspNetCore.AutofacAutoRegister.Use method instead")]
         public override IServiceProvider Build(IServiceCollection services,
-           Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action)
         {
-            return base.Build(services, (builder) =>
+            return AutofacAutoRegister.Use(services, action);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static IServiceProvider Use(IServiceCollection services,
+            Action<ContainerBuilder> action)
+        {
+            return EInfrastructure.Core.AutoFac.MySql.AutofacAutoRegister.Use(services, (builder) =>
             {
                 services.AddMvc().AddControllersAsServices();
-                action(builder);
+                action?.Invoke(builder);
             });
         }
     }

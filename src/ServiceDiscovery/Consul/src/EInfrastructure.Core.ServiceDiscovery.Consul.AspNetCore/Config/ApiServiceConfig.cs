@@ -9,7 +9,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config
     /// <summary>
     /// api服务配置
     /// </summary>
-    public class ApiServiceConfig : ISingleInstance,IFluentlValidatorEntity
+    public class ApiServiceConfig : IFluentlValidatorEntity
     {
         /// <summary>
         /// 服务id（非必填）

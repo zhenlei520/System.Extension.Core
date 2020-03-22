@@ -10,7 +10,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
     /// <summary>
     /// 缓存接口
     /// </summary>
-    public interface ICacheProvider : IIdentify
+    public interface ICacheProvider : ISingleInstance, IIdentify
     {
         #region String
 
