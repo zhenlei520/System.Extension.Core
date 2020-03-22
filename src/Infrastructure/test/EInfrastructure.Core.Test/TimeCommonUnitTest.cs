@@ -145,7 +145,7 @@ namespace EInfrastructure.Core.Test
             var time2 = DateTime.Now.ToUnixTimestamp(TimestampType.Second);
 
             var time3 = TimeCommon.UnixTimeStampToDateTime(time);
-            var time4= TimeCommon.UnixTimeStampToDateTime(time2);
+            var time4 = TimeCommon.UnixTimeStampToDateTime(time2);
         }
 
         [Theory]

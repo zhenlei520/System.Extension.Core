@@ -851,7 +851,9 @@ namespace EInfrastructure.Core.Tools
         {
             if (timestampType.Id == TimestampType.Millisecond.Id)
             {
-                return (TimeZoneInfo.ConvertTimeToUtc(target).Ticks - TimeZoneInfo.ConvertTimeToUtc(new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind)).Ticks) / 10000; //除10000调整为13位
+                return (TimeZoneInfo.ConvertTimeToUtc(target).Ticks - TimeZoneInfo
+                           .ConvertTimeToUtc(new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind)).Ticks) /
+                       10000; //除10000调整为13位
             }
 
             if (timestampType.Id == TimestampType.Second.Id)
@@ -913,6 +915,29 @@ namespace EInfrastructure.Core.Tools
             Enum[] days)
         {
             return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
+        }
+
+        #endregion
+
+        #region 根据身份证号码获取出生日期
+
+        /// <summary>
+        /// 根据身份证号码获取出生日期
+        /// </summary>
+        /// <param name="cardNo">身份证号码</param>
+        /// <returns></returns>
+        public static DateTime? GetBirthday(this string cardNo)
+        {
+            if (!cardNo.IsIdCard())
+            {
+                throw new BusinessException("请输入合法的身份证号码");
+            }
+
+            string timeStr = cardNo.Length == 15
+                ? ("19" + cardNo.Substring(6, 2)) + "-" + cardNo.Substring(8, 2) + "-" +
+                  cardNo.Substring(10, 2)
+                : cardNo.Substring(6, 4) + "-" + cardNo.Substring(10, 2) + "-" + cardNo.Substring(12, 2);
+            return timeStr.ConvertToDateTime(null);
         }
 
         #endregion

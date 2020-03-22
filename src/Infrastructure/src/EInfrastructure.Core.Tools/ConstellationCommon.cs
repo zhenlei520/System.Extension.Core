@@ -11,7 +11,7 @@ namespace EInfrastructure.Core.Tools
     /// <summary>
     /// 星座帮助类
     /// </summary>
-    public class ConstellationCommon
+    public static class ConstellationCommon
     {
         /// <summary>
         /// 星座map
@@ -111,36 +111,14 @@ namespace EInfrastructure.Core.Tools
             }
         };
 
-        #region 根据日期得到星座名称
+        #region 根据日期得到星座信息
 
         /// <summary>
-        /// 根据日期得到星座名称
+        /// 根据日期得到星座信息
         /// </summary>
         /// <param name="birthday">日期</param>
         /// <returns></returns>
-        public static string GetConstellationFromBirthday(DateTime? birthday)
-        {
-            if (birthday == null)
-            {
-                return "未知";
-            }
-
-            float fBirthDay = Convert.ToSingle(birthday.Value.ToString("M.dd"));
-
-            return ConstellationMaps.Where(x => fBirthDay >= x.MinTime && fBirthDay < x.MaxTime).Select(x => x.Value)
-                .FirstOrDefault();
-        }
-
-        #endregion
-
-        #region 根据日期得到星座枚举
-
-        /// <summary>
-        /// 根据日期得到星座枚举
-        /// </summary>
-        /// <param name="birthday">日期</param>
-        /// <returns></returns>
-        public static Constellation GetConstellationEnumFromBirthday(DateTime? birthday)
+        public static Constellation GetConstellationFromBirthday(this DateTime? birthday)
         {
             if (birthday == null)
             {
@@ -150,6 +128,25 @@ namespace EInfrastructure.Core.Tools
             float fBirthDay = Convert.ToSingle(birthday.Value.ToString("M.dd"));
             return ConstellationMaps.Where(x => fBirthDay >= x.MinTime && fBirthDay < x.MaxTime)
                 .Select(x => x.Key).FirstOrDefault();
+        }
+
+        #endregion
+
+        #region 根据身份证号码得到星座信息
+
+        /// <summary>
+        /// 根据身份证号码得到星座信息
+        /// </summary>
+        /// <param name="cardNo">身份证号码</param>
+        /// <returns></returns>
+        public static Constellation GetConstellationFromCardNo(this string cardNo)
+        {
+            if (cardNo == null)
+            {
+                return null;
+            }
+
+            return GetConstellationFromBirthday(cardNo.GetBirthday());
         }
 
         #endregion

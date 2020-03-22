@@ -25,7 +25,7 @@ namespace EInfrastructure.Core.Test
         [InlineData(2008, "鼠")]
         public void GetAnimal(int year, string animal)
         {
-            Check.True(AnimalCommon.GetAnimalFromBirthday(year) == animal, "animal is error");
+            Check.True((year.GetAnimalFromBirthday()?.Name??"") == animal, "animal is error");
         }
 
         #endregion
@@ -35,7 +35,7 @@ namespace EInfrastructure.Core.Test
         public void GetAnimalEnumFromBirthday(int year, int animal)
         {
             Check.True(
-                AnimalCommon.GetAnimalEnumFromBirthday(year) ==
+                year.GetAnimalFromBirthday() ==
                 Animal.GetAll<Animal>().FirstOrDefault(x => x.Id == animal), "方法异常");
         }
     }

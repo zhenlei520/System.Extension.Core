@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using EInfrastructure.Core.Http;
 using EInfrastructure.Core.Http.Params;
 using EInfrastructure.Core.Test.Base;

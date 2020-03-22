@@ -28,7 +28,8 @@ namespace EInfrastructure.Core.Test
         [InlineData("1993-04-17", "白羊座")]
         public void GetConstellationFromBirthday(string birthday, string result)
         {
-            Check.True(ConstellationCommon.GetConstellationFromBirthday(DateTime.Parse(birthday)) == result, "方法有误");
+            Check.True((ConstellationCommon.GetConstellationFromBirthday(DateTime.Parse(birthday))?.Name??"") == result,
+                "方法有误");
         }
 
         /// <summary>
@@ -42,7 +43,9 @@ namespace EInfrastructure.Core.Test
         [InlineData("1993-04-17", 1)]
         public void GetConstellationEnumFromBirthday(string birthday, int result)
         {
-            Check.True(ConstellationCommon.GetConstellationEnumFromBirthday(birthday.ConvertToDateTime(null)).Id == result, "方法有误");
+            Check.True(
+                birthday.ConvertToDateTime(null).GetConstellationFromBirthday().Id == result,
+                "方法有误");
         }
     }
 }
