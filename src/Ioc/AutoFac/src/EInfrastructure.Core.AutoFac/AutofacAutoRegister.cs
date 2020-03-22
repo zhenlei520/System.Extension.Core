@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.AutoFac
         /// <returns></returns>
         [Obsolete("Use the EInfrastructure.Core.AutoFac.AutofacAutoRegister.Use method instead")]
         public virtual IServiceProvider Build(IServiceCollection services,
-            Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action = null)
         {
             return AutofacAutoRegister.Use(services, action);
         }
@@ -35,7 +35,7 @@ namespace EInfrastructure.Core.AutoFac
         /// <param name="action"></param>
         /// <returns></returns>
         public static IServiceProvider Use(IServiceCollection services,
-            Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action=null)
         {
             EInfrastructure.Core.StartUp.Run();
 

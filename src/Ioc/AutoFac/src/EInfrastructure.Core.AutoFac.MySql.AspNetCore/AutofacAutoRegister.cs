@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.AutoFac.MySql.AspNetCore
         /// <returns></returns>
         [Obsolete("Use the EInfrastructure.Core.AutoFac.MySql.AspNetCore.AutofacAutoRegister.Use method instead")]
         public override IServiceProvider Build(IServiceCollection services,
-            Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action=null)
         {
             return AutofacAutoRegister.Use(services, action);
         }
@@ -32,7 +32,7 @@ namespace EInfrastructure.Core.AutoFac.MySql.AspNetCore
         /// <param name="action"></param>
         /// <returns></returns>
         public static IServiceProvider Use(IServiceCollection services,
-            Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action=null)
         {
             return EInfrastructure.Core.AutoFac.MySql.AutofacAutoRegister.Use(services, (builder) =>
             {

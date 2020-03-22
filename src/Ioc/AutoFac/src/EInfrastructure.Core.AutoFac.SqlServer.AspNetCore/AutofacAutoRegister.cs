@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.AutoFac.SqlServer.AspNetCore
         /// <returns></returns>
         [Obsolete("Use the EInfrastructure.Core.AutoFac.SqlServer.AspNetCore.AutofacAutoRegister.Use method instead")]
         public override IServiceProvider Build(IServiceCollection services,
-            Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action = null)
         {
             return AutofacAutoRegister.Use(services, action);
         }
@@ -32,9 +32,13 @@ namespace EInfrastructure.Core.AutoFac.SqlServer.AspNetCore
         /// <param name="action"></param>
         /// <returns></returns>
         public static IServiceProvider Use(IServiceCollection services,
-            Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action = null)
         {
-            return EInfrastructure.Core.AutoFac.SqlServer.AutofacAutoRegister.Use(services, action);
+            return EInfrastructure.Core.AutoFac.SqlServer.AutofacAutoRegister.Use(services, (builder) =>
+            {
+                services.AddMvc().AddControllersAsServices();
+                action?.Invoke(builder);
+            });
         }
     }
 }

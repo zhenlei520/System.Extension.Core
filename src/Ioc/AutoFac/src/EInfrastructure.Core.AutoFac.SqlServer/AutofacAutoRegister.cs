@@ -22,7 +22,7 @@ namespace EInfrastructure.Core.AutoFac.SqlServer
         /// <returns></returns>
         [Obsolete("Use the EInfrastructure.Core.AutoFac.SqlServer.AutofacAutoRegister.Use method instead")]
         public override IServiceProvider Build(IServiceCollection services,
-            Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action=null)
         {
             return AutofacAutoRegister.Use(services, action);
         }
@@ -34,7 +34,7 @@ namespace EInfrastructure.Core.AutoFac.SqlServer
         /// <param name="action"></param>
         /// <returns></returns>
         public static IServiceProvider Use(IServiceCollection services,
-            Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action=null)
         {
             return EInfrastructure.Core.AutoFac.AutofacAutoRegister.Use(services, (builder) =>
             {
