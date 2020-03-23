@@ -361,9 +361,8 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// 创建线程任务（无响应值）
         /// </summary>
         /// <param name="action">线程委托，输入参数为可通过Cancel方法取消任务</param>
-        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static Task Create<T>(Action<CancellationTokenSource> action)
+        public static Task Create(Action<CancellationTokenSource> action)
         {
             var cts = new CancellationTokenSource();
             var token = cts.Token;
@@ -376,6 +375,30 @@ namespace EInfrastructure.Core.Tools.Tasks
 
         #region 多任务串行
 
+        #region 多任务串行（有响应值）
+
+        /// <summary>
+        /// 多任务串行（有响应值）
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="funcs"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static Task<T2> And<T, T2>(this Task<T> task, params Func<CancellationTokenSource, T2>[] funcs)
+        {
+            Task<T2> task2 = Task.FromResult(default(T2));
+            var i = 0;
+            foreach (var func in funcs)
+            {
+                i++;
+                task2 = i == 1 ? And(task, func) : And(task2, func);
+            }
+
+            return task2;
+        }
+
+        #endregion
+
         #region 多任务串行（无响应值）
 
         /// <summary>
@@ -383,9 +406,8 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// </summary>
         /// <param name="task"></param>
         /// <param name="funcs"></param>
-        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static Task And<T>(this Task task, params Func<CancellationTokenSource, T>[] funcs)
+        public static Task And(this Task task, params Func<CancellationTokenSource>[] funcs)
         {
             foreach (var func in funcs)
             {
@@ -401,6 +423,8 @@ namespace EInfrastructure.Core.Tools.Tasks
 
         #region 单任务串行
 
+        #region 单任务串行（有响应值）
+
         /// <summary>
         /// 单任务串行（无响应值）
         /// </summary>
@@ -408,15 +432,32 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <param name="func">委托任务</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        private static Task And<T>(this Task task, Func<CancellationTokenSource, T> func)
+        private static Task<T2> And<T, T2>(this Task<T> task, Func<CancellationTokenSource, T2> func)
         {
-            return task.ContinueWith(res =>
-            {
-                var cts = new CancellationTokenSource();
-                var token = cts.Token;
-                return func.Invoke(cts);
-            });
+            var cts = new CancellationTokenSource();
+            var token = cts.Token;
+            return task.ContinueWith(res => func.Invoke(cts), token);
         }
+
+        #endregion
+
+        #region 单任务串行（无响应值）
+
+        /// <summary>
+        /// 单任务串行（无响应值）
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="action">委托任务</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        private static Task And(this Task task, Action<CancellationTokenSource> action)
+        {
+            var cts = new CancellationTokenSource();
+            var token = cts.Token;
+            return task.ContinueWith(res => { action.Invoke(cts); }, token);
+        }
+
+        #endregion
 
         #endregion
 
