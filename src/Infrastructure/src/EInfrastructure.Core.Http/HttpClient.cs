@@ -48,12 +48,12 @@ namespace EInfrastructure.Core.Http
         /// 请求接口域
         /// </summary>
         /// <param name="host">域名</param>
-        /// <param name="requestBodyType">body请求类型</param>
         /// <param name="requestBodyFormat">等待响应的数据类型</param>
+        /// <param name="requestBodyType">body请求类型</param>
         /// <param name="jsonProvider"></param>
         public HttpClient(string host,
-            RequestBodyType requestBodyType = null,
-            RequestBodyFormat requestBodyFormat = null, IJsonProvider jsonProvider = null) : this(host)
+            RequestBodyFormat requestBodyFormat = null,
+            RequestBodyType requestBodyType = null, IJsonProvider jsonProvider = null) : this(host)
         {
             Host = host;
             _jsonProvider = jsonProvider ?? new NewtonsoftJsonProvider();
@@ -65,12 +65,12 @@ namespace EInfrastructure.Core.Http
         /// 请求接口域
         /// </summary>
         /// <param name="host">域名</param>
-        /// <param name="requestBodyType">请求类型</param>
         /// <param name="requestBodyFormat">等待响应的数据类型</param>
+        /// <param name="requestBodyType">请求类型</param>
         /// <param name="xmlProvider"></param>
         public HttpClient(string host,
-            RequestBodyType requestBodyType = null,
-            RequestBodyFormat requestBodyFormat = null, IXmlProvider xmlProvider = null) : this(host)
+            RequestBodyFormat requestBodyFormat = null,
+            RequestBodyType requestBodyType = null, IXmlProvider xmlProvider = null) : this(host)
         {
             Host = host;
             _xmlProvider = xmlProvider ?? new XmlProvider();
@@ -86,10 +86,11 @@ namespace EInfrastructure.Core.Http
         /// <param name="requestBodyType">请求类型</param>
         /// <param name="requestBodyFormat">等待响应的数据类型</param>
         /// <param name="jsonProvider"></param>
-        public HttpClient(string host, Encoding encoding,
+        public HttpClient(string host,
             RequestBodyType requestBodyType = null,
-            RequestBodyFormat requestBodyFormat = null, IJsonProvider jsonProvider = null) : this(host, requestBodyType,
-            requestBodyFormat,
+            RequestBodyFormat requestBodyFormat = null, IJsonProvider jsonProvider = null,
+            Encoding encoding = null) : this(host,
+            requestBodyFormat, requestBodyType,
             jsonProvider ?? new NewtonsoftJsonProvider())
         {
             Host = host;
@@ -100,14 +101,16 @@ namespace EInfrastructure.Core.Http
         /// 请求接口域
         /// </summary>
         /// <param name="host">域名</param>
-        /// <param name="encoding">编码格式 默认Utf8</param>
-        /// <param name="requestBodyType">请求类型</param>
         /// <param name="requestBodyFormat">等待响应的数据类型</param>
+        /// <param name="requestBodyType">请求类型</param>
         /// <param name="xmlProvider"></param>
-        public HttpClient(string host, Encoding encoding,
-            RequestBodyType requestBodyType = null,
-            RequestBodyFormat requestBodyFormat = null, IXmlProvider xmlProvider = null) : this(host, requestBodyType,
+        /// <param name="encoding">编码格式 默认Utf8</param>
+        public HttpClient(string host,
+            RequestBodyFormat requestBodyFormat = null,
+            RequestBodyType requestBodyType = null, IXmlProvider xmlProvider = null, Encoding encoding = null) : this(
+            host,
             requestBodyFormat,
+            requestBodyType,
             xmlProvider ?? new XmlProvider())
         {
             Host = host;
