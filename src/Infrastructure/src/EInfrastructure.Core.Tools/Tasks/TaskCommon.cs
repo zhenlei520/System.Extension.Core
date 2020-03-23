@@ -353,6 +353,17 @@ namespace EInfrastructure.Core.Tools.Tasks
             return Task.Factory.StartNew(() => func.Invoke(cts), token);
         }
 
+        /// <summary>
+        /// 创建线程任务（有响应值）
+        /// </summary>
+        /// <param name="func">线程委托，输入参数为可通过Cancel方法取消任务，输出参数为最后的结果</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static Task<object> Create(Func<CancellationTokenSource, object> func)
+        {
+            return Create<object>(func);
+        }
+
         #endregion
 
         #region 创建线程任务（无响应值）
@@ -397,6 +408,19 @@ namespace EInfrastructure.Core.Tools.Tasks
             return task2;
         }
 
+        /// <summary>
+        /// 多任务串行（有响应值）
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="funcs"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static Task<object> And(this Task<object>
+            task, params Func<CancellationTokenSource, object>[] funcs)
+        {
+            return And<object, object>(task, funcs);
+        }
+
         #endregion
 
         #region 多任务串行（无响应值）
@@ -437,6 +461,17 @@ namespace EInfrastructure.Core.Tools.Tasks
             var cts = new CancellationTokenSource();
             var token = cts.Token;
             return task.ContinueWith(res => func.Invoke(cts), token);
+        }
+
+        /// <summary>
+        /// 单任务串行（无响应值）
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="func">委托任务</param>
+        /// <returns></returns>
+        private static Task<object> And(this Task<object> task, Func<CancellationTokenSource, object> func)
+        {
+            return And<object, object>(task, func);
         }
 
         #endregion
