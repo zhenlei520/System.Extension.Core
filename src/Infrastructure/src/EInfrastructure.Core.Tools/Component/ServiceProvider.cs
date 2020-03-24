@@ -12,19 +12,32 @@ namespace EInfrastructure.Core.Tools.Component
     /// <summary>
     ///
     /// </summary>
-    public class ServiceProvider : IServiceProvider
+    public class ServiceProvider
     {
+        /// <summary>
+        /// 程序集
+        /// </summary>
+        private readonly Assembly[] _assblemyArray;
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="assblemyArray"></param>
+        public ServiceProvider(Assembly[] assblemyArray = null)
+        {
+            _assblemyArray = assblemyArray ?? AssemblyCommon.GetAssemblies();
+        }
+
         #region 得到服务
 
         /// <summary>
         /// 得到服务集合
         /// </summary>
-        /// <param name="assblemyArray">应用程序集（如果为null则获取当前应用的程序集）</param>
         /// <typeparam name="TService"></typeparam>
         /// <returns>得到继承serviceType的实现类</returns>
-        public IEnumerable<TService> GetServices<TService>(Assembly[] assblemyArray = null) where TService : class
+        public IEnumerable<TService> GetServices<TService>() where TService : class
         {
-            var types = (assblemyArray ?? AssemblyCommon.GetAssemblies()).SelectMany(x =>
+            var types = _assblemyArray.SelectMany(x =>
                 x.GetTypes().Where(y => y.GetInterfaces().Contains(typeof(TService)))).ToList();
             foreach (var type in types)
             {
