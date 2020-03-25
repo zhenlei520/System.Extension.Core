@@ -27,7 +27,7 @@ namespace EInfrastructure.Core.Tools
         }
 
         /// <summary>
-        /// 得到扩展名1.jpg
+        /// 得到扩展名
         /// </summary>
         /// <param name="path">地址参数</param>
         /// <returns></returns>
