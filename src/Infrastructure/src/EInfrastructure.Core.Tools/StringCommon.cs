@@ -25,7 +25,7 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="parameter">待匹配字符串</param>
         /// <param name="character">匹配的字符串</param>
-        /// <param name="number">倒数第n次出现（默认倒数第1次）</param>
+        /// <param name="number">得到第number次（默认第1次）</param>
         /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
         /// <returns></returns>
         public static int IndexOf(this string parameter, char character, int number = 1, int defaultIndexof = -1)
@@ -35,16 +35,16 @@ namespace EInfrastructure.Core.Tools
                 return defaultIndexof;
             }
 
-            string temp = "";
+            int index = 0;
             int count = 1; //第1次匹配
             while (count < number)
             {
-                var index = parameter.IndexOf(character);
-                temp = temp.Substring(index, parameter.Length - index);
+                index += (parameter.IndexOf(character));
+                parameter = parameter.Substring(index+1);
                 count++;
             }
 
-            return temp.IndexOf(character);
+            return index + parameter.IndexOf(character)+1;
         }
 
         #endregion
@@ -67,7 +67,7 @@ namespace EInfrastructure.Core.Tools
                 return defaultIndexof;
             }
 
-            string temp = "";
+            string temp = parameter;
             int count = 1; //第1次匹配
             while (count < number)
             {
@@ -300,7 +300,7 @@ namespace EInfrastructure.Core.Tools
 
             string[] result = new string[h.Count];
             h.Keys.CopyTo(result, 0);
-            return result.Where(x=>!string.IsNullOrEmpty(x)).ToArray();
+            return result.Where(x => !string.IsNullOrEmpty(x)).ToArray();
         }
 
         #endregion
