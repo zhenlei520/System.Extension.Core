@@ -40,8 +40,11 @@ namespace EInfrastructure.Core.Test
         {
             var s3="123,1234,".IndexOf(',',2,3);
             var s = StringCommon.LastIndexOf("123,1234,4323,2", ',', 2);
+            var s5 = StringCommon.LastIndexOf("123,1234,4323,2,4", ',', 4);
+            var s6 = StringCommon.LastIndexOf("123,1234,4323,2", ',', 3);
             var s2 = StringCommon.IndexOf("123,1234,4323,2", ',', 2);
             var s4 = StringCommon.IndexOf("123,1234,4323,2", ',', 3);
+            var s7 = StringCommon.IndexOf("123,1234,4323,2,3,2", ',', 4);
         }
     }
 }

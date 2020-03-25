@@ -30,7 +30,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static int IndexOf(this string parameter, char character, int number = 1, int defaultIndexof = -1)
         {
-            if (string.IsNullOrEmpty(parameter))
+            if (string.IsNullOrEmpty(parameter)||number<=0)
             {
                 return defaultIndexof;
             }
@@ -39,12 +39,13 @@ namespace EInfrastructure.Core.Tools
             int count = 1; //第1次匹配
             while (count < number)
             {
-                index += (parameter.IndexOf(character));
-                parameter = parameter.Substring(index+1);
+                var tempIndex= (parameter.IndexOf(character));
+                index += tempIndex;
+                parameter = parameter.Substring(tempIndex+1);
                 count++;
             }
 
-            return index + parameter.IndexOf(character)+1;
+            return index + parameter.IndexOf(character)+number-1;
         }
 
         #endregion
@@ -62,20 +63,7 @@ namespace EInfrastructure.Core.Tools
         // ReSharper disable once InconsistentNaming
         public static int LastIndexOf(this string parameter, char character, int number = 1, int defaultIndexof = -1)
         {
-            if (string.IsNullOrEmpty(parameter))
-            {
-                return defaultIndexof;
-            }
-
-            string temp = parameter;
-            int count = 1; //第1次匹配
-            while (count < number)
-            {
-                temp = temp.Substring(0, parameter.LastIndexOf(character));
-                count++;
-            }
-
-            return temp.LastIndexOf(character);
+            return IndexOf(parameter, character, parameter.Split(character).Length-number, defaultIndexof);
         }
 
         #endregion
