@@ -405,7 +405,6 @@ namespace EInfrastructure.Core.Tools.Tasks
 
         #endregion
 
-
         #region 单任务串行（无响应值）
 
         /// <summary>
