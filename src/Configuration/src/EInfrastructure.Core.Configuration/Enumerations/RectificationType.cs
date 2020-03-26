@@ -19,6 +19,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// </summary>
         public static RectificationType Floor = new RectificationType(2, "向下取整");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">描述</param>
         public RectificationType(int id, string name) : base(id, name)
         {
         }

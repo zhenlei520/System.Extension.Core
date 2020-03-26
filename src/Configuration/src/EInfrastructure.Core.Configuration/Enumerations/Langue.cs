@@ -50,6 +50,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// </summary>
         public static Language Hindi = new Language(7, "印度语");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">描述</param>
         public Language(int id, string name) : base(id, name)
         {
         }

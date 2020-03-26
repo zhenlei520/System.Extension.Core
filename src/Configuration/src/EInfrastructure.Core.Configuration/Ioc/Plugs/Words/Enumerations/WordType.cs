@@ -187,6 +187,11 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Words.Enumerations
 
         #endregion
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">描述</param>
         public WordType(int id, string name) : base(id, name)
         {
         }

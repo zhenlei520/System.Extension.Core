@@ -90,6 +90,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// </summary>
         public static Nationality Indian = new Nationality(15, "印度");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">描述</param>
         public Nationality(int id, string name) : base(id, name)
         {
         }

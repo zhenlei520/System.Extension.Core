@@ -35,6 +35,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// </summary>
         public static Blood O = new Blood(4, "O型");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id">血型id</param>
+        /// <param name="name">血型描述</param>
         public Blood(int id, string name) : base(id, name)
         {
         }

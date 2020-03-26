@@ -455,7 +455,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <summary>
         /// 出队
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
         Task<string> ListRightPopAsync(string key);
@@ -480,7 +479,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <summary>
         /// 出栈
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
         Task<string> ListLeftPopAsync(string key);
@@ -564,7 +562,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <summary>
         /// 获取指定索引的集合
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="fromRank"></param>
         /// <param name="toRank"></param>
