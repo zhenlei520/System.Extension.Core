@@ -26,10 +26,10 @@ namespace EInfrastructure.Core.AliYun.DaYu.Test
             {
                 var result = new SmsProvider(new AliSmsConfig()
                 {
-                    AccessKey = "",
-                    EncryptionKey = "",
-                    SignName = ""
-                }).Send("", "SMS_151545308", new List<KeyValuePair<string, string>>()
+                    AccessKey = "LTAIDUtupDgzqDVr",
+                    EncryptionKey = "vwV9ToOmooV8gKeYUFQRcPcmmGbYCt",
+                    SignName = "得有店"
+                }).Send("13653771007", "SMS_151545308", new List<KeyValuePair<string, string>>()
                 {
                     new KeyValuePair<string, string>("code", "3982")
                 });

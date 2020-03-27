@@ -78,6 +78,11 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Enum
         /// <summary>
         /// 未知错误（不一定是发送失败）
         /// </summary>
-        [Description("未知错误")] Unknown = 14
+        [Description("未知错误")] Unknown = 14,
+
+        /// <summary>
+        /// MissingAccessKeyId 秘钥错误
+        /// </summary>
+        [Description("秘钥错误")]AccessKeyError=15
     }
 }

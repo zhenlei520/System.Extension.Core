@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Aliyun.Acs.Core;
+using Aliyun.Acs.Core.Exceptions;
+using Aliyun.Acs.Core.Http;
+using Aliyun.Acs.Core.Profile;
 using EInfrastructure.Core.AliYun.DaYu.Common;
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.AliYun.DaYu.Model;
@@ -30,7 +34,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
     /// <summary>
     /// 短信
     /// </summary>
-    public class SmsProvider : ISmsProvider
+    public class SmsProvider : BaseSmsProvider, ISmsProvider
     {
         private AliSmsConfig _smsConfig;
         private readonly IJsonProvider _jsonProvider;
@@ -53,7 +57,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// 短信服务
         /// </summary>
         public SmsProvider(AliSmsConfig smsConfig, ICollection<IJsonProvider> jsonProviders,
-            ICollection<IXmlProvider> xmlProviders)
+            ICollection<IXmlProvider> xmlProviders) : base(smsConfig)
         {
             _smsConfig = smsConfig;
             _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
@@ -86,10 +90,12 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <param name="templateCode">短信模板</param>
         /// <param name="content">内容</param>
         /// <returns></returns>
-        public List<SendSmsResponseDto> Send(List<string> phoneNumbers, string templateCode,
+        public List<Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto> Send(List<string> phoneNumbers,
+            string templateCode,
             List<KeyValuePair<string, string>> content)
         {
-            List<SendSmsResponseDto> responseList = new List<SendSmsResponseDto>();
+            List<Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto> responseList =
+                new List<Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto>();
             foreach (var phone in phoneNumbers)
             {
                 responseList.Add(Send(phone, templateCode, content));
@@ -109,91 +115,145 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <param name="templateCode">短信模板</param>
         /// <param name="content">内容</param>
         /// <returns></returns>
-        public SendSmsResponseDto Send(string phoneNumber, string templateCode,
+        public Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto Send(string phoneNumber,
+            string templateCode,
             List<KeyValuePair<string, string>> content)
         {
-            if (content.Any(x => x.Key.Length >= 20 || x.Value.Length >= 20))
-            {
-                throw new BusinessException<string>("请确保短信参数以及短信内容不超过20个字符", "Param Error");
-            }
+            // if (content.Any(x => x.Key.Length >= 20 || x.Value.Length >= 20))
+            // {
+            //     throw new BusinessException<string>("请确保短信参数以及短信内容不超过20个字符", "Param Error");
+            // }
+            //
+            // Dictionary<string, string> data = new Dictionary<string, string>();
+            // content.ForEach(item => { data.Add(item.Key, item.Value); });
+            // Dictionary<string, string> commonParam = Util.BuildCommonParam(_smsConfig.AccessKey);
+            // commonParam.Add("Action", "SendSms");
+            // commonParam.Add("Version", "2017-05-25");
+            // commonParam.Add("RegionId", "cn-hangzhou");
+            // commonParam.Add("PhoneNumbers", phoneNumber);
+            // commonParam.Add("SignName", _smsConfig.SignName);
+            // commonParam.Add("TemplateCode", templateCode);
+            // commonParam.Add("TemplateParam", _jsonProvider.Serializer(data));
+            // string sign = Util.CreateSign(commonParam, _smsConfig.EncryptionKey);
+            // commonParam.Add("Signature", sign);
+            //
+            // var response = _smsClient.GetString("", commonParam);
+            //
+            // if (string.IsNullOrEmpty(response))
+            // {
+            //     return new SendSmsResponseDto(phoneNumber)
+            //     {
+            //         Code = SmsCode.Unknown,
+            //         Msg = "发送异常"
+            //     };
+            // }
+            //
+            // var xmlElement = XmlCommon.GetXmlElement(response);
+            // if (xmlElement != null)
+            // {
+            //     if (xmlElement.Name == "SendSmsResponse")
+            //     {
+            //         var result =
+            //             _xmlProvider.Deserialize<SendSmsSuccessResponse>(response, Encoding.UTF8, (ex) => null);
+            //         if (result != null)
+            //         {
+            //             SmsCode smsCode = SmsCodeMap.Where(x => x.Key == result.Code).Select(x => x.Value)
+            //                 .FirstOrDefault();
+            //             if (smsCode != default(SmsCode))
+            //             {
+            //                 return new SendSmsResponseDto(phoneNumber)
+            //                 {
+            //                     Code = smsCode,
+            //                     Msg = smsCode == SmsCode.Ok ? "success" : "lose",
+            //                     Extend = new SendSmsExtend()
+            //                     {
+            //                         BizId = "",
+            //                         RequestId = result.RequestId,
+            //                         Msg = result.Message
+            //                     }
+            //                 };
+            //             }
+            //         }
+            //     }
+            //     else if (xmlElement.Name == "Error")
+            //     {
+            //         var result = _xmlProvider.Deserialize<SendSmsErrorResponse>(response, Encoding.UTF8, (ex) => null);
+            //         if (result != null)
+            //         {
+            //             SmsCode smsCode = SmsCodeMap.Where(x => x.Key == result.Code).Select(x => x.Value)
+            //                 .FirstOrDefault();
+            //             if (smsCode != default(SmsCode))
+            //             {
+            //                 return new SendSmsResponseDto(phoneNumber)
+            //                 {
+            //                     Code = smsCode,
+            //                     Msg = smsCode == SmsCode.Ok ? "success" : "lose",
+            //                     Extend = new SendSmsExtend()
+            //                     {
+            //                         BizId = "",
+            //                         RequestId = result.RequestId,
+            //                         Msg = result.Message
+            //                     }
+            //                 };
+            //             }
+            //         }
+            //     }
+            // }
+            //
+            // return new SendSmsResponseDto(phoneNumber)
+            // {
+            //     Code = SmsCode.Unknown,
+            //     Msg = "发送异常"
+            // };
 
+
+            CommonRequest request = base.GetRequest();
+            request.AddQueryParameters("PhoneNumbers", phoneNumber);
+            request.AddQueryParameters("SignName", _smsConfig.SignName);
+            request.AddQueryParameters("TemplateCode", templateCode);
             Dictionary<string, string> data = new Dictionary<string, string>();
             content.ForEach(item => { data.Add(item.Key, item.Value); });
-            Dictionary<string, string> commonParam = Util.BuildCommonParam(_smsConfig.AccessKey);
-            commonParam.Add("Action", "SendSms");
-            commonParam.Add("Version", "2017-05-25");
-            commonParam.Add("RegionId", "cn-hangzhou");
-            commonParam.Add("PhoneNumbers", phoneNumber);
-            commonParam.Add("SignName", _smsConfig.SignName);
-            commonParam.Add("TemplateCode", templateCode);
-            commonParam.Add("TemplateParam", _jsonProvider.Serializer(data));
-            string sign = Util.CreateSign(commonParam, _smsConfig.EncryptionKey);
-            commonParam.Add("Signature", sign);
-
-            var response = _smsClient.GetString("", commonParam);
-
-            if (string.IsNullOrEmpty(response))
+            request.AddQueryParameters("TemplateParam", _jsonProvider.Serializer(data));
+            try
             {
-                return new SendSmsResponseDto(phoneNumber)
+                CommonResponse response = GetClient().GetCommonResponse(request);
+                if (response != null)
                 {
-                    Code = SmsCode.Unknown,
-                    Msg = "发送异常"
-                };
-            }
-
-            var xmlElement = XmlCommon.GetXmlElement(response);
-            if (xmlElement != null)
-            {
-                if (xmlElement.Name == "SendSmsResponse")
-                {
-                    var result =
-                        _xmlProvider.Deserialize<SendSmsSuccessResponse>(response, Encoding.UTF8, (ex) => null);
-                    if (result != null)
+                    var res = _jsonProvider
+                        .Deserialize<Model.SendSms.SendSmsResponseDto>(
+                            response.Data);
+                    if (res != null)
                     {
-                        SmsCode smsCode = SmsCodeMap.Where(x => x.Key == result.Code).Select(x => x.Value)
+                        SmsCode smsCode = SmsCodeMap.Where(x => x.Key == res.Code).Select(x => x.Value)
                             .FirstOrDefault();
+
                         if (smsCode != default(SmsCode))
                         {
-                            return new SendSmsResponseDto(phoneNumber)
+                            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(
+                                phoneNumber)
                             {
                                 Code = smsCode,
                                 Msg = smsCode == SmsCode.Ok ? "success" : "lose",
                                 Extend = new SendSmsExtend()
                                 {
-                                    BizId = "",
-                                    RequestId = result.RequestId,
-                                    Msg = result.Message
-                                }
-                            };
-                        }
-                    }
-                }
-                else if (xmlElement.Name == "Error")
-                {
-                    var result = _xmlProvider.Deserialize<SendSmsErrorResponse>(response, Encoding.UTF8, (ex) => null);
-                    if (result != null)
-                    {
-                        SmsCode smsCode = SmsCodeMap.Where(x => x.Key == result.Code).Select(x => x.Value)
-                            .FirstOrDefault();
-                        if (smsCode != default(SmsCode))
-                        {
-                            return new SendSmsResponseDto(phoneNumber)
-                            {
-                                Code = smsCode,
-                                Msg = smsCode == SmsCode.Ok ? "success" : "lose",
-                                Extend = new SendSmsExtend()
-                                {
-                                    BizId = "",
-                                    RequestId = result.RequestId,
-                                    Msg = result.Message
+                                    BizId = smsCode == SmsCode.Ok
+                                        ? _jsonProvider
+                                            .Deserialize<SendSmsSuccessResponse>(
+                                                response.Data).BizId
+                                        : "",
+                                    RequestId = res.RequestId,
+                                    Msg = res.Message
                                 }
                             };
                         }
                     }
                 }
             }
+            catch (ServerException e)
+            {
+            }
 
-            return new SendSmsResponseDto(phoneNumber)
+            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(phoneNumber)
             {
                 Code = SmsCode.Unknown,
                 Msg = "发送异常"
@@ -236,7 +296,8 @@ namespace EInfrastructure.Core.AliYun.DaYu
             {"isv.BLACK_KEY_CONTROL_LIMIT", SmsCode.BlackKeyControlLimit},
             {"isv.INVALID_PARAMETERS", SmsCode.InvalidParameters},
             {"isv.PARAM_LENGTH_LIMIT", SmsCode.LengthError},
-            {"isv.INVALID_JSON_PARAM", SmsCode.InvalidParameters}
+            {"isv.INVALID_JSON_PARAM", SmsCode.InvalidParameters},
+            {"MissingAccessKeyId", SmsCode.AccessKeyError},
         };
 
         #endregion
