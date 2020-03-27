@@ -15,7 +15,6 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Enum;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Http;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
-using EInfrastructure.Core.Serialize.Xml;
 using EInfrastructure.Core.Validation.Common;
 
 namespace EInfrastructure.Core.AliYun.DaYu
@@ -34,9 +33,6 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public SmsProvider(AliSmsConfig smsConfig) : this(smsConfig, new List<IJsonProvider>()
         {
             new NewtonsoftJsonProvider(),
-        }, new List<IXmlProvider>()
-        {
-            new XmlProvider()
         })
         {
         }
@@ -44,12 +40,10 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <summary>
         /// 短信服务
         /// </summary>
-        public SmsProvider(AliSmsConfig smsConfig, ICollection<IJsonProvider> jsonProviders,
-            ICollection<IXmlProvider> xmlProviders) : base(smsConfig)
+        public SmsProvider(AliSmsConfig smsConfig, ICollection<IJsonProvider> jsonProviders) : base(smsConfig)
         {
             _smsConfig = smsConfig;
             _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
-            _xmlProvider = InjectionSelectionCommon.GetImplement(xmlProviders);
             ValidationCommon.Check(smsConfig, "请完善阿里云短信配置信息", HttpStatus.Err.Name);
         }
 

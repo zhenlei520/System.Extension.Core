@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <PackageReference Include="aliyun-net-sdk-core" Version="1.5.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
   </ItemGroup>
 
