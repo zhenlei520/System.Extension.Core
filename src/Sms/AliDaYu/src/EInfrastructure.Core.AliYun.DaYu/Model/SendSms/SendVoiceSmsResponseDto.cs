@@ -6,9 +6,9 @@ using Newtonsoft.Json;
 namespace EInfrastructure.Core.AliYun.DaYu.Model.SendSms
 {
     /// <summary>
-    /// 短信响应信息
+    /// 发送语音短信信息
     /// </summary>
-    internal class SendSmsResponseDto : BaseReponseDto
+    internal class SendVoiceSmsResponseDto : BaseReponseDto
     {
         /// <summary>
         /// 消息
@@ -24,12 +24,12 @@ namespace EInfrastructure.Core.AliYun.DaYu.Model.SendSms
     /// <summary>
     /// 发送成功消息
     /// </summary>
-    internal class SendSmsSuccessResponseDto:SendSmsResponseDto
+    internal class SendVoiceSmsSuccessResponseDto : SendVoiceSmsResponseDto
     {
         /// <summary>
         ///发送回执ID
         /// </summary>
-        [JsonProperty(PropertyName = "BizId", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string BizId { get; set; }
+        [JsonProperty(PropertyName = "CallId", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string CallId { get; set; }
     }
 }

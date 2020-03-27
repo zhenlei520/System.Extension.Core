@@ -50,20 +50,19 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// 得到公共的请求参数
         /// </summary>
         /// <returns></returns>
-        protected virtual CommonRequest GetRequest()
+        protected virtual CommonRequest GetRequest(string action, string version,string regionId)
         {
             return new CommonRequest
             {
                 Method = MethodType.POST,
                 Domain = "dysmsapi.aliyuncs.com",
-                Version = "2017-05-25",
-                Action = "SendSms",
-                RegionId = "cn-hangzhou",
+                Version = version,
+                Action = action,
+                RegionId = regionId,
             };
         }
 
         #endregion
-
 
 
         #region private methods
