@@ -5,10 +5,13 @@ using System.Net;
 
 namespace EInfrastructure.Core.UCloud.Storage.Common
 {
+    /// <summary>
+    ///
+    /// </summary>
     internal static class HttpWebResponseExt
     {
         internal static HttpWebResponse GetResponseNoException(this HttpWebRequest req) {
-            try { 
+            try {
                 return (HttpWebResponse)req.GetResponse();
             }catch (WebException we) {
                 var resp = we.Response as HttpWebResponse;

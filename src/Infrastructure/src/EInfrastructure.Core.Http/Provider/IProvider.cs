@@ -44,7 +44,9 @@ namespace EInfrastructure.Core.Http.Provider
         /// <returns></returns>
         protected RestRequest GetRestRequest(string url, Method method, int timeOut, Dictionary<string, string> headers)
         {
-            RestRequest request = new RestRequest(url, method) {Timeout = timeOut};
+            RestRequest request = string.IsNullOrEmpty(url)
+                ? new RestRequest(method) {Timeout = timeOut}
+                : new RestRequest(url, method) {Timeout = timeOut};
             if (headers != null)
             {
                 foreach (var key in headers.Keys)

@@ -24,13 +24,15 @@ namespace EInfrastructure.Core.AliYun.DaYu.Test
         {
             try
             {
-                new SmsProvider(new AliSmsConfig(), new List<IJsonProvider>()
+                var result = new SmsProvider(new AliSmsConfig()
                 {
-                    new NewtonsoftJsonProvider()
-                }, new List<IXmlProvider>()
+                    AccessKey = "",
+                    EncryptionKey = "",
+                    SignName = ""
+                }).Send("", "SMS_151545308", new List<KeyValuePair<string, string>>()
                 {
-                    new XmlProvider()
-                }).Send(new List<string>(), "", "");
+                    new KeyValuePair<string, string>("code", "3982")
+                });
             }
             catch (Exception ex)
             {

@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.UCloud.Storage
     /// <summary>
     /// 基类UCloud实现
     /// </summary>
-    public class BaseStorageProvider
+    public abstract class BaseStorageProvider
     {
         /// <summary>
         ///
@@ -49,7 +49,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <param name="key">文件地址</param>
         /// <param name="ext">扩展名</param>
         /// <exception cref="Exception"></exception>
-        internal bool UploadFile(Stream stream, string key, string ext)
+        internal virtual bool UploadFile(Stream stream, string key, string ext)
         {
             HttpWebRequest request = null;
             HttpWebResponse response = null;
@@ -91,7 +91,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// 返回权重
         /// </summary>
         /// <returns></returns>
-        public int GetWeights()
+        public virtual int GetWeights()
         {
             return 99;
         }

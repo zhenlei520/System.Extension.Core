@@ -10,10 +10,13 @@ using EInfrastructure.Core.UCloud.Storage.Config;
 
 namespace EInfrastructure.Core.UCloud.Storage.Common
 {
+    /// <summary>
+    ///
+    /// </summary>
     internal class Digest
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="header"></param>
         /// <returns></returns>

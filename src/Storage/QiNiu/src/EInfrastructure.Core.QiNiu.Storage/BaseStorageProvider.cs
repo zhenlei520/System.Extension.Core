@@ -16,7 +16,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// <summary>
     /// 基类存储实现类
     /// </summary>
-    public partial class BaseStorageProvider
+    public abstract class BaseStorageProvider
     {
         /// <summary>
         /// 存储配置文件
@@ -51,7 +51,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="uploadPersistentOps"></param>
         /// <returns></returns>
-        protected PutExtra GetPutExtra(UploadPersistentOps uploadPersistentOps = null)
+        protected virtual PutExtra GetPutExtra(UploadPersistentOps uploadPersistentOps = null)
         {
             PutExtra putExtra = new PutExtra();
             if (uploadPersistentOps != null)
@@ -116,7 +116,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// 得到七牛配置文件
         /// </summary>
         /// <returns></returns>
-        internal Qiniu.Storage.Config GetConfig(UploadPersistentOps uploadPersistentOps = null)
+        internal virtual Qiniu.Storage.Config GetConfig(UploadPersistentOps uploadPersistentOps = null)
         {
             var config = new Qiniu.Storage.Config()
             {
@@ -160,7 +160,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// 得到资源管理
         /// </summary>
         /// <returns></returns>
-        protected BucketManager GetBucketManager()
+        protected virtual BucketManager GetBucketManager()
         {
             if (_bucketManager == null)
                 _bucketManager = new BucketManager(_qiNiuConfig.GetMac(), GetConfig());
@@ -178,7 +178,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <param name="opsParam">上传策略</param>
         /// <param name="action"></param>
         /// <returns></returns>
-        protected string GetUploadCredentials(QiNiuStorageConfig qiNiuConfig, UploadPersistentOpsParam opsParam,
+        protected virtual string GetUploadCredentials(QiNiuStorageConfig qiNiuConfig, UploadPersistentOpsParam opsParam,
             Action<PutPolicy> action = null)
         {
             PutPolicyConfig putPolicyConfig = new PutPolicyConfig(qiNiuConfig);
@@ -196,7 +196,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="uploadPersistentOps">上传策略</param>
         /// <returns></returns>
-        protected UploadPersistentOps GetUploadPersistentOps(UploadPersistentOps uploadPersistentOps)
+        protected virtual UploadPersistentOps GetUploadPersistentOps(UploadPersistentOps uploadPersistentOps)
         {
             return uploadPersistentOps ?? new UploadPersistentOps();
         }
@@ -209,7 +209,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// 返回权重
         /// </summary>
         /// <returns></returns>
-        public int GetWeights()
+        public virtual int GetWeights()
         {
             return 99;
         }

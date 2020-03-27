@@ -8,7 +8,7 @@ namespace EInfrastructure.Core.Words.Enum
     /// <summary>
     /// 词库类型
     /// </summary>
-    public enum DictTypeEnum
+    internal enum DictTypeEnum
     {
         /// <summary>
         /// 内容

@@ -3,14 +3,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Text;
 using EInfrastructure.Core.AliYun.DaYu.Common;
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.AliYun.DaYu.Model;
+using EInfrastructure.Core.AliYun.DaYu.Model.SendSms;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Dto;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Enum;
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Http;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
+using EInfrastructure.Core.Serialize.Xml;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Validation.Common;
 using RestSharp;
@@ -29,6 +39,19 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <summary>
         /// 短信服务
         /// </summary>
+        public SmsProvider(AliSmsConfig smsConfig) : this(smsConfig, new List<IJsonProvider>()
+        {
+            new NewtonsoftJsonProvider(),
+        }, new List<IXmlProvider>()
+        {
+            new XmlProvider()
+        })
+        {
+        }
+
+        /// <summary>
+        /// 短信服务
+        /// </summary>
         public SmsProvider(AliSmsConfig smsConfig, ICollection<IJsonProvider> jsonProviders,
             ICollection<IXmlProvider> xmlProviders)
         {
@@ -38,7 +61,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
             ValidationCommon.Check(smsConfig, "请完善阿里云短信配置信息", HttpStatus.Err.Name);
         }
 
-        readonly RestClient _restClient = new RestClient("http://dysmsapi.aliyuncs.com");
+        readonly HttpClient _smsClient = new HttpClient("http://dysmsapi.aliyuncs.com");
 
         #region 得到实现类唯一标示
 
@@ -62,43 +85,17 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <param name="phoneNumbers">手机号</param>
         /// <param name="templateCode">短信模板</param>
         /// <param name="content">内容</param>
-        /// <param name="loseAction">失败回调函数</param>
         /// <returns></returns>
-        public bool Send(List<string> phoneNumbers, string templateCode, object content,
-            Action<SendSmsLoseDto> loseAction = null)
+        public List<SendSmsResponseDto> Send(List<string> phoneNumbers, string templateCode,
+            List<KeyValuePair<string, string>> content)
         {
-            Dictionary<string, string> commonParam = Util.BuildCommonParam(_smsConfig.AccessKey);
-            commonParam.Add("Action", "SendSms");
-            commonParam.Add("Version", "2017-05-25");
-            commonParam.Add("RegionId", "cn-hangzhou");
-            commonParam.Add("PhoneNumbers", phoneNumbers.ConvertListToString(','));
-            commonParam.Add("SignName", _smsConfig.SignName);
-            commonParam.Add("TemplateCode", templateCode);
-            commonParam.Add("TemplateParam", _jsonProvider.Serializer(content));
-
-            string sign = Util.CreateSign(commonParam, _smsConfig.EncryptionKey);
-            commonParam.Add("Signature", sign);
-            RestRequest request = new RestRequest(Method.GET);
-            foreach (var key in commonParam.Keys)
+            List<SendSmsResponseDto> responseList = new List<SendSmsResponseDto>();
+            foreach (var phone in phoneNumbers)
             {
-                request.AddQueryParameter(key, commonParam[key]);
+                responseList.Add(Send(phone, templateCode, content));
             }
 
-            var response = _restClient.Execute(request);
-            SendSmsResponse result = _xmlProvider.Deserialize<SendSmsResponse>(response.Content);
-            if (result.Code == "OK")
-            {
-                return true;
-            }
-
-            loseAction?.Invoke(new SendSmsLoseDto()
-            {
-                PhoneList = phoneNumbers,
-                Msg = "短信发送失败",
-                SubMsg = response.Content,
-                Code = result.Code
-            });
-            return false;
+            return responseList;
         }
 
         #endregion
@@ -111,12 +108,96 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <param name="phoneNumber">手机号</param>
         /// <param name="templateCode">短信模板</param>
         /// <param name="content">内容</param>
-        /// <param name="loseAction">失败回调函数</param>
         /// <returns></returns>
-        public bool Send(string phoneNumber, string templateCode, object content,
-            Action<SendSmsLoseDto> loseAction = null)
+        public SendSmsResponseDto Send(string phoneNumber, string templateCode,
+            List<KeyValuePair<string, string>> content)
         {
-            return Send(new List<string>() {phoneNumber}, templateCode, content, loseAction);
+            if (content.Any(x => x.Key.Length >= 20 || x.Value.Length >= 20))
+            {
+                throw new BusinessException<string>("请确保短信参数以及短信内容不超过20个字符", "Param Error");
+            }
+
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            content.ForEach(item => { data.Add(item.Key, item.Value); });
+            Dictionary<string, string> commonParam = Util.BuildCommonParam(_smsConfig.AccessKey);
+            commonParam.Add("Action", "SendSms");
+            commonParam.Add("Version", "2017-05-25");
+            commonParam.Add("RegionId", "cn-hangzhou");
+            commonParam.Add("PhoneNumbers", phoneNumber);
+            commonParam.Add("SignName", _smsConfig.SignName);
+            commonParam.Add("TemplateCode", templateCode);
+            commonParam.Add("TemplateParam", _jsonProvider.Serializer(data));
+            string sign = Util.CreateSign(commonParam, _smsConfig.EncryptionKey);
+            commonParam.Add("Signature", sign);
+
+            var response = _smsClient.GetString("", commonParam);
+
+            if (string.IsNullOrEmpty(response))
+            {
+                return new SendSmsResponseDto(phoneNumber)
+                {
+                    Code = SmsCode.Unknown,
+                    Msg = "发送异常"
+                };
+            }
+
+            var xmlElement = XmlCommon.GetXmlElement(response);
+            if (xmlElement != null)
+            {
+                if (xmlElement.Name == "SendSmsResponse")
+                {
+                    var result =
+                        _xmlProvider.Deserialize<SendSmsSuccessResponse>(response, Encoding.UTF8, (ex) => null);
+                    if (result != null)
+                    {
+                        SmsCode smsCode = SmsCodeMap.Where(x => x.Key == result.Code).Select(x => x.Value)
+                            .FirstOrDefault();
+                        if (smsCode != default(SmsCode))
+                        {
+                            return new SendSmsResponseDto(phoneNumber)
+                            {
+                                Code = smsCode,
+                                Msg = smsCode == SmsCode.Ok ? "success" : "lose",
+                                Extend = new SendSmsExtend()
+                                {
+                                    BizId = "",
+                                    RequestId = result.RequestId,
+                                    Msg = result.Message
+                                }
+                            };
+                        }
+                    }
+                }
+                else if (xmlElement.Name == "Error")
+                {
+                    var result = _xmlProvider.Deserialize<SendSmsErrorResponse>(response, Encoding.UTF8, (ex) => null);
+                    if (result != null)
+                    {
+                        SmsCode smsCode = SmsCodeMap.Where(x => x.Key == result.Code).Select(x => x.Value)
+                            .FirstOrDefault();
+                        if (smsCode != default(SmsCode))
+                        {
+                            return new SendSmsResponseDto(phoneNumber)
+                            {
+                                Code = smsCode,
+                                Msg = smsCode == SmsCode.Ok ? "success" : "lose",
+                                Extend = new SendSmsExtend()
+                                {
+                                    BizId = "",
+                                    RequestId = result.RequestId,
+                                    Msg = result.Message
+                                }
+                            };
+                        }
+                    }
+                }
+            }
+
+            return new SendSmsResponseDto(phoneNumber)
+            {
+                Code = SmsCode.Unknown,
+                Msg = "发送异常"
+            };
         }
 
         #endregion
@@ -131,6 +212,32 @@ namespace EInfrastructure.Core.AliYun.DaYu
         {
             return 99;
         }
+
+        #endregion
+
+        #region private methods
+
+        /// <summary>
+        /// 短信验证码
+        /// </summary>
+        private Dictionary<string, SmsCode> SmsCodeMap = new Dictionary<string, SmsCode>()
+        {
+            {"OK", SmsCode.Ok},
+            {"isv.TEMPLATE_MISSING_PARAMETERS", SmsCode.TemplateIllegal},
+            {"isv.SMS_TEMPLATE_ILLEGAL", SmsCode.TemplateIllegal},
+            {"isv.SMS_SIGNATURE_ILLEGAL", SmsCode.SignIllegal},
+            {"isv.MOBILE_NUMBER_ILLEGAL", SmsCode.MobileNumberIllegal},
+            {"isv.BUSINESS_LIMIT_CONTROL", SmsCode.BusinessLimitControl},
+            {"isv.AMOUNT_NOT_ENOUGH", SmsCode.AmountNotEnough},
+            {"isp.RAM_PERMISSION_DENY", SmsCode.InsufficientPrivileges},
+            {"isv.OUT_OF_SERVICE", SmsCode.BusinessStop},
+            {"isv.ACCOUNT_NOT_EXISTS", SmsCode.AbnormalAccount},
+            {"isv.ACCOUNT_ABNORMAL", SmsCode.AbnormalAccount},
+            {"isv.BLACK_KEY_CONTROL_LIMIT", SmsCode.BlackKeyControlLimit},
+            {"isv.INVALID_PARAMETERS", SmsCode.InvalidParameters},
+            {"isv.PARAM_LENGTH_LIMIT", SmsCode.LengthError},
+            {"isv.INVALID_JSON_PARAM", SmsCode.InvalidParameters}
+        };
 
         #endregion
     }

@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.Words.Extension
     /// <summary>
     /// 基础类
     /// </summary>
-    public class BaseWordService
+    public abstract class BaseWordService
     {
         /// <summary>
         /// 内容词库
@@ -75,7 +75,7 @@ namespace EInfrastructure.Core.Words.Extension
         /// </summary>
         /// <param name="path">绝对路径</param>
         /// <returns></returns>
-        internal string GetContent(string path)
+        internal virtual string GetContent(string path)
         {
             using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
@@ -94,7 +94,7 @@ namespace EInfrastructure.Core.Words.Extension
         /// </summary>
         /// <param name="path">文件地址（相对路径）</param>
         /// <returns></returns>
-        internal string GetContent(List<string> path)
+        internal virtual string GetContent(List<string> path)
         {
             string filePath = "";
             path.ForEach(item => { filePath = Path.Combine(filePath, item); });
@@ -111,7 +111,7 @@ namespace EInfrastructure.Core.Words.Extension
         /// 重载词库信息
         /// </summary>
         /// <param name="dictType">词库类型</param>
-        internal void Reload(DictTypeEnum dictType)
+        internal virtual void Reload(DictTypeEnum dictType)
         {
             switch (dictType)
             {

@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Common
         /// <param name="strKey"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public static string CreateSign(Dictionary<string, string> data, string strKey, string method = "GET")
+        internal static string CreateSign(Dictionary<string, string> data, string strKey, string method = "GET")
         {
             var dic = new RouteValueDictionary(data);
             string[] array = dic.OrderBy(a => a.Key, StringComparer.Ordinal).Select(a => PercentEncode(a.Key) + "=" + PercentEncode(a.Value.ToString())).ToArray();
@@ -102,7 +102,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Common
         /// 构建公共参数
         /// </summary>
         /// <returns></returns>
-        public static Dictionary<string, string> BuildCommonParam(string accessKey)
+        internal static Dictionary<string, string> BuildCommonParam(string accessKey)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>
             {

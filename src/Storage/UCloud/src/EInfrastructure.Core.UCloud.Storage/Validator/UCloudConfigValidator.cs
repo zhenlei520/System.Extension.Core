@@ -10,7 +10,7 @@ namespace EInfrastructure.Core.UCloud.Storage.Validator
     /// <summary>
     /// UCloud存储配置校验
     /// </summary>
-    public class UCloudConfigValidator : AbstractValidator<UCloudStorageConfig>, IFluentlValidator<UCloudStorageConfig>
+    internal class UCloudConfigValidator : AbstractValidator<UCloudStorageConfig>, IFluentlValidator<UCloudStorageConfig>
     {
         /// <summary>
         ///
