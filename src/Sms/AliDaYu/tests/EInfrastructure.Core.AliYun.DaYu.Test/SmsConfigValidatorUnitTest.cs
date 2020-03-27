@@ -25,6 +25,21 @@ namespace EInfrastructure.Core.AliYun.DaYu.Test
         {
             try
             {
+                var result2 = new SmsProvider(new AliSmsConfig()
+                {
+                    AccessKey = "LTAIDUtupDgzqDVr",
+                    EncryptionKey = "vwV9ToOmooV8gKeYUFQRcPcmmGbYCt",
+                }).SendVoiceSms(new SendVoiceSmsParam()
+                {
+                    Phone = "13653771007",
+                    TemplateCode = "TTS_177536483",
+                    CalledShowNumber="02566040803",
+                    Content = new List<KeyValuePair<string, string>>()
+                    {
+                        new KeyValuePair<string, string>("code", "3982")
+                    }
+                });
+
                 var result = new SmsProvider(new AliSmsConfig()
                 {
                     AccessKey = "",

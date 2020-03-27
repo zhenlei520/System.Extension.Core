@@ -71,7 +71,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto SendSms(SendSmsParam param)
         {
             new SendSmsParamValidator().Validate(param).Check(HttpStatus.Err.Name);
-            CommonRequest request = base.GetRequest("SendSms", "2017-05-25", "cn-hangzhou");
+            CommonRequest request = base.GetRequest("dysmsapi.aliyuncs.com", "SendSms", "2017-05-25", "cn-hangzhou");
             request.AddQueryParameters("PhoneNumbers", param.Phone);
             request.AddQueryParameters("SignName", param.SignName);
             request.AddQueryParameters("TemplateCode", param.TemplateCode);
@@ -136,7 +136,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto SendVoiceSms(SendVoiceSmsParam param)
         {
             new SendVoiceSmsParamValidator().Validate(param).Check(HttpStatus.Err.Name);
-            CommonRequest request = base.GetRequest("SingleCallByTts", "2017-05-25", "cn-hangzhou");
+            CommonRequest request = base.GetRequest("dyvmsapi.aliyuncs.com", "SingleCallByTts", "2017-05-25", "cn-hangzhou");
             request.AddQueryParameters("CalledNumber", param.Phone);
             request.AddQueryParameters("CalledShowNumber", param.CalledShowNumber);
             request.AddQueryParameters("TtsCode", param.TemplateCode);
@@ -151,7 +151,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
                 if (response != null)
                 {
                     var res = _jsonProvider
-                        .Deserialize<SendSmsResponseDto>(
+                        .Deserialize<SendVoiceSmsResponseDto>(
                             response.Data);
                     if (res != null)
                     {
@@ -169,8 +169,8 @@ namespace EInfrastructure.Core.AliYun.DaYu
                                 {
                                     BizId = smsCode == SmsCode.Ok
                                         ? _jsonProvider
-                                            .Deserialize<SendSmsSuccessResponseDto>(
-                                                response.Data).BizId
+                                            .Deserialize<SendVoiceSmsSuccessResponseDto>(
+                                                response.Data).CallId
                                         : "",
                                     RequestId = res.RequestId,
                                     Msg = res.Message
