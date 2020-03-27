@@ -832,7 +832,7 @@ namespace EInfrastructure.Core.Http
         {
             var body = _requestBodyType.Id == RequestBodyType.TextXml.Id
                 ? _xmlProvider.Serializer(data)
-                : _jsonProvider.Serializer((data ?? new { }));
+                : data;
             var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
                 new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());

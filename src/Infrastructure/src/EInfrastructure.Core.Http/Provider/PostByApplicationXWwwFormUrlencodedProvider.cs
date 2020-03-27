@@ -26,7 +26,7 @@ namespace EInfrastructure.Core.Http.Provider
         {
             RestRequest request = base.GetRestRequest(url, method, timeOut, headers);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-            var bodyDic = ObjectCommon.GetParams(requestBody.Data,"Newtonsoft.Json.JsonPropertyAttribute,Newtonsoft.Json");
+            var bodyDic = ObjectCommon.GetParams(requestBody.Data??new {},"Newtonsoft.Json.JsonPropertyAttribute,Newtonsoft.Json");
             foreach (var item in bodyDic)
             {
                 request.AddParameter(item.Key, item.Value);
