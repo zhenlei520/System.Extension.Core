@@ -77,10 +77,10 @@ namespace EInfrastructure.Core.AliYun.DaYu
 
         #endregion
 
-        #region 指定短信列表发送短信
+        #region 指定手机号列表发送同一短信
 
         /// <summary>
-        /// 指定短信列表发送短信
+        /// 指定手机号列表发送同一短信
         /// </summary>
         /// <param name="phoneNumbers">手机号</param>
         /// <param name="templateCode">短信模板</param>
