@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Serialize.Xml;
 using Xunit;
@@ -28,10 +29,15 @@ namespace EInfrastructure.Core.AliYun.DaYu.Test
                 {
                     AccessKey = "",
                     EncryptionKey = "",
-                    SignName = ""
-                }).Send("", "", new List<KeyValuePair<string, string>>()
+                }).SendSms(new SendSmsParam()
                 {
-                    new KeyValuePair<string, string>("code", "3982")
+                    Phone = "",
+                    TemplateCode = "",
+                    SignName = "",
+                    Content = new List<KeyValuePair<string, string>>()
+                    {
+                        new KeyValuePair<string, string>("code", "3982")
+                    }
                 });
             }
             catch (Exception ex)

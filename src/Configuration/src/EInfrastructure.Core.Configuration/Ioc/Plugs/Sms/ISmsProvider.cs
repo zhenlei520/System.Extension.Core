@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Dto;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params;
 using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Sms
@@ -13,31 +14,18 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Sms
     /// </summary>
     public interface ISmsProvider : ISingleInstance, IIdentify
     {
-        #region 指定短信列表发送短信
-
-        /// <summary>
-        /// 指定短信列表发送短信
-        /// </summary>
-        /// <param name="phoneNumbers">手机号</param>
-        /// <param name="templateCode">短信模板</param>
-        /// <param name="content">内容</param>
-        /// <returns></returns>
-        List<SendSmsResponseDto> Send(List<string> phoneNumbers, string templateCode,
-            List<KeyValuePair<string, string>> content);
-
-        #endregion
-
-        #region 指定单个手机号发送短信
-
         /// <summary>
         /// 指定单个手机号发送短信
         /// </summary>
-        /// <param name="phoneNumber">手机号</param>
-        /// <param name="templateCode">短信模板</param>
-        /// <param name="content">内容</param>
+        /// <param name="param">短信参数</param>
         /// <returns></returns>
-        SendSmsResponseDto Send(string phoneNumber, string templateCode, List<KeyValuePair<string, string>> content);
+        SendSmsResponseDto SendSms(SendSmsParam param);
 
-        #endregion
+        /// <summary>
+        /// 发送语音短信
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        SendSmsResponseDto SendVoiceSms(SendVoiceSmsParam param);
     }
 }

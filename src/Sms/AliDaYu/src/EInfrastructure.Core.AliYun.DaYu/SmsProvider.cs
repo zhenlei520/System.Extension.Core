@@ -8,12 +8,13 @@ using Aliyun.Acs.Core;
 using Aliyun.Acs.Core.Exceptions;
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.AliYun.DaYu.Model.SendSms;
+using EInfrastructure.Core.AliYun.DaYu.Validator;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Enum;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.Http;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Validation.Common;
 
@@ -46,8 +47,6 @@ namespace EInfrastructure.Core.AliYun.DaYu
             ValidationCommon.Check(smsConfig, "请完善阿里云短信配置信息", HttpStatus.Err.Name);
         }
 
-        readonly HttpClient _smsClient = new HttpClient("http://dysmsapi.aliyuncs.com");
-
         #region 得到实现类唯一标示
 
         /// <summary>
@@ -62,50 +61,22 @@ namespace EInfrastructure.Core.AliYun.DaYu
 
         #endregion
 
-        #region 指定手机号列表发送同一短信
-
-        /// <summary>
-        /// 指定手机号列表发送同一短信
-        /// </summary>
-        /// <param name="phoneNumbers">手机号</param>
-        /// <param name="templateCode">短信模板</param>
-        /// <param name="content">内容</param>
-        /// <returns></returns>
-        public List<Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto> Send(List<string> phoneNumbers,
-            string templateCode,
-            List<KeyValuePair<string, string>> content)
-        {
-            List<Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto> responseList =
-                new List<Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto>();
-            foreach (var phone in phoneNumbers)
-            {
-                responseList.Add(Send(phone, templateCode, content));
-            }
-
-            return responseList;
-        }
-
-        #endregion
-
         #region 指定单个手机号发送短信
 
         /// <summary>
         /// 指定单个手机号发送短信
         /// </summary>
-        /// <param name="phoneNumber">手机号</param>
-        /// <param name="templateCode">短信模板</param>
-        /// <param name="content">内容</param>
+        /// <param name="param">短信参数</param>
         /// <returns></returns>
-        public Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto Send(string phoneNumber,
-            string templateCode,
-            List<KeyValuePair<string, string>> content)
+        public Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto SendSms(SendSmsParam param)
         {
+            new SendSmsParamValidator().Validate(param).Check(HttpStatus.Err.Name);
             CommonRequest request = base.GetRequest("SendSms", "2017-05-25", "cn-hangzhou");
-            request.AddQueryParameters("PhoneNumbers", phoneNumber);
-            request.AddQueryParameters("SignName", _smsConfig.SignName);
-            request.AddQueryParameters("TemplateCode", templateCode);
+            request.AddQueryParameters("PhoneNumbers", param.Phone);
+            request.AddQueryParameters("SignName", param.SignName);
+            request.AddQueryParameters("TemplateCode", param.TemplateCode);
             Dictionary<string, string> data = new Dictionary<string, string>();
-            content.ForEach(item => { data.Add(item.Key, item.Value); });
+            param.Content.ForEach(item => { data.Add(item.Key, item.Value); });
             request.AddQueryParameters("TemplateParam", _jsonProvider.Serializer(data));
             try
             {
@@ -113,7 +84,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
                 if (response != null)
                 {
                     var res = _jsonProvider
-                        .Deserialize<Model.SendSms.SendSmsResponseDto>(
+                        .Deserialize<SendSmsResponseDto>(
                             response.Data);
                     if (res != null)
                     {
@@ -123,7 +94,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
                         if (smsCode != default(SmsCode))
                         {
                             return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(
-                                phoneNumber)
+                                param.Phone)
                             {
                                 Code = smsCode,
                                 Msg = smsCode == SmsCode.Ok ? "success" : "lose",
@@ -146,7 +117,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
             {
             }
 
-            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(phoneNumber)
+            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(param.Phone)
             {
                 Code = SmsCode.Unknown,
                 Msg = "发送异常"
@@ -160,23 +131,19 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// <summary>
         /// 发送语音短信
         /// </summary>
-        /// <param name="phoneNumber">接受语音的手机号</param>
-        /// <param name="calledShowNumber">被叫显号，必须是已购买的号码</param>
-        /// <param name="templateCode"></param>
-        /// <param name="content"></param>
+        /// <param name="param"></param>
         /// <returns></returns>
-        public Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto SendVoice(string phoneNumber, string calledShowNumber,
-            string templateCode,
-            List<KeyValuePair<string, string>> content)
+        public Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto SendVoiceSms(SendVoiceSmsParam param)
         {
+            new SendVoiceSmsParamValidator().Validate(param).Check(HttpStatus.Err.Name);
             CommonRequest request = base.GetRequest("SingleCallByTts", "2017-05-25", "cn-hangzhou");
-            request.AddQueryParameters("CalledNumber", phoneNumber);
-            request.AddQueryParameters("CalledShowNumber", calledShowNumber);
-            request.AddQueryParameters("TtsCode", templateCode);
-            request.AddQueryParameters("PlayTimes", "3"); //播放次数
-            request.AddQueryParameters("Volume", templateCode); //播放音量
+            request.AddQueryParameters("CalledNumber", param.Phone);
+            request.AddQueryParameters("CalledShowNumber", param.CalledShowNumber);
+            request.AddQueryParameters("TtsCode", param.TemplateCode);
+            request.AddQueryParameters("PlayTimes", param.PlatTimes.ToString()); //播放次数
+            request.AddQueryParameters("Volume", param.Volume.ToString()); //播放音量
             Dictionary<string, string> data = new Dictionary<string, string>();
-            content.ForEach(item => { data.Add(item.Key, item.Value); });
+            param.Content.ForEach(item => { data.Add(item.Key, item.Value); });
             request.AddQueryParameters("TtsParam", _jsonProvider.Serializer(data));
             try
             {
@@ -184,7 +151,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
                 if (response != null)
                 {
                     var res = _jsonProvider
-                        .Deserialize<Model.SendSms.SendSmsResponseDto>(
+                        .Deserialize<SendSmsResponseDto>(
                             response.Data);
                     if (res != null)
                     {
@@ -194,7 +161,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
                         if (smsCode != default(SmsCode))
                         {
                             return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(
-                                phoneNumber)
+                                param.Phone)
                             {
                                 Code = smsCode,
                                 Msg = smsCode == SmsCode.Ok ? "success" : "lose",
@@ -217,7 +184,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
             {
             }
 
-            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(phoneNumber)
+            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(param.Phone)
             {
                 Code = SmsCode.Unknown,
                 Msg = "发送异常"
