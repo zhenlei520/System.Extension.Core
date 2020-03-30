@@ -8,16 +8,6 @@ namespace EInfrastructure.Core.Configuration.Ioc
     /// </summary>
     public interface ILogProvider : ISingleInstance, IIdentify
     {
-        #region 得到实现类唯一标示
-
-        /// <summary>
-        /// 得到实现类唯一标示
-        /// </summary>
-        /// <returns></returns>
-        string GetIdentify();
-
-        #endregion
-
         #region 增加error文件日志
 
         /// <summary>

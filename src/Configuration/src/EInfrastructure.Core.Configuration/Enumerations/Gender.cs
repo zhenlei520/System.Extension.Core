@@ -25,6 +25,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// </summary>
         public static Gender Girl = new Gender(2, "女");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">描述</param>
         public Gender(int id, string name) : base(id, name)
         {
         }

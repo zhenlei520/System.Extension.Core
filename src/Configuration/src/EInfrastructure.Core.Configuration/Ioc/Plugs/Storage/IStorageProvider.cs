@@ -95,14 +95,14 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// </summary>
         /// <param name="key">文件key</param>
         /// <returns></returns>
-        DeleteResultDto Del(string key);
+        DeleteResultDto Remove(string key);
 
         /// <summary>
         /// 根据文件key集合删除
         /// </summary>
         /// <param name="keyList">文件key集合</param>
         /// <returns></returns>
-        IEnumerable<DeleteResultDto> DelList(IEnumerable<string> keyList);
+        IEnumerable<DeleteResultDto> RemoveRange(IEnumerable<string> keyList);
 
         #endregion
 
@@ -120,7 +120,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// </summary>
         /// <param name="copyFileParam">复制到新空间的参数</param>
         /// <returns></returns>
-        IEnumerable<CopyFileResultDto> CopyToList(ICollection<CopyFileParam> copyFileParam);
+        IEnumerable<CopyFileResultDto> CopyRangeTo(ICollection<CopyFileParam> copyFileParam);
 
         #endregion
 
@@ -138,7 +138,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// </summary>
         /// <param name="moveFileParamList"></param>
         /// <returns></returns>
-        IEnumerable<MoveFileResultDto> MoveList(List<MoveFileParam> moveFileParamList);
+        IEnumerable<MoveFileResultDto> MoveRange(List<MoveFileParam> moveFileParamList);
 
         #endregion
     }

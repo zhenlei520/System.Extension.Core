@@ -12,7 +12,7 @@ namespace EInfrastructure.Core.Words.Config
     /// <summary>
     /// Unicode编码范围
     /// </summary>
-    public class UnicodeConfig
+    internal class UnicodeConfig
     {
         #region 所有的编码范围
 

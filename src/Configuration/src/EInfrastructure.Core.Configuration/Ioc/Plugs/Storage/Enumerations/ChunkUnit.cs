@@ -40,6 +40,11 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations
         /// </summary>
         public static ChunkUnit U4096K = new ChunkUnit(32, "4MB");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">描述</param>
         public ChunkUnit(int id, string name) : base(id, name)
         {
         }

@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using EInfrastructure.Core.AutoFac.Modules;
 using EInfrastructure.Core.Configuration.Ioc;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,7 +26,7 @@ namespace EInfrastructure.Core.AutoFac
         public virtual IServiceProvider Build(IServiceCollection services,
             Action<ContainerBuilder> action = null)
         {
-            return AutofacAutoRegister.Use(services, action);
+            return Use(services, action);
         }
 
         /// <summary>
@@ -35,42 +36,16 @@ namespace EInfrastructure.Core.AutoFac
         /// <param name="action"></param>
         /// <returns></returns>
         public static IServiceProvider Use(IServiceCollection services,
-            Action<ContainerBuilder> action=null)
+            Action<ContainerBuilder> action = null)
         {
             EInfrastructure.Core.StartUp.Run();
-
             var builder = new ContainerBuilder();
-            var assemblys = AppDomain.CurrentDomain.GetAssemblies().ToArray();
-
-            var perRequestType = typeof(IPerRequest);
-            builder.RegisterAssemblyTypes(assemblys)
-                .Where(t => perRequestType.IsAssignableFrom(t) && t != perRequestType)
-                .PropertiesAutowired()
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
-
-            var perDependencyType = typeof(IDependency);
-            builder.RegisterAssemblyTypes(assemblys)
-                .Where(t => perDependencyType.IsAssignableFrom(t) && t != perDependencyType)
-                .PropertiesAutowired()
-                .AsImplementedInterfaces()
-                .InstancePerDependency();
-
-            var singleInstanceType = typeof(ISingleInstance);
-            builder.RegisterAssemblyTypes(assemblys)
-                .Where(t => singleInstanceType.IsAssignableFrom(t) && t != singleInstanceType)
-                .PropertiesAutowired()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-
+            builder.RegisterModule<AutomaticInjectionModule>();
             action?.Invoke(builder);
-
             builder.Populate(services);
-
             var container = builder.Build();
-
             var servicesProvider = new AutofacServiceProvider(container);
-
+            ServiceComponent.SetServiceProvider(servicesProvider);
             return servicesProvider;
         }
     }

@@ -53,14 +53,30 @@ namespace EInfrastructure.Core.Configuration.Enumerations.SeedWork.Configuration
             return typeMatches && valueMatches;
         }
 
+        /// <summary>
+        /// 得到HashCode
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode() => UniqueCommon.GetHashCode(Id.ToString());
 
+        /// <summary>
+        /// 根据值获取对象
+        /// </summary>
+        /// <param name="value"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static T FromValue<T>(T1 value) where T : Enumeration<T1, T2>
         {
             var matchingItem = Parse<T, T1>(value, "value", item => item.Id.Equals(value));
             return matchingItem;
         }
 
+        /// <summary>
+        /// 根据描述获取对象
+        /// </summary>
+        /// <param name="displayName"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static T FromDisplayName<T>(string displayName) where T : Enumeration<T1, T2>
         {
             var matchingItem = Parse<T, string>(displayName, "display name", item => item.Name.Equals(displayName));
@@ -74,6 +90,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations.SeedWork.Configuration
             return matchingItem;
         }
 
+        /// <summary>
+        /// 比较
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public int CompareTo(object other) => Id.CompareTo(((Enumeration<T1, T2>) other).Id);
     }
 }

@@ -153,7 +153,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="key">文件key</param>
         /// <returns></returns>
-        public DeleteResultDto Del(string key)
+        public DeleteResultDto Remove(string key)
         {
             throw new NotImplementedException();
         }
@@ -163,7 +163,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="keyList">文件key集合</param>
         /// <returns></returns>
-        public IEnumerable<DeleteResultDto> DelList(IEnumerable<string> keyList)
+        public IEnumerable<DeleteResultDto> RemoveRange(IEnumerable<string> keyList)
         {
             throw new NotImplementedException();
         }
@@ -187,7 +187,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="copyFileParam">复制到新空间的参数</param>
         /// <returns></returns>
-        public IEnumerable<CopyFileResultDto> CopyToList(ICollection<CopyFileParam> copyFileParam)
+        public IEnumerable<CopyFileResultDto> CopyRangeTo(ICollection<CopyFileParam> copyFileParam)
         {
             throw new NotImplementedException();
         }
@@ -211,7 +211,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="moveFileParamList"></param>
         /// <returns></returns>
-        public IEnumerable<MoveFileResultDto> MoveList(List<MoveFileParam> moveFileParamList)
+        public IEnumerable<MoveFileResultDto> MoveRange(List<MoveFileParam> moveFileParamList)
         {
             throw new NotImplementedException();
         }

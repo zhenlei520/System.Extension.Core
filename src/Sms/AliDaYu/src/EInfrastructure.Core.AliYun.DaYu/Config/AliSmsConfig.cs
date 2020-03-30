@@ -11,11 +11,6 @@ namespace EInfrastructure.Core.AliYun.DaYu.Config
     public class AliSmsConfig : IFluentlValidatorEntity
     {
         /// <summary>
-        /// 签名名称
-        /// </summary>
-        public string SignName { get; set; }
-
-        /// <summary>
         /// AccessKey ID
         /// </summary>
         public string AccessKey { get; set; }

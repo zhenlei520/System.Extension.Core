@@ -5,7 +5,7 @@ using System;
 
 namespace EInfrastructure.Core.Words.Extension
 {
-    class NumberConventer
+    internal class NumberConventer
     {
         public static Decimal ChnToArab(string chnNum)
         {

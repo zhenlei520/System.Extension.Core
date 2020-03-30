@@ -75,6 +75,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// </summary>
         public static Constellation Pisces = new Constellation(12, "双鱼座");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id">星座id</param>
+        /// <param name="name">星座描述</param>
         public Constellation(int id, string name) : base(id, name)
         {
         }

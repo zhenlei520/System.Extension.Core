@@ -7,10 +7,18 @@ namespace EInfrastructure.Core.Configuration.Exception.Response
     /// </summary>
     public class ExceptionResponse<T, T2>
     {
+        /// <summary>
+        ///
+        /// </summary>
         public ExceptionResponse()
         {
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="code">异常码</param>
+        /// <param name="content">异常描述</param>
         public ExceptionResponse(T code, T2 content)
         {
             Code = code;

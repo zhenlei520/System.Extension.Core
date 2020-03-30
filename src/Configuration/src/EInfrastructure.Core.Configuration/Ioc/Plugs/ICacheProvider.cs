@@ -144,6 +144,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <param name="dataKey"></param>
         /// <param name="t"></param>
         /// <param name="second">秒</param>
+        /// <param name="isSetHashKeyExpire">false：设置key的过期时间（整个键使用一个过期时间），true：设置hashkey的过期时间，默认设置的为HashKey的过期时间（单个datakey使用一个过期时间）。</param>
         /// <returns></returns>
         bool HashSet<T>(string key, string dataKey, T t, long second = -1L, bool isSetHashKeyExpire = true);
 
@@ -154,6 +155,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <param name="key"></param>
         /// <param name="kvalues"></param>
         /// <param name="second">秒</param>
+        /// <param name="isSetHashKeyExpire">false：设置key的过期时间（整个键使用一个过期时间），true：设置hashkey的过期时间，默认设置的为HashKey的过期时间（单个datakey使用一个过期时间）。</param>
         /// <returns></returns>
         bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L, bool isSetHashKeyExpire = true);
 
@@ -453,7 +455,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <summary>
         /// 出队
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
         Task<string> ListRightPopAsync(string key);
@@ -478,7 +479,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <summary>
         /// 出栈
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
         Task<string> ListLeftPopAsync(string key);
@@ -562,7 +562,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <summary>
         /// 获取指定索引的集合
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="fromRank"></param>
         /// <param name="toRank"></param>

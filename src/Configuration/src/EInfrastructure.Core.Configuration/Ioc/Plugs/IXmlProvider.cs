@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -28,8 +29,9 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// </summary>
         /// <param name="xml">待反序列化的字符串</param>
         /// <param name="encoding">编码格式，默认utf8</param>
+        /// <param name="func"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        T Deserialize<T>(string xml, Encoding encoding = null);
+        T Deserialize<T>(string xml, Encoding encoding = null, Func<System.Exception, T> func = null);
     }
 }

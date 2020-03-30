@@ -266,6 +266,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="url">请求地址</param>
         /// <returns></returns>
         public T GetJson<T>(string url)
+            where T : class, new()
         {
             var res = Get(url).Content;
             if (string.IsNullOrEmpty(res))
@@ -283,6 +284,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="data">请求参数</param>
         /// <returns></returns>
         public T GetJson<T>(string url, object data)
+            where T : class, new()
         {
             var res = Get(SetUrlParam(url, GetParams(data))).Content;
             if (string.IsNullOrEmpty(res))
@@ -303,6 +305,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="url">请求地址</param>
         /// <returns></returns>
         public T GetXml<T>(string url)
+            where T : class, new()
         {
             var res = Get(url).Content;
             if (string.IsNullOrEmpty(res))
@@ -320,6 +323,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="data">请求参数</param>
         /// <returns></returns>
         public T GetXml<T>(string url, object data)
+            where T : class, new()
         {
             var res = Get(SetUrlParam(url, GetParams(data))).Content;
             if (string.IsNullOrEmpty(res))
@@ -624,6 +628,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public T GetJsonByPost<T>(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
+            where T : class, new()
         {
             var res = GetStringByPost(url, data, requestBodyFormat);
             if (string.IsNullOrEmpty(res))
@@ -648,6 +653,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public T GetXmlByPost<T>(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
+            where T : class, new()
         {
             var res = GetStringByPost(url, data, requestBodyFormat);
             if (string.IsNullOrEmpty(res))
@@ -832,7 +838,7 @@ namespace EInfrastructure.Core.Http
         {
             var body = _requestBodyType.Id == RequestBodyType.TextXml.Id
                 ? _xmlProvider.Serializer(data)
-                : _jsonProvider.Serializer((data ?? new { }));
+                : data;
             var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
                 new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());
@@ -944,6 +950,16 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         private Dictionary<string, string> GetParams(object data)
         {
+            if (data is Dictionary<string, string> dictionary)
+            {
+                return dictionary;
+            }
+
+            if (data is Dictionary<object, object>)
+            {
+                throw new BusinessException("暂不支持字典类型的Data，除非Data是Dictionary<string,string>");
+            }
+
             return ObjectCommon.GetParams(data,
                     "Microsoft.AspNetCore.Mvc.FromQueryAttribute,Microsoft.AspNetCore.Mvc.Core",
                     (res) => _jsonProvider.Serializer(data))

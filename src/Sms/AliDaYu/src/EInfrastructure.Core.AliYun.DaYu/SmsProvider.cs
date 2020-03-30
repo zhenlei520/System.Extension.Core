@@ -1,44 +1,51 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using EInfrastructure.Core.AliYun.DaYu.Common;
+using Aliyun.Acs.Core;
+using Aliyun.Acs.Core.Exceptions;
 using EInfrastructure.Core.AliYun.DaYu.Config;
-using EInfrastructure.Core.AliYun.DaYu.Model;
+using EInfrastructure.Core.AliYun.DaYu.Model.SendSms;
+using EInfrastructure.Core.AliYun.DaYu.Validator;
 using EInfrastructure.Core.Configuration.Enumerations;
-using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Enum;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params;
 using EInfrastructure.Core.HelpCommon;
-using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Validation.Common;
-using RestSharp;
 
 namespace EInfrastructure.Core.AliYun.DaYu
 {
     /// <summary>
     /// 短信
     /// </summary>
-    public class SmsProvider : ISmsProvider
+    public class SmsProvider : BaseSmsProvider, ISmsProvider
     {
-        private AliSmsConfig _smsConfig;
         private readonly IJsonProvider _jsonProvider;
-        private readonly IXmlProvider _xmlProvider;
 
         /// <summary>
         /// 短信服务
         /// </summary>
-        public SmsProvider(AliSmsConfig smsConfig, ICollection<IJsonProvider> jsonProviders,
-            ICollection<IXmlProvider> xmlProviders)
+        public SmsProvider(AliSmsConfig smsConfig) : this(smsConfig, new List<IJsonProvider>()
+        {
+            new NewtonsoftJsonProvider(),
+        })
+        {
+        }
+
+        /// <summary>
+        /// 短信服务
+        /// </summary>
+        public SmsProvider(AliSmsConfig smsConfig, ICollection<IJsonProvider> jsonProviders) : base(smsConfig)
         {
             _smsConfig = smsConfig;
             _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
-            _xmlProvider = InjectionSelectionCommon.GetImplement(xmlProviders);
             ValidationCommon.Check(smsConfig, "请完善阿里云短信配置信息", HttpStatus.Err.Name);
         }
-
-        readonly RestClient _restClient = new RestClient("http://dysmsapi.aliyuncs.com");
 
         #region 得到实现类唯一标示
 
@@ -54,69 +61,134 @@ namespace EInfrastructure.Core.AliYun.DaYu
 
         #endregion
 
-        #region 指定短信列表发送短信
-
-        /// <summary>
-        /// 指定短信列表发送短信
-        /// </summary>
-        /// <param name="phoneNumbers">手机号</param>
-        /// <param name="templateCode">短信模板</param>
-        /// <param name="content">内容</param>
-        /// <param name="loseAction">失败回调函数</param>
-        /// <returns></returns>
-        public bool Send(List<string> phoneNumbers, string templateCode, object content,
-            Action<SendSmsLoseDto> loseAction = null)
-        {
-            Dictionary<string, string> commonParam = Util.BuildCommonParam(_smsConfig.AccessKey);
-            commonParam.Add("Action", "SendSms");
-            commonParam.Add("Version", "2017-05-25");
-            commonParam.Add("RegionId", "cn-hangzhou");
-            commonParam.Add("PhoneNumbers", phoneNumbers.ConvertListToString(','));
-            commonParam.Add("SignName", _smsConfig.SignName);
-            commonParam.Add("TemplateCode", templateCode);
-            commonParam.Add("TemplateParam", _jsonProvider.Serializer(content));
-
-            string sign = Util.CreateSign(commonParam, _smsConfig.EncryptionKey);
-            commonParam.Add("Signature", sign);
-            RestRequest request = new RestRequest(Method.GET);
-            foreach (var key in commonParam.Keys)
-            {
-                request.AddQueryParameter(key, commonParam[key]);
-            }
-
-            var response = _restClient.Execute(request);
-            SendSmsResponse result = _xmlProvider.Deserialize<SendSmsResponse>(response.Content);
-            if (result.Code == "OK")
-            {
-                return true;
-            }
-
-            loseAction?.Invoke(new SendSmsLoseDto()
-            {
-                PhoneList = phoneNumbers,
-                Msg = "短信发送失败",
-                SubMsg = response.Content,
-                Code = result.Code
-            });
-            return false;
-        }
-
-        #endregion
-
         #region 指定单个手机号发送短信
 
         /// <summary>
         /// 指定单个手机号发送短信
         /// </summary>
-        /// <param name="phoneNumber">手机号</param>
-        /// <param name="templateCode">短信模板</param>
-        /// <param name="content">内容</param>
-        /// <param name="loseAction">失败回调函数</param>
+        /// <param name="param">短信参数</param>
         /// <returns></returns>
-        public bool Send(string phoneNumber, string templateCode, object content,
-            Action<SendSmsLoseDto> loseAction = null)
+        public Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto SendSms(SendSmsParam param)
         {
-            return Send(new List<string>() {phoneNumber}, templateCode, content, loseAction);
+            new SendSmsParamValidator().Validate(param).Check(HttpStatus.Err.Name);
+            CommonRequest request = base.GetRequest("dysmsapi.aliyuncs.com", "SendSms", "2017-05-25", "cn-hangzhou");
+            request.AddQueryParameters("PhoneNumbers", param.Phone);
+            request.AddQueryParameters("SignName", param.SignName);
+            request.AddQueryParameters("TemplateCode", param.TemplateCode);
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            param.Content.ForEach(item => { data.Add(item.Key, item.Value); });
+            request.AddQueryParameters("TemplateParam", _jsonProvider.Serializer(data));
+            try
+            {
+                CommonResponse response = GetClient().GetCommonResponse(request);
+                if (response != null)
+                {
+                    var res = _jsonProvider
+                        .Deserialize<SendSmsResponseDto>(
+                            response.Data);
+                    if (res != null)
+                    {
+                        SmsCode smsCode = SmsCodeMap.Where(x => x.Key == res.Code).Select(x => x.Value)
+                            .FirstOrDefault();
+
+                        if (smsCode != default(SmsCode))
+                        {
+                            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(
+                                param.Phone)
+                            {
+                                Code = smsCode,
+                                Msg = smsCode == SmsCode.Ok ? "success" : "lose",
+                                Extend = new SendSmsExtend()
+                                {
+                                    BizId = smsCode == SmsCode.Ok
+                                        ? _jsonProvider
+                                            .Deserialize<SendSmsSuccessResponseDto>(
+                                                response.Data).BizId
+                                        : "",
+                                    RequestId = res.RequestId,
+                                    Msg = res.Message
+                                }
+                            };
+                        }
+                    }
+                }
+            }
+            catch (ServerException e)
+            {
+            }
+
+            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(param.Phone)
+            {
+                Code = SmsCode.Unknown,
+                Msg = "发送异常"
+            };
+        }
+
+        #endregion
+
+        #region 发送语音短信
+
+        /// <summary>
+        /// 发送语音短信
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto SendVoiceSms(SendVoiceSmsParam param)
+        {
+            new SendVoiceSmsParamValidator().Validate(param).Check(HttpStatus.Err.Name);
+            CommonRequest request = base.GetRequest("dyvmsapi.aliyuncs.com", "SingleCallByTts", "2017-05-25", "cn-hangzhou");
+            request.AddQueryParameters("CalledNumber", param.Phone);
+            request.AddQueryParameters("CalledShowNumber", param.CalledShowNumber);
+            request.AddQueryParameters("TtsCode", param.TemplateCode);
+            request.AddQueryParameters("PlayTimes", param.PlatTimes.ToString()); //播放次数
+            request.AddQueryParameters("Volume", param.Volume.ToString()); //播放音量
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            param.Content.ForEach(item => { data.Add(item.Key, item.Value); });
+            request.AddQueryParameters("TtsParam", _jsonProvider.Serializer(data));
+            try
+            {
+                CommonResponse response = GetClient().GetCommonResponse(request);
+                if (response != null)
+                {
+                    var res = _jsonProvider
+                        .Deserialize<SendVoiceSmsResponseDto>(
+                            response.Data);
+                    if (res != null)
+                    {
+                        SmsCode smsCode = SmsCodeMap.Where(x => x.Key == res.Code).Select(x => x.Value)
+                            .FirstOrDefault();
+
+                        if (smsCode != default(SmsCode))
+                        {
+                            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(
+                                param.Phone)
+                            {
+                                Code = smsCode,
+                                Msg = smsCode == SmsCode.Ok ? "success" : "lose",
+                                Extend = new SendSmsExtend()
+                                {
+                                    BizId = smsCode == SmsCode.Ok
+                                        ? _jsonProvider
+                                            .Deserialize<SendVoiceSmsSuccessResponseDto>(
+                                                response.Data).CallId
+                                        : "",
+                                    RequestId = res.RequestId,
+                                    Msg = res.Message
+                                }
+                            };
+                        }
+                    }
+                }
+            }
+            catch (ServerException e)
+            {
+            }
+
+            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(param.Phone)
+            {
+                Code = SmsCode.Unknown,
+                Msg = "发送异常"
+            };
         }
 
         #endregion

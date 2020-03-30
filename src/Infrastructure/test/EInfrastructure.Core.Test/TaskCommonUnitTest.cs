@@ -36,8 +36,9 @@ namespace EInfrastructure.Core.Test
 
             foreach (var item in userses)
             {
-                taskCommon.Add(item.Name, (name) =>
+                taskCommon.Add(item.Name, (name, cts) =>
                 {
+                    cts.Cancel(); //取消任务
                     Console.WriteLine("我的名字是：" + name);
                     Thread.Sleep(new Random().Next(1000, 3999));
                     return "结束了" + "我的名字是：" + name;
@@ -69,7 +70,7 @@ namespace EInfrastructure.Core.Test
 
             foreach (var item in userses)
             {
-                taskCommon.Add(item.Name, (name) =>
+                taskCommon.Add(item.Name, (name, cts) =>
                 {
                     Console.WriteLine("我的名字是：" + name);
                     Thread.Sleep(new Random().Next(1000, 3999));

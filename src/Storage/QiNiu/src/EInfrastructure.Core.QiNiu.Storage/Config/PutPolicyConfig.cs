@@ -8,7 +8,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
     /// <summary>
     /// 上传策略配置
     /// </summary>
-    public class PutPolicyConfig
+    internal class PutPolicyConfig
     {
         /// <summary>
         /// 七牛自定义配置

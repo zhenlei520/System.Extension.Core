@@ -13,7 +13,7 @@ namespace EInfrastructure.Core.SqlServer.Common
     /// <summary>
     ///
     /// </summary>
-    public class SpatialDimensionBaseQuery<TEntity, T>
+    public abstract class SpatialDimensionBaseQuery<TEntity, T>
         : ISpatialDimensionQuery<TEntity, T> where TEntity : class, IEntity<T>
         where T : IComparable
     {
@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// </summary>
         /// <param name="unitOfWork">unitwork</param>
         /// <param name="execute"></param>
-        public SpatialDimensionBaseQuery(IUnitOfWork unitOfWork, IExecute execute)
+        protected SpatialDimensionBaseQuery(IUnitOfWork unitOfWork, IExecute execute)
         {
             this.Dbcontext = unitOfWork as DbContext;
             _execute = execute;
@@ -43,7 +43,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// <param name="param"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public List<T> GetList<T>(SpatialDimensionParam param)
+        public virtual List<T> GetList<T>(SpatialDimensionParam param)
         {
             throw new System.NotImplementedException();
         }
@@ -56,7 +56,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// <param name="param"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public PageData<T> GetPageData<T>(SpatialDimensionPagingParam param)
+        public virtual PageData<T> GetPageData<T>(SpatialDimensionPagingParam param)
         {
             throw new System.NotImplementedException();
         }
