@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -21,7 +23,9 @@ namespace EInfrastructure.Core.Tools
         /// <param name="customerAttributeTypeName"></param>
         /// <param name="func">委托方法，当属性类型为泛型时，可以修改最后的value返回值</param>
         /// <returns></returns>
-        public static Dictionary<string, object> GetParams(object data,string customerAttributeTypeName = "Newtonsoft.Json.JsonPropertyAttribute,Newtonsoft.Json", Func<object, object> func = null)
+        public static Dictionary<string, object> GetParams(object data,
+            string customerAttributeTypeName = "Newtonsoft.Json.JsonPropertyAttribute,Newtonsoft.Json",
+            Func<object, object> func = null)
         {
             if (data == null || data is string || !data.GetType().IsClass)
             {
@@ -68,6 +72,37 @@ namespace EInfrastructure.Core.Tools
             }
 
             return objectDic;
+        }
+
+        #endregion
+
+        #region 字典转对象
+
+        /// <summary>
+        /// 字典类型转化为对象
+        /// </summary>
+        /// <param name="dic"></param>
+        /// <returns></returns>
+        public T DicToObject<T>(Dictionary<string, object> dic) where T : new()
+        {
+            var md = new T();
+            CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+            TextInfo textInfo = cultureInfo.TextInfo;
+            foreach (var d in dic)
+            {
+                var filed = textInfo.ToTitleCase(d.Key);
+                try
+                {
+                    var value = d.Value;
+                    md.GetType().GetProperty(filed)?.SetValue(md, value);
+                }
+                catch (Exception e)
+                {
+                    // ignored
+                }
+            }
+
+            return md;
         }
 
         #endregion
