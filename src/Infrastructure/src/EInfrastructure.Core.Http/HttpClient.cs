@@ -159,7 +159,7 @@ namespace EInfrastructure.Core.Http
                 }
             }
 
-            throw new BusinessException("不支持的请求");
+            throw new BusinessException("不支持的请求", HttpStatus.Err.Id);
         }
 
         /// <summary>
@@ -957,7 +957,7 @@ namespace EInfrastructure.Core.Http
 
             if (data is Dictionary<object, object>)
             {
-                throw new BusinessException("暂不支持字典类型的Data，除非Data是Dictionary<string,string>");
+                throw new BusinessException("暂不支持字典类型的Data，除非Data是Dictionary<string,string>", HttpStatus.Err.Id);
             }
 
             return ObjectCommon.GetParams(data,

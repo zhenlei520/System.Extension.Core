@@ -91,7 +91,7 @@ namespace EInfrastructure.Core.Tools
                 return Convert.ToInt32(Math.Floor(mm));
             }
 
-            throw new BusinessException("不支持的取整方式");
+            throw new BusinessException("不支持的取整方式", HttpStatus.Err.Id);
         }
 
         #endregion
@@ -737,12 +737,12 @@ namespace EInfrastructure.Core.Tools
         private static DateTime GetLunarYearDate(int year, int month, int day, bool isLeapMonth)
         {
             if (year < 1902 || year > 2100)
-                throw new BusinessException("只支持1902～2100期间的农历年");
+                throw new BusinessException("只支持1902～2100期间的农历年", HttpStatus.Err.Id);
             if (month < 1 || month > 12)
-                throw new BusinessException("表示月份的数字必须在1～12之间");
+                throw new BusinessException("表示月份的数字必须在1～12之间", HttpStatus.Err.Id);
 
             if (day < 1 || day > calendar.GetDaysInMonth(year, month))
-                throw new BusinessException("农历日期输入有误");
+                throw new BusinessException("农历日期输入有误", HttpStatus.Err.Id);
 
             int num1 = 0, num2 = 0;
             int leapMonth = calendar.GetLeapMonth(year);
@@ -862,7 +862,7 @@ namespace EInfrastructure.Core.Tools
                     .TotalSeconds;
             }
 
-            throw new BusinessException("不支持的类型");
+            throw new BusinessException("不支持的类型", HttpStatus.Err.Id);
         }
 
         #endregion
@@ -930,7 +930,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (!cardNo.IsIdCard())
             {
-                throw new BusinessException("请输入合法的身份证号码");
+                throw new BusinessException("请输入合法的身份证号码", HttpStatus.Err.Id);
             }
 
             string timeStr = cardNo.Length == 15

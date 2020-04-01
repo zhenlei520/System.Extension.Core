@@ -4,6 +4,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
+using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 
 namespace EInfrastructure.Core.Tools
@@ -33,7 +34,7 @@ namespace EInfrastructure.Core.Tools
                 }
             }
 
-            throw new BusinessException("无效的链接");
+            throw new BusinessException("无效的链接", HttpStatus.Err.Id);
         }
 
         #endregion

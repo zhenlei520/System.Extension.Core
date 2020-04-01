@@ -19,7 +19,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (!cardNo.IsIdCard())
             {
-                throw new BusinessException("请输入合法的身份证号码");
+                throw new BusinessException("请输入合法的身份证号码", HttpStatus.Err.Id);
             }
 
             int? gender = (cardNo.Length == 15 ? cardNo.Substring(14, 1) : cardNo.Substring(16, 1)).ConvertToInt(null);

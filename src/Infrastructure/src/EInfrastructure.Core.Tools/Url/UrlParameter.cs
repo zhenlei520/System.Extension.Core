@@ -41,7 +41,7 @@ namespace EInfrastructure.Core.Tools.Url
             {
                 if (item.Split('=').Length != 2)
                 {
-                    throw new BusinessException("url参数异常");
+                    throw new BusinessException("url参数异常",HttpStatus.Err.Id);
                 }
 
                 Add(item.Split('=')[0].ToString(), item.Split('=')[1].ToString());
