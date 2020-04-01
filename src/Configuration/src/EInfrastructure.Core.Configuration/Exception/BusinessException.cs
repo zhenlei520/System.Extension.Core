@@ -13,8 +13,8 @@ namespace EInfrastructure.Core.Configuration.Exception
         /// </summary>
         /// <param name="code">状态码</param>
         /// <param name="content">异常详情</param>
-        public BusinessException(string content, int? code = null) :
-            base(content, code ?? HttpStatus.Err.Id)
+        public BusinessException(string content) :
+            base(content, HttpStatus.Err.Id)
         {
         }
 
