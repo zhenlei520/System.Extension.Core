@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 
 namespace EInfrastructure.Core.Tools
@@ -897,7 +898,7 @@ namespace EInfrastructure.Core.Tools
             string result = ""; //结果
             if (number < 0)
             {
-                throw new BusinessException("number必须为正整数");
+                throw new BusinessException("number必须为正整数", HttpStatus.Err.Id);
             }
 
             for (int i = 0; i < number; i++)
@@ -926,7 +927,7 @@ namespace EInfrastructure.Core.Tools
             string result = ""; //结果
             if (number < 0)
             {
-                throw new BusinessException("number必须为正整数");
+                throw new BusinessException("number必须为正整数", HttpStatus.Err.Id);
             }
 
             for (int i = 0; i < number; i++)

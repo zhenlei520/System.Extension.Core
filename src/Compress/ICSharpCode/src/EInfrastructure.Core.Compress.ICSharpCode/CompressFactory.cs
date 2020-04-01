@@ -25,7 +25,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
                 return new Zip.ZipCompressService();
             }
 
-            throw new BusinessException("暂不支持的压缩方式");
+            throw new BusinessException("暂不支持的压缩方式", HttpStatus.Err.Id);
         }
 
         #endregion

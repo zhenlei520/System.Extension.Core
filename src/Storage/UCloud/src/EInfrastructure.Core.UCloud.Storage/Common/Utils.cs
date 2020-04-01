@@ -16,7 +16,7 @@ namespace EInfrastructure.Core.UCloud.Storage.Common
         public enum RequestHeadType
         {
             HEAD_FIELD_CHECK
-        };
+        }
 
         internal static int bufferLen = 32 * 1024;
 

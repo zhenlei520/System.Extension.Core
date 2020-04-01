@@ -1,5 +1,7 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
+using System;
+using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Xunit;

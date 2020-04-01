@@ -10,7 +10,7 @@ using EInfrastructure.Core.Words.Extension.ImportDict.Common.Helpers;
 namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Entities
 {
     /// <summary>
-    ///     词条类
+    /// 词条类
     /// </summary>
     internal class WordLibrary
     {
@@ -108,7 +108,7 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Entities
                     }
                     return result;
                 }
-               
+
                 return null;
             }
             set

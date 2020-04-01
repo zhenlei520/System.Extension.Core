@@ -70,6 +70,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// </summary>
         public static Animal Boar = new Animal(11, "猪");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id">生肖id</param>
+        /// <param name="name">生肖描述</param>
         public Animal(int id, string name) : base(id, name)
         {
         }

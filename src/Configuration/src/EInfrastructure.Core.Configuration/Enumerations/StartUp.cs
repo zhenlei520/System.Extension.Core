@@ -2,6 +2,9 @@
 
 namespace EInfrastructure.Core.Configuration.Enumerations
 {
+    /// <summary>
+    ///
+    /// </summary>
     public static class StartUp
     {
         private static bool _isStartUp;

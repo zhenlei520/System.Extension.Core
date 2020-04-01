@@ -122,9 +122,9 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
         /// </summary>
         /// <param name="str"></param>
         /// <param name="type"></param>
-        /// <param name="action">委托方法</param>
+        /// <param name="func">委托方法</param>
         /// <returns></returns>
-        public object Deserialize(string str, Type type, Func<Exception, object> action = null)
+        public object Deserialize(string str, Type type, Func<Exception, object> func = null)
         {
             try
             {
@@ -138,9 +138,9 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
                     _logService?.Info($"反序列化失败，待转字符串str：{str}" + "，异常信息：" + ex.Message);
                 }
 
-                if (action != null)
+                if (func != null)
                 {
-                    return action.Invoke(ex);
+                    return func.Invoke(ex);
                 }
 
                 throw;

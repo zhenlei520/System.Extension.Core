@@ -5,7 +5,7 @@ namespace EInfrastructure.Core.Http.Enumerations
     /// <summary>
     /// Http请求类型
     /// </summary>
-    public class RequestType : Enumeration
+    internal class RequestType : Enumeration
     {
         /// <summary>
         /// Get请求

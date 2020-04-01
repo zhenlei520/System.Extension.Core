@@ -18,7 +18,8 @@ namespace EInfrastructure.Core.SqlServer.Common
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="T"></typeparam>
-    public class RepositoryBase<TEntity, T> : IRepository<TEntity, T> where TEntity : Entity<T>, IAggregateRoot<T>
+    public abstract class RepositoryBase<TEntity, T> : IRepository<TEntity, T>
+        where TEntity : Entity<T>, IAggregateRoot<T>
         where T : IComparable
     {
         /// <summary>
@@ -32,7 +33,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         ///
         /// </summary>
         /// <param name="unitOfWork"></param>
-        public RepositoryBase(IUnitOfWork unitOfWork)
+        protected RepositoryBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             Dbcontext = unitOfWork as DbContext;
@@ -49,7 +50,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// 得到唯一标示
         /// </summary>
         /// <returns></returns>
-        public string GetIdentify()
+        public virtual string GetIdentify()
         {
             return AssemblyCommon.GetReflectedInfo().Namespace;
         }
@@ -63,7 +64,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TEntity FindById(T id)
+        public virtual TEntity FindById(T id)
         {
             return Dbcontext.Set<TEntity>().Find(id);
         }
@@ -73,7 +74,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Task<TEntity> FindByIdAsync(T id)
+        public virtual Task<TEntity> FindByIdAsync(T id)
         {
             return Dbcontext.Set<TEntity>().FindAsync(id);
         }
@@ -86,7 +87,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// 添加单个实体信息
         /// </summary>
         /// <param name="entity"></param>
-        public void Add(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             Dbcontext.Set<TEntity>().Add(entity);
         }
@@ -95,7 +96,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// 添加单个实体信息
         /// </summary>
         /// <param name="entity"></param>
-        public void AddAsync(TEntity entity)
+        public  virtual void AddAsync(TEntity entity)
         {
             Dbcontext.Set<TEntity>().AddAsync(entity);
         }
@@ -108,7 +109,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// 添加集合
         /// </summary>
         /// <param name="entities"></param>
-        public void AddRange(List<TEntity> entities)
+        public virtual void AddRange(List<TEntity> entities)
         {
             Dbcontext.Set<TEntity>().AddRange(entities);
         }
@@ -117,7 +118,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// 添加集合
         /// </summary>
         /// <param name="entities"></param>
-        public void AddRangeAsync(List<TEntity> entities)
+        public virtual void AddRangeAsync(List<TEntity> entities)
         {
             Dbcontext.Set<TEntity>().AddRangeAsync(entities);
         }
@@ -130,7 +131,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// 移除数据
         /// </summary>
         /// <param name="entity"></param>
-        public void Remove(TEntity entity)
+        public virtual void Remove(TEntity entity)
         {
             Dbcontext.Set<TEntity>().Remove(entity);
         }
@@ -142,7 +143,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// <summary>
         /// 批量删除实体
         /// </summary>
-        public void Removes(Expression<Func<TEntity, bool>> condition)
+        public virtual void Removes(Expression<Func<TEntity, bool>> condition)
         {
             var query = Dbcontext.Set<TEntity>().Where(condition);
             foreach (var q in query)
@@ -159,7 +160,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// 更新实体
         /// </summary>
         /// <param name="entity"></param>
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             Dbcontext.Set<TEntity>().Update(entity);
         }

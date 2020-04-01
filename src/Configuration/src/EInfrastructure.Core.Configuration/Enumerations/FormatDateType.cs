@@ -60,6 +60,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// </summary>
         public static FormatDateType Nine = new FormatDateType(9, "yyyy年MM月");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">描述</param>
         public FormatDateType(int id, string name) : base(id, name)
         {
         }

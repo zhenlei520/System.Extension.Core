@@ -13,7 +13,7 @@ namespace EInfrastructure.Core.MySql.Common
     /// <summary>
     /// 执行Sql语句
     /// </summary>
-    public class ExecuteBase : IExecute
+    public abstract class ExecuteBase : IExecute
     {
         /// <summary>
         ///
@@ -26,7 +26,7 @@ namespace EInfrastructure.Core.MySql.Common
         ///
         /// </summary>
         /// <param name="unitOfWork">工作单元</param>
-        public ExecuteBase(IUnitOfWork unitOfWork)
+        protected ExecuteBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             Dbcontext = unitOfWork as DbContext;
@@ -44,7 +44,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// </summary>
         /// <param name="sql">sql语句</param>
         /// <param name="action">委托</param>
-        public void Reader(string sql, Action<DbDataReader> action)
+        public virtual void Reader(string sql, Action<DbDataReader> action)
         {
             var conn = Dbcontext.Database.GetDbConnection();
 
@@ -86,7 +86,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// <typeparam name="T"></typeparam>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public List<T> SqlQuery<T>(string sql)
+        public virtual List<T> SqlQuery<T>(string sql)
         {
             List<T> list = new List<T>();
 
@@ -129,7 +129,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public int ExecuteSql(string sql)
+        public virtual int ExecuteSql(string sql)
         {
             var conn = Dbcontext.Database.GetDbConnection();
             int rowAffected;

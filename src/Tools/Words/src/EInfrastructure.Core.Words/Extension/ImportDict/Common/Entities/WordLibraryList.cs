@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Entities
 {
     /// <summary>
-    ///     词库类，含有多个词条
+    /// 词库类，含有多个词条
     /// </summary>
     internal class WordLibraryList : List<WordLibrary>
     {

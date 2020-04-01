@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -77,19 +78,32 @@ namespace EInfrastructure.Core.Serialize.Xml
         /// </summary>
         /// <param name="xml">待反序列化的字符串</param>
         /// <param name="encoding">编码格式，默认utf8</param>
+        /// <param name="func"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T Deserialize<T>(string xml, Encoding encoding = null)
+        public T Deserialize<T>(string xml, Encoding encoding = null, Func<Exception, T> func = null)
         {
-            XmlSerializer xmldes = new XmlSerializer(typeof(T));
-            if (encoding == null)
+            try
             {
-                encoding = Encoding.UTF8;
-            }
+                XmlSerializer xmldes = new XmlSerializer(typeof(T));
+                if (encoding == null)
+                {
+                    encoding = Encoding.UTF8;
+                }
 
-            using (MemoryStream stream = new MemoryStream(encoding.GetBytes(xml.ToCharArray())))
+                using (MemoryStream stream = new MemoryStream(encoding.GetBytes(xml.ToCharArray())))
+                {
+                    return (T) xmldes.Deserialize(stream);
+                }
+            }
+            catch (Exception ex)
             {
-                return (T) xmldes.Deserialize(stream);
+                if (func != null)
+                {
+                    return func.Invoke(ex);
+                }
+
+                throw ex;
             }
         }
 

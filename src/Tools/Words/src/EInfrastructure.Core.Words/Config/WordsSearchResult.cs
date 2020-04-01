@@ -4,9 +4,9 @@
 namespace EInfrastructure.Core.Words.Config
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
-    public class WordsSearchResult
+    internal class WordsSearchResult
     {
         internal WordsSearchResult(string keyword, int start, int end, int index)
         {
@@ -52,7 +52,7 @@ namespace EInfrastructure.Core.Words.Config
         public int Index { get; private set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static WordsSearchResult Empty
         {
@@ -62,7 +62,7 @@ namespace EInfrastructure.Core.Words.Config
         private int _hash = -1;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override int GetHashCode()
@@ -78,7 +78,7 @@ namespace EInfrastructure.Core.Words.Config
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override string ToString()

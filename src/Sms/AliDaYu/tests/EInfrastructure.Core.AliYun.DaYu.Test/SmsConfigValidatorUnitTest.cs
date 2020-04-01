@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.DaYu.Config;
-using EInfrastructure.Core.Configuration.Ioc.Plugs;
-using EInfrastructure.Core.Serialize.NewtonsoftJson;
-using EInfrastructure.Core.Serialize.Xml;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params;
 using Xunit;
 
 namespace EInfrastructure.Core.AliYun.DaYu.Test
@@ -17,20 +15,55 @@ namespace EInfrastructure.Core.AliYun.DaYu.Test
     public class SmsConfigValidatorUnitTest
     {
         /// <summary>
-        /// 检查sms配置检查
+        /// 普通短信
         /// </summary>
         [Fact]
-        public void CheckSmsConfigValidaor()
+        public void SendSms()
         {
             try
             {
-                new SmsProvider(new AliSmsConfig(), new List<IJsonProvider>()
+                var result = new SmsProvider(new AliSmsConfig()
                 {
-                    new NewtonsoftJsonProvider()
-                }, new List<IXmlProvider>()
+                    AccessKey = "",
+                    EncryptionKey = "",
+                }).SendSms(new SendSmsParam()
                 {
-                    new XmlProvider()
-                }).Send(new List<string>(), "", "");
+                    Phone = "",
+                    TemplateCode = "",
+                    SignName = "",
+                    Content = new List<KeyValuePair<string, string>>()
+                    {
+                        new KeyValuePair<string, string>("code", "3982")
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        /// <summary>
+        /// 语音短信
+        /// </summary>
+        [Fact]
+        public void SendVoiceSms()
+        {
+            try
+            {
+                var result = new SmsProvider(new AliSmsConfig()
+                {
+                    AccessKey = "",
+                    EncryptionKey = "",
+                }).SendVoiceSms(new SendVoiceSmsParam()
+                {
+                    Phone = "",
+                    TemplateCode = "",
+                    CalledShowNumber="",
+                    Content = new List<KeyValuePair<string, string>>()
+                    {
+                        new KeyValuePair<string, string>("code", "3982")
+                    }
+                });
             }
             catch (Exception ex)
             {

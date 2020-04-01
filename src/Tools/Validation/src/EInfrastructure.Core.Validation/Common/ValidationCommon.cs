@@ -28,11 +28,8 @@ namespace EInfrastructure.Core.Validation.Common
         {
             Tools.Check.True(entity != null, msg);
             var validatotor = new ServiceProvider().GetService<IFluentlValidator<TEntity>>();
-            if (validatotor != null)
-            {
-                validatotor.Validate(entity)
-                    .Check(code);
-            }
+            validatotor?.Validate(entity)
+                .Check(code);
         }
 
         /// <summary>
