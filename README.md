@@ -1,6 +1,6 @@
 # System.Extension.Core
 
-[![Build status](https://dev.azure.com/wangzhenlei520/System.Extension.Core/_apis/build/status/System.Extension.Core-2.0%20Push)](https://dev.azure.com/wangzhenlei520/System.Extension.Core/_build/latest?definitionId=3)
+[![Build status](https://dev.azure.com/wangzhenlei520/System.Extension.Core/_apis/build/status/System.Extension.Core-2.0%20Build)](https://dev.azure.com/wangzhenlei520/System.Extension.Core/_build/latest?definitionId=3)
 
 [![NuGet](https://img.shields.io/nuget/v/EInfrastructure.Core.svg?style=flat-square)](https://www.nuget.org/packages/EInfrastructure.Core)
 [![NuGet Download](https://img.shields.io/nuget/dt/EInfrastructure.Core.svg?style=flat-square)](https://www.nuget.org/packages/EInfrastructure.Core)
