@@ -131,22 +131,15 @@ namespace EInfrastructure.Core.Words.Extension
         /// </summary>
         private void ReloadTextDict()
         {
-            try
+            DictConfig = new DictTextConfig()
             {
-                DictConfig = new DictTextConfig()
-                {
-                    Simplified = GetContent(DictTextPathConfig.SimplifiedPath.ConvertStrToList<string>('/')),
-                    Traditional = GetContent(DictTextPathConfig.TraditionalPath.ConvertStrToList<string>('/')),
-                    Initial = GetContent(DictTextPathConfig.InitialPath.ConvertStrToList<string>('/')),
-                    SpecialNumber = GetContent(DictTextPathConfig.SpecialNumberPath.ConvertStrToList<string>('/')),
-                    TranscodingNumber =
-                        GetContent(DictTextPathConfig.TranscodingNumberPath.ConvertStrToList<string>('/'))
-                };
-            }
-            catch (System.Exception ex)
-            {
-                throw new BusinessException($"词语词库异常：{ex}");
-            }
+                Simplified = GetContent(DictTextPathConfig.SimplifiedPath.ConvertStrToList<string>('/')),
+                Traditional = GetContent(DictTextPathConfig.TraditionalPath.ConvertStrToList<string>('/')),
+                Initial = GetContent(DictTextPathConfig.InitialPath.ConvertStrToList<string>('/')),
+                SpecialNumber = GetContent(DictTextPathConfig.SpecialNumberPath.ConvertStrToList<string>('/')),
+                TranscodingNumber =
+                    GetContent(DictTextPathConfig.TranscodingNumberPath.ConvertStrToList<string>('/'))
+            };
         }
 
         #endregion
@@ -175,7 +168,7 @@ namespace EInfrastructure.Core.Words.Extension
             }
             catch (System.Exception ex)
             {
-                throw new BusinessException($"拼音词库异常：{ex}",HttpStatus.Err.Id);
+                throw new BusinessException($"拼音词库异常：{ex}", HttpStatus.Err.Id);
             }
         }
 

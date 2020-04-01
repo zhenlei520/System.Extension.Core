@@ -234,7 +234,7 @@ namespace EInfrastructure.Core.Tools
 
             if (pageIndex - 1 < 0)
             {
-                throw new BusinessException("页码必须大于等于1");
+                throw new BusinessException("页码必须大于等于1", HttpStatus.Err.Id);
             }
 
             query = query.Skip((pageIndex - 1) * pageSize).ToList();
@@ -244,7 +244,7 @@ namespace EInfrastructure.Core.Tools
             }
             else if (pageSize < 1 && pageSize != -1)
             {
-                throw new BusinessException("页大小须等于-1或者大于0");
+                throw new BusinessException("页大小须等于-1或者大于0", HttpStatus.Err.Id);
             }
             else
             {
@@ -429,9 +429,9 @@ namespace EInfrastructure.Core.Tools
             /// 创建列表
             /// </summary>
             public List<T> CreateList => _createList ?? (_createList =
-                                             OptList.Where(x => !
-                                                     SourceList.Select(source => source.Id).ToList().Contains(x.Id))
-                                                 .ToList());
+                OptList.Where(x => !
+                        SourceList.Select(source => source.Id).ToList().Contains(x.Id))
+                    .ToList());
 
             #endregion
 

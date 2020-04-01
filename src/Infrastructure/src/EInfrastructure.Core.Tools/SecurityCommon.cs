@@ -401,7 +401,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (stream == null)
             {
-                throw new BusinessException("FileStream is Null");
+                throw new BusinessException("FileStream is Null", HttpStatus.Err.Id);
             }
 
             byte[] retval = hashAlgorithm.ComputeHash(stream);
