@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-   <Version>2.0.1-beta-017</Version>
-<Authors>zhenlei520</Authors>
+    <Version>2.0.1-beta-017</Version>
+    <Authors>zhenlei520</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>zhenlei520</Company>
     <Description>dotnet core autofac自动注入</Description>
@@ -23,8 +23,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Database\MySql\src\EInfrastructure.Core.MySql\EInfrastructure.Core.MySql.csproj" />
-    <ProjectReference Include="..\EInfrastructure.Core.AutoFac\EInfrastructure.Core.AutoFac.csproj" />
+    <ProjectReference Include="..\..\..\..\Database\MySql\src\EInfrastructure.Core.MySql\EInfrastructure.Core.MySql.csproj"/>
+    <ProjectReference Include="..\EInfrastructure.Core.AutoFac\EInfrastructure.Core.AutoFac.csproj"/>
   </ItemGroup>
 
 </Project>
