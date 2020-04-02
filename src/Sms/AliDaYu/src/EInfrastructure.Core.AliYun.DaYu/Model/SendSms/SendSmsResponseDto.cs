@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Model.SendSms
     /// <summary>
     /// 发送成功消息
     /// </summary>
-    internal class SendSmsSuccessResponseDto:SendSmsResponseDto
+    internal class SendSmsSuccessResponseDto : SendSmsResponseDto
     {
         /// <summary>
         ///发送回执ID

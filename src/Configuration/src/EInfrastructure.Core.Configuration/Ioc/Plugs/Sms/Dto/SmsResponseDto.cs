@@ -7,25 +7,10 @@ using Newtonsoft.Json;
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Dto
 {
     /// <summary>
-    /// 发送短信响应信息
+    /// 短信响应信息
     /// </summary>
-    public class SendSmsResponseDto
+    public class SmsResponseDto<T>
     {
-        /// <summary>
-        /// 发送短信响应信息
-        /// </summary>
-        public SendSmsResponseDto()
-        {
-        }
-
-        /// <summary>
-        /// 发送短信响应信息
-        /// </summary>
-        public SendSmsResponseDto(string mobile)
-        {
-            Mobile = mobile;
-        }
-
         /// <summary>
         /// 响应结果
         /// </summary>
@@ -42,12 +27,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Dto
         /// 扩展信息
         /// </summary>
         [JsonProperty(PropertyName = "extend")]
-        public object Extend { get; set; }
-
-        /// <summary>
-        /// 手机号
-        /// </summary>
-        [JsonIgnore]
-        public string Mobile { get; private set; }
+        public T Extend { get; set; }
     }
 }

@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params.Sms;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params.VoiceSms;
 using Xunit;
 
 namespace EInfrastructure.Core.AliYun.DaYu.Test
@@ -50,7 +52,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Test
         {
             try
             {
-                var result = new SmsProvider(new AliSmsConfig()
+                var result = new VoiceSmsProvider(new AliSmsConfig()
                 {
                     AccessKey = "",
                     EncryptionKey = "",
