@@ -70,8 +70,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
             IConfiguration configuration)
         {
             EInfrastructure.Core.StartUp.Run();
-            services.Configure<QiNiuStorageConfig>(configuration);
-            return services;
+            return AddQiNiuStorage(services,
+                () => configuration.GetSection(nameof(QiNiuStorageConfig)).Get<QiNiuStorageConfig>());
         }
 
         #endregion

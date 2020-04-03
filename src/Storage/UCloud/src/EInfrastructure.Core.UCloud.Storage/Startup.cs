@@ -69,9 +69,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         public static IServiceCollection AddUCloudStorage(this IServiceCollection services,
             IConfiguration configuration)
         {
-            EInfrastructure.Core.StartUp.Run();
             services.Configure<UCloudStorageConfig>(configuration);
-            return services;
+            return AddUCloudStorage(services,
+                () => configuration.GetSection(nameof(UCloudStorageConfig)).Get<UCloudStorageConfig>());
         }
 
         #endregion
