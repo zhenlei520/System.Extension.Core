@@ -25,8 +25,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Database\SqlServer\src\EInfrastructure.Core.SqlServer\EInfrastructure.Core.SqlServer.csproj" />
-    <ProjectReference Include="..\EInfrastructure.Core.AutoFac\EInfrastructure.Core.AutoFac.csproj" />
+    <ProjectReference Include="..\..\..\..\Database\SqlServer\src\EInfrastructure.Core.SqlServer\EInfrastructure.Core.SqlServer.csproj"/>
+    <ProjectReference Include="..\EInfrastructure.Core.AutoFac\EInfrastructure.Core.AutoFac.csproj"/>
   </ItemGroup>
 
 </Project>

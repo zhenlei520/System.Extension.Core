@@ -1,11 +1,9 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Dto;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params;
-using Newtonsoft.Json;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Dto.Sms;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params.Sms;
 
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Sms
 {
@@ -19,13 +17,13 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Sms
         /// </summary>
         /// <param name="param">短信参数</param>
         /// <returns></returns>
-        SendSmsResponseDto SendSms(SendSmsParam param);
+        SmsResponseDto<SendSmsResponseDto> SendSms(SendSmsParam param);
 
         /// <summary>
-        /// 发送语音短信
+        /// 查看短信发送记录
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        SendSmsResponseDto SendVoiceSms(SendVoiceSmsParam param);
+        SmsResponseDto<SendSmsRecordDto> GetRecords(SendSmsRecordParam param);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using EInfrastructure.Core.Redis.Config;
+using EInfrastructure.Core.Redis.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -67,9 +68,8 @@ namespace EInfrastructure.Core.Redis
             IConfiguration configuration)
         {
             EInfrastructure.Core.StartUp.Run();
-
-            services.Configure<RedisConfig>(configuration);
-            return services;
+            services.AddHostedService<Bootstrapper>();
+            return services.AddRedis(() => configuration.GetSection(nameof(RedisConfig)).Get<RedisConfig>());
         }
 
         #endregion

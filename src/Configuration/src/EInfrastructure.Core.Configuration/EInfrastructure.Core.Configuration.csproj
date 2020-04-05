@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
    <Version>2.0.1-beta-018</Version>
@@ -27,6 +27,10 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Ioc\Plugs\Sms\Dto\VoiceSms" />
   </ItemGroup>
 
 </Project>

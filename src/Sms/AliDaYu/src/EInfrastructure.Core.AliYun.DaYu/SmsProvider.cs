@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -12,11 +13,15 @@ using EInfrastructure.Core.AliYun.DaYu.Validator;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Dto;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Dto.Sms;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Enum;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params.Sms;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Validation.Common;
+using SendSmsResponseDto = EInfrastructure.Core.AliYun.DaYu.Model.SendSms.SendSmsResponseDto;
 
 namespace EInfrastructure.Core.AliYun.DaYu
 {
@@ -42,7 +47,6 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// </summary>
         public SmsProvider(AliSmsConfig smsConfig, ICollection<IJsonProvider> jsonProviders) : base(smsConfig)
         {
-            _smsConfig = smsConfig;
             _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
             ValidationCommon.Check(smsConfig, "请完善阿里云短信配置信息", HttpStatus.Err.Name);
         }
@@ -61,6 +65,19 @@ namespace EInfrastructure.Core.AliYun.DaYu
 
         #endregion
 
+        #region 返回权重
+
+        /// <summary>
+        /// 返回权重
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 99;
+        }
+
+        #endregion
+
         #region 指定单个手机号发送短信
 
         /// <summary>
@@ -68,7 +85,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         /// </summary>
         /// <param name="param">短信参数</param>
         /// <returns></returns>
-        public Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto SendSms(SendSmsParam param)
+        public SmsResponseDto<Configuration.Ioc.Plugs.Sms.Dto.Sms.SendSmsResponseDto> SendSms(SendSmsParam param)
         {
             new SendSmsParamValidator().Validate(param).Check(HttpStatus.Err.Name);
             CommonRequest request = base.GetRequest("dysmsapi.aliyuncs.com", "SendSms", "2017-05-25", "cn-hangzhou");
@@ -93,21 +110,21 @@ namespace EInfrastructure.Core.AliYun.DaYu
 
                         if (smsCode != default(SmsCode))
                         {
-                            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(
-                                param.Phone)
+                            return new SmsResponseDto<Configuration.Ioc.Plugs.Sms.Dto.Sms.SendSmsResponseDto>()
                             {
                                 Code = smsCode,
                                 Msg = smsCode == SmsCode.Ok ? "success" : "lose",
-                                Extend = new SendSmsExtend()
-                                {
-                                    BizId = smsCode == SmsCode.Ok
-                                        ? _jsonProvider
-                                            .Deserialize<SendSmsSuccessResponseDto>(
-                                                response.Data).BizId
-                                        : "",
-                                    RequestId = res.RequestId,
-                                    Msg = res.Message
-                                }
+                                Extend = new Configuration.Ioc.Plugs.Sms.Dto.Sms.SendSmsResponseDto(param.Phone,
+                                    new SendSmsExtend()
+                                    {
+                                        BizId = smsCode == SmsCode.Ok
+                                            ? _jsonProvider
+                                                .Deserialize<SendSmsSuccessResponseDto>(
+                                                    response.Data).BizId
+                                            : "",
+                                        RequestId = res.RequestId,
+                                        Msg = res.Message
+                                    })
                             };
                         }
                     }
@@ -117,7 +134,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
             {
             }
 
-            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(param.Phone)
+            return new SmsResponseDto<Configuration.Ioc.Plugs.Sms.Dto.Sms.SendSmsResponseDto>()
             {
                 Code = SmsCode.Unknown,
                 Msg = "发送异常"
@@ -126,82 +143,16 @@ namespace EInfrastructure.Core.AliYun.DaYu
 
         #endregion
 
-        #region 发送语音短信
+        #region 查看短信发送记录
 
         /// <summary>
-        /// 发送语音短信
+        /// 查看短信发送记录
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto SendVoiceSms(SendVoiceSmsParam param)
+        public SmsResponseDto<SendSmsRecordDto> GetRecords(SendSmsRecordParam param)
         {
-            new SendVoiceSmsParamValidator().Validate(param).Check(HttpStatus.Err.Name);
-            CommonRequest request = base.GetRequest("dyvmsapi.aliyuncs.com", "SingleCallByTts", "2017-05-25", "cn-hangzhou");
-            request.AddQueryParameters("CalledNumber", param.Phone);
-            request.AddQueryParameters("CalledShowNumber", param.CalledShowNumber);
-            request.AddQueryParameters("TtsCode", param.TemplateCode);
-            request.AddQueryParameters("PlayTimes", param.PlatTimes.ToString()); //播放次数
-            request.AddQueryParameters("Volume", param.Volume.ToString()); //播放音量
-            Dictionary<string, string> data = new Dictionary<string, string>();
-            param.Content.ForEach(item => { data.Add(item.Key, item.Value); });
-            request.AddQueryParameters("TtsParam", _jsonProvider.Serializer(data));
-            try
-            {
-                CommonResponse response = GetClient().GetCommonResponse(request);
-                if (response != null)
-                {
-                    var res = _jsonProvider
-                        .Deserialize<SendVoiceSmsResponseDto>(
-                            response.Data);
-                    if (res != null)
-                    {
-                        SmsCode smsCode = SmsCodeMap.Where(x => x.Key == res.Code).Select(x => x.Value)
-                            .FirstOrDefault();
-
-                        if (smsCode != default(SmsCode))
-                        {
-                            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(
-                                param.Phone)
-                            {
-                                Code = smsCode,
-                                Msg = smsCode == SmsCode.Ok ? "success" : "lose",
-                                Extend = new SendSmsExtend()
-                                {
-                                    BizId = smsCode == SmsCode.Ok
-                                        ? _jsonProvider
-                                            .Deserialize<SendVoiceSmsSuccessResponseDto>(
-                                                response.Data).CallId
-                                        : "",
-                                    RequestId = res.RequestId,
-                                    Msg = res.Message
-                                }
-                            };
-                        }
-                    }
-                }
-            }
-            catch (ServerException e)
-            {
-            }
-
-            return new Configuration.Ioc.Plugs.Sms.Dto.SendSmsResponseDto(param.Phone)
-            {
-                Code = SmsCode.Unknown,
-                Msg = "发送异常"
-            };
-        }
-
-        #endregion
-
-        #region 返回权重
-
-        /// <summary>
-        /// 返回权重
-        /// </summary>
-        /// <returns></returns>
-        public int GetWeights()
-        {
-            return 99;
+            throw new NotImplementedException();
         }
 
         #endregion

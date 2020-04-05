@@ -26,8 +26,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.Entities\EInfrastructure.Core.Config.Entities.csproj" />
-    <ProjectReference Include="..\EInfrastructure.Core.Http\EInfrastructure.Core.Http.csproj" />
+    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.Entities\EInfrastructure.Core.Config.Entities.csproj"/>
+    <ProjectReference Include="..\EInfrastructure.Core.Http\EInfrastructure.Core.Http.csproj"/>
   </ItemGroup>
 
 </Project>

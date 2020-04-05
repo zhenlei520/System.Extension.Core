@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params.VoiceSms
 {
     /// <summary>
     /// 发送语音短信

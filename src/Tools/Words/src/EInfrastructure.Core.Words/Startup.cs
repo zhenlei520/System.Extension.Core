@@ -55,8 +55,7 @@ namespace EInfrastructure.Core.Words
         public static IServiceCollection AddWords(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.Configure<EWordConfig>(configuration);
-            return services;
+            return services.AddWords(() => configuration.GetSection(nameof(EWordConfig)).Get<EWordConfig>());
         }
 
         #endregion
