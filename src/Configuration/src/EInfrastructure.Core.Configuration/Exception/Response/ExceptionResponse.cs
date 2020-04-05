@@ -24,6 +24,21 @@ namespace EInfrastructure.Core.Configuration.Exception.Response
         public ExceptionResponse(T code, string content, object extend = null) : base(code, content, extend)
         {
         }
+
+        /// <summary>
+        /// 异常码
+        /// </summary>
+        public T GetCode => Code;
+
+        /// <summary>
+        /// 异常响应内容
+        /// </summary>
+        public string GetContent => Content;
+
+        /// <summary>
+        /// 扩展信息
+        /// </summary>
+        public object GetExtend => Extend;
     }
 
     /// <summary>
