@@ -17,7 +17,7 @@ namespace EInfrastructure.Core.Tools.Systems
         public static string SafeString(this object param)
         {
             return ObjectCommon.SafeObject(param != null,
-                () => ValueTuple.Create(param.ToString().Trim(), string.Empty));
+                () => ValueTuple.Create(param?.ToString().Trim(), string.Empty));
         }
     }
 }

@@ -443,7 +443,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="url">请求地址</param>
         /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public async Task<T> GetFromJsonAsync<T>(string url, object data)
+        public async Task<T> GetJsonAsync<T>(string url, object data)
         {
             var res = await GetStringAsync(url, data);
             if (string.IsNullOrEmpty(res))
@@ -480,7 +480,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="url">请求地址</param>
         /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public async Task<T> GetFromXmlAsync<T>(string url, object data)
+        public async Task<T> GetXmlAsync<T>(string url, object data)
         {
             var res = await GetStringAsync(url, data);
             if (string.IsNullOrEmpty(res))

@@ -69,7 +69,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public static IServiceCollection AddAliDaYu(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddAliDaYu(() => configuration.GetSection(typeof(AliSmsConfig).Name).Get<AliSmsConfig>());
+            services.AddAliDaYu(() => configuration.GetSection(nameof(AliSmsConfig)).Get<AliSmsConfig>());
             return services;
         }
 
