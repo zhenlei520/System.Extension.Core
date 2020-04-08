@@ -58,7 +58,7 @@ namespace EInfrastructure.Core.Config.Entities.Data
         /// <summary>
         /// 扩展Data
         /// </summary>
-        [JsonProperty(PropertyName = "extend_data")]
+        [JsonProperty(PropertyName = "extend_data",DefaultValueHandling =DefaultValueHandling.Ignore)]
         public virtual object ExtendedData { get; set; }
     }
 }
