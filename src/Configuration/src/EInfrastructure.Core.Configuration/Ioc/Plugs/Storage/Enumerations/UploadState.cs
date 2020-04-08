@@ -16,7 +16,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations
         public static UploadState Activated = new UploadState(0, "激活");
 
         /// <summary>
-        /// 激活
+        /// 暂停
         /// </summary>
         public static UploadState Suspended = new UploadState(1, "暂停");
 
@@ -25,6 +25,11 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations
         /// </summary>
         public static UploadState Aborted = new UploadState(2, "退出");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">描述</param>
         public UploadState(int id, string name) : base(id, name)
         {
         }

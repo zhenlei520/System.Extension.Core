@@ -28,9 +28,9 @@ namespace EInfrastructure.Core.Tools
         /// <param name="t1">集合1（新集合）</param>
         /// <param name="t2">集合2（旧集合）</param>
         /// <returns>排除t1中包含t2的项</returns>
-        public static List<T> Except<T>(this IEnumerable<T> t1, IEnumerable<T> t2)
+        public static List<T> ExceptNew<T>(this IEnumerable<T> t1, IEnumerable<T> t2)
         {
-            return System.Linq.Enumerable.Except(t1, t2).ToList();
+            return t1.Except(t2).ToList();
         }
 
         #endregion
@@ -44,9 +44,9 @@ namespace EInfrastructure.Core.Tools
         /// <param name="t2"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static List<T> Intersect<T>(this IEnumerable<T> t1, IEnumerable<T> t2)
+        public static List<T> IntersectNew<T>(this IEnumerable<T> t1, IEnumerable<T> t2)
         {
-            return System.Linq.Enumerable.Intersect(t1, t2).ToList();
+            return t1.Intersect(t2).ToList();
         }
 
         #endregion
@@ -60,9 +60,9 @@ namespace EInfrastructure.Core.Tools
         /// <param name="t2"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static List<T> Union<T>(this IEnumerable<T> t1, IEnumerable<T> t2)
+        public static List<T> UnionNew<T>(this IEnumerable<T> t1, IEnumerable<T> t2)
         {
-            return System.Linq.Enumerable.Union(t1, t2).ToList();
+            return t1.Union(t2).ToList();
         }
 
         #endregion
@@ -76,9 +76,9 @@ namespace EInfrastructure.Core.Tools
         /// <param name="t2"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static List<T> Concat<T>(this IEnumerable<T> t1, IEnumerable<T> t2)
+        public static List<T> ConcatNew<T>(this IEnumerable<T> t1, IEnumerable<T> t2)
         {
-            return System.Linq.Enumerable.Concat(t1, t2).ToList();
+            return t1.Concat(t2).ToList();
         }
 
         #endregion
@@ -93,7 +93,7 @@ namespace EInfrastructure.Core.Tools
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TKey"></typeparam>
         /// <returns></returns>
-        public static ListCompare<T, TKey> Compare<T, TKey>(this List<T> sourceList, List<T> optList)
+        public static ListCompare<T, TKey> CompareNew<T, TKey>(this List<T> sourceList, List<T> optList)
             where T : IEntity<TKey> where TKey : struct
         {
             return new ListCompare<T, TKey>(sourceList, optList);
@@ -104,7 +104,7 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static ListCompare<T, string> Compare<T>(this List<T> sourceList, List<T> optList)
+        public static ListCompare<T, string> CompareNew<T>(this List<T> sourceList, List<T> optList)
             where T : IEntity<string>
         {
             return new ListCompare<T, string>(sourceList, optList);
@@ -234,7 +234,7 @@ namespace EInfrastructure.Core.Tools
 
             if (pageIndex - 1 < 0)
             {
-                throw new BusinessException("页码必须大于等于1");
+                throw new BusinessException("页码必须大于等于1", HttpStatus.Err.Id);
             }
 
             query = query.Skip((pageIndex - 1) * pageSize).ToList();
@@ -244,7 +244,7 @@ namespace EInfrastructure.Core.Tools
             }
             else if (pageSize < 1 && pageSize != -1)
             {
-                throw new BusinessException("页大小须等于-1或者大于0");
+                throw new BusinessException("页大小须等于-1或者大于0", HttpStatus.Err.Id);
             }
             else
             {
@@ -429,9 +429,9 @@ namespace EInfrastructure.Core.Tools
             /// 创建列表
             /// </summary>
             public List<T> CreateList => _createList ?? (_createList =
-                                             OptList.Where(x => !
-                                                     SourceList.Select(source => source.Id).ToList().Contains(x.Id))
-                                                 .ToList());
+                OptList.Where(x => !
+                        SourceList.Select(source => source.Id).ToList().Contains(x.Id))
+                    .ToList());
 
             #endregion
 

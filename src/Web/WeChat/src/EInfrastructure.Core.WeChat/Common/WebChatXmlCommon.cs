@@ -3,6 +3,7 @@
 
 using System;
 using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Enumerations;
 
 namespace EInfrastructure.Core.WeChat.Common
 {
@@ -12,7 +13,7 @@ namespace EInfrastructure.Core.WeChat.Common
     public class WebChatXmlCommon
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="toUserName"></param>
         /// <param name="fromUserName"></param>
@@ -36,7 +37,7 @@ namespace EInfrastructure.Core.WeChat.Common
         /// <summary>
         /// 消息创建时间 （整型）
         /// </summary>
-        public double CreateTime { get; private set; } = TimeCommon.ConvertDateTimeInt(DateTime.UtcNow);
+        public double CreateTime { get; private set; } = TimeCommon.ToUnixTimestamp(DateTime.UtcNow,TimestampType.Second);
 
         /// <summary>
         /// 消息类型

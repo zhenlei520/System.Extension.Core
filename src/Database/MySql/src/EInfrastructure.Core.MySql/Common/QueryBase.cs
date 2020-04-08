@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.MySql.Common
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="T"></typeparam>
-    public class QueryBase<TEntity, T>
+    public abstract class QueryBase<TEntity, T>
         : IQuery<TEntity, T> where TEntity : class, IEntity<T>
         where T : IComparable
     {
@@ -31,7 +31,7 @@ namespace EInfrastructure.Core.MySql.Common
         ///
         /// </summary>
         /// <param name="unitOfWork">工作单元</param>
-        public QueryBase(IUnitOfWork unitOfWork)
+        protected QueryBase(IUnitOfWork unitOfWork)
         {
             this.Dbcontext = unitOfWork as DbContext;
         }
@@ -42,7 +42,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// 得到唯一标示
         /// </summary>
         /// <returns></returns>
-        public string GetIdentify()
+        public virtual string GetIdentify()
         {
             return AssemblyCommon.GetReflectedInfo().Namespace;
         }
@@ -57,7 +57,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// <param name="condition">条件</param>
         /// <param name="isTracking">是否跟踪</param>
         /// <returns></returns>
-        public TEntity GetOne(Expression<Func<TEntity, bool>> condition, bool isTracking = true)
+        public virtual TEntity GetOne(Expression<Func<TEntity, bool>> condition, bool isTracking = true)
         {
             if (isTracking)
             {
@@ -74,7 +74,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// <param name="condition">条件</param>
         /// <param name="isTracking">是否跟踪</param>
         /// <returns></returns>
-        public Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> condition, bool isTracking = true)
+        public virtual Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> condition, bool isTracking = true)
         {
             if (isTracking)
             {
@@ -97,7 +97,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// <param name="pageIndex">页码</param>
         /// <param name="isTotal">是否计算总数</param>
         /// <returns></returns>
-        public PageData<TEntity> GetList(Expression<Func<TEntity, bool>> condition, int pageSize, int pageIndex,
+        public virtual PageData<TEntity> GetList(Expression<Func<TEntity, bool>> condition, int pageSize, int pageIndex,
             bool isTotal)
         {
             return Dbcontext.GetList<TEntity, T>(condition, pageSize, pageIndex, isTotal);
@@ -111,7 +111,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// <param name="pageIndex">页码</param>
         /// <param name="isTotal">是否计算总数</param>
         /// <returns></returns>
-        public Task<PageData<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> condition, int pageSize,
+        public virtual Task<PageData<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> condition, int pageSize,
             int pageIndex, bool isTotal)
         {
             return Dbcontext.GetListAsync<TEntity, T>(condition, pageSize, pageIndex, isTotal);
@@ -126,7 +126,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
-        public List<TEntity> GetList(Expression<Func<TEntity, bool>> condition)
+        public virtual List<TEntity> GetList(Expression<Func<TEntity, bool>> condition)
         {
             return Dbcontext.GetList<TEntity, T>(condition);
         }
@@ -136,7 +136,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
-        public Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> condition)
+        public  virtual Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> condition)
         {
             return Dbcontext.GetListAsync<TEntity, T>(condition);
         }
@@ -150,7 +150,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
-        public bool Exists(Expression<Func<TEntity, bool>> condition)
+        public virtual bool Exists(Expression<Func<TEntity, bool>> condition)
         {
             return Dbcontext.Exists<TEntity, T>(condition);
         }
@@ -160,7 +160,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
-        public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> condition)
+        public virtual Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> condition)
         {
             return Dbcontext.ExistsAsync<TEntity, T>(condition);
         }
@@ -175,7 +175,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// <param name="condition">条件</param>
         /// <param name="topN">前N条记录</param>
         /// <returns></returns>
-        public List<TEntity> TopN(Expression<Func<TEntity, bool>> condition, int topN)
+        public virtual List<TEntity> TopN(Expression<Func<TEntity, bool>> condition, int topN)
         {
             return Dbcontext.TopN<TEntity, T>(condition, topN);
         }
@@ -186,7 +186,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// <param name="condition">条件</param>
         /// <param name="topN">前N条记录</param>
         /// <returns></returns>
-        public Task<List<TEntity>> TopNAsync(Expression<Func<TEntity, bool>> condition, int topN)
+        public virtual Task<List<TEntity>> TopNAsync(Expression<Func<TEntity, bool>> condition, int topN)
         {
             return Dbcontext.TopNAsync<TEntity, T>(condition, topN);
         }
@@ -200,7 +200,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
-        public IQueryable<TEntity> GetListQuery(Expression<Func<TEntity, bool>> condition)
+        public virtual IQueryable<TEntity> GetListQuery(Expression<Func<TEntity, bool>> condition)
         {
             return Dbcontext.GetListQuery<TEntity, T>(condition);
         }
@@ -213,7 +213,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// 获取IQueryable的方法
         /// </summary>
         /// <returns></returns>
-        public IQueryable<TEntity> GetQueryable()
+        public virtual IQueryable<TEntity> GetQueryable()
         {
             return Dbcontext.Set<TEntity>();
         }
@@ -227,7 +227,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
-        public int Count(Expression<Func<TEntity, bool>> condition)
+        public virtual int Count(Expression<Func<TEntity, bool>> condition)
         {
             return Dbcontext.Count<TEntity, T>(condition);
         }
@@ -237,7 +237,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
-        public Task<int> CountAsync(Expression<Func<TEntity, bool>> condition)
+        public virtual Task<int> CountAsync(Expression<Func<TEntity, bool>> condition)
         {
             return Dbcontext.CountAsync<TEntity, T>(condition);
         }

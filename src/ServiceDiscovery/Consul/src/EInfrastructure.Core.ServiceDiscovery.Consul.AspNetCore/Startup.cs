@@ -89,9 +89,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
             IConfiguration configuration)
         {
             EInfrastructure.Core.StartUp.Run();
-
-            services.Configure<ConsulConfig>(configuration);
-            return services;
+            return services.AddConsul(() => configuration.GetSection(nameof(ConsulConfig)).Get<ConsulConfig>());
         }
 
         #endregion

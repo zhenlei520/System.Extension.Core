@@ -18,12 +18,12 @@ namespace EInfrastructure.Core.UCloud.Storage
     /// <summary>
     /// 基类UCloud实现
     /// </summary>
-    public class BaseStorageProvider
+    public abstract class BaseStorageProvider
     {
         /// <summary>
         ///
         /// </summary>
-        protected readonly ILogService LogService;
+        protected readonly ILogProvider LogService;
 
         /// <summary>
         /// UCloud配置
@@ -33,11 +33,11 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 基类UCloud实现
         /// </summary>
-        public BaseStorageProvider(ICollection<ILogService> logServices, UCloudStorageConfig uCloudConfig)
+        public BaseStorageProvider(ICollection<ILogProvider> logServices, UCloudStorageConfig uCloudConfig)
         {
             LogService = InjectionSelectionCommon.GetImplement(logServices);
             UCloudConfig = uCloudConfig;
-            uCloudConfig.Check("七牛云存储配置异常",HttpStatus.Err.Name);
+            ValidationCommon.Check(uCloudConfig,"Uc云存储配置异常",HttpStatus.Err.Name);
         }
 
         #region 上传文件
@@ -49,7 +49,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <param name="key">文件地址</param>
         /// <param name="ext">扩展名</param>
         /// <exception cref="Exception"></exception>
-        internal bool UploadFile(Stream stream, string key, string ext)
+        internal virtual bool UploadFile(Stream stream, string key, string ext)
         {
             HttpWebRequest request = null;
             HttpWebResponse response = null;
@@ -91,7 +91,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// 返回权重
         /// </summary>
         /// <returns></returns>
-        public int GetWeights()
+        public virtual int GetWeights()
         {
             return 99;
         }

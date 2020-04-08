@@ -30,6 +30,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// </summary>
         public static TextTypes Japanese = new TextTypes(3, "日文");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">描述</param>
         public TextTypes(int id, string name) : base(id, name)
         {
         }

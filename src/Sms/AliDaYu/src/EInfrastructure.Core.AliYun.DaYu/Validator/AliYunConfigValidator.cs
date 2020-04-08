@@ -10,7 +10,7 @@ namespace EInfrastructure.Core.AliYun.DaYu.Validator
     /// <summary>
     /// 阿里大于短信配置校验
     /// </summary>
-    public class AliYunConfigValidator : AbstractValidator<AliSmsConfig>, IFluentlValidator<AliSmsConfig>
+    internal class AliYunConfigValidator : AbstractValidator<AliSmsConfig>, IFluentlValidator<AliSmsConfig>
     {
         /// <summary>
         ///
@@ -19,8 +19,6 @@ namespace EInfrastructure.Core.AliYun.DaYu.Validator
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
 
-            RuleFor(x => x.SignName).NotNull()
-                .WithMessage("短信签名不能为空");
             RuleFor(x => x.AccessKey).NotNull()
                 .WithMessage("AccessKey ID信息异常");
             RuleFor(x => x.EncryptionKey).NotNull()

@@ -22,7 +22,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// <summary>
     /// 文件实现类
     /// </summary>
-    public class StorageProvider : BaseStorageProvider, IStorageService, IPerRequest
+    public class StorageProvider : BaseStorageProvider, IStorageProvider
     {
         /// <summary>
         /// 文件实现类
@@ -98,8 +98,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
             FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
-            HttpResult result = null;
-            if (param.Stream == null)
+            HttpResult result;
+            if (param.Stream != null)
             {
                 result =
                     target.UploadStream(param.Stream, param.Key, param.Token, GetPutExtra(uploadPersistentOps));
@@ -108,7 +108,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 return new UploadResultDto(res, res ? "成功" : result.ToString());
             }
 
-            if (param.ByteArray == null)
+            if (param.ByteArray != null)
             {
                 result =
                     target.UploadData(param.ByteArray, param.Key, param.Token, GetPutExtra(uploadPersistentOps));
@@ -260,7 +260,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="key">文件key</param>
         /// <returns></returns>
-        public DeleteResultDto Del(string key)
+        public DeleteResultDto Remove(string key)
         {
             HttpResult deleteRet = GetBucketManager().Delete(QiNiuConfig.Bucket, key);
             var res = deleteRet.Code == (int) HttpCode.OK;
@@ -272,7 +272,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="keyList">文件key集合</param>
         /// <returns></returns>
-        public IEnumerable<DeleteResultDto> DelList(IEnumerable<string> keyList)
+        public IEnumerable<DeleteResultDto> RemoveRange(IEnumerable<string> keyList)
         {
             var enumerable = keyList as string[] ?? keyList.ToArray();
 
@@ -329,7 +329,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="copyFileParam">复制到新空间的参数</param>
         /// <returns></returns>
-        public IEnumerable<CopyFileResultDto> CopyToList(ICollection<CopyFileParam> copyFileParam)
+        public IEnumerable<CopyFileResultDto> CopyRangeTo(ICollection<CopyFileParam> copyFileParam)
         {
             List<CopyFileResultDto> res = new List<CopyFileResultDto>();
             copyFileParam.ToList().ListPager(list => { res.AddRange(CopyToMulti(list)); }, 1000, 1);
@@ -337,7 +337,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         }
 
         /// <summary>
-        ///
+        ///复制到新空间的参数
         /// </summary>
         /// <param name="copyFileParam">复制到新空间的参数</param>
         /// <returns></returns>
@@ -391,7 +391,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="moveFileParamList"></param>
         /// <returns></returns>
-        public IEnumerable<MoveFileResultDto> MoveList(List<MoveFileParam> moveFileParamList)
+        public IEnumerable<MoveFileResultDto> MoveRange(List<MoveFileParam> moveFileParamList)
         {
             List<MoveFileResultDto> res = new List<MoveFileResultDto>();
             moveFileParamList.ToList().ListPager(list => { res.AddRange(MoveMulti(list)); }, 1000, 1);

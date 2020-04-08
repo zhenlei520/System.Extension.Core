@@ -20,6 +20,11 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations
         /// </summary>
         public static CallbackBodyType Urlencoded = new CallbackBodyType(2, "application/x-www-form-urlencoded");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">描述</param>
         public CallbackBodyType(int id, string name) : base(id, name)
         {
         }

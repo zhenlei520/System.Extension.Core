@@ -12,7 +12,7 @@ namespace EInfrastructure.Core.Words.Extension
     /// <summary>
     /// 文本搜索，带返回位置及索引号
     /// </summary>
-    public class WordsSearch
+    internal class WordsSearch
     {
         #region class
 

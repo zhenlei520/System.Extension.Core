@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using EInfrastructure.Core.Http.Enumerations;
+using EInfrastructure.Core.Http.Common;
 using RestSharp;
 
 namespace EInfrastructure.Core.Http.Provider
@@ -26,7 +26,7 @@ namespace EInfrastructure.Core.Http.Provider
         {
             RestRequest request = base.GetRestRequest(url, method, timeOut, headers);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-            var bodyDic = base.GetParams(requestBody.Data);
+            var bodyDic = ObjectCommon.GetParams(requestBody.Data??new {},"Newtonsoft.Json.JsonPropertyAttribute,Newtonsoft.Json");
             foreach (var item in bodyDic)
             {
                 request.AddParameter(item.Key, item.Value);

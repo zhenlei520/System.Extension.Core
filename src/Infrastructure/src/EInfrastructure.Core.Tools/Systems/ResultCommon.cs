@@ -1,6 +1,8 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
+
 namespace EInfrastructure.Core.Tools.Systems
 {
     /// <summary>
@@ -14,7 +16,8 @@ namespace EInfrastructure.Core.Tools.Systems
         /// <param name="param">参数</param>
         public static string SafeString(this object param)
         {
-            return param?.ToString().Trim() ?? string.Empty;
+            return ObjectCommon.SafeObject(param != null,
+                () => ValueTuple.Create(param?.ToString().Trim(), string.Empty));
         }
     }
 }

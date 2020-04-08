@@ -9,12 +9,12 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator
     /// <summary>
     ///
     /// </summary>
-    public class MoveFileParamValidator : AbstractValidator<MoveFileParam>
+    internal class MoveFileParamValidator : AbstractValidator<MoveFileParam>
     {
         /// <summary>
         ///
         /// </summary>
-        public MoveFileParamValidator()
+        internal MoveFileParamValidator()
         {
             RuleFor(x => x.SourceBucket).Must(x => string.IsNullOrEmpty(x)).WithMessage("源空间不能为空");
             RuleFor(x => x.OptBucket).Must(x => string.IsNullOrEmpty(x)).WithMessage("目标空间不能为空");

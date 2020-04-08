@@ -100,6 +100,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// </summary>
         public static CupSize P = new CupSize(17, "P杯");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">描述</param>
         public CupSize(int id, string name) : base(id, name)
         {
         }

@@ -13,5 +13,5 @@ cd ./bin/Release/package
 set "package=*.nupkg"
 
 for /r %%i in (%package%) do ( 
-dotnet nuget push %%~ni.nupkg --source nuget.org
+dotnet nuget push %%~ni.nupkg --source %3
 )

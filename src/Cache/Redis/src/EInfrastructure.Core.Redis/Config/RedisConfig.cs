@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using EInfrastructure.Core.AutomationConfiguration.Interface;
 using EInfrastructure.Core.Validation;
 
 namespace EInfrastructure.Core.Redis.Config
@@ -7,7 +6,7 @@ namespace EInfrastructure.Core.Redis.Config
     /// <summary>
     /// Redis配置
     /// </summary>
-    public class RedisConfig : ISingletonConfigModel, IFluentlValidatorEntity
+    public class RedisConfig : IFluentlValidatorEntity
     {
         /// <summary>
         /// Ip地址

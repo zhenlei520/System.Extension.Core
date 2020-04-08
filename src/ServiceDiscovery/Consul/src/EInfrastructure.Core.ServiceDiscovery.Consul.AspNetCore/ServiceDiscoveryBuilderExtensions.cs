@@ -37,10 +37,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
                 };
             }
 
-            consulConfigs.ForEach(consulConfig =>
-            {
-                consulConfig.UseConsul(cancellationToken);
-            });
+            consulConfigs.ForEach(consulConfig => { consulConfig.UseConsul(cancellationToken); });
             return app;
         }
 
@@ -52,8 +49,9 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         /// <returns></returns>
         private static void UseConsul(this ConsulConfig consulConfig, CancellationToken cancellationToken)
         {
-            consulConfig.ApiServiceConfig.Check("consul service 配置异常",HttpStatus.Err.Name);
-            consulConfig.ApiServiceHealthyConfig.Check("consul healthy service 配置异常",HttpStatus.Err.Name);
+            ValidationCommon.Check(consulConfig.ApiServiceConfig, "consul service 配置异常", HttpStatus.Err.Name);
+            ValidationCommon.Check(consulConfig.ApiServiceHealthyConfig, "consul healthy service 配置异常",
+                HttpStatus.Err.Name);
 
             var consulClient =
                 new ConsulClient(x =>
@@ -100,7 +98,8 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
 
             cancellationToken.Register(() =>
             {
-                consulClient.Agent.ServiceDeregister(registration.ID, cancellationToken).Wait(cancellationToken); //服务停止时取消注册
+                consulClient.Agent.ServiceDeregister(registration.ID, cancellationToken)
+                    .Wait(cancellationToken); //服务停止时取消注册
             });
         }
 

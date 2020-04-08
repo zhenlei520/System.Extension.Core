@@ -35,6 +35,11 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations
         /// </summary>
         public static ImageMode Cut = new ImageMode(3, "指定高宽裁减（不变形）");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">描述</param>
         public ImageMode(int id, string name) : base(id, name)
         {
         }

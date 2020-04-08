@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>2.0.1-beta-005</Version>
-<Authors>zhenlei520</Authors>
+   <Version>2.0.1-beta-020</Version>
+    <Authors>zhenlei520</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>zhenlei520</Company>
     <Description>dotnet core autofac自动注入</Description>
@@ -13,6 +13,8 @@
     <Title>Autofac自动注入类库</Title>
     <PackageTags>Autofac Ioc</PackageTags>
     <PackageReleaseNotes>彻底与数据库等无用类库分离</PackageReleaseNotes>
+    <NeutralLanguage>zh-CN</NeutralLanguage>
+
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DocumentationFile>bin\Debug\EInfrastructure.Core.AutoFac.xml</DocumentationFile>
@@ -21,9 +23,9 @@
     <DocumentationFile>bin\Release\EInfrastructure.Core.AutoFac.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.0"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj" />
+    <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj"/>
   </ItemGroup>
 </Project>

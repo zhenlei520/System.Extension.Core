@@ -2,19 +2,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.Http.Common;
 using EInfrastructure.Core.Http.Enumerations;
 using EInfrastructure.Core.Http.Params;
 using EInfrastructure.Core.Http.Provider;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Serialize.Xml;
-using Newtonsoft.Json.Serialization;
 using RestSharp;
 
 namespace EInfrastructure.Core.Http
@@ -43,34 +41,41 @@ namespace EInfrastructure.Core.Http
             _files = new List<RequestMultDataParam>();
             Headers = new Dictionary<string, string>();
             _requestBodyType = RequestBodyType.ApplicationJson;
+            _requestBodyFormat = null;
         }
 
         /// <summary>
         /// 请求接口域
         /// </summary>
         /// <param name="host">域名</param>
+        /// <param name="requestBodyFormat">等待响应的数据类型</param>
+        /// <param name="requestBodyType">body请求类型</param>
         /// <param name="jsonProvider"></param>
-        /// <param name="requestBodyType"></param>
-        public HttpClient(string host, IJsonProvider jsonProvider = null,
-            RequestBodyType requestBodyType = null) : this(host)
+        public HttpClient(string host,
+            RequestBodyFormat requestBodyFormat = null,
+            RequestBodyType requestBodyType = null, IJsonProvider jsonProvider = null) : this(host)
         {
             Host = host;
             _jsonProvider = jsonProvider ?? new NewtonsoftJsonProvider();
             _requestBodyType = requestBodyType ?? RequestBodyType.ApplicationJson;
+            _requestBodyFormat = requestBodyFormat;
         }
 
         /// <summary>
         /// 请求接口域
         /// </summary>
         /// <param name="host">域名</param>
+        /// <param name="requestBodyFormat">等待响应的数据类型</param>
+        /// <param name="requestBodyType">请求类型</param>
         /// <param name="xmlProvider"></param>
-        /// <param name="requestBodyType"></param>
-        public HttpClient(string host, IXmlProvider xmlProvider = null,
-            RequestBodyType requestBodyType = null) : this(host)
+        public HttpClient(string host,
+            RequestBodyFormat requestBodyFormat = null,
+            RequestBodyType requestBodyType = null, IXmlProvider xmlProvider = null) : this(host)
         {
             Host = host;
             _xmlProvider = xmlProvider ?? new XmlProvider();
             _requestBodyType = requestBodyType ?? RequestBodyType.ApplicationJson;
+            _requestBodyFormat = requestBodyFormat;
         }
 
         /// <summary>
@@ -78,8 +83,14 @@ namespace EInfrastructure.Core.Http
         /// </summary>
         /// <param name="host">域名</param>
         /// <param name="encoding">编码格式 默认Utf8</param>
+        /// <param name="requestBodyType">请求类型</param>
+        /// <param name="requestBodyFormat">等待响应的数据类型</param>
         /// <param name="jsonProvider"></param>
-        public HttpClient(string host, Encoding encoding, IJsonProvider jsonProvider = null) : this(host,
+        public HttpClient(string host,
+            RequestBodyType requestBodyType = null,
+            RequestBodyFormat requestBodyFormat = null, IJsonProvider jsonProvider = null,
+            Encoding encoding = null) : this(host,
+            requestBodyFormat, requestBodyType,
             jsonProvider ?? new NewtonsoftJsonProvider())
         {
             Host = host;
@@ -90,13 +101,21 @@ namespace EInfrastructure.Core.Http
         /// 请求接口域
         /// </summary>
         /// <param name="host">域名</param>
-        /// <param name="encoding">编码格式 默认Utf8</param>
+        /// <param name="requestBodyFormat">等待响应的数据类型</param>
+        /// <param name="requestBodyType">请求类型</param>
         /// <param name="xmlProvider"></param>
-        public HttpClient(string host, Encoding encoding, IXmlProvider xmlProvider = null) : this(host,
+        /// <param name="encoding">编码格式 默认Utf8</param>
+        public HttpClient(string host,
+            RequestBodyFormat requestBodyFormat = null,
+            RequestBodyType requestBodyType = null, IXmlProvider xmlProvider = null, Encoding encoding = null) : this(
+            host,
+            requestBodyFormat,
+            requestBodyType,
             xmlProvider ?? new XmlProvider())
         {
             Host = host;
             _encoding = encoding ?? Encoding.UTF8;
+            _requestBodyFormat = requestBodyFormat;
         }
 
         /// <summary>
@@ -140,7 +159,7 @@ namespace EInfrastructure.Core.Http
                 }
             }
 
-            throw new BusinessException("不支持的请求");
+            throw new BusinessException("不支持的请求", HttpStatus.Err.Id);
         }
 
         /// <summary>
@@ -184,6 +203,11 @@ namespace EInfrastructure.Core.Http
         private readonly RequestBodyType _requestBodyType;
 
         /// <summary>
+        /// 得到响应的数据类型
+        /// </summary>
+        private RequestBodyFormat _requestBodyFormat;
+
+        /// <summary>
         /// 请求头
         /// </summary>
         public Dictionary<string, string> Headers;
@@ -207,6 +231,31 @@ namespace EInfrastructure.Core.Http
 
         #region 同步
 
+        #region Get请求 得到响应字符串
+
+        /// <summary>
+        /// Get请求 得到响应字符串
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <returns></returns>
+        public string GetString(string url)
+        {
+            return Get(url).Content;
+        }
+
+        /// <summary>
+        /// Get请求
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数</param>
+        /// <returns></returns>
+        public string GetString(string url, object data)
+        {
+            return Get(SetUrlParam(url, GetParams(data))).Content;
+        }
+
+        #endregion
+
         #region 得到响应对象
 
         #region 响应信息为Json对象
@@ -217,6 +266,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="url">请求地址</param>
         /// <returns></returns>
         public T GetJson<T>(string url)
+            where T : class, new()
         {
             var res = Get(url).Content;
             if (string.IsNullOrEmpty(res))
@@ -234,6 +284,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="data">请求参数</param>
         /// <returns></returns>
         public T GetJson<T>(string url, object data)
+            where T : class, new()
         {
             var res = Get(SetUrlParam(url, GetParams(data))).Content;
             if (string.IsNullOrEmpty(res))
@@ -254,6 +305,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="url">请求地址</param>
         /// <returns></returns>
         public T GetXml<T>(string url)
+            where T : class, new()
         {
             var res = Get(url).Content;
             if (string.IsNullOrEmpty(res))
@@ -271,6 +323,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="data">请求参数</param>
         /// <returns></returns>
         public T GetXml<T>(string url, object data)
+            where T : class, new()
         {
             var res = Get(SetUrlParam(url, GetParams(data))).Content;
             if (string.IsNullOrEmpty(res))
@@ -282,32 +335,6 @@ namespace EInfrastructure.Core.Http
         }
 
         #endregion
-
-        #endregion
-
-        #region Get请求 得到响应字符串
-
-        /// <summary>
-        /// Get请求 得到响应字符串
-        /// </summary>
-        /// <param name="url">请求地址</param>
-        /// <param name="timeOut">超时时间，不设置的话默认与当前配置一致</param>
-        /// <returns></returns>
-        public string GetString(string url, int? timeOut = null)
-        {
-            return Get(url).Content;
-        }
-
-        /// <summary>
-        /// Get请求
-        /// </summary>
-        /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数</param>
-        /// <returns></returns>
-        public string GetString(string url, object data)
-        {
-            return Get(SetUrlParam(url, GetParams(data))).Content;
-        }
 
         #endregion
 
@@ -365,6 +392,31 @@ namespace EInfrastructure.Core.Http
 
         #region 异步
 
+        #region Get请求 得到响应字符串
+
+        /// <summary>
+        /// Get请求 得到响应字符串
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <returns></returns>
+        public async Task<string> GetStringAsync(string url)
+        {
+            return (await GetAsync(url)).Content;
+        }
+
+        /// <summary>
+        /// Get请求 得到响应字符串
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数</param>
+        /// <returns></returns>
+        public async Task<string> GetStringAsync(string url, object data)
+        {
+            return (await GetAsync(SetUrlParam(url, GetParams(data)))).Content;
+        }
+
+        #endregion
+
         #region 得到响应对象
 
         #region 响应信息为Json对象
@@ -391,7 +443,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="url">请求地址</param>
         /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public async Task<T> GetFromJsonAsync<T>(string url, object data)
+        public async Task<T> GetJsonAsync<T>(string url, object data)
         {
             var res = await GetStringAsync(url, data);
             if (string.IsNullOrEmpty(res))
@@ -428,7 +480,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="url">请求地址</param>
         /// <param name="data">请求参数</param>
         /// <returns></returns>
-        public async Task<T> GetFromXmlAsync<T>(string url, object data)
+        public async Task<T> GetXmlAsync<T>(string url, object data)
         {
             var res = await GetStringAsync(url, data);
             if (string.IsNullOrEmpty(res))
@@ -440,31 +492,6 @@ namespace EInfrastructure.Core.Http
         }
 
         #endregion
-
-        #endregion
-
-        #region Get请求 得到响应字符串
-
-        /// <summary>
-        /// Get请求 得到响应字符串
-        /// </summary>
-        /// <param name="url">请求地址</param>
-        /// <returns></returns>
-        public async Task<string> GetStringAsync(string url)
-        {
-            return (await GetAsync(url)).Content;
-        }
-
-        /// <summary>
-        /// Get请求 得到响应字符串
-        /// </summary>
-        /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数</param>
-        /// <returns></returns>
-        public async Task<string> GetStringAsync(string url, object data)
-        {
-            return (await GetAsync(SetUrlParam(url, GetParams(data)))).Content;
-        }
 
         #endregion
 
@@ -529,8 +556,14 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         private IRestResponse Get(string url)
         {
-            var res = GetAsync(url);
-            return res.Result;
+            RestRequest request = GetProvider(RequestType.Get)
+                .GetRequest(Method.GET, url, new RequestBody(null), GetHeaders(), GetTimeOut());
+            if (Proxy != null)
+            {
+                _restClient.Proxy = Proxy;
+            }
+
+            return GetClient().Execute(request);
         }
 
         /// <summary>
@@ -595,6 +628,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public T GetJsonByPost<T>(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
+            where T : class, new()
         {
             var res = GetStringByPost(url, data, requestBodyFormat);
             if (string.IsNullOrEmpty(res))
@@ -619,6 +653,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public T GetXmlByPost<T>(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
+            where T : class, new()
         {
             var res = GetStringByPost(url, data, requestBodyFormat);
             if (string.IsNullOrEmpty(res))
@@ -686,6 +721,24 @@ namespace EInfrastructure.Core.Http
 
         #region 异步请求
 
+        #region Post请求得到响应内容
+
+        /// <summary>
+        /// Post请求得到响应内容
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求参数</param>
+        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
+        /// <returns></returns>
+        public async Task<string> GetPostByStringAsync(string url, object data,
+            RequestBodyFormat requestBodyFormat = null)
+        {
+            var res = await GetByPostAsync(url, data, requestBodyFormat);
+            return res.Content;
+        }
+
+        #endregion
+
         #region Post请求得到响应信息为Json对象
 
         /// <summary>
@@ -696,10 +749,10 @@ namespace EInfrastructure.Core.Http
         /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public async Task<T> PostByJsonAsync<T>(string url, object data,
+        public async Task<T> GetJsonByPostAsync<T>(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
-            var res = await PostByStringAsync(url, data, requestBodyFormat);
+            var res = await GetPostByStringAsync(url, data, requestBodyFormat);
             if (string.IsNullOrEmpty(res))
             {
                 return default;
@@ -720,34 +773,16 @@ namespace EInfrastructure.Core.Http
         /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public async Task<T> PostByXmlAsync<T>(string url, object data,
+        public async Task<T> GetXmlByPostAsync<T>(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
-            var res = await PostByStringAsync(url, data, requestBodyFormat);
+            var res = await GetPostByStringAsync(url, data, requestBodyFormat);
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
             }
 
             return _xmlProvider.Deserialize<T>(res, _encoding);
-        }
-
-        #endregion
-
-        #region Post请求得到响应内容
-
-        /// <summary>
-        /// Post请求得到响应内容
-        /// </summary>
-        /// <param name="url">请求地址</param>
-        /// <param name="data">请求参数</param>
-        /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
-        /// <returns></returns>
-        public async Task<string> PostByStringAsync(string url, object data,
-            RequestBodyFormat requestBodyFormat = null)
-        {
-            var res = await GetByPostAsync(url, data, requestBodyFormat);
-            return res.Content;
         }
 
         #endregion
@@ -761,7 +796,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="data">请求参数</param>
         /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
         /// <returns></returns>
-        public async Task<byte[]> PostByBytesAsync(string url, object data,
+        public async Task<byte[]> GetBytesByPostAsync(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
             var res = await GetByPostAsync(url, data, requestBodyFormat);
@@ -779,10 +814,10 @@ namespace EInfrastructure.Core.Http
         /// <param name="data"></param>
         /// <param name="requestBodyFormat"></param>
         /// <returns></returns>
-        public async Task<Stream> PostByStreamAsync(string url, object data,
+        public async Task<Stream> GetStreamByPostAsync(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
-            return new MemoryStream(await PostByBytesAsync(url, data, requestBodyFormat));
+            return new MemoryStream(await GetBytesByPostAsync(url, data, requestBodyFormat));
         }
 
         #endregion
@@ -801,8 +836,13 @@ namespace EInfrastructure.Core.Http
         private IRestResponse GetByPost(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
-            var res = GetByPostAsync(url, data, requestBodyFormat);
-            return res.Result;
+            var body = _requestBodyType.Id == RequestBodyType.TextXml.Id
+                ? _xmlProvider.Serializer(data)
+                : data;
+            var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
+                new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
+                GetHeaders(), GetTimeOut());
+            return GetClient().Execute(request);
         }
 
         /// <summary>
@@ -815,16 +855,12 @@ namespace EInfrastructure.Core.Http
         private async Task<IRestResponse> GetByPostAsync(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
-            var body = data;
-            if (_requestBodyType.Id == RequestBodyType.TextXml.Id)
-            {
-                body = _xmlProvider.Serializer(data);
-            }
-
+            var body = _requestBodyType.Id == RequestBodyType.TextXml.Id
+                ? _xmlProvider.Serializer(data)
+                : _jsonProvider.Serializer((data ?? new { }));
             var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
-                new RequestBody(body, requestBodyFormat, _files),
+                new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());
-
             return await GetClient().ExecuteTaskAsync(request);
         }
 
@@ -898,6 +934,7 @@ namespace EInfrastructure.Core.Http
             _files = new List<RequestMultDataParam>();
             Headers = new Dictionary<string, string>();
             Proxy = null;
+            _requestBodyFormat = null;
         }
 
         #endregion
@@ -913,36 +950,20 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         private Dictionary<string, string> GetParams(object data)
         {
-            if (data == null || data is string || !data.GetType().IsClass)
+            if (data is Dictionary<string, string> dictionary)
             {
-                return new Dictionary<string, string>();
+                return dictionary;
             }
 
-            var type = data.GetType();
-            var properties = type.GetProperties();
-
-            Dictionary<string, string> objectDic = new Dictionary<string, string>();
-            foreach (var property in properties)
+            if (data is Dictionary<object, object>)
             {
-                string name;
-                if (property.CustomAttributes.Any(x => x.AttributeType == typeof(JsonProperty)))
-                {
-                    var namedargument = property.CustomAttributes.Where(x => x.AttributeType == typeof(JsonProperty))
-                        .Select(x => x.NamedArguments).FirstOrDefault();
-                    name = namedargument.Select(x => x.TypedValue.Value).FirstOrDefault()?.ToString();
-                }
-                else
-                {
-                    name = property.Name;
-                }
-
-                if (objectDic.All(x => x.Key != name) && name != null)
-                {
-                    objectDic.Add(name, property.GetValue(data, null)?.ToString() ?? "");
-                }
+                throw new BusinessException("暂不支持字典类型的Data，除非Data是Dictionary<string,string>", HttpStatus.Err.Id);
             }
 
-            return objectDic;
+            return ObjectCommon.GetParams(data,
+                    "Microsoft.AspNetCore.Mvc.FromQueryAttribute,Microsoft.AspNetCore.Mvc.Core",
+                    (res) => _jsonProvider.Serializer(data))
+                .ToDictionary(x => x.Key, x => x.Value.ToString());
         }
 
         #endregion
@@ -988,11 +1009,7 @@ namespace EInfrastructure.Core.Http
 
             if (IsHttps)
             {
-                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(
-                    (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) =>
-                    {
-                        return true; //总是接受
-                    });
+                ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls |
                                                        SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             }
@@ -1004,6 +1021,20 @@ namespace EInfrastructure.Core.Http
             }
 
             return _restClient;
+        }
+
+        #endregion
+
+        #region 得到RequestBodyFormat
+
+        /// <summary>
+        /// 得到RequestBodyFormat
+        /// </summary>
+        /// <param name="requestBodyFormat">数据响应类型</param>
+        /// <returns></returns>
+        private RequestBodyFormat GetRequestBody(RequestBodyFormat requestBodyFormat)
+        {
+            return requestBodyFormat ?? _requestBodyFormat;
         }
 
         #endregion

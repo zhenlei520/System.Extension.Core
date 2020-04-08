@@ -25,26 +25,27 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="parameter">待匹配字符串</param>
         /// <param name="character">匹配的字符串</param>
-        /// <param name="number">倒数第n次出现（默认倒数第1次）</param>
+        /// <param name="number">得到第number次（默认第1次）</param>
         /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
         /// <returns></returns>
         public static int IndexOf(this string parameter, char character, int number = 1, int defaultIndexof = -1)
         {
-            if (string.IsNullOrEmpty(parameter))
+            if (string.IsNullOrEmpty(parameter)||number<=0)
             {
                 return defaultIndexof;
             }
 
-            string temp = "";
+            int index = 0;
             int count = 1; //第1次匹配
             while (count < number)
             {
-                var index = parameter.IndexOf(character);
-                temp = temp.Substring(index, parameter.Length - index);
+                var tempIndex= (parameter.IndexOf(character));
+                index += tempIndex;
+                parameter = parameter.Substring(tempIndex+1);
                 count++;
             }
 
-            return temp.IndexOf(character);
+            return index + parameter.IndexOf(character)+number-1;
         }
 
         #endregion
@@ -62,20 +63,7 @@ namespace EInfrastructure.Core.Tools
         // ReSharper disable once InconsistentNaming
         public static int LastIndexOf(this string parameter, char character, int number = 1, int defaultIndexof = -1)
         {
-            if (string.IsNullOrEmpty(parameter))
-            {
-                return defaultIndexof;
-            }
-
-            string temp = "";
-            int count = 1; //第1次匹配
-            while (count < number)
-            {
-                temp = temp.Substring(0, parameter.LastIndexOf(character));
-                count++;
-            }
-
-            return temp.LastIndexOf(character);
+            return IndexOf(parameter, character, parameter.Split(character).Length-number, defaultIndexof);
         }
 
         #endregion
@@ -146,12 +134,23 @@ namespace EInfrastructure.Core.Tools
             {
                 if (mobile.IsMobile())
                 {
-                    return mobile.Substring(0, 3) + "*****" + mobile.Substring(8);
+                    return EncryptStr(mobile, "*", 3, 4);
                 }
 
                 if (mobile.IsPhone())
                 {
-                    return mobile.Substring(0, mobile.Length - 6) + "***" + mobile.Substring(mobile.Length - 3);
+                    var strArray = mobile.Split('-');
+                    if (strArray.Length == 2)
+                    {
+                        return strArray[0] + "-" + EncryptStr(strArray[1], "*", 2, -1);
+                    }
+
+                    if (mobile.Length <= 7)
+                    {
+                        return EncryptStr(mobile, "*", 2, 3);
+                    }
+
+                    return EncryptStr(mobile, "*", mobile.Length - 6, 3);
                 }
 
                 throw new System.Exception("请输入正确的手机号码");
@@ -265,13 +264,13 @@ namespace EInfrastructure.Core.Tools
 
         #region 操作
 
-        #region 清除字符串数组中的重复项
+        #region 清除字符串数组中的重复项以及对字符串进行剪切
 
         /// <summary>
-        /// 清除字符串数组中的重复项
+        /// 清除字符串数组中的重复项以及对字符串进行剪切
         /// </summary>
         /// <param name="strArray">字符串数组</param>
-        /// <param name="maxElementLength">字符串数组中单个元素的最大长度</param>
+        /// <param name="maxElementLength">字符串数组中单个元素的最大长度 当其值大于0时，对其进行剪切</param>
         /// <returns></returns>
         public static string[] DistinctStringArray(string[] strArray, int maxElementLength)
         {
@@ -289,7 +288,7 @@ namespace EInfrastructure.Core.Tools
 
             string[] result = new string[h.Count];
             h.Keys.CopyTo(result, 0);
-            return result;
+            return result.Where(x => !string.IsNullOrEmpty(x)).ToArray();
         }
 
         #endregion

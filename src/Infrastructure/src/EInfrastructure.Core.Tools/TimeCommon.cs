@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Tools.Enumerations;
 using TimeType = EInfrastructure.Core.Tools.Enumerations.TimeType;
 
 namespace EInfrastructure.Core.Tools
@@ -80,17 +81,17 @@ namespace EInfrastructure.Core.Tools
         public static int SecondToMinute(int second, RectificationType rectificationType)
         {
             decimal mm = (decimal) second / 60;
-            if (rectificationType == RectificationType.Celling)
+            if (rectificationType.Id == RectificationType.Celling.Id)
             {
                 return Convert.ToInt32(Math.Ceiling(mm));
             }
 
-            if (rectificationType == RectificationType.Floor)
+            if (rectificationType.Id == RectificationType.Floor.Id)
             {
                 return Convert.ToInt32(Math.Floor(mm));
             }
 
-            throw new BusinessException("不支持的取整方式");
+            throw new BusinessException("不支持的取整方式", HttpStatus.Err.Id);
         }
 
         #endregion
@@ -112,46 +113,6 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 返回时间差
-
-        /// <summary>
-        /// 返回时间差
-        /// </summary>
-        /// <param name="dateTime1"></param>
-        /// <param name="dateTime2"></param>
-        /// <returns></returns>
-        public static string DateDiff(this DateTime dateTime1, DateTime dateTime2)
-        {
-            string dateDiff = null;
-            try
-            {
-                TimeSpan ts = dateTime2 - dateTime1;
-                if (ts.Days >= 1)
-                {
-                    dateDiff = dateTime1.Month + "月" + dateTime1.Day + "日";
-                }
-                else
-                {
-                    if (ts.Hours > 1)
-                    {
-                        dateDiff = ts.Hours + "小时前";
-                    }
-                    else
-                    {
-                        dateDiff = ts.Minutes + "分钟前";
-                    }
-                }
-            }
-            catch
-            {
-                // ignored
-            }
-
-            return dateDiff;
-        }
-
-        #endregion
-
         #region 获得两个日期的间隔
 
         /// <summary>
@@ -160,12 +121,9 @@ namespace EInfrastructure.Core.Tools
         /// <param name="dateTime1">日期一(较大一点的时间)。</param>
         /// <param name="dateTime2">日期二(较小一点的时间)。</param>
         /// <returns>日期间隔TimeSpan。</returns>
-        public static TimeSpan DateDiff2(this DateTime dateTime1, DateTime dateTime2)
+        public static TimeSpan DateDiff(this DateTime dateTime1, DateTime dateTime2)
         {
-            TimeSpan ts1 = new TimeSpan(dateTime1.Ticks);
-            TimeSpan ts2 = new TimeSpan(dateTime2.Ticks);
-            TimeSpan ts = ts1.Subtract(ts2).Duration();
-            return ts;
+            return dateTime1 - dateTime2;
         }
 
         #endregion
@@ -253,7 +211,7 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 返回每月的第一天和最后一天
         /// </summary>
-        /// <param name="year1"></param>
+        /// <param name="year"></param>
         /// <param name="month"></param>
         /// <param name="firstDay"></param>
         /// <param name="lastDay"></param>
@@ -334,45 +292,45 @@ namespace EInfrastructure.Core.Tools
         public static DateTime Get(this DateTime? dateTime, TimeType timeKey)
         {
             DateTime dateNow = dateTime ?? DateTime.Now.Date; //当前时间
-            if (timeKey == TimeType.StartYear)
+            if (timeKey.Id == TimeType.StartYear.Id)
             {
                 return new DateTime(dateNow.Year, 1, 1); //本年年初
             }
 
-            if (timeKey == TimeType.EndYear)
+            if (timeKey.Id == TimeType.EndYear.Id)
             {
                 return new DateTime(dateNow.Year, 12, 31); //本年年末
             }
 
-            if (timeKey == TimeType.StartQuarter)
+            if (timeKey.Id == TimeType.StartQuarter.Id)
             {
                 return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day); //本季度初;
             }
 
-            if (timeKey == TimeType.EndQuarter)
+            if (timeKey.Id == TimeType.EndQuarter.Id)
             {
                 return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day).AddMonths(3)
                     .AddDays(-1); //本季度末
             }
 
-            if (timeKey == TimeType.StartMonth)
+            if (timeKey.Id == TimeType.StartMonth.Id)
             {
                 return dateNow.AddDays(1 - dateNow.Day); //本月月初
             }
 
-            if (timeKey == TimeType.EndMonth)
+            if (timeKey.Id == TimeType.EndMonth.Id)
             {
                 return dateNow.AddDays(1 - dateNow.Day).AddMonths(1).AddDays(-1); //本月月末
             }
 
-            if (timeKey == TimeType.StartWeek)
+            if (timeKey.Id == TimeType.StartWeek.Id)
             {
                 int count = dateNow.DayOfWeek - DayOfWeek.Monday;
                 if (count == -1) count = 6;
                 return new DateTime(dateNow.Year, dateNow.Month, dateNow.Day).AddDays(-count); //本周周一
             }
 
-            if (timeKey == TimeType.EndWeek)
+            if (timeKey.Id == TimeType.EndWeek.Id)
             {
                 int count = dateNow.DayOfWeek - DayOfWeek.Sunday;
                 if (count != 0) count = 7 - count;
@@ -775,21 +733,21 @@ namespace EInfrastructure.Core.Tools
         /// <param name="year">阴历年</param>
         /// <param name="month">阴历月</param>
         /// <param name="day">阴历日</param>
-        /// <param name="IsLeapMonth">是否闰月</param>
-        private static DateTime GetLunarYearDate(int year, int month, int day, bool IsLeapMonth)
+        /// <param name="isLeapMonth">是否闰月</param>
+        private static DateTime GetLunarYearDate(int year, int month, int day, bool isLeapMonth)
         {
             if (year < 1902 || year > 2100)
-                throw new BusinessException("只支持1902～2100期间的农历年");
+                throw new BusinessException("只支持1902～2100期间的农历年", HttpStatus.Err.Id);
             if (month < 1 || month > 12)
-                throw new BusinessException("表示月份的数字必须在1～12之间");
+                throw new BusinessException("表示月份的数字必须在1～12之间", HttpStatus.Err.Id);
 
             if (day < 1 || day > calendar.GetDaysInMonth(year, month))
-                throw new BusinessException("农历日期输入有误");
+                throw new BusinessException("农历日期输入有误", HttpStatus.Err.Id);
 
             int num1 = 0, num2 = 0;
             int leapMonth = calendar.GetLeapMonth(year);
 
-            if (((leapMonth == month + 1) && IsLeapMonth) || (leapMonth > 0 && leapMonth <= month))
+            if (((leapMonth == month + 1) && isLeapMonth) || (leapMonth > 0 && leapMonth <= month))
                 num2 = month;
             else
                 num2 = month - 1;
@@ -852,125 +810,59 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 获取时间戳
-
-        #region DateTime时间格式转换为10位不带毫秒的Unix时间戳
+        #region 将时间戳转时间
 
         /// <summary>
-        /// DateTime时间格式转换为10位不带毫秒的Unix时间戳
+        /// 将时间戳转时间
         /// </summary>
-        /// <param name="time"> DateTime时间格式</param>
-        /// <param name="dateTimeKind"></param>
-        /// <returns>Unix时间戳格式</returns>
-        public static int ConvertDateTimeInt(this DateTime time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
-        {
-            DateTime startTime =
-                TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind), TimeZoneInfo.Local);
-            return (int) (time - startTime).TotalSeconds;
-        }
-
-        #endregion
-
-        #region 得到13位时间戳
-
-        /// <summary>
-        /// 得到13位时间戳
-        /// </summary>
-        /// <param name="time"></param>
+        /// <param name="unixTimeStamp">待转时间戳</param>
         /// <param name="dateTimeKind"></param>
         /// <returns></returns>
-        public static long GetTimeSpan(this DateTime? time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
-        {
-            if (time == null)
-                time = DateTime.Now;
-            return GetTimeSpan(time.Value, dateTimeKind);
-        }
-
-        /// <summary>
-        /// 得到13位时间戳
-        /// </summary>
-        /// <param name="time"></param>
-        /// <param name="dateTimeKind"></param>
-        /// <returns></returns>
-        public static long GetTimeSpan(this DateTime time, DateTimeKind dateTimeKind = DateTimeKind.Utc)
-        {
-            var startTime =
-                TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind), TimeZoneInfo.Local);
-            long t = (time.Ticks - startTime.Ticks) / 10000; //除10000调整为13位
-            return t;
-        }
-
-        #endregion
-
-        #endregion
-
-        #region 时间戳转时间
-
-        #region 将10位时间戳转时间
-
-        /// <summary>
-        /// 将10位时间戳转时间
-        /// </summary>
-        /// <param name="unixTimeStamp"></param>
-        /// <param name="dateTimeKind"></param>
-        /// <returns></returns>
-        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp,
+        public static DateTime UnixTimeStampToDateTime(long unixTimeStamp,
             DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
-            // Unix timestamp is seconds past epoch
             System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind);
-            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            switch (unixTimeStamp.ToString(CultureInfo.InvariantCulture).Length)
+            {
+                case 10:
+                    dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+                    break;
+                case 13:
+                    dtDateTime = dtDateTime.AddMilliseconds(unixTimeStamp).ToLocalTime();
+                    break;
+            }
+
             return dtDateTime;
         }
 
         #endregion
 
-        #region 将13位时间戳转为时间
+        #region 生成时间戳
 
         /// <summary>
-        /// 将13位时间戳转为时间
+        /// 生成时间戳
         /// </summary>
-        /// <param name="javaTimeStamp"></param>
+        /// <param name="target">待转换的时间</param>
+        /// <param name="timestampType">时间戳类型：10位或者13位</param>
         /// <param name="dateTimeKind"></param>
         /// <returns></returns>
-        public static DateTime JsTimeStampToDateTime(double javaTimeStamp, DateTimeKind dateTimeKind = DateTimeKind.Utc)
+        public static long ToUnixTimestamp(this DateTime target, TimestampType timestampType,
+            DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
-            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind);
-            dtDateTime = dtDateTime.AddMilliseconds(javaTimeStamp).ToLocalTime();
-            return dtDateTime;
-        }
+            if (timestampType.Id == TimestampType.Millisecond.Id)
+            {
+                return (TimeZoneInfo.ConvertTimeToUtc(target).Ticks - TimeZoneInfo
+                           .ConvertTimeToUtc(new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind)).Ticks) /
+                       10000; //除10000调整为13位
+            }
 
-        #endregion
+            if (timestampType.Id == TimestampType.Second.Id)
+            {
+                return (long) (TimeZoneInfo.ConvertTimeToUtc(target) - new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind))
+                    .TotalSeconds;
+            }
 
-        #endregion
-
-        #region 获得总秒数
-
-        /// <summary>
-        /// 获得总秒数
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="dateTimeKind"></param>
-        /// <returns></returns>
-        public static long CurrentTimeMillis(this DateTime target, DateTimeKind dateTimeKind = DateTimeKind.Utc)
-        {
-            return (long) (TimeZoneInfo.ConvertTimeToUtc(target) - new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind)).TotalSeconds;
-        }
-
-        #endregion
-
-        #region 将当前Utc时间转换为总毫秒数
-
-        /// <summary>
-        /// 将当前Utc时间转换为总毫秒数
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="dateTimeKind"></param>
-        /// <returns></returns>
-        public static long ToUnixTimestamp(this DateTime target, DateTimeKind dateTimeKind = DateTimeKind.Utc)
-        {
-            return (TimeZoneInfo.ConvertTimeToUtc(target) -
-                                    new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind)).TotalMilliseconds.ConvertToLong(0);
+            throw new BusinessException("不支持的类型", HttpStatus.Err.Id);
         }
 
         #endregion
@@ -1023,6 +915,29 @@ namespace EInfrastructure.Core.Tools
             Enum[] days)
         {
             return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
+        }
+
+        #endregion
+
+        #region 根据身份证号码获取出生日期
+
+        /// <summary>
+        /// 根据身份证号码获取出生日期
+        /// </summary>
+        /// <param name="cardNo">身份证号码</param>
+        /// <returns></returns>
+        public static DateTime? GetBirthday(this string cardNo)
+        {
+            if (!cardNo.IsIdCard())
+            {
+                throw new BusinessException("请输入合法的身份证号码", HttpStatus.Err.Id);
+            }
+
+            string timeStr = cardNo.Length == 15
+                ? ("19" + cardNo.Substring(6, 2)) + "-" + cardNo.Substring(8, 2) + "-" +
+                  cardNo.Substring(10, 2)
+                : cardNo.Substring(6, 4) + "-" + cardNo.Substring(10, 2) + "-" + cardNo.Substring(12, 2);
+            return timeStr.ConvertToDateTime(null);
         }
 
         #endregion

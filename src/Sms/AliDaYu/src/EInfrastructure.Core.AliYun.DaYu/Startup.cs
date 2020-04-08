@@ -39,7 +39,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public static IServiceCollection AddAliDaYu(this IServiceCollection services,
             Func<AliSmsConfig> func)
         {
-            EInfrastructure.Core.StartUp.Run();
+            StartUp.Run();
             services.AddSingleton(func.Invoke());
             return services;
         }
@@ -69,9 +69,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public static IServiceCollection AddAliDaYu(this IServiceCollection services,
             IConfiguration configuration)
         {
-            EInfrastructure.Core.StartUp.Run();
-
-            services.Configure<AliSmsConfig>(configuration);
+            services.AddAliDaYu(() => configuration.GetSection(nameof(AliSmsConfig)).Get<AliSmsConfig>());
             return services;
         }
 

@@ -2,8 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using System.Linq;
-using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Tools;
 
@@ -71,10 +69,7 @@ namespace EInfrastructure.Core.HelpCommon
             {
                 if (resultStrList.Count == 0 && resultList.Count != 0)
                 {
-                    t1.ForEach(item =>
-                    {
-                        resultStrList.Add(new NewtonsoftJsonProvider().Serializer(item));
-                    });
+                    t1.ForEach(item => { resultStrList.Add(new NewtonsoftJsonProvider().Serializer(item)); });
                 }
 
                 return resultStrList;
@@ -91,42 +86,9 @@ namespace EInfrastructure.Core.HelpCommon
         /// <typeparam name="T">类型</typeparam>
         /// <param name="t1">集合1</param>
         /// <param name="t2">集合2</param>
-        /// <param name="isCheckRepeat">排除t1中包含t2的项</param>
-        public static List<T> Except<T>(this List<T> t1, List<T> t2, bool isCheckRepeat ) where T : class, new()
+        public static List<T> Except<T>(this List<T> t1, List<T> t2) where T : class, new()
         {
-            if (!isCheckRepeat)
-                return Tools.ListCommon.Except(t1, t2);
-            return MinusExcept(t1, t2);
-        }
-
-        /// <summary>
-        /// 查重添加
-        /// </summary>
-        /// <typeparam name="T">类型</typeparam>
-        /// <param name="t1">集合1</param>
-        /// <param name="t2">集合2</param>
-        /// <returns></returns>
-        private static List<T> MinusExcept<T>(this List<T> t1, List<T> t2) where T : class, new()
-        {
-            IJsonProvider jsonProvider = new NewtonsoftJsonProvider();
-
-            List<T> resultList = new CloneableClass().DeepClone(t1);
-            List<string> resultStrList = new List<string>();
-            if (resultStrList.Count == 0 && resultList.Count != 0)
-            {
-                t1.ForEach(item => { resultStrList.Add(jsonProvider.Serializer(item)); });
-            }
-
-            foreach (var item in t2)
-            {
-                var str = jsonProvider.Serializer(item);
-                if (resultStrList.Contains(str))
-                {
-                    resultStrList.Remove(str);
-                }
-            }
-
-            return resultStrList.Select(x => jsonProvider.Deserialize<T>(x)).ToList();
+            return t1.ExceptNew(t2);
         }
 
         #endregion

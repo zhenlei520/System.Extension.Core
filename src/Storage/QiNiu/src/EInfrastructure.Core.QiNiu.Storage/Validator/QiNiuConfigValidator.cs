@@ -13,15 +13,14 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator
     /// <summary>
     /// 七牛配置信息校验
     /// </summary>
-    public class QiNiuConfigValidator : AbstractValidator<QiNiuStorageConfig>,IFluentlValidator<QiNiuStorageConfig>
+    internal class QiNiuConfigValidator : AbstractValidator<QiNiuStorageConfig>,IFluentlValidator<QiNiuStorageConfig>
     {
         /// <summary>
         ///
         /// </summary>
-        public QiNiuConfigValidator()
+        internal QiNiuConfigValidator()
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
-            ;
             RuleFor(x => x.AccessKey).NotNull()
                 .WithMessage("AccessKey信息异常");
             RuleFor(x => x.SecretKey).NotNull()

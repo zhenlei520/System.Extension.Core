@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>2.0.1-beta-005</Version>
+   <Version>2.0.1-beta-020</Version>
     <PackageReleaseNotes>sqlserver2012以上数据库</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>dotnet core autofac 与sqlserver自动注入</Description>
@@ -12,6 +12,8 @@
     <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
     <Title>Autofac sql自动注入</Title>
     <PackageTags>autofac autofac.sqlserver</PackageTags>
+    <NeutralLanguage>zh-CN</NeutralLanguage>
+
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

@@ -1,5 +1,7 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
+using EInfrastructure.Core.Configuration;
+
 namespace EInfrastructure.Core
 {
     /// <summary>
@@ -10,16 +12,18 @@ namespace EInfrastructure.Core
         /// <summary>
         ///
         /// </summary>
-        private static bool IsStartUp;
+        private static bool _isStartUp;
 
         /// <summary>
         /// 启用配置
         /// </summary>
-        public static void Run()
+        /// <param name="enableLog">默认不启用日志</param>
+        public static void Run(bool enableLog = false)
         {
-            if (!IsStartUp)
+            if (!_isStartUp)
             {
-                IsStartUp = true;
+                EInfrastructureCoreConfigurations.SetLog(enableLog);
+                _isStartUp = true;
                 Load();
             }
         }
@@ -31,11 +35,11 @@ namespace EInfrastructure.Core
         /// </summary>
         private static void Load()
         {
-            Config.IdentificationExtensions.StartUp.Run();
-            EInfrastructure.Core.Serialize.Xml.StartUp.Run();
-            EInfrastructure.Core.Serialize.NewtonsoftJson.StartUp.Run();
-            EInfrastructure.Core.Config.SerializeExtensions.StartUp.Run();
-            Tools.StartUp.Run();
+            Config.IdentificationExtensions.StartUp.Run(EInfrastructureCoreConfigurations.EnableLog);
+            Serialize.Xml.StartUp.Run(EInfrastructureCoreConfigurations.EnableLog);
+            Serialize.NewtonsoftJson.StartUp.Run(EInfrastructureCoreConfigurations.EnableLog);
+            Config.SerializeExtensions.StartUp.Run(EInfrastructureCoreConfigurations.EnableLog);
+            Tools.StartUp.Run(EInfrastructureCoreConfigurations.EnableLog);
         }
 
         #endregion

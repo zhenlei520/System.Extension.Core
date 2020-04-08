@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.Words.Extension
     /// <summary>
     /// 基础类
     /// </summary>
-    public class BaseWordService
+    public abstract class BaseWordService
     {
         /// <summary>
         /// 内容词库
@@ -75,7 +75,7 @@ namespace EInfrastructure.Core.Words.Extension
         /// </summary>
         /// <param name="path">绝对路径</param>
         /// <returns></returns>
-        internal string GetContent(string path)
+        internal virtual string GetContent(string path)
         {
             using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
@@ -94,7 +94,7 @@ namespace EInfrastructure.Core.Words.Extension
         /// </summary>
         /// <param name="path">文件地址（相对路径）</param>
         /// <returns></returns>
-        internal string GetContent(List<string> path)
+        internal virtual string GetContent(List<string> path)
         {
             string filePath = "";
             path.ForEach(item => { filePath = Path.Combine(filePath, item); });
@@ -111,7 +111,7 @@ namespace EInfrastructure.Core.Words.Extension
         /// 重载词库信息
         /// </summary>
         /// <param name="dictType">词库类型</param>
-        internal void Reload(DictTypeEnum dictType)
+        internal virtual void Reload(DictTypeEnum dictType)
         {
             switch (dictType)
             {
@@ -131,22 +131,15 @@ namespace EInfrastructure.Core.Words.Extension
         /// </summary>
         private void ReloadTextDict()
         {
-            try
+            DictConfig = new DictTextConfig()
             {
-                DictConfig = new DictTextConfig()
-                {
-                    Simplified = GetContent(DictTextPathConfig.SimplifiedPath.ConvertStrToList<string>('/')),
-                    Traditional = GetContent(DictTextPathConfig.TraditionalPath.ConvertStrToList<string>('/')),
-                    Initial = GetContent(DictTextPathConfig.InitialPath.ConvertStrToList<string>('/')),
-                    SpecialNumber = GetContent(DictTextPathConfig.SpecialNumberPath.ConvertStrToList<string>('/')),
-                    TranscodingNumber =
-                        GetContent(DictTextPathConfig.TranscodingNumberPath.ConvertStrToList<string>('/'))
-                };
-            }
-            catch (System.Exception ex)
-            {
-                throw new BusinessException($"词语词库异常：{ex}");
-            }
+                Simplified = GetContent(DictTextPathConfig.SimplifiedPath.ConvertStrToList<string>('/')),
+                Traditional = GetContent(DictTextPathConfig.TraditionalPath.ConvertStrToList<string>('/')),
+                Initial = GetContent(DictTextPathConfig.InitialPath.ConvertStrToList<string>('/')),
+                SpecialNumber = GetContent(DictTextPathConfig.SpecialNumberPath.ConvertStrToList<string>('/')),
+                TranscodingNumber =
+                    GetContent(DictTextPathConfig.TranscodingNumberPath.ConvertStrToList<string>('/'))
+            };
         }
 
         #endregion
@@ -175,7 +168,7 @@ namespace EInfrastructure.Core.Words.Extension
             }
             catch (System.Exception ex)
             {
-                throw new BusinessException($"拼音词库异常：{ex}",HttpStatus.Err.Id);
+                throw new BusinessException($"拼音词库异常：{ex}", HttpStatus.Err.Id);
             }
         }
 

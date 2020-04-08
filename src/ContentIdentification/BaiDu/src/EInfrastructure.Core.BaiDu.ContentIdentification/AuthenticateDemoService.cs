@@ -1,7 +1,6 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -23,12 +22,16 @@ namespace EInfrastructure.Core.BaiDu.ContentIdentification
     /// <summary>
     /// 鉴定服务
     /// </summary>
-    public class AuthenticateDemoService : IAuthenticateDemoService, IPerRequest
+    public class AuthenticateDemoService : IAuthenticateDemoService
     {
         private readonly IJsonProvider _jsonProvider;
         private readonly RestClient _restClient;
         private readonly RestRequest _request;
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="jsonProviders"></param>
         public AuthenticateDemoService(ICollection<IJsonProvider> jsonProviders)
         {
             _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using EInfrastructure.Core.Tools.Systems;
 
 namespace EInfrastructure.Core.Tools.Component
@@ -11,8 +12,22 @@ namespace EInfrastructure.Core.Tools.Component
     /// <summary>
     ///
     /// </summary>
-    public class ServiceProvider : IServiceProvider
+    public class ServiceProvider
     {
+        /// <summary>
+        /// 程序集
+        /// </summary>
+        private readonly Assembly[] _assblemyArray;
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="assblemyArray"></param>
+        public ServiceProvider(Assembly[] assblemyArray = null)
+        {
+            _assblemyArray = assblemyArray ?? AssemblyCommon.GetAssemblies();
+        }
+
         #region 得到服务
 
         /// <summary>
@@ -22,14 +37,12 @@ namespace EInfrastructure.Core.Tools.Component
         /// <returns>得到继承serviceType的实现类</returns>
         public IEnumerable<TService> GetServices<TService>() where TService : class
         {
-            var types = AssemblyCommon.GetAssemblies().SelectMany(x =>
+            var types = _assblemyArray.SelectMany(x =>
                 x.GetTypes().Where(y => y.GetInterfaces().Contains(typeof(TService)))).ToList();
             foreach (var type in types)
             {
                 yield return Activator.CreateInstance(type) as TService;
             }
-
-            // return list;
         }
 
         #endregion

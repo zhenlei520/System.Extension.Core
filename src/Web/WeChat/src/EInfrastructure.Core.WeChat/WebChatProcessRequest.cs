@@ -22,7 +22,7 @@ namespace EInfrastructure.Core.WeChat
     /// </summary>
     public class WebChatProcessRequest
     {
-        private readonly ILogService _logService;
+        private readonly ILogProvider _logService;
         private readonly IJsonProvider _jsonProvider;
         private readonly IXmlProvider _xmlProvider;
 
@@ -32,7 +32,7 @@ namespace EInfrastructure.Core.WeChat
         /// <param name="logServices"></param>
         /// <param name="jsonProviders"></param>
         /// <param name="xmlProviders"></param>
-        public WebChatProcessRequest(ICollection<ILogService> logServices, ICollection<IJsonProvider> jsonProviders,
+        public WebChatProcessRequest(ICollection<ILogProvider> logServices, ICollection<IJsonProvider> jsonProviders,
             ICollection<IXmlProvider> xmlProviders)
         {
             _logService = InjectionSelectionCommon.GetImplement(logServices);
@@ -57,13 +57,13 @@ namespace EInfrastructure.Core.WeChat
             {
                 if (!string.IsNullOrEmpty(Auth(webChatAuthConfig, wxConfig)))
                 {
-                    throw new BusinessException("签名错误");
+                    throw new BusinessException("签名错误",HttpStatus.Err.Id);
                 }
 
                 refundReponse = _xmlProvider.Deserialize<WebChatMessage>(xml);
                 if (refundReponse == null)
                 {
-                    throw new BusinessException("参数错误");
+                    throw new BusinessException("参数错误",HttpStatus.Err.Id);
                 }
             }
             catch (System.Exception e)

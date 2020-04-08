@@ -10,7 +10,7 @@ namespace EInfrastructure.Core.Words.PinYin
     /// <summary>
     /// 拼音词库
     /// </summary>
-    public class PinyinDict
+    internal class PinyinDict
     {
         private static WordsSearch _search;
 

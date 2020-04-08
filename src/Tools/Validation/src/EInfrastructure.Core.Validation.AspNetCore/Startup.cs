@@ -19,6 +19,7 @@ namespace EInfrastructure.Core.Validation.AspNetCore
         /// 加载类验证服务
         /// </summary>
         /// <param name="services"></param>
+        /// <param name="func"></param>
         /// <param name="cascadeMode">开启全局级联验证模式，当出现一个错误时，不再继续执行;默认开启级联验证</param>
         public static IServiceCollection AddModelValidation(this IServiceCollection services,
             Func<List<IEnumerable<KeyValuePair<System.Exception, string>>>, object> func,
@@ -36,8 +37,7 @@ namespace EInfrastructure.Core.Validation.AspNetCore
                     return new BadRequestObjectResult(func.Invoke(errors));
                 };
             });
-
-            ValidatorOptions.CascadeMode = cascadeMode;
+            services.AddModelValidation(cascadeMode);
             return services;
         }
     }

@@ -13,18 +13,31 @@ namespace EInfrastructure.Core.AutoFac.SqlServer.AspNetCore
     public class AutofacAutoRegister : EInfrastructure.Core.AutoFac.SqlServer.AutofacAutoRegister
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="services"></param>
         /// <param name="action"></param>
         /// <returns></returns>
+        [Obsolete("Use the EInfrastructure.Core.AutoFac.SqlServer.AspNetCore.AutofacAutoRegister.Use method instead")]
         public override IServiceProvider Build(IServiceCollection services,
-            Action<ContainerBuilder> action)
+            Action<ContainerBuilder> action = null)
         {
-            return base.Build(services, (builder) =>
+            return AutofacAutoRegister.Use(services, action);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static IServiceProvider Use(IServiceCollection services,
+            Action<ContainerBuilder> action = null)
+        {
+            return EInfrastructure.Core.AutoFac.SqlServer.AutofacAutoRegister.Use(services, (builder) =>
             {
                 services.AddMvc().AddControllersAsServices();
-                action(builder);
+                action?.Invoke(builder);
             });
         }
     }

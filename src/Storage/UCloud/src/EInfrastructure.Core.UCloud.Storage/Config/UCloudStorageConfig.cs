@@ -1,7 +1,6 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using EInfrastructure.Core.AutomationConfiguration.Interface;
 using EInfrastructure.Core.Validation;
 
 namespace EInfrastructure.Core.UCloud.Storage.Config
@@ -9,7 +8,7 @@ namespace EInfrastructure.Core.UCloud.Storage.Config
     /// <summary>
     /// UCloud配置
     /// </summary>
-    public class UCloudStorageConfig : ISingletonConfigModel, IFluentlValidatorEntity
+    public class UCloudStorageConfig : IFluentlValidatorEntity
     {
         /// <summary>
         /// 版本号

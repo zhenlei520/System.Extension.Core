@@ -27,7 +27,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
                 Zones = ZoneEnum.ZoneCnNorth,
                 CallbackBodyType=CallbackBodyType.Json.Id
             };
-            new QiNiuConfigValidator().Validate(qiNiuStorageConfig).Check();
         }
     }
 }

@@ -22,9 +22,9 @@ for /r %%i in (%project%) do (
     echo %%~pi
     echo %%~di
     cd %batPath%
-    call publish.bat %%~di%%~pi,%%~ni
+    call publish.bat %%~di%%~pi,%%~ni,nuget.org
 )
 
 echo.  
-echo 搜索完成！回车可退出。  
+echo 发布成功
 pause >nul 

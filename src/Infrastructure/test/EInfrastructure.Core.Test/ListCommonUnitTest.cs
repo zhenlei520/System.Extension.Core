@@ -67,8 +67,8 @@ namespace EInfrastructure.Core.Test
                     Name = "小明花"
                 }
             };
-            var persons = personList.Except(personList2);
-            persons = personList.Except(personList2, true);
+            var persons = personList.ExceptNew(personList2);
+            persons = personList.Except(personList2);
         }
 
         [Fact]

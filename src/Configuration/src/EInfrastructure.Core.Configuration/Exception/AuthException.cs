@@ -22,20 +22,4 @@ namespace EInfrastructure.Core.Configuration.Exception
         {
         }
     }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class AuthException<T> : System.Exception
-    {
-        /// <summary>
-        /// 权限校验
-        /// </summary>
-        /// <param name="msg">提示信息</param>
-        public AuthException(T msg) : base(
-            new ExceptionResponse<string, T>(HttpStatus.Unauthorized.Name, msg).ToString())
-        {
-        }
-    }
 }

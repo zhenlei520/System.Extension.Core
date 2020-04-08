@@ -3,6 +3,7 @@
 
 using System;
 using System.Text;
+using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 
 namespace EInfrastructure.Core.Tools.Url
@@ -19,7 +20,7 @@ namespace EInfrastructure.Core.Tools.Url
         public Url(string url)
         {
             if (string.IsNullOrEmpty(url))
-                throw new BusinessException("url is not empty");
+                throw new BusinessException("url is not empty", HttpStatus.Err.Id);
             var uri = new Uri(url);
             Host = uri.Host;
             RequestUrl = url.Split('?')[0].Trim();

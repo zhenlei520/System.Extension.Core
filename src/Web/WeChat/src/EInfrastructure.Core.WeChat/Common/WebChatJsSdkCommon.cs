@@ -6,6 +6,7 @@ using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Enumerations;
 using EInfrastructure.Core.WeChat.Config;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -19,7 +20,7 @@ namespace EInfrastructure.Core.WeChat.Common
     public class WebChatJsSdkCommon
     {
         private readonly WxConfig _config;
-        private readonly ICacheService _cacheService;
+        private readonly ICacheProvider _cacheService;
 
         /// <summary>
         ///
@@ -31,7 +32,7 @@ namespace EInfrastructure.Core.WeChat.Common
         /// </summary>
         /// <param name="config"></param>
         /// <param name="cacheService"></param>
-        public WebChatJsSdkCommon(WxConfig config, ICacheService cacheService)
+        public WebChatJsSdkCommon(WxConfig config, ICacheProvider cacheService)
         {
             _config = config;
             _cacheService = cacheService;
@@ -120,7 +121,7 @@ namespace EInfrastructure.Core.WeChat.Common
 
             string nonceStr = Guid.NewGuid().ToString().Replace("-", "");
 
-            long timestamp = DateTime.Now.CurrentTimeMillis();
+            long timestamp = DateTime.Now.ToUnixTimestamp(TimestampType.Second);
 
             JsSdkConfig config = new JsSdkConfig()
             {

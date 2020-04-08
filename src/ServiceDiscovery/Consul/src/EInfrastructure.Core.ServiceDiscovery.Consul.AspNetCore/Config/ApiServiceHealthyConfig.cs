@@ -9,7 +9,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config
     /// <summary>
     /// Api服务健康检查
     /// </summary>
-    public class ApiServiceHealthyConfig : ISingleInstance,IFluentlValidatorEntity
+    public class ApiServiceHealthyConfig : IFluentlValidatorEntity
     {
         /// <summary>
         /// 检查Api接口地址(HttpStatus为200代表正常)
