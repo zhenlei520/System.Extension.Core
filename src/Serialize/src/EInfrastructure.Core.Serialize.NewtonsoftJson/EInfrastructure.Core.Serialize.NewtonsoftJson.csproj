@@ -12,7 +12,7 @@
     <Copyright>Copyright ©zhenlei520 2019</Copyright>
     <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
     <Title>序列化类库</Title>
-    <PackageTags>System.Extension.Core Serialize</PackageTags>
+    <PackageTags>EInfrastructure.Core.Serialize.NewtonsoftJson</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
 
   </PropertyGroup>

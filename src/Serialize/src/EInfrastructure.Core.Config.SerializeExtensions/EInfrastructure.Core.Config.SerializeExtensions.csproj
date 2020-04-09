@@ -12,7 +12,7 @@
     <Copyright>Copyright ©zhenlei520 2019</Copyright>
     <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
     <Title>configuration</Title>
-    <PackageTags>EInfrastructure.Core Configuration</PackageTags>
+    <PackageTags>EInfrastructure.Core.Config.SerializeExtensions</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
 
   </PropertyGroup>
