@@ -10,10 +10,11 @@
     <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core</RepositoryUrl>
     <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.Serialize.Xml/</PackageProjectUrl>
     <Copyright>Copyright ©zhenlei520 2019</Copyright>
-    <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
     <Title>xml序列化类库</Title>
     <PackageTags>EInfrastructure.Core.Serialize.Xml</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
+    <PackageIcon>packageIcon.png</PackageIcon>
+    <PackageIconUrl />
 
   </PropertyGroup>
 
@@ -26,7 +27,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj"/>
+    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\packageIcon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

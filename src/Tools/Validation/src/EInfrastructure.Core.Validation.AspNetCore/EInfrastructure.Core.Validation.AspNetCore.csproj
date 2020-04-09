@@ -10,10 +10,11 @@
     <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core</RepositoryUrl>
     <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.Validation.AspNetCore/</PackageProjectUrl>
     <Copyright>Copyright ©zhenlei520 2020</Copyright>
-    <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
     <Title>参数校验基础类库</Title>
     <PackageTags>EInfrastructure.Core EInfrastructure.Core.Validation EInfrastructure ECommon</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
+    <PackageIcon>packageIcon.png</PackageIcon>
+    <PackageIconUrl />
 
   </PropertyGroup>
 
@@ -26,8 +27,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Web\AspNetCore\src\EInfrastructure.Core.AspNetCore\EInfrastructure.Core.AspNetCore.csproj"/>
-    <ProjectReference Include="..\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj"/>
+    <ProjectReference Include="..\..\..\..\Web\AspNetCore\src\EInfrastructure.Core.AspNetCore\EInfrastructure.Core.AspNetCore.csproj" />
+    <ProjectReference Include="..\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\..\packageIcon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

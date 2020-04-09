@@ -43,10 +43,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.AutoFa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.AutoFac.SqlServer.AspNetCore", "src\Ioc\AutoFac\src\EInfrastructure.Core.AutoFac.SqlServer.AspNetCore\EInfrastructure.Core.AutoFac.SqlServer.AspNetCore.csproj", "{D4BE3C9A-6D86-4E12-8010-1991589096A2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DependencyInjection", "DependencyInjection", "{04A545BF-D8C1-404F-98E2-415CCCF5B02C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Extension.Ioc", "src\Ioc\DependencyInjection\src\EInfrastructure.Core.Extension.Ioc\EInfrastructure.Core.Extension.Ioc.csproj", "{398324CD-B45C-48CE-BE06-6966841E1E40}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Marketing", "Marketing", "{A434B55D-6F96-4A85-A710-C483C4570A23}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceDiscovery", "ServiceDiscovery", "{557E29BB-0F53-493F-AC7E-50225A0FD816}"
@@ -113,19 +109,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Tools"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basic", "Basic", "{24632C62-A403-4004-A8D2-DEE348E2917B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.AliYun.DaYu.Test", "src\Sms\AliDaYu\tests\EInfrastructure.Core.AliYun.DaYu.Test\EInfrastructure.Core.AliYun.DaYu.Test.csproj", "{1B62590C-A547-4158-BCD8-A836802205CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.AliYun.DaYu.Test", "src\Sms\AliDaYu\tests\EInfrastructure.Core.AliYun.DaYu.Test\EInfrastructure.Core.AliYun.DaYu.Test.csproj", "{1B62590C-A547-4158-BCD8-A836802205CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Http", "src\Infrastructure\src\EInfrastructure.Core.Http\EInfrastructure.Core.Http.csproj", "{153E7CE5-1E55-4CD6-B19F-9CB846A2FE1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Http", "src\Infrastructure\src\EInfrastructure.Core.Http\EInfrastructure.Core.Http.csproj", "{153E7CE5-1E55-4CD6-B19F-9CB846A2FE1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Serialize.Xml", "src\Serialize\src\EInfrastructure.Core.Serialize.Xml\EInfrastructure.Core.Serialize.Xml.csproj", "{DAF3910F-0F65-4C25-AF86-9360570E9B2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Serialize.Xml", "src\Serialize\src\EInfrastructure.Core.Serialize.Xml\EInfrastructure.Core.Serialize.Xml.csproj", "{DAF3910F-0F65-4C25-AF86-9360570E9B2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Config.SerializeExtensions", "src\Serialize\src\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions.csproj", "{671680E3-3A9A-4765-9E7B-A38A10111B5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Config.SerializeExtensions", "src\Serialize\src\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions.csproj", "{671680E3-3A9A-4765-9E7B-A38A10111B5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Config.SerializeExtensions.Test", "src\Serialize\src\EInfrastructure.Core.Config.SerializeExtensions.Test\EInfrastructure.Core.Config.SerializeExtensions.Test.csproj", "{B38A1390-DEF5-47D4-A522-C086E384D1B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Config.SerializeExtensions.Test", "src\Serialize\src\EInfrastructure.Core.Config.SerializeExtensions.Test\EInfrastructure.Core.Config.SerializeExtensions.Test.csproj", "{B38A1390-DEF5-47D4-A522-C086E384D1B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Configuration", "src\Configuration\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj", "{40B8382D-68CA-4CC3-BC01-B8F40882877E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Configuration", "src\Configuration\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj", "{40B8382D-68CA-4CC3-BC01-B8F40882877E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Config.Entities", "src\Configuration\src\EInfrastructure.Core.Config.Entities\EInfrastructure.Core.Config.Entities.csproj", "{577525F6-DBE8-4DF8-9B00-74677F94249B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Config.Entities", "src\Configuration\src\EInfrastructure.Core.Config.Entities\EInfrastructure.Core.Config.Entities.csproj", "{577525F6-DBE8-4DF8-9B00-74677F94249B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -185,10 +181,6 @@ Global
 		{D4BE3C9A-6D86-4E12-8010-1991589096A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4BE3C9A-6D86-4E12-8010-1991589096A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4BE3C9A-6D86-4E12-8010-1991589096A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{398324CD-B45C-48CE-BE06-6966841E1E40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{398324CD-B45C-48CE-BE06-6966841E1E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{398324CD-B45C-48CE-BE06-6966841E1E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{398324CD-B45C-48CE-BE06-6966841E1E40}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D04D26B6-EB9E-47EC-92FA-3E4A8A9CAE06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D04D26B6-EB9E-47EC-92FA-3E4A8A9CAE06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D04D26B6-EB9E-47EC-92FA-3E4A8A9CAE06}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -300,8 +292,6 @@ Global
 		{AB177227-D631-41B6-BB52-C94F779F2441} = {84A0EA8B-17DC-489F-BE24-36B5A9F1C671}
 		{94859B4A-C608-4335-A932-71D8004B16F0} = {84A0EA8B-17DC-489F-BE24-36B5A9F1C671}
 		{D4BE3C9A-6D86-4E12-8010-1991589096A2} = {84A0EA8B-17DC-489F-BE24-36B5A9F1C671}
-		{04A545BF-D8C1-404F-98E2-415CCCF5B02C} = {06C83D30-DB25-46D6-BAB9-DDBFE3C535BC}
-		{398324CD-B45C-48CE-BE06-6966841E1E40} = {04A545BF-D8C1-404F-98E2-415CCCF5B02C}
 		{D04D26B6-EB9E-47EC-92FA-3E4A8A9CAE06} = {0A70569E-D6F2-49A4-90AA-4AEB4386B40C}
 		{77C9B3AB-869F-49F0-868C-58B741C5EEE5} = {0A70569E-D6F2-49A4-90AA-4AEB4386B40C}
 		{BA18A5EE-66FE-43E9-9234-673659714E42} = {611DEF96-11AC-4DF1-B8C4-7B07599C069A}
