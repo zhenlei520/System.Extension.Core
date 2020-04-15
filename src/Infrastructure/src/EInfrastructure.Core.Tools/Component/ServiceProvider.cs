@@ -31,17 +31,18 @@ namespace EInfrastructure.Core.Tools.Component
         #region 得到服务
 
         /// <summary>
-        /// 得到服务集合
+        /// 得到继承serviceType的实现类
         /// </summary>
-        /// <typeparam name="TService"></typeparam>
-        /// <returns>得到继承serviceType的实现类</returns>
-        public IEnumerable<TService> GetServices<TService>() where TService : class
+        /// <param name="noPublic"></param>
+        /// <typeparam name="TService">TService的构造函数是否不公开的，默认只查询公开的构造函数false，否则为true</typeparam>
+        /// <returns></returns>
+        public IEnumerable<TService> GetServices<TService>(bool noPublic = false) where TService : class
         {
             var types = _assblemyArray.SelectMany(x =>
                 x.GetTypes().Where(y => y.GetInterfaces().Contains(typeof(TService)))).ToList();
             foreach (var type in types)
             {
-                yield return Activator.CreateInstance(type) as TService;
+                yield return type.CreateInstance(noPublic) as TService;
             }
         }
 
@@ -52,10 +53,12 @@ namespace EInfrastructure.Core.Tools.Component
         /// <summary>
         /// 得到服务
         /// </summary>
+        /// <param name="noPublic">TService的构造函数是否不公开的，默认只查询公开的构造函数false，否则为true</param>
+        /// <typeparam name="TService"></typeparam>
         /// <returns></returns>
-        public TService GetService<TService>() where TService : class
+        public TService GetService<TService>(bool noPublic = false) where TService : class
         {
-            return GetServices<TService>().FirstOrDefault();
+            return GetServices<TService>(noPublic).FirstOrDefault();
         }
 
         #endregion

@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator
         /// <summary>
         ///
         /// </summary>
-        internal QiNiuConfigValidator()
+        public QiNiuConfigValidator()
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
             RuleFor(x => x.AccessKey).NotNull()
