@@ -2,7 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 using EInfrastructure.Core.QiNiu.Storage.Config;
@@ -10,6 +12,7 @@ using EInfrastructure.Core.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.DependencyInjection;
 using Qiniu.Util;
 
 namespace EInfrastructure.Core.QiNiu.Storage.Auths
@@ -17,38 +20,26 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
     /// <summary>
     /// 七牛回调鉴权
     /// </summary>
-    public class QiNiuAuthAttribute : TypeFilterAttribute
+    public class QiNiuAuthAttribute : ActionFilterAttribute
     {
         /// <summary>
-        ///
+        /// 取值范围为：CallbackBodyType.Json.Id
+        /// 如果与全局的CallbackBodyType不一致的话，需要指定CallbackBody为CallbackBodyType对象的id
         /// </summary>
-        public QiNiuAuthAttribute() : base(typeof(ClaimQiNiuRequirementFilter))
-        {
-        }
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    public class ClaimQiNiuRequirementFilter : IAuthorizationFilter
-    {
-        private readonly QiNiuStorageConfig _qiNiuConfig;
+        public int? CallbackBody;
 
         /// <summary>
-        ///
+        /// 回调域
         /// </summary>
-        /// <param name="qiNiuConfig"></param>
-        public ClaimQiNiuRequirementFilter(QiNiuStorageConfig qiNiuConfig)
-        {
-            _qiNiuConfig = qiNiuConfig;
-        }
+        public string CallBackHost;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="context"></param>
-        public void OnAuthorization(AuthorizationFilterContext context)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
+            var qiNiuConfig = context.HttpContext.RequestServices.GetService<QiNiuStorageConfig>();
             if (context.Filters.Any(item => item is IAllowAnonymousFilter))
                 return;
             string qiNiuAuthorization = context.HttpContext.Request.Headers["Authorization"];
@@ -58,18 +49,22 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
                 return;
             }
 
-            string callbackUrl = _qiNiuConfig.CallbackAuthHost + context.HttpContext.Request.Path.Value;
+            string callbackUrl = string.IsNullOrEmpty(CallBackHost)
+                ? qiNiuConfig.CallbackHost
+                : CallBackHost + context.HttpContext.Request.Path.Value;
 
             byte[] body = null;
-            if (_qiNiuConfig.CallbackBodyType == CallbackBodyType.Urlencoded.Id)
+
+            if ((CallbackBody != null && CallbackBody == CallbackBodyType.Urlencoded.Id) ||
+                (CallbackBody == null && qiNiuConfig.CallbackBodyType == CallbackBodyType.Urlencoded.Id))
             {
-                body = GetData(context.HttpContext.Request.Form
+                body = (GetData(context.HttpContext.Request.Form
                     .Select(x => new KeyValuePair<string, string>(x.Key, x.Value))
-                    .ToList()).ConvertToByteArray();
+                    .ToList())).ConvertToByteArray();
             }
 
             string authorization =
-                new Auth(_qiNiuConfig.GetMac()).CreateManageToken(callbackUrl, body);
+                new Auth(qiNiuConfig.GetMac()).CreateManageToken(callbackUrl, body);
 
             if (authorization != qiNiuAuthorization)
             {
@@ -81,7 +76,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
         /// 鉴权失败
         /// </summary>
         /// <param name="context"></param>
-        private void AuthLose(AuthorizationFilterContext context)
+        private void AuthLose(ActionExecutingContext context)
         {
             context.HttpContext.Response.StatusCode = HttpStatus.Unauthorized.Id;
             context.Result =

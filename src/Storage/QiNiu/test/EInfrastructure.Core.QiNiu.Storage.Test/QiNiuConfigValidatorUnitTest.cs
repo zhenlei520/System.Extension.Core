@@ -18,15 +18,8 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [Fact]
         public void CheckQiNiuConfigValidaor()
         {
-            QiNiuStorageConfig qiNiuStorageConfig = new QiNiuStorageConfig()
-            {
-                AccessKey = "access_key",
-                SecretKey = "secretkey",
-                Bucket = "bucket",
-                Host = "host",
-                Zones = ZoneEnum.ZoneCnNorth,
-                CallbackBodyType=CallbackBodyType.Json.Id
-            };
+            QiNiuStorageConfig qiNiuStorageConfig =
+                new QiNiuStorageConfig("access_key", "secretkey", ZoneEnum.ZoneUsNorth, "host", "bucket");
         }
     }
 }

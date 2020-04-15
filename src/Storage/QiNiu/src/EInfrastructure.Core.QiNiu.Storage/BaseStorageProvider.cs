@@ -124,7 +124,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
             };
             if (uploadPersistentOps != null)
             {
-                config.UseHttps = uploadPersistentOps.IsUseHttps;
+                if (uploadPersistentOps.IsUseHttps != null)
+                {
+                    config.UseHttps = uploadPersistentOps.IsUseHttps.Value;
+                }
 
                 config.ChunkSize = Get(uploadPersistentOps.ChunkUnit);
                 if (uploadPersistentOps.MaxRetryTimes != -1)
@@ -132,10 +135,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     config.MaxRetryTimes = uploadPersistentOps.MaxRetryTimes;
                 }
 
-                if (uploadPersistentOps.MaxRetryTimes != -1)
-                {
-                    config.MaxRetryTimes = uploadPersistentOps.MaxRetryTimes;
-                }
+
             }
 
             Qiniu.Storage.ChunkUnit Get(
@@ -198,7 +198,56 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         protected virtual UploadPersistentOps GetUploadPersistentOps(UploadPersistentOps uploadPersistentOps)
         {
-            return uploadPersistentOps ?? new UploadPersistentOps();
+            if (uploadPersistentOps == null)
+            {
+                uploadPersistentOps = new UploadPersistentOps();
+            }
+
+            if (uploadPersistentOps.IsUseHttps == null)
+            {
+                uploadPersistentOps.IsUseHttps = _qiNiuConfig.IsUseHttps;
+            }
+
+            if (uploadPersistentOps.UseCdnDomains == null)
+            {
+                uploadPersistentOps.UseCdnDomains = _qiNiuConfig.UseCdnDomains;
+            }
+
+            if (uploadPersistentOps.EnableCallback)
+            {
+                string callbackHost = string.IsNullOrEmpty(uploadPersistentOps.CallbackHost)
+                    ? _qiNiuConfig.CallbackHost
+                    : uploadPersistentOps.CallbackHost;
+                string callbackUrl = string.IsNullOrEmpty(uploadPersistentOps.CallbackUrl)
+                    ? _qiNiuConfig.CallbackUrl
+                    : uploadPersistentOps.CallbackUrl;
+                string callbackBody = string.IsNullOrEmpty(uploadPersistentOps.CallbackBody)
+                    ? _qiNiuConfig.CallbackBody
+                    : uploadPersistentOps.CallbackBody;
+                string callbackBodyType = string.IsNullOrEmpty(uploadPersistentOps.CallbackBodyType)
+                    ? CallbackBodyType
+                        .FromValue<CallbackBodyType>(_qiNiuConfig.CallbackBodyType)?.Name ?? "application/json"
+                    : uploadPersistentOps.CallbackBodyType;
+                uploadPersistentOps.SetCallBack(callbackHost, callbackUrl, callbackBody, callbackBodyType);
+            }
+
+            if (uploadPersistentOps.EnablePersistentNotifyUrl)
+            {
+                string persistentNotifyUrl = string.IsNullOrEmpty(uploadPersistentOps.PersistentNotifyUrl)
+                    ? _qiNiuConfig.PersistentNotifyUrl
+                    : uploadPersistentOps.PersistentNotifyUrl;
+                uploadPersistentOps.SetPersistentNotifyUrl(persistentNotifyUrl);
+            }
+
+            if (uploadPersistentOps.EnablePersistentPipeline)
+            {
+                string persistentPipeline = string.IsNullOrEmpty(uploadPersistentOps.PersistentPipeline)
+                    ? _qiNiuConfig.PersistentPipeline
+                    : uploadPersistentOps.PersistentPipeline;
+                uploadPersistentOps.SetPersistentPipeline(persistentPipeline);
+            }
+
+            return uploadPersistentOps;
         }
 
         #endregion

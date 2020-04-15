@@ -12,6 +12,14 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config.Pictures
     public class ImgPersistentOps : UploadPersistentOps
     {
         /// <summary>
+        ///
+        /// </summary>
+        public ImgPersistentOps():base()
+        {
+            this.IsAllowOverlap = null;
+        }
+
+        /// <summary>
         /// 上传策略
         /// </summary>
         /// <param name="key">图片相对地址</param>
@@ -20,7 +28,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config.Pictures
         /// <param name="model">缩放信息</param>
         /// <param name="waterMark">水印信息</param>
         public ImgPersistentOps(string key, int width = 0, int height = 0, int? model = null,
-            StorageWaterMark waterMark = null)
+            StorageWaterMark waterMark = null):this()
         {
             Key = key;
             Width = width;
@@ -54,7 +62,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config.Pictures
         /// <summary>
         /// 是否覆盖上传
         /// </summary>
-        public override bool IsAllowOverlap { get; set; } = true;
+        public override bool? IsAllowOverlap { get; set; }
 
         /// <summary>
         /// 水印信息
