@@ -42,7 +42,7 @@ namespace EInfrastructure.Core.Redis.Common.Internal.IO
             _connectionTaskSource = new TaskCompletionSource<bool>();
         }
 
-        public Task<bool> ConnectAsync()
+        public async Task<bool> ConnectAsync()
         {
 			this.InitConnection();
 			if (_redisSocket.Connected)
@@ -61,16 +61,16 @@ namespace EInfrastructure.Core.Redis.Common.Internal.IO
                 }
             }
 
-            return _connectionTaskSource.Task;
+            return await _connectionTaskSource.Task;
         }
 
-        public Task<T> CallAsync<T>(RedisCommand<T> command)
+        public async Task<T> CallAsync<T>(RedisCommand<T> command)
         {
 			this.InitConnection();
 			var token = new RedisAsyncCommandToken<T>(command);
             _asyncWriteQueue.Enqueue(token);
-            ConnectAsync().ContinueWith(CallAsyncDeferred);
-            return token.TaskSource.Task;
+            await ConnectAsync().ContinueWith(CallAsyncDeferred);
+            return await token.TaskSource.Task;
         }
 
         void InitConnection()

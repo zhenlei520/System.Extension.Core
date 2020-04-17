@@ -11,9 +11,9 @@ namespace EInfrastructure.Core.Redis.Common
         /// Connect to the remote host
         /// </summary>
         /// <returns>True if connected</returns>
-        public Task<bool> ConnectAsync()
+        public async Task<bool> ConnectAsync()
         {
-            return _connector.ConnectAsync();
+            return  await _connector.ConnectAsync();
         }
 
         /// <summary>
@@ -22,14 +22,14 @@ namespace EInfrastructure.Core.Redis.Common
         /// <param name="command">The name of the command</param>
         /// <param name="args">Array of arguments to the command</param>
         /// <returns>Redis unified response</returns>
-        public Task<object> CallAsync(string command, params string[] args)
+        public async Task<object> CallAsync(string command, params string[] args)
         {
-            return WriteAsync(new RedisObject(command, args));
+            return  await WriteAsync(new RedisObject(command, args));
         }
 
-        Task<T> WriteAsync<T>(RedisCommand<T> command)
+       async Task<T> WriteAsync<T>(RedisCommand<T> command)
         {
-            return _connector.CallAsync(command);
+            return  await _connector.CallAsync(command);
         }
 
         #region sentinel
@@ -37,18 +37,18 @@ namespace EInfrastructure.Core.Redis.Common
         /// Ping the Sentinel server
         /// </summary>
         /// <returns>Status code</returns>
-        public Task<string> PingAsync()
+        public async Task<string> PingAsync()
         {
-            return WriteAsync(RedisCommands.Ping());
+            return  await WriteAsync(RedisCommands.Ping());
         }
 
         /// <summary>
         /// Get a list of monitored Redis masters
         /// </summary>
         /// <returns>Redis master info</returns>
-        public Task<RedisMasterInfo[]> MastersAsync()
+        public async Task<RedisMasterInfo[]> MastersAsync()
         {
-            return WriteAsync(RedisCommands.Sentinel.Masters());
+            return  await WriteAsync(RedisCommands.Sentinel.Masters());
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace EInfrastructure.Core.Redis.Common
         /// </summary>
         /// <param name="masterName">Name of the Redis master</param>
         /// <returns>Master information</returns>
-        public Task<RedisMasterInfo> MasterAsync(string masterName)
+        public async Task<RedisMasterInfo> MasterAsync(string masterName)
         {
-            return WriteAsync(RedisCommands.Sentinel.Master(masterName));
+            return  await WriteAsync(RedisCommands.Sentinel.Master(masterName));
         }
 
         /// <summary>
@@ -66,20 +66,20 @@ namespace EInfrastructure.Core.Redis.Common
         /// </summary>
         /// <param name="masterName">Name of monitored master</param>
         /// <returns>Sentinel hosts and ports</returns>
-        public Task<RedisSentinelInfo[]> SentinelsAsync(string masterName)
+        public async Task<RedisSentinelInfo[]> SentinelsAsync(string masterName)
         {
-            return WriteAsync(RedisCommands.Sentinel.Sentinels(masterName));
+            return  await WriteAsync(RedisCommands.Sentinel.Sentinels(masterName));
         }
 
 
         /// <summary>
-        /// Get a list of monitored Redis slaves to the given master 
+        /// Get a list of monitored Redis slaves to the given master
         /// </summary>
         /// <param name="masterName">Name of monitored master</param>
         /// <returns>Redis slave info</returns>
-        public Task<RedisSlaveInfo[]> SlavesAsync(string masterName)
+        public async Task<RedisSlaveInfo[]> SlavesAsync(string masterName)
         {
-            return WriteAsync(RedisCommands.Sentinel.Slaves(masterName));
+            return await  WriteAsync(RedisCommands.Sentinel.Slaves(masterName));
         }
 
         /// <summary>
@@ -87,9 +87,9 @@ namespace EInfrastructure.Core.Redis.Common
         /// </summary>
         /// <param name="masterName">Name of monitored master</param>
         /// <returns>IP and port of master Redis server</returns>
-        public Task<Tuple<string, int>> GetMasterAddrByNameAsync(string masterName)
+        public async Task<Tuple<string, int>> GetMasterAddrByNameAsync(string masterName)
         {
-            return WriteAsync(RedisCommands.Sentinel.GetMasterAddrByName(masterName));
+            return  await WriteAsync(RedisCommands.Sentinel.GetMasterAddrByName(masterName));
         }
 
         /// <summary>
@@ -100,9 +100,9 @@ namespace EInfrastructure.Core.Redis.Common
         /// <param name="currentEpoch">Current epoch</param>
         /// <param name="runId">Run ID</param>
         /// <returns>Master state</returns>
-        public Task<RedisMasterState> IsMasterDownByAddrAsync(string ip, int port, long currentEpoch, string runId)
+        public async Task<RedisMasterState> IsMasterDownByAddrAsync(string ip, int port, long currentEpoch, string runId)
         {
-            return WriteAsync(RedisCommands.Sentinel.IsMasterDownByAddr(ip, port, currentEpoch, runId));
+            return await  WriteAsync(RedisCommands.Sentinel.IsMasterDownByAddr(ip, port, currentEpoch, runId));
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace EInfrastructure.Core.Redis.Common
         /// </summary>
         /// <param name="pattern">Master name pattern</param>
         /// <returns>Number of masters that were reset</returns>
-        public Task<long> ResetAsync(string pattern)
+        public async Task<long> ResetAsync(string pattern)
         {
-            return WriteAsync(RedisCommands.Sentinel.Reset(pattern));
+            return  await WriteAsync(RedisCommands.Sentinel.Reset(pattern));
         }
 
         /// <summary>
@@ -120,9 +120,9 @@ namespace EInfrastructure.Core.Redis.Common
         /// </summary>
         /// <param name="masterName">Master name</param>
         /// <returns>Status code</returns>
-        public Task<string> FailoverAsync(string masterName)
+        public async Task<string> FailoverAsync(string masterName)
         {
-            return WriteAsync(RedisCommands.Sentinel.Failover(masterName));
+            return await  WriteAsync(RedisCommands.Sentinel.Failover(masterName));
         }
 
         /// <summary>
@@ -132,9 +132,9 @@ namespace EInfrastructure.Core.Redis.Common
         /// <param name="port">Master port</param>
         /// <param name="quorum">Quorum count</param>
         /// <returns>Status code</returns>
-        public Task<string> MonitorAsync(string name, int port, int quorum)
+        public async Task<string> MonitorAsync(string name, int port, int quorum)
         {
-            return WriteAsync(RedisCommands.Sentinel.Monitor(name, port, quorum));
+            return  await WriteAsync(RedisCommands.Sentinel.Monitor(name, port, quorum));
         }
 
         /// <summary>
@@ -142,9 +142,9 @@ namespace EInfrastructure.Core.Redis.Common
         /// </summary>
         /// <param name="name">Master name</param>
         /// <returns>Status code</returns>
-        public Task<string> RemoveAsync(string name)
+        public async Task<string> RemoveAsync(string name)
         {
-            return WriteAsync(RedisCommands.Sentinel.Remove(name));
+            return await  WriteAsync(RedisCommands.Sentinel.Remove(name));
         }
 
         /// <summary>
@@ -154,9 +154,9 @@ namespace EInfrastructure.Core.Redis.Common
         /// <param name="option">Config option name</param>
         /// <param name="value">Config option value</param>
         /// <returns>Status code</returns>
-        public Task<string> SetAsync(string masterName, string option, string value)
+        public async Task<string> SetAsync(string masterName, string option, string value)
         {
-            return WriteAsync(RedisCommands.Sentinel.Set(masterName, option, value));
+            return await  WriteAsync(RedisCommands.Sentinel.Set(masterName, option, value));
         }
         #endregion
     }
