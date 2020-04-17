@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using EInfrastructure.Core.Config.Entities.Data;
 using EInfrastructure.Core.Config.Entities.Ioc;
 using EInfrastructure.Core.Tools.Systems;
+using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.SqlServer.Repository
 {
@@ -21,8 +22,8 @@ namespace EInfrastructure.Core.SqlServer.Repository
         : IQuery<TEntity, T> where TEntity : class, IEntity<T>
         where T : IComparable
     {
-
         private EInfrastructure.Core.SqlServer.Common.QueryBase<TEntity, T> _queryBase;
+        protected DbContext Dbcontext;
 
         /// <summary>
         ///
@@ -30,6 +31,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
         /// <param name="unitOfWork"></param>
         public QueryBase(IUnitOfWork unitOfWork)
         {
+            Dbcontext = unitOfWork as DbContext;
             _queryBase = new EInfrastructure.Core.SqlServer.Common.QueryBase<TEntity, T>(unitOfWork);
         }
 

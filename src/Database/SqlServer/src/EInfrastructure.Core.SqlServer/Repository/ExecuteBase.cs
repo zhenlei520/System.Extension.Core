@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using EInfrastructure.Core.Config.Entities.Ioc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.SqlServer.Repository
 {
@@ -14,6 +15,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
     public class ExecuteBase : IExecute
     {
         private readonly EInfrastructure.Core.SqlServer.Common.ExecuteBase _executeBase;
+        protected DbContext Dbcontext;
 
         /// <summary>
         ///
@@ -21,6 +23,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
         /// <param name="unitOfWork"></param>
         public ExecuteBase(IUnitOfWork unitOfWork)
         {
+            Dbcontext = unitOfWork as DbContext;
             _executeBase = new EInfrastructure.Core.SqlServer.Common.ExecuteBase(unitOfWork);
         }
 

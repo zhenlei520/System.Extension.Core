@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EInfrastructure.Core.Config.Entities.Configuration;
 using EInfrastructure.Core.Config.Entities.Ioc;
 using EInfrastructure.Core.Tools.Systems;
+using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.SqlServer.Repository
 {
@@ -21,6 +22,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
         where TDbContext : IDbContext, IUnitOfWork
     {
         private readonly EInfrastructure.Core.SqlServer.Common.RepositoryBase<TEntity, T> _repositoryBase;
+        protected DbContext Dbcontext;
 
         /// <summary>
         ///
@@ -29,6 +31,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
         // ReSharper disable once SuspiciousTypeConversion.Global
         public RepositoryBase(IUnitOfWork<TDbContext> unitOfWork)
         {
+            Dbcontext = unitOfWork as DbContext;
             UnitOfWork = unitOfWork;
             _repositoryBase = new EInfrastructure.Core.SqlServer.Common.RepositoryBase<TEntity, T>(unitOfWork);
         }

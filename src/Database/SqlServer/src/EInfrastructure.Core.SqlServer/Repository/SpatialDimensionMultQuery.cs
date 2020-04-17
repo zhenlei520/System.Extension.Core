@@ -7,6 +7,7 @@ using System.Linq;
 using EInfrastructure.Core.Config.Entities.Configuration;
 using EInfrastructure.Core.Config.Entities.Data;
 using EInfrastructure.Core.Config.Entities.Ioc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.SqlServer.Repository
 {
@@ -20,6 +21,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
         where TDbContext : IDbContext, IUnitOfWork
     {
         private EInfrastructure.Core.SqlServer.Common.SpatialDimensionBaseQuery<TEntity, T> _spatialDimensionBase;
+        protected DbContext Dbcontext;
 
         /// <summary>
         ///
@@ -28,6 +30,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
         /// <param name="execute"></param>
         public SpatialDimensionQuery(IUnitOfWork unitOfWork, IExecute execute)
         {
+            Dbcontext = unitOfWork as DbContext;
             _spatialDimensionBase =
                 new EInfrastructure.Core.SqlServer.Common.SpatialDimensionBaseQuery<TEntity, T>(unitOfWork, execute);
         }

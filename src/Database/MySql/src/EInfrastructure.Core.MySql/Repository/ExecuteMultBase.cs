@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using EInfrastructure.Core.Config.Entities.Configuration;
 using EInfrastructure.Core.Config.Entities.Ioc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.MySql.Repository
 {
@@ -20,9 +21,14 @@ namespace EInfrastructure.Core.MySql.Repository
         /// <summary>
         ///
         /// </summary>
+        protected DbContext Dbcontext;
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="unitOfWork"></param>
         public ExecuteBase(IUnitOfWork<TDbContext> unitOfWork)
         {
+            Dbcontext = unitOfWork as DbContext;
             _executeBase = new EInfrastructure.Core.MySql.Common.ExecuteBase(unitOfWork);
         }
 

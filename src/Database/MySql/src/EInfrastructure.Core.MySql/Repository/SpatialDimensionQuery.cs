@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using EInfrastructure.Core.Config.Entities.Data;
 using EInfrastructure.Core.Config.Entities.Ioc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.MySql.Repository
 {
@@ -17,6 +18,7 @@ namespace EInfrastructure.Core.MySql.Repository
         where T : IComparable
     {
         private EInfrastructure.Core.MySql.Common.SpatialDimensionBaseQuery<TEntity, T> _spatialDimensionBase;
+        protected DbContext Dbcontext;
 
         /// <summary>
         ///
@@ -25,6 +27,7 @@ namespace EInfrastructure.Core.MySql.Repository
         /// <param name="execute"></param>
         public SpatialDimensionQuery(IUnitOfWork unitOfWork, IExecute execute)
         {
+            Dbcontext = unitOfWork as DbContext;
             _spatialDimensionBase =
                 new EInfrastructure.Core.MySql.Common.SpatialDimensionBaseQuery<TEntity, T>(unitOfWork, execute);
         }
