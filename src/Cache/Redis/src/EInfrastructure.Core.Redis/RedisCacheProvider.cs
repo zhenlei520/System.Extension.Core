@@ -293,6 +293,7 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         /// <param name="kValues"></param>
         /// <param name="second"></param>
+        /// <param name="isSetHashKeyExpire">是否制定HashKey的过期时间</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1,

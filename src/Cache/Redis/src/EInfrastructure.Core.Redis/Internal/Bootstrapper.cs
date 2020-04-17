@@ -46,7 +46,7 @@ namespace EInfrastructure.Core.Redis.Internal
         /// <returns></returns>
         public async Task BootstrapAsync(CancellationToken stoppingToken)
         {
-
+            await Task.CompletedTask;
         }
     }
 }
