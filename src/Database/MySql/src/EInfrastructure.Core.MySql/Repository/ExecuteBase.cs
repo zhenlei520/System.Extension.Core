@@ -31,7 +31,6 @@ namespace EInfrastructure.Core.MySql.Repository
             _executeBase = new EInfrastructure.Core.MySql.Common.ExecuteBase(unitOfWork);
         }
 
-
         #region 执行Reader（查询）
 
         /// <summary>

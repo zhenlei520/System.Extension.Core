@@ -175,7 +175,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public TEntity LoadIntegrate(T id)
+        public virtual TEntity LoadIntegrate(T id)
         {
             return _repositoryBase.LoadIntegrate(id);
         }

@@ -36,7 +36,6 @@ namespace EInfrastructure.Core.MySql.Repository
             _repositoryBase = new EInfrastructure.Core.MySql.Common.RepositoryBase<TEntity, T>(unitOfWork);
         }
 
-
         public IUnitOfWork UnitOfWork { get; }
 
         #region 得到唯一标示
@@ -177,7 +176,7 @@ namespace EInfrastructure.Core.MySql.Repository
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public TEntity LoadIntegrate(T id)
+        public virtual TEntity LoadIntegrate(T id)
         {
             return _repositoryBase.LoadIntegrate(id);
         }
