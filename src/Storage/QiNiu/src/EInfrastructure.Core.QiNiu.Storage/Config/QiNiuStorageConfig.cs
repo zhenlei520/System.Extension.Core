@@ -20,10 +20,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         {
             IsUseHttps = false;
             UseCdnDomains = false;
-            CallbackBody =
-                "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsiz\":$(fsize),\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\",\"mimeType\":\"$(mimeType)\"}";
-            CallbackBodyType = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.CallbackBodyType.Json
-                .Id;
             IsAllowOverlap = false;
         }
 
@@ -44,11 +40,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
             Host = host;
             Bucket = bucket;
         }
-
-        /// <summary>
-        /// 代理
-        /// </summary>
-        public string UserAgent { get; set; }
 
         /// <summary>
         /// 七牛提供的公钥，用于识别用户
@@ -148,6 +139,20 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         public bool IsAllowOverlap { get; set; }
 
         /// <summary>
+        /// 启用回调
+        /// </summary>
+        public bool EnableCallback { get; private set; }
+
+        /// <summary>
+        /// [可选]分片上传默认最大值
+        /// </summary>
+        public virtual EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit ChunkUnit
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// 得到空间
         /// </summary>
         /// <returns></returns>
@@ -181,15 +186,18 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
 
         #endregion
 
+        #region 设置回调信息，不调用此方法，不开启成功回调
+
         /// <summary>
-        /// 设置回调信息
+        /// 设置回调信息，不调用此方法，不开启成功回调
         /// </summary>
         /// <param name="callbackBodyType">上传成功后，云存储向业务服务器发送回调通知 callbackBody 的 Content-Type。默认为 application/json，也可设置为 application/x-www-form-urlencoded。</param>
         /// <param name="callbackHost">上传成功后，云存储向业务服务器发送回调通知时的 Host 值。与 callbackUrl 配合使用，仅当设置了 callbackUrl 时才有效。</param>
         /// <param name="callbackUrl">上传成功后，云存储向业务服务器发送 POST 请求的 URL。必须是公网上可以正常进行 POST 请求并能响应 HTTP/1.1 200 OK 的有效 URL。另外，为了给客户端有一致的体验，我们要求 callbackUrl 返回包 Content-Type 为 "application/json"，即返回的内容必须是合法的 JSON 文本。出于高可用的考虑，本字段允许设置多个 callbackUrl（用英文符号 ; 分隔），在前一个 callbackUrl 请求失败的时候会依次重试下一个 callbackUrl。一个典型例子是：http://<ip1>/callback;http://<ip2>/callback，并同时指定下面的 callbackHost 字段。在 callbackUrl 中使用 ip 的好处是减少对 dns 解析的依赖，可改善回调的性能和稳定性。指定 callbackUrl，必须指定 callbackbody，且值不能为空。</param>
         /// <param name="callbackBody">上传成功后，云存储向业务服务器发送 Content-Type: application/x-www-form-urlencoded 的 POST 请求。业务服务器可以通过直接读取请求的 query 来获得该字段，支持魔法变量和自定义变量。callbackBody 要求是合法的 url query string。例如key=$(key)&hash=$(etag)&w=$(imageInfo.width)&h=$(imageInfo.height)。如果callbackBodyType指定为application/json，则callbackBody应为json格式，例如:{"key":"$(key)","hash":"$(etag)","w":"$(imageInfo.width)","h":"$(imageInfo.height)"}。</param>
         public void SetCallBack(int callbackBodyType, string callbackHost = "", string callbackUrl = "",
-            string callbackBody = "")
+            string callbackBody =
+                "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsiz\":$(fsize),\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\",\"mimeType\":\"$(mimeType)\"}")
         {
             CallbackBodyType = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.CallbackBodyType
                 .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.
@@ -197,8 +205,31 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
                     callbackBodyType)?.Id ?? EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
                 .Enumerations.CallbackBodyType.Json.Id;
             CallbackHost = callbackHost;
-            CallbackUrl = callbackUrl;
+            if (!string.IsNullOrEmpty(callbackUrl) && callbackUrl.Substring(0, 1) != "/")
+            {
+                CallbackUrl = "/" + callbackUrl;
+            }
+            else
+            {
+                CallbackUrl = callbackUrl;
+            }
+
             CallbackBody = callbackBody;
+            EnableCallback = true;
         }
+
+        #endregion
+
+        #region 启用回调（针对配置文件注入使用）
+
+        /// <summary>
+        /// 启用回调（针对配置文件注入使用）
+        /// </summary>
+        internal void SetCallBackState(bool enableCallback)
+        {
+            EnableCallback = enableCallback;
+        }
+
+        #endregion
     }
 }

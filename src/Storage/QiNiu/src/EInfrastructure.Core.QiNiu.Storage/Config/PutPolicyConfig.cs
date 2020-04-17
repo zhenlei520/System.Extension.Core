@@ -107,7 +107,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
                 _putPolicy.ReturnBody = opsParam.UploadPersistentOps.ReturnBody;
             }
 
-            if (!string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackHost) &&
+            if (opsParam.UploadPersistentOps.EnableCallback!=null&&opsParam.UploadPersistentOps.EnableCallback.Value&&!string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackHost) &&
                 !string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackUrl))
             {
                 string url = opsParam.UploadPersistentOps.CallbackUrl.ConvertStrToList<string>(';')

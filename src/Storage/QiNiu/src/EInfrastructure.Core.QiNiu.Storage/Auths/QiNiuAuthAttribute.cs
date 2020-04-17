@@ -49,9 +49,9 @@ namespace EInfrastructure.Core.QiNiu.Storage.Auths
                 return;
             }
 
-            string callbackUrl = string.IsNullOrEmpty(CallBackHost)
+            string callbackUrl = (string.IsNullOrEmpty(CallBackHost)
                 ? qiNiuConfig.CallbackHost
-                : CallBackHost + context.HttpContext.Request.Path.Value;
+                : CallBackHost )+ context.HttpContext.Request.Path.Value;
 
             byte[] body = null;
 

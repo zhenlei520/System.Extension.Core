@@ -129,20 +129,11 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     config.UseHttps = uploadPersistentOps.IsUseHttps.Value;
                 }
 
-                config.ChunkSize = Get(uploadPersistentOps.ChunkUnit);
+                config.ChunkSize = (Qiniu.Storage.ChunkUnit)(uploadPersistentOps.ChunkUnit.Id);
                 if (uploadPersistentOps.MaxRetryTimes != -1)
                 {
                     config.MaxRetryTimes = uploadPersistentOps.MaxRetryTimes;
                 }
-
-
-            }
-
-            Qiniu.Storage.ChunkUnit Get(
-                EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit chunkUnit)
-            {
-                int chunkUnits = chunkUnit.Id;
-                return (Qiniu.Storage.ChunkUnit) chunkUnits;
             }
 
             return config;
@@ -213,7 +204,18 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 uploadPersistentOps.UseCdnDomains = _qiNiuConfig.UseCdnDomains;
             }
 
-            if (uploadPersistentOps.EnableCallback)
+            if (uploadPersistentOps.IsAllowOverlap == null)
+            {
+                uploadPersistentOps.IsAllowOverlap = _qiNiuConfig.IsAllowOverlap;
+            }
+
+            if (uploadPersistentOps.ChunkUnit == null)
+            {
+                uploadPersistentOps.ChunkUnit = _qiNiuConfig.ChunkUnit;
+            }
+
+            if ((uploadPersistentOps.EnableCallback == null && _qiNiuConfig.EnableCallback) ||
+                uploadPersistentOps.EnableCallback == true)
             {
                 string callbackHost = string.IsNullOrEmpty(uploadPersistentOps.CallbackHost)
                     ? _qiNiuConfig.CallbackHost
@@ -226,9 +228,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     : uploadPersistentOps.CallbackBody;
                 string callbackBodyType = string.IsNullOrEmpty(uploadPersistentOps.CallbackBodyType)
                     ? CallbackBodyType
-                        .FromValue<CallbackBodyType>(_qiNiuConfig.CallbackBodyType)?.Name ?? "application/json"
+                          .FromValue<CallbackBodyType>(_qiNiuConfig.CallbackBodyType)?.Name ??
+                      CallbackBodyType.Json.Name
                     : uploadPersistentOps.CallbackBodyType;
-                uploadPersistentOps.SetCallBack(callbackHost, callbackUrl, callbackBody, callbackBodyType);
+                uploadPersistentOps.SetCallBack(callbackBodyType, callbackHost, callbackUrl, callbackBody);
             }
 
             if (uploadPersistentOps.EnablePersistentNotifyUrl)

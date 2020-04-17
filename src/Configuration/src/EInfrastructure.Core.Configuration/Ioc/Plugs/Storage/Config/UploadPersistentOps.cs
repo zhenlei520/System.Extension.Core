@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
             IsUseHttps = null;
             UseCdnDomains = null;
             IsAllowOverlap = null;
-            ChunkUnit = ChunkUnit.U4096K;
+            ChunkUnit = null;
             ExpireInSeconds = 3600;
             FileType = null;
             DetectMime = FsizeMin;
@@ -29,9 +29,9 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
             FsizeLimit = null;
             ProgressAction = null;
             MaxRetryTimes = 5;
-            EnableCallback = true; //默认启用回调
             EnablePersistentPipeline = true;
             EnablePersistentNotifyUrl = true;
+            EnableCallback = null;
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
         /// <summary>
         /// 启用回调
         /// </summary>
-        public virtual bool EnableCallback { get; private set; }
+        public virtual bool? EnableCallback { get; private set; }
 
         /// <summary>
         /// 上传成功后，云存储向业务服务器发送 POST 请求的 URL。必须是公网上可以正常进行 POST 请求并能响应 HTTP/1.1 200 OK 的有效 URL。另外，为了给客户端有一致的体验，我们要求 callbackUrl 返回包 Content-Type 为 "application/json"，即返回的内容必须是合法的 JSON 文本。出于高可用的考虑，本字段允许设置多个 callbackUrl（用英文符号 ; 分隔），在前一个 callbackUrl 请求失败的时候会依次重试下一个 callbackUrl。一个典型例子是：http://<ip1>/callback;http://<ip2>/callback，并同时指定下面的 callbackHost 字段。在 callbackUrl 中使用 ip 的好处是减少对 dns 解析的依赖，可改善回调的性能和稳定性。指定 callbackUrl，必须指定 callbackbody，且值不能为空。
@@ -274,23 +274,45 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
         #region 设置回调信息
 
         /// <summary>
-        /// 设置回调信息
+        /// 设置回调信息（不赋值则默认走全局回调）
         /// </summary>
         /// <param name="callbackHost">上传成功后，云存储向业务服务器发送回调通知时的 Host 值。与 callbackUrl 配合使用，仅当设置了 callbackUrl 时才有效。</param>
         /// <param name="callbackUrl">上传成功后，云存储向业务服务器发送 POST 请求的 URL。必须是公网上可以正常进行 POST 请求并能响应 HTTP/1.1 200 OK 的有效 URL。另外，为了给客户端有一致的体验，我们要求 callbackUrl 返回包 Content-Type 为 "application/json"，即返回的内容必须是合法的 JSON 文本。出于高可用的考虑，本字段允许设置多个 callbackUrl（用英文符号 ; 分隔），在前一个 callbackUrl 请求失败的时候会依次重试下一个 callbackUrl。一个典型例子是：http://<ip1>/callback;http://<ip2>/callback，并同时指定下面的 callbackHost 字段。在 callbackUrl 中使用 ip 的好处是减少对 dns 解析的依赖，可改善回调的性能和稳定性。指定 callbackUrl，必须指定 callbackbody，且值不能为空。</param>
         /// <param name="callbackBody">上传成功后，云存储向业务服务器发送 Content-Type: application/x-www-form-urlencoded 的 POST 请求。业务服务器可以通过直接读取请求的 query 来获得该字段，支持魔法变量和自定义变量。callbackBody 要求是合法的 url query string。例如key=$(key)&hash=$(etag)&w=$(imageInfo.width)&h=$(imageInfo.height)。如果callbackBodyType指定为application/json，则callbackBody应为json格式，例如:{"key":"$(key)","hash":"$(etag)","w":"$(imageInfo.width)","h":"$(imageInfo.height)"}。</param>
         /// <param name="callbackBodyType">上传成功后，云存储向业务服务器发送回调通知 callbackBody 的 Content-Type。默认为 application/json，也可设置为 application/x-www-form-urlencoded。</param>
-        public void SetCallBack(string callbackHost = "", string callbackUrl = "",
-            string callbackBody = "", string callbackBodyType = "")
+        public void SetCallBack(int callbackBodyType, string callbackHost = "", string callbackUrl = "",
+            string callbackBody =
+                "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsiz\":$(fsize),\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\",\"mimeType\":\"$(mimeType)\"}")
+        {
+            SetCallBack(EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.CallbackBodyType
+                .FromValue<CallbackBodyType>(
+                    callbackBodyType)?.Name ?? EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
+                .Enumerations.CallbackBodyType.Json.Name, callbackHost, callbackUrl, callbackBody);
+        }
+
+        /// <summary>
+        /// 设置回调信息（不赋值则默认走全局回调）
+        /// </summary>
+        /// <param name="callbackHost">上传成功后，云存储向业务服务器发送回调通知时的 Host 值。与 callbackUrl 配合使用，仅当设置了 callbackUrl 时才有效。</param>
+        /// <param name="callbackUrl">上传成功后，云存储向业务服务器发送 POST 请求的 URL。必须是公网上可以正常进行 POST 请求并能响应 HTTP/1.1 200 OK 的有效 URL。另外，为了给客户端有一致的体验，我们要求 callbackUrl 返回包 Content-Type 为 "application/json"，即返回的内容必须是合法的 JSON 文本。出于高可用的考虑，本字段允许设置多个 callbackUrl（用英文符号 ; 分隔），在前一个 callbackUrl 请求失败的时候会依次重试下一个 callbackUrl。一个典型例子是：http://<ip1>/callback;http://<ip2>/callback，并同时指定下面的 callbackHost 字段。在 callbackUrl 中使用 ip 的好处是减少对 dns 解析的依赖，可改善回调的性能和稳定性。指定 callbackUrl，必须指定 callbackbody，且值不能为空。</param>
+        /// <param name="callbackBody">上传成功后，云存储向业务服务器发送 Content-Type: application/x-www-form-urlencoded 的 POST 请求。业务服务器可以通过直接读取请求的 query 来获得该字段，支持魔法变量和自定义变量。callbackBody 要求是合法的 url query string。例如key=$(key)&hash=$(etag)&w=$(imageInfo.width)&h=$(imageInfo.height)。如果callbackBodyType指定为application/json，则callbackBody应为json格式，例如:{"key":"$(key)","hash":"$(etag)","w":"$(imageInfo.width)","h":"$(imageInfo.height)"}。</param>
+        /// <param name="callbackBodyType">上传成功后，云存储向业务服务器发送回调通知 callbackBody 的 Content-Type。默认为 application/json，也可设置为 application/x-www-form-urlencoded。</param>
+        public void SetCallBack(string callbackBodyType, string callbackHost = "", string callbackUrl = "",
+            string callbackBody =
+                "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsiz\":$(fsize),\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\",\"mimeType\":\"$(mimeType)\"}")
         {
             CallbackHost = callbackHost;
             CallbackUrl = callbackUrl;
             CallbackBody = callbackBody;
-            CallbackBodyType = callbackBodyType;
+            CallbackBodyType = !string.IsNullOrEmpty(callbackBodyType)
+                ? callbackBodyType
+                : EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
+                    .Enumerations.CallbackBodyType.Json.Name;
+            EnableCallback = true; //默认启用回调
         }
 
         /// <summary>
-        /// 关闭回调
+        /// 关闭当前请求回调
         /// </summary>
         public void CloseCallBack()
         {
