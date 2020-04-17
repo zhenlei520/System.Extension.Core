@@ -13,29 +13,21 @@ namespace EInfrastructure.Core.SqlServer.Common
     /// <summary>
     /// 执行Sql语句
     /// </summary>
-    public abstract class ExecuteBase : IExecute
+    internal class ExecuteBase
     {
         /// <summary>
         ///
         /// </summary>
-        protected DbContext Dbcontext;
-
-        private readonly IUnitOfWork _unitOfWork;
+        private DbContext Dbcontext;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="unitOfWork">工作单元</param>
-        protected ExecuteBase(IUnitOfWork unitOfWork)
+        public ExecuteBase(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork;
             Dbcontext = unitOfWork as DbContext;
         }
-
-        /// <summary>
-        /// 单元模式
-        /// </summary>
-        public IUnitOfWork UnitOfWork => _unitOfWork;
 
         #region 执行Reader
 
@@ -115,6 +107,7 @@ namespace EInfrastructure.Core.SqlServer.Common
             {
                 conn.Close();
             }
+
 
             return list;
         }

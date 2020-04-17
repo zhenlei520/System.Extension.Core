@@ -124,6 +124,13 @@ namespace EInfrastructure.Core.Config.Entities.Ioc
         /// <param name="condition">条件</param>
         /// <returns></returns>
         int Count(Expression<Func<TEntity, bool>> condition);
+
+        /// <summary>
+        /// 根据条件得到满足条件的数量
+        /// </summary>
+        /// <param name="condition">条件</param>
+        /// <returns></returns>
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> condition);
     }
 
     /// <summary>

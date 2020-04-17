@@ -43,11 +43,11 @@ namespace EInfrastructure.Core.MySql
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static Task<TEntity> GetOneAsync<TEntity, T>(this DbContext dbContext,
+        internal static async Task<TEntity> GetOneAsync<TEntity, T>(this DbContext dbContext,
             Expression<Func<TEntity, bool>> exp)
             where TEntity : class, IEntity<T>
         {
-            return dbContext.Set<TEntity>()
+            return await dbContext.Set<TEntity>()
                 .FirstOrDefaultAsync(exp);
         }
 
@@ -87,11 +87,11 @@ namespace EInfrastructure.Core.MySql
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static Task<PageData<TEntity>> GetListAsync<TEntity, T>(this DbContext dbContext,
+        internal static async Task<PageData<TEntity>> GetListAsync<TEntity, T>(this DbContext dbContext,
             Expression<Func<TEntity, bool>> exp, int pageSize, int pageindex, bool isTotal)
             where TEntity : class, IEntity<T>
         {
-            return dbContext.Set<TEntity>()
+            return await dbContext.Set<TEntity>()
                 .Where(exp)
                 .OrderByDescending(t => t.Id)
                 .ListPagerAsync(pageSize, pageindex, isTotal);
@@ -124,11 +124,11 @@ namespace EInfrastructure.Core.MySql
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static Task<List<TEntity>> GetListAsync<TEntity, T>(this DbContext dbContext,
+        internal static async Task<List<TEntity>> GetListAsync<TEntity, T>(this DbContext dbContext,
             Expression<Func<TEntity, bool>> exp)
             where TEntity : class, IEntity<T>
         {
-            return dbContext.Set<TEntity>()
+            return await dbContext.Set<TEntity>()
                 .Where(exp).ToListAsync();
         }
 
@@ -179,11 +179,11 @@ namespace EInfrastructure.Core.MySql
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static Task<bool> ExistsAsync<TEntity, T>(this DbContext dbContext,
+        internal static async Task<bool> ExistsAsync<TEntity, T>(this DbContext dbContext,
             Expression<Func<TEntity, bool>> exp)
             where TEntity : class, IEntity<T>
         {
-            return dbContext.Set<TEntity>()
+            return await dbContext.Set<TEntity>()
                 .AnyAsync(exp);
         }
 
@@ -213,11 +213,11 @@ namespace EInfrastructure.Core.MySql
         /// <param name="condition">条件</param>
         /// <param name="topN">前N条记录</param>
         /// <returns></returns>
-        internal static Task<List<TEntity>> TopNAsync<TEntity, T>(this DbContext dbContext,
+        internal static async Task<List<TEntity>> TopNAsync<TEntity, T>(this DbContext dbContext,
             Expression<Func<TEntity, bool>> condition, int topN)
             where TEntity : class, IEntity<T>
         {
-            return dbContext.Set<TEntity>()
+            return await dbContext.Set<TEntity>()
                 .Where(condition).TopN(topN).ToListAsync();
         }
 
@@ -244,10 +244,10 @@ namespace EInfrastructure.Core.MySql
         /// <param name="dbContext"></param>
         /// <param name="condition">条件</param>
         /// <returns></returns>
-        internal static Task<int> CountAsync<TEntity, T>(this DbContext dbContext, Expression<Func<TEntity, bool>> condition)
+        internal static async Task<int> CountAsync<TEntity, T>(this DbContext dbContext, Expression<Func<TEntity, bool>> condition)
             where TEntity : class, IEntity<T>
         {
-            return dbContext.Set<TEntity>()
+            return await dbContext.Set<TEntity>()
                 .CountAsync(condition);
         }
 

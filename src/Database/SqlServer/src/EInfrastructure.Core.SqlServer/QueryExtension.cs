@@ -23,15 +23,15 @@ namespace EInfrastructure.Core.SqlServer
         /// <summary>
         /// 得到满足条件的单个实体
         /// </summary>
-        /// <param name="dbcontext">上下文</param>
+        /// <param name="dbContext">上下文</param>
         /// <param name="exp">条件</param>
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static TEntity GetOne<TEntity, T>(this DbContext dbcontext, Expression<Func<TEntity, bool>> exp)
+        internal static TEntity GetOne<TEntity, T>(this DbContext dbContext, Expression<Func<TEntity, bool>> exp)
             where TEntity : class, IEntity<T>
         {
-            return dbcontext.Set<TEntity>()
+            return dbContext.Set<TEntity>()
                 .FirstOrDefault(exp);
         }
 
@@ -43,11 +43,11 @@ namespace EInfrastructure.Core.SqlServer
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static Task<TEntity> GetOneAsync<TEntity, T>(this DbContext dbContext,
+        internal static async Task<TEntity> GetOneAsync<TEntity, T>(this DbContext dbContext,
             Expression<Func<TEntity, bool>> exp)
             where TEntity : class, IEntity<T>
         {
-            return dbContext.Set<TEntity>()
+            return await dbContext.Set<TEntity>()
                 .FirstOrDefaultAsync(exp);
         }
 
@@ -58,22 +58,22 @@ namespace EInfrastructure.Core.SqlServer
         /// <summary>
         /// 根据条件得到分页列表
         /// </summary>
-        /// <param name="dbcontext"></param>
+        /// <param name="dbContext"></param>
         /// <param name="exp">条件</param>
-        /// <param name="pagesize">页大小</param>
+        /// <param name="pageSize">页大小</param>
         /// <param name="pageindex">页码</param>
-        /// <param name="istotal">是否计算总数</param>
+        /// <param name="isTotal">是否计算总数</param>
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static PageData<TEntity> GetList<TEntity, T>(this DbContext dbcontext,
-            Expression<Func<TEntity, bool>> exp, int pagesize, int pageindex, bool istotal)
+        internal static PageData<TEntity> GetList<TEntity, T>(this DbContext dbContext,
+            Expression<Func<TEntity, bool>> exp, int pageSize, int pageindex, bool isTotal)
             where TEntity : class, IEntity<T>
         {
-            return dbcontext.Set<TEntity>()
+            return dbContext.Set<TEntity>()
                 .Where(exp)
                 .OrderByDescending(t => t.Id)
-                .ListPager(pagesize, pageindex, istotal);
+                .ListPager(pageSize, pageindex, isTotal);
         }
 
         /// <summary>
@@ -87,11 +87,11 @@ namespace EInfrastructure.Core.SqlServer
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static Task<PageData<TEntity>> GetListAsync<TEntity, T>(this DbContext dbContext,
+        internal static async Task<PageData<TEntity>> GetListAsync<TEntity, T>(this DbContext dbContext,
             Expression<Func<TEntity, bool>> exp, int pageSize, int pageindex, bool isTotal)
             where TEntity : class, IEntity<T>
         {
-            return dbContext.Set<TEntity>()
+            return await dbContext.Set<TEntity>()
                 .Where(exp)
                 .OrderByDescending(t => t.Id)
                 .ListPagerAsync(pageSize, pageindex, isTotal);
@@ -104,15 +104,15 @@ namespace EInfrastructure.Core.SqlServer
         /// <summary>
         /// 得到实体列表
         /// </summary>
-        /// <param name="dbcontext"></param>
+        /// <param name="dbContext"></param>
         /// <param name="exp">条件</param>
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static List<TEntity> GetList<TEntity, T>(this DbContext dbcontext, Expression<Func<TEntity, bool>> exp)
+        internal static List<TEntity> GetList<TEntity, T>(this DbContext dbContext, Expression<Func<TEntity, bool>> exp)
             where TEntity : class, IEntity<T>
         {
-            return dbcontext.Set<TEntity>()
+            return dbContext.Set<TEntity>()
                 .Where(exp).ToList();
         }
 
@@ -124,11 +124,11 @@ namespace EInfrastructure.Core.SqlServer
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static Task<List<TEntity>> GetListAsync<TEntity, T>(this DbContext dbContext,
+        internal static async Task<List<TEntity>> GetListAsync<TEntity, T>(this DbContext dbContext,
             Expression<Func<TEntity, bool>> exp)
             where TEntity : class, IEntity<T>
         {
-            return dbContext.Set<TEntity>()
+            return await dbContext.Set<TEntity>()
                 .Where(exp).ToListAsync();
         }
 
@@ -139,16 +139,16 @@ namespace EInfrastructure.Core.SqlServer
         /// <summary>
         /// 根据条件查询返回值为IQueryable
         /// </summary>
-        /// <param name="dbcontext"></param>
+        /// <param name="dbContext"></param>
         /// <param name="exp">条件</param>
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static IQueryable<TEntity> GetListQuery<TEntity, T>(this DbContext dbcontext,
+        internal static IQueryable<TEntity> GetListQuery<TEntity, T>(this DbContext dbContext,
             Expression<Func<TEntity, bool>> exp)
             where TEntity : class, IEntity<T>
         {
-            return dbcontext.Set<TEntity>()
+            return dbContext.Set<TEntity>()
                 .Where(exp);
         }
 
@@ -159,15 +159,15 @@ namespace EInfrastructure.Core.SqlServer
         /// <summary>
         /// 判断是否存在
         /// </summary>
-        /// <param name="dbcontext"></param>
+        /// <param name="dbContext"></param>
         /// <param name="exp">条件</param>
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static bool Exists<TEntity, T>(this DbContext dbcontext, Expression<Func<TEntity, bool>> exp)
+        internal static bool Exists<TEntity, T>(this DbContext dbContext, Expression<Func<TEntity, bool>> exp)
             where TEntity : class, IEntity<T>
         {
-            return dbcontext.Set<TEntity>()
+            return dbContext.Set<TEntity>()
                 .Any(exp);
         }
 
@@ -179,11 +179,11 @@ namespace EInfrastructure.Core.SqlServer
         /// <typeparam name="TEntity"></typeparam>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal static Task<bool> ExistsAsync<TEntity, T>(this DbContext dbContext,
+        internal static async Task<bool> ExistsAsync<TEntity, T>(this DbContext dbContext,
             Expression<Func<TEntity, bool>> exp)
             where TEntity : class, IEntity<T>
         {
-            return dbContext.Set<TEntity>()
+            return await dbContext.Set<TEntity>()
                 .AnyAsync(exp);
         }
 
@@ -194,15 +194,15 @@ namespace EInfrastructure.Core.SqlServer
         /// <summary>
         /// 根据条件得到前N项实体列表
         /// </summary>
-        /// <param name="dbcontext"></param>
+        /// <param name="dbContext"></param>
         /// <param name="condition">条件</param>
         /// <param name="topN">前N条记录</param>
         /// <returns></returns>
-        internal static List<TEntity> TopN<TEntity, T>(this DbContext dbcontext,
+        internal static List<TEntity> TopN<TEntity, T>(this DbContext dbContext,
             Expression<Func<TEntity, bool>> condition, int topN)
             where TEntity : class, IEntity<T>
         {
-            return dbcontext.Set<TEntity>()
+            return dbContext.Set<TEntity>()
                 .Where(condition).TopN(topN).ToList();
         }
 
@@ -213,11 +213,11 @@ namespace EInfrastructure.Core.SqlServer
         /// <param name="condition">条件</param>
         /// <param name="topN">前N条记录</param>
         /// <returns></returns>
-        internal static Task<List<TEntity>> TopNAsync<TEntity, T>(this DbContext dbContext,
+        internal static async Task<List<TEntity>> TopNAsync<TEntity, T>(this DbContext dbContext,
             Expression<Func<TEntity, bool>> condition, int topN)
             where TEntity : class, IEntity<T>
         {
-            return dbContext.Set<TEntity>()
+            return await dbContext.Set<TEntity>()
                 .Where(condition).TopN(topN).ToListAsync();
         }
 
@@ -228,14 +228,28 @@ namespace EInfrastructure.Core.SqlServer
         /// <summary>
         /// 根据条件得到满足条件的数量
         /// </summary>
-        /// <param name="dbcontext"></param>
+        /// <param name="dbContext"></param>
         /// <param name="condition">条件</param>
         /// <returns></returns>
-        internal static int Count<TEntity, T>(this DbContext dbcontext, Expression<Func<TEntity, bool>> condition)
+        internal static int Count<TEntity, T>(this DbContext dbContext, Expression<Func<TEntity, bool>> condition)
             where TEntity : class, IEntity<T>
         {
-            return dbcontext.Set<TEntity>()
+            return dbContext.Set<TEntity>()
                 .Count(condition);
+        }
+
+        /// <summary>
+        /// 根据条件得到满足条件的数量
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <param name="condition">条件</param>
+        /// <returns></returns>
+        internal static async Task<int> CountAsync<TEntity, T>(this DbContext dbContext,
+            Expression<Func<TEntity, bool>> condition)
+            where TEntity : class, IEntity<T>
+        {
+            return await dbContext.Set<TEntity>()
+                .CountAsync(condition);
         }
 
         #endregion

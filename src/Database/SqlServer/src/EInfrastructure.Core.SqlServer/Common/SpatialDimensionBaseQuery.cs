@@ -13,14 +13,14 @@ namespace EInfrastructure.Core.SqlServer.Common
     /// <summary>
     ///
     /// </summary>
-    public abstract class SpatialDimensionBaseQuery<TEntity, T>
+    internal class SpatialDimensionBaseQuery<TEntity, T>
         : ISpatialDimensionQuery<TEntity, T> where TEntity : class, IEntity<T>
         where T : IComparable
     {
         /// <summary>
         ///
         /// </summary>
-        protected DbContext Dbcontext;
+        private DbContext Dbcontext;
 
         private readonly IExecute _execute;
 
@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// </summary>
         /// <param name="unitOfWork">unitwork</param>
         /// <param name="execute"></param>
-        protected SpatialDimensionBaseQuery(IUnitOfWork unitOfWork, IExecute execute)
+        public SpatialDimensionBaseQuery(IUnitOfWork unitOfWork, IExecute execute)
         {
             this.Dbcontext = unitOfWork as DbContext;
             _execute = execute;
