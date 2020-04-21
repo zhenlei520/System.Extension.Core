@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public static IServiceCollection AddAliDaYu(this IServiceCollection services)
         {
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
-            var configuration = (IConfiguration) service.ImplementationInstance;
+            var configuration = (IConfiguration)service.ImplementationInstance;
             return AddAliDaYu(services, configuration);
         }
 
