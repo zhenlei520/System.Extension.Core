@@ -1,27 +1,27 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket
 {
     /// <summary>
-    ///
+    /// 域名响应
     /// </summary>
-    public class ExpireResultDto: OperateResultDto
+    public class DomainResultDto : OperateResultDto
     {
         /// <summary>
         ///
         /// </summary>
         /// <param name="state"></param>
-        /// <param name="key"></param>
+        /// <param name="host">域名空间</param>
         /// <param name="msg"></param>
-        public ExpireResultDto(bool state, string key,string msg) : base(state, msg)
+        public DomainResultDto(bool state, string host, string msg) : base(state, msg)
         {
-            Key = key;
+            Host = host;
         }
 
         /// <summary>
-        /// 文件key
+        /// 域名
         /// </summary>
-        public string Key { get; }
+        public string Host { get; set; }
     }
 }

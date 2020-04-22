@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
@@ -44,6 +45,8 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
 
         #endregion
 
+        #region 得到凭证
+
         #region 得到上传文件凭证
 
         /// <summary>
@@ -51,6 +54,38 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// </summary>
         /// <param name="opsParam">上传信息</param>
         string GetUploadCredentials(UploadPersistentOpsParam opsParam);
+
+        #endregion
+
+        #region 得到管理凭证
+
+        /// <summary>
+        /// 得到管理凭证
+        /// </summary>
+        /// <param name="url">地址</param>
+        /// <returns></returns>
+        string GetManageToken(string url);
+
+        /// <summary>
+        /// 得到管理凭证
+        /// </summary>
+        /// <param name="url">地址</param>
+        /// <param name="body">内容</param>
+        /// <returns></returns>
+        string GetManageToken(string url, byte[] body);
+
+        #endregion
+
+        #region 得到下载凭证
+
+        /// <summary>
+        /// 得到下载凭证
+        /// </summary>
+        /// <param name="url">url地址</param>
+        /// <returns></returns>
+        string GetDownloadToken(string url);
+
+        #endregion
 
         #endregion
 

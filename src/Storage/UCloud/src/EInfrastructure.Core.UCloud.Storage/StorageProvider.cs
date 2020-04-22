@@ -9,6 +9,7 @@ using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.UCloud.Storage.Config;
@@ -89,16 +90,59 @@ namespace EInfrastructure.Core.UCloud.Storage
 
         #endregion
 
-        #region 得到上传文件策略信息
+        #region 得到凭证
+
+        #region 得到上传凭证
 
         /// <summary>
-        /// 得到上传文件策略信息
+        /// 得到上传凭证
         /// </summary>
         /// <param name="opsParam">上传信息</param>
         public string GetUploadCredentials(UploadPersistentOpsParam opsParam)
         {
             throw new System.NotImplementedException();
         }
+
+        #endregion
+
+        #region 得到管理凭证
+
+        /// <summary>
+        /// 得到管理凭证
+        /// </summary>
+        /// <param name="url">地址</param>
+        /// <returns></returns>
+        public string GetManageToken(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 得到管理凭证
+        /// </summary>
+        /// <param name="url">地址</param>
+        /// <param name="body">内容</param>
+        /// <returns></returns>
+        public string GetManageToken(string url, byte[] body)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 得到下载凭证
+
+        /// <summary>
+        /// 得到下载凭证
+        /// </summary>
+        /// <param name="url">url地址</param>
+        /// <returns></returns>
+        public string GetDownloadToken(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
         #endregion
 

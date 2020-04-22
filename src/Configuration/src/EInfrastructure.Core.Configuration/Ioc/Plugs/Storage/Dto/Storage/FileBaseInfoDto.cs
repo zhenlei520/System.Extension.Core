@@ -3,7 +3,7 @@
 
 using System;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage
 {
     /// <summary>
     /// 文件基础信息

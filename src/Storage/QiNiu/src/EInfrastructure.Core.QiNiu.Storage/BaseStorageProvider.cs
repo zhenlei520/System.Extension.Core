@@ -129,7 +129,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     config.UseHttps = uploadPersistentOps.IsUseHttps.Value;
                 }
 
-                config.ChunkSize = (Qiniu.Storage.ChunkUnit)(uploadPersistentOps.ChunkUnit.Id);
+                config.ChunkSize = (Qiniu.Storage.ChunkUnit) (uploadPersistentOps.ChunkUnit.Id);
                 if (uploadPersistentOps.MaxRetryTimes != -1)
                 {
                     config.MaxRetryTimes = uploadPersistentOps.MaxRetryTimes;
@@ -176,6 +176,19 @@ namespace EInfrastructure.Core.QiNiu.Storage
             putPolicyConfig.SetPutPolicy(opsParam);
             action?.Invoke(putPolicyConfig.GetPutPolicy());
             return Auth.CreateUploadToken(qiNiuConfig.GetMac(), putPolicyConfig.GetPutPolicy().ToJsonString());
+        }
+
+        #endregion
+
+        #region 得到授权
+
+        /// <summary>
+        /// 得到授权
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Auth GetAuth()
+        {
+            return new Auth(this._qiNiuConfig.GetMac());
         }
 
         #endregion

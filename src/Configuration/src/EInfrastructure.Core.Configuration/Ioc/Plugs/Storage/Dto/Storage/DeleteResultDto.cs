@@ -1,27 +1,27 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage
 {
     /// <summary>
-    /// 移动文件响应
+    /// 删除结果
     /// </summary>
-    public class MoveFileResultDto: OperateResultDto
+    public class DeleteResultDto : OperateResultDto
     {
         /// <summary>
         ///
         /// </summary>
         /// <param name="state">操作结果</param>
-        /// <param name="fileId">文件id</param>
+        /// <param name="key">文件key</param>
         /// <param name="msg">提示信息</param>
-        public MoveFileResultDto(bool state, string fileId, string msg) : base(state, msg)
+        public DeleteResultDto(bool state, string key, string msg) : base(state, msg)
         {
-            FileId = fileId;
+            Key = key;
         }
 
         /// <summary>
         /// 文件key
         /// </summary>
-        public string FileId { get; }
+        public string Key { get; }
     }
 }

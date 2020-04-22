@@ -8,6 +8,7 @@ using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.QiNiu.Storage.Validator;
@@ -146,6 +147,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
 
         #endregion
 
+        #region 得到凭证
+
         #region 得到上传文件凭证
 
         /// <summary>
@@ -158,6 +161,47 @@ namespace EInfrastructure.Core.QiNiu.Storage
             return base.GetUploadCredentials(QiNiuConfig,
                 new UploadPersistentOpsParam(opsParam.Key, uploadPersistentOps));
         }
+
+        #endregion
+
+        #region 得到管理凭证
+
+        /// <summary>
+        /// 得到管理凭证
+        /// </summary>
+        /// <param name="url">地址</param>
+        /// <returns></returns>
+        public string GetManageToken(string url)
+        {
+            return GetAuth().CreateManageToken(url);
+        }
+
+        /// <summary>
+        /// 得到管理凭证
+        /// </summary>
+        /// <param name="url">请求的URL</param>
+        /// <param name="body">请求的主体内容</param>
+        /// <returns></returns>
+        public string GetManageToken(string url, byte[] body)
+        {
+            return GetAuth().CreateManageToken(url, body);
+        }
+
+        #endregion
+
+        #region 得到下载凭证
+
+        /// <summary>
+        /// 得到下载凭证
+        /// </summary>
+        /// <param name="url">url地址</param>
+        /// <returns></returns>
+        public string GetDownloadToken(string url)
+        {
+            return base.GetAuth().CreateDownloadToken(url);
+        }
+
+        #endregion
 
         #endregion
 

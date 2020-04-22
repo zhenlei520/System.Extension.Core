@@ -1,20 +1,20 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage
 {
     /// <summary>
-    /// 删除结果
+    ///
     /// </summary>
-    public class DeleteResultDto : OperateResultDto
+    public class ExpireResultDto: OperateResultDto
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="state">操作结果</param>
-        /// <param name="key">文件key</param>
-        /// <param name="msg">提示信息</param>
-        public DeleteResultDto(bool state, string key, string msg) : base(state, msg)
+        /// <param name="state"></param>
+        /// <param name="key"></param>
+        /// <param name="msg"></param>
+        public ExpireResultDto(bool state, string key,string msg) : base(state, msg)
         {
             Key = key;
         }

@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage
 {
     /// <summary>
     /// 文件列表
