@@ -11,14 +11,14 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto
     public class FileBaseInfoDto
     {
         /// <summary>
-        /// 文件流水号-调用方赋值，为方便定位文件
-        /// </summary>
-        public Guid FileNo { get; set; }
-
-        /// <summary>
         /// 是否成功
         /// </summary>
         public bool Success { get; set; } = true;
+
+        /// <summary>
+        /// 文件流水号-调用方赋值，为方便定位文件
+        /// </summary>
+        public Guid FileNo { get; set; }
 
         /// <summary>
         /// 文件域
@@ -34,6 +34,5 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto
         /// 提示信息
         /// </summary>
         public string Msg { get; set; }
-
     }
 }

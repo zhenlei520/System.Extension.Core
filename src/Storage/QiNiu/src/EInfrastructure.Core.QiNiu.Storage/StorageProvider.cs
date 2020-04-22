@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 using EInfrastructure.Core.QiNiu.Storage.Config;
@@ -93,7 +94,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
             {
                 ResumableUploader target = new ResumableUploader(GetConfig(uploadPersistentOps));
                 HttpResult result =
-                    target.UploadStream(param.ByteArray.ConvertToStream(), param.Key, token, GetPutExtra(uploadPersistentOps));
+                    target.UploadStream(param.ByteArray.ConvertToStream(), param.Key, token,
+                        GetPutExtra(uploadPersistentOps));
                 bool res = result.Code == (int) HttpCode.OK;
                 return new UploadResultDto(res, res ? "成功" : result.ToString());
             }
@@ -174,6 +176,44 @@ namespace EInfrastructure.Core.QiNiu.Storage
 
         #endregion
 
+        #region 获取指定前缀的文件列表
+
+        /// <summary>
+        /// 获取指定前缀的文件列表
+        /// </summary>
+        /// <param name="filter">筛选</param>
+        /// <returns></returns>
+        public ListFileItemResultDto ListFiles(ListFileFilter filter)
+        {
+            var listRet = base.GetBucketManager().ListFiles(this.QiNiuConfig.Bucket, filter.Prefix, filter.LastMark,
+                filter.PageSize,
+                filter.Delimiter);
+            if (listRet.Code == (int) HttpCode.OK)
+            {
+                return new ListFileItemResultDto(true, "success")
+                {
+                    CommonPrefixes = listRet.Result.CommonPrefixes,
+                    Marker = listRet.Result.Marker,
+                    Items = listRet.Result.Items.Select(x => new FileInfoDto()
+                    {
+                        Host = QiNiuConfig.Host,
+                        Path = x.Key,
+                        Msg = "success",
+                        Hash = x.Hash,
+                        Size = x.Fsize,
+                        PutTime = x.PutTime,
+                        MimeType = x.MimeType,
+                        FileType = x.FileType,
+                        Success = true,
+                    }).ToList()
+                };
+            }
+
+            return new ListFileItemResultDto(false, "lose");
+        }
+
+        #endregion
+
         #region 获取文件信息
 
         /// <summary>
@@ -203,7 +243,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 Success = true,
                 Host = QiNiuConfig.Host,
                 Path = key,
-                Msg = "成功"
+                Msg = "success"
             };
         }
 
@@ -212,7 +252,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="keyList">文件key集合</param>
         /// <returns></returns>
-        public IEnumerable<FileInfoDto> GetList(IEnumerable<string> keyList)
+        public IEnumerable<FileInfoDto> GetList(string[] keyList)
         {
             var enumerable = keyList as string[] ?? keyList.ToArray();
 
@@ -248,7 +288,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                         Success = true,
                         Host = QiNiuConfig.Host,
                         Path = enumerable.ToList()[index - 1],
-                        Msg = "成功"
+                        Msg = "success"
                     };
                 }
                 else
@@ -285,7 +325,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="keyList">文件key集合</param>
         /// <returns></returns>
-        public IEnumerable<DeleteResultDto> RemoveRange(IEnumerable<string> keyList)
+        public IEnumerable<DeleteResultDto> RemoveRange(string[] keyList)
         {
             var enumerable = keyList as string[] ?? keyList.ToArray();
             List<DeleteResultDto> res = new List<DeleteResultDto>();
@@ -341,7 +381,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="copyFileParam">复制到新空间的参数</param>
         /// <returns></returns>
-        public IEnumerable<CopyFileResultDto> CopyRangeTo(ICollection<CopyFileParam> copyFileParam)
+        public IEnumerable<CopyFileResultDto> CopyRangeTo(CopyFileParam[] copyFileParam)
         {
             List<CopyFileResultDto> res = new List<CopyFileResultDto>();
             copyFileParam.ToList().ListPager(list => { res.AddRange(CopyToMulti(list)); }, 1000, 1);
@@ -403,7 +443,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="moveFileParamList"></param>
         /// <returns></returns>
-        public IEnumerable<MoveFileResultDto> MoveRange(List<MoveFileParam> moveFileParamList)
+        public IEnumerable<MoveFileResultDto> MoveRange(MoveFileParam[] moveFileParamList)
         {
             List<MoveFileResultDto> res = new List<MoveFileResultDto>();
             moveFileParamList.ToList().ListPager(list => { res.AddRange(MoveMulti(list)); }, 1000, 1);
@@ -438,6 +478,249 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 {
                     yield return new MoveFileResultDto(false, moveFileParamList.ToList()[index - 1].FileId,
                         info.Data.Error);
+                }
+            }
+        }
+
+        #endregion
+
+        #region 得到地址
+
+        /// <summary>
+        /// 得到公开空间的访问地址
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <returns></returns>
+        public string GetPublishUrl(string key)
+        {
+            return DownloadManager.CreatePublishUrl(this.QiNiuConfig.Host, key);
+        }
+
+        /// <summary>
+        /// 得到私有空间的地址
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="expire">过期时间 单位：s</param>
+        /// <returns></returns>
+        public string GetPrivateUrl(string key, int expire = 3600)
+        {
+            return DownloadManager.CreatePrivateUrl(this.QiNiuConfig.GetMac(), this.QiNiuConfig.Host, key, expire);
+        }
+
+        #endregion
+
+        #region 下载文件
+
+        /// <summary>
+        /// 下载文件
+        /// </summary>
+        /// <param name="url">文件访问地址</param>
+        /// <param name="savePath">保存路径</param>
+        /// <returns></returns>
+        public DownloadResultDto Download(string url, string savePath)
+        {
+            var ret = DownloadManager.Download(url, savePath);
+            var res = ret.Code == (int) HttpCode.OK;
+            return new DownloadResultDto(res, ret.Text, ret);
+        }
+
+        #endregion
+
+        #region 设置生存时间
+
+        /// <summary>
+        /// 设置生存时间（超时会自动删除）
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="expire">过期时间 单位：day</param>
+        /// <returns></returns>
+        public ExpireResultDto SetExpire(string key, int expire)
+        {
+            var expireRet = base.GetBucketManager().DeleteAfterDays(this.QiNiuConfig.Bucket, key, expire);
+            if (expireRet.Code != (int) HttpCode.OK)
+            {
+                return new ExpireResultDto(false, key, "lose");
+            }
+
+            return new ExpireResultDto(true, key, "success");
+        }
+
+        /// <summary>
+        /// 批量设置生存时间（超时会自动删除）
+        /// </summary>
+        /// <param name="keys">文件key</param>
+        /// <param name="expire">过期时间 单位：day</param>
+        /// <returns></returns>
+        public List<ExpireResultDto> SetExpireRange(string[] keys, int expire)
+        {
+            List<ExpireResultDto> expireResult = new List<ExpireResultDto>();
+            keys.Distinct().ToList()
+                .ListPager((list) => { expireResult.AddRange(SetExpireMulti(list.ToArray(), expire)); }, 1000, 1);
+            return expireResult;
+        }
+
+        /// <summary>
+        /// 设置生存时间
+        /// </summary>
+        /// <param name="keys">文件key集合</param>
+        /// <param name="expire">过期时间 单位：day</param>
+        /// <returns></returns>
+        private IEnumerable<ExpireResultDto> SetExpireMulti(string[] keys, int expire)
+        {
+            var bucketManager = base.GetBucketManager();
+            List<string> ops = new List<string>();
+            foreach (string key in keys)
+            {
+                string op = bucketManager.DeleteAfterDaysOp(this.QiNiuConfig.Bucket, key, expire);
+                ops.Add(op);
+            }
+
+            BatchResult ret = bucketManager.Batch(ops);
+            var index = 0;
+            foreach (BatchInfo info in ret.Result)
+            {
+                index++;
+                if (info.Code == (int) HttpCode.OK)
+                {
+                    yield return new ExpireResultDto(true, keys.ToList()[index - 1], "success");
+                }
+                else
+                {
+                    yield return new ExpireResultDto(false, keys.ToList()[index - 1], "lose");
+                }
+            }
+        }
+
+        #endregion
+
+        #region 修改文件MimeType
+
+        /// <summary>
+        /// 修改文件MimeType
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="mime">文件mimeType</param>
+        /// <returns></returns>
+        public ChangeMimeResultDto ChangeMime(string key, string mime)
+        {
+            var ret = base.GetBucketManager().ChangeMime(this.QiNiuConfig.Bucket, key, mime);
+            if (ret.Code != (int) HttpCode.OK)
+            {
+                return new ChangeMimeResultDto(false, key, ret.Text);
+            }
+
+            return new ChangeMimeResultDto(true, key, "success");
+        }
+
+        /// <summary>
+        /// 批量更改文件mime
+        /// </summary>
+        /// <param name="keys">文件key集合</param>
+        /// <param name="mime">问价mime</param>
+        /// <returns></returns>
+        public List<ChangeMimeResultDto> ChangeMimeRange(string[] keys, string mime)
+        {
+            List<ChangeMimeResultDto> ret = new List<ChangeMimeResultDto>();
+            keys.Distinct().ToList()
+                .ListPager((list) => { ret.AddRange(ChangeMimeMulti(list.ToArray(), mime)); }, 1000, 1);
+            return ret;
+        }
+
+        /// <summary>
+        /// 批量更改mimeType
+        /// </summary>
+        /// <param name="keys">文件key</param>
+        /// <param name="mime">文件mime</param>
+        /// <returns></returns>
+        private IEnumerable<ChangeMimeResultDto> ChangeMimeMulti(string[] keys, string mime)
+        {
+            var bucketManager = base.GetBucketManager();
+            List<string> ops = new List<string>();
+            foreach (string key in keys)
+            {
+                string op = bucketManager.ChangeMimeOp(this.QiNiuConfig.Bucket, key, mime);
+                ops.Add(op);
+            }
+
+            BatchResult ret = bucketManager.Batch(ops);
+            var index = 0;
+            foreach (BatchInfo info in ret.Result)
+            {
+                index++;
+                if (info.Code == (int) HttpCode.OK)
+                {
+                    yield return new ChangeMimeResultDto(true, keys.ToList()[index - 1], "success");
+                }
+                else
+                {
+                    yield return new ChangeMimeResultDto(false, keys.ToList()[index - 1], "lose");
+                }
+            }
+        }
+
+        #endregion
+
+        #region 修改文件的存储类型
+
+        /// <summary>
+        /// 修改文件存储类型
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="type">0表示普通存储，1表示低频存储</param>
+        /// <returns></returns>
+        public ChangeTypeResultDto ChangeType(string key, int type)
+        {
+            HttpResult ret = base.GetBucketManager().ChangeType(this.QiNiuConfig.Bucket, key, type);
+            if (ret.Code == (int) HttpCode.OK)
+            {
+                return new ChangeTypeResultDto(true, key, "success");
+            }
+
+            return new ChangeTypeResultDto(false, key, ret.Text);
+        }
+
+        /// <summary>
+        /// 批量更改文件类型
+        /// </summary>
+        /// <param name="keys">文件key</param>
+        /// <param name="type">0表示普通存储，1表示低频存储</param>
+        /// <returns></returns>
+        public List<ChangeTypeResultDto> ChangeTypeRange(string[] keys, int type)
+        {
+            List<ChangeTypeResultDto> ret = new List<ChangeTypeResultDto>();
+            keys.Distinct().ToList()
+                .ListPager((list) => { ret.AddRange(ChangeTypeMulti(list.ToArray(), type)); }, 1000, 1);
+            return ret;
+        }
+
+        /// <summary>
+        /// 批量更改文件Type
+        /// </summary>
+        /// <param name="keys">文件key</param>
+        /// <param name="type">0表示普通存储，1表示低频存储</param>
+        /// <returns></returns>
+        private IEnumerable<ChangeTypeResultDto> ChangeTypeMulti(string[] keys, int type)
+        {
+            var bucketManager = base.GetBucketManager();
+            List<string> ops = new List<string>();
+            foreach (string key in keys)
+            {
+                string op = bucketManager.ChangeTypeOp(this.QiNiuConfig.Bucket, key, type);
+                ops.Add(op);
+            }
+
+            BatchResult ret = bucketManager.Batch(ops);
+            var index = 0;
+            foreach (BatchInfo info in ret.Result)
+            {
+                index++;
+                if (info.Code == (int) HttpCode.OK)
+                {
+                    yield return new ChangeTypeResultDto(true, keys.ToList()[index - 1], "success");
+                }
+                else
+                {
+                    yield return new ChangeTypeResultDto(false, keys.ToList()[index - 1], "lose");
                 }
             }
         }

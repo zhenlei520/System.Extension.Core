@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 using EInfrastructure.Core.Tools;
@@ -22,7 +23,8 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// UCloud存储实现类
         /// </summary>
-        public StorageProvider(ICollection<ILogProvider> logService, UCloudStorageConfig uCloudStorageConfig) : base(logService,
+        public StorageProvider(ICollection<ILogProvider> logService, UCloudStorageConfig uCloudStorageConfig) : base(
+            logService,
             uCloudStorageConfig)
         {
         }
@@ -114,6 +116,20 @@ namespace EInfrastructure.Core.UCloud.Storage
 
         #endregion
 
+        #region 获取指定前缀的文件列表
+
+        /// <summary>
+        /// 获取指定前缀的文件列表
+        /// </summary>
+        /// <param name="filter">筛选</param>
+        /// <returns></returns>
+        public ListFileItemResultDto ListFiles(ListFileFilter filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
         #region 获取文件信息
 
         /// <summary>
@@ -131,7 +147,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="keyList">文件key集合</param>
         /// <returns></returns>
-        public IEnumerable<FileInfoDto> GetList(IEnumerable<string> keyList)
+        public IEnumerable<FileInfoDto> GetList(string[] keyList)
         {
             throw new NotImplementedException();
         }
@@ -155,7 +171,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="keyList">文件key集合</param>
         /// <returns></returns>
-        public IEnumerable<DeleteResultDto> RemoveRange(IEnumerable<string> keyList)
+        public IEnumerable<DeleteResultDto> RemoveRange(string[] keyList)
         {
             throw new NotImplementedException();
         }
@@ -179,7 +195,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="copyFileParam">复制到新空间的参数</param>
         /// <returns></returns>
-        public IEnumerable<CopyFileResultDto> CopyRangeTo(ICollection<CopyFileParam> copyFileParam)
+        public IEnumerable<CopyFileResultDto> CopyRangeTo(CopyFileParam[] copyFileParam)
         {
             throw new NotImplementedException();
         }
@@ -203,7 +219,117 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="moveFileParamList"></param>
         /// <returns></returns>
-        public IEnumerable<MoveFileResultDto> MoveRange(List<MoveFileParam> moveFileParamList)
+        public IEnumerable<MoveFileResultDto> MoveRange(MoveFileParam[] moveFileParamList)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 得到公开空间的访问地址
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <returns></returns>
+        public string GetPublishUrl(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 得到私有空间的地址
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="expire">过期时间 单位：s</param>
+        /// <returns></returns>
+        public string GetPrivateUrl(string key, int expire = 3600)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 下载文件
+        /// </summary>
+        /// <param name="url">文件访问地址</param>
+        /// <param name="savePath">保存路径</param>
+        /// <returns></returns>
+        public DownloadResultDto Download(string url, string savePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        #region 设置生存时间（超时会自动删除）
+
+        /// <summary>
+        /// 设置生存时间（超时会自动删除）
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="expire">过期时间 单位：day</param>
+        /// <returns></returns>
+        public ExpireResultDto SetExpire(string key, int expire)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 批量设置生存时间（超时会自动删除）
+        /// </summary>
+        /// <param name="keys">文件key</param>
+        /// <param name="expire">过期时间 单位：day</param>
+        /// <returns></returns>
+        public List<ExpireResultDto> SetExpireRange(string[] keys, int expire)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 修改文件MimeType
+
+        /// <summary>
+        /// 修改文件MimeType
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="mime">文件mimeType</param>
+        /// <returns></returns>
+        public ChangeMimeResultDto ChangeMime(string key, string mime)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 批量更改文件mime
+        /// </summary>
+        /// <param name="keys">文件key集合</param>
+        /// <param name="mime">问价mime</param>
+        /// <returns></returns>
+        public List<ChangeMimeResultDto> ChangeMimeRange(string[] keys, string mime)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 修改文件存储类型
+
+        /// <summary>
+        /// 修改文件存储类型
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="type">0表示普通存储，1表示低频存储</param>
+        /// <returns></returns>
+        public ChangeTypeResultDto ChangeType(string key, int type)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 批量更改文件类型
+        /// </summary>
+        /// <param name="keys">文件key集合</param>
+        /// <param name="type">0表示普通存储，1表示低频存储</param>
+        /// <returns></returns>
+        public List<ChangeTypeResultDto> ChangeTypeRange(string[] keys, int type)
         {
             throw new NotImplementedException();
         }

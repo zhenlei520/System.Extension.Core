@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 
@@ -64,6 +65,17 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
 
         #endregion
 
+        #region 获取指定前缀的文件列表
+
+        /// <summary>
+        /// 获取指定前缀的文件列表
+        /// </summary>
+        /// <param name="filter">筛选</param>
+        /// <returns></returns>
+        ListFileItemResultDto ListFiles(ListFileFilter filter);
+
+        #endregion
+
         #region 获取文件信息
 
         /// <summary>
@@ -78,7 +90,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// </summary>
         /// <param name="keyList">文件key集合</param>
         /// <returns></returns>
-        IEnumerable<FileInfoDto> GetList(IEnumerable<string> keyList);
+        IEnumerable<FileInfoDto> GetList(string[] keyList);
 
         #endregion
 
@@ -96,7 +108,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// </summary>
         /// <param name="keyList">文件key集合</param>
         /// <returns></returns>
-        IEnumerable<DeleteResultDto> RemoveRange(IEnumerable<string> keyList);
+        IEnumerable<DeleteResultDto> RemoveRange(string[] keyList);
 
         #endregion
 
@@ -114,7 +126,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// </summary>
         /// <param name="copyFileParam">复制到新空间的参数</param>
         /// <returns></returns>
-        IEnumerable<CopyFileResultDto> CopyRangeTo(ICollection<CopyFileParam> copyFileParam);
+        IEnumerable<CopyFileResultDto> CopyRangeTo(CopyFileParam[] copyFileParam);
 
         #endregion
 
@@ -132,7 +144,94 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// </summary>
         /// <param name="moveFileParamList"></param>
         /// <returns></returns>
-        IEnumerable<MoveFileResultDto> MoveRange(List<MoveFileParam> moveFileParamList);
+        IEnumerable<MoveFileResultDto> MoveRange(MoveFileParam[] moveFileParamList);
+
+        #endregion
+
+        #region 得到地址
+
+        /// <summary>
+        /// 得到公开空间的访问地址
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <returns></returns>
+        string GetPublishUrl(string key);
+
+        /// <summary>
+        /// 得到私有空间的访问地址
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="expire">过期时间，单位：s</param>
+        /// <returns></returns>
+        string GetPrivateUrl(string key, int expire = 3600);
+
+        #endregion
+
+        /// <summary>
+        /// 下载文件
+        /// </summary>
+        /// <param name="url">文件访问地址</param>
+        /// <param name="savePath">保存路径</param>
+        /// <returns></returns>
+        DownloadResultDto Download(string url, string savePath);
+
+        #region 设置生存时间
+
+        /// <summary>
+        /// 设置生存时间（超时会自动删除）
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="expire">过期时间 单位：day</param>
+        /// <returns></returns>
+        ExpireResultDto SetExpire(string key, int expire);
+
+        /// <summary>
+        /// 批量设置生存时间（超时会自动删除）
+        /// </summary>
+        /// <param name="keys">文件key</param>
+        /// <param name="expire">过期时间 单位：day</param>
+        /// <returns></returns>
+        List<ExpireResultDto> SetExpireRange(string[] keys, int expire);
+
+        #endregion
+
+        #region 更改文件mime
+
+        /// <summary>
+        /// 修改文件MimeType
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="mime">文件mimeType</param>
+        /// <returns></returns>
+        ChangeMimeResultDto ChangeMime(string key, string mime);
+
+        /// <summary>
+        /// 批量更改文件mime
+        /// </summary>
+        /// <param name="keys">文件key集合</param>
+        /// <param name="mime">问价mime</param>
+        /// <returns></returns>
+        List<ChangeMimeResultDto> ChangeMimeRange(string[] keys, string mime);
+
+        #endregion
+
+        #region 更改文件存储类型
+
+        /// <summary>
+        /// 修改文件存储类型
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="type">0表示普通存储，1表示低频存储</param>
+        /// <returns></returns>
+        ChangeTypeResultDto ChangeType(string key, int type);
+
+        /// <summary>
+        /// 批量更改文件类型
+        /// </summary>
+        /// <param name="keys">文件key集合</param>
+        /// <param name="type">0表示普通存储，1表示低频存储</param>
+        /// <returns></returns>
+        List<ChangeTypeResultDto> ChangeTypeRange(string[] keys, int type);
 
         #endregion
     }
