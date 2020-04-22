@@ -3,7 +3,6 @@
 
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Dto.Sms;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params.VoiceSms;
 
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Sms

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params
 {
     /// <summary>
     /// 移动或重命名文件

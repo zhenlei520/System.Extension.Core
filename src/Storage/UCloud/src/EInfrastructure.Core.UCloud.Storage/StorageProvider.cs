@@ -8,7 +8,7 @@ using System.Reflection;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.UCloud.Storage.Config;
 
@@ -94,16 +94,6 @@ namespace EInfrastructure.Core.UCloud.Storage
         public string GetUploadCredentials(UploadPersistentOpsParam opsParam)
         {
             throw new System.NotImplementedException();
-        }
-
-        /// <summary>
-        /// 得到上传文件策略信息
-        /// </summary>
-        /// <param name="opsParam">上传信息</param>
-        /// <param name="func"></param>
-        public string GetUploadCredentials(UploadPersistentOpsParam opsParam, Func<string> func)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

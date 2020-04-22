@@ -3,7 +3,7 @@
 
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params
 {
     /// <summary>
     /// 根据文件字节数组上传

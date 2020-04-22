@@ -3,7 +3,7 @@
 
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params
 {
     /// <summary>
     /// 上传文件（前端上传，后台生成策略信息）

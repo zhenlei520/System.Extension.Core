@@ -1,5 +1,5 @@
 using System.Linq;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 using EInfrastructure.Core.Tools;
 using Qiniu.Storage;
 

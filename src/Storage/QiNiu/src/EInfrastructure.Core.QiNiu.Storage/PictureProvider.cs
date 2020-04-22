@@ -3,8 +3,8 @@
 
 using System.Reflection;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param.Pictures;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Pictures;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.Tools;
 using Qiniu.Http;

@@ -7,7 +7,7 @@ using System.Reflection;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.QiNiu.Storage.Validator;
 using EInfrastructure.Core.Tools;
@@ -264,7 +264,6 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public IEnumerable<DeleteResultDto> RemoveRange(IEnumerable<string> keyList)
         {
             var enumerable = keyList as string[] ?? keyList.ToArray();
-
             List<DeleteResultDto> res = new List<DeleteResultDto>();
             enumerable.ToList().ListPager((list) => { res.AddRange(DelMulti(list)); }, 1000, 1);
             return res;

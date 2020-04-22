@@ -1,10 +1,9 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
 {

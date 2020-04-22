@@ -5,7 +5,7 @@ using System;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.Validation.Common;
 using Qiniu.Storage;
