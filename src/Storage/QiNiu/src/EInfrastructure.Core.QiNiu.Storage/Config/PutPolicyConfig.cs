@@ -1,6 +1,4 @@
 using System.Linq;
-using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
 using EInfrastructure.Core.Tools;
 using Qiniu.Storage;

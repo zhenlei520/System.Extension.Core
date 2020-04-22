@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Reflection;
-using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param.Pictures;
@@ -47,7 +46,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public bool  Upload(UploadByBase64Param param)
+        public bool Upload(UploadByBase64Param param)
         {
             string token = base.GetUploadCredentials(QiNiuConfig,
                 new UploadPersistentOpsParam(param.ImgPersistentOps.Key, param.ImgPersistentOps));

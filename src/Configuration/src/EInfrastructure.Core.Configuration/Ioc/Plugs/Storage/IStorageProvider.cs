@@ -42,20 +42,13 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
 
         #endregion
 
-        #region 得到上传文件策略信息
+        #region 得到上传文件凭证
 
         /// <summary>
-        /// 得到上传文件策略信息
+        /// 得到上传文件凭证
         /// </summary>
         /// <param name="opsParam">上传信息</param>
         string GetUploadCredentials(UploadPersistentOpsParam opsParam);
-
-        /// <summary>
-        /// 得到上传文件策略信息
-        /// </summary>
-        /// <param name="opsParam">上传信息</param>
-        /// <param name="func"></param>
-        string GetUploadCredentials(UploadPersistentOpsParam opsParam, Func<string> func);
 
         #endregion
 

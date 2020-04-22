@@ -1,12 +1,10 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using EInfrastructure.Core.Configuration.Enumerations;
-using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
@@ -122,26 +120,17 @@ namespace EInfrastructure.Core.QiNiu.Storage
 
         #endregion
 
-        #region 得到上传文件策略信息
+        #region 得到上传文件凭证
 
         /// <summary>
-        /// 得到上传文件策略信息
+        /// 得到上传文件凭证
         /// </summary>
         /// <param name="opsParam">上传信息</param>
         public string GetUploadCredentials(UploadPersistentOpsParam opsParam)
         {
-            return base.GetUploadCredentials(QiNiuConfig, opsParam);
-        }
-
-        /// <summary>
-        /// 得到上传文件策略信息
-        /// </summary>
-        /// <param name="opsParam">上传信息</param>
-        /// <param name="func"></param>
-        public string GetUploadCredentials(UploadPersistentOpsParam opsParam, Func<string> func)
-        {
-            return base.GetUploadCredentials(QiNiuConfig, opsParam,
-                (putPolicy) => { putPolicy.CallbackBody = func?.Invoke(); });
+            var uploadPersistentOps = GetUploadPersistentOps(opsParam.UploadPersistentOps);
+            return base.GetUploadCredentials(QiNiuConfig,
+                new UploadPersistentOpsParam(opsParam.Key, uploadPersistentOps));
         }
 
         #endregion
