@@ -8,7 +8,7 @@ namespace EInfrastructure.Core.Tools.Unique
     /// <summary>
     /// 雪花id
     /// </summary>
-    internal class SnowflakeId
+    public class SnowflakeId
     {
         /// <summary>
         /// 开始时间截
