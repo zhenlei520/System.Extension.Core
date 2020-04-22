@@ -18,15 +18,17 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// 根据文件流上传
         /// </summary>
         /// <param name="param">文件流上传配置</param>
+        /// <param name="isResume">是否允许续传</param>
         /// <returns></returns>
-        UploadResultDto UploadStream(UploadByStreamParam param);
+        UploadResultDto UploadStream(UploadByStreamParam param, bool isResume = false);
 
         /// <summary>
         /// 根据文件字节数组上传
         /// </summary>
         /// <param name="param">文件流上传配置</param>
+        /// <param name="isResume">是否允许续传</param>
         /// <returns></returns>
-        UploadResultDto UploadByteArray(UploadByByteArrayParam param);
+        UploadResultDto UploadByteArray(UploadByByteArrayParam param, bool isResume = false);
 
         #endregion
 

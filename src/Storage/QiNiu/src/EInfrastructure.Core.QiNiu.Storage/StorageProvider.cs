@@ -49,17 +49,29 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// 根据文件流上传
         /// </summary>
         /// <param name="param"></param>
+        /// <param name="isResume">是否允许续传（续传采用非表单提交方式）</param>
         /// <returns></returns>
-        public UploadResultDto UploadStream(UploadByStreamParam param)
+        public UploadResultDto UploadStream(UploadByStreamParam param, bool isResume = false)
         {
             var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
             string token = GetUploadCredentials(QiNiuConfig,
                 new UploadPersistentOpsParam(param.Key, uploadPersistentOps));
-            FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
-            HttpResult result =
-                target.UploadStream(param.Stream, param.Key, token, GetPutExtra(uploadPersistentOps));
-            bool res = result.Code == (int) HttpCode.OK;
-            return new UploadResultDto(res, res ? "成功" : result.ToString());
+            if (isResume)
+            {
+                ResumableUploader target = new ResumableUploader(GetConfig(uploadPersistentOps));
+                HttpResult result =
+                    target.UploadStream(param.Stream, param.Key, token, GetPutExtra(uploadPersistentOps));
+                bool res = result.Code == (int) HttpCode.OK;
+                return new UploadResultDto(res, res ? "成功" : result.ToString());
+            }
+            else
+            {
+                FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
+                HttpResult result =
+                    target.UploadStream(param.Stream, param.Key, token, GetPutExtra(uploadPersistentOps));
+                bool res = result.Code == (int) HttpCode.OK;
+                return new UploadResultDto(res, res ? "成功" : result.ToString());
+            }
         }
 
         #endregion
@@ -70,17 +82,29 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// 根据文件字节数组上传
         /// </summary>
         /// <param name="param">文件流上传配置</param>
+        /// <param name="isResume">是否允许续传（续传采用非表单提交方式）</param>
         /// <returns></returns>
-        public UploadResultDto UploadByteArray(UploadByByteArrayParam param)
+        public UploadResultDto UploadByteArray(UploadByByteArrayParam param, bool isResume = false)
         {
             var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
             string token = GetUploadCredentials(QiNiuConfig,
                 new UploadPersistentOpsParam(param.Key, uploadPersistentOps));
-            FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
-            HttpResult result =
-                target.UploadData(param.ByteArray, param.Key, token, GetPutExtra(uploadPersistentOps));
-            bool res = result.Code == (int) HttpCode.OK;
-            return new UploadResultDto(res, res ? "成功" : result.ToString());
+            if (isResume)
+            {
+                ResumableUploader target = new ResumableUploader(GetConfig(uploadPersistentOps));
+                HttpResult result =
+                    target.UploadStream(param.ByteArray.ConvertToStream(), param.Key, token, GetPutExtra(uploadPersistentOps));
+                bool res = result.Code == (int) HttpCode.OK;
+                return new UploadResultDto(res, res ? "成功" : result.ToString());
+            }
+            else
+            {
+                FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
+                HttpResult result =
+                    target.UploadData(param.ByteArray, param.Key, token, GetPutExtra(uploadPersistentOps));
+                bool res = result.Code == (int) HttpCode.OK;
+                return new UploadResultDto(res, res ? "成功" : result.ToString());
+            }
         }
 
         #endregion

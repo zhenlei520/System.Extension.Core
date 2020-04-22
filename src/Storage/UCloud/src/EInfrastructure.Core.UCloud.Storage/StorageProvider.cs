@@ -47,8 +47,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// 根据文件流上传
         /// </summary>
         /// <param name="param"></param>
+        /// <param name="isResume">是否允许续传</param>
         /// <returns></returns>
-        public UploadResultDto UploadStream(UploadByStreamParam param)
+        public UploadResultDto UploadStream(UploadByStreamParam param, bool isResume = false)
         {
             var res = base.UploadFile(param.Stream, param.Key, Path.GetExtension(param.Key));
             return new UploadResultDto(res, res ? "上传成功" : "上传失败");
@@ -62,8 +63,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// 根据文件字节数组上传
         /// </summary>
         /// <param name="param">文件流上传配置</param>
+        /// <param name="isResume">是否允许续传</param>
         /// <returns></returns>
-        public UploadResultDto UploadByteArray(UploadByByteArrayParam param)
+        public UploadResultDto UploadByteArray(UploadByByteArrayParam param, bool isResume = false)
         {
             var res = base.UploadFile(param.ByteArray.ConvertToStream(), param.Key, Path.GetExtension(param.Key));
             return new UploadResultDto(res, res ? "上传成功" : "上传失败");
