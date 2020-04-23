@@ -18,31 +18,24 @@ namespace EInfrastructure.Core.SqlServer.Common
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="T"></typeparam>
-    public abstract class RepositoryBase<TEntity, T> : IRepository<TEntity, T>
+    internal class RepositoryBase<TEntity, T>
         where TEntity : Entity<T>, IAggregateRoot<T>
         where T : IComparable
     {
         /// <summary>
         ///
         /// </summary>
-        protected DbContext Dbcontext;
-
-        private readonly IUnitOfWork _unitOfWork;
+        private DbContext Dbcontext;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="unitOfWork"></param>
-        protected RepositoryBase(IUnitOfWork unitOfWork)
+        public RepositoryBase(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork;
             Dbcontext = unitOfWork as DbContext;
         }
 
-        /// <summary>
-        /// 单元模式
-        /// </summary>
-        public IUnitOfWork UnitOfWork => _unitOfWork;
 
         #region 得到唯一标示
 
@@ -74,9 +67,9 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual Task<TEntity> FindByIdAsync(T id)
+        public virtual async Task<TEntity> FindByIdAsync(T id)
         {
-            return Dbcontext.Set<TEntity>().FindAsync(id);
+            return await Dbcontext.Set<TEntity>().FindAsync(id);
         }
 
         #endregion
@@ -96,9 +89,9 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// 添加单个实体信息
         /// </summary>
         /// <param name="entity"></param>
-        public  virtual void AddAsync(TEntity entity)
+        public virtual async Task AddAsync(TEntity entity)
         {
-            Dbcontext.Set<TEntity>().AddAsync(entity);
+            await Dbcontext.Set<TEntity>().AddAsync(entity);
         }
 
         #endregion
@@ -118,9 +111,9 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// 添加集合
         /// </summary>
         /// <param name="entities"></param>
-        public virtual void AddRangeAsync(List<TEntity> entities)
+        public virtual async Task AddRangeAsync(List<TEntity> entities)
         {
-            Dbcontext.Set<TEntity>().AddRangeAsync(entities);
+            await Dbcontext.Set<TEntity>().AddRangeAsync(entities);
         }
 
         #endregion
@@ -136,6 +129,14 @@ namespace EInfrastructure.Core.SqlServer.Common
             Dbcontext.Set<TEntity>().Remove(entity);
         }
 
+        /// <summary>
+        /// 移除数据
+        /// </summary>
+        /// <param name="entitys"></param>
+        public virtual void RemoveRange(params TEntity[] entitys)
+        {
+            Dbcontext.Set<TEntity>().RemoveRange(entitys);
+        }
         #endregion
 
         #region 批量删除实体
@@ -143,13 +144,10 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// <summary>
         /// 批量删除实体
         /// </summary>
-        public virtual void Removes(Expression<Func<TEntity, bool>> condition)
+        public virtual void RemoveRange(Expression<Func<TEntity, bool>> condition)
         {
-            var query = Dbcontext.Set<TEntity>().Where(condition);
-            foreach (var q in query)
-            {
-                Dbcontext.Set<TEntity>().Remove(q);
-            }
+            var entities = Dbcontext.Set<TEntity>().Where(condition).ToArray();
+            RemoveRange(entities);
         }
 
         #endregion
@@ -163,6 +161,16 @@ namespace EInfrastructure.Core.SqlServer.Common
         public virtual void Update(TEntity entity)
         {
             Dbcontext.Set<TEntity>().Update(entity);
+        }
+
+
+        /// <summary>
+        /// 更新实体
+        /// </summary>
+        /// <param name="entitys"></param>
+        public virtual void UpdateRange(params TEntity[] entitys)
+        {
+            Dbcontext.Set<TEntity>().UpdateRange(entitys);
         }
 
         #endregion

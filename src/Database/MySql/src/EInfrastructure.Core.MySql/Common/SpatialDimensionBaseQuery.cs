@@ -12,14 +12,14 @@ namespace EInfrastructure.Core.MySql.Common
     /// <summary>
     ///
     /// </summary>
-    public abstract class SpatialDimensionBaseQuery<TEntity, T>
+    internal class SpatialDimensionBaseQuery<TEntity, T>
         : ISpatialDimensionQuery<TEntity, T> where TEntity : class, IEntity<T>
         where T : IComparable
     {
         /// <summary>
         ///
         /// </summary>
-        protected DbContext Dbcontext;
+        private DbContext Dbcontext;
 
         private readonly IExecute _execute;
 
@@ -27,7 +27,7 @@ namespace EInfrastructure.Core.MySql.Common
         ///
         /// </summary>
         /// <param name="unitOfWork">unitwork</param>
-        protected SpatialDimensionBaseQuery(IUnitOfWork unitOfWork, IExecute execute)
+        public SpatialDimensionBaseQuery(IUnitOfWork unitOfWork, IExecute execute)
         {
             Dbcontext = unitOfWork as DbContext;
             _execute = execute;
@@ -85,7 +85,7 @@ namespace EInfrastructure.Core.MySql.Common
         #region get IQueryable
 
         /// <summary>
-        /// get list
+        /// get IQueryable
         /// </summary>
         /// <returns></returns>
         public virtual IQueryable<TEntity> GetQueryable(SpatialDimensionParam param)

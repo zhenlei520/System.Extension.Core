@@ -17,17 +17,17 @@ namespace EInfrastructure.Core.Config.Entities.Ioc
         /// <summary>
         /// get list
         /// </summary>
-        /// <typeparam name="TOption"></typeparam>
+        /// <typeparam name="TOpt"></typeparam>
         /// <returns></returns>
-        List<TOption> GetList<TOption>(SpatialDimensionParam param);
+        List<TOpt> GetList<TOpt>(SpatialDimensionParam param);
 
         /// <summary>
         /// get list
         /// </summary>
         /// <param name="param"></param>
-        /// <typeparam name="TOption"></typeparam>
+        /// <typeparam name="TOpt"></typeparam>
         /// <returns></returns>
-        PageData<TOption> GetPageData<TOption>(SpatialDimensionPagingParam param);
+        PageData<TOpt> GetPageData<TOpt>(SpatialDimensionPagingParam param);
 
         /// <summary>
         /// get list

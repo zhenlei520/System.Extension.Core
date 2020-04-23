@@ -1,6 +1,6 @@
-using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
+using System.Linq;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
+using EInfrastructure.Core.Tools;
 using Qiniu.Storage;
 
 namespace EInfrastructure.Core.QiNiu.Storage.Config
@@ -22,6 +22,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         public PutPolicyConfig(QiNiuStorageConfig qiNiuConfig)
         {
             _qiNiuConfig = qiNiuConfig;
+            _putPolicy = new PutPolicy();
         }
 
         #region 得到上传策略
@@ -34,26 +35,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// <returns></returns>
         internal PutPolicy GetPutPolicy()
         {
-            if (_putPolicy == null)
-            {
-                _putPolicy = new PutPolicy();
-                if (!string.IsNullOrEmpty(_qiNiuConfig.CallbackBody))
-                {
-                    _putPolicy.PersistentNotifyUrl = _qiNiuConfig.PersistentNotifyUrl;
-                    _putPolicy.CallbackBody = _qiNiuConfig.CallbackBody;
-                    _putPolicy.CallbackBodyType = Enumeration
-                        .FromValue<CallbackBodyType>(
-                            _qiNiuConfig
-                                .CallbackBodyType).Name;
-                    _putPolicy.CallbackUrl = _qiNiuConfig.CallbackUrl;
-                }
-
-                if (!string.IsNullOrEmpty(_qiNiuConfig.PersistentPipeline))
-                {
-                    _putPolicy.PersistentPipeline = _qiNiuConfig.PersistentPipeline;
-                }
-            }
-
             return _putPolicy;
         }
 
@@ -67,18 +48,19 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// <param name="opsParam">上传策略</param>
         internal void SetPutPolicy(UploadPersistentOpsParam opsParam)
         {
-            GetPutPolicy();
             _putPolicy.SaveKey = opsParam.Key;
 
             #region 覆盖上传
 
-            if (!opsParam.UploadPersistentOps.IsAllowOverlap)
+            var bucket = Core.Tools.GetBucket(this._qiNiuConfig, opsParam.UploadPersistentOps.Bucket);
+            if (opsParam.UploadPersistentOps.IsAllowOverlap == null ||
+                !opsParam.UploadPersistentOps.IsAllowOverlap.Value)
             {
-                _putPolicy.Scope = _qiNiuConfig.Bucket;
+                _putPolicy.Scope = bucket;
             }
             else
             {
-                _putPolicy.Scope = _qiNiuConfig.Bucket + ":" + opsParam.Key;
+                _putPolicy.Scope = bucket + ":" + opsParam.Key;
             }
 
             #endregion
@@ -110,6 +92,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
             {
                 _putPolicy.MimeLimit = opsParam.UploadPersistentOps.MimeLimit;
             }
+
             _putPolicy.FsizeMin = opsParam.UploadPersistentOps.FsizeMin;
             _putPolicy.FsizeLimit = opsParam.UploadPersistentOps.FsizeLimit;
 
@@ -123,15 +106,18 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
                 _putPolicy.ReturnBody = opsParam.UploadPersistentOps.ReturnBody;
             }
 
-            if (!string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackUrl))
+            if (opsParam.UploadPersistentOps.EnableCallback!=null&&opsParam.UploadPersistentOps.EnableCallback.Value&&!string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackHost) &&
+                !string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackUrl))
             {
-                _putPolicy.CallbackUrl = opsParam.UploadPersistentOps.CallbackUrl;
+                string url = opsParam.UploadPersistentOps.CallbackUrl.ConvertStrToList<string>(';')
+                    .Select(x => opsParam.UploadPersistentOps.CallbackHost + "" + x).ConvertListToString(';');
+                _putPolicy.CallbackUrl = url;
             }
 
-            if (!string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackHost))
-            {
-                _putPolicy.CallbackHost = opsParam.UploadPersistentOps.CallbackHost;
-            }
+            // if (!string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackHost))
+            // {
+            //     _putPolicy.CallbackHost = opsParam.UploadPersistentOps.CallbackHost;
+            // }
 
             if (!string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackBody))
             {

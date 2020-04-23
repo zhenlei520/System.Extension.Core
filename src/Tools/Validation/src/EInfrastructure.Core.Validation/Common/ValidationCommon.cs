@@ -22,12 +22,14 @@ namespace EInfrastructure.Core.Validation.Common
         /// <param name="entity">待检查的参数类</param>
         /// <param name="msg">默认错误提示信息</param>
         /// <param name="code">错误码</param>
+        /// <param name="noPublic">验证类的构造函数是否不公开的，默认只查询公开的构造函数false，否则为true</param>
         /// <typeparam name="TEntity"></typeparam>
-        public static void Check<TEntity>(this TEntity entity, string msg = "参数异常", string code = "")
+        public static void Check<TEntity>(this TEntity entity, string msg = "参数异常", string code = "",
+            bool noPublic = false)
             where TEntity : IFluentlValidatorEntity
         {
             Tools.Check.True(entity != null, msg);
-            var validatotor = new ServiceProvider().GetService<IFluentlValidator<TEntity>>();
+            var validatotor = new ServiceProvider().GetService<IFluentlValidator<TEntity>>(noPublic);
             validatotor?.Validate(entity)
                 .Check(code);
         }
@@ -38,12 +40,14 @@ namespace EInfrastructure.Core.Validation.Common
         /// <param name="entity">待检查的参数类</param>
         /// <param name="msg">默认错误提示信息</param>
         /// <param name="code">错误码</param>
+        /// <param name="noPublic">验证类的构造函数是否不公开的，默认只查询公开的构造函数false，否则为true</param>
         /// <typeparam name="TEntity"></typeparam>
-        public static void Check<TEntity>(this TEntity entity, string msg = "参数异常", int code = 201)
+        public static void Check<TEntity>(this TEntity entity, string msg = "参数异常", int code = 201,
+            bool noPublic = false)
             where TEntity : IFluentlValidatorEntity
         {
             Tools.Check.True(entity != null, msg);
-            var validatotor = new ServiceProvider().GetService<IFluentlValidator<TEntity>>();
+            var validatotor = new ServiceProvider().GetService<IFluentlValidator<TEntity>>(noPublic);
             validatotor?.Validate(entity)
                 .Check(code);
         }

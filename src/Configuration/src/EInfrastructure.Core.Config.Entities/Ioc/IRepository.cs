@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Config.Entities.Configuration;
 
@@ -50,7 +51,7 @@ namespace EInfrastructure.Core.Config.Entities.Ioc
         /// 添加单个实体信息
         /// </summary>
         /// <param name="entity"></param>
-        void AddAsync(TEntity entity);
+        Task AddAsync(TEntity entity);
 
         /// <summary>
         /// 添加集合
@@ -62,7 +63,7 @@ namespace EInfrastructure.Core.Config.Entities.Ioc
         /// 添加集合
         /// </summary>
         /// <param name="entities"></param>
-        void AddRangeAsync(List<TEntity> entities);
+        Task AddRangeAsync(List<TEntity> entities);
 
         /// <summary>
         /// 移除数据
@@ -71,10 +72,28 @@ namespace EInfrastructure.Core.Config.Entities.Ioc
         void Remove(TEntity entity);
 
         /// <summary>
+        /// 移除数据
+        /// </summary>
+        /// <param name="entitys"></param>
+        void RemoveRange(params TEntity[] entitys);
+
+        /// <summary>
+        /// 根据条件移除满足条件的数据集合
+        /// </summary>
+        /// <param name="condition">条件</param>
+        void RemoveRange(Expression<Func<TEntity, bool>> condition);
+
+        /// <summary>
         /// 更新实体
         /// </summary>
         /// <param name="entity"></param>
         void Update(TEntity entity);
+
+        /// <summary>
+        /// 更新实体集合
+        /// </summary>
+        /// <param name="entitys"></param>
+        void UpdateRange(params TEntity[] entitys);
 
         /// <summary>
         /// 根据id得到实体信息（需要重写）

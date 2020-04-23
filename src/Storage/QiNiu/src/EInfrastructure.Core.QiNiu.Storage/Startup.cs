@@ -3,7 +3,13 @@
 
 using System;
 using System.Linq;
+using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 using EInfrastructure.Core.QiNiu.Storage.Config;
+using EInfrastructure.Core.QiNiu.Storage.Enum;
+using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Validation.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -40,21 +46,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
             Func<QiNiuStorageConfig> func)
         {
             EInfrastructure.Core.StartUp.Run();
-            services.AddSingleton(func.Invoke());
+            var qiNiuConfig = func.Invoke();
+            ValidationCommon.Check(qiNiuConfig, "七牛云存储配置异常", HttpStatus.Err.Name);
+            services.AddSingleton(qiNiuConfig);
             return services;
-        }
-
-        /// <summary>
-        /// 加载七牛云存储
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="action">委托</param>
-        public static IServiceCollection AddQiNiuStorage(this IServiceCollection services,
-            Action<QiNiuStorageConfig> action)
-        {
-            QiNiuStorageConfig qiNiuStorageConfig = new QiNiuStorageConfig();
-            action.Invoke(qiNiuStorageConfig);
-            return services.AddQiNiuStorage(() => qiNiuStorageConfig);
         }
 
         #endregion
@@ -70,8 +65,36 @@ namespace EInfrastructure.Core.QiNiu.Storage
             IConfiguration configuration)
         {
             EInfrastructure.Core.StartUp.Run();
+            var section = configuration.GetSection(nameof(QiNiuStorageConfig));
+            if (section == null)
+            {
+                throw new BusinessException<string>("七牛云存储配置异常", HttpStatus.Err.Name);
+            }
+
+            QiNiuStorageConfig qiNiuStorageConfig = new QiNiuStorageConfig(section.GetValue<string>("AccessKey"),
+                section.GetValue<string>("SecretKey"), section.GetValue<ZoneEnum>("Zones"),
+                section.GetValue<string>("Host"), section.GetValue<string>("Bucket"))
+            {
+                IsUseHttps = section.GetValue<bool>("IsUseHttps"),
+                UseCdnDomains = section.GetValue<bool>("UseCdnDomains"),
+                IsAllowOverlap = section.GetValue<bool>("IsAllowOverlap"),
+                PersistentNotifyUrl = section.GetValue<string>("PersistentNotifyUrl"),
+                PersistentPipeline = section.GetValue<string>("PersistentPipeline"),
+                ChunkUnit =
+                    EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit
+                        .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit>((section
+                            .GetValue<string>("ChunkUnit").ConvertToInt(EInfrastructure.Core.Configuration.Ioc.Plugs
+                                .Storage.Enumerations.ChunkUnit.U2048K.Id)))
+            };
+            qiNiuStorageConfig.SetCallBack(section.GetValue<string>("CallbackBodyType").ConvertToInt(CallbackBodyType.Json.Id),
+                section.GetValue<string>("CallbackHost"), section.GetValue<string>("CallbackUrl"),
+                section.GetValue<string>("CallbackBody"));
+            configuration.GetSection(nameof(QiNiuStorageConfig)).Bind(qiNiuStorageConfig);
+            qiNiuStorageConfig.SetCallBackState(!string.IsNullOrEmpty(qiNiuStorageConfig.CallbackUrl) &&
+                                                !string.IsNullOrEmpty(qiNiuStorageConfig.CallbackHost));
+
             return AddQiNiuStorage(services,
-                () => configuration.GetSection(nameof(QiNiuStorageConfig)).Get<QiNiuStorageConfig>());
+                () => qiNiuStorageConfig);
         }
 
         #endregion

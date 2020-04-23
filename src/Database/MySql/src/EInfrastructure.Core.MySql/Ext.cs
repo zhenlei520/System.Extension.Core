@@ -1,4 +1,4 @@
-﻿// Copyright (c) zhenlei520 All rights reserved.
+// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -65,7 +65,7 @@ namespace EInfrastructure.Core.MySql
 
                 // Create the mapping type and do the mapping
                 var mapper = Activator.CreateInstance(mappingType);
-                mapper.GetType().GetMethod("Map")?.Invoke(mapper, new[] {entityBuilder});
+                mapper.GetType().GetMethod("Map")?.Invoke(mapper, new[] { entityBuilder });
             }
         }
 

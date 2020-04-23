@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-   <Version>2.0.1-beta-020</Version>
+    <Version>2.0.1-beta-027</Version>
     <Authors>zhenlei520</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>zhenlei520</Company>
@@ -10,10 +10,11 @@
     <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core</RepositoryUrl>
     <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.Tools/</PackageProjectUrl>
     <Copyright>Copyright ©zhenlei520 2020</Copyright>
-    <PackageIconUrl>https://secure.gravatar.com/avatar/932ca0f8eaf4df1aaf221f9a1a897569?s=512</PackageIconUrl>
     <Title>基础类库</Title>
     <PackageTags>EInfrastructure.Core.Tools EInfrastructure ECommon</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
+    <PackageIcon>packageIcon.png</PackageIcon>
+    <PackageIconUrl />
 
   </PropertyGroup>
 
@@ -26,8 +27,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.Entities\EInfrastructure.Core.Config.Entities.csproj"/>
-    <ProjectReference Include="..\EInfrastructure.Core.Http\EInfrastructure.Core.Http.csproj"/>
+    <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.Entities\EInfrastructure.Core.Config.Entities.csproj" />
+    <ProjectReference Include="..\EInfrastructure.Core.Http\EInfrastructure.Core.Http.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\packageIcon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

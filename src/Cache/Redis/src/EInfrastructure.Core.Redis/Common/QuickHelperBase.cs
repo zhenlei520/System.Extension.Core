@@ -739,7 +739,6 @@ namespace EInfrastructure.Core.Redis.Common
         /// <summary>
         /// 向有序集合添加一个或多个成员，或者更新已存在成员的分数
         /// </summary>
-        /// <typeparam name="TScore">分数类型</typeparam>
         /// <param name="key">不含prefix前辍RedisHelper.Name</param>
         /// <param name="memberScores">一个或多个成员分数</param>
         /// <returns></returns>
@@ -756,8 +755,6 @@ namespace EInfrastructure.Core.Redis.Common
         /// <summary>
         /// 向有序集合添加一个或多个成员，或者更新已存在成员的分数
         /// </summary>
-        /// <typeparam name="TScore">分数类型</typeparam>
-        /// <param name="key">不含prefix前辍RedisHelper.Name</param>
         /// <param name="memberScores">一个或多个成员分数</param>
         /// <returns></returns>
         public static long ZAdd(Dictionary<string, List<(double, string)>> memberScores)
@@ -1055,7 +1052,7 @@ namespace EInfrastructure.Core.Redis.Common
         /// <summary>
         /// 返回有序集中指定分数区间内的成员，分数从高到低排序
         /// </summary>
-        /// <param name="key">不含prefix前辍RedisHelper.Name</param>
+        /// <param name="keys">不含prefix前辍RedisHelper.Name</param>
         /// <param name="minScore">最小分数</param>
         /// <param name="maxScore">最大分数</param>
         /// <param name="limit">返回多少成员</param>

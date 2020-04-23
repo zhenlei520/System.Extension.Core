@@ -20,13 +20,27 @@ namespace EInfrastructure.Core.Config.Entities.Data
         }
 
         /// <summary>
-        ///
+        /// 分页
         /// </summary>
         /// <param name="rowCount">总条数</param>
         /// <param name="data">数据集合</param>
-        /// <param name="extendedData">扩展信息</param>
+        public PageData(int rowCount, List<T> data)
+        {
+            RowCount = rowCount;
+            Data = data;
+        }
+
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <param name="rowCount"></param>
+        /// <param name="data"></param>
+        /// <param name="extendedData"></param>
         public PageData(int rowCount, List<T> data, object extendedData)
         {
+            RowCount = rowCount;
+            Data = data;
+            ExtendedData = extendedData;
         }
 
         /// <summary>
@@ -44,8 +58,7 @@ namespace EInfrastructure.Core.Config.Entities.Data
         /// <summary>
         /// 扩展Data
         /// </summary>
-        [JsonProperty(PropertyName = "extend_data")]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "extend_data",DefaultValueHandling =DefaultValueHandling.Ignore)]
         public virtual object ExtendedData { get; set; }
     }
 }

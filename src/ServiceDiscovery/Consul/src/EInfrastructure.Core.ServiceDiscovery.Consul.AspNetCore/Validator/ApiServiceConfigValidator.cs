@@ -10,7 +10,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Validator
     /// <summary>
     /// ApiService配置校验
     /// </summary>
-    public class ApiServiceConfigValidator : AbstractValidator<ApiServiceConfig>, IFluentlValidator<ApiServiceConfig>
+    internal class ApiServiceConfigValidator : AbstractValidator<ApiServiceConfig>, IFluentlValidator<ApiServiceConfig>
     {
         /// <summary>
         ///

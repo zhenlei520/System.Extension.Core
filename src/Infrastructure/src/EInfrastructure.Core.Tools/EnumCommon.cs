@@ -28,6 +28,7 @@ namespace EInfrastructure.Core.Tools
         }
 
         #region 得到枚举字典（key对应枚举的值，value对应枚举的注释）
+
         /// <summary>
         /// 得到枚举字典（key对应枚举的值，value对应枚举的注释）
         /// </summary>
@@ -41,11 +42,14 @@ namespace EInfrastructure.Core.Tools
             {
                 nums.Add(Convert.ToInt32(value), GetDescription(value));
             }
+
             return nums;
         }
+
         #endregion
 
         #region 返回枚举项的描述信息
+
         /// <summary>
         /// 返回枚举项的描述信息。
         /// </summary>
@@ -70,11 +74,47 @@ namespace EInfrastructure.Core.Tools
                     }
                 }
             }
+
             return null;
         }
+
+        #endregion
+
+        #region 得到自定义描述
+
+        /// <summary>
+        /// 得到自定义描述
+        /// </summary>
+        /// <param name="value"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T GetCustomerObj<T>(this Enum value) where T : Attribute
+        {
+            Type enumType = value.GetType();
+            // 获取枚举常数名称。
+            string name = Enum.GetName(enumType, value);
+            if (name != null)
+            {
+                // 获取枚举字段。
+                FieldInfo fieldInfo = enumType.GetField(name);
+                if (fieldInfo != null)
+                {
+                    // 获取描述的属性。
+                    if (Attribute.GetCustomAttribute(fieldInfo,
+                        typeof(T), false) is T attr)
+                    {
+                        return attr;
+                    }
+                }
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region 判断值是否在枚举类型中存在
+
         /// <summary>
         /// 判断值是否在枚举中存在
         /// </summary>
@@ -96,8 +136,9 @@ namespace EInfrastructure.Core.Tools
         {
             if (enumValue == null)
                 return false;
-            return ((int)enumValue).IsExist(enumType);
+            return ((int) enumValue).IsExist(enumType);
         }
+
         #endregion
     }
 }

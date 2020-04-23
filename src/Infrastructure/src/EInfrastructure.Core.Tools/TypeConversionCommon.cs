@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -475,6 +476,29 @@ namespace EInfrastructure.Core.Tools
                 if (byte.TryParse(obj.ToString(), out var result))
                     return result;
             return func.Invoke();
+        }
+
+        #endregion
+
+        #region 转为字节数组
+
+        /// <summary>
+        /// 转为字节数组
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static byte[] ConvertToByteArray(this object obj)
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+            BinaryFormatter se = new BinaryFormatter();
+            MemoryStream memStream = new MemoryStream();
+            se.Serialize(memStream, obj);
+            byte[] bobj = memStream.ToArray();
+            memStream.Close();
+            return bobj;
         }
 
         #endregion

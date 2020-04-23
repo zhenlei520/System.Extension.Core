@@ -8,6 +8,9 @@ using EInfrastructure.Core.Redis.Common.Internal.IO;
 
 namespace EInfrastructure.Core.Redis.Common.Internal
 {
+    /// <summary>
+    /// 
+    /// </summary>
     class RedisConnector
     {
         readonly int _concurrency;
@@ -25,12 +28,12 @@ namespace EInfrastructure.Core.Redis.Common.Internal
         public bool IsPipelined { get { return _io.IsPipelined; } }
         public int ReconnectAttempts { get; set; }
         public int ReconnectWait { get; set; }
-        public int ReceiveTimeout 
+        public int ReceiveTimeout
         {
             get { return _redisSocket.ReceiveTimeout; }
             set { _redisSocket.ReceiveTimeout = value; }
         }
-        public int SendTimeout 
+        public int SendTimeout
         {
             get { return _redisSocket.SendTimeout; }
             set { _redisSocket.SendTimeout = value; }
@@ -40,7 +43,7 @@ namespace EInfrastructure.Core.Redis.Common.Internal
             get { return _io.Encoding; }
             set { _io.Encoding = value; }
         }
-        
+
 
         public RedisConnector(EndPoint endPoint, IRedisSocket socket, int concurrency, int bufferSize)
         {
@@ -62,9 +65,9 @@ namespace EInfrastructure.Core.Redis.Common.Internal
             return _redisSocket.Connected;
         }
 
-        public Task<bool> ConnectAsync()
+        public async Task<bool> ConnectAsync()
         {
-            return Async.ConnectAsync();
+            return await Async.ConnectAsync();
         }
 
         public T Call<T>(RedisCommand<T> command)
@@ -88,9 +91,9 @@ namespace EInfrastructure.Core.Redis.Common.Internal
             }
         }
 
-        public Task<T> CallAsync<T>(RedisCommand<T> command)
+        public async Task<T> CallAsync<T>(RedisCommand<T> command)
         {
-            return Async.CallAsync(command);
+            return  await Async.CallAsync(command);
         }
 
         public void Write(RedisCommand command)

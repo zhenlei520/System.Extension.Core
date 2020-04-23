@@ -18,20 +18,20 @@ namespace EInfrastructure.Core.MySql.Common
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="T"></typeparam>
-    public abstract class QueryBase<TEntity, T>
-        : IQuery<TEntity, T> where TEntity : class, IEntity<T>
+    internal class QueryBase<TEntity, T>
+        where TEntity : class, IEntity<T>
         where T : IComparable
     {
         /// <summary>
         ///
         /// </summary>
-        protected DbContext Dbcontext;
+        private DbContext Dbcontext;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="unitOfWork">工作单元</param>
-        protected QueryBase(IUnitOfWork unitOfWork)
+        internal QueryBase(IUnitOfWork unitOfWork)
         {
             this.Dbcontext = unitOfWork as DbContext;
         }
@@ -74,14 +74,14 @@ namespace EInfrastructure.Core.MySql.Common
         /// <param name="condition">条件</param>
         /// <param name="isTracking">是否跟踪</param>
         /// <returns></returns>
-        public virtual Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> condition, bool isTracking = true)
+        public virtual async Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> condition, bool isTracking = true)
         {
             if (isTracking)
             {
-                return Dbcontext.GetOneAsync<TEntity, T>(condition);
+                return await Dbcontext.GetOneAsync<TEntity, T>(condition);
             }
 
-            return Dbcontext.Set<TEntity>().AsNoTracking()
+            return await Dbcontext.Set<TEntity>().AsNoTracking()
                 .FirstOrDefaultAsync(condition);
         }
 
@@ -111,10 +111,10 @@ namespace EInfrastructure.Core.MySql.Common
         /// <param name="pageIndex">页码</param>
         /// <param name="isTotal">是否计算总数</param>
         /// <returns></returns>
-        public virtual Task<PageData<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> condition, int pageSize,
+        public virtual async Task<PageData<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> condition, int pageSize,
             int pageIndex, bool isTotal)
         {
-            return Dbcontext.GetListAsync<TEntity, T>(condition, pageSize, pageIndex, isTotal);
+            return await Dbcontext.GetListAsync<TEntity, T>(condition, pageSize, pageIndex, isTotal);
         }
 
         #endregion
@@ -136,9 +136,9 @@ namespace EInfrastructure.Core.MySql.Common
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
-        public  virtual Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> condition)
+        public virtual async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> condition)
         {
-            return Dbcontext.GetListAsync<TEntity, T>(condition);
+            return await Dbcontext.GetListAsync<TEntity, T>(condition);
         }
 
         #endregion
@@ -160,9 +160,9 @@ namespace EInfrastructure.Core.MySql.Common
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
-        public virtual Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> condition)
+        public virtual async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> condition)
         {
-            return Dbcontext.ExistsAsync<TEntity, T>(condition);
+            return await Dbcontext.ExistsAsync<TEntity, T>(condition);
         }
 
         #endregion
@@ -186,9 +186,9 @@ namespace EInfrastructure.Core.MySql.Common
         /// <param name="condition">条件</param>
         /// <param name="topN">前N条记录</param>
         /// <returns></returns>
-        public virtual Task<List<TEntity>> TopNAsync(Expression<Func<TEntity, bool>> condition, int topN)
+        public virtual async Task<List<TEntity>> TopNAsync(Expression<Func<TEntity, bool>> condition, int topN)
         {
-            return Dbcontext.TopNAsync<TEntity, T>(condition, topN);
+            return await Dbcontext.TopNAsync<TEntity, T>(condition, topN);
         }
 
         #endregion
@@ -237,9 +237,9 @@ namespace EInfrastructure.Core.MySql.Common
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
-        public virtual Task<int> CountAsync(Expression<Func<TEntity, bool>> condition)
+        public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> condition)
         {
-            return Dbcontext.CountAsync<TEntity, T>(condition);
+            return await Dbcontext.CountAsync<TEntity, T>(condition);
         }
 
         #endregion

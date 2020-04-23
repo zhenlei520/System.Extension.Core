@@ -68,10 +68,11 @@ namespace EInfrastructure.Core.Tools.Systems
         /// 根据类型实例化当前类
         /// </summary>
         /// <param name="type"></param>
+        /// <param name="noPublic">是否不公开的</param>
         /// <returns></returns>
-        public static object CreateInstance(this Type type)
+        public static object CreateInstance(this Type type, bool noPublic = false)
         {
-            return Assembly.GetAssembly(type).CreateInstance(type.ToString());
+            return Assembly.GetAssembly(type).CreateInstance(type.ToString(), noPublic);
         }
 
         #endregion
@@ -86,8 +87,8 @@ namespace EInfrastructure.Core.Tools.Systems
         /// <returns></returns>
         public static Type GetType(string fullName, string package)
         {
-            Check.True(!string.IsNullOrEmpty(fullName),"fullName is not empty");
-            Check.True(!string.IsNullOrEmpty(package),"package is not empty");
+            Check.True(!string.IsNullOrEmpty(fullName), "fullName is not empty");
+            Check.True(!string.IsNullOrEmpty(package), "package is not empty");
             return Type.GetType($"{fullName},{package}");
         }
 

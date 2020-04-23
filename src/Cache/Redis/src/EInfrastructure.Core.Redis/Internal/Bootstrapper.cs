@@ -1,7 +1,6 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
@@ -46,7 +45,7 @@ namespace EInfrastructure.Core.Redis.Internal
         /// <returns></returns>
         public async Task BootstrapAsync(CancellationToken stoppingToken)
         {
-
+            await Task.CompletedTask;
         }
     }
 }

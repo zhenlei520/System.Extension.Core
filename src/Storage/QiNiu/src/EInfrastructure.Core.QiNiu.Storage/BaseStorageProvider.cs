@@ -5,7 +5,7 @@ using System;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.Validation.Common;
 using Qiniu.Storage;
@@ -99,53 +99,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     uploadPersistentOps.UploadController?.Invoke(uploadState);
                 }
 
-                if (uploadPersistentOps.MaxRetryTimes != -1)
-                {
-                    putExtra.MaxRetryTimes = uploadPersistentOps.MaxRetryTimes;
-                }
+                putExtra.MaxRetryTimes = Core.Tools.GetMaxRetryTimes(_qiNiuConfig, uploadPersistentOps.MaxRetryTimes);
             }
 
             return putExtra;
-        }
-
-        #endregion
-
-        #region 得到七牛配置文件
-
-        /// <summary>
-        /// 得到七牛配置文件
-        /// </summary>
-        /// <returns></returns>
-        internal virtual Qiniu.Storage.Config GetConfig(UploadPersistentOps uploadPersistentOps = null)
-        {
-            var config = new Qiniu.Storage.Config()
-            {
-                Zone = _qiNiuConfig.GetZone(),
-            };
-            if (uploadPersistentOps != null)
-            {
-                config.UseHttps = uploadPersistentOps.IsUseHttps;
-
-                config.ChunkSize = Get(uploadPersistentOps.ChunkUnit);
-                if (uploadPersistentOps.MaxRetryTimes != -1)
-                {
-                    config.MaxRetryTimes = uploadPersistentOps.MaxRetryTimes;
-                }
-
-                if (uploadPersistentOps.MaxRetryTimes != -1)
-                {
-                    config.MaxRetryTimes = uploadPersistentOps.MaxRetryTimes;
-                }
-            }
-
-            Qiniu.Storage.ChunkUnit Get(
-                EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit chunkUnit)
-            {
-                int chunkUnits = chunkUnit.Id;
-                return (Qiniu.Storage.ChunkUnit) chunkUnits;
-            }
-
-            return config;
         }
 
         #endregion
@@ -159,11 +116,13 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 得到资源管理
         /// </summary>
+        /// <param name="persistentOps">策略</param>
         /// <returns></returns>
-        protected virtual BucketManager GetBucketManager()
+        protected virtual BucketManager GetBucketManager(BasePersistentOps persistentOps = null)
         {
             if (_bucketManager == null)
-                _bucketManager = new BucketManager(_qiNiuConfig.GetMac(), GetConfig());
+                _bucketManager = new BucketManager(_qiNiuConfig.GetMac(),
+                    EInfrastructure.Core.QiNiu.Storage.Core.Tools.GetConfig(this._qiNiuConfig, persistentOps));
             return _bucketManager;
         }
 
@@ -189,6 +148,19 @@ namespace EInfrastructure.Core.QiNiu.Storage
 
         #endregion
 
+        #region 得到授权
+
+        /// <summary>
+        /// 得到授权
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Auth GetAuth()
+        {
+            return new Auth(this._qiNiuConfig.GetMac());
+        }
+
+        #endregion
+
         #region 得到上传策略
 
         /// <summary>
@@ -198,7 +170,68 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         protected virtual UploadPersistentOps GetUploadPersistentOps(UploadPersistentOps uploadPersistentOps)
         {
-            return uploadPersistentOps ?? new UploadPersistentOps();
+            if (uploadPersistentOps == null)
+            {
+                uploadPersistentOps = new UploadPersistentOps();
+            }
+
+            if (uploadPersistentOps.IsUseHttps == null)
+            {
+                uploadPersistentOps.IsUseHttps = _qiNiuConfig.IsUseHttps;
+            }
+
+            if (uploadPersistentOps.UseCdnDomains == null)
+            {
+                uploadPersistentOps.UseCdnDomains = _qiNiuConfig.UseCdnDomains;
+            }
+
+            if (uploadPersistentOps.IsAllowOverlap == null)
+            {
+                uploadPersistentOps.IsAllowOverlap = _qiNiuConfig.IsAllowOverlap;
+            }
+
+            if (uploadPersistentOps.ChunkUnit == null)
+            {
+                uploadPersistentOps.ChunkUnit = _qiNiuConfig.ChunkUnit;
+            }
+
+            if ((uploadPersistentOps.EnableCallback == null && _qiNiuConfig.EnableCallback) ||
+                uploadPersistentOps.EnableCallback == true)
+            {
+                string callbackHost = string.IsNullOrEmpty(uploadPersistentOps.CallbackHost)
+                    ? _qiNiuConfig.CallbackHost
+                    : uploadPersistentOps.CallbackHost;
+                string callbackUrl = string.IsNullOrEmpty(uploadPersistentOps.CallbackUrl)
+                    ? _qiNiuConfig.CallbackUrl
+                    : uploadPersistentOps.CallbackUrl;
+                string callbackBody = string.IsNullOrEmpty(uploadPersistentOps.CallbackBody)
+                    ? _qiNiuConfig.CallbackBody
+                    : uploadPersistentOps.CallbackBody;
+                string callbackBodyType = string.IsNullOrEmpty(uploadPersistentOps.CallbackBodyType)
+                    ? CallbackBodyType
+                          .FromValue<CallbackBodyType>(_qiNiuConfig.CallbackBodyType)?.Name ??
+                      CallbackBodyType.Json.Name
+                    : uploadPersistentOps.CallbackBodyType;
+                uploadPersistentOps.SetCallBack(callbackBodyType, callbackHost, callbackUrl, callbackBody);
+            }
+
+            if (uploadPersistentOps.EnablePersistentNotifyUrl)
+            {
+                string persistentNotifyUrl = string.IsNullOrEmpty(uploadPersistentOps.PersistentNotifyUrl)
+                    ? _qiNiuConfig.PersistentNotifyUrl
+                    : uploadPersistentOps.PersistentNotifyUrl;
+                uploadPersistentOps.SetPersistentNotifyUrl(persistentNotifyUrl);
+            }
+
+            if (uploadPersistentOps.EnablePersistentPipeline)
+            {
+                string persistentPipeline = string.IsNullOrEmpty(uploadPersistentOps.PersistentPipeline)
+                    ? _qiNiuConfig.PersistentPipeline
+                    : uploadPersistentOps.PersistentPipeline;
+                uploadPersistentOps.SetPersistentPipeline(persistentPipeline);
+            }
+
+            return uploadPersistentOps;
         }
 
         #endregion

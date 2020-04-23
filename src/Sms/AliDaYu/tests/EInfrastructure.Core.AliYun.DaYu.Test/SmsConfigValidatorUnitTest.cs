@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.AliYun.DaYu.Config;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params.Sms;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params.VoiceSms;
 using Xunit;

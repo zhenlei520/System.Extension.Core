@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Param.Pictures;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pictures;
 using EInfrastructure.Core.UCloud.Storage.Config;
 
 namespace EInfrastructure.Core.UCloud.Storage

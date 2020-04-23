@@ -14,7 +14,11 @@ namespace EInfrastructure.Core.Redis.Common.Internal
         public event EventHandler<RedisTransactionQueuedEventArgs> TransactionQueued;
 
         bool _active;
-        public bool Active { get { return _active; } }
+
+        public bool Active
+        {
+            get { return _active; }
+        }
 
         public RedisTransaction(RedisConnector connector)
         {
@@ -28,10 +32,10 @@ namespace EInfrastructure.Core.Redis.Common.Internal
             return _connector.Call(RedisCommands.Multi());
         }
 
-        public Task<string> StartAsync()
+        public async Task<string> StartAsync()
         {
             _active = true;
-            return _connector.CallAsync(RedisCommands.Multi());
+            return await _connector.CallAsync(RedisCommands.Multi());
         }
 
         public T Write<T>(RedisCommand<T> command)
@@ -63,8 +67,9 @@ namespace EInfrastructure.Core.Redis.Common.Internal
                 _connector.Call(_execCommand);
                 object[] response = _connector.EndPipe();
                 for (int i = 1; i < response.Length - 1; i++)
-                    OnTransactionQueued(_pipeCommands[i - 1].Item1, _pipeCommands[i - 1].Item2, response[i - 1].ToString());
-                
+                    OnTransactionQueued(_pipeCommands[i - 1].Item1, _pipeCommands[i - 1].Item2,
+                        response[i - 1].ToString());
+
                 object transaction_response = response[response.Length - 1];
                 if (!(transaction_response is object[]))
                     throw new RedisProtocolException("Unexpected response");
@@ -75,10 +80,10 @@ namespace EInfrastructure.Core.Redis.Common.Internal
             return _connector.Call(_execCommand);
         }
 
-        public Task<object[]> ExecuteAsync()
+        public async Task<object[]> ExecuteAsync()
         {
             _active = false;
-            return _connector.CallAsync(_execCommand);
+            return await _connector.CallAsync(_execCommand);
         }
 
         public string Abort()
@@ -87,10 +92,10 @@ namespace EInfrastructure.Core.Redis.Common.Internal
             return _connector.Call(RedisCommands.Discard());
         }
 
-        public Task<string> AbortAsync()
+        public async Task<string> AbortAsync()
         {
             _active = false;
-            return _connector.CallAsync(RedisCommands.Discard());
+            return await _connector.CallAsync(RedisCommands.Discard());
         }
 
         void OnTransactionQueued<T>(RedisCommand<T> command, string response)
