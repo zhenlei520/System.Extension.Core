@@ -10,17 +10,15 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
     /// <summary>
     /// 上传策略配置
     /// </summary>
-    public class UploadPersistentOps
+    public class UploadPersistentOps : BasePersistentOps
     {
         /// <summary>
         ///
         /// </summary>
-        public UploadPersistentOps()
+        public UploadPersistentOps():base()
         {
-            IsUseHttps = null;
-            UseCdnDomains = null;
+
             IsAllowOverlap = null;
-            ChunkUnit = null;
             ExpireInSeconds = 3600;
             FileType = null;
             DetectMime = FsizeMin;
@@ -28,31 +26,15 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
             FsizeMin = null;
             FsizeLimit = null;
             ProgressAction = null;
-            MaxRetryTimes = 5;
             EnablePersistentPipeline = true;
             EnablePersistentNotifyUrl = true;
             EnableCallback = null;
         }
 
         /// <summary>
-        /// [可选]是否使用Https域名
-        /// </summary>
-        public virtual bool? IsUseHttps { get; set; }
-
-        /// <summary>
-        /// [可选]是否用Cdn域
-        /// </summary>
-        public virtual bool? UseCdnDomains { get; set; }
-
-        /// <summary>
         /// [可选]是否覆盖上传
         /// </summary>
         public virtual bool? IsAllowOverlap { get; set; }
-
-        /// <summary>
-        /// [可选]分片上传默认最大值
-        /// </summary>
-        public virtual ChunkUnit ChunkUnit { get; set; }
 
         /// <summary>
         /// [可选]文件上传后多少天后自动删除
@@ -206,11 +188,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
         /// 设置文件上传状态
         /// </summary>
         public virtual Action<UploadState> UploadController { set; get; }
-
-        /// <summary>
-        /// 最大重试次数
-        /// </summary>
-        public virtual int MaxRetryTimes { set; get; }
 
         #endregion
 

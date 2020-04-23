@@ -15,12 +15,15 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
         /// <param name="delimiter">指定目录分隔符，列出所有公共前缀（模拟列出目录效果）</param>
         /// <param name="lastMark">最后一次访问的文件</param>
         /// <param name="pageSize">每页数量（默认1000条）</param>
-        public ListFileFilter(string prefix, string delimiter, string lastMark, int pageSize = 1000)
+        /// <param name="persistentOps">策略</param>
+        public ListFileFilter(string prefix, string delimiter, string lastMark, int pageSize = 1000,
+            BasePersistentOps persistentOps = null)
         {
             Prefix = prefix;
             Delimiter = delimiter;
             LastMark = lastMark;
             PageSize = pageSize;
+            PersistentOps = persistentOps ?? new BasePersistentOps();
         }
 
         /// <summary>
@@ -42,5 +45,10 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
         /// 每页数量
         /// </summary>
         public int PageSize { get; private set; }
+
+        /// <summary>
+        /// 策略
+        /// </summary>
+        public BasePersistentOps PersistentOps { get; private set; }
     }
 }

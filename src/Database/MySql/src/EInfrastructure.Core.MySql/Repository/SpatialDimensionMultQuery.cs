@@ -7,7 +7,6 @@ using System.Linq;
 using EInfrastructure.Core.Config.Entities.Configuration;
 using EInfrastructure.Core.Config.Entities.Data;
 using EInfrastructure.Core.Config.Entities.Ioc;
-using EInfrastructure.Core.MySql.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace EInfrastructure.Core.MySql.Repository

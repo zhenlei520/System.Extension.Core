@@ -1,5 +1,5 @@
 using System.Linq;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using EInfrastructure.Core.Tools;
 using Qiniu.Storage;
 
@@ -52,14 +52,15 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
 
             #region 覆盖上传
 
+            var bucket = Core.Tools.GetBucket(this._qiNiuConfig, opsParam.UploadPersistentOps.Bucket);
             if (opsParam.UploadPersistentOps.IsAllowOverlap == null ||
                 !opsParam.UploadPersistentOps.IsAllowOverlap.Value)
             {
-                _putPolicy.Scope = _qiNiuConfig.Bucket;
+                _putPolicy.Scope = bucket;
             }
             else
             {
-                _putPolicy.Scope = _qiNiuConfig.Bucket + ":" + opsParam.Key;
+                _putPolicy.Scope = bucket + ":" + opsParam.Key;
             }
 
             #endregion

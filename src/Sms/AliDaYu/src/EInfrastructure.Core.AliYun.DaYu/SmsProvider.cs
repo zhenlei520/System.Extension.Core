@@ -16,7 +16,6 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Dto.Sms;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Enum;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params.Sms;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
