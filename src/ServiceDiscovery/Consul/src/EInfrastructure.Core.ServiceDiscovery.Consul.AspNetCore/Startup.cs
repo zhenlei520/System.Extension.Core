@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,10 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         {
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration) service.ImplementationInstance;
+            if (configuration == null)
+            {
+                throw new BusinessException("获取IConfiguration失败");
+            }
             return AddConsul(services, configuration);
         }
 
