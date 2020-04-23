@@ -26,8 +26,8 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// <summary>
         ///
         /// </summary>
-        /// <param name="accessKey"></param>
-        /// <param name="secretKey"></param>
+        /// <param name="accessKey">七牛提供的公钥，用于识别用户</param>
+        /// <param name="secretKey">七牛提供的秘钥</param>
         public QiNiuStorageConfig(string accessKey, string secretKey) :
             this()
         {
@@ -38,13 +38,13 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// <summary>
         ///
         /// </summary>
-        /// <param name="accessKey"></param>
-        /// <param name="secretKey"></param>
-        /// <param name="zones"></param>
-        /// <param name="host"></param>
-        /// <param name="bucket"></param>
+        /// <param name="accessKey">七牛提供的公钥，用于识别用户</param>
+        /// <param name="secretKey">七牛提供的秘钥</param>
+        /// <param name="zones">空间区域</param>
+        /// <param name="host">文件对外访问的主机名</param>
+        /// <param name="bucket">默认空间</param>
         public QiNiuStorageConfig(string accessKey, string secretKey, ZoneEnum zones, string host, string bucket) :
-            this(accessKey,secretKey)
+            this(accessKey, secretKey)
         {
             DefaultZones = zones;
             DefaultHost = host;
@@ -62,7 +62,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         public string SecretKey { get; private set; }
 
         /// <summary>
-        /// 空间
+        /// 空间区域
         /// </summary>
         public ZoneEnum? DefaultZones { get; private set; }
 
@@ -156,6 +156,23 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         internal Mac GetMac()
         {
             return _mac ?? (_mac = new Mac(this.AccessKey, this.SecretKey));
+        }
+
+        #endregion
+
+        #region 设置默认空间信息
+
+        /// <summary>
+        /// 设置默认空间信息
+        /// </summary>
+        /// <param name="bucket">默认空间</param>
+        /// <param name="host">默认域</param>
+        /// <param name="zone">默认空间区域</param>
+        public void SetDefaultBucket(string bucket,string host,ZoneEnum zone)
+        {
+            DefaultBucket = bucket;
+            DefaultHost = host;
+            DefaultZones = zone;
         }
 
         #endregion
