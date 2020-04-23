@@ -25,10 +25,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test.Base
             var services = new ServiceCollection();
             services.AddQiNiuStorage(() =>
             {
-                return new QiNiuStorageConfig("AfgRCCFwzEB5BUNMX7xkN-shv8icPueyDU1GPleX",
-                    "qHOKkPU1_X345-69nd8UfMkSwXds7IUA0mjNMJB1", ZoneEnum.ZoneCnSouth,
-                    "http://test.storage.bflove.cn", "test");
-                // return new QiNiuStorageConfig("","",ZoneEnum.ZoneCnSouth,"","");
+                return new QiNiuStorageConfig("","",ZoneEnum.ZoneCnSouth,"","");
             });
             provider = EInfrastructure.Core.AutoFac.AutofacAutoRegister.Use(services, builder => { });
         }
