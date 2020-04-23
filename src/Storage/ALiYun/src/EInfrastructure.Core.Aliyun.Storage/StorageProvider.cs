@@ -61,12 +61,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
             throw new System.NotImplementedException();
         }
 
-        public string GetManageToken(string url)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public string GetManageToken(string url, byte[] body)
+        public string GetManageToken(GetManageTokenParam request)
         {
             throw new System.NotImplementedException();
         }
@@ -76,7 +71,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
             throw new System.NotImplementedException();
         }
 
-        public OperateResultDto Exist(string key, BasePersistentOps persistentOps = null)
+        public OperateResultDto Exist(ExistParam request)
         {
             throw new System.NotImplementedException();
         }
@@ -86,12 +81,12 @@ namespace EInfrastructure.Core.Aliyun.Storage
             throw new System.NotImplementedException();
         }
 
-        public FileInfoDto Get(string key, BasePersistentOps persistentOps = null)
+        public FileInfoDto Get(GetFileParam request)
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<FileInfoDto> GetList(string[] keyList, BasePersistentOps persistentOps = null)
+        public IEnumerable<FileInfoDto> GetList(GetFileRangeParam request)
         {
             throw new System.NotImplementedException();
         }

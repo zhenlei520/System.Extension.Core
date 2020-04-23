@@ -3,28 +3,28 @@
 
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
 {
     /// <summary>
-    /// 删除空间
+    /// 得到文件信息
     /// </summary>
-    public class DeleteBucketParam
+    public class GetFileParam
     {
         /// <summary>
         ///
         /// </summary>
-        public DeleteBucketParam()
+        /// <param name="key">文件key</param>
+        /// <param name="persistentOps">策略</param>
+        public GetFileParam(string key, BasePersistentOps persistentOps= null)
         {
+            Key = key;
+            PersistentOps = persistentOps??new BasePersistentOps();
         }
 
         /// <summary>
-        /// 删除空间
+        /// 文件key
         /// </summary>
-        /// <param name="persistentOps">策略（待删除的空间名也在其中设置，如果不设置，则默认当前配置空间）</param>
-        public DeleteBucketParam(BasePersistentOps persistentOps = null)
-        {
-            PersistentOps = persistentOps ?? new BasePersistentOps();
-        }
+        public string Key { get; private set; }
 
         /// <summary>
         /// 策略

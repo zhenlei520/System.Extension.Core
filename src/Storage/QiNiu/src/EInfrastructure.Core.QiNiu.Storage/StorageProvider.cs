@@ -159,6 +159,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <param name="opsParam">上传信息</param>
         public string GetUploadCredentials(UploadPersistentOpsParam opsParam)
         {
+            new UploadPersistentOpsParamValidator().Validate(opsParam).Check(HttpStatus.Err.Name);
             var uploadPersistentOps = GetUploadPersistentOps(opsParam.UploadPersistentOps);
             return base.GetUploadCredentials(QiNiuConfig,
                 new UploadPersistentOpsParam(opsParam.Key, uploadPersistentOps));
@@ -171,22 +172,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 得到管理凭证
         /// </summary>
-        /// <param name="url">地址</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public string GetManageToken(string url)
+        public string GetManageToken(GetManageTokenParam request)
         {
-            return GetAuth().CreateManageToken(url);
-        }
-
-        /// <summary>
-        /// 得到管理凭证
-        /// </summary>
-        /// <param name="url">请求的URL</param>
-        /// <param name="body">请求的主体内容</param>
-        /// <returns></returns>
-        public string GetManageToken(string url, byte[] body)
-        {
-            return GetAuth().CreateManageToken(url, body);
+            new GetManageTokenParamValidator().Validate(request).Check(HttpStatus.Err.Name);
+            return GetAuth().CreateManageToken(request.Url);
         }
 
         #endregion
@@ -212,17 +203,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 检查文件是否存在
         /// </summary>
-        /// <param name="key">文件key</param>
-        /// <param name="persistentOps">策略</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public OperateResultDto Exist(string key, BasePersistentOps persistentOps=null)
+        public OperateResultDto Exist(ExistParam request)
         {
-            if (persistentOps == null)
-            {
-                persistentOps = new BasePersistentOps();
-            }
-
-            var res = Get(key, persistentOps);
+            new ExistParamValidator().Validate(request).Check(HttpStatus.Err.Name);
+            var res = Get(new GetFileParam(request.Key, request.PersistentOps));
             return new OperateResultDto(res.Success, res.Msg);
         }
 
@@ -273,18 +259,13 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 获取文件信息
         /// </summary>
-        /// <param name="key">文件key</param>
-        /// <param name="persistentOps">策略</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public FileInfoDto Get(string key, BasePersistentOps persistentOps=null)
+        public FileInfoDto Get(GetFileParam request)
         {
-            if (persistentOps == null)
-            {
-                persistentOps = new BasePersistentOps();
-            }
-
+            new GetFileParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             StatResult statRet = GetBucketManager()
-                .Stat(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), key);
+                .Stat(Core.Tools.GetBucket(this.QiNiuConfig, request.PersistentOps.Bucket), request.Key);
             if (statRet.Code != (int) HttpCode.OK)
             {
                 return new FileInfoDto()
@@ -302,8 +283,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 PutTime = statRet.Result.PutTime,
                 FileType = statRet.Result.FileType,
                 Success = true,
-                Host = Core.Tools.GetHost(this.QiNiuConfig, persistentOps.Host),
-                Path = key,
+                Host = Core.Tools.GetHost(this.QiNiuConfig, request.PersistentOps.Host),
+                Path = request.Key,
                 Msg = "success"
             };
         }
@@ -311,14 +292,14 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 获取文件信息集合
         /// </summary>
-        /// <param name="keyList">文件key集合</param>
-        /// <param name="persistentOps">策略</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public IEnumerable<FileInfoDto> GetList(string[] keyList, BasePersistentOps persistentOps=null)
+        public IEnumerable<FileInfoDto> GetList(GetFileRangeParam request)
         {
-            var enumerable = keyList as string[] ?? keyList.ToArray();
+            new GetFileRangeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             List<FileInfoDto> res = new List<FileInfoDto>();
-            enumerable.ToList().ListPager((list) => { res.AddRange(GetMulti(list.ToArray(), persistentOps)); }, 1000, 1);
+            request.Keys.ToList()
+                .ListPager((list) => { res.AddRange(GetMulti(list.ToArray(), request.PersistentOps)); }, 1000, 1);
             return res;
         }
 

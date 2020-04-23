@@ -3,21 +3,28 @@
 
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
 {
     /// <summary>
-    /// 清空空间标签
+    /// 判断文件是否存在
     /// </summary>
-    public class ClearTagBucketParam
+    public class ExistParam
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="persistentOps">策略（待清空的空间名也在其中设置，如果不设置，则默认当前配置空间）</param>
-        public ClearTagBucketParam(BasePersistentOps persistentOps = null)
+        /// <param name="key">文件key</param>
+        /// <param name="persistentOps">策略</param>
+        public ExistParam(string key, BasePersistentOps persistentOps = null)
         {
+            Key = key;
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
+
+        /// <summary>
+        /// 文件key
+        /// </summary>
+        public string Key { get; private set; }
 
         /// <summary>
         /// 策略

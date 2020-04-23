@@ -16,7 +16,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator.Bucket
         /// </summary>
         public GetBucketHostParamValidator()
         {
-            RuleFor(x => x.BucketName).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请输入空间名");
         }
     }
 }

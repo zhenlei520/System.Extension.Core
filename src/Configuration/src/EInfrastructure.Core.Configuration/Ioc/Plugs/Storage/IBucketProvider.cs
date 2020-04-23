@@ -51,10 +51,9 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <summary>
         /// 设置权限
         /// </summary>
-        /// <param name="bucketName">空间名</param>
-        /// <param name="permiss">权限 0：公开，1：私有</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        OperateResultDto SetPermiss(string bucketName, BucketPermiss permiss);
+        OperateResultDto SetPermiss(SetPermissParam request);
 
         /// <summary>
         /// 设置标签

@@ -20,9 +20,9 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket
         /// <summary>
         /// 创建空间
         /// </summary>
-        /// <param name="bucketName">空间名</param>
+        /// <param name="bucketName">待创建的空间名</param>
         /// <param name="region">存储区域</param>
-        /// <param name="persistentOps"></param>
+        /// <param name="persistentOps">策略（其中的空间名不作为本次创建空间的条件）</param>
         public CreateBucketParam(string bucketName, int region, BasePersistentOps persistentOps = null) : this()
         {
             BucketName = bucketName;

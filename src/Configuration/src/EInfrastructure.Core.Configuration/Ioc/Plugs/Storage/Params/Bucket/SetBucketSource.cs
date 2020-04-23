@@ -13,23 +13,16 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket
         /// <summary>
         ///
         /// </summary>
-        /// <param name="bucketName"></param>
-        /// <param name="imageSource"></param>
-        /// <param name="referHost"></param>
-        /// <param name="persistentOps"></param>
-        public SetBucketSource(string bucketName, string imageSource, string referHost = "",
+        /// <param name="imageSource">镜像源</param>
+        /// <param name="referHost">回源时使用的Host头部值,可以为空</param>
+        /// <param name="persistentOps">策略（如果需要修改其他空间的镜像源，可以修改此对象的Bucket）</param>
+        public SetBucketSource(string imageSource, string referHost = "",
             BasePersistentOps persistentOps = null)
         {
-            BucketName = bucketName;
             ImageSource = imageSource;
             ReferHost = referHost;
             PersistentOps = persistentOps??new BasePersistentOps();
         }
-
-        /// <summary>
-        /// 空间名
-        /// </summary>
-        public string BucketName { get; private set; }
 
         /// <summary>
         /// 镜像源

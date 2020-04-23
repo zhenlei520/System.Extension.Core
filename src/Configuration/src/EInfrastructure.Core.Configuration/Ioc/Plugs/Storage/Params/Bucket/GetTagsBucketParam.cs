@@ -13,18 +13,11 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket
         /// <summary>
         ///
         /// </summary>
-        /// <param name="bucketName"></param>
-        /// <param name="persistentOps"></param>
-        public GetTagsBucketParam(string bucketName, BasePersistentOps persistentOps = null)
+        /// <param name="persistentOps">策略（如果希望得到的空间不是默认配置的空间，则需要修改此对象的Bucket属性）</param>
+        public GetTagsBucketParam(BasePersistentOps persistentOps = null)
         {
-            BucketName = bucketName;
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
-
-        /// <summary>
-        /// 空间名
-        /// </summary>
-        public string BucketName { get; private set; }
 
         /// <summary>
         /// 策略

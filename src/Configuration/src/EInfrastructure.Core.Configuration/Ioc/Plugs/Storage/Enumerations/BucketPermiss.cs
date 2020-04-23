@@ -6,7 +6,7 @@ using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations
 {
     /// <summary>
-    /// 域名权限
+    /// 空间访问权限
     /// </summary>
     public class BucketPermiss : Enumeration
     {

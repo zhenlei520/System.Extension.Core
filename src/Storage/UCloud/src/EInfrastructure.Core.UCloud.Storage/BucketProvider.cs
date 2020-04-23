@@ -40,7 +40,7 @@ namespace EInfrastructure.Core.UCloud.Storage
             throw new System.NotImplementedException();
         }
 
-        public OperateResultDto SetPermiss(string bucketName, BucketPermiss permiss)
+        public OperateResultDto SetPermiss(SetPermissParam request)
         {
             throw new System.NotImplementedException();
         }

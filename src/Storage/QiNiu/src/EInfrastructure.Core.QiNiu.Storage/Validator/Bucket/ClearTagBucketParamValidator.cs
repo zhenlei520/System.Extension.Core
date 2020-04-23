@@ -16,7 +16,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator.Bucket
         /// </summary>
         public ClearTagBucketParamValidator()
         {
-            RuleFor(x => x.BucketName).Must(x => !string.IsNullOrEmpty(x)).WithMessage("空间名称不能为空");
         }
     }
 }

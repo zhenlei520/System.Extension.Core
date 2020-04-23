@@ -1,31 +1,32 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket
 {
     /// <summary>
-    /// 设置空间标签
+    /// 设置空间访问权限
+    /// 公有或者私有
     /// </summary>
-    public class SetTagBucketParam
+    public class SetPermissParam
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="tags">标签</param>
+        /// <param name="permiss">空间访问权限 公开：0 私有：1</param>
         /// <param name="persistentOps">策略（如果修改的空间不是当前配置中的默认域，则修改此对象的Bucket属性）</param>
-        public SetTagBucketParam(List<KeyValuePair<string, string>> tags, BasePersistentOps persistentOps = null)
+        public SetPermissParam(BucketPermiss permiss, BasePersistentOps persistentOps = null)
         {
-            Tags = tags??new List<KeyValuePair<string, string>>();
+            Permiss = permiss;
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
 
         /// <summary>
-        /// 标签
+        /// 空间访问权限 公开：0 私有：1
         /// </summary>
-        public List<KeyValuePair<string, string>> Tags { get; set; }
+        public BucketPermiss Permiss { get; private set; }
 
         /// <summary>
         /// 策略

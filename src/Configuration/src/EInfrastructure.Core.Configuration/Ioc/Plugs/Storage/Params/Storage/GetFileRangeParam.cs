@@ -4,28 +4,28 @@
 using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
 {
     /// <summary>
-    /// 设置空间标签
+    /// 得到多个文件信息
     /// </summary>
-    public class SetTagBucketParam
+    public class GetFileRangeParam
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="tags">标签</param>
-        /// <param name="persistentOps">策略（如果修改的空间不是当前配置中的默认域，则修改此对象的Bucket属性）</param>
-        public SetTagBucketParam(List<KeyValuePair<string, string>> tags, BasePersistentOps persistentOps = null)
+        /// <param name="keys">文件key集合</param>
+        /// <param name="persistentOps">策略</param>
+        public GetFileRangeParam(List<string> keys, BasePersistentOps persistentOps = null)
         {
-            Tags = tags??new List<KeyValuePair<string, string>>();
+            Keys = keys ?? new List<string>();
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
 
         /// <summary>
-        /// 标签
+        /// 文件key集合
         /// </summary>
-        public List<KeyValuePair<string, string>> Tags { get; set; }
+        public List<string> Keys { get; private set; }
 
         /// <summary>
         /// 策略

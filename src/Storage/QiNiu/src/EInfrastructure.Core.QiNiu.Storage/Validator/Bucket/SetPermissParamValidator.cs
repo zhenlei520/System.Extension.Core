@@ -7,15 +7,16 @@ using FluentValidation;
 namespace EInfrastructure.Core.QiNiu.Storage.Validator.Bucket
 {
     /// <summary>
-    ///
+    /// 空间访问权限验证
     /// </summary>
-    internal class GetTagsBucketParamValidator : AbstractValidator<GetTagsBucketParam>
+    public class SetPermissParamValidator : AbstractValidator<SetPermissParam>
     {
         /// <summary>
         ///
         /// </summary>
-        public GetTagsBucketParamValidator()
+        public SetPermissParamValidator()
         {
+            RuleFor(x => x.Permiss).IsInEnum().WithMessage("不支持的访问权限");
         }
     }
 }

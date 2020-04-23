@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
 using EInfrastructure.Core.QiNiu.Storage.Test.Base;
@@ -63,7 +64,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [InlineData("test", "http://img2.deiyou.net")]
         public void SetSource(string bucketName, string source)
         {
-            var ret = _bucketProvider.SetSource(new SetBucketSource(bucketName,source));
+            var ret = _bucketProvider.SetSource(new SetBucketSource(bucketName, source));
         }
 
         #endregion
@@ -78,7 +79,10 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [InlineData("einfrastructuretest")]
         public void DeteleBucket(string bucketName)
         {
-            var resultDto = _bucketProvider.Delete(new DeleteBucketParam(bucketName));
+            var resultDto = _bucketProvider.Delete(new DeleteBucketParam(new BasePersistentOps()
+            {
+                Bucket = bucketName
+            }));
         }
 
         #endregion
@@ -93,7 +97,10 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [InlineData("test")]
         public void GetHost(string bucketName)
         {
-            var host = _bucketProvider.GetHost(new GetBucketHostParam(bucketName));
+            var host = _bucketProvider.GetHost(new GetBucketHostParam(new BasePersistentOps()
+            {
+                Bucket = bucketName
+            }));
         }
 
         #endregion
@@ -104,7 +111,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [InlineData("test", 0)]
         public void SetPermiss(string bucket, int permiss)
         {
-            var ret = _bucketProvider.SetPermiss(bucket, BucketPermiss.FromValue<BucketPermiss>(permiss));
+            var ret = _bucketProvider.SetPermiss(new SetPermissParam(BucketPermiss.FromValue<BucketPermiss>(permiss),
+                new BasePersistentOps()
+                {
+                    Bucket = bucket,
+                }));
         }
 
         #endregion
@@ -119,9 +130,12 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [InlineData("test")]
         public void SetTag(string bucket)
         {
-            var ret = _bucketProvider.SetTag(new SetTagBucketParam(bucket, new List<KeyValuePair<string, string>>()
+            var ret = _bucketProvider.SetTag(new SetTagBucketParam(new List<KeyValuePair<string, string>>()
             {
                 new KeyValuePair<string, string>("name", "test"),
+            }, new BasePersistentOps()
+            {
+                Bucket = bucket
             }));
         }
 
@@ -137,7 +151,10 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [InlineData("test")]
         public void GetTags(string bucket)
         {
-            var ret = _bucketProvider.GetTags(new GetTagsBucketParam(bucket));
+            var ret = _bucketProvider.GetTags(new GetTagsBucketParam(new BasePersistentOps()
+            {
+                Bucket = bucket
+            }));
         }
 
         #endregion
@@ -152,7 +169,10 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [InlineData("test")]
         public void ClearTag(string bucket)
         {
-            var ret = _bucketProvider.ClearTag(new ClearTagBucketParam(bucket));
+            var ret = _bucketProvider.ClearTag(new ClearTagBucketParam(new BasePersistentOps()
+            {
+                Bucket = bucket
+            }));
         }
 
         #endregion

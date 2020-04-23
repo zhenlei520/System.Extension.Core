@@ -16,7 +16,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator.Bucket
         /// </summary>
         public SetBucketSourceValidator()
         {
-            RuleFor(x => x.BucketName).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请输入空间名");
             RuleFor(x => x.ImageSource).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请输入镜像源地址");
         }
     }

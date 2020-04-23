@@ -20,18 +20,11 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket
         /// <summary>
         /// 得到空间域名
         /// </summary>
-        /// <param name="bucketName"></param>
-        /// <param name="persistentOps"></param>
-        public GetBucketHostParam(string bucketName, BasePersistentOps persistentOps = null)
+        /// <param name="persistentOps">策略（如果想指定与默认配置中不一样的空间，则修改此对象的bucket属性）</param>
+        public GetBucketHostParam(BasePersistentOps persistentOps = null)
         {
-            BucketName = bucketName;
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
-
-        /// <summary>
-        /// 空间名
-        /// </summary>
-        public string BucketName { get;private set; }
 
         /// <summary>
         /// 策略

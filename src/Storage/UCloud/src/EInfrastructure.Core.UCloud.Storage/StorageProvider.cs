@@ -110,20 +110,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 得到管理凭证
         /// </summary>
-        /// <param name="url">地址</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public string GetManageToken(string url)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// 得到管理凭证
-        /// </summary>
-        /// <param name="url">地址</param>
-        /// <param name="body">内容</param>
-        /// <returns></returns>
-        public string GetManageToken(string url, byte[] body)
+        public string GetManageToken(GetManageTokenParam request)
         {
             throw new NotImplementedException();
         }
@@ -151,10 +140,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 检查文件是否存在
         /// </summary>
-        /// <param name="key">文件key</param>
-        /// <param name="persistentOps"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public OperateResultDto Exist(string key, BasePersistentOps persistentOps)
+        public OperateResultDto Exist(ExistParam request)
         {
             throw new NotImplementedException();
         }
@@ -180,9 +168,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 获取文件信息
         /// </summary>
-        /// <param name="key">文件key</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public FileInfoDto Get(string key, BasePersistentOps persistentOps = null)
+        public FileInfoDto Get(GetFileParam request)
         {
             throw new NotImplementedException();
         }
@@ -190,9 +178,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 获取文件信息集合
         /// </summary>
-        /// <param name="keyList">文件key集合</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public IEnumerable<FileInfoDto> GetList(string[] keyList, BasePersistentOps persistentOps = null)
+        public IEnumerable<FileInfoDto> GetList(GetFileRangeParam request)
         {
             throw new NotImplementedException();
         }
