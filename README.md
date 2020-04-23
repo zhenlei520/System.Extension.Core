@@ -24,8 +24,8 @@
 
 <div>
   <p align="right">
-    <img style="width:150px;height:150px;" src="https://blog.bflove.cn/System.Extension.Core.Doc/_media/wechat.jpg">
-    <img style="width:150px;height:170px;margin-left:50px;" src="https://blog.bflove.cn/System.Extension.Core.Doc/_media/qq.jpg">
+    <img width="150" height="150" src="https://blog.bflove.cn/System.Extension.Core.Doc/_media/wechat.jpg">
+    <img width="150" height="150"  src="https://blog.bflove.cn/System.Extension.Core.Doc/_media/qq.jpg">
   </p>
   <p align="right">
    
