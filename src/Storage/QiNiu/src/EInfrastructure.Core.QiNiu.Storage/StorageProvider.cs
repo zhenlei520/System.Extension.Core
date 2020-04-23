@@ -9,7 +9,7 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.QiNiu.Storage.Validator;
 using EInfrastructure.Core.Tools;
@@ -60,7 +60,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 new UploadPersistentOpsParam(param.Key, uploadPersistentOps));
             if (isResume)
             {
-                ResumableUploader target = new ResumableUploader(GetConfig(uploadPersistentOps));
+                ResumableUploader target = new ResumableUploader(Core.Tools.GetConfig(this.QiNiuConfig,uploadPersistentOps));
                 HttpResult result =
                     target.UploadStream(param.Stream, param.Key, token, GetPutExtra(uploadPersistentOps));
                 bool res = result.Code == (int) HttpCode.OK;
@@ -68,7 +68,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             }
             else
             {
-                FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
+                FormUploader target = new FormUploader(Core.Tools.GetConfig(this.QiNiuConfig,uploadPersistentOps));
                 HttpResult result =
                     target.UploadStream(param.Stream, param.Key, token, GetPutExtra(uploadPersistentOps));
                 bool res = result.Code == (int) HttpCode.OK;
@@ -93,7 +93,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 new UploadPersistentOpsParam(param.Key, uploadPersistentOps));
             if (isResume)
             {
-                ResumableUploader target = new ResumableUploader(GetConfig(uploadPersistentOps));
+                ResumableUploader target = new ResumableUploader(Core.Tools.GetConfig(this.QiNiuConfig,uploadPersistentOps));
                 HttpResult result =
                     target.UploadStream(param.ByteArray.ConvertToStream(), param.Key, token,
                         GetPutExtra(uploadPersistentOps));
@@ -102,7 +102,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             }
             else
             {
-                FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
+                FormUploader target = new FormUploader(Core.Tools.GetConfig(this.QiNiuConfig,uploadPersistentOps));
                 HttpResult result =
                     target.UploadData(param.ByteArray, param.Key, token, GetPutExtra(uploadPersistentOps));
                 bool res = result.Code == (int) HttpCode.OK;
@@ -122,7 +122,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public UploadResultDto UploadByToken(UploadByTokenParam param)
         {
             var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
-            FormUploader target = new FormUploader(GetConfig(uploadPersistentOps));
+            FormUploader target = new FormUploader(Core.Tools.GetConfig(this.QiNiuConfig,uploadPersistentOps));
             HttpResult result;
             if (param.Stream != null)
             {

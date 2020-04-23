@@ -8,6 +8,7 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 
 namespace EInfrastructure.Core.Aliyun.Storage
 {

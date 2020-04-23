@@ -4,7 +4,8 @@
 using System.Reflection;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Pictures;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pictures;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.Tools;
 using Qiniu.Http;
@@ -50,7 +51,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             string token = base.GetUploadCredentials(QiNiuConfig,
                 new UploadPersistentOpsParam(param.ImgPersistentOps.Key, param.ImgPersistentOps));
-            FormUploader target = new FormUploader(GetConfig());
+            FormUploader target = new FormUploader(Core.Tools.GetConfig(this.QiNiuConfig));
             HttpResult result =
                 target.UploadData(param.Base64.ConvertToByte(), param.ImgPersistentOps.Key, token,
                     GetPutExtra());

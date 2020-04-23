@@ -3,7 +3,7 @@
 
 using System;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
 {
     /// <summary>
     /// 复制文件到新的空间

@@ -4,6 +4,8 @@
 using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
 
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
 {
@@ -13,33 +15,38 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
     public interface IBucketProvider : ISingleInstance
     {
         /// <summary>
-        ///
+        /// 获取空间列表
         /// </summary>
         /// <param name="tagFilters">标签筛选</param>
         /// <returns></returns>
-        List<string> GetBucketList(List<KeyValuePair<string, string>> tagFilters);
+        BucketItemResultDto GetBucketList(List<KeyValuePair<string, string>> tagFilters);
 
         /// <summary>
         /// 创建空间
         /// </summary>
-        /// <param name="bucketName">空间名</param>
-        /// <param name="region">区域</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        OperateResultDto Create(string bucketName, int region);
+        OperateResultDto Create(CreateBucketParam request);
+
+        /// <summary>
+        /// 设置空间的镜像源
+        /// </summary>
+        /// <param name="request"></param>
+        OperateResultDto SetSource(SetBucketSource request);
 
         /// <summary>
         /// 删除空间
         /// </summary>
-        /// <param name="bucketName">空间名</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        OperateResultDto Delete(string bucketName);
+        OperateResultDto Delete(DeleteBucketParam request);
 
         /// <summary>
         /// 获取域名空间信息
         /// </summary>
-        /// <param name="bucketName">空间名</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        DomainResultDto GetHost(string bucketName);
+        DomainResultDto GetHost(GetBucketHostParam request);
 
         /// <summary>
         /// 设置权限
@@ -47,29 +54,27 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <param name="bucketName">空间名</param>
         /// <param name="permiss">权限 0：公开，1：私有</param>
         /// <returns></returns>
-        OperateResultDto SetPermiss(string bucketName, int permiss);
+        OperateResultDto SetPermiss(string bucketName, BucketPermiss permiss);
 
         /// <summary>
         /// 设置标签
         /// </summary>
-        /// <param name="bucketName">空间名</param>
-        /// <param name="key">标签key</param>
-        /// <param name="value">标签value</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        OperateResultDto SetTag(string bucketName, string key, string value);
+        OperateResultDto SetTag(SetTagBucketParam request);
 
         /// <summary>
         /// 得到空间标签
         /// </summary>
-        /// <param name="bucketName">空间名</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        TagResultDto GetTags(string bucketName);
+        TagResultDto GetTags(GetTagsBucketParam request);
 
         /// <summary>
         /// 清除空间标签
         /// </summary>
-        /// <param name="bucketName">空间命</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        OperateResultDto ClearTag(string bucketName);
+        OperateResultDto ClearTag(ClearTagBucketParam request);
     }
 }

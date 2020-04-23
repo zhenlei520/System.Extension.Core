@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
 
 namespace EInfrastructure.Core.UCloud.Storage
 {
@@ -13,42 +15,47 @@ namespace EInfrastructure.Core.UCloud.Storage
     /// </summary>
     public class BucketProvider:IBucketProvider
     {
-        public List<string> GetBucketList(List<KeyValuePair<string, string>> tagFilter)
+        public BucketItemResultDto GetBucketList(List<KeyValuePair<string, string>> tagFilter)
         {
             throw new System.NotImplementedException();
         }
 
-        public OperateResultDto Create(string bucketName, int region)
+        public OperateResultDto Create(CreateBucketParam request)
         {
             throw new System.NotImplementedException();
         }
 
-        public OperateResultDto Delete(string bucketName)
+        public OperateResultDto SetSource(SetBucketSource request)
         {
             throw new System.NotImplementedException();
         }
 
-        public DomainResultDto GetHost(string bucketName)
+        public OperateResultDto Delete(DeleteBucketParam request)
         {
             throw new System.NotImplementedException();
         }
 
-        public OperateResultDto SetPermiss(string bucketName, int permiss)
+        public DomainResultDto GetHost(GetBucketHostParam request)
         {
             throw new System.NotImplementedException();
         }
 
-        public OperateResultDto SetTag(string bucketName, string key, string value)
+        public OperateResultDto SetPermiss(string bucketName, BucketPermiss permiss)
         {
             throw new System.NotImplementedException();
         }
 
-        public TagResultDto GetTags(string bucketName)
+        public OperateResultDto SetTag(SetTagBucketParam param)
         {
             throw new System.NotImplementedException();
         }
 
-        public OperateResultDto ClearTag(string bucketName)
+        public TagResultDto GetTags(GetTagsBucketParam param)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public OperateResultDto ClearTag(ClearTagBucketParam request)
         {
             throw new System.NotImplementedException();
         }

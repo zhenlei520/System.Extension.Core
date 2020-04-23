@@ -6,6 +6,7 @@ using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.Validation.Common;
 using Qiniu.Storage;
@@ -99,44 +100,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     uploadPersistentOps.UploadController?.Invoke(uploadState);
                 }
 
-                if (uploadPersistentOps.MaxRetryTimes != -1)
-                {
-                    putExtra.MaxRetryTimes = uploadPersistentOps.MaxRetryTimes;
-                }
+                putExtra.MaxRetryTimes = Core.Tools.GetMaxRetryTimes(_qiNiuConfig, uploadPersistentOps.MaxRetryTimes);
             }
 
             return putExtra;
-        }
-
-        #endregion
-
-        #region 得到七牛配置文件
-
-        /// <summary>
-        /// 得到七牛配置文件
-        /// </summary>
-        /// <returns></returns>
-        internal virtual Qiniu.Storage.Config GetConfig(UploadPersistentOps uploadPersistentOps = null)
-        {
-            var config = new Qiniu.Storage.Config()
-            {
-                Zone = _qiNiuConfig.GetZone(),
-            };
-            if (uploadPersistentOps != null)
-            {
-                if (uploadPersistentOps.IsUseHttps != null)
-                {
-                    config.UseHttps = uploadPersistentOps.IsUseHttps.Value;
-                }
-
-                config.ChunkSize = (Qiniu.Storage.ChunkUnit) (uploadPersistentOps.ChunkUnit.Id);
-                if (uploadPersistentOps.MaxRetryTimes != -1)
-                {
-                    config.MaxRetryTimes = uploadPersistentOps.MaxRetryTimes;
-                }
-            }
-
-            return config;
         }
 
         #endregion
@@ -154,7 +121,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         protected virtual BucketManager GetBucketManager()
         {
             if (_bucketManager == null)
-                _bucketManager = new BucketManager(_qiNiuConfig.GetMac(), GetConfig());
+                _bucketManager = new BucketManager(_qiNiuConfig.GetMac(),
+                    EInfrastructure.Core.QiNiu.Storage.Core.Tools.GetConfig(this._qiNiuConfig));
             return _bucketManager;
         }
 

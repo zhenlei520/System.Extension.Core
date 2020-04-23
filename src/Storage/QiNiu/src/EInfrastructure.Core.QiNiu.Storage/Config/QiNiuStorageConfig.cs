@@ -21,6 +21,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
             IsUseHttps = false;
             UseCdnDomains = false;
             IsAllowOverlap = false;
+            MaxRetryTimes = 5;
         }
 
         /// <summary>
@@ -144,6 +145,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         public bool EnableCallback { get; private set; }
 
         /// <summary>
+        /// 最大重试次数
+        /// </summary>
+        public int MaxRetryTimes { set; get; }
+
+        /// <summary>
         /// [可选]分片上传默认最大值
         /// </summary>
         public virtual EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit ChunkUnit
@@ -160,6 +166,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         {
             switch (Zones)
             {
+                case ZoneEnum.ZoneCnEast:
                 default:
                     return Zone.ZONE_CN_East;
                 case ZoneEnum.ZoneCnNorth:
@@ -168,6 +175,8 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
                     return Zone.ZONE_CN_South;
                 case ZoneEnum.ZoneUsNorth:
                     return Zone.ZONE_US_North;
+                case ZoneEnum.ZoneAsSingapore:
+                    return Zone.ZONE_AS_Singapore;
             }
         }
 

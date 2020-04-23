@@ -3,7 +3,7 @@
 
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config.Pictures;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Pictures
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pictures
 {
     /// <summary>
     /// 根据图片base64上传图片

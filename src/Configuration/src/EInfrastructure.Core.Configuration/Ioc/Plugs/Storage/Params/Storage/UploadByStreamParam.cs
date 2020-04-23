@@ -1,30 +1,38 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.IO;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
 {
     /// <summary>
-    /// 上传文件（前端上传，后台生成策略信息）
+    /// 根据文件流上传
     /// </summary>
-    public class UploadPersistentOpsParam
+    public class UploadByStreamParam
     {
         /// <summary>
-        /// 上传文件（前端上传，后台生成策略信息）
+        /// 根据文件流上传
         /// </summary>
         /// <param name="key">文件地址</param>
+        /// <param name="stream">文件流</param>
         /// <param name="uploadPersistentOps">上传配置</param>
-        public UploadPersistentOpsParam(string key, UploadPersistentOps uploadPersistentOps = null)
+        public UploadByStreamParam(string key, Stream stream, UploadPersistentOps uploadPersistentOps = null)
         {
             Key = key;
-            UploadPersistentOps = uploadPersistentOps ?? new UploadPersistentOps();
+            Stream = stream;
+            UploadPersistentOps = uploadPersistentOps;
         }
 
         /// <summary>
-        /// 待上传文件名称
+        /// 文件key
         /// </summary>
-        public string Key { get; set; }
+        public string Key { get; private set; }
+
+        /// <summary>
+        /// 文件流
+        /// </summary>
+        public Stream Stream { get; private set; }
 
         /// <summary>
         /// 上传策略
