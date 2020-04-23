@@ -42,14 +42,14 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         OperateResultDto Delete(DeleteBucketParam request);
 
         /// <summary>
-        /// 获取域名空间信息
+        /// 获取空间域名信息
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         DomainResultDto GetHost(GetBucketHostParam request);
 
         /// <summary>
-        /// 设置权限
+        /// 设置空间访问权限
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
