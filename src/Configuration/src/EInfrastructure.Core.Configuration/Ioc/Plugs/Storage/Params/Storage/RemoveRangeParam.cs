@@ -1,37 +1,31 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pictures
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
 {
     /// <summary>
-    /// 图片抓取
+    ///
     /// </summary>
-    public class FetchFileParam
+    public class RemoveRangeParam
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="sourceFileKey"></param>
-        /// <param name="key"></param>
+        /// <param name="keys">文件key集合</param>
         /// <param name="persistentOps"></param>
-        public FetchFileParam(string sourceFileKey, string key, BasePersistentOps persistentOps = null)
+        public RemoveRangeParam(List<string> keys, BasePersistentOps persistentOps = null)
         {
-            SourceFileKey = sourceFileKey;
-            Key = key;
+            Keys = keys??new List<string>();
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
 
         /// <summary>
-        /// 源图（必填）
+        /// 文件key集合
         /// </summary>
-        public string SourceFileKey { get; private set; }
-
-        /// <summary>
-        /// 目标图（必填）
-        /// </summary>
-        public string Key { get; private set; }
+        public List<string> Keys { get; private set; }
 
         /// <summary>
         /// 策略

@@ -7,7 +7,6 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 
 namespace EInfrastructure.Core.Aliyun.Storage
@@ -40,6 +39,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         }
 
         #endregion
+
 
         public UploadResultDto UploadStream(UploadByStreamParam param, bool isResume = false)
         {
@@ -76,7 +76,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
             throw new System.NotImplementedException();
         }
 
-        public OperateResultDto Exist(string key)
+        public OperateResultDto Exist(string key, BasePersistentOps persistentOps = null)
         {
             throw new System.NotImplementedException();
         }
@@ -86,22 +86,22 @@ namespace EInfrastructure.Core.Aliyun.Storage
             throw new System.NotImplementedException();
         }
 
-        public FileInfoDto Get(string key)
+        public FileInfoDto Get(string key, BasePersistentOps persistentOps = null)
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<FileInfoDto> GetList(string[] keyList)
+        public IEnumerable<FileInfoDto> GetList(string[] keyList, BasePersistentOps persistentOps = null)
         {
             throw new System.NotImplementedException();
         }
 
-        public DeleteResultDto Remove(string key)
+        public DeleteResultDto Remove(RemoveParam request)
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<DeleteResultDto> RemoveRange(string[] keyList)
+        public IEnumerable<DeleteResultDto> RemoveRange(RemoveRangeParam request)
         {
             throw new System.NotImplementedException();
         }
@@ -111,7 +111,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<CopyFileResultDto> CopyRangeTo(CopyFileParam[] copyFileParam)
+        public IEnumerable<CopyFileResultDto> CopyRangeTo(CopyFileRangeParam request)
         {
             throw new System.NotImplementedException();
         }
@@ -121,17 +121,17 @@ namespace EInfrastructure.Core.Aliyun.Storage
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<MoveFileResultDto> MoveRange(MoveFileParam[] moveFileParamList)
+        public IEnumerable<MoveFileResultDto> MoveRange(MoveFileRangeParam request)
         {
             throw new System.NotImplementedException();
         }
 
-        public string GetPublishUrl(string key)
+        public string GetPublishUrl(GetPublishUrlParam request)
         {
             throw new System.NotImplementedException();
         }
 
-        public string GetPrivateUrl(string key, int expire = 3600)
+        public string GetPrivateUrl(GetPrivateUrlParam request)
         {
             throw new System.NotImplementedException();
         }
@@ -141,32 +141,32 @@ namespace EInfrastructure.Core.Aliyun.Storage
             throw new System.NotImplementedException();
         }
 
-        public ExpireResultDto SetExpire(string key, int expire)
+        public ExpireResultDto SetExpire(SetExpireParam request)
         {
             throw new System.NotImplementedException();
         }
 
-        public List<ExpireResultDto> SetExpireRange(string[] keys, int expire)
+        public List<ExpireResultDto> SetExpireRange(SetExpireRangeParam request)
         {
             throw new System.NotImplementedException();
         }
 
-        public ChangeMimeResultDto ChangeMime(string key, string mime)
+        public ChangeMimeResultDto ChangeMime(ChangeMimeParam request)
         {
             throw new System.NotImplementedException();
         }
 
-        public List<ChangeMimeResultDto> ChangeMimeRange(string[] keys, string mime)
+        public List<ChangeMimeResultDto> ChangeMimeRange(ChangeMimeRangeParam request)
         {
             throw new System.NotImplementedException();
         }
 
-        public ChangeTypeResultDto ChangeType(string key, int type)
+        public ChangeTypeResultDto ChangeType(ChangeTypeParam request)
         {
             throw new System.NotImplementedException();
         }
 
-        public List<ChangeTypeResultDto> ChangeTypeRange(string[] keys, int type)
+        public List<ChangeTypeResultDto> ChangeTypeRange(ChangeTypeRangeParam request)
         {
             throw new System.NotImplementedException();
         }

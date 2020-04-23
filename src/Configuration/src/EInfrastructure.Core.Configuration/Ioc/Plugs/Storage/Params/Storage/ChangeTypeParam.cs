@@ -3,35 +3,35 @@
 
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pictures
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
 {
     /// <summary>
-    /// 图片抓取
+    /// 更改存储类型
     /// </summary>
-    public class FetchFileParam
+    public class ChangeTypeParam
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="sourceFileKey"></param>
         /// <param name="key"></param>
+        /// <param name="type"></param>
         /// <param name="persistentOps"></param>
-        public FetchFileParam(string sourceFileKey, string key, BasePersistentOps persistentOps = null)
+        public ChangeTypeParam(string key, int type, BasePersistentOps persistentOps = null)
         {
-            SourceFileKey = sourceFileKey;
             Key = key;
+            Type = type;
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
 
         /// <summary>
-        /// 源图（必填）
-        /// </summary>
-        public string SourceFileKey { get; private set; }
-
-        /// <summary>
-        /// 目标图（必填）
+        /// 文件key
         /// </summary>
         public string Key { get; private set; }
+
+        /// <summary>
+        /// 存储类型
+        /// </summary>
+        public int Type { get; private set; }
 
         /// <summary>
         /// 策略

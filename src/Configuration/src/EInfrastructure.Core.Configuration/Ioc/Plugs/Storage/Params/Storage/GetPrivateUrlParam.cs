@@ -3,35 +3,35 @@
 
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pictures
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
 {
     /// <summary>
-    /// 图片抓取
+    /// 得到私有空间的地址
     /// </summary>
-    public class FetchFileParam
+    public class GetPrivateUrlParam
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="sourceFileKey"></param>
-        /// <param name="key"></param>
+        /// <param name="key">文件key</param>
+        /// <param name="expire">过期时间 单位：s</param>
         /// <param name="persistentOps"></param>
-        public FetchFileParam(string sourceFileKey, string key, BasePersistentOps persistentOps = null)
+        public GetPrivateUrlParam(string key, int expire = 3600, BasePersistentOps persistentOps = null)
         {
-            SourceFileKey = sourceFileKey;
             Key = key;
+            Expire = expire;
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
 
         /// <summary>
-        /// 源图（必填）
-        /// </summary>
-        public string SourceFileKey { get; private set; }
-
-        /// <summary>
-        /// 目标图（必填）
+        /// 文件key
         /// </summary>
         public string Key { get; private set; }
+
+        /// <summary>
+        /// 过期时间 单位：s
+        /// </summary>
+        public int Expire { get; private set; }
 
         /// <summary>
         /// 策略

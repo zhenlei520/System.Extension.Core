@@ -8,7 +8,7 @@ using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.Validation;
 using FluentValidation;
 
-namespace EInfrastructure.Core.QiNiu.Storage.Validator
+namespace EInfrastructure.Core.QiNiu.Storage.Validator.Storage
 {
     /// <summary>
     /// 七牛配置信息校验
@@ -25,11 +25,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator
                 .WithMessage("AccessKey信息异常");
             RuleFor(x => x.SecretKey).NotNull()
                 .WithMessage("SecretKey信息异常");
-
-            RuleFor(x => x.Zones).IsInEnum().WithMessage("Zones 信息异常");
-
-            RuleFor(x => x.Bucket).NotNull()
-                .WithMessage("Bucket信息异常");
 
             RuleFor(x => x.CallbackBody)
                 .Must(item => !string.IsNullOrEmpty(item)).WithMessage("CallbackBody信息异常")

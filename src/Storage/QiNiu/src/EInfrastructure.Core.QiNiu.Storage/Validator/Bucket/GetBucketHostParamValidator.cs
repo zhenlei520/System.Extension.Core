@@ -4,7 +4,7 @@
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
 using FluentValidation;
 
-namespace EInfrastructure.Core.QiNiu.Storage.Validator
+namespace EInfrastructure.Core.QiNiu.Storage.Validator.Bucket
 {
     /// <summary>
     ///

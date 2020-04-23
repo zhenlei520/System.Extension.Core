@@ -4,19 +4,19 @@
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
 using FluentValidation;
 
-namespace EInfrastructure.Core.QiNiu.Storage.Validator
+namespace EInfrastructure.Core.QiNiu.Storage.Validator.Bucket
 {
     /// <summary>
     ///
     /// </summary>
-    internal class GetTagsBucketParamValidator : AbstractValidator<GetTagsBucketParam>
+    internal class SetTagBucketParamValidator : AbstractValidator<SetTagBucketParam>
     {
         /// <summary>
         ///
         /// </summary>
-        public GetTagsBucketParamValidator()
+        public SetTagBucketParamValidator()
         {
-            RuleFor(x => x.BucketName).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请输入空间名称");
+            RuleFor(x => x.BucketName).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请输入空间名");
         }
     }
 }

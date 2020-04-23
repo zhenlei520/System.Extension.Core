@@ -16,6 +16,7 @@ using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.QiNiu.Storage.Dto;
 using EInfrastructure.Core.QiNiu.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Validator;
+using EInfrastructure.Core.QiNiu.Storage.Validator.Bucket;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Attributes;
 using EInfrastructure.Core.Tools.Url;

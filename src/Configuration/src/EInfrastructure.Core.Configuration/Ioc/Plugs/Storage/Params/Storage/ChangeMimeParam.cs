@@ -3,35 +3,35 @@
 
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 
-namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pictures
+namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
 {
     /// <summary>
-    /// 图片抓取
+    /// 更改文件mime
     /// </summary>
-    public class FetchFileParam
+    public class ChangeMimeParam
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="sourceFileKey"></param>
-        /// <param name="key"></param>
-        /// <param name="persistentOps"></param>
-        public FetchFileParam(string sourceFileKey, string key, BasePersistentOps persistentOps = null)
+        /// <param name="key">文件key</param>
+        /// <param name="mimeType">文件mimeType</param>
+        /// <param name="persistentOps">策略</param>
+        public ChangeMimeParam(string key, string mimeType, BasePersistentOps persistentOps = null)
         {
-            SourceFileKey = sourceFileKey;
             Key = key;
+            MimeType = mimeType;
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
 
         /// <summary>
-        /// 源图（必填）
-        /// </summary>
-        public string SourceFileKey { get; private set; }
-
-        /// <summary>
-        /// 目标图（必填）
+        /// 文件key
         /// </summary>
         public string Key { get; private set; }
+
+        /// <summary>
+        /// 文件mimeType
+        /// </summary>
+        public string MimeType { get; private set; }
 
         /// <summary>
         /// 策略

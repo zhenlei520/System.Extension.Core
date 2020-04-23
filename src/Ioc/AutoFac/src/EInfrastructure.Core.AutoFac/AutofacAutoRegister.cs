@@ -2,11 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Linq;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using EInfrastructure.Core.AutoFac.Modules;
-using EInfrastructure.Core.Configuration.Ioc;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.AutoFac

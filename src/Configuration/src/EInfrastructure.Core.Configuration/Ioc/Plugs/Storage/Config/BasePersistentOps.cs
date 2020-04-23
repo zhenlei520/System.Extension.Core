@@ -16,6 +16,8 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
         public BasePersistentOps()
         {
             Zone = null;
+            Bucket = "";
+            Host = "";
             IsUseHttps = null;
             UseCdnDomains = null;
             MaxRetryTimes = null;
@@ -27,6 +29,16 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
         /// </summary>
         /// <returns></returns>
         public int? Zone { get; set; }
+
+        /// <summary>
+        /// 空间名称
+        /// </summary>
+        public string Bucket { get; set; }
+
+        /// <summary>
+        /// 空间域
+        /// </summary>
+        public string Host { get; set; }
 
         /// <summary>
         /// [可选]是否使用Https域名

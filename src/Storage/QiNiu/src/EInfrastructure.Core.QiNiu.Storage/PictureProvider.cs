@@ -3,7 +3,6 @@
 
 using System.Reflection;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pictures;
 using EInfrastructure.Core.QiNiu.Storage.Config;
@@ -70,7 +69,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public bool FetchFile(FetchFileParam fetchFileParam)
         {
             FetchResult ret = GetBucketManager()
-                .Fetch(fetchFileParam.SourceFileKey, QiNiuConfig.Bucket, fetchFileParam.Key);
+                .Fetch(fetchFileParam.SourceFileKey,
+                    Core.Tools.GetBucket(this.QiNiuConfig, fetchFileParam.PersistentOps.Bucket), fetchFileParam.Key);
             switch (ret.Code)
             {
                 case (int) HttpCode.OK:

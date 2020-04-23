@@ -5,7 +5,6 @@ using System;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.Validation.Common;
@@ -117,12 +116,13 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 得到资源管理
         /// </summary>
+        /// <param name="persistentOps">策略</param>
         /// <returns></returns>
-        protected virtual BucketManager GetBucketManager()
+        protected virtual BucketManager GetBucketManager(BasePersistentOps persistentOps = null)
         {
             if (_bucketManager == null)
                 _bucketManager = new BucketManager(_qiNiuConfig.GetMac(),
-                    EInfrastructure.Core.QiNiu.Storage.Core.Tools.GetConfig(this._qiNiuConfig));
+                    EInfrastructure.Core.QiNiu.Storage.Core.Tools.GetConfig(this._qiNiuConfig, persistentOps));
             return _bucketManager;
         }
 

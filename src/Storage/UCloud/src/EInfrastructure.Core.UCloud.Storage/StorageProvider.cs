@@ -10,7 +10,6 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.UCloud.Storage.Config;
@@ -153,8 +152,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// 检查文件是否存在
         /// </summary>
         /// <param name="key">文件key</param>
+        /// <param name="persistentOps"></param>
         /// <returns></returns>
-        public OperateResultDto Exist(string key)
+        public OperateResultDto Exist(string key, BasePersistentOps persistentOps)
         {
             throw new NotImplementedException();
         }
@@ -182,7 +182,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="key">文件key</param>
         /// <returns></returns>
-        public FileInfoDto Get(string key)
+        public FileInfoDto Get(string key, BasePersistentOps persistentOps = null)
         {
             throw new NotImplementedException();
         }
@@ -192,7 +192,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="keyList">文件key集合</param>
         /// <returns></returns>
-        public IEnumerable<FileInfoDto> GetList(string[] keyList)
+        public IEnumerable<FileInfoDto> GetList(string[] keyList, BasePersistentOps persistentOps = null)
         {
             throw new NotImplementedException();
         }
@@ -204,9 +204,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 根据文件key删除
         /// </summary>
-        /// <param name="key">文件key</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public DeleteResultDto Remove(string key)
+        public DeleteResultDto Remove(RemoveParam request)
         {
             throw new NotImplementedException();
         }
@@ -214,9 +214,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 根据文件key集合删除
         /// </summary>
-        /// <param name="keyList">文件key集合</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public IEnumerable<DeleteResultDto> RemoveRange(string[] keyList)
+        public IEnumerable<DeleteResultDto> RemoveRange(RemoveRangeParam request)
         {
             throw new NotImplementedException();
         }
@@ -238,9 +238,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 复制文件（两个文件需要在同一账号下）
         /// </summary>
-        /// <param name="copyFileParam">复制到新空间的参数</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public IEnumerable<CopyFileResultDto> CopyRangeTo(CopyFileParam[] copyFileParam)
+        public IEnumerable<CopyFileResultDto> CopyRangeTo(CopyFileRangeParam request)
         {
             throw new NotImplementedException();
         }
@@ -262,9 +262,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 移动文件（两个文件需要在同一账号下）
         /// </summary>
-        /// <param name="moveFileParamList"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public IEnumerable<MoveFileResultDto> MoveRange(MoveFileParam[] moveFileParamList)
+        public IEnumerable<MoveFileResultDto> MoveRange(MoveFileRangeParam request)
         {
             throw new NotImplementedException();
         }
@@ -274,9 +274,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 得到公开空间的访问地址
         /// </summary>
-        /// <param name="key">文件key</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public string GetPublishUrl(string key)
+        public string GetPublishUrl(GetPublishUrlParam request)
         {
             throw new NotImplementedException();
         }
@@ -284,10 +284,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 得到私有空间的地址
         /// </summary>
-        /// <param name="key">文件key</param>
-        /// <param name="expire">过期时间 单位：s</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public string GetPrivateUrl(string key, int expire = 3600)
+        public string GetPrivateUrl(GetPrivateUrlParam request)
         {
             throw new NotImplementedException();
         }
@@ -308,10 +307,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 设置生存时间（超时会自动删除）
         /// </summary>
-        /// <param name="key">文件key</param>
-        /// <param name="expire">过期时间 单位：day</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public ExpireResultDto SetExpire(string key, int expire)
+        public ExpireResultDto SetExpire(SetExpireParam request)
         {
             throw new NotImplementedException();
         }
@@ -319,10 +317,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 批量设置生存时间（超时会自动删除）
         /// </summary>
-        /// <param name="keys">文件key</param>
-        /// <param name="expire">过期时间 单位：day</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public List<ExpireResultDto> SetExpireRange(string[] keys, int expire)
+        public List<ExpireResultDto> SetExpireRange(SetExpireRangeParam request)
         {
             throw new NotImplementedException();
         }
@@ -334,10 +331,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 修改文件MimeType
         /// </summary>
-        /// <param name="key">文件key</param>
-        /// <param name="mime">文件mimeType</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public ChangeMimeResultDto ChangeMime(string key, string mime)
+        public ChangeMimeResultDto ChangeMime(ChangeMimeParam request)
         {
             throw new NotImplementedException();
         }
@@ -345,10 +341,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 批量更改文件mime
         /// </summary>
-        /// <param name="keys">文件key集合</param>
-        /// <param name="mime">问价mime</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public List<ChangeMimeResultDto> ChangeMimeRange(string[] keys, string mime)
+        public List<ChangeMimeResultDto> ChangeMimeRange(ChangeMimeRangeParam request)
         {
             throw new NotImplementedException();
         }
@@ -360,10 +355,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 修改文件存储类型
         /// </summary>
-        /// <param name="key">文件key</param>
-        /// <param name="type">0表示普通存储，1表示低频存储</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public ChangeTypeResultDto ChangeType(string key, int type)
+        public ChangeTypeResultDto ChangeType(ChangeTypeParam request)
         {
             throw new NotImplementedException();
         }
@@ -371,10 +365,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 批量更改文件类型
         /// </summary>
-        /// <param name="keys">文件key集合</param>
-        /// <param name="type">0表示普通存储，1表示低频存储</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public List<ChangeTypeResultDto> ChangeTypeRange(string[] keys, int type)
+        public List<ChangeTypeResultDto> ChangeTypeRange(ChangeTypeRangeParam request)
         {
             throw new NotImplementedException();
         }

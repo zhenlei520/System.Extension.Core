@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
@@ -96,8 +95,9 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// 检查文件是否存在
         /// </summary>
         /// <param name="key">文件key</param>
+        /// <param name="persistentOps"></param>
         /// <returns></returns>
-        OperateResultDto Exist(string key);
+        OperateResultDto Exist(string key, BasePersistentOps persistentOps=null);
 
         #endregion
 
@@ -118,15 +118,17 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// 获取文件信息
         /// </summary>
         /// <param name="key">文件key</param>
+        /// <param name="persistentOps">策略</param>
         /// <returns></returns>
-        FileInfoDto Get(string key);
+        FileInfoDto Get(string key, BasePersistentOps persistentOps=null);
 
         /// <summary>
         /// 获取文件信息
         /// </summary>
         /// <param name="keyList">文件key集合</param>
+        /// <param name="persistentOps">策略</param>
         /// <returns></returns>
-        IEnumerable<FileInfoDto> GetList(string[] keyList);
+        IEnumerable<FileInfoDto> GetList(string[] keyList, BasePersistentOps persistentOps=null);
 
         #endregion
 
@@ -135,16 +137,16 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <summary>
         /// 根据文件key删除
         /// </summary>
-        /// <param name="key">文件key</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        DeleteResultDto Remove(string key);
+        DeleteResultDto Remove(RemoveParam request);
 
         /// <summary>
         /// 根据文件key集合删除
         /// </summary>
-        /// <param name="keyList">文件key集合</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        IEnumerable<DeleteResultDto> RemoveRange(string[] keyList);
+        IEnumerable<DeleteResultDto> RemoveRange(RemoveRangeParam request);
 
         #endregion
 
@@ -160,9 +162,9 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <summary>
         /// 复制文件（两个文件需要在同一账号下）
         /// </summary>
-        /// <param name="copyFileParam">复制到新空间的参数</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        IEnumerable<CopyFileResultDto> CopyRangeTo(CopyFileParam[] copyFileParam);
+        IEnumerable<CopyFileResultDto> CopyRangeTo(CopyFileRangeParam request);
 
         #endregion
 
@@ -178,9 +180,9 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <summary>
         /// 移动文件（两个文件需要在同一账号下）
         /// </summary>
-        /// <param name="moveFileParamList"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        IEnumerable<MoveFileResultDto> MoveRange(MoveFileParam[] moveFileParamList);
+        IEnumerable<MoveFileResultDto> MoveRange(MoveFileRangeParam request);
 
         #endregion
 
@@ -189,24 +191,23 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <summary>
         /// 得到公开空间的访问地址
         /// </summary>
-        /// <param name="key">文件key</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        string GetPublishUrl(string key);
+        string GetPublishUrl(GetPublishUrlParam request);
 
         /// <summary>
         /// 得到私有空间的访问地址
         /// </summary>
-        /// <param name="key">文件key</param>
-        /// <param name="expire">过期时间，单位：s</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        string GetPrivateUrl(string key, int expire = 3600);
+        string GetPrivateUrl(GetPrivateUrlParam request);
 
         #endregion
 
         /// <summary>
         /// 下载文件
         /// </summary>
-        /// <param name="url">文件访问地址</param>
+        /// <param name="url">文件访问地址(绝对地址，非文件key)</param>
         /// <param name="savePath">保存路径</param>
         /// <returns></returns>
         DownloadResultDto Download(string url, string savePath);
@@ -216,18 +217,16 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <summary>
         /// 设置生存时间（超时会自动删除）
         /// </summary>
-        /// <param name="key">文件key</param>
-        /// <param name="expire">过期时间 单位：day</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        ExpireResultDto SetExpire(string key, int expire);
+        ExpireResultDto SetExpire(SetExpireParam request);
 
         /// <summary>
         /// 批量设置生存时间（超时会自动删除）
         /// </summary>
-        /// <param name="keys">文件key</param>
-        /// <param name="expire">过期时间 单位：day</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        List<ExpireResultDto> SetExpireRange(string[] keys, int expire);
+        List<ExpireResultDto> SetExpireRange(SetExpireRangeParam request);
 
         #endregion
 
@@ -236,18 +235,16 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <summary>
         /// 修改文件MimeType
         /// </summary>
-        /// <param name="key">文件key</param>
-        /// <param name="mime">文件mimeType</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        ChangeMimeResultDto ChangeMime(string key, string mime);
+        ChangeMimeResultDto ChangeMime(ChangeMimeParam request);
 
         /// <summary>
         /// 批量更改文件mime
         /// </summary>
-        /// <param name="keys">文件key集合</param>
-        /// <param name="mime">问价mime</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        List<ChangeMimeResultDto> ChangeMimeRange(string[] keys, string mime);
+        List<ChangeMimeResultDto> ChangeMimeRange(ChangeMimeRangeParam request);
 
         #endregion
 
@@ -256,18 +253,16 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <summary>
         /// 修改文件存储类型
         /// </summary>
-        /// <param name="key">文件key</param>
-        /// <param name="type">0表示普通存储，1表示低频存储</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        ChangeTypeResultDto ChangeType(string key, int type);
+        ChangeTypeResultDto ChangeType(ChangeTypeParam request);
 
         /// <summary>
         /// 批量更改文件类型
         /// </summary>
-        /// <param name="keys">文件key集合</param>
-        /// <param name="type">0表示普通存储，1表示低频存储</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        List<ChangeTypeResultDto> ChangeTypeRange(string[] keys, int type);
+        List<ChangeTypeResultDto> ChangeTypeRange(ChangeTypeRangeParam request);
 
         #endregion
     }

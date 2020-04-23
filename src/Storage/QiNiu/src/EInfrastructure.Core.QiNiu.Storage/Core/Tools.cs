@@ -1,9 +1,11 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 using EInfrastructure.Core.QiNiu.Storage.Config;
+using EInfrastructure.Core.QiNiu.Storage.Enum;
 
 namespace EInfrastructure.Core.QiNiu.Storage.Core
 {
@@ -25,7 +27,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Core
         {
             var config = new Qiniu.Storage.Config()
             {
-                Zone = qiNiuConfig.GetZone(),
+                Zone = GetZone(qiNiuConfig, persistentOps.Zone),
             };
             if (persistentOps != null)
             {
@@ -36,6 +38,105 @@ namespace EInfrastructure.Core.QiNiu.Storage.Core
             }
 
             return config;
+        }
+
+        #endregion
+
+        #region 得到默认空间域
+
+        /// <summary>
+        /// 得到默认空间域
+        /// </summary>
+        /// <param name="qiNiuConfig">七牛配置</param>
+        /// <param name="host">空间域</param>
+        /// <returns></returns>
+        internal static string GetHost(QiNiuStorageConfig qiNiuConfig, string host)
+        {
+            if (string.IsNullOrEmpty(host) == string.IsNullOrEmpty(qiNiuConfig.DefaultHost))
+            {
+                throw new BusinessException("请输入默认空间域");
+            }
+
+            if (!string.IsNullOrEmpty(host))
+            {
+                return host;
+            }
+
+            return qiNiuConfig.DefaultHost;
+        }
+
+        #endregion
+
+        #region 得到空间名
+
+        /// <summary>
+        /// 得到空间名
+        /// </summary>
+        /// <param name="qiNiuStorageConfig">七牛配置</param>
+        /// <param name="bucket">空间名</param>
+        /// <returns></returns>
+        internal static string GetBucket(QiNiuStorageConfig qiNiuStorageConfig, string bucket)
+        {
+            if (string.IsNullOrEmpty(bucket) && string.IsNullOrEmpty(qiNiuStorageConfig.DefaultBucket))
+            {
+                throw new BusinessException("请选择存储空间");
+            }
+
+            if (!string.IsNullOrEmpty(bucket))
+            {
+                return bucket;
+            }
+
+            return qiNiuStorageConfig.DefaultBucket;
+        }
+
+        #endregion
+
+        #region 得到空间区域
+
+        /// <summary>
+        /// 得到空间区域
+        /// </summary>
+        /// <param name="qiNiuConfig">七牛配置</param>
+        /// <param name="zone">空间配置</param>
+        /// <returns></returns>
+        internal static Qiniu.Storage.Zone GetZone(QiNiuStorageConfig qiNiuConfig, int? zone)
+        {
+            switch (GetZonePrivate(qiNiuConfig, zone))
+            {
+                case ZoneEnum.ZoneCnEast:
+                default:
+                    return Qiniu.Storage.Zone.ZONE_CN_East;
+                case ZoneEnum.ZoneCnNorth:
+                    return Qiniu.Storage.Zone.ZONE_CN_North;
+                case ZoneEnum.ZoneCnSouth:
+                    return Qiniu.Storage.Zone.ZONE_CN_South;
+                case ZoneEnum.ZoneUsNorth:
+                    return Qiniu.Storage.Zone.ZONE_US_North;
+                case ZoneEnum.ZoneAsSingapore:
+                    return Qiniu.Storage.Zone.ZONE_AS_Singapore;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="qiNiuConfig"></param>
+        /// <param name="zone"></param>
+        /// <returns></returns>
+        private static ZoneEnum GetZonePrivate(QiNiuStorageConfig qiNiuConfig, int? zone)
+        {
+            if (zone == null && qiNiuConfig.DefaultZones == null)
+            {
+                throw new BusinessException("请选择要操作的空间区域");
+            }
+
+            if (zone != null)
+            {
+                return (ZoneEnum) zone.Value;
+            }
+
+            return qiNiuConfig.DefaultZones.Value;
         }
 
         #endregion

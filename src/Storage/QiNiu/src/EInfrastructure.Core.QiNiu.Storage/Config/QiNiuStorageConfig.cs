@@ -3,7 +3,6 @@
 
 using EInfrastructure.Core.QiNiu.Storage.Enum;
 using EInfrastructure.Core.Validation;
-using Qiniu.Storage;
 using Qiniu.Util;
 
 namespace EInfrastructure.Core.QiNiu.Storage.Config
@@ -29,17 +28,27 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// </summary>
         /// <param name="accessKey"></param>
         /// <param name="secretKey"></param>
-        /// <param name="zones"></param>
-        /// <param name="host"></param>
-        /// <param name="bucket"></param>
-        public QiNiuStorageConfig(string accessKey, string secretKey, ZoneEnum zones, string host, string bucket) :
+        public QiNiuStorageConfig(string accessKey, string secretKey) :
             this()
         {
             AccessKey = accessKey;
             SecretKey = secretKey;
-            Zones = zones;
-            Host = host;
-            Bucket = bucket;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="accessKey"></param>
+        /// <param name="secretKey"></param>
+        /// <param name="zones"></param>
+        /// <param name="host"></param>
+        /// <param name="bucket"></param>
+        public QiNiuStorageConfig(string accessKey, string secretKey, ZoneEnum zones, string host, string bucket) :
+            this(accessKey,secretKey)
+        {
+            DefaultZones = zones;
+            DefaultHost = host;
+            DefaultBucket = bucket;
         }
 
         /// <summary>
@@ -53,31 +62,9 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         public string SecretKey { get; private set; }
 
         /// <summary>
-        /// 七牛资源上传服务器地址.
-        /// </summary>
-        internal string UpHost
-        {
-            get
-            {
-                switch (Zones)
-                {
-                    case ZoneEnum.ZoneCnEast:
-                    default:
-                        return "http://upload.qiniup.com";
-                    case ZoneEnum.ZoneCnNorth:
-                        return "http://upload-z1.qiniup.com";
-                    case ZoneEnum.ZoneCnSouth:
-                        return "http://upload-z2.qiniup.com";
-                    case ZoneEnum.ZoneUsNorth:
-                        return "http://upload-na0.qiniup.com";
-                }
-            }
-        }
-
-        /// <summary>
         /// 空间
         /// </summary>
-        public ZoneEnum Zones { get; private set; }
+        public ZoneEnum? DefaultZones { get; private set; }
 
         /// <summary>
         /// 是否启用https
@@ -94,12 +81,12 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// <summary>
         /// 文件对外访问的主机名
         /// </summary>
-        public string Host { get; private set; }
+        public string DefaultHost { get; private set; }
 
         /// <summary>
         /// 存储的空间名
         /// </summary>
-        public string Bucket { get; private set; }
+        public string DefaultBucket { get; private set; }
 
         /// <summary>
         /// 传输队列
@@ -156,28 +143,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         {
             get;
             set;
-        }
-
-        /// <summary>
-        /// 得到空间
-        /// </summary>
-        /// <returns></returns>
-        public Zone GetZone()
-        {
-            switch (Zones)
-            {
-                case ZoneEnum.ZoneCnEast:
-                default:
-                    return Zone.ZONE_CN_East;
-                case ZoneEnum.ZoneCnNorth:
-                    return Zone.ZONE_CN_North;
-                case ZoneEnum.ZoneCnSouth:
-                    return Zone.ZONE_CN_South;
-                case ZoneEnum.ZoneUsNorth:
-                    return Zone.ZONE_US_North;
-                case ZoneEnum.ZoneAsSingapore:
-                    return Zone.ZONE_AS_Singapore;
-            }
         }
 
         #region 得到Mac
