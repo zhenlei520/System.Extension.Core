@@ -1,11 +1,9 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
 
 namespace EInfrastructure.Core.UCloud.Storage
@@ -13,9 +11,9 @@ namespace EInfrastructure.Core.UCloud.Storage
     /// <summary>
     /// 空间
     /// </summary>
-    public class BucketProvider:IBucketProvider
+    public class BucketProvider : IBucketProvider
     {
-        public BucketItemResultDto GetBucketList(List<KeyValuePair<string, string>> tagFilter)
+        public BucketItemResultDto GetBucketList(GetBucketParam request)
         {
             throw new System.NotImplementedException();
         }
@@ -35,12 +33,32 @@ namespace EInfrastructure.Core.UCloud.Storage
             throw new System.NotImplementedException();
         }
 
+        public OperateResultDto Exist(ExistBucketParam request)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public DomainResultDto GetHost(GetBucketHostParam request)
         {
             throw new System.NotImplementedException();
         }
 
         public OperateResultDto SetPermiss(SetPermissParam request)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public OperateResultDto SetReferer(SetRefererParam request)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public RefererResultDto GetReferer(GetRefererParam request)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public OperateResultDto ClearReferer(ClearRefererParam request)
         {
             throw new System.NotImplementedException();
         }

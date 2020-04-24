@@ -3,6 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using EInfrastructure.Core.Config.Entities.Extensions;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
@@ -13,8 +16,8 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using EInfrastructure.Core.Http;
 using EInfrastructure.Core.Http.Enumerations;
 using EInfrastructure.Core.QiNiu.Storage.Config;
-using EInfrastructure.Core.QiNiu.Storage.Dto;
 using EInfrastructure.Core.QiNiu.Storage.Enum;
+using EInfrastructure.Core.QiNiu.Storage.Response;
 using EInfrastructure.Core.QiNiu.Storage.Validator.Bucket;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Attributes;
@@ -52,12 +55,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 根据标签筛选空间获取空间名列表
         /// </summary>
-        /// <param name="tagFilter"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public BucketItemResultDto GetBucketList(List<KeyValuePair<string, string>> tagFilter)
+        public BucketItemResultDto GetBucketList(GetBucketParam request)
         {
             UrlParameter urlParameter = new UrlParameter();
-            tagFilter.ForEach(tag => { urlParameter.Add(tag.Key, tag.Value); });
+            request.TagFilters.ForEach(tag => { urlParameter.Add(tag.Key, tag.Value); });
             string url =
                 $"http://rs.qbox.me/buckets?tagCondition={Base64.UrlSafeBase64Encode(urlParameter.GetQueryResult())}";
             _httpClient.Headers = new Dictionary<string, string>()
@@ -67,15 +70,42 @@ namespace EInfrastructure.Core.QiNiu.Storage
             try
             {
                 var response = _httpClient.GetString(url);
-                return GetResponse(response, () => new BucketItemResultDto(true,
-                        _jsonProvider.Deserialize<List<string>>(response),
-                        "success"),
+                return GetResponse(response, () =>
+                    {
+                        var bucketList = _jsonProvider.Deserialize<List<string>>(response);
+                        Expression<Func<string, bool>> condition = x => true;
+                        if (!string.IsNullOrEmpty(request.Prefix))
+                        {
+                            condition = condition.And(x => x.StartsWith(request.Prefix));
+                        }
+
+                        var list = bucketList.Where(condition.Compile()).ToList();
+                        if (!string.IsNullOrEmpty(request.Marker))
+                        {
+                            var index = list.ToList().IndexOf(request.Marker);
+                            if (index != -1)
+                            {
+                                list = list.Skip(index + 1).ToList();
+                            }
+                        }
+
+                        if (request.PageSize != -1)
+                        {
+                            var isTruncated = list.Take(request.PageSize).Count() != list.Count;
+                            return new BucketItemResultDto(list.Take(request.PageSize).ToList(), request.Prefix,
+                                isTruncated, request.Marker,
+                                isTruncated ? list.Take(request.PageSize).LastOrDefault() : "");
+                        }
+
+                        return new BucketItemResultDto(list.ToList(), request.Prefix, false, request.Marker, "");
+                    },
                     resultResponse =>
-                        new BucketItemResultDto(false, null, $"{resultResponse.Error}|{resultResponse.ErrorCode}"));
+                        new BucketItemResultDto(request.Prefix, request.Marker,
+                            $"{resultResponse.Error}|{resultResponse.ErrorCode}"));
             }
             catch (Exception e)
             {
-                return new BucketItemResultDto(false, null, $"lose {e.Message}");
+                return new BucketItemResultDto(request.Prefix, request.Marker, $"lose {e.Message}");
             }
         }
 
@@ -128,6 +158,33 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     "success"),
                 resultResponse =>
                     new OperateResultDto(false, $"{resultResponse.Error}|{resultResponse.ErrorCode}"));
+        }
+
+        #endregion
+
+        #region 判断空间是否存在
+
+        /// <summary>
+        /// 判断空间是否存在
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public OperateResultDto Exist(ExistBucketParam request)
+        {
+            Check.True(request != null, $"{nameof(request)} is null");
+            var bucket = Core.Tools.GetBucket(this._qiNiuConfig, request.PersistentOps.Bucket);
+            var ret = GetBucketList(new GetBucketParam());
+            if (!ret.State)
+            {
+                return new OperateResultDto(false, "lose 请稍后再试");
+            }
+
+            if (ret.BucketList.Contains(bucket))
+            {
+                return new OperateResultDto(true, "success");
+            }
+
+            return new OperateResultDto(false, "the bucket is not find");
         }
 
         #endregion
@@ -223,6 +280,54 @@ namespace EInfrastructure.Core.QiNiu.Storage
         }
 
         #endregion
+
+        #region 防盗链
+
+        #region 设置防盗链
+
+        /// <summary>
+        /// 设置防盗链
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public OperateResultDto SetReferer(SetRefererParam request)
+        {
+            return new OperateResultDto(false, "不支持api设置防盗链");
+        }
+
+        #endregion
+
+        #region 得到防盗链配置
+
+        /// <summary>
+        /// 得到防盗链配置
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public RefererResultDto GetReferer(GetRefererParam request)
+        {
+            return new RefererResultDto("不支持api获取防盗链配置");
+        }
+
+        #endregion
+
+        #region 清空防盗链规则
+
+        /// <summary>
+        /// 清空防盗链规则
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public OperateResultDto ClearReferer(ClearRefererParam request)
+        {
+            return new OperateResultDto(false, "不支持api配置操作防盗链");
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 标签管理
 
         #region 设置标签
 
@@ -340,6 +445,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 return new OperateResultDto(false, $"lose {e.Message}");
             }
         }
+
+        #endregion
 
         #endregion
 

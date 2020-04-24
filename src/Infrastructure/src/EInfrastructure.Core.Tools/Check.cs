@@ -97,5 +97,24 @@ namespace EInfrastructure.Core.Tools
         }
 
         #endregion
+
+        #region 检查是否为假
+
+        /// <summary>
+        /// 检查是否为假 若status为false，则抛出异常
+        /// </summary>
+        /// <param name="status">状态</param>
+        /// <param name="errorMessageFormat"></param>
+        /// <param name="errCode">错误码</param>
+        public static void TrueByString(bool status, string errorMessageFormat,
+            string errCode = null)
+        {
+            if (!status)
+            {
+                throw new BusinessException<string>(string.Format(errorMessageFormat), HttpStatus.Err.Name);
+            }
+        }
+
+        #endregion
     }
 }

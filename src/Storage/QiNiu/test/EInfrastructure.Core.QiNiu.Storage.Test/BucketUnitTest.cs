@@ -32,7 +32,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [Fact]
         public void GetBucketList()
         {
-            var bucketList = _bucketProvider.GetBucketList(new List<KeyValuePair<string, string>>());
+            var bucketList = _bucketProvider.GetBucketList(new GetBucketParam("te","",1));
         }
 
         #endregion

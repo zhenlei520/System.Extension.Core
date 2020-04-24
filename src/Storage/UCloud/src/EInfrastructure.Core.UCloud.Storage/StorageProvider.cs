@@ -55,7 +55,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         public UploadResultDto UploadStream(UploadByStreamParam param, bool isResume = false)
         {
             var res = base.UploadFile(param.Stream, param.Key, Path.GetExtension(param.Key));
-            return new UploadResultDto(res, res ? "上传成功" : "上传失败");
+            return new UploadResultDto(res, "",res ? "上传成功" : "上传失败");
         }
 
         #endregion
@@ -71,7 +71,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         public UploadResultDto UploadByteArray(UploadByByteArrayParam param, bool isResume = false)
         {
             var res = base.UploadFile(param.ByteArray.ConvertToStream(), param.Key, Path.GetExtension(param.Key));
-            return new UploadResultDto(res, res ? "上传成功" : "上传失败");
+            return new UploadResultDto(res, "", res ? "上传成功" : "上传失败");
         }
 
         #endregion

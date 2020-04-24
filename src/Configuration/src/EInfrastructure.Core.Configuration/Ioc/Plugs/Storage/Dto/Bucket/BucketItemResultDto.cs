@@ -13,17 +13,60 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket
         /// <summary>
         /// 空间列表
         /// </summary>
-        public List<string> BucketList { get; set; }
+        public List<string> BucketList { get; private set; }
+
+        /// <summary>
+        /// 前缀
+        /// </summary>
+        public string Prefix { get; private set; }
+
+
+        /// <summary>
+        /// 请求中返回的结果是否被截断。返回值：true、false
+        /// </summary>
+        public bool? IsTruncated { get; private set; }
+
+        /// <summary>
+        /// 标明这次GetBucket（ListObjects）的起点
+        /// </summary>
+        public string Marker { get; private set; }
+
+        /// <summary>
+        /// 下次的起点
+        /// </summary>
+        public string NextMaker { get; private set; }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="state"></param>
         /// <param name="bucketList">空间列表</param>
-        /// <param name="msg"></param>
-        public BucketItemResultDto(bool state, List<string> bucketList, string msg) : base(state, msg)
+        /// <param name="prefix">前缀</param>
+        /// <param name="isTruncated">请求中返回的结果是否被截断。返回值：true、false</param>
+        /// <param name="marker">标明这次GetBucket（ListObjects）的起点</param>
+        /// <param name="nextMaker">下次的起点</param>
+        public BucketItemResultDto(List<string> bucketList, string prefix, bool? isTruncated, string marker,
+            string nextMaker) : base(true, "success")
         {
             BucketList = bucketList;
+            Prefix = prefix;
+            Marker = marker;
+            IsTruncated = isTruncated;
+            NextMaker = nextMaker;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="prefix">前缀</param>
+        /// <param name="marker">标明这次GetBucket（ListObjects）的起点</param>
+        /// <param name="msg">异常提示</param>
+        public BucketItemResultDto(string prefix, string marker,
+            string msg) : base(false, msg)
+        {
+            Prefix = prefix;
+            Marker = marker;
+            IsTruncated = null;
+            BucketList = null;
         }
     }
 }

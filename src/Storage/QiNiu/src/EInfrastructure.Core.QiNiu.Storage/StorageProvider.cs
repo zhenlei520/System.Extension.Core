@@ -65,7 +65,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 HttpResult result =
                     target.UploadStream(param.Stream, param.Key, token, GetPutExtra(uploadPersistentOps));
                 bool res = result.Code == (int) HttpCode.OK;
-                return new UploadResultDto(res, res ? "成功" : result.ToString());
+                return new UploadResultDto(res, result, res ? "成功" : result.ToString());
             }
             else
             {
@@ -73,7 +73,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 HttpResult result =
                     target.UploadStream(param.Stream, param.Key, token, GetPutExtra(uploadPersistentOps));
                 bool res = result.Code == (int) HttpCode.OK;
-                return new UploadResultDto(res, res ? "成功" : result.ToString());
+                return new UploadResultDto(res, result, res ? "成功" : result.ToString());
             }
         }
 
@@ -100,7 +100,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     target.UploadStream(param.ByteArray.ConvertToStream(), param.Key, token,
                         GetPutExtra(uploadPersistentOps));
                 bool res = result.Code == (int) HttpCode.OK;
-                return new UploadResultDto(res, res ? "成功" : result.ToString());
+                return new UploadResultDto(res, result, res ? "成功" : result.ToString());
             }
             else
             {
@@ -108,7 +108,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 HttpResult result =
                     target.UploadData(param.ByteArray, param.Key, token, GetPutExtra(uploadPersistentOps));
                 bool res = result.Code == (int) HttpCode.OK;
-                return new UploadResultDto(res, res ? "成功" : result.ToString());
+                return new UploadResultDto(res, result, res ? "成功" : result.ToString());
             }
         }
 
@@ -125,14 +125,14 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
             FormUploader target = new FormUploader(Core.Tools.GetConfig(this.QiNiuConfig, uploadPersistentOps));
-            HttpResult result;
+            HttpResult result = null;
             if (param.Stream != null)
             {
                 result =
                     target.UploadStream(param.Stream, param.Key, param.Token, GetPutExtra(uploadPersistentOps));
 
                 bool res = result.Code == (int) HttpCode.OK;
-                return new UploadResultDto(res, res ? "成功" : result.ToString());
+                return new UploadResultDto(res, result, res ? "成功" : result.ToString());
             }
 
             if (param.ByteArray != null)
@@ -141,10 +141,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     target.UploadData(param.ByteArray, param.Key, param.Token, GetPutExtra(uploadPersistentOps));
 
                 bool res = result.Code == (int) HttpCode.OK;
-                return new UploadResultDto(res, res ? "成功" : result.ToString());
+                return new UploadResultDto(res, result, res ? "成功" : result.ToString());
             }
 
-            return new UploadResultDto(false, "不支持的上传方式");
+            return new UploadResultDto(false, result, "不支持的上传方式");
         }
 
         #endregion

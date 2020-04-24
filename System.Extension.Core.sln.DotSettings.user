@@ -3,6 +3,11 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\wangz\.nuget\packages\qiniu\7.3.1.1\lib\Net40\Qiniu.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4222b74d_002Dc5d0_002D4397_002Db86d_002Dbf9ebe5e9ba8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetBucketList" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.GetBucketList&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	
 	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=48e904e6_002D8978_002D41b7_002Dbbef_002D58ec08610a6c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateBucket" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
@@ -41,9 +46,14 @@
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=de56d6b2_002Dc477_002D4a0c_002D8729_002D314236572852/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SetSource #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.SetSource&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.SetSource&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.GetBucketList&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f94058ed_002Dad3e_002D4e88_002D93d5_002D89214935c1c3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SetSource #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;

@@ -15,7 +15,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket
         /// <summary>
         ///
         /// </summary>
-        /// <param name="permiss">空间访问权限 公开：0 私有：1</param>
+        /// <param name="permiss">空间访问权限 公开读：0 私有：1 公共读写：2</param>
         /// <param name="persistentOps">策略（如果修改的空间不是当前配置中的默认域，则修改此对象的Bucket属性）</param>
         public SetPermissParam(BucketPermiss permiss, BasePersistentOps persistentOps = null)
         {
@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket
         }
 
         /// <summary>
-        /// 空间访问权限 公开：0 私有：1
+        /// 空间访问权限 公开：0 私有：1 公共读写：2
         /// </summary>
         public BucketPermiss Permiss { get; private set; }
 
