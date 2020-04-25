@@ -3,8 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EInfrastructure.Core.Tools.Tasks.Dto;
 
 namespace EInfrastructure.Core.Tools.Tasks
 {
@@ -13,15 +16,18 @@ namespace EInfrastructure.Core.Tools.Tasks
     /// </summary>
     /// <typeparam name="T">传入任务参数</typeparam>
     /// <typeparam name="T2">任务响应的信息</typeparam>
-    public class TaskCommon<T, T2> : TaskBaseCommon
+    public class TaskCommon<T, T2>
     {
+        private readonly TaskBaseCommon _taskBaseCommon;
+
         /// <summary>
         ///
         /// </summary>
         /// <param name="maxThread">最大线程数</param>
         /// <param name="duration">默认无任务后休息3000ms</param>
-        public TaskCommon(int maxThread, int duration = 3000) : base(maxThread, duration)
+        public TaskCommon(int maxThread, int duration = 3000)
         {
+            _taskBaseCommon = new TaskBaseCommon(maxThread, duration);
         }
 
         #region 添加任务(有返回值)
@@ -36,7 +42,7 @@ namespace EInfrastructure.Core.Tools.Tasks
             Action<bool, T2, Exception> taskFinishAction = null)
         {
             Guid guid = Guid.NewGuid();
-            AwaitList.Add(guid, new TaskJobParam<T>(guid, item));
+            _taskBaseCommon.AwaitList.Add(guid, new TaskJobParam<T>(guid, item));
             StartProcessForWait(func, taskFinishAction);
         }
 
@@ -68,9 +74,9 @@ namespace EInfrastructure.Core.Tools.Tasks
         private void StartNewProcess(TaskJobParam<T> item, Func<T, CancellationTokenSource, T2> func,
             Action<bool, T2, Exception> taskFinishAction)
         {
-            if (!OnGoingList.ContainsKey(item.Id))
+            if (!_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
             {
-                OnGoingList.Add(item.Id, item.Data);
+                _taskBaseCommon.OnGoingList.Add(item.Id, item.Data);
             }
             else
             {
@@ -109,9 +115,9 @@ namespace EInfrastructure.Core.Tools.Tasks
                     }
                     finally
                     {
-                        if (OnGoingList.ContainsKey(item.Id))
+                        if (_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
                         {
-                            OnGoingList.Remove(item.Id);
+                            _taskBaseCommon.OnGoingList.Remove(item.Id);
                         }
 
                         StartProcessForWait(func, taskFinishAction);
@@ -129,14 +135,14 @@ namespace EInfrastructure.Core.Tools.Tasks
         private void StartProcessForWait(Func<T, CancellationTokenSource, T2> func,
             Action<bool, T2, Exception> taskFinishAction)
         {
-            if (AwaitList.Count > 0 && IsStartNewProcess)
+            if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsStartNewProcess)
             {
-                TaskJobParam<T> taskJobParam = base.GetFirstJob<TaskJobParam<T>>(AwaitList);
+                TaskJobParam<T> taskJobParam = _taskBaseCommon.GetFirstJob<TaskJobParam<T>>(_taskBaseCommon.AwaitList);
                 if (taskJobParam != null)
                 {
-                    if (AwaitList.ContainsKey(taskJobParam.Id))
+                    if (_taskBaseCommon.AwaitList.ContainsKey(taskJobParam.Id))
                     {
-                        AwaitList.Remove(taskJobParam.Id);
+                        _taskBaseCommon.AwaitList.Remove(taskJobParam.Id);
                     }
 
                     StartNewProcess(taskJobParam, func, taskFinishAction);
@@ -144,9 +150,9 @@ namespace EInfrastructure.Core.Tools.Tasks
             }
             else
             {
-                if (_duration > 0)
+                if (_taskBaseCommon._duration > 0)
                 {
-                    Thread.Sleep(_duration);
+                    Thread.Sleep(_taskBaseCommon._duration);
                 }
             }
         }
@@ -160,15 +166,18 @@ namespace EInfrastructure.Core.Tools.Tasks
     /// 多线程任务，可控制最大线程数（无响应值）
     /// </summary>
     /// <typeparam name="T">传入任务参数</typeparam>
-    public class TaskCommon<T> : TaskBaseCommon
+    public class TaskCommon<T>
     {
+        private readonly TaskBaseCommon _taskBaseCommon;
+
         /// <summary>
         ///
         /// </summary>
         /// <param name="maxThread">最大线程数</param>
         /// <param name="duration">默认无任务后休息3000ms</param>
-        public TaskCommon(int maxThread, int duration = 3000) : base(maxThread, duration)
+        public TaskCommon(int maxThread, int duration = 3000)
         {
+            _taskBaseCommon = new TaskBaseCommon(maxThread, duration);
         }
 
         #region 添加任务(无响应值)
@@ -178,11 +187,34 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// </summary>
         /// <param name="item">传入任务参数</param>
         /// <param name="action">需要执行的任务</param>
+        public void Add(T item, Action<T> action)
+        {
+            Guid guid = Guid.NewGuid();
+            _taskBaseCommon.AwaitList.Add(guid, new TaskJobParam<T>(guid, item));
+            StartProcessForWait(action);
+        }
+
+        /// <summary>
+        /// 添加任务(无响应值)
+        /// </summary>
+        /// <param name="item">传入任务参数</param>
+        /// <param name="action">需要执行的任务</param>
         public void Add(T item, Action<T, CancellationTokenSource> action)
         {
             Guid guid = Guid.NewGuid();
-            AwaitList.Add(guid, new TaskJobParam<T>(guid, item));
+            _taskBaseCommon.AwaitList.Add(guid, new TaskJobParam<T>(guid, item));
             StartProcessForWait(action);
+        }
+
+        /// <summary>
+        /// 添加任务集合(无响应值)
+        /// </summary>
+        /// <param name="list">传入任务参数</param>
+        /// <param name="action">需要执行的任务</param>
+        /// <typeparam name="T">任务参数类型</typeparam>
+        public void AddRang(List<T> list, Action<T> action)
+        {
+            list.ForEach(item => { Add(item, action); });
         }
 
         /// <summary>
@@ -207,11 +239,40 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// </summary>
         /// <param name="item"></param>
         /// <param name="action"></param>
+        private void StartNewProcess(TaskJobParam<T> item, Action<T> action)
+        {
+            if (!_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
+            {
+                _taskBaseCommon.OnGoingList.Add(item.Id, item.Data);
+            }
+            else
+            {
+                StartProcessForWait(action);
+            }
+
+            var task = Task.Factory.StartNew(() =>
+                    action.Invoke(item.Data))
+                .ContinueWith(res =>
+                {
+                    if (_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
+                    {
+                        _taskBaseCommon.OnGoingList.Remove(item.Id);
+                    }
+
+                    StartProcessForWait(action);
+                });
+        }
+
+        /// <summary>
+        /// 开始新的任务
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="action"></param>
         private void StartNewProcess(TaskJobParam<T> item, Action<T, CancellationTokenSource> action)
         {
-            if (!OnGoingList.ContainsKey(item.Id))
+            if (!_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
             {
-                OnGoingList.Add(item.Id, item.Data);
+                _taskBaseCommon.OnGoingList.Add(item.Id, item.Data);
             }
             else
             {
@@ -224,22 +285,12 @@ namespace EInfrastructure.Core.Tools.Tasks
                     action.Invoke(item.Data, cts), token)
                 .ContinueWith((res) =>
                 {
-                    try
+                    if (_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
                     {
+                        _taskBaseCommon.OnGoingList.Remove(item.Id);
                     }
-                    catch (Exception ex)
-                    {
-                        // ignored
-                    }
-                    finally
-                    {
-                        if (OnGoingList.ContainsKey(item.Id))
-                        {
-                            OnGoingList.Remove(item.Id);
-                        }
 
-                        StartProcessForWait(action);
-                    }
+                    StartProcessForWait(action);
                 }, token);
         }
 
@@ -250,16 +301,16 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         /// 开始执行等待进行的任务
         /// </summary>
-        private void StartProcessForWait(Action<T, CancellationTokenSource> action)
+        private void StartProcessForWait(Action<T> action)
         {
-            if (AwaitList.Count > 0 && IsStartNewProcess)
+            if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsStartNewProcess)
             {
-                TaskJobParam<T> taskJobParam = base.GetFirstJob<TaskJobParam<T>>(AwaitList);
+                TaskJobParam<T> taskJobParam = _taskBaseCommon.GetFirstJob<TaskJobParam<T>>(_taskBaseCommon.AwaitList);
                 if (taskJobParam != null)
                 {
-                    if (AwaitList.ContainsKey(taskJobParam.Id))
+                    if (_taskBaseCommon.AwaitList.ContainsKey(taskJobParam.Id))
                     {
-                        AwaitList.Remove(taskJobParam.Id);
+                        _taskBaseCommon.AwaitList.Remove(taskJobParam.Id);
                     }
 
                     StartNewProcess(taskJobParam, action);
@@ -267,9 +318,36 @@ namespace EInfrastructure.Core.Tools.Tasks
             }
             else
             {
-                if (_duration > 0)
+                if (_taskBaseCommon._duration > 0)
                 {
-                    Thread.Sleep(_duration);
+                    Thread.Sleep(_taskBaseCommon._duration);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 开始执行等待进行的任务
+        /// </summary>
+        private void StartProcessForWait(Action<T, CancellationTokenSource> action)
+        {
+            if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsStartNewProcess)
+            {
+                TaskJobParam<T> taskJobParam = _taskBaseCommon.GetFirstJob<TaskJobParam<T>>(_taskBaseCommon.AwaitList);
+                if (taskJobParam != null)
+                {
+                    if (_taskBaseCommon.AwaitList.ContainsKey(taskJobParam.Id))
+                    {
+                        _taskBaseCommon.AwaitList.Remove(taskJobParam.Id);
+                    }
+
+                    StartNewProcess(taskJobParam, action);
+                }
+            }
+            else
+            {
+                if (_taskBaseCommon._duration > 0)
+                {
+                    Thread.Sleep(_taskBaseCommon._duration);
                 }
             }
         }
@@ -290,7 +368,20 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// 执行多个操作，等待所有操作完成
         /// </summary>
         /// <param name="actions">操作集合</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("suggest use ParallelExecute")]
         public static void WaitAll(params Action[] actions)
+        {
+            WaitAll(TaskCreationOptions.None, actions);
+        }
+
+        /// <summary>
+        /// 执行多个操作，等待所有操作完成
+        /// </summary>
+        /// <param name="taskCreationOptions">父子任务运行、长时间运行配置</param>
+        /// <param name="actions">操作集合</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static void WaitAll(TaskCreationOptions taskCreationOptions, params Action[] actions)
         {
             if (actions == null)
                 return;
@@ -305,12 +396,64 @@ namespace EInfrastructure.Core.Tools.Tasks
         #region 并发执行多个操作
 
         /// <summary>
-        /// 并发执行多个操作
+        /// 并发执行多个操作（无返回值）
         /// </summary>
         /// <param name="actions">操作集合</param>
         public static void ParallelExecute(params Action[] actions)
         {
             Parallel.Invoke(actions);
+        }
+
+        /// <summary>
+        /// 并发执行多个操作（有返回值）
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="jobs">待执行的参数集合</param>
+        /// <returns></returns>
+        public static IEnumerable<JobItem> ParallelExecute(Action<JobItem> action, IEnumerable<JobItem> jobs)
+        {
+            var watis = new List<EventWaitHandle>();
+            foreach (var job in jobs)
+            {
+                //创建句柄   true终止状态
+                var handler = new ManualResetEvent(false);
+                watis.Add(handler);
+                //创建线程，传入线程参数
+                Thread t = new Thread(ParallelExecuteResult);
+                //启动线程
+                t.Start(new Request.JobItemRequest(job, action, handler));
+            }
+
+            WaitHandle.WaitAll(watis.ToArray());
+            return jobs;
+        }
+
+        /// <summary>
+        /// 并发执行多个操作（有返回值）
+        /// </summary>
+        /// <param name="action">委托方法</param>
+        /// <param name="jobs">待执行的参数集合</param>
+        /// <returns></returns>
+        public static IEnumerable<JobItem> ParallelExecute(Action<JobItem> action, params JobItem[] jobs)
+        {
+            return ParallelExecute(action, jobs.ToList());
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="data"></param>
+        private static void ParallelExecuteResult(object data)
+        {
+            Request.JobItemRequest jobItem =
+                (Request.JobItemRequest) data;
+            if (jobItem == null)
+            {
+                return;
+            }
+
+            jobItem.Action.Invoke(jobItem.Job);
+            jobItem.EventWaitHandle.Set();
         }
 
         #endregion
@@ -357,7 +500,6 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// 创建线程任务（有响应值）
         /// </summary>
         /// <param name="func">线程委托，输入参数为可通过Cancel方法取消任务，输出参数为最后的结果</param>
-        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public static Task<object> Create(Func<CancellationTokenSource, object> func)
         {
@@ -393,8 +535,21 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// </summary>
         /// <param name="task"></param>
         /// <param name="func">委托任务</param>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T">第一个任务的返回类型</typeparam>
+        /// <typeparam name="T2">方法返回类型</typeparam>
+        /// <returns></returns>
+        public static Task<T2> And<T, T2>(this Task<T> task, Func<T, T2> func)
+        {
+            return task.ContinueWith(res => func.Invoke(res.Result));
+        }
+
+        /// <summary>
+        /// 单任务串行（有响应值）
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="func">委托任务</param>
+        /// <typeparam name="T">第一个任务的返回类型</typeparam>
+        /// <typeparam name="T2">方法返回类型</typeparam>
         /// <returns></returns>
         public static Task<T2> And<T, T2>(this Task<T> task, Func<T, CancellationTokenSource, T2> func)
         {
@@ -413,11 +568,33 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <param name="task"></param>
         /// <param name="action">委托任务</param>
         /// <returns></returns>
+        public static Task And<T>(this Task<T> task, Action<T> action)
+        {
+            return task.ContinueWith(res => { action.Invoke(res.Result); });
+        }
+
+        /// <summary>
+        /// 单任务串行（无响应值）
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="action">委托任务</param>
+        /// <returns></returns>
         public static Task And<T>(this Task<T> task, Action<T, CancellationTokenSource> action)
         {
             var cts = new CancellationTokenSource();
             var token = cts.Token;
             return task.ContinueWith(res => { action.Invoke(res.Result, cts); }, token);
+        }
+
+        /// <summary>
+        /// 单任务串行（无响应值）
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="action">委托任务</param>
+        /// <returns></returns>
+        public static Task And(this Task task, Action action)
+        {
+            return task.ContinueWith(res => { action.Invoke(); });
         }
 
         /// <summary>
@@ -440,6 +617,17 @@ namespace EInfrastructure.Core.Tools.Tasks
         #region 多任务并行
 
         #region 多任务并行（无响应值）
+
+        /// <summary>
+        /// 多任务并行（无响应值）
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="actions"></param>
+        /// <returns></returns>
+        public static Task Or(this Task task, params Action[] actions)
+        {
+            return task.ContinueWith(res => { ParallelExecute(actions); });
+        }
 
         /// <summary>
         /// 多任务并行（无响应值）
