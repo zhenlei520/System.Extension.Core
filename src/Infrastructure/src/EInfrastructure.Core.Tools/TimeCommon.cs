@@ -485,7 +485,7 @@ namespace EInfrastructure.Core.Tools
             if (dt > China.MaxSupportedDateTime || dt < China.MinSupportedDateTime)
             {
                 //日期范围：1901 年 2 月 19 日 - 2101 年 1 月 28 日
-                throw new System.Exception(
+                throw new Exception(
                     $"日期超出范围！必须在{China.MinSupportedDateTime:yyyy-MM-dd}到{China.MaxSupportedDateTime.ToString($"yyyy-MM-dd")}之间！");
             }
 
@@ -821,7 +821,7 @@ namespace EInfrastructure.Core.Tools
         public static DateTime UnixTimeStampToDateTime(long unixTimeStamp,
             DateTimeKind dateTimeKind = DateTimeKind.Utc)
         {
-            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind);
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind);
             switch (unixTimeStamp.ToString(CultureInfo.InvariantCulture).Length)
             {
                 case 10:

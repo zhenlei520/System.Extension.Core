@@ -406,7 +406,7 @@ namespace EInfrastructure.Core.Tools
 
             byte[] retval = hashAlgorithm.ComputeHash(stream);
             stream.Close();
-            return SecurityCommon.GetSha(retval, hashAlgorithm, isUpper);
+            return GetSha(retval, hashAlgorithm, isUpper);
         }
 
         #endregion
@@ -472,7 +472,7 @@ namespace EInfrastructure.Core.Tools
         public static string HMacSha384(string text, string key)
         {
             key = key ?? "";
-            var encoding = new System.Text.ASCIIEncoding();
+            var encoding = new ASCIIEncoding();
             byte[] keyByte = encoding.GetBytes(key);
             byte[] messageBytes = encoding.GetBytes(text);
             using (var hmacsha384 = new HMACSHA384(keyByte))
