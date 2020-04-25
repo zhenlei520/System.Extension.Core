@@ -15,14 +15,14 @@ namespace EInfrastructure.Core.Tools.Randoms
         /// <summary>
         /// 随机数
         /// </summary>
-        protected System.Random Random;
+        protected Random Random;
 
         /// <summary>
         /// 初始化随机数字生成器
         /// </summary>
         public RandomNumberGenerator()
         {
-            Random = new System.Random();
+            Random = new Random();
         }
 
         #region 生成随机数字

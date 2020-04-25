@@ -153,10 +153,10 @@ namespace EInfrastructure.Core.Tools
                     return EncryptStr(mobile, "*", mobile.Length - 6, 3);
                 }
 
-                throw new System.Exception("请输入正确的手机号码");
+                throw new Exception("请输入正确的手机号码");
             }
 
-            throw new System.Exception("请输入正确的手机号码");
+            throw new Exception("请输入正确的手机号码");
         }
 
         #endregion

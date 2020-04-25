@@ -259,7 +259,7 @@ namespace EInfrastructure.Core.Tools.Files
         {
             try
             {
-                if (!System.IO.File.Exists(filePath))
+                if (!File.Exists(filePath))
                     return new byte[] { };
                 using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
@@ -353,7 +353,7 @@ namespace EInfrastructure.Core.Tools.Files
             string result = string.Empty;
             try
             {
-                if (!System.IO.File.Exists(filePath))
+                if (!File.Exists(filePath))
                     return result;
                 using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
@@ -411,7 +411,7 @@ namespace EInfrastructure.Core.Tools.Files
             List<string> result = new List<string>();
             try
             {
-                if (!System.IO.File.Exists(filePath))
+                if (!File.Exists(filePath))
                     return result;
                 using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {

@@ -818,7 +818,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static string ConvertToString(this byte[] bytes)
         {
-            System.Text.UnicodeEncoding converter = new System.Text.UnicodeEncoding();
+            UnicodeEncoding converter = new UnicodeEncoding();
             return converter.GetString(bytes);
         }
 
