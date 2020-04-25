@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace EInfrastructure.Core.Test
 {
@@ -11,10 +10,6 @@ namespace EInfrastructure.Core.Test
     /// </summary>
     public class StringCommonUnitTest : BaseUnitTest
     {
-        public StringCommonUnitTest(ITestOutputHelper output) : base(output)
-        {
-        }
-
         [Fact]
         public void EncryptStr()
         {

@@ -7,16 +7,11 @@ using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace EInfrastructure.Core.Test
 {
     public class ListCommonUnitTest : BaseUnitTest
     {
-        public ListCommonUnitTest(ITestOutputHelper output) : base(output)
-        {
-        }
-
         [Fact]
         public void Add()
         {

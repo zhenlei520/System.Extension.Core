@@ -7,6 +7,7 @@ using EInfrastructure.Core.HelpCommon.Randoms;
 using EInfrastructure.Core.HelpCommon.Randoms.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace EInfrastructure.Core.Test.Base
 {
@@ -18,13 +19,19 @@ namespace EInfrastructure.Core.Test.Base
         protected readonly ITestOutputHelper output;
         protected IServiceProvider provider;
 
-        public BaseUnitTest(ITestOutputHelper output)
+        public BaseUnitTest()
         {
-            var connectionString = "";
+            output = provider.GetService<ITestOutputHelper>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        protected void GetServiceProvider()
+        {
             var services = new ServiceCollection();
-            this.output = output;
             services.AddSingleton<IRandomBuilder, RandomCommon>();
-//            services.Configure<>(connectionString);////add using CNBlogs.Ad.Bootstrapper;
+            services.AddSingleton<ITestOutputHelper, TestOutputHelper>();
             provider = services.BuildServiceProvider();
         }
     }

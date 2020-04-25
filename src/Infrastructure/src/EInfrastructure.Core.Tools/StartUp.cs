@@ -39,7 +39,7 @@ namespace EInfrastructure.Core.Tools
                 SetLog(_isStartUp);
                 _isStartUp = true;
             }
-            EInfrastructure.Core.Config.Entities.StartUp.Run(enableLog);
+            Config.Entities.StartUp.Run(enableLog);
         }
     }
 }

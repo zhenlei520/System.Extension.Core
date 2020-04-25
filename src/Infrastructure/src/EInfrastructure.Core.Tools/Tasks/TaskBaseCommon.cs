@@ -8,27 +8,27 @@ namespace EInfrastructure.Core.Tools.Tasks
     /// <summary>
     /// 基础类
     /// </summary>
-    public class TaskBaseCommon
+    internal class TaskBaseCommon
     {
         /// <summary>
         /// 最大线程数
         /// </summary>
-        protected int _maxThread;
+        public int _maxThread;
 
         /// <summary>
         /// 等待中的任务
         /// </summary>
-        protected readonly Hashtable AwaitList = Hashtable.Synchronized(new Hashtable());
+        public readonly Hashtable AwaitList = Hashtable.Synchronized(new Hashtable());
 
         /// <summary>
         /// 进行中的任务
         /// </summary>
-        protected readonly Hashtable OnGoingList = Hashtable.Synchronized(new Hashtable());
+        public readonly Hashtable OnGoingList = Hashtable.Synchronized(new Hashtable());
 
         /// <summary>
         /// 无任务后休息的时间
         /// </summary>
-        protected readonly int _duration;
+        public readonly int _duration;
 
         /// <summary>
         ///
@@ -54,7 +54,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         /// 判断是否可开启新的任务
         /// </summary>
-        protected bool IsStartNewProcess => OnGoingList.Count < _maxThread;
+        public bool IsStartNewProcess => OnGoingList.Count < _maxThread;
 
         #endregion
 

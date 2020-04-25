@@ -3,7 +3,6 @@
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace EInfrastructure.Core.Test
 {
@@ -12,10 +11,6 @@ namespace EInfrastructure.Core.Test
     /// </summary>
     public class ValidateUnitTest : BaseUnitTest
     {
-        public ValidateUnitTest(ITestOutputHelper output) : base(output)
-        {
-        }
-
         [Theory]
         [InlineData("450000", true)]
         [InlineData("4500002", false)]

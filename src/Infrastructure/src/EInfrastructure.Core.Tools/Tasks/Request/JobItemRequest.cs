@@ -9,27 +9,34 @@ namespace EInfrastructure.Core.Tools.Tasks.Request
     /// <summary>
     /// 任务信息
     /// </summary>
-    internal class JobItem
+    internal class JobItemRequest
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public JobItemRequest()
+        {
+        }
+
         /// <summary>
         ///
         /// </summary>
         /// <param name="job"></param>
         /// <param name="action"></param>
         /// <param name="eventWaitHandle"></param>
-        public JobItem(EInfrastructure.Core.Tools.Tasks.Dto.JobItem job,Action<EInfrastructure.Core.Tools.Tasks.Dto.JobItem> action, EventWaitHandle eventWaitHandle)
+        public JobItemRequest(Dto.JobItem job, Action<Dto.JobItem> action, EventWaitHandle eventWaitHandle) : this()
         {
             Job = job;
             Action = action;
             EventWaitHandle = eventWaitHandle;
         }
 
-        public Action<EInfrastructure.Core.Tools.Tasks.Dto.JobItem> Action { get; private set; }
+        public Action<Dto.JobItem> Action { get; private set; }
 
         /// <summary>
         /// 任务信息
         /// </summary>
-        public EInfrastructure.Core.Tools.Tasks.Dto.JobItem Job { get; private set; }
+        public Dto.JobItem Job { get; private set; }
 
         /// <summary>
         /// EventWaitHandle

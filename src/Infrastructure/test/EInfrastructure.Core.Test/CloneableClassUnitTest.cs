@@ -5,16 +5,11 @@ using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace EInfrastructure.Core.Test
 {
     public class CloneableClassUnitTest : BaseUnitTest
     {
-        public CloneableClassUnitTest(ITestOutputHelper output) : base(output)
-        {
-        }
-
         [Fact]
         public void DeepClone()
         {

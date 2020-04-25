@@ -66,7 +66,6 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// <summary>
         /// get list
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public IQueryable<TEntity> GetQueryable(SpatialDimensionParam param)
         {

@@ -36,12 +36,12 @@ namespace EInfrastructure.Core.SqlServer.Repository
         }
 
 
-        /// <summary>
-        /// get list
-        /// </summary>
-        /// <param name="param"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+       /// <summary>
+       /// get list
+       /// </summary>
+       /// <param name="param">param</param>
+       /// <typeparam name="TOpt"></typeparam>
+       /// <returns></returns>
         public List<TOpt> GetList<TOpt>(SpatialDimensionParam param)
         {
             return _spatialDimensionBase.GetList<TOpt>(param);
@@ -51,7 +51,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
         /// GetPageData
         /// </summary>
         /// <param name="param"></param>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TOpt"></typeparam>
         /// <returns></returns>
         public PageData<TOpt> GetPageData<TOpt>(SpatialDimensionPagingParam param)
         {

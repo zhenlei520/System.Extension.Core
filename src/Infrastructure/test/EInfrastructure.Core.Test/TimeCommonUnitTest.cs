@@ -7,16 +7,11 @@ using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Enumerations;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace EInfrastructure.Core.Test
 {
     public class TimeCommonUnitTest : BaseUnitTest
     {
-        public TimeCommonUnitTest(ITestOutputHelper output) : base(output)
-        {
-        }
-
         [Theory]
         [InlineData("2019-07-29 14:00", '-', "2019-07-29")]
         [InlineData("", '/', null)]

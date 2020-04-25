@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Aliyun.OSS;
-using Aliyun.OSS.Common;
 using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
