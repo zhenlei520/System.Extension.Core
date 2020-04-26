@@ -9,7 +9,7 @@ namespace EInfrastructure.Core.Tools.Tasks.Dto
     public class JobItem
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public JobItem()
         {
@@ -22,6 +22,16 @@ namespace EInfrastructure.Core.Tools.Tasks.Dto
         public JobItem(object source) : this()
         {
             Source = source;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="data">数据</param>
+        internal JobItem(object source, object data) : this(source)
+        {
+            Data = data;
         }
 
         /// <summary>
