@@ -9,6 +9,14 @@ namespace EInfrastructure.Core.Redis.Config
     public class RedisConfig : IFluentlValidatorEntity
     {
         /// <summary>
+        /// 
+        /// </summary>
+        public RedisConfig()
+        {
+            Timer = 500;
+        }
+
+        /// <summary>
         /// Ip地址
         /// </summary>
         public string Ip { get; set; }
@@ -47,5 +55,10 @@ namespace EInfrastructure.Core.Redis.Config
         /// Hash缓存key 范围
         /// </summary>
         public List<string> OverTimeCacheKeys { get; set; }
+
+        /// <summary>
+        /// 定时清理Hash的时间 默认为500ms
+        /// </summary>
+        public int Timer { get; set; }
     }
 }

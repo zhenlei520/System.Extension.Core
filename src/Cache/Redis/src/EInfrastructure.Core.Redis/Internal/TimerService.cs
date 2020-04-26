@@ -1,9 +1,12 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.Redis.Config;
 using Microsoft.Extensions.Hosting;
 
 namespace EInfrastructure.Core.Redis.Internal
@@ -11,17 +14,15 @@ namespace EInfrastructure.Core.Redis.Internal
     /// <summary>
     /// Default implement of
     /// </summary>
-    internal class Bootstrapper : BackgroundService, IBootstrapper
+    internal class TimerService : BackgroundService
     {
-        private ICacheProvider CacheProvider { get; }
+        private readonly ICacheProvider _cacheProvider;
+        private readonly RedisConfig _redisConfig;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="cacheProvider"></param>
-        public Bootstrapper(ICacheProvider cacheProvider)
+        public TimerService(ICollection<ICacheProvider> cacheProviders, RedisConfig redisConfig)
         {
-            CacheProvider = cacheProvider;
+            _cacheProvider = cacheProviders.FirstOrDefault(x => x.GetIdentify() == "EInfrastructure.Core.Redis");
+            _redisConfig = redisConfig;
         }
 
         /// <summary>
@@ -33,18 +34,10 @@ namespace EInfrastructure.Core.Redis.Internal
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                CacheProvider.ClearOverTimeHashKey();
+                _cacheProvider.ClearOverTimeHashKey();
+                Thread.Sleep(_redisConfig.Timer);
             }
-            await BootstrapAsync(stoppingToken);
-        }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="stoppingToken"></param>
-        /// <returns></returns>
-        public async Task BootstrapAsync(CancellationToken stoppingToken)
-        {
             await Task.CompletedTask;
         }
     }
