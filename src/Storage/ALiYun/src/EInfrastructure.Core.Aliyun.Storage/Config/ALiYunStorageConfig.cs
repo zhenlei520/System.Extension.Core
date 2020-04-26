@@ -99,8 +99,13 @@ namespace EInfrastructure.Core.Aliyun.Storage.Config
         /// </summary>
         /// <param name="zone">空间区域</param>
         /// <returns></returns>
-        internal OssClient GetClient(ZoneEnum zone)
+        internal OssClient GetClient(ZoneEnum? zone)
         {
+            if (zone == null)
+            {
+                zone = ZoneEnum.HangZhou;
+            }
+
             var endpoint = zone.GetCustomerObj<ENameAttribute>()?.Name;
             if (string.IsNullOrEmpty(endpoint))
             {

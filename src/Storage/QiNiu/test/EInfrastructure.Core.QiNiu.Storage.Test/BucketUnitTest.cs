@@ -111,7 +111,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [InlineData("test", 0)]
         public void SetPermiss(string bucket, int permiss)
         {
-            var ret = _bucketProvider.SetPermiss(new SetPermissParam(BucketPermiss.FromValue<BucketPermiss>(permiss),
+            var ret = _bucketProvider.SetPermiss(new SetPermissParam(Permiss.FromValue<Permiss>(permiss),
                 new BasePersistentOps()
                 {
                     Bucket = bucket,

@@ -26,16 +26,16 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <summary>
         /// 文件key
         /// </summary>
-        public string Key { get; private set; }
+        public string Key { get; }
 
         /// <summary>
         /// 文件流
         /// </summary>
-        public byte[] ByteArray { get; private set; }
+        public byte[] ByteArray { get; }
 
         /// <summary>
         /// 上传策略
         /// </summary>
-        public UploadPersistentOps UploadPersistentOps { get; private set; }
+        public UploadPersistentOps UploadPersistentOps { get; }
     }
 }

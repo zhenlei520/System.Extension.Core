@@ -20,7 +20,6 @@ using EInfrastructure.Core.QiNiu.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Response;
 using EInfrastructure.Core.QiNiu.Storage.Validator.Bucket;
 using EInfrastructure.Core.Tools;
-using EInfrastructure.Core.Tools.Attributes;
 using EInfrastructure.Core.Tools.Url;
 using EInfrastructure.Core.Validation.Common;
 using Qiniu.Util;
@@ -121,9 +120,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public OperateResultDto Create(CreateBucketParam request)
         {
             new CreateBucketParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-            var reg = ((ZoneEnum) request.Region).GetCustomerObj<ENameAttribute>()?.Name ?? "";
+
+            var zone = Core.Tools.GetZonePrivate(this._qiNiuConfig, request.Zone,()=>ZoneEnum.ZoneCnSouth);
             var scheme = Core.Tools.GetScheme(_qiNiuConfig, request.PersistentOps.IsUseHttps);
-            string url = $"{scheme}rs.qbox.me/mkbucketv3/{request.BucketName}/region/{reg}";
+            string url = $"{scheme}rs.qbox.me/mkbucketv3/{request.BucketName}/region/{Core.Tools.GetRegion(zone)}";
             _httpClient.Headers = new Dictionary<string, string>()
             {
                 {"Authorization", $"{_storageProvider.GetManageToken(new GetManageTokenParam(url))}"}
@@ -257,7 +257,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public OperateResultDto SetPermiss(SetPermissParam request)
+        public OperateResultDto SetPermiss(EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket.SetPermissParam request)
         {
             new SetPermissParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             string url =

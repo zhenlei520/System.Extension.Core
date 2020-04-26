@@ -1,11 +1,10 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using FluentValidation;
 
-namespace EInfrastructure.Core.QiNiu.Storage.Validator.Bucket
+namespace EInfrastructure.Core.Aliyun.Storage.Validator.Storage
 {
     /// <summary>
     /// 空间访问权限验证
@@ -17,8 +16,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator.Bucket
         /// </summary>
         public SetPermissParamValidator()
         {
-            RuleFor(x => x.Permiss).IsInEnum().WithMessage("不支持的访问权限")
-                .Must(x => x.Id != Permiss.PublicReadWrite.Id).WithMessage("不支持的访问权限");
+            RuleFor(x => x.Key).Must(x => !string.IsNullOrEmpty(x) && x.Trim().Length > 0).WithMessage("请输入文件key");
         }
     }
 }

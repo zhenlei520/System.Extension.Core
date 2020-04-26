@@ -25,11 +25,11 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <summary>
         /// 文件key集合
         /// </summary>
-        public List<string> Keys { get; private set; }
+        public List<string> Keys { get; }
 
         /// <summary>
         /// 策略
         /// </summary>
-        public BasePersistentOps PersistentOps { get; private set; }
+        public BasePersistentOps PersistentOps { get; }
     }
 }

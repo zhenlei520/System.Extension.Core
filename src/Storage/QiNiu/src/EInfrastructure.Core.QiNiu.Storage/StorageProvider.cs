@@ -209,7 +209,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new ExistParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             var res = Get(new GetFileParam(request.Key, request.PersistentOps));
-            return new OperateResultDto(res.Success, res.Msg);
+            return new OperateResultDto(res.State, res.Msg);
         }
 
         #endregion
@@ -225,7 +225,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new ListFileFilterValidator().Validate(filter).Check(HttpStatus.Err.Name);
             var listRet = base.GetBucketManager().ListFiles(
-                Core.Tools.GetBucket(this.QiNiuConfig, filter.PersistentOps.Bucket), filter.Prefix, filter.LastMark,
+                Core.Tools.GetBucket(this.QiNiuConfig, filter.PersistentOps.Bucket), filter.Prefix, filter.Marker,
                 filter.PageSize,
                 filter.Delimiter);
             if (listRet.Code == (int) HttpCode.OK)
@@ -234,17 +234,14 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 {
                     CommonPrefixes = listRet.Result.CommonPrefixes,
                     Marker = listRet.Result.Marker,
-                    Items = listRet.Result.Items.Select(x => new FileInfoDto()
+                    Items = listRet.Result.Items.Select(x => new FileInfoDto(true, "success")
                     {
-                        Host = Core.Tools.GetHost(this.QiNiuConfig, filter.PersistentOps.Host),
-                        Path = x.Key,
-                        Msg = "success",
+                        Key = x.Key,
                         Hash = x.Hash,
                         Size = x.Fsize,
                         PutTime = x.PutTime,
                         MimeType = x.MimeType,
                         FileType = x.FileType,
-                        Success = true,
                     }).ToList()
                 };
             }
@@ -268,24 +265,17 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 .Stat(Core.Tools.GetBucket(this.QiNiuConfig, request.PersistentOps.Bucket), request.Key);
             if (statRet.Code != (int) HttpCode.OK)
             {
-                return new FileInfoDto()
-                {
-                    Success = false,
-                    Msg = statRet.ToString()
-                };
+                return new FileInfoDto(false, statRet.ToString());
             }
 
-            return new FileInfoDto()
+            return new FileInfoDto(true, "success")
             {
                 Size = statRet.Result.Fsize,
                 Hash = statRet.Result.Hash,
                 MimeType = statRet.Result.MimeType,
                 PutTime = statRet.Result.PutTime,
                 FileType = statRet.Result.FileType,
-                Success = true,
-                Host = Core.Tools.GetHost(this.QiNiuConfig, request.PersistentOps.Host),
-                Path = request.Key,
-                Msg = "success"
+                Key = request.Key,
             };
         }
 
@@ -321,27 +311,21 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 index++;
                 if (item.Code == (int) HttpCode.OK)
                 {
-                    yield return new FileInfoDto()
+                    yield return new FileInfoDto(true, "success")
                     {
                         Size = item.Data.Fsize,
                         Hash = item.Data.Hash,
                         MimeType = item.Data.MimeType,
                         PutTime = item.Data.PutTime,
                         FileType = item.Data.FileType,
-                        Success = true,
-                        Host = Core.Tools.GetHost(this.QiNiuConfig, persistentOps.Host),
-                        Path = keyList[index - 1],
-                        Msg = "success"
+                        Key = keyList[index - 1]
                     };
                 }
                 else
                 {
-                    yield return new FileInfoDto()
+                    yield return new FileInfoDto(false, item.Data.Error)
                     {
-                        Success = false,
-                        Msg = item.Data.Error,
-                        Host = Core.Tools.GetHost(this.QiNiuConfig, persistentOps.Host),
-                        Path = keyList[index - 1]
+                        Key = keyList[index - 1]
                     };
                 }
             }
@@ -420,9 +404,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
             new CopyFileParamValidator().Validate(copyFileParam).Check(HttpStatus.Err.Name);
             HttpResult copyRet = GetBucketManager().Copy(
                 Core.Tools.GetBucket(this.QiNiuConfig, copyFileParam.PersistentOps.Bucket), copyFileParam.SourceKey,
-                copyFileParam.OptBucket, copyFileParam.OptKey, copyFileParam.IsForce);
+                Core.Tools.GetBucket(this.QiNiuConfig, copyFileParam.PersistentOps.Bucket, copyFileParam.OptBucket),
+                copyFileParam.OptKey, copyFileParam.IsForce);
             var res = copyRet.Code == (int) HttpCode.OK;
-            return new CopyFileResultDto(res, copyFileParam.FileId, res ? "复制成功" : copyRet.Text);
+            return new CopyFileResultDto(res, copyFileParam.SourceKey, res ? "复制成功" : copyRet.Text);
         }
 
         /// <summary>
@@ -449,8 +434,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
             BasePersistentOps persistentOps)
         {
             List<string> ops = copyFileParam.Select(x =>
-                GetBucketManager().CopyOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), x.SourceKey,
-                    x.OptBucket, x.OptKey, x.IsForce)).ToList();
+                    GetBucketManager().CopyOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), x.SourceKey,
+                        Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket, x.OptBucket), x.OptKey, x.IsForce))
+                .ToList();
             BatchResult ret = GetBucketManager().Batch(ops);
             var index = 0;
             foreach (BatchInfo info in ret.Result)
@@ -458,12 +444,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 index++;
                 if (info.Code == (int) HttpCode.OK)
                 {
-                    yield return new CopyFileResultDto(true, copyFileParam.ToList()[index - 1].FileId,
+                    yield return new CopyFileResultDto(true, copyFileParam.ToList()[index - 1].SourceKey,
                         "复制成功");
                 }
                 else
                 {
-                    yield return new CopyFileResultDto(false, copyFileParam.ToList()[index - 1].FileId,
+                    yield return new CopyFileResultDto(false, copyFileParam.ToList()[index - 1].SourceKey,
                         info.Data.Error);
                 }
             }
@@ -804,6 +790,38 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 }
             }
         }
+
+        #endregion
+
+        #region 文件权限
+
+        #region 设置文件权限
+
+        /// <summary>
+        /// 设置文件权限
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public OperateResultDto SetPermiss(SetPermissParam request)
+        {
+            return new OperateResultDto(false, "不支持设置文件权限");
+        }
+
+        #endregion
+
+        #region 获取文件的访问权限
+
+        /// <summary>
+        /// 获取文件的访问权限
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public FilePermissResultInfo GetPermiss(GetFilePermissParam request)
+        {
+            return new FilePermissResultInfo(false, null, "不支持获取文件权限");
+        }
+
+        #endregion
 
         #endregion
     }

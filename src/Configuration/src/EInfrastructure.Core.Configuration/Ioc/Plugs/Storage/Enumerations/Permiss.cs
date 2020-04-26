@@ -6,31 +6,37 @@ using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations
 {
     /// <summary>
-    /// 空间访问权限
+    /// 访问权限
     /// </summary>
-    public class BucketPermiss : Enumeration
+    public class Permiss : Enumeration
     {
         /// <summary>
         /// 公开读
         /// </summary>
-        public static BucketPermiss Public = new BucketPermiss(0, "公开读");
+        public static Permiss Public = new Permiss(0, "公开读");
 
         /// <summary>
         /// 私有
         /// </summary>
-        public static BucketPermiss Private = new BucketPermiss(1, "私有");
+        public static Permiss Private = new Permiss(1, "私有");
 
         /// <summary>
         /// 公共读写
         /// </summary>
-        public static BucketPermiss PublicReadWrite = new BucketPermiss(2, "公共读写");
+        public static Permiss PublicReadWrite = new Permiss(2, "公共读写");
+
+        /// <summary>
+        /// 默认
+        /// 阿里云这里为继承父类权限，其他云不支持
+        /// </summary>
+        public static Permiss Default = new Permiss(3, "默认");
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
-        public BucketPermiss(int id, string name) : base(id, name)
+        public Permiss(int id, string name) : base(id, name)
         {
         }
     }

@@ -26,16 +26,16 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pi
         /// <summary>
         /// 源图（必填）
         /// </summary>
-        public string SourceFileKey { get; private set; }
+        public string SourceFileKey { get; }
 
         /// <summary>
         /// 目标图（必填）
         /// </summary>
-        public string Key { get; private set; }
+        public string Key { get; }
 
         /// <summary>
         /// 策略
         /// </summary>
-        public BasePersistentOps PersistentOps { get; private set; }
+        public BasePersistentOps PersistentOps { get; }
     }
 }

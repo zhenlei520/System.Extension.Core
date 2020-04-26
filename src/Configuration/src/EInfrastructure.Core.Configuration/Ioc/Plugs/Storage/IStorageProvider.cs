@@ -144,9 +144,9 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <summary>
         /// 复制文件（两个文件需要在同一账号下）
         /// </summary>
-        /// <param name="copyFileParam">复制到新空间的参数</param>
+        /// <param name="request">复制到新空间的参数</param>
         /// <returns></returns>
-        CopyFileResultDto CopyTo(CopyFileParam copyFileParam);
+        CopyFileResultDto CopyTo(CopyFileParam request);
 
         /// <summary>
         /// 复制文件（两个文件需要在同一账号下）
@@ -254,5 +254,25 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         List<ChangeTypeResultDto> ChangeTypeRange(ChangeTypeRangeParam request);
 
         #endregion
+
+        /// <summary>
+        /// 设置空间访问权限
+        /// 七牛云存储不支持设置文件权限
+        /// 阿里云Oss支持
+        /// Uc云不支持
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        OperateResultDto SetPermiss(SetPermissParam request);
+
+        /// <summary>
+        /// 获取文件的访问权限
+        /// 七牛云存储不支持获取文件权限
+        /// 阿里云Oss支持
+        /// Uc云不支持
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        FilePermissResultInfo GetPermiss(GetFilePermissParam request);
     }
 }

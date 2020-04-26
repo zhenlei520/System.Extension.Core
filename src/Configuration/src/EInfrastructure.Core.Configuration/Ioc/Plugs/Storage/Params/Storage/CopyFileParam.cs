@@ -1,7 +1,6 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
@@ -14,26 +13,20 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <summary>
         ///
         /// </summary>
-        /// <param name="optBucket">目标空间</param>
         /// <param name="sourceKey">源文件key</param>
         /// <param name="optKey">目标文件key</param>
+        /// <param name="optBucket">目标空间（如果为空，则认为与源空间一致）</param>
         /// <param name="isForce">是否覆盖</param>
-        /// <param name="persistentOps">策略</param>
-        public CopyFileParam(string optBucket, string sourceKey, string optKey, bool isForce,
+        /// <param name="persistentOps">策略（分片为4MB复制时，采用大文件复制）</param>
+        public CopyFileParam(string sourceKey, string optKey, string optBucket, bool isForce = true,
             BasePersistentOps persistentOps = null)
         {
-            FileId = Guid.NewGuid().ToString("N");
             OptBucket = optBucket;
             SourceKey = sourceKey;
             OptKey = optKey;
             IsForce = isForce;
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
-
-        /// <summary>
-        /// 文件标识
-        /// </summary>
-        public string FileId { get; }
 
         /// <summary>
         /// 目标空间
@@ -58,6 +51,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <summary>
         /// 策略
         /// </summary>
-        public BasePersistentOps PersistentOps { get; private set; }
+        public BasePersistentOps PersistentOps { get; }
     }
 }

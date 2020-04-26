@@ -13,15 +13,15 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
         /// </summary>
         /// <param name="prefix">前缀</param>
         /// <param name="delimiter">指定目录分隔符，列出所有公共前缀（模拟列出目录效果）</param>
-        /// <param name="lastMark">最后一次访问的文件</param>
+        /// <param name="marker">标明本次列举文件的起点</param>
         /// <param name="pageSize">每页数量（默认1000条）</param>
         /// <param name="persistentOps">策略</param>
-        public ListFileFilter(string prefix, string delimiter, string lastMark, int pageSize = 1000,
+        public ListFileFilter(string prefix, string delimiter, string marker = "", int pageSize = 1000,
             BasePersistentOps persistentOps = null)
         {
             Prefix = prefix;
             Delimiter = delimiter;
-            LastMark = lastMark;
+            Marker = marker;
             PageSize = pageSize;
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
@@ -29,26 +29,27 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
         /// <summary>
         /// 前缀
         /// </summary>
-        public string Prefix { get; private set; }
+        public string Prefix { get; }
 
         /// <summary>
         /// 指定目录分隔符，列出所有公共前缀（模拟列出目录效果）
         /// </summary>
-        public string Delimiter { get; private set; }
+        public string Delimiter { get; }
 
         /// <summary>
-        /// 最后一次访问的文件
+        /// 标明本次列举文件的起点
+        /// 考虑到设置limit后返回的文件列表可能不全,首次执行时marker为null
         /// </summary>
-        public string LastMark { get; private set; }
+        public string Marker { get; }
 
         /// <summary>
         /// 每页数量
         /// </summary>
-        public int PageSize { get; private set; }
+        public int PageSize { get; }
 
         /// <summary>
         /// 策略
         /// </summary>
-        public BasePersistentOps PersistentOps { get; private set; }
+        public BasePersistentOps PersistentOps { get; }
     }
 }

@@ -55,7 +55,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         public UploadResultDto UploadStream(UploadByStreamParam param, bool isResume = false)
         {
             var res = base.UploadFile(param.Stream, param.Key, Path.GetExtension(param.Key));
-            return new UploadResultDto(res, "",res ? "上传成功" : "上传失败");
+            return new UploadResultDto(res, "", res ? "上传成功" : "上传失败");
         }
 
         #endregion
@@ -359,6 +359,39 @@ namespace EInfrastructure.Core.UCloud.Storage
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region 文件权限
+
+        #region 设置文件权限
+
+        /// <summary>
+        /// 设置文件权限
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public OperateResultDto SetPermiss(SetPermissParam request)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 获取文件权限
+
+        /// <summary>
+        /// 获取文件权限
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public FilePermissResultInfo GetPermiss(GetFilePermissParam request)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
         #endregion
     }

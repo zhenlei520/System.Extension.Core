@@ -27,12 +27,12 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <summary>
         /// 移动文件信息
         /// </summary>
-        public List<MoveFileParam> MoveFiles { get; private set; }
+        public List<MoveFileParam> MoveFiles { get; }
 
         /// <summary>
         /// 策略
         /// </summary>
-        public BasePersistentOps PersistentOps { get; private set; }
+        public BasePersistentOps PersistentOps { get; }
 
         /// <summary>
         /// 移动或重命名文件

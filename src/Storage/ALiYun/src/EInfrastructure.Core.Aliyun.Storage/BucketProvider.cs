@@ -7,6 +7,7 @@ using System.Net;
 using Aliyun.OSS;
 using EInfrastructure.Core.Aliyun.Storage.Config;
 using EInfrastructure.Core.Aliyun.Storage.Core;
+using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Aliyun.Storage.Validator.Bucket;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
@@ -39,7 +40,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public BucketItemResultDto GetBucketList(GetBucketParam request)
         {
-            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone);
+            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
             var client = _aLiYunConfig.GetClient(zone);
             ListBucketsRequest listBucketsRequest = new ListBucketsRequest();
             if (request.PageSize != -1)
@@ -90,10 +91,10 @@ namespace EInfrastructure.Core.Aliyun.Storage
         public OperateResultDto Create(CreateBucketParam request)
         {
             new CreateBucketParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone);
+            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.Zone, () => ZoneEnum.HangZhou);
             var client = _aLiYunConfig.GetClient(zone);
             Bucket ret = request.StorageClass != null
-                ? client.CreateBucket(request.BucketName, (StorageClass) request.StorageClass.Id)
+                ? client.CreateBucket(request.BucketName, Core.Tools.GetStorageClass(request.StorageClass))
                 : client.CreateBucket(request.BucketName);
             if (ret != null)
             {
@@ -120,7 +121,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         public OperateResultDto Delete(DeleteBucketParam request)
         {
             Check.TrueByString(request != null, $"{nameof(request)} is null", HttpStatus.Err.Name);
-            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone);
+            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
             var client = _aLiYunConfig.GetClient(zone);
             var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
             client.DeleteBucket(bucket);
@@ -139,7 +140,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         public OperateResultDto Exist(ExistBucketParam request)
         {
             Check.TrueByString(request != null, $"{nameof(request)} is null", HttpStatus.Err.Name);
-            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone);
+            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
             var client = _aLiYunConfig.GetClient(zone);
             var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
             if (client.DoesBucketExist(bucket))
@@ -167,7 +168,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         public OperateResultDto SetPermiss(SetPermissParam request)
         {
             new SetPermissParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone);
+            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
             var client = _aLiYunConfig.GetClient(zone);
             client.SetBucketAcl(Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket),
                 Maps.GetCannedAccessControl(request.Permiss));
@@ -188,7 +189,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         public OperateResultDto SetReferer(SetRefererParam request)
         {
             Check.TrueByString(request != null, $"{nameof(request)} is null", HttpStatus.Err.Name);
-            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone);
+            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
             var client = _aLiYunConfig.GetClient(zone);
             var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
             client.SetBucketReferer(new SetBucketRefererRequest(bucket, request.RefererList,
@@ -208,7 +209,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         public RefererResultDto GetReferer(GetRefererParam request)
         {
             Check.TrueByString(request != null, $"{nameof(request)} is null", HttpStatus.Err.Name);
-            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone);
+            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
             var client = _aLiYunConfig.GetClient(zone);
             var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
             var rc = client.GetBucketReferer(bucket);
@@ -217,7 +218,8 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 return new RefererResultDto("the bucket is not find");
             }
 
-            return new RefererResultDto(rc.AllowEmptyReferer, (rc.RefererList?.Referers ?? Array.Empty<string>()).ToList());
+            return new RefererResultDto(rc.AllowEmptyReferer,
+                (rc.RefererList?.Referers ?? Array.Empty<string>()).ToList());
         }
 
         #endregion
@@ -232,7 +234,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         public OperateResultDto ClearReferer(ClearRefererParam request)
         {
             Check.TrueByString(request != null, $"{nameof(request)} is null", HttpStatus.Err.Name);
-            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone);
+            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
             var client = _aLiYunConfig.GetClient(zone);
             var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
             client.SetBucketReferer(new SetBucketRefererRequest(bucket));

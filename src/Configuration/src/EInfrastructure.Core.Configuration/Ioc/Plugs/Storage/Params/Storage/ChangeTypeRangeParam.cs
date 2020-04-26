@@ -27,17 +27,17 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <summary>
         /// 文件key集合
         /// </summary>
-        public List<string> Keys { get; private set; }
+        public List<string> Keys { get; }
 
         /// <summary>
         /// 存储类型
         /// 七牛：0代表普通存储，1：代表低频存储
         /// </summary>
-        public int Type { get; private set; }
+        public int Type { get; }
 
         /// <summary>
         /// 策略
         /// </summary>
-        public BasePersistentOps PersistentOps { get; private set; }
+        public BasePersistentOps PersistentOps { get; }
     }
 }

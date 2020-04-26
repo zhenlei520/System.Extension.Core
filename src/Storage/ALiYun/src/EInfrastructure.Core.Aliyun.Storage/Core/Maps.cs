@@ -7,6 +7,7 @@ using Aliyun.OSS;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
+using StorageClass = Aliyun.OSS.StorageClass;
 
 namespace EInfrastructure.Core.Aliyun.Storage.Core
 {
@@ -20,27 +21,46 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
         /// <summary>
         ///
         /// </summary>
-        private static List<KeyValuePair<BucketPermiss, CannedAccessControlList>> CannedAccessControl =
-            new List<KeyValuePair<BucketPermiss, CannedAccessControlList>>()
+        protected static List<KeyValuePair<Permiss, CannedAccessControlList>> CannedAccessControl =
+            new List<KeyValuePair<Permiss, CannedAccessControlList>>()
             {
-                new KeyValuePair<BucketPermiss, CannedAccessControlList>(BucketPermiss.Private,
+                new KeyValuePair<Permiss, CannedAccessControlList>(Permiss.Private,
                     CannedAccessControlList.Private),
-                new KeyValuePair<BucketPermiss, CannedAccessControlList>(BucketPermiss.Public,
+                new KeyValuePair<Permiss, CannedAccessControlList>(Permiss.Public,
                     CannedAccessControlList.PublicRead),
-                new KeyValuePair<BucketPermiss, CannedAccessControlList>(BucketPermiss.PublicReadWrite,
+                new KeyValuePair<Permiss, CannedAccessControlList>(Permiss.PublicReadWrite,
                     CannedAccessControlList.PublicReadWrite),
+                new KeyValuePair<Permiss, CannedAccessControlList>(Permiss.Default,
+                    CannedAccessControlList.Default),
             };
 
         /// <summary>
         /// 得到访问权限
         /// </summary>
-        /// <param name="bucketPermiss"></param>
+        /// <param name="permiss"></param>
         /// <returns></returns>
-        internal static CannedAccessControlList GetCannedAccessControl(BucketPermiss bucketPermiss)
+        internal static CannedAccessControlList GetCannedAccessControl(Permiss permiss)
         {
-            var cannedAccessControl = CannedAccessControl.Where(x => x.Key.Id == bucketPermiss.Id).Select(x => x.Value)
+            var cannedAccessControl = CannedAccessControl.Where(x => x.Key.Id == permiss.Id).Select(x => x.Value)
                 .FirstOrDefault();
-            if (cannedAccessControl == default(CannedAccessControlList))
+            if (cannedAccessControl == default)
+            {
+                throw new BusinessException<string>("不支持的访问权限", HttpStatus.Err.Name);
+            }
+
+            return cannedAccessControl;
+        }
+
+        /// <summary>
+        /// 得到访问权限
+        /// </summary>
+        /// <param name="permiss"></param>
+        /// <returns></returns>
+        internal static Permiss GetPermiss(CannedAccessControlList permiss)
+        {
+            var cannedAccessControl = CannedAccessControl.Where(x => x.Value == permiss).Select(x => x.Key)
+                .FirstOrDefault();
+            if (cannedAccessControl == null)
             {
                 throw new BusinessException<string>("不支持的访问权限", HttpStatus.Err.Name);
             }
@@ -55,7 +75,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
         /// <summary>
         ///
         /// </summary>
-        internal static List<KeyValuePair<ChunkUnit, int>>
+        protected static List<KeyValuePair<ChunkUnit, int>>
             ChunkUnitList = new List<KeyValuePair<ChunkUnit, int>>()
             {
                 new KeyValuePair<ChunkUnit, int>(ChunkUnit.U128K, 128 * 1024),
@@ -66,15 +86,23 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
                 new KeyValuePair<ChunkUnit, int>(ChunkUnit.U4096K, 4 * 1024 * 1024),
             };
 
-        /// <summary>
-        /// 得到分片大小
-        /// </summary>
-        /// <param name="chunkUnit"></param>
-        /// <returns></returns>
-        internal static long GetPartSize(ChunkUnit chunkUnit)
-        {
-            return ChunkUnitList.Where(x => x.Key == chunkUnit).Select(x => x.Value).FirstOrDefault();
-        }
+
+        #endregion
+
+        #region 存储类型
+
+        protected static
+            List<KeyValuePair<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass,
+                StorageClass>> StorageClassList =
+                new List<KeyValuePair<Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass, StorageClass>>()
+                {
+                    new KeyValuePair<Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass, StorageClass>(
+                        Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass.Archive, StorageClass.Archive),
+                    new KeyValuePair<Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass, StorageClass>(
+                        Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass.Standard, StorageClass.Standard),
+                    new KeyValuePair<Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass, StorageClass>(
+                        Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass.IA, StorageClass.IA)
+                };
 
         #endregion
     }

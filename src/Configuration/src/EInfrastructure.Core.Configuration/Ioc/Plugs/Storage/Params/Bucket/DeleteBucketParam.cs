@@ -11,13 +11,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket
     public class DeleteBucketParam
     {
         /// <summary>
-        ///
-        /// </summary>
-        public DeleteBucketParam()
-        {
-        }
-
-        /// <summary>
         /// 删除空间
         /// </summary>
         /// <param name="persistentOps">策略（待删除的空间名也在其中设置，如果不设置，则默认当前配置空间）</param>
