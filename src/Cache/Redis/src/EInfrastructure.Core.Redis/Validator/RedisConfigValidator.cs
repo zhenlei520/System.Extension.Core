@@ -19,6 +19,8 @@ namespace EInfrastructure.Core.Redis.Validator
                 .WithMessage("Redis主机信息异常");
             RuleFor(x => x.Port).NotEqual(0)
                 .WithMessage("Redis端口信息异常");
+            RuleFor(x => x.Timer).Must(x => x > 0)
+                .WithMessage("Redis时间信息异常");
         }
     }
 }

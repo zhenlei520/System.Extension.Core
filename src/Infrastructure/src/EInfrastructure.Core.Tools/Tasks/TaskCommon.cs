@@ -412,20 +412,9 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <returns></returns>
         public static IEnumerable<JobItem> ParallelExecute(Action<JobItem> action, IEnumerable<JobItem> jobs)
         {
-            var watis = new List<EventWaitHandle>();
-            foreach (var job in jobs)
-            {
-                //创建句柄   true终止状态
-                var handler = new ManualResetEvent(false);
-                watis.Add(handler);
-                //创建线程，传入线程参数
-                Thread t = new Thread(ParallelExecuteResult);
-                //启动线程
-                t.Start(new Request.JobItemRequest(job, action, handler));
-            }
-
-            WaitHandle.WaitAll(watis.ToArray());
-            return jobs;
+            IEnumerable<JobItem2> jobItemList = jobs.Select(x => new JobItem2(action, x.Source));
+            var job2ResponseList = ParallelExecute(jobItemList);
+            return job2ResponseList.Select(x => new JobItem(x.Source, x.Data));
         }
 
         /// <summary>
@@ -437,6 +426,39 @@ namespace EInfrastructure.Core.Tools.Tasks
         public static IEnumerable<JobItem> ParallelExecute(Action<JobItem> action, params JobItem[] jobs)
         {
             return ParallelExecute(action, jobs.ToList());
+        }
+
+        /// <summary>
+        /// 并发执行多个操作（有返回值）
+        /// </summary>
+        /// <param name="jobItems"></param>
+        /// <returns></returns>
+        public static IEnumerable<JobItem> ParallelExecute(params JobItem2[] jobItems)
+        {
+            return ParallelExecute(jobItems.ToList());
+        }
+
+        /// <summary>
+        /// 并发执行多个操作（有返回值）
+        /// </summary>
+        /// <param name="jobItems"></param>
+        /// <returns></returns>
+        public static IEnumerable<JobItem2> ParallelExecute(IEnumerable<JobItem2> jobItems)
+        {
+            var watis = new List<EventWaitHandle>();
+            foreach (var job in jobItems)
+            {
+                //创建句柄   true终止状态
+                var handler = new ManualResetEvent(false);
+                watis.Add(handler);
+                //创建线程，传入线程参数
+                Thread t = new Thread(ParallelExecuteResult);
+                //启动线程
+                t.Start(new Request.JobItemRequest(job, job.Action, handler));
+            }
+
+            WaitHandle.WaitAll(watis.ToArray());
+            return jobItems;
         }
 
         /// <summary>
