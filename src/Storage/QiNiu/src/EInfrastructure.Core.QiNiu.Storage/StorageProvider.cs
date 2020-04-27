@@ -1,15 +1,19 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
+using EInfrastructure.Core.Http;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.QiNiu.Storage.Validator.Storage;
 using EInfrastructure.Core.Tools;
@@ -554,7 +558,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 下载文件
         /// </summary>
-        /// <param name="url">文件访问地址(绝对地址，非文件key)</param>
+        /// <param name="url">文件访问地址，若为私有空间，则需要带有凭证(绝对地址，非文件key)</param>
         /// <param name="savePath">保存路径</param>
         /// <returns></returns>
         public DownloadResultDto Download(string url, string savePath)
@@ -562,6 +566,34 @@ namespace EInfrastructure.Core.QiNiu.Storage
             var ret = DownloadManager.Download(url, savePath);
             var res = ret.Code == (int) HttpCode.OK;
             return new DownloadResultDto(res, ret.Text, ret);
+        }
+
+        /// <summary>
+        /// 下载文件流
+        /// </summary>
+        /// <param name="url">文件访问地址，若为私有空间，则需要带有凭证(绝对地址，非文件key)</param>
+        public DownloadStreamResultDto DownloadStream(string url)
+        {
+            try
+            {
+                if (!url.IsUrl())
+                {
+                    return new DownloadStreamResultDto("请输入正确url地址");
+                }
+
+                Uri uri = new Uri(url);
+                string host = $"{uri.Scheme}://{uri.Host}";
+                Stream stream = new HttpClient(host).GetStream(url.Replace(host, ""));
+                return new DownloadStreamResultDto(true, "success", stream, null);
+            }
+            catch (BusinessException<string> ex)
+            {
+                return new DownloadStreamResultDto(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return new DownloadStreamResultDto(Core.Tools.GetMessage(ex));
+            }
         }
 
         #endregion

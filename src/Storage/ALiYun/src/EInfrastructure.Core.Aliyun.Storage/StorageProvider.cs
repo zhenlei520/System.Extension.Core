@@ -581,6 +581,11 @@ namespace EInfrastructure.Core.Aliyun.Storage
             throw new System.NotImplementedException();
         }
 
+        public DownloadStreamResultDto DownloadStream(string url)
+        {
+            throw new NotImplementedException();
+        }
+
         public ExpireResultDto SetExpire(SetExpireParam request)
         {
             throw new System.NotImplementedException();

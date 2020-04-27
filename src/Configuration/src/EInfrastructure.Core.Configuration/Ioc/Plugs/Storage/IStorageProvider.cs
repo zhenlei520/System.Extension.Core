@@ -196,10 +196,16 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <summary>
         /// 下载文件
         /// </summary>
-        /// <param name="url">文件访问地址(绝对地址，非文件key)</param>
+        /// <param name="url">文件访问地址(带有访问凭证)(绝对地址，非文件key)</param>
         /// <param name="savePath">保存路径</param>
         /// <returns></returns>
         DownloadResultDto Download(string url, string savePath);
+
+        /// <summary>
+        /// 下载文件流
+        /// </summary>
+        /// <param name="url">文件访问地址，若为私有空间，则需要带有凭证(绝对地址，非文件key)</param>
+        DownloadStreamResultDto DownloadStream(string url);
 
         #region 设置生存时间
 

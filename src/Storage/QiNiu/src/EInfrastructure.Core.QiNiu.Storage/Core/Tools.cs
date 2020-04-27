@@ -264,5 +264,24 @@ namespace EInfrastructure.Core.QiNiu.Storage.Core
         }
 
         #endregion
+
+
+        #region 得到Message
+
+        /// <summary>
+        /// 得到Message
+        /// </summary>
+        /// <returns></returns>
+        internal static string GetMessage(Exception ex)
+        {
+            if (ex.InnerException != null)
+            {
+                return $"Message：{ex.Message}，InnerExceptionMessage：{ex.InnerException?.Message}";
+            }
+
+            return $"Message：{ex.Message}";
+        }
+
+        #endregion
     }
 }

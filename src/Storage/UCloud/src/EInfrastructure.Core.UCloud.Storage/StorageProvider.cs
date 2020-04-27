@@ -279,16 +279,29 @@ namespace EInfrastructure.Core.UCloud.Storage
             throw new NotImplementedException();
         }
 
+        #region 下载
+
         /// <summary>
         /// 下载文件
         /// </summary>
-        /// <param name="url">文件访问地址</param>
+        /// <param name="url">文件访问地址(带有访问凭证)(绝对地址，非文件key)</param>
         /// <param name="savePath">保存路径</param>
         /// <returns></returns>
         public DownloadResultDto Download(string url, string savePath)
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// 下载文件流
+        /// </summary>
+        /// <param name="url">文件访问地址，若为私有空间，则需要带有凭证(绝对地址，非文件key)</param>
+        public DownloadStreamResultDto DownloadStream(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
         #region 设置生存时间（超时会自动删除）
 
