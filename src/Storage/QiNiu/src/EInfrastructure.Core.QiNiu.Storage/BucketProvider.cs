@@ -16,6 +16,7 @@ using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.QiNiu.Storage.Dto;
 using EInfrastructure.Core.QiNiu.Storage.Enum;
 using EInfrastructure.Core.QiNiu.Storage.Validator.Bucket;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Attributes;
 using EInfrastructure.Core.Tools.Url;
@@ -38,13 +39,20 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         ///
         /// </summary>
-        public BucketProvider(QiNiuStorageConfig qiNiuConfig, IJsonProvider jsonProvider,
-            IStorageProvider storageProvider)
+        public BucketProvider(QiNiuStorageConfig qiNiuConfig)
         {
             _qiNiuConfig = qiNiuConfig;
-            _jsonProvider = jsonProvider;
-            _storageProvider = storageProvider;
+            _storageProvider = new StorageProvider(qiNiuConfig);
+            _jsonProvider = new NewtonsoftJsonProvider();
             _httpClient = new HttpClient("http://rs.qbox.me");
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public BucketProvider(QiNiuStorageConfig qiNiuConfig, IJsonProvider jsonProvider) : this(qiNiuConfig)
+        {
+            _jsonProvider = jsonProvider;
         }
 
         #region 根据标签筛选空间获取空间名列表

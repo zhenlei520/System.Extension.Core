@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 图片服务
         /// </summary>
-        public PictureProvider(QiNiuStorageConfig qiNiuConfig = null) : base(
+        public PictureProvider(QiNiuStorageConfig qiNiuConfig) : base(
             qiNiuConfig)
         {
         }

@@ -27,7 +27,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 文件实现类
         /// </summary>
-        public StorageProvider(QiNiuStorageConfig qiNiuConfig = null) : base(qiNiuConfig)
+        public StorageProvider(QiNiuStorageConfig qiNiuConfig) : base(qiNiuConfig)
         {
         }
 
