@@ -39,6 +39,7 @@ namespace EInfrastructure.Core.Redis
         {
             EInfrastructure.Core.StartUp.Run();
             services.AddSingleton(func.Invoke());
+            services.AddHostedService<TimerService>();
             return services;
         }
 
@@ -68,7 +69,6 @@ namespace EInfrastructure.Core.Redis
             IConfiguration configuration)
         {
             EInfrastructure.Core.StartUp.Run();
-            services.AddHostedService<Bootstrapper>();
             return services.AddRedis(() => configuration.GetSection(nameof(RedisConfig)).Get<RedisConfig>());
         }
 
