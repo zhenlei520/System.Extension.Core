@@ -9,12 +9,12 @@ namespace EInfrastructure.Core.Aliyun.Storage.Validator.Storage
     /// <summary>
     ///
     /// </summary>
-    internal class GetPublishUrlParamValidator:AbstractValidator<GetPublishUrlParam>
+    internal class GetVisitUrlParamValidator:AbstractValidator<GetVisitUrlParam>
     {
         /// <summary>
         ///
         /// </summary>
-        public GetPublishUrlParamValidator()
+        public GetVisitUrlParamValidator()
         {
             RuleFor(x => x.Key).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请输入文件key");
         }

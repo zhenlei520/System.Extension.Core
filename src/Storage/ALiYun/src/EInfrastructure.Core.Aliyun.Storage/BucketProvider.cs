@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using Aliyun.OSS;
 using EInfrastructure.Core.Aliyun.Storage.Config;
-using EInfrastructure.Core.Aliyun.Storage.Core;
 using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Aliyun.Storage.Validator.Bucket;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -171,7 +170,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
             var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
             var client = _aLiYunConfig.GetClient(zone);
             client.SetBucketAcl(Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket),
-                Maps.GetCannedAccessControl(request.Permiss));
+                Core.Tools.GetCannedAccessControl(request.Permiss));
             return new OperateResultDto(true, "success");
         }
 

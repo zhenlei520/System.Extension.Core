@@ -259,35 +259,30 @@ namespace EInfrastructure.Core.UCloud.Storage
 
         #endregion
 
+
+        #region 得到访问地址
+
         /// <summary>
-        /// 得到公开空间的访问地址
+        /// 得到访问地址
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public string GetPublishUrl(GetPublishUrlParam request)
+        public GetVisitUrlResultDto GetVisitUrl(GetVisitUrlParam request)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// 得到私有空间的地址
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public string GetPrivateUrl(GetPrivateUrlParam request)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
+
 
         #region 下载
 
         /// <summary>
         /// 下载文件
         /// </summary>
-        /// <param name="url">文件访问地址(带有访问凭证)(绝对地址，非文件key)</param>
-        /// <param name="savePath">保存路径</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public DownloadResultDto Download(string url, string savePath)
+        public DownloadResultDto Download(FileDownloadParam request)
         {
             throw new NotImplementedException();
         }
@@ -295,8 +290,8 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 下载文件流
         /// </summary>
-        /// <param name="url">文件访问地址，若为私有空间，则需要带有凭证(绝对地址，非文件key)</param>
-        public DownloadStreamResultDto DownloadStream(string url)
+        /// <param name="request"></param>
+        public DownloadStreamResultDto DownloadStream(FileDownloadStreamParam request)
         {
             throw new NotImplementedException();
         }

@@ -3,13 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
 using Aliyun.OSS;
 using Aliyun.OSS.Common;
 using EInfrastructure.Core.Aliyun.Storage.Config;
-using EInfrastructure.Core.Aliyun.Storage.Core;
 using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Aliyun.Storage.Validator.Storage;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -20,6 +20,7 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
+using EInfrastructure.Core.Http;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Enumerations;
 using EInfrastructure.Core.Validation.Common;
@@ -296,15 +297,87 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
         #endregion
 
+        #region 获取文件信息
+
+        /// <summary>
+        /// 获取文件信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public FileInfoDto Get(GetFileParam request)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                new GetFileParamValidator().Validate(request).Check(HttpStatus.Err.Name);
+                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var client = _aLiYunConfig.GetClient(zone);
+                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var ret = client.GetObject(bucket, request.Key);
+                if (ret.HttpStatusCode == HttpStatusCode.OK)
+                {
+                    string fileTypeStr = ret.Metadata.HttpMetadata.Where(x => x.Key == "x-oss-storage-class")
+                        .Select(x => x.Value.ToString()).FirstOrDefault();
+                    int? fileType = null;
+                    if (!string.IsNullOrEmpty(fileTypeStr))
+                    {
+                        fileType = Core.Tools.GetStorageClass(fileTypeStr).Id;
+                    }
+
+                    return new FileInfoDto(true, "success")
+                    {
+                        Hash = ret.Metadata.ContentMd5,
+                        Key = ret.Key,
+                        Size = ret.Metadata.ContentLength,
+                        PutTime = ret.Metadata.LastModified.ToUnixTimestamp(TimestampType.Second),
+                        MimeType = ret.Metadata.ContentType,
+                        FileType = fileType
+                    };
+                }
+
+                return new FileInfoDto(false, $"lose RequestId：{ret.RequestId}，HttpStatusCode：{ret.HttpStatusCode}")
+                {
+                    Key = request.Key
+                };
+            }
+            catch (BusinessException<string> ex)
+            {
+                return new FileInfoDto(false, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return new FileInfoDto(false, Core.Tools.GetMessage(ex));
+            }
         }
 
+        #endregion
+
+        #region 批量获取文件信息
+
+        /// <summary>
+        /// 批量获取文件信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public IEnumerable<FileInfoDto> GetList(GetFileRangeParam request)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                new GetFileRangeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
+                List<FileInfoDto> list = new List<FileInfoDto>();
+                foreach (var key in request.Keys)
+                {
+                    list.Add(Get(new GetFileParam(key, request.PersistentOps)));
+                }
+
+                return list;
+            }
+            catch (Exception e)
+            {
+                return new List<FileInfoDto>();
+            }
         }
+
+        #endregion
 
         #region 删除文件
 
@@ -463,7 +536,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         }
 
         /// <summary>
-        ///
+        /// 拷贝大文件
         /// </summary>
         /// <param name="client"></param>
         /// <param name="sourceBucket">源空间</param>
@@ -557,34 +630,111 @@ namespace EInfrastructure.Core.Aliyun.Storage
             throw new System.NotImplementedException();
         }
 
-        public string GetPublishUrl(GetPublishUrlParam request)
+        #region 得到访问地址
+
+        /// <summary>
+        /// 得到访问地址
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public GetVisitUrlResultDto GetVisitUrl(GetVisitUrlParam request)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                new GetVisitUrlParamValidator().Validate(request).Check(HttpStatus.Err.Name);
+                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var client = _aLiYunConfig.GetClient(zone);
+                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var req = new GeneratePresignedUriRequest(bucket, request.Key, SignHttpMethod.Get);
+                var uri = client.GeneratePresignedUri(req);
+                return new GetVisitUrlResultDto(uri.ToString(), "success");
+            }
+            catch (BusinessException<string>ex)
+            {
+                return new GetVisitUrlResultDto(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return new GetVisitUrlResultDto(Core.Tools.GetMessage(ex));
+            }
         }
 
-        public string GetPrivateUrl(GetPrivateUrlParam request)
+        #endregion
+
+        #region 下载文件
+
+        #region 下载文件（根据已授权的地址）
+
+        /// <summary>
+        /// 下载文件（根据已授权的地址）
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public DownloadResultDto Download(FileDownloadParam request)
         {
-            new GetPrivateUrlParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
-            var client = _aLiYunConfig.GetClient(zone);
-            var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
-            var req = new GeneratePresignedUriRequest(bucket, request.Key, SignHttpMethod.Get);
+            try
+            {
+                new FileDownloadParamValidator().Validate(request).Check(HttpStatus.Err.Name);
+                Uri uri = new Uri(request.Url);
+                string host = $"{uri.Scheme}://{uri.Host}";
+                using (var file = File.Open(request.SavePath, FileMode.OpenOrCreate))
+                {
+                    using (Stream stream = new HttpClient(host).GetStream(request.Url.Replace(host, "")))
+                    {
+                        int length = 4 * 1024;
+                        var buf = new byte[length];
+                        do
+                        {
+                            length = stream.Read(buf, 0, length);
+                            file.Write(buf, 0, length);
+                        } while (length != 0);
+                    }
+                }
 
-            var uri = client.GeneratePresignedUri(req);
-            OssObject ossObject = client.GetObject(uri);
-
-            return uri.ToString();
+                return new DownloadResultDto(true, "success");
+            }
+            catch (BusinessException<string>ex)
+            {
+                return new DownloadResultDto(false, ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                return new DownloadResultDto(false, Core.Tools.GetMessage(ex));
+            }
         }
 
-        public DownloadResultDto Download(string url, string savePath)
+        #endregion
+
+        #region 获取文件流（根据已授权的地址）
+
+        /// <summary>
+        /// 获取文件流（根据已授权的地址）
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public DownloadStreamResultDto DownloadStream(FileDownloadStreamParam request)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                new FileDownloadStreamParamValidator().Validate(request).Check(HttpStatus.Err.Name);
+                Uri uri = new Uri(request.Url);
+                string host = $"{uri.Scheme}://{uri.Host}";
+                return new DownloadStreamResultDto(true, "success",
+                    new HttpClient(host).GetStream(request.Url.Replace(host, "")), null);
+            }
+            catch (BusinessException<string>ex)
+            {
+                return new DownloadStreamResultDto(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return new DownloadStreamResultDto(Core.Tools.GetMessage(ex));
+            }
         }
 
-        public DownloadStreamResultDto DownloadStream(string url)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
+
+        #endregion
 
         public ExpireResultDto SetExpire(SetExpireParam request)
         {
@@ -634,7 +784,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 var client = _aLiYunConfig.GetClient(zone);
                 var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
                 var permiss = request.Permiss != null
-                    ? Maps.GetCannedAccessControl(request.Permiss)
+                    ? Core.Tools.GetCannedAccessControl(request.Permiss)
                     : CannedAccessControlList.Default;
                 client.SetObjectAcl(bucket, request.Key, permiss);
                 return new OperateResultDto(true, "success");
@@ -667,7 +817,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
                 if (ret.HttpStatusCode == HttpStatusCode.OK)
                 {
-                    return new FilePermissResultInfo(true, Maps.GetPermiss(ret.ACL), "success");
+                    return new FilePermissResultInfo(true, Core.Tools.GetPermiss(ret.ACL), "success");
                 }
 
                 return new FilePermissResultInfo(false, null, "文件不存在" + ret.ToString());

@@ -528,27 +528,40 @@ namespace EInfrastructure.Core.QiNiu.Storage
         #region 得到地址
 
         /// <summary>
-        /// 得到公开空间的访问地址
+        /// 得到访问地址
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public string GetPublishUrl(GetPublishUrlParam request)
+        public GetVisitUrlResultDto GetVisitUrl(GetVisitUrlParam request)
         {
-            new GetPublishUrlParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-            return DownloadManager.CreatePublishUrl(Core.Tools.GetHost(this.QiNiuConfig, request.PersistentOps.Host),
-                request.Key);
-        }
+            try
+            {
+                new GetVisitUrlParamValidator().Validate(request).Check(HttpStatus.Err.Name);
+                var url = DownloadManager.CreatePrivateUrl(this.QiNiuConfig.GetMac(),
+                    Core.Tools.GetHost(this.QiNiuConfig, request.PersistentOps.Host), request.Key, request.Expire);
 
-        /// <summary>
-        /// 得到私有空间的地址
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public string GetPrivateUrl(GetPrivateUrlParam request)
-        {
-            new GetPrivateUrlParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-            return DownloadManager.CreatePrivateUrl(this.QiNiuConfig.GetMac(),
-                Core.Tools.GetHost(this.QiNiuConfig, request.PersistentOps.Host), request.Key, request.Expire);
+                if (string.IsNullOrEmpty(url))
+                {
+                    if (request.Expire <= 0)
+                    {
+                        request.Expire = 3600;
+                    }
+
+                    url = DownloadManager.CreatePublishUrl(
+                        Core.Tools.GetHost(this.QiNiuConfig, request.PersistentOps.Host),
+                        request.Key);
+                }
+
+                return new GetVisitUrlResultDto(url, "success");
+            }
+            catch (BusinessException<string>ex)
+            {
+                return new GetVisitUrlResultDto(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return new GetVisitUrlResultDto(Core.Tools.GetMessage(ex));
+            }
         }
 
         #endregion
@@ -558,12 +571,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 下载文件
         /// </summary>
-        /// <param name="url">文件访问地址，若为私有空间，则需要带有凭证(绝对地址，非文件key)</param>
-        /// <param name="savePath">保存路径</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public DownloadResultDto Download(string url, string savePath)
+        public DownloadResultDto Download(FileDownloadParam request)
         {
-            var ret = DownloadManager.Download(url, savePath);
+            new FileDownloadParamValidator().Validate(request).Check(HttpStatus.Err.Name);
+            var ret = DownloadManager.Download(request.Url, request.SavePath);
             var res = ret.Code == (int) HttpCode.OK;
             return new DownloadResultDto(res, ret.Text, ret);
         }
@@ -571,19 +584,15 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 下载文件流
         /// </summary>
-        /// <param name="url">文件访问地址，若为私有空间，则需要带有凭证(绝对地址，非文件key)</param>
-        public DownloadStreamResultDto DownloadStream(string url)
+        /// <param name="request"></param>
+        public DownloadStreamResultDto DownloadStream(FileDownloadStreamParam request)
         {
             try
             {
-                if (!url.IsUrl())
-                {
-                    return new DownloadStreamResultDto("请输入正确url地址");
-                }
-
-                Uri uri = new Uri(url);
+                new FileDownloadStreamParamValidator().Validate(request).Check(HttpStatus.Err.Name);
+                Uri uri = new Uri(request.Url);
                 string host = $"{uri.Scheme}://{uri.Host}";
-                Stream stream = new HttpClient(host).GetStream(url.Replace(host, ""));
+                Stream stream = new HttpClient(host).GetStream(request.Url.Replace(host, ""));
                 return new DownloadStreamResultDto(true, "success", stream, null);
             }
             catch (BusinessException<string> ex)

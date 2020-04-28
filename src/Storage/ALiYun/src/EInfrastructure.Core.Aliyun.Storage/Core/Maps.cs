@@ -2,10 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using System.Linq;
 using Aliyun.OSS;
-using EInfrastructure.Core.Configuration.Enumerations;
-using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 using StorageClass = Aliyun.OSS.StorageClass;
 
@@ -33,40 +30,6 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
                 new KeyValuePair<Permiss, CannedAccessControlList>(Permiss.Default,
                     CannedAccessControlList.Default),
             };
-
-        /// <summary>
-        /// 得到访问权限
-        /// </summary>
-        /// <param name="permiss"></param>
-        /// <returns></returns>
-        internal static CannedAccessControlList GetCannedAccessControl(Permiss permiss)
-        {
-            var cannedAccessControl = CannedAccessControl.Where(x => x.Key.Id == permiss.Id).Select(x => x.Value)
-                .FirstOrDefault();
-            if (cannedAccessControl == default)
-            {
-                throw new BusinessException<string>("不支持的访问权限", HttpStatus.Err.Name);
-            }
-
-            return cannedAccessControl;
-        }
-
-        /// <summary>
-        /// 得到访问权限
-        /// </summary>
-        /// <param name="permiss"></param>
-        /// <returns></returns>
-        internal static Permiss GetPermiss(CannedAccessControlList permiss)
-        {
-            var cannedAccessControl = CannedAccessControl.Where(x => x.Value == permiss).Select(x => x.Key)
-                .FirstOrDefault();
-            if (cannedAccessControl == null)
-            {
-                throw new BusinessException<string>("不支持的访问权限", HttpStatus.Err.Name);
-            }
-
-            return cannedAccessControl;
-        }
 
         #endregion
 

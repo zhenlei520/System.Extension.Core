@@ -4,19 +4,19 @@
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using FluentValidation;
 
-namespace EInfrastructure.Core.QiNiu.Storage.Validator.Storage
+namespace EInfrastructure.Core.Aliyun.Storage.Validator.Storage
 {
     /// <summary>
-    ///
+    /// 批量得到多个文件
     /// </summary>
-    internal class GetPublishUrlParamValidator:AbstractValidator<GetPublishUrlParam>
+    internal class GetFileRangeParamValidator : AbstractValidator<GetFileRangeParam>
     {
         /// <summary>
         ///
         /// </summary>
-        public GetPublishUrlParamValidator()
+        public GetFileRangeParamValidator()
         {
-            RuleFor(x => x.Key).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请输入文件key");
+            RuleFor(x => x.Keys).Must(x => x.Count > 0).WithMessage("请选择文件");
         }
     }
 }

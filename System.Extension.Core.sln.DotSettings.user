@@ -25,13 +25,33 @@
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a9cbf732_002D3a30_002D42be_002D8137_002D1584724c36bd/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SetPermiss" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
+    &lt;Or&gt;&#xD;
+      &lt;Or&gt;&#xD;
+        &lt;Or&gt;&#xD;
+          &lt;TestAncestor&gt;&#xD;
+            &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.SetPermiss&lt;/TestId&gt;&#xD;
+          &lt;/TestAncestor&gt;&#xD;
+          &lt;TestAncestor&gt;&#xD;
+            &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.GetPermiss&lt;/TestId&gt;&#xD;
+          &lt;/TestAncestor&gt;&#xD;
+        &lt;/Or&gt;&#xD;
+        &lt;TestAncestor&gt;&#xD;
+          &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.BucketUnitTest.GetBucketList&lt;/TestId&gt;&#xD;
+        &lt;/TestAncestor&gt;&#xD;
+      &lt;/Or&gt;&#xD;
+      &lt;TestAncestor&gt;&#xD;
+        &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.Get&lt;/TestId&gt;&#xD;
+      &lt;/TestAncestor&gt;&#xD;
+    &lt;/Or&gt;&#xD;
     &lt;TestAncestor&gt;&#xD;
-      &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.SetPermiss&lt;/TestId&gt;&#xD;
-    &lt;/TestAncestor&gt;&#xD;
-    &lt;TestAncestor&gt;&#xD;
-      &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.GetPermiss&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.GetVisitUrl&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
   &lt;/Or&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f557d819_002D45cf_002D40ca_002D9a60_002D7ab7cb99adf0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Get" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.Get&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
 	

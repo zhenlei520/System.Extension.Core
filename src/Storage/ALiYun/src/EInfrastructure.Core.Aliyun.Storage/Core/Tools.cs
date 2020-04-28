@@ -3,10 +3,12 @@
 
 using System;
 using System.Linq;
+using Aliyun.OSS;
 using EInfrastructure.Core.Aliyun.Storage.Config;
 using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 using StorageClass = Aliyun.OSS.StorageClass;
 
 namespace EInfrastructure.Core.Aliyun.Storage.Core
@@ -16,6 +18,45 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
     /// </summary>
     internal class Tools : Maps
     {
+        #region 得到访问权限
+
+        /// <summary>
+        /// 得到访问权限
+        /// </summary>
+        /// <param name="permiss"></param>
+        /// <returns></returns>
+        internal static CannedAccessControlList GetCannedAccessControl(Permiss permiss)
+        {
+            var cannedAccessControl = CannedAccessControl.Where(x => x.Key.Id == permiss.Id).Select(x => x.Value)
+                .FirstOrDefault();
+            if (cannedAccessControl == default)
+            {
+                throw new BusinessException<string>("不支持的访问权限", HttpStatus.Err.Name);
+            }
+
+            return cannedAccessControl;
+        }
+
+        /// <summary>
+        /// 得到访问权限
+        /// </summary>
+        /// <param name="permiss"></param>
+        /// <returns></returns>
+        internal static Permiss GetPermiss(CannedAccessControlList permiss)
+        {
+            var cannedAccessControl = CannedAccessControl.Where(x => x.Value == permiss).Select(x => x.Key)
+                .FirstOrDefault();
+            if (cannedAccessControl == null)
+            {
+                throw new BusinessException<string>("不支持的访问权限", HttpStatus.Err.Name);
+            }
+
+            return cannedAccessControl;
+        }
+
+        #endregion
+
+
         #region 得到空间区域
 
         /// <summary>
@@ -98,7 +139,9 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
         /// <param name="chunkUnit">分片大小</param>
         /// <param name="defaultChunkUnit">默认分片大小</param>
         /// <returns></returns>
-        internal static EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit GetChunkUnit(ALiYunStorageConfig aliyunConfig, EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit chunkUnit,
+        internal static EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit GetChunkUnit(
+            ALiYunStorageConfig aliyunConfig,
+            EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit chunkUnit,
             Func<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit> defaultChunkUnit = null)
         {
             if (chunkUnit == null && aliyunConfig.ChunkUnit == null)
@@ -123,10 +166,12 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
         /// 得到分片大小
         /// </summary>
         /// <returns></returns>
-        internal static long GetPartSize(EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit chunkUnit)
+        internal static long GetPartSize(
+            EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit chunkUnit)
         {
             return ChunkUnitList.Where(x => x.Key.Id == chunkUnit.Id).Select(x => x.Value).FirstOrDefault();
         }
+
         #endregion
 
         #region 得到存储类型
