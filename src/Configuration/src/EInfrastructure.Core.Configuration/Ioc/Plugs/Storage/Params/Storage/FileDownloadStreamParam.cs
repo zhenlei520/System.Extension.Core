@@ -12,10 +12,10 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// </summary>
         /// <param name="url">文件访问地址（有权限可以访问的地址，如果你知道key的话，也可通过获取访问地址先获取到文件访问地址）</param>
         /// <param name="persistentOps">策略</param>
-        public FileDownloadStreamParam(string url, BasePersistentOps persistentOps)
+        public FileDownloadStreamParam(string url, BasePersistentOps persistentOps=null)
         {
             Url = url;
-            PersistentOps = persistentOps;
+            PersistentOps = persistentOps??new BasePersistentOps();
         }
 
         /// <summary>
