@@ -2,6 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Test.Base;
@@ -64,6 +66,41 @@ namespace EInfrastructure.Core.Test
             };
             var persons = personList.ExceptNew(personList2);
             persons = personList.Except(personList2);
+        }
+
+        [Fact]
+        public void Remove()
+        {
+            List<Person> personList = new List<Person>
+            {
+                new Person
+                {
+                    Name = "小明"
+                },
+                new Person
+                {
+                    Name = "小明花2"
+                }
+            };
+            personList.RemoveNew(personList.FirstOrDefault());
+        }
+
+        [Fact]
+        public void RemoveRangeNew()
+        {
+            List<Person> personList = new List<Person>
+            {
+                new Person
+                {
+                    Name = "小明"
+                },
+                new Person
+                {
+                    Name = "小明花2"
+                }
+            };
+            //personList.RemoveRangeNew(personList);
+            personList.RemoveRangeNew(x => x.Name == "小明花2");
         }
 
         [Fact]

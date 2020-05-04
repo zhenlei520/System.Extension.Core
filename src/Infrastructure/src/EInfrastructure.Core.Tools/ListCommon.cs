@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using EInfrastructure.Core.Config.Entities.Data;
 using EInfrastructure.Core.Config.Entities.Ioc;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -337,10 +338,24 @@ namespace EInfrastructure.Core.Tools
         /// <param name="item"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static List<T> RemoveNew<T>(this List<T> list, T item)
+        public static void RemoveNew<T>(this List<T> list, T item)
         {
             list.Remove(item);
-            return list;
+        }
+
+        /// <summary>
+        /// 移除集合
+        /// </summary>
+        /// <param name="list">源集合</param>
+        /// <param name="delList">待删除的集合</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static void RemoveRangeNew<T>(this List<T> list, ICollection<T> delList)
+        {
+            delList.ToList().ForEach(item =>
+            {
+                list.Remove(item);
+            });
         }
 
         #endregion
@@ -352,20 +367,14 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 移除单条符合条件的数据
         /// </summary>
-        /// <param name="list"></param>
+        /// <param name="list">源集合</param>
         /// <param name="condtion">条件</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static List<T> RemoveNew<T>(this List<T> list, Func<T, bool> condtion)
+        public static void RemoveNew<T>(this List<T> list, Expression<Func<T, bool>> condtion)
         {
-            List<T> listTemp = list;
-            var item = listTemp.FirstOrDefault(condtion);
-            if (item != null)
-            {
-                listTemp.Remove(item);
-            }
-
-            return list;
+            var item = list.FirstOrDefault(condtion.Compile());
+            list.RemoveNew(item);
         }
 
         #endregion
@@ -379,16 +388,10 @@ namespace EInfrastructure.Core.Tools
         /// <param name="condtion">条件</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static List<T> RemoveMultNew<T>(this List<T> list, Func<T, bool> condtion)
+        public static void RemoveRangeNew<T>(this List<T> list, Expression<Func<T, bool>> condtion)
         {
-            List<T> listTemp = list;
-            var items = listTemp.Where(condtion).ToList();
-            foreach (var item in items)
-            {
-                listTemp.Remove(item);
-            }
-
-            return list;
+            var items = list.Where(condtion.Compile()).ToList();
+            list.RemoveRangeNew(items);
         }
 
         #endregion

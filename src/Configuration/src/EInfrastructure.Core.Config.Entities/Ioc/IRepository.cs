@@ -78,12 +78,6 @@ namespace EInfrastructure.Core.Config.Entities.Ioc
         void RemoveRange(params TEntity[] entitys);
 
         /// <summary>
-        /// 根据条件移除满足条件的数据集合
-        /// </summary>
-        /// <param name="condition">条件</param>
-        void RemoveRange(Expression<Func<TEntity, bool>> condition);
-
-        /// <summary>
         /// 更新实体
         /// </summary>
         /// <param name="entity"></param>

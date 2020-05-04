@@ -139,19 +139,6 @@ namespace EInfrastructure.Core.MySql.Common
         }
         #endregion
 
-        #region 批量删除实体
-
-        /// <summary>
-        /// 批量删除实体
-        /// </summary>
-        public virtual void RemoveRange(Expression<Func<TEntity, bool>> condition)
-        {
-            var entities = Dbcontext.Set<TEntity>().Where(condition).ToArray();
-            RemoveRange(entities);
-        }
-
-        #endregion
-
         #region 更新实体
 
         /// <summary>
