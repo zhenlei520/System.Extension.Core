@@ -13,19 +13,12 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// /
         /// </summary>
         /// <param name="key">文件key</param>
-        /// <param name="stream">文件流</param>
         /// <param name="token"></param>
         /// <param name="uploadPersistentOps"></param>
-        public UploadByTokenParam(string key, Stream stream, string token,
+        private UploadByTokenParam(string key, string token,
             UploadPersistentOps uploadPersistentOps = null)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream cannot be empty");
-            }
-
             Key = key;
-            Stream = stream;
             Token = token;
             UploadPersistentOps = uploadPersistentOps;
         }
@@ -34,21 +27,41 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// /
         /// </summary>
         /// <param name="key">文件key</param>
+        /// <param name="stream">文件流</param>
+        /// <param name="token">上传凭证</param>
+        /// <param name="isResume">是否允许续传</param>
+        /// <param name="uploadPersistentOps"></param>
+        public UploadByTokenParam(string key, Stream stream, string token,
+            bool isResume=true,
+            UploadPersistentOps uploadPersistentOps = null):this(key, token, uploadPersistentOps)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream cannot be empty");
+            }
+
+            Stream = stream;
+        }
+
+        /// <summary>
+        /// /
+        /// </summary>
+        /// <param name="key">文件key</param>
         /// <param name="byteArray">文件字符数组</param>
-        /// <param name="token">文件Token</param>
+        /// <param name="token">文件上传凭证</param>
+        /// <param name="isResume">是否允许续传</param>
         /// <param name="uploadPersistentOps">上传策略</param>
         public UploadByTokenParam(string key, byte[] byteArray, string token,
-            UploadPersistentOps uploadPersistentOps = null)
+            bool isResume=true,
+            UploadPersistentOps uploadPersistentOps = null):this(key, token, uploadPersistentOps)
         {
             if (byteArray == null || byteArray.Length == 0)
             {
                 throw new ArgumentNullException("byteArray cannot be empty");
             }
 
-            Key = key;
             ByteArray = byteArray;
-            Token = token;
-            UploadPersistentOps = uploadPersistentOps;
+            IsResume = isResume;
         }
 
         /// <summary>
@@ -70,6 +83,11 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// 文件Token
         /// </summary>
         public string Token { get; }
+
+        /// <summary>
+        /// 是否允许续传
+        /// </summary>
+        public bool IsResume { get; }
 
         /// <summary>
         /// 上传策略

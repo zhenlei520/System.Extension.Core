@@ -265,7 +265,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Core
 
         #endregion
 
-
         #region 得到Message
 
         /// <summary>

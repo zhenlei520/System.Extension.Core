@@ -45,6 +45,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage
         /// <summary>
         /// 文件类型
         /// </summary>
-        public int? FileType { get; set; }
+        public EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass FileType { get; set; }
     }
 }

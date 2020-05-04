@@ -12,16 +12,16 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage
         ///
         /// </summary>
         /// <param name="state">操作结果</param>
-        /// <param name="fileId">文件id</param>
+        /// <param name="key">目标文件key</param>
         /// <param name="msg">提示信息</param>
-        public MoveFileResultDto(bool state, string fileId, string msg) : base(state, msg)
+        public MoveFileResultDto(bool state, string key, string msg) : base(state, msg)
         {
-            FileId = fileId;
+            Key = key;
         }
 
         /// <summary>
         /// 文件key
         /// </summary>
-        public string FileId { get; }
+        public string Key { get; }
     }
 }

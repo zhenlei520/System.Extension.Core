@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using Aliyun.OSS;
+using Aliyun.OSS.Util;
 using EInfrastructure.Core.Aliyun.Storage.Config;
 using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -199,6 +200,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
         }
 
         #endregion
+
 
         #region 得到Message
 

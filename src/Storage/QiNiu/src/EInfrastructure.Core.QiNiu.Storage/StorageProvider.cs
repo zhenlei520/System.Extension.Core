@@ -245,7 +245,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
                         Size = x.Fsize,
                         PutTime = x.PutTime,
                         MimeType = x.MimeType,
-                        FileType = x.FileType,
+                        FileType = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass
+                            .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass>(x.FileType),
                     }).ToList()
                 };
             }
@@ -278,7 +279,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 Hash = statRet.Result.Hash,
                 MimeType = statRet.Result.MimeType,
                 PutTime = statRet.Result.PutTime,
-                FileType = statRet.Result.FileType,
+                FileType = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass
+                    .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass>(
+                        statRet.Result.FileType),
                 Key = request.Key,
             };
         }
@@ -321,7 +324,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
                         Hash = item.Data.Hash,
                         MimeType = item.Data.MimeType,
                         PutTime = item.Data.PutTime,
-                        FileType = item.Data.FileType,
+                        FileType = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass
+                            .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass>(item.Data.FileType),
                         Key = keyList[index - 1]
                     };
                 }
@@ -772,7 +776,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             new ChangeTypeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             HttpResult ret = base.GetBucketManager()
                 .ChangeType(Core.Tools.GetBucket(this.QiNiuConfig, request.PersistentOps.Bucket), request.Key,
-                    request.Type);
+                    request.Type.Id);
             if (ret.Code == (int) HttpCode.OK)
             {
                 return new ChangeTypeResultDto(true, request.Key, "success");
@@ -792,7 +796,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
             List<ChangeTypeResultDto> ret = new List<ChangeTypeResultDto>();
             request.Keys.Distinct().ToList()
                 .ListPager(
-                    (list) => { ret.AddRange(ChangeTypeMulti(list.ToArray(), request.Type, request.PersistentOps)); },
+                    (list) =>
+                    {
+                        ret.AddRange(ChangeTypeMulti(list.ToArray(), request.Type.Id, request.PersistentOps));
+                    },
                     1000, 1);
             return ret;
         }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
@@ -43,10 +44,37 @@ namespace EInfrastructure.Core.UCloud.Storage
             throw new System.NotImplementedException();
         }
 
+        #region 空间管理
+
+        #region 设置空间访问权限
+
+        /// <summary>
+        /// 设置空间访问权限
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public OperateResultDto SetPermiss(SetPermissParam request)
         {
             throw new System.NotImplementedException();
         }
+
+        #endregion
+
+        #region 获取空间的访问权限
+
+        /// <summary>
+        /// 获取空间的访问权限
+        /// </summary>
+        /// <param name="persistentOps"></param>
+        /// <returns></returns>
+        public BucketPermissItemResultDto GetPermiss(BasePersistentOps persistentOps)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #endregion
 
         public OperateResultDto SetReferer(SetRefererParam request)
         {
