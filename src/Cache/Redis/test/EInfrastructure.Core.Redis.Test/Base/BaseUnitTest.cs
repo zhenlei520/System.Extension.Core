@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.Redis.Test.Base
         {
             _redisCacheService = new RedisCacheProvider(new RedisConfig()
             {
-                Ip = "111.231.222.34",
+                Ip = "111.231.222.32",
                 Port = 5329,
                 DataBase = 3,
                 Name = "einfrastructure_",
