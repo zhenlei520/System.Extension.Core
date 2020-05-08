@@ -32,11 +32,14 @@ namespace EInfrastructure.Core.Redis.Internal
         /// <returns></returns>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            await Task.Run(() =>
             {
-                _cacheProvider.ClearOverTimeHashKey();
-                Thread.Sleep(_redisConfig.Timer);
-            }
+                while (!stoppingToken.IsCancellationRequested)
+                {
+                    _cacheProvider.ClearOverTimeHashKey();
+                    Thread.Sleep(_redisConfig.Timer);
+                }
+            }, stoppingToken);
 
             await Task.CompletedTask;
         }

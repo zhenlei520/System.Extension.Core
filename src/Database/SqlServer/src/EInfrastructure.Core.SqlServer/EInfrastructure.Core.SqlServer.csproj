@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-   <Version>2.1.0</Version>
+   <Version>2.1.1</Version>
     <PackageReleaseNotes>sqlserver2012以上数据库</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>dotnet core 使用sqlserver数据库实现</Description>

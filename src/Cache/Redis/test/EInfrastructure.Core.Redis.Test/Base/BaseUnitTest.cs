@@ -32,11 +32,6 @@ namespace EInfrastructure.Core.Redis.Test.Base
             {
                 new NewtonsoftJsonProvider()
             });
-//            var connectionString = "";
-//            var services = new ServiceCollection();
-//            this.output = output;
-//            services.AddSingleton<IRandomBuilder, RandomCommon>();
-//            provider = services.BuildServiceProvider();
         }
     }
 }
