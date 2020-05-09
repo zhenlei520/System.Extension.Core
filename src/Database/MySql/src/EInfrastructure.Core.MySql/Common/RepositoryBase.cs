@@ -150,7 +150,6 @@ namespace EInfrastructure.Core.MySql.Common
             Dbcontext.Set<TEntity>().Update(entity);
         }
 
-
         /// <summary>
         /// 更新实体
         /// </summary>
