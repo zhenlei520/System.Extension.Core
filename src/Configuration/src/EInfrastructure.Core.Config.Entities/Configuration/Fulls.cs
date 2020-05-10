@@ -11,15 +11,15 @@ namespace EInfrastructure.Core.Config.Entities.Configuration
     public class Fulls<T> : AddAndUpdate<T>
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        public Fulls()
+        public Fulls():base()
         {
             IsDel = false;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="accountId"></param>
         public Fulls(T accountId) : base(accountId)
