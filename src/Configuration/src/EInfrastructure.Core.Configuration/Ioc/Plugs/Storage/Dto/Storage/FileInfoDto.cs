@@ -28,7 +28,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage
         public string Key { get; set; }
 
         /// <summary>
-        /// 文件大小
+        /// 文件大小 单位：字节（Byte） 1kb=1024字节
         /// </summary>
         public double Size { get; set; }
 
@@ -45,6 +45,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage
         /// <summary>
         /// 文件类型
         /// </summary>
-        public int FileType { get; set; }
+        public EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass FileType { get; set; }
     }
 }

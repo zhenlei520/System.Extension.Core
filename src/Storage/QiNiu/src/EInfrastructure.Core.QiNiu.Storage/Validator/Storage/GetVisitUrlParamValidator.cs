@@ -9,15 +9,14 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator.Storage
     /// <summary>
     ///
     /// </summary>
-    internal class GetPrivateUrlParamValidator : AbstractValidator<GetPrivateUrlParam>
+    internal class GetVisitUrlParamValidator:AbstractValidator<GetVisitUrlParam>
     {
         /// <summary>
         ///
         /// </summary>
-        public GetPrivateUrlParamValidator()
+        public GetVisitUrlParamValidator()
         {
             RuleFor(x => x.Key).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请输入文件key");
-            RuleFor(x => x.Expire).Must(x => x > 0).WithMessage("请输入过期时间");
         }
     }
 }

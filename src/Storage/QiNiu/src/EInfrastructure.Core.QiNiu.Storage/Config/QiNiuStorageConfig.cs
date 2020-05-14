@@ -98,6 +98,8 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// </summary>
         public string PersistentNotifyUrl { get; set; }
 
+        #region 回调相关
+
         /// <summary>
         /// 上传成功后，七牛云向业务服务器发送 POST 请求的 URL
         /// 可以使用ip，减少对dns的依赖
@@ -122,14 +124,17 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         public int CallbackBodyType { get; private set; }
 
         /// <summary>
+        /// 启用回调
+        /// </summary>
+        public bool EnableCallback { get; private set; }
+
+        #endregion
+
+        /// <summary>
         /// 是否覆盖上传 默认false
         /// </summary>
         public bool IsAllowOverlap { get; set; }
 
-        /// <summary>
-        /// 启用回调
-        /// </summary>
-        public bool EnableCallback { get; private set; }
 
         /// <summary>
         /// 最大重试次数
@@ -168,7 +173,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// <param name="bucket">默认空间</param>
         /// <param name="host">默认域</param>
         /// <param name="zone">默认空间区域</param>
-        public void SetDefaultBucket(string bucket,string host,ZoneEnum zone)
+        public void SetDefaultBucket(string bucket, string host, ZoneEnum zone)
         {
             DefaultBucket = bucket;
             DefaultHost = host;

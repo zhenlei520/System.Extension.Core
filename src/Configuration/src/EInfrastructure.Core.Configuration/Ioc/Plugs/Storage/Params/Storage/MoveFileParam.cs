@@ -14,12 +14,12 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <summary>
         /// 移动或重命名文件
         /// </summary>
-        /// <param name="optBucket">目标空间</param>
         /// <param name="sourceKey">源文件key</param>
+        /// <param name="optBucket">目标空间</param>
         /// <param name="optKey">目标文件key</param>
         /// <param name="isForce">是否覆盖</param>
         /// <param name="persistentOps">策略</param>
-        public MoveFileParam(string optBucket, string sourceKey, string optKey, bool isForce,
+        public MoveFileParam( string sourceKey,string optBucket, string optKey, bool isForce,
             BasePersistentOps persistentOps = null)
         {
             FileId = Guid.NewGuid().ToString("N");

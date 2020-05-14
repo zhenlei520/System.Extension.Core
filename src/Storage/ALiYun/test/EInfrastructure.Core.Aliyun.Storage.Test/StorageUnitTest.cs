@@ -6,7 +6,6 @@ using EInfrastructure.Core.Aliyun.Storage.Test.Base;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config.Pictures;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using EInfrastructure.Core.Tools;
@@ -114,6 +113,24 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
 
         #endregion
 
+        #region 获取文件信息
+
+        /// <summary>
+        /// 获取文件信息
+        /// </summary>
+        [Theory]
+        [InlineData("2.jpg", "einfrastructuretest")]
+        public void Get(string key, string bucket)
+        {
+            var ret = _storageProvider.Get(new GetFileParam(key, new BasePersistentOps()
+            {
+                Bucket = bucket
+            }));
+            Check.True(ret.State, "校验不一致");
+        }
+
+        #endregion
+
         #region 获取指定前缀的文件列表
 
         /// <summary>
@@ -122,10 +139,30 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
         /// <param name="filter">筛选</param>
         /// <returns></returns>
         [Theory]
-        [InlineData( "einfrastructuretest")]
+        [InlineData("einfrastructuretest")]
         public void ListFiles(string bucket)
         {
-            var ret = _storageProvider.ListFiles(new ListFileFilter("","","",100,new BasePersistentOps()
+            var ret = _storageProvider.ListFiles(new ListFileFilter("", "", "", 100, new BasePersistentOps()
+            {
+                Bucket = bucket
+            }));
+            Check.True(ret.State, "校验不一致");
+        }
+
+        #endregion
+
+        #region 获取文件的访问地址
+
+        /// <summary>
+        /// 获取文件的访问地址（不区分权限）
+        /// </summary>
+        /// <param name="key">文件key</param>
+        /// <param name="bucket">空间名</param>
+        [Theory]
+        [InlineData("2.jpg", "einfrastructuretest")]
+        public void GetVisitUrl(string key, string bucket)
+        {
+            var ret = _storageProvider.GetVisitUrl(new GetVisitUrlParam(key, null, new BasePersistentOps()
             {
                 Bucket = bucket
             }));

@@ -8,7 +8,7 @@ using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.Validation;
 using FluentValidation;
 
-namespace EInfrastructure.Core.QiNiu.Storage.Validator.Storage
+namespace EInfrastructure.Core.QiNiu.Storage.Validator
 {
     /// <summary>
     /// 七牛配置信息校验

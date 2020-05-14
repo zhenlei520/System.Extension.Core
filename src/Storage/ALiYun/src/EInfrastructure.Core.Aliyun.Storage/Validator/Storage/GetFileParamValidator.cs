@@ -4,21 +4,19 @@
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using FluentValidation;
 
-namespace EInfrastructure.Core.QiNiu.Storage.Validator.Storage
+namespace EInfrastructure.Core.Aliyun.Storage.Validator.Storage
 {
     /// <summary>
-    /// 更改文件类型校验
+    /// 得到文件信息检查
     /// </summary>
-    internal class ChangeTypeParamValidator : AbstractValidator<ChangeTypeParam>
+    internal class GetFileParamValidator : AbstractValidator<GetFileParam>
     {
         /// <summary>
         ///
         /// </summary>
-        public ChangeTypeParamValidator()
+        public GetFileParamValidator()
         {
             RuleFor(x => x.Key).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请选择文件");
-            RuleFor(x => x.Type).IsInEnum()
-                .WithMessage("文件存储类型不支持");
         }
     }
 }

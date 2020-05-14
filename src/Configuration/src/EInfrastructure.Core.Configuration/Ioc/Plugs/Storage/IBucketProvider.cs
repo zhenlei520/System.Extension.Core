@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
@@ -53,12 +54,23 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <returns></returns>
         DomainResultDto GetHost(GetBucketHostParam request);
 
+        #region 空间权限管理
+
         /// <summary>
         /// 设置空间访问权限
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         OperateResultDto SetPermiss(SetPermissParam request);
+
+        /// <summary>
+        /// 获取空间的访问权限
+        /// </summary>
+        /// <param name="persistentOps"></param>
+        /// <returns></returns>
+        BucketPermissItemResultDto GetPermiss(BasePersistentOps persistentOps);
+
+        #endregion
 
         #region 防盗链管理
 

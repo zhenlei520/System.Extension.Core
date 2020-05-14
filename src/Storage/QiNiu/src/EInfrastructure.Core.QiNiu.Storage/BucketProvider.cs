@@ -9,6 +9,7 @@ using EInfrastructure.Core.Config.Entities.Extensions;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
@@ -129,7 +130,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new CreateBucketParamValidator().Validate(request).Check(HttpStatus.Err.Name);
 
-            var zone = Core.Tools.GetZonePrivate(this._qiNiuConfig, request.Zone,()=>ZoneEnum.ZoneCnSouth);
+            var zone = Core.Tools.GetZonePrivate(this._qiNiuConfig, request.Zone, () => ZoneEnum.ZoneCnSouth);
             var scheme = Core.Tools.GetScheme(_qiNiuConfig, request.PersistentOps.IsUseHttps);
             string url = $"{scheme}rs.qbox.me/mkbucketv3/{request.BucketName}/region/{Core.Tools.GetRegion(zone)}";
             _httpClient.Headers = new Dictionary<string, string>()
@@ -258,6 +259,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
 
         #endregion
 
+        #region 空间权限管理
+
         #region 设置 Bucket 访问权限
 
         /// <summary>
@@ -265,7 +268,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public OperateResultDto SetPermiss(EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket.SetPermissParam request)
+        public OperateResultDto SetPermiss(
+            EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket.SetPermissParam request)
         {
             new SetPermissParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             string url =
@@ -288,6 +292,23 @@ namespace EInfrastructure.Core.QiNiu.Storage
         }
 
         #endregion
+
+        #region 获取空间的访问权限
+
+        /// <summary>
+        /// 获取空间的访问权限
+        /// </summary>
+        /// <param name="persistentOps"></param>
+        /// <returns></returns>
+        public BucketPermissItemResultDto GetPermiss(BasePersistentOps persistentOps)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #endregion
+
 
         #region 防盗链
 

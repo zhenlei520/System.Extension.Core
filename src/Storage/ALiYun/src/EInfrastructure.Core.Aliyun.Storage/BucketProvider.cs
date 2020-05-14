@@ -2,17 +2,20 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Aliyun.OSS;
 using EInfrastructure.Core.Aliyun.Storage.Config;
-using EInfrastructure.Core.Aliyun.Storage.Core;
 using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Aliyun.Storage.Validator.Bucket;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Validation.Common;
@@ -106,10 +109,18 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
         #endregion
 
+        #region 设置空间的镜像源
+
+        /// <summary>
+        /// 设置空间的镜像源
+        /// </summary>
+        /// <param name="request"></param>
         public OperateResultDto SetSource(SetBucketSource request)
         {
-            throw new System.NotImplementedException();
+            return new OperateResultDto(false, "不支持设置空间的镜像源");
         }
+
+        #endregion
 
         #region 删除空间
 
@@ -153,10 +164,19 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
         #endregion
 
+        #region 获取空间域名信息
+
+        /// <summary>
+        /// 获取空间域名信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public DomainResultDto GetHost(GetBucketHostParam request)
         {
-            throw new System.NotImplementedException();
+            return new DomainResultDto(false, default(List<string>), "不支持获取空间域");
         }
+
+        #endregion
 
         #region 设置空间访问权限
 
@@ -171,8 +191,49 @@ namespace EInfrastructure.Core.Aliyun.Storage
             var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
             var client = _aLiYunConfig.GetClient(zone);
             client.SetBucketAcl(Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket),
-                Maps.GetCannedAccessControl(request.Permiss));
+                Core.Tools.GetCannedAccessControl(request.Permiss));
             return new OperateResultDto(true, "success");
+        }
+
+        #endregion
+
+        #region 获取空间的访问权限
+
+        /// <summary>
+        /// 获取空间的访问权限
+        /// </summary>
+        /// <param name="persistentOps"></param>
+        /// <returns></returns>
+        public BucketPermissItemResultDto GetPermiss(BasePersistentOps persistentOps)
+        {
+            try
+            {
+                Check.True(persistentOps != null, "策略信息异常");
+                var zone = Core.Tools.GetZone(this._aLiYunConfig, persistentOps.Zone, () => ZoneEnum.HangZhou);
+                var client = _aLiYunConfig.GetClient(zone);
+                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, persistentOps.Bucket);
+                var ret = client.GetBucketAcl(bucket);
+                if (ret != null && ret.HttpStatusCode == HttpStatusCode.OK)
+                {
+                    return new BucketPermissItemResultDto(true, Core.Tools.GetPermiss(ret.ACL), "success");
+                }
+
+                if (ret != null)
+                {
+                    return new BucketPermissItemResultDto(false, null,
+                        $"lose，RequestId：{ret.RequestId}，HttpStatusCode：{ret.HttpStatusCode}");
+                }
+
+                return new BucketPermissItemResultDto(false, null, "lose");
+            }
+            catch (BusinessException<string>ex)
+            {
+                return new BucketPermissItemResultDto(false, null, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return new BucketPermissItemResultDto(false, null, Core.Tools.GetMessage(ex));
+            }
         }
 
         #endregion
@@ -247,20 +308,95 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
         #region 标签管理
 
+        #region 设置标签
+
+        /// <summary>
+        /// 设置标签
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public OperateResultDto SetTag(SetTagBucketParam request)
         {
-            throw new System.NotImplementedException();
+            new SetTagBucketParamValidator().Validate(request).Check(HttpStatus.Err.Name);
+            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+            var client = _aLiYunConfig.GetClient(zone);
+            var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+            var setRequest = new SetBucketTaggingRequest(bucket);
+            request.Tags.ForEach(tag =>
+            {
+                setRequest.AddTag(new Tag()
+                {
+                    Key = tag.Key,
+                    Value = tag.Value
+                });
+            });
+            client.SetBucketTagging(setRequest);
+            return new OperateResultDto(true, "success");
         }
 
+        #endregion
+
+        #region 查询空间标签
+
+        /// <summary>
+        /// 查询空间标签
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public TagResultDto GetTags(GetTagsBucketParam request)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                new GetTagsBucketParamValidator().Validate(request).Check(HttpStatus.Err.Name);
+                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var client = _aLiYunConfig.GetClient(zone);
+                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                // 查看Bucket标签。
+                var ret = client.GetBucketTagging(bucket);
+                if (ret != null && ret.HttpStatusCode == HttpStatusCode.OK)
+                {
+                    return new TagResultDto(true,
+                        ret.Tags.Select(x => new KeyValuePair<string, string>(x.Key, x.Value)).ToList(), "success");
+                }
+
+                if (ret != null)
+                {
+                    return new TagResultDto(false, null,
+                        $"lose，RequestId：{ret.RequestId}，HttpStatusCode：{ret.HttpStatusCode}");
+                }
+
+                return new TagResultDto(false, null, "lose");
+            }
+            catch (BusinessException<string>ex)
+            {
+                return new TagResultDto(false, null, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return new TagResultDto(false, null, Core.Tools.GetMessage(ex));
+            }
         }
 
+        #endregion
+
+        #region 清除标签
+
+        /// <summary>
+        /// 清除标签
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public OperateResultDto ClearTag(ClearTagBucketParam request)
         {
-            throw new System.NotImplementedException();
+            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+            var client = _aLiYunConfig.GetClient(zone);
+            var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+            // 查看Bucket标签。
+            client.DeleteBucketTagging(bucket);
+            return new OperateResultDto(true, "success");
         }
+
+        #endregion
 
         #endregion
     }

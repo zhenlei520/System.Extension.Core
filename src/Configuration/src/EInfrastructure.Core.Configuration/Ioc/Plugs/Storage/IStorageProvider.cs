@@ -175,37 +175,29 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
 
         #endregion
 
-        #region 得到地址
+        #region 得到访问地址
 
         /// <summary>
-        /// 得到公开空间的访问地址
+        /// 得到访问地址
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        string GetPublishUrl(GetPublishUrlParam request);
-
-        /// <summary>
-        /// 得到私有空间的访问地址
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        string GetPrivateUrl(GetPrivateUrlParam request);
+        GetVisitUrlResultDto GetVisitUrl(GetVisitUrlParam request);
 
         #endregion
 
         /// <summary>
-        /// 下载文件
+        /// 下载文件（根据已授权的地址）
         /// </summary>
-        /// <param name="url">文件访问地址(带有访问凭证)(绝对地址，非文件key)</param>
-        /// <param name="savePath">保存路径</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        DownloadResultDto Download(string url, string savePath);
+        DownloadResultDto Download(FileDownloadParam request);
 
         /// <summary>
-        /// 下载文件流
+        /// 下载文件流（根据已授权的地址）
         /// </summary>
-        /// <param name="url">文件访问地址，若为私有空间，则需要带有凭证(绝对地址，非文件key)</param>
-        DownloadStreamResultDto DownloadStream(string url);
+        /// <param name="request"></param>
+        DownloadStreamResultDto DownloadStream(FileDownloadStreamParam request);
 
         #region 设置生存时间
 

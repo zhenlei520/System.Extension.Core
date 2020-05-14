@@ -106,27 +106,17 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
                 _putPolicy.ReturnBody = opsParam.UploadPersistentOps.ReturnBody;
             }
 
-            if (opsParam.UploadPersistentOps.EnableCallback!=null&&opsParam.UploadPersistentOps.EnableCallback.Value&&!string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackHost) &&
+            if (opsParam.UploadPersistentOps.EnableCallback != null &&
+                opsParam.UploadPersistentOps.EnableCallback.Value &&
                 !string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackUrl))
             {
                 string url = opsParam.UploadPersistentOps.CallbackUrl.ConvertStrToList<string>(';')
                     .Select(x => opsParam.UploadPersistentOps.CallbackHost + "" + x).ConvertListToString(';');
                 _putPolicy.CallbackUrl = url;
-            }
 
-            // if (!string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackHost))
-            // {
-            //     _putPolicy.CallbackHost = opsParam.UploadPersistentOps.CallbackHost;
-            // }
-
-            if (!string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackBody))
-            {
                 _putPolicy.CallbackBody = opsParam.UploadPersistentOps.CallbackBody;
-            }
-
-            if (!string.IsNullOrEmpty(opsParam.UploadPersistentOps.CallbackBodyType))
-            {
                 _putPolicy.CallbackBodyType = opsParam.UploadPersistentOps.CallbackBodyType;
+                //     _putPolicy.CallbackHost = opsParam.UploadPersistentOps.CallbackHost;
             }
 
             if (!string.IsNullOrEmpty(opsParam.UploadPersistentOps.PersistentNotifyUrl))

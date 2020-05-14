@@ -7,16 +7,17 @@ using FluentValidation;
 namespace EInfrastructure.Core.Aliyun.Storage.Validator.Storage
 {
     /// <summary>
-    ///
+    /// 文件mime校验
     /// </summary>
-    internal class GetPublishUrlParamValidator:AbstractValidator<GetPublishUrlParam>
+    internal class ChangeMimeParamValidator : AbstractValidator<ChangeMimeParam>
     {
         /// <summary>
         ///
         /// </summary>
-        public GetPublishUrlParamValidator()
+        public ChangeMimeParamValidator()
         {
-            RuleFor(x => x.Key).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请输入文件key");
+            RuleFor(x => x.Key).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请选择文件");
+            RuleFor(x => x.MimeType).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请输入文件MimeType");
         }
     }
 }
