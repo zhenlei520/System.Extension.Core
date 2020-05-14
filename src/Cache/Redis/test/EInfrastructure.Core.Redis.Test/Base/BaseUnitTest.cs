@@ -21,22 +21,17 @@ namespace EInfrastructure.Core.Redis.Test.Base
         {
             _redisCacheService = new RedisCacheProvider(new RedisConfig()
             {
-                Ip = "122.114.19.229",
-                Port = 6379,
+                Ip = "111.231.222.32",
+                Port = 5329,
                 DataBase = 3,
                 Name = "einfrastructure_",
-                Password = "dysh_enjoy",
+                Password = "einfrastructure_",
                 PoolSize = 1,
                 OverTimeCacheKeyPre = "OverTime_HashSet",
             }, new List<IJsonProvider>()
             {
                 new NewtonsoftJsonProvider()
             });
-//            var connectionString = "";
-//            var services = new ServiceCollection();
-//            this.output = output;
-//            services.AddSingleton<IRandomBuilder, RandomCommon>();
-//            provider = services.BuildServiceProvider();
         }
     }
 }

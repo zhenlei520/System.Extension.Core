@@ -104,7 +104,6 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         /// <returns></returns>
         public static void ListPager<T>(this IQueryable<T> query, Action<List<T>> action, int pageSize = 20,
             int pageIndex = 1)
-            where T : class, new()
         {
             if (pageSize <= 0 && pageSize != -1)
             {
@@ -146,7 +145,6 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         /// <param name="isTatal">是否统计总页数</param>
         /// <returns></returns>
         public static PageData<T> QueryPager<T>(this IQueryable<T> query, int pageSize, int pageIndex, bool isTatal)
-            where T : class, new()
         {
             PageData<T> list = new PageData<T>();
 

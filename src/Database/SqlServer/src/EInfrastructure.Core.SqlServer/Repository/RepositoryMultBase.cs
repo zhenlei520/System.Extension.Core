@@ -136,15 +136,6 @@ namespace EInfrastructure.Core.SqlServer.Repository
             _repositoryBase.RemoveRange(entitys);
         }
 
-        /// <summary>
-        /// 根据条件移除满足条件的数据集合
-        /// </summary>
-        /// <param name="condition">条件</param>
-        public void RemoveRange(Expression<Func<TEntity, bool>> condition)
-        {
-            _repositoryBase.RemoveRange(condition);
-        }
-
         #endregion
 
         #region 更新实体
