@@ -11,13 +11,24 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pi
     public class UploadByBase64Param
     {
         /// <summary>
+        ///
+        /// </summary>
+        /// <param name="base64">图片Base64编码</param>
+        /// <param name="imgPersistentOps">上传图片策略</param>
+        public UploadByBase64Param(string base64, ImgPersistentOps imgPersistentOps = null)
+        {
+            this.Base64 = base64;
+            this.ImgPersistentOps = imgPersistentOps ?? new ImgPersistentOps();
+        }
+
+        /// <summary>
         /// 图片Base64编码
         /// </summary>
-        public string Base64 { get; set; }
+        public string Base64 { get; }
 
         /// <summary>
         /// 上传图片策略
         /// </summary>
-        public ImgPersistentOps ImgPersistentOps { get; set; }
+        public ImgPersistentOps ImgPersistentOps { get; }
     }
 }

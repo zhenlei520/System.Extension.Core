@@ -228,7 +228,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public ListFileItemResultDto ListFiles(ListFileFilter filter)
         {
             new ListFileFilterValidator().Validate(filter).Check(HttpStatus.Err.Name);
-            var listRet = base.GetBucketManager().ListFiles(
+            var listRet = base.GetBucketManager(filter.PersistentOps).ListFiles(
                 Core.Tools.GetBucket(this.QiNiuConfig, filter.PersistentOps.Bucket), filter.Prefix, filter.Marker,
                 filter.PageSize,
                 filter.Delimiter);
@@ -266,7 +266,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public FileInfoDto Get(GetFileParam request)
         {
             new GetFileParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-            StatResult statRet = GetBucketManager()
+            StatResult statRet = GetBucketManager(request.PersistentOps)
                 .Stat(Core.Tools.GetBucket(this.QiNiuConfig, request.PersistentOps.Bucket), request.Key);
             if (statRet.Code != (int) HttpCode.OK)
             {
@@ -309,8 +309,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         private IEnumerable<FileInfoDto> GetMulti(string[] keyList, BasePersistentOps persistentOps)
         {
             List<string> ops = keyList.Select(key =>
-                GetBucketManager().StatOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), key)).ToList();
-            BatchResult ret = GetBucketManager().Batch(ops);
+                GetBucketManager(persistentOps).StatOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), key)).ToList();
+            BatchResult ret = GetBucketManager(persistentOps).Batch(ops);
 
             var index = 0;
             foreach (var item in ret.Result)
@@ -351,7 +351,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public DeleteResultDto Remove(RemoveParam request)
         {
             new RemoveParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-            HttpResult deleteRet = GetBucketManager()
+            HttpResult deleteRet = GetBucketManager(request.PersistentOps)
                 .Delete(Core.Tools.GetBucket(this.QiNiuConfig, request.PersistentOps.Bucket), request.Key);
             var res = deleteRet.Code == (int) HttpCode.OK;
             return new DeleteResultDto(res, request.Key, res ? "删除成功" : deleteRet.ToString());
@@ -380,9 +380,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             var enumerable = keyList as string[] ?? keyList.ToArray();
             List<string> ops = enumerable.Select(key =>
-                    GetBucketManager().DeleteOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), key))
+                    GetBucketManager(persistentOps).DeleteOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), key))
                 .ToList();
-            BatchResult ret = GetBucketManager().Batch(ops);
+            BatchResult ret = GetBucketManager(persistentOps).Batch(ops);
             var index = 0;
             foreach (var item in ret.Result)
             {
@@ -410,7 +410,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public CopyFileResultDto CopyTo(CopyFileParam copyFileParam)
         {
             new CopyFileParamValidator().Validate(copyFileParam).Check(HttpStatus.Err.Name);
-            HttpResult copyRet = GetBucketManager().Copy(
+            HttpResult copyRet = GetBucketManager(copyFileParam.PersistentOps).Copy(
                 Core.Tools.GetBucket(this.QiNiuConfig, copyFileParam.PersistentOps.Bucket), copyFileParam.SourceKey,
                 Core.Tools.GetBucket(this.QiNiuConfig, copyFileParam.PersistentOps.Bucket, copyFileParam.OptBucket),
                 copyFileParam.OptKey, copyFileParam.IsForce);
@@ -442,10 +442,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
             BasePersistentOps persistentOps)
         {
             List<string> ops = copyFileParam.Select(x =>
-                    GetBucketManager().CopyOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), x.SourceKey,
+                    GetBucketManager(persistentOps).CopyOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), x.SourceKey,
                         Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket, x.OptBucket), x.OptKey, x.IsForce))
                 .ToList();
-            BatchResult ret = GetBucketManager().Batch(ops);
+            BatchResult ret = GetBucketManager(persistentOps).Batch(ops);
             var index = 0;
             foreach (BatchInfo info in ret.Result)
             {
@@ -475,7 +475,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public MoveFileResultDto Move(MoveFileParam moveFileParam)
         {
             new MoveFileParamValidator().Validate(moveFileParam).Check(HttpStatus.Err.Name);
-            HttpResult copyRet = GetBucketManager().Move(
+            HttpResult copyRet = GetBucketManager(moveFileParam.PersistentOps).Move(
                 Core.Tools.GetBucket(this.QiNiuConfig, moveFileParam.PersistentOps.Bucket), moveFileParam.SourceKey,
                 moveFileParam.OptBucket, moveFileParam.OptKey, moveFileParam.IsForce);
             var res = copyRet.Code == (int) HttpCode.OK;
@@ -621,7 +621,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public ExpireResultDto SetExpire(SetExpireParam request)
         {
             new SetExpireParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-            var expireRet = base.GetBucketManager()
+            var expireRet = base.GetBucketManager(request.PersistentOps)
                 .DeleteAfterDays(Core.Tools.GetBucket(this.QiNiuConfig, request.PersistentOps.Bucket), request.Key,
                     request.Expire);
             if (expireRet.Code != (int) HttpCode.OK)
@@ -661,7 +661,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         private IEnumerable<ExpireResultDto> SetExpireMulti(string[] keys, int expire, BasePersistentOps persistentOps)
         {
-            var bucketManager = base.GetBucketManager();
+            var bucketManager = base.GetBucketManager(persistentOps);
             List<string> ops = new List<string>();
             foreach (string key in keys)
             {
@@ -698,7 +698,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public ChangeMimeResultDto ChangeMime(ChangeMimeParam request)
         {
             new ChangeMimeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-            var ret = base.GetBucketManager()
+            var ret = base.GetBucketManager(request.PersistentOps)
                 .ChangeMime(Core.Tools.GetBucket(this.QiNiuConfig, request.PersistentOps.Bucket), request.Key,
                     request.MimeType);
             if (ret.Code != (int) HttpCode.OK)
@@ -737,7 +737,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         private IEnumerable<ChangeMimeResultDto> ChangeMimeMulti(string[] keys, string mime,
             BasePersistentOps persistentOps)
         {
-            var bucketManager = base.GetBucketManager();
+            var bucketManager = base.GetBucketManager(persistentOps);
             List<string> ops = new List<string>();
             foreach (string key in keys)
             {
@@ -774,7 +774,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public ChangeTypeResultDto ChangeType(ChangeTypeParam request)
         {
             new ChangeTypeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-            HttpResult ret = base.GetBucketManager()
+            HttpResult ret = base.GetBucketManager(request.PersistentOps)
                 .ChangeType(Core.Tools.GetBucket(this.QiNiuConfig, request.PersistentOps.Bucket), request.Key,
                     request.Type.Id);
             if (ret.Code == (int) HttpCode.OK)
@@ -814,7 +814,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         private IEnumerable<ChangeTypeResultDto> ChangeTypeMulti(string[] keys, int type,
             BasePersistentOps persistentOps)
         {
-            var bucketManager = base.GetBucketManager();
+            var bucketManager = base.GetBucketManager(persistentOps);
             List<string> ops = new List<string>();
             foreach (string key in keys)
             {

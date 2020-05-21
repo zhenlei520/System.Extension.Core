@@ -8,6 +8,9 @@ using EInfrastructure.Core.Tools;
 
 namespace EInfrastructure.Core.Aliyun.Storage
 {
+    /// <summary>
+    /// 图片管理
+    /// </summary>
     public class PictureProvider : BaseStorageProvider, IPictureProvider
     {
         private readonly IStorageProvider _storageProvider;

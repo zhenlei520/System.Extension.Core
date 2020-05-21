@@ -50,7 +50,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             string token = base.GetUploadCredentials(QiNiuConfig,
                 new UploadPersistentOpsParam(param.ImgPersistentOps.Key, param.ImgPersistentOps));
-            FormUploader target = new FormUploader(Core.Tools.GetConfig(this.QiNiuConfig));
+            FormUploader target = new FormUploader(Core.Tools.GetConfig(this.QiNiuConfig,param.ImgPersistentOps));
             HttpResult result =
                 target.UploadData(param.Base64.ConvertToByte(), param.ImgPersistentOps.Key, token,
                     GetPutExtra());
@@ -68,7 +68,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool FetchFile(FetchFileParam fetchFileParam)
         {
-            FetchResult ret = GetBucketManager()
+            FetchResult ret = GetBucketManager(fetchFileParam.PersistentOps)
                 .Fetch(fetchFileParam.SourceFileKey,
                     Core.Tools.GetBucket(this.QiNiuConfig, fetchFileParam.PersistentOps.Bucket), fetchFileParam.Key);
             switch (ret.Code)

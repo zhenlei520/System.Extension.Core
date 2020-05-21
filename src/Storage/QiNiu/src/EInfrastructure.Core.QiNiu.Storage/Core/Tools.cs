@@ -26,19 +26,16 @@ namespace EInfrastructure.Core.QiNiu.Storage.Core
         /// <param name="persistentOps">基础策略</param>
         /// <returns></returns>
         internal static Qiniu.Storage.Config GetConfig(QiNiuStorageConfig qiNiuConfig,
-            BasePersistentOps persistentOps = null)
+            BasePersistentOps persistentOps)
         {
-            var config = new Qiniu.Storage.Config()
+            var config = new Qiniu.Storage.Config
             {
                 Zone = GetZone(qiNiuConfig, persistentOps.Zone),
+                UseHttps = GetHttpsState(qiNiuConfig, persistentOps.IsUseHttps),
+                UseCdnDomains = GetCdn(qiNiuConfig, persistentOps.UseCdnDomains),
+                ChunkSize = (Qiniu.Storage.ChunkUnit) (GetChunkUnit(qiNiuConfig, persistentOps.ChunkUnit).Id),
+                MaxRetryTimes = GetMaxRetryTimes(qiNiuConfig, persistentOps.MaxRetryTimes),
             };
-            if (persistentOps != null)
-            {
-                config.UseHttps = GetHttpsState(qiNiuConfig, persistentOps.IsUseHttps);
-                config.UseCdnDomains = GetCdn(qiNiuConfig, persistentOps.UseCdnDomains);
-                config.ChunkSize = (Qiniu.Storage.ChunkUnit) (GetChunkUnit(qiNiuConfig, persistentOps.ChunkUnit).Id);
-                config.MaxRetryTimes = GetMaxRetryTimes(qiNiuConfig, persistentOps.MaxRetryTimes);
-            }
 
             return config;
         }
