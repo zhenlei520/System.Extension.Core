@@ -20,16 +20,5 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         bool Upload(UploadByBase64Param param);
 
         #endregion
-
-        #region 抓取资源到空间
-
-        /// <summary>
-        /// 抓取资源到空间
-        /// </summary>
-        /// <param name="fetchFileParam">资源信息</param>
-        /// <returns></returns>
-        bool FetchFile(FetchFileParam fetchFileParam);
-
-        #endregion
     }
 }

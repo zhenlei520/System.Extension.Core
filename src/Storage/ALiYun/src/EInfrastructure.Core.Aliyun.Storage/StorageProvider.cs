@@ -165,5 +165,10 @@ namespace EInfrastructure.Core.Aliyun.Storage
         {
             throw new System.NotImplementedException();
         }
+
+        public bool FetchFile(FetchFileParam fetchFileParam)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
