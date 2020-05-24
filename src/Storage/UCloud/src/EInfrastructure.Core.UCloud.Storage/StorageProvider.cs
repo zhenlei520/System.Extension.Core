@@ -287,6 +287,10 @@ namespace EInfrastructure.Core.UCloud.Storage
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region 下载文件
+
         /// <summary>
         /// 下载文件流
         /// </summary>
@@ -366,6 +370,20 @@ namespace EInfrastructure.Core.UCloud.Storage
         public List<ChangeTypeResultDto> ChangeTypeRange(ChangeTypeRangeParam request)
         {
             throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 抓取资源到空间
+
+        /// <summary>
+        /// 抓取资源到空间
+        /// </summary>
+        /// <param name="fetchFileParam">资源信息</param>
+        /// <returns></returns>
+        public bool FetchFile(FetchFileParam fetchFileParam)
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion

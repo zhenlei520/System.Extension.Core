@@ -872,5 +872,29 @@ namespace EInfrastructure.Core.QiNiu.Storage
         #endregion
 
         #endregion
+
+        #region 抓取资源到空间
+
+        /// <summary>
+        /// 抓取资源到空间
+        /// </summary>
+        /// <param name="fetchFileParam">资源信息</param>
+        /// <returns></returns>
+        public bool FetchFile(FetchFileParam fetchFileParam)
+        {
+            FetchResult ret = GetBucketManager()
+                .Fetch(fetchFileParam.SourceFileKey,
+                    Core.Tools.GetBucket(this.QiNiuConfig, fetchFileParam.PersistentOps.Bucket), fetchFileParam.Key);
+            switch (ret.Code)
+            {
+                case (int) HttpCode.OK:
+                case (int) HttpCode.CALLBACK_FAILED:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        #endregion
     }
 }

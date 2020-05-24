@@ -1163,8 +1163,9 @@ namespace EInfrastructure.Core.Aliyun.Storage
             }
         }
 
-        #endregion
-
-        #endregion
+        public bool FetchFile(FetchFileParam fetchFileParam)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

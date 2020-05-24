@@ -253,16 +253,17 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
 
         #endregion
 
-        /// <summary>
-        /// 设置空间访问权限
-        /// 七牛云存储不支持设置文件权限
-        /// 阿里云Oss支持
-        /// Uc云不支持
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        OperateResultDto SetPermiss(SetPermissParam request);
+        #region 抓取资源到空间
 
+        /// <summary>
+        /// 抓取资源到空间
+        /// </summary>
+        /// <param name="fetchFileParam">资源信息</param>
+        /// <returns></returns>
+        bool FetchFile(FetchFileParam fetchFileParam);
+
+        #endregion
+        
         /// <summary>
         /// 获取文件的访问权限
         /// 七牛云存储不支持获取文件权限
