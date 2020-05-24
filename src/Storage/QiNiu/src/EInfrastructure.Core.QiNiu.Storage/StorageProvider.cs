@@ -882,7 +882,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         public bool FetchFile(FetchFileParam fetchFileParam)
         {
-            FetchResult ret = GetBucketManager()
+            FetchResult ret = GetBucketManager(fetchFileParam.PersistentOps)
                 .Fetch(fetchFileParam.SourceFileKey,
                     Core.Tools.GetBucket(this.QiNiuConfig, fetchFileParam.PersistentOps.Bucket), fetchFileParam.Key);
             switch (ret.Code)

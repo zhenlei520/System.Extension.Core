@@ -1163,9 +1163,23 @@ namespace EInfrastructure.Core.Aliyun.Storage
             }
         }
 
+        #endregion
+
+        #endregion
+
+        #region 抓取资源到空间
+
+        /// <summary>
+        /// 抓取资源到空间
+        /// </summary>
+        /// <param name="fetchFileParam"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public bool FetchFile(FetchFileParam fetchFileParam)
         {
             throw new System.NotImplementedException();
         }
+
+        #endregion
     }
 }
