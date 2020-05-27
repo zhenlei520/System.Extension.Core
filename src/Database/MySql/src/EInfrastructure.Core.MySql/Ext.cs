@@ -2,12 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using EInfrastructure.Core.Tools;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -65,87 +62,8 @@ namespace EInfrastructure.Core.MySql
 
                 // Create the mapping type and do the mapping
                 var mapper = Activator.CreateInstance(mappingType);
-                mapper.GetType().GetMethod("Map")?.Invoke(mapper, new[] { entityBuilder });
+                mapper.GetType().GetMethod("Map")?.Invoke(mapper, new[] {entityBuilder});
             }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="dbContext"></param>
-        /// <param name="sql"></param>
-        /// <param name="action"></param>
-        public static void Reader(this DbContext dbContext, string sql, Action<DbDataReader> action)
-        {
-            var conn = dbContext.Database.GetDbConnection();
-
-            try
-            {
-                conn.Open();
-
-                using (var command = conn.CreateCommand())
-                {
-                    string query = sql;
-
-                    command.CommandText = query;
-
-                    using (DbDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                        {
-                            while (reader.Read())
-                            {
-                                action(reader);
-                            }
-                        }
-                    }
-                }
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="dbContext"></param>
-        /// <param name="sql">sql语句</param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static List<T> SqlQuery<T>(this DbContext dbContext, string sql)
-        {
-            List<T> list = new List<T>();
-
-            var conn = dbContext.Database.GetDbConnection();
-
-            try
-            {
-                conn.Open();
-
-                using (var command = conn.CreateCommand())
-                {
-                    string query = sql;
-
-                    command.CommandText = query;
-
-                    using (DbDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                        {
-                            list = reader.ConvertReaderToList<T>();
-                        }
-                    }
-                }
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-
-            return list;
         }
     }
 

@@ -104,7 +104,6 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         /// <returns></returns>
         public static void ListPager<T>(this IQueryable<T> query, Action<List<T>> action, int pageSize = 20,
             int pageIndex = 1)
-            where T : class, new()
         {
             if (pageSize <= 0 && pageSize != -1)
             {
@@ -130,34 +129,6 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
             {
                 action(query.ToList());
             }
-        }
-
-        #endregion
-
-        #region 得到IQueryable<T>的分页后数据源
-
-        /// <summary>
-        /// 得到IQueryable的分页后数据源
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="query"></param>
-        /// <param name="pageSize">每页几条数据</param>
-        /// <param name="pageIndex">当前页数</param>
-        /// <param name="isTatal">是否统计总页数</param>
-        /// <returns></returns>
-        public static PageData<T> QueryPager<T>(this IQueryable<T> query, int pageSize, int pageIndex, bool isTatal)
-            where T : class, new()
-        {
-            PageData<T> list = new PageData<T>();
-
-            if (isTatal)
-            {
-                list.RowCount = query.Count();
-            }
-
-            list.Data = query.QueryPager(pageSize, pageIndex).ToList();
-
-            return list;
         }
 
         #endregion

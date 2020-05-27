@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Config.Entities.Configuration;
 
@@ -76,12 +75,6 @@ namespace EInfrastructure.Core.Config.Entities.Ioc
         /// </summary>
         /// <param name="entitys"></param>
         void RemoveRange(params TEntity[] entitys);
-
-        /// <summary>
-        /// 根据条件移除满足条件的数据集合
-        /// </summary>
-        /// <param name="condition">条件</param>
-        void RemoveRange(Expression<Func<TEntity, bool>> condition);
 
         /// <summary>
         /// 更新实体

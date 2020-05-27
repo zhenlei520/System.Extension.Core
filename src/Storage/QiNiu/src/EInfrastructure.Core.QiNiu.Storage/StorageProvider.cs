@@ -27,7 +27,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 文件实现类
         /// </summary>
-        public StorageProvider(QiNiuStorageConfig qiNiuConfig = null) : base(qiNiuConfig)
+        public StorageProvider(QiNiuStorageConfig qiNiuConfig) : base(qiNiuConfig)
         {
         }
 
@@ -802,6 +802,30 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 {
                     yield return new ChangeTypeResultDto(false, keys.ToList()[index - 1], "lose");
                 }
+            }
+        }
+
+        #endregion
+
+        #region 抓取资源到空间
+
+        /// <summary>
+        /// 抓取资源到空间
+        /// </summary>
+        /// <param name="fetchFileParam">资源信息</param>
+        /// <returns></returns>
+        public bool FetchFile(FetchFileParam fetchFileParam)
+        {
+            FetchResult ret = GetBucketManager()
+                .Fetch(fetchFileParam.SourceFileKey,
+                    Core.Tools.GetBucket(this.QiNiuConfig, fetchFileParam.PersistentOps.Bucket), fetchFileParam.Key);
+            switch (ret.Code)
+            {
+                case (int) HttpCode.OK:
+                case (int) HttpCode.CALLBACK_FAILED:
+                    return true;
+                default:
+                    return false;
             }
         }
 

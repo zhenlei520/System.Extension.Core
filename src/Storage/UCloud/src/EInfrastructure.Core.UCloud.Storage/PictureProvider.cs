@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pictures;
 using EInfrastructure.Core.UCloud.Storage.Config;
 
@@ -47,20 +48,6 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <param name="param"></param>
         /// <returns></returns>
         public bool Upload(UploadByBase64Param param)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
-
-        #region 抓取资源到空间
-
-        /// <summary>
-        /// 抓取资源到空间
-        /// </summary>
-        /// <param name="fetchFileParam">资源信息</param>
-        /// <returns></returns>
-        public bool FetchFile(FetchFileParam fetchFileParam)
         {
             throw new System.NotImplementedException();
         }

@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Config.Entities.Configuration;
 using EInfrastructure.Core.Config.Entities.Ioc;
@@ -137,19 +135,6 @@ namespace EInfrastructure.Core.MySql.Common
         {
             Dbcontext.Set<TEntity>().RemoveRange(entitys);
         }
-        #endregion
-
-        #region 批量删除实体
-
-        /// <summary>
-        /// 批量删除实体
-        /// </summary>
-        public virtual void RemoveRange(Expression<Func<TEntity, bool>> condition)
-        {
-            var entities = Dbcontext.Set<TEntity>().Where(condition).ToArray();
-            RemoveRange(entities);
-        }
-
         #endregion
 
         #region 更新实体

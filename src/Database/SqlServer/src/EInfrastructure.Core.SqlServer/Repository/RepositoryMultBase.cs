@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Config.Entities.Configuration;
 using EInfrastructure.Core.Config.Entities.Ioc;
@@ -134,15 +133,6 @@ namespace EInfrastructure.Core.SqlServer.Repository
         public void RemoveRange(params TEntity[] entitys)
         {
             _repositoryBase.RemoveRange(entitys);
-        }
-
-        /// <summary>
-        /// 根据条件移除满足条件的数据集合
-        /// </summary>
-        /// <param name="condition">条件</param>
-        public void RemoveRange(Expression<Func<TEntity, bool>> condition)
-        {
-            _repositoryBase.RemoveRange(condition);
         }
 
         #endregion

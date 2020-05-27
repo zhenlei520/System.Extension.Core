@@ -259,6 +259,8 @@ namespace EInfrastructure.Core.UCloud.Storage
 
         #endregion
 
+        #region 得到公开空间的访问地址
+
         /// <summary>
         /// 得到公开空间的访问地址
         /// </summary>
@@ -268,6 +270,10 @@ namespace EInfrastructure.Core.UCloud.Storage
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region 得到私有空间的地址
 
         /// <summary>
         /// 得到私有空间的地址
@@ -279,6 +285,10 @@ namespace EInfrastructure.Core.UCloud.Storage
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region 下载文件
+
         /// <summary>
         /// 下载文件
         /// </summary>
@@ -289,6 +299,8 @@ namespace EInfrastructure.Core.UCloud.Storage
         {
             throw new NotImplementedException();
         }
+
+        #endregion
 
         #region 设置生存时间（超时会自动删除）
 
@@ -358,6 +370,20 @@ namespace EInfrastructure.Core.UCloud.Storage
         public List<ChangeTypeResultDto> ChangeTypeRange(ChangeTypeRangeParam request)
         {
             throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 抓取资源到空间
+
+        /// <summary>
+        /// 抓取资源到空间
+        /// </summary>
+        /// <param name="fetchFileParam">资源信息</param>
+        /// <returns></returns>
+        public bool FetchFile(FetchFileParam fetchFileParam)
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion
