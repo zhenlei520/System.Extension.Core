@@ -37,7 +37,6 @@ namespace EInfrastructure.Core
         {
             Serialize.Xml.StartUp.Run(EInfrastructureCoreConfigurations.EnableLog);
             Serialize.NewtonsoftJson.StartUp.Run(EInfrastructureCoreConfigurations.EnableLog);
-            Config.SerializeExtensions.StartUp.Run(EInfrastructureCoreConfigurations.EnableLog);
             Tools.StartUp.Run(EInfrastructureCoreConfigurations.EnableLog);
         }
 
