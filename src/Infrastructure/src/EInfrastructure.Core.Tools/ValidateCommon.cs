@@ -11,24 +11,36 @@ namespace EInfrastructure.Core.Tools
     /// </summary>
     public static class ValidateCommon
     {
-        //邮件正则表达式
+        /// <summary>
+        /// 邮件正则表达式
+        /// </summary>
         private static readonly Regex Emailregex =
             new Regex(@"^([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$",
                 RegexOptions.IgnoreCase);
 
-        //手机号正则表达式
+        /// <summary>
+        /// 手机号正则表达式
+        /// </summary>
         private static readonly Regex Mobileregex = new Regex("^(13|14|15|16|17|18|19)[0-9]{9}$");
 
-        //固话号正则表达式
+        /// <summary>
+        /// 固话号正则表达式
+        /// </summary>
         private static readonly Regex Phoneregex = new Regex(@"^(\d{3,4}-?)?\d{7,8}$");
 
-        //邮政编码正则表达式
+        /// <summary>
+        /// 邮政编码正则表达式
+        /// </summary>
         private static readonly Regex ZipCodeRegex = new Regex(@"^\d{6}$");
 
-        //数字正则表达式
+        /// <summary>
+        /// 数字正则表达式
+        /// </summary>
         private static readonly Regex NumberRegex = new Regex(@"\d");
 
-        //纯数字
+        /// <summary>
+        /// 纯数字
+        /// </summary>
         private static readonly Regex OnlyNumberRegex = new Regex(@"^-?\d+$");
 
         /// <summary>
@@ -36,12 +48,16 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         private static readonly Regex Chineseregex = new Regex("^[\u4e00-\u9fa5]");
 
-        //IP正则表达式
+        /// <summary>
+        /// IP正则表达式
+        /// </summary>
         private static readonly Regex Ipregex =
             new Regex(
                 @"^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$");
 
-        //网址正则表达式
+        /// <summary>
+        /// 网址正则表达式
+        /// </summary>
         private static readonly Regex WebSiteRegex =
             new Regex(@"((http|https)://)?(www.)?[a-z0-9\.]+(\.(com|net|cn|com\.cn|com\.net|net\.cn))(/[^\s\n]*)?");
 
@@ -168,8 +184,7 @@ namespace EInfrastructure.Core.Tools
                 return false; //省份验证
 
             string birth = id.Substring(6, 8).Insert(6, "-").Insert(4, "-");
-            DateTime time;
-            if (DateTime.TryParse(birth, out time) == false)
+            if (DateTime.TryParse(birth, out _) == false)
                 return false; //生日验证
 
             string[] arrVarifyCode = ("1,0,x,9,8,7,6,5,4,3,2").Split(',');
@@ -202,8 +217,7 @@ namespace EInfrastructure.Core.Tools
                 return false; //省份验证
 
             string birth = id.Substring(6, 6).Insert(4, "-").Insert(2, "-");
-            DateTime time;
-            if (DateTime.TryParse(birth, out time) == false)
+            if (DateTime.TryParse(birth, out _) == false)
                 return false; //生日验证
 
             return true; //符合15位身份证标准
@@ -220,8 +234,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsGuid(this string strSrc)
         {
-            Guid g;
-            return Guid.TryParse(strSrc, out g);
+            return Guid.TryParse(strSrc, out _);
         }
 
         #endregion
