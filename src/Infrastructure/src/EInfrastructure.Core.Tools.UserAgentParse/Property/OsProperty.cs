@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
 
@@ -16,8 +17,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse.Property
         /// </summary>
         /// <param name="osState">状态</param>
         /// <param name="value">值</param>
-        /// <param name="regex">正则表达式</param>
-        protected OsProperty(OsState osState, string value, Regex regex = null)
+        protected OsProperty(OsState osState, string value)
         {
             this.Keys = null;
             this.ExceptRegexs = null;
@@ -25,7 +25,6 @@ namespace EInfrastructure.Core.Tools.UserAgentParse.Property
             this.ExceptRegexs = null;
             this.OsState = osState;
             this.Value = value;
-            this.Regex = regex;
         }
 
         /// <summary>
@@ -33,8 +32,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse.Property
         /// </summary>
         /// <param name="keys">Key名称，&&</param>
         /// <param name="value">值</param>
-        /// <param name="regex">正则表达式</param>
-        public OsProperty(string[] keys, string value, Regex regex = null) : this(OsState.Vague, value, regex)
+        public OsProperty(string[] keys, string value) : this(OsState.Vague, value)
         {
             this.Keys = keys;
         }
@@ -45,10 +43,9 @@ namespace EInfrastructure.Core.Tools.UserAgentParse.Property
         /// <param name="keys">Key名称，&&</param>
         /// <param name="exceptKeys">除哪些key什么之外</param>
         /// <param name="value">值</param>
-        /// <param name="regex">正则表达式</param>
-        public OsProperty(string[] keys, string[] exceptKeys, string value, Regex regex = null) : this(
+        public OsProperty(string[] keys, string[] exceptKeys, string value) : this(
             OsState.VagueAndExceptVague,
-            value, regex)
+            value)
         {
             this.Keys = keys;
             this.ExceptKeys = exceptKeys;
@@ -60,7 +57,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse.Property
         /// <param name="regexs">Key名称，&&</param>
         /// <param name="value">值</param>
         /// <param name="regex">正则表达式</param>
-        public OsProperty(Regex[] regexs, string value, Regex regex = null) : this(OsState.Regex, value, regex)
+        public OsProperty(Regex[] regexs, string value) : this(OsState.Regex, value)
         {
             this.Regexs = regexs;
         }
@@ -71,10 +68,9 @@ namespace EInfrastructure.Core.Tools.UserAgentParse.Property
         /// <param name="regexs">Key名称，&&</param>
         /// <param name="exceptRegexs"></param>
         /// <param name="value">值</param>
-        /// <param name="regex">正则表达式</param>
-        public OsProperty(Regex[] regexs, Regex[] exceptRegexs, string value, Regex regex = null) : this(
+        public OsProperty(Regex[] regexs, Regex[] exceptRegexs, string value) : this(
             OsState.RegexAndExceptRegex,
-            value, regex)
+            value)
         {
             this.Regexs = regexs;
             this.ExceptRegexs = exceptRegexs;
@@ -86,9 +82,8 @@ namespace EInfrastructure.Core.Tools.UserAgentParse.Property
         /// <param name="keys">Key名称，&&</param>
         /// <param name="regexs">Key名称，&&</param>
         /// <param name="value">值</param>
-        /// <param name="regex">正则表达式</param>
-        public OsProperty(string[] keys, Regex[] regexs, string value, Regex regex = null) : this(OsState.VagueAndRegex,
-            value, regex)
+        public OsProperty(string[] keys, Regex[] regexs, string value) : this(OsState.VagueAndRegex,
+            value)
         {
             this.Regexs = regexs;
             this.Keys = keys;
@@ -102,10 +97,9 @@ namespace EInfrastructure.Core.Tools.UserAgentParse.Property
         /// <param name="regexs">Key名称，&&</param>
         /// <param name="exceptRegexs"></param>
         /// <param name="value">值</param>
-        /// <param name="regex">正则表达式</param>
-        public OsProperty(string[] keys, string[] exceptKeys, Regex[] regexs, Regex[] exceptRegexs, string value,
-            Regex regex = null) : this(OsState.All,
-            value, regex)
+        public OsProperty(string[] keys, string[] exceptKeys, Regex[] regexs, Regex[] exceptRegexs, string value) :
+            this(OsState.All,
+                value)
         {
             this.Keys = keys;
             this.ExceptKeys = exceptKeys;
@@ -113,7 +107,26 @@ namespace EInfrastructure.Core.Tools.UserAgentParse.Property
             this.ExceptRegexs = exceptRegexs;
         }
 
-        #region 并且
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="keys">Key名称，&&</param>
+        /// <param name="exceptKeys">除哪些key什么之外</param>
+        /// <param name="regexs">Key名称，&&</param>
+        /// <param name="exceptRegexs"></param>
+        /// <param name="value">值</param>
+        /// <param name="osState">状态</param>
+        public OsProperty(string[] keys, string[] exceptKeys, Regex[] regexs, Regex[] exceptRegexs, string value,
+            OsState osState) : this(osState,
+            value)
+        {
+            this.Keys = keys;
+            this.ExceptKeys = exceptKeys;
+            this.Regexs = regexs;
+            this.ExceptRegexs = exceptRegexs;
+        }
+
+        #region 筛选os名称条件
 
         /// <summary>
         /// 包括 Key名称
@@ -148,9 +161,9 @@ namespace EInfrastructure.Core.Tools.UserAgentParse.Property
         public string Value { get; }
 
         /// <summary>
-        /// 正则表达式
+        /// os版本规则
         /// </summary>
-        public Regex Regex { get; }
+        public OsVersionProperty OsVersionRules { get; set; }
     }
 
     /// <summary>
@@ -177,6 +190,16 @@ namespace EInfrastructure.Core.Tools.UserAgentParse.Property
         /// 正则表达式和除什么之外正则表达式匹配
         /// </summary>
         public static OsState RegexAndExceptRegex = new OsState(4, "RegexAndExceptRegex");
+
+        /// <summary>
+        /// 模糊匹配和除什么之外的正则表达式匹配
+        /// </summary>
+        public static OsState VagueAndExceptRegex = new OsState(5, "VagueAndExceptRegex");
+
+        /// <summary>
+        /// 正则表达式和除什么之外模糊匹配
+        /// </summary>
+        public static OsState RegexAndExceptVague = new OsState(5, "RegexAndExceptVague");
 
         /// <summary>
         /// 模糊匹配和正则表达式

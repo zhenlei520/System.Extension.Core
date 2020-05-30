@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <param name="userAgent"></param>
         public UserAgent(string userAgent) : this()
         {
-            var os=new Os();
+            this.Os=new Os(userAgent);
         }
 
         /// <summary>
