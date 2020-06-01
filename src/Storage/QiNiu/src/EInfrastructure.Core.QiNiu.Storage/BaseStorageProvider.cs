@@ -118,7 +118,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="persistentOps">策略</param>
         /// <returns></returns>
-        protected virtual BucketManager GetBucketManager(BasePersistentOps persistentOps = null)
+        protected virtual BucketManager GetBucketManager(BasePersistentOps persistentOps)
         {
             if (_bucketManager == null)
                 _bucketManager = new BucketManager(_qiNiuConfig.GetMac(),

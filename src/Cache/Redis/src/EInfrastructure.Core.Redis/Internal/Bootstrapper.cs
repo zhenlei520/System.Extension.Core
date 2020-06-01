@@ -14,12 +14,12 @@ namespace EInfrastructure.Core.Redis.Internal
     /// <summary>
     /// Default implement of
     /// </summary>
-    internal class TimerService : BackgroundService
+    internal class Bootstrapper : BackgroundService
     {
         private readonly ICacheProvider _cacheProvider;
         private readonly RedisConfig _redisConfig;
 
-        public TimerService(ICollection<ICacheProvider> cacheProviders, RedisConfig redisConfig)
+        public Bootstrapper(ICollection<ICacheProvider> cacheProviders, RedisConfig redisConfig)
         {
             _cacheProvider = cacheProviders.FirstOrDefault(x => x.GetIdentify() == "EInfrastructure.Core.Redis");
             _redisConfig = redisConfig;

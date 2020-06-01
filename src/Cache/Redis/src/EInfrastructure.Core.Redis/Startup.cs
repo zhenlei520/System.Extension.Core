@@ -39,7 +39,7 @@ namespace EInfrastructure.Core.Redis
         {
             EInfrastructure.Core.StartUp.Run();
             services.AddSingleton(func.Invoke());
-            services.AddHostedService<TimerService>();
+            services.AddHostedService<Bootstrapper>();
             return services;
         }
 
