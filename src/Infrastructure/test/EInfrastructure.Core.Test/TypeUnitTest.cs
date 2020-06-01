@@ -19,5 +19,20 @@ namespace EInfrastructure.Core.Test
         {
             Check.True(1.ConvertToShort() == s, "方法有误");
         }
+
+        [Theory]
+        [InlineData("是", true)]
+        [InlineData("否", false)]
+        public void ConvertToBool(string str,bool res)
+        {
+            Check.True(str.ConvertToBool() == res, "方法有误");
+        }
+
+        [Theory]
+        [InlineData(100.02)]
+        public void ConvertDecimalToString(decimal money)
+        {
+            string str=money.ConvertToCurrency();
+        }
     }
 }

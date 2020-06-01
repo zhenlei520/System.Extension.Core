@@ -20,7 +20,6 @@ namespace EInfrastructure.Core.Test.Base
 
         public BaseUnitTest(ITestOutputHelper output)
         {
-            var connectionString = "";
             var services = new ServiceCollection();
             this.output = output;
             services.AddSingleton<IRandomBuilder, RandomCommon>();

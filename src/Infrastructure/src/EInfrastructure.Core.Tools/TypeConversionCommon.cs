@@ -2,8 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -493,6 +495,7 @@ namespace EInfrastructure.Core.Tools
             {
                 return null;
             }
+
             BinaryFormatter se = new BinaryFormatter();
             MemoryStream memStream = new MemoryStream();
             se.Serialize(memStream, obj);
@@ -552,6 +555,26 @@ namespace EInfrastructure.Core.Tools
         #region obj转bool
 
         /// <summary>
+        ///
+        /// </summary>
+        private static Dictionary<string, bool> _boolMap = new Dictionary<string, bool>()
+        {
+            {"0", false},
+            {"不", false},
+            {"否", false},
+            {"失败", false},
+            {"no", false},
+            {"fail", false},
+            {"lose", false},
+            {"1", true},
+            {"是", true},
+            {"ok", true},
+            {"yes", true},
+            {"success", true},
+            {"成功", true}
+        };
+
+        /// <summary>
         /// obj转bool
         /// </summary>
         /// <param name="obj"></param>
@@ -588,8 +611,18 @@ namespace EInfrastructure.Core.Tools
         private static bool? ConvertToBool(this object obj, Func<bool?> func)
         {
             if (obj != null)
-                if (bool.TryParse(obj.ToString(), out var result))
+            {
+                string objStr = obj.ToString();
+                var res = _boolMap.FirstOrDefault(x => x.Key == objStr);
+                if (res.Key == objStr)
+                {
+                    return res.Value;
+                }
+
+                if (bool.TryParse(objStr, out var result))
                     return result;
+            }
+
             return func.Invoke();
         }
 
