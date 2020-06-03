@@ -18,6 +18,7 @@ using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config.Pictures;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
@@ -27,6 +28,7 @@ using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Enumerations;
 using EInfrastructure.Core.Validation.Common;
 using ICredentials = Aliyun.OSS.Common.Authentication.ICredentials;
+using LifecycleRule = Aliyun.OSS.LifecycleRule;
 using StorageClass = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass;
 
 namespace EInfrastructure.Core.Aliyun.Storage
@@ -73,6 +75,8 @@ namespace EInfrastructure.Core.Aliyun.Storage
         }
 
         #endregion
+
+        #region 上传文件
 
         #region 根据文件流上传
 
@@ -223,6 +227,8 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
         #endregion
 
+        #region private methods
+
         #region 上传文件
 
         /// <summary>
@@ -259,6 +265,10 @@ namespace EInfrastructure.Core.Aliyun.Storage
                     Core.Tools.GetMessage(e));
             }
         }
+
+        #endregion
+
+        #endregion
 
         #endregion
 
@@ -901,7 +911,32 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public ExpireResultDto SetExpire(SetExpireParam request)
         {
-            return new ExpireResultDto(false, request.Key, "不支持设置过期时间");
+            try
+            {
+                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var client = _aLiYunConfig.GetClient(zone);
+                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var setBucketLifecycleRequest = new SetBucketLifecycleRequest(bucket);
+
+                LifecycleRule lcr = new LifecycleRule()
+                {
+                    ID = "delete " + request.Key + " files",
+                    Prefix = request.Key,
+                    Status = RuleStatus.Enabled,
+                    ExpriationDays = request.Expire
+                };
+                setBucketLifecycleRequest.AddLifecycleRule(lcr);
+                client.SetBucketLifecycle(setBucketLifecycleRequest); //调整生命周期
+                return new ExpireResultDto(true, request.Key, "success");
+            }
+            catch (BusinessException<string>ex)
+            {
+                return new ExpireResultDto(false, request.Key, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return new ExpireResultDto(false, request.Key, Core.Tools.GetMessage(ex));
+            }
         }
 
         #endregion
@@ -915,7 +950,42 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public List<ExpireResultDto> SetExpireRange(SetExpireRangeParam request)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var client = _aLiYunConfig.GetClient(zone);
+                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var setBucketLifecycleRequest = new SetBucketLifecycleRequest(bucket);
+
+                List<ExpireResultDto> list = new List<ExpireResultDto>();
+                request.Keys.ForEach(key =>
+                {
+                    LifecycleRule lcr = new LifecycleRule()
+                    {
+                        ID = "delete " + key + " files",
+                        Prefix = key,
+                        Status = RuleStatus.Enabled,
+                        ExpriationDays = request.Expire
+                    };
+                    setBucketLifecycleRequest.AddLifecycleRule(lcr);
+                    list.Add(new ExpireResultDto(true, key, "success"));
+                });
+
+                client.SetBucketLifecycle(setBucketLifecycleRequest); //调整生命周期
+                return list;
+            }
+            catch (BusinessException<string>ex)
+            {
+                List<ExpireResultDto> list = new List<ExpireResultDto>();
+                request.Keys.ForEach(key => { list.Add(new ExpireResultDto(false, key, ex.Message)); });
+                return list;
+            }
+            catch (Exception ex)
+            {
+                List<ExpireResultDto> list = new List<ExpireResultDto>();
+                request.Keys.ForEach(key => { list.Add(new ExpireResultDto(false, key, ex.Message)); });
+                return list;
+            }
         }
 
         #endregion
@@ -1167,17 +1237,35 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
         #endregion
 
-        #region 抓取资源到空间
+        #region 抓取资源到空间（不建议上传大文件）
 
         /// <summary>
-        /// 抓取资源到空间
+        /// 抓取资源到空间（不建议上传大文件）
         /// </summary>
         /// <param name="fetchFileParam"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public bool FetchFile(FetchFileParam fetchFileParam)
         {
-            throw new System.NotImplementedException();
+            var ret = DownloadStream(new FileDownloadStreamParam(fetchFileParam.SourceFileKey,
+                fetchFileParam.PersistentOps));
+            if (ret.State)
+            {
+                var result = UploadStream(new UploadByStreamParam(fetchFileParam.Key, ret.FileStream,
+                    new UploadPersistentOps()
+                    {
+                        Zone = fetchFileParam.PersistentOps.Zone,
+                        Bucket = fetchFileParam.PersistentOps.Bucket,
+                        Host = fetchFileParam.PersistentOps.Host,
+                        IsUseHttps = fetchFileParam.PersistentOps.IsUseHttps,
+                        UseCdnDomains = fetchFileParam.PersistentOps.UseCdnDomains,
+                        ChunkUnit = fetchFileParam.PersistentOps.ChunkUnit,
+                        MaxRetryTimes = fetchFileParam.PersistentOps.MaxRetryTimes,
+                    }));
+                return result.State;
+            }
+
+            return false;
         }
 
         #endregion

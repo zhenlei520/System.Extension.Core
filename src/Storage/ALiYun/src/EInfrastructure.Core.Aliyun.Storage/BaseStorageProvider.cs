@@ -7,7 +7,7 @@ using EInfrastructure.Core.Validation.Common;
 
 namespace EInfrastructure.Core.Aliyun.Storage
 {
-    public class BaseStorageProvider
+    public abstract class BaseStorageProvider
     {
         /// <summary>
         /// 存储配置文件
