@@ -246,7 +246,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
                         PutTime = x.PutTime,
                         MimeType = x.MimeType,
                         FileType = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass
-                            .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass>(x.FileType),
+                            .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass>(
+                                x.FileType),
                     }).ToList()
                 };
             }
@@ -309,7 +310,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         private IEnumerable<FileInfoDto> GetMulti(string[] keyList, BasePersistentOps persistentOps)
         {
             List<string> ops = keyList.Select(key =>
-                GetBucketManager(persistentOps).StatOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), key)).ToList();
+                GetBucketManager(persistentOps)
+                    .StatOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), key)).ToList();
             BatchResult ret = GetBucketManager(persistentOps).Batch(ops);
 
             var index = 0;
@@ -325,7 +327,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
                         MimeType = item.Data.MimeType,
                         PutTime = item.Data.PutTime,
                         FileType = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass
-                            .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass>(item.Data.FileType),
+                            .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass>(
+                                item.Data.FileType),
                         Key = keyList[index - 1]
                     };
                 }
@@ -380,7 +383,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             var enumerable = keyList as string[] ?? keyList.ToArray();
             List<string> ops = enumerable.Select(key =>
-                    GetBucketManager(persistentOps).DeleteOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), key))
+                    GetBucketManager(persistentOps)
+                        .DeleteOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), key))
                 .ToList();
             BatchResult ret = GetBucketManager(persistentOps).Batch(ops);
             var index = 0;
@@ -442,7 +446,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
             BasePersistentOps persistentOps)
         {
             List<string> ops = copyFileParam.Select(x =>
-                GetBucketManager(persistentOps).CopyOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), x.SourceKey,
+                    GetBucketManager(persistentOps).CopyOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket),
+                        x.SourceKey,
                         Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket, x.OptBucket), x.OptKey, x.IsForce))
                 .ToList();
             BatchResult ret = GetBucketManager(persistentOps).Batch(ops);
