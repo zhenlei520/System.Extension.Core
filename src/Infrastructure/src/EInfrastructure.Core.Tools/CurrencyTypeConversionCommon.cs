@@ -11,9 +11,9 @@ using EInfrastructure.Core.Tools.DecimalConversion;
 namespace EInfrastructure.Core.Tools
 {
     /// <summary>
-    /// 数值类型转换
+    /// 货币类型转换
     /// </summary>
-    public static class DecimalConversionCommon
+    public static class CurrencyTypeConversionCommon
     {
         #region 转换为货币
 

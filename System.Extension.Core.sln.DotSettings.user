@@ -3,40 +3,13 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\wangz\.nuget\packages\qiniu\7.3.1.1\lib\Net40\Qiniu.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=220da7d6_002Df95d_002D4115_002D8130_002D56a9f2b604a4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ConvertToBool" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TypeUnitTest.ConvertToBool&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
 	
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=48e904e6_002D8978_002D41b7_002Dbbef_002D58ec08610a6c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateBucket" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.CreateBucket&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.DeteleBucket&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.SetTag&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.GetTags&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.ClearTag&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.SetSource&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b83c36ea_002D08c4_002D4f66_002D845a_002D3966b786a053/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SetSource" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.SetSource&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=de56d6b2_002Dc477_002D4a0c_002D8729_002D314236572852/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SetSource #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.SetSource&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f94058ed_002Dad3e_002D4e88_002D93d5_002D89214935c1c3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SetSource #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.SetSource&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TypeUnitTest.ConvertToBool&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TypeUnitTest.ConvertDecimalToString&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
+	
+	
+	
+	
+	
 	
 	
 	

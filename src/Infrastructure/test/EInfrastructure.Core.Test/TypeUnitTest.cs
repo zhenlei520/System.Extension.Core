@@ -23,16 +23,16 @@ namespace EInfrastructure.Core.Test
         [Theory]
         [InlineData("是", true)]
         [InlineData("否", false)]
+        [InlineData("TRUE", true)]
+        [InlineData("True", true)]
+        [InlineData("true", true)]
+        [InlineData("FALSE", false)]
+        [InlineData("false", false)]
+        [InlineData("False", false)]
         public void ConvertToBool(string str,bool res)
         {
             Check.True(str.ConvertToBool() == res, "方法有误");
         }
 
-        [Theory]
-        [InlineData(100.02)]
-        public void ConvertDecimalToString(decimal money)
-        {
-            string str=money.ConvertToCurrency();
-        }
     }
 }
