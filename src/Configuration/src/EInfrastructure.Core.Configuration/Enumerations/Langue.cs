@@ -16,9 +16,9 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         public static Language Unknow = new Language(0, "未知");
 
         /// <summary>
-        /// 国语
+        /// 汉语
         /// </summary>
-        public static Language Chinese = new Language(1, "国语");
+        public static Language Chinese = new Language(1, "汉语");
 
         /// <summary>
         /// 粤语

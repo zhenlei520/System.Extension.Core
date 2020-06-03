@@ -442,7 +442,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             BasePersistentOps persistentOps)
         {
             List<string> ops = copyFileParam.Select(x =>
-                    GetBucketManager(persistentOps).CopyOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), x.SourceKey,
+                GetBucketManager(persistentOps).CopyOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), x.SourceKey,
                         Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket, x.OptBucket), x.OptKey, x.IsForce))
                 .ToList();
             BatchResult ret = GetBucketManager(persistentOps).Batch(ops);

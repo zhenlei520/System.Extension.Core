@@ -23,6 +23,8 @@ namespace EInfrastructure.Core.Aliyun.Storage.Validator
             RuleFor(x => x.SecretKey).NotNull()
                 .WithMessage("SecretKey信息异常");
             RuleFor(x => x.MaxRetryTimes).Must(x => x > 0).WithMessage("最大重试次数有误");
+
+            RuleFor(x=>x.test).ScalePrecision()
         }
     }
 }

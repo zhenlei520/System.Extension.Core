@@ -37,6 +37,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Core
                 MaxRetryTimes = GetMaxRetryTimes(qiNiuConfig, persistentOps.MaxRetryTimes),
             };
 
+            config.UseHttps = GetHttpsState(qiNiuConfig, persistentOps.IsUseHttps);
+            config.UseCdnDomains = GetCdn(qiNiuConfig, persistentOps.UseCdnDomains);
+            config.ChunkSize = (Qiniu.Storage.ChunkUnit) (GetChunkUnit(qiNiuConfig, persistentOps.ChunkUnit).Id);
+            config.MaxRetryTimes = GetMaxRetryTimes(qiNiuConfig, persistentOps.MaxRetryTimes);
+
             return config;
         }
 

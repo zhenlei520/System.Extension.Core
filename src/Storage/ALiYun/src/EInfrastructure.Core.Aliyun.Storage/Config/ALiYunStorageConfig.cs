@@ -85,6 +85,8 @@ namespace EInfrastructure.Core.Aliyun.Storage.Config
         /// </summary>
         public int MaxRetryTimes { set; get; }
 
+        public decimal test { get; set; }
+
         /// <summary>
         /// [可选]分片上传默认最大值
         /// </summary>
