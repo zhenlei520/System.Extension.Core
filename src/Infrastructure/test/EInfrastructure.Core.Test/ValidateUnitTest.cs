@@ -107,5 +107,16 @@ namespace EInfrastructure.Core.Test
         {
             Check.True(param.IsChinese() == result, "方法异常");
         }
+
+        [Theory]
+        [InlineData("0.1210", 2, false)]
+        [InlineData("0.120", 2, true)]
+        [InlineData("0.12", 2, true)]
+        [InlineData("0.1", 2, true)]
+        [InlineData("2", 2, true)]
+        public void IsMaxScale(string str, int scale, bool state)
+        {
+            Check.True(str.IsMaxScale(scale) == state, "状态不一致");
+        }
     }
 }
