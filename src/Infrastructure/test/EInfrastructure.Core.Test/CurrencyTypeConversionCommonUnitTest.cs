@@ -13,10 +13,6 @@ namespace EInfrastructure.Core.Test
     /// </summary>
     public class CurrencyTypeConversionCommonUnitTest : BaseUnitTest
     {
-        public CurrencyTypeConversionCommonUnitTest(ITestOutputHelper output) : base(output)
-        {
-        }
-
         /// <summary>
         /// 货币类型转换，目前仅支持人民币
         /// </summary>
