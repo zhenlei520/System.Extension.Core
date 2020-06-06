@@ -24,8 +24,8 @@ namespace EInfrastructure.Core.Tools.Tasks
         ///
         /// </summary>
         /// <param name="maxThread">最大线程数</param>
-        /// <param name="duration">默认无任务后休息3000ms</param>
-        public TaskCommon(int maxThread, int duration = 3000)
+        /// <param name="duration">默认无任务后休息0ms</param>
+        public TaskCommon(int maxThread, int duration = 0)
         {
             _taskBaseCommon = new TaskBaseCommon(maxThread, duration);
         }
@@ -137,14 +137,9 @@ namespace EInfrastructure.Core.Tools.Tasks
         {
             if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsStartNewProcess)
             {
-                TaskJobParam<T> taskJobParam = _taskBaseCommon.GetFirstJob<TaskJobParam<T>>(_taskBaseCommon.AwaitList);
+                TaskJobParam<T> taskJobParam = _taskBaseCommon.GetNextJob<T>();
                 if (taskJobParam != null)
                 {
-                    if (_taskBaseCommon.AwaitList.ContainsKey(taskJobParam.Id))
-                    {
-                        _taskBaseCommon.AwaitList.Remove(taskJobParam.Id);
-                    }
-
                     StartNewProcess(taskJobParam, func, taskFinishAction);
                 }
             }
@@ -174,8 +169,8 @@ namespace EInfrastructure.Core.Tools.Tasks
         ///
         /// </summary>
         /// <param name="maxThread">最大线程数</param>
-        /// <param name="duration">默认无任务后休息3000ms</param>
-        public TaskCommon(int maxThread, int duration = 3000)
+        /// <param name="duration">默认无任务后休息0ms</param>
+        public TaskCommon(int maxThread, int duration = 0)
         {
             _taskBaseCommon = new TaskBaseCommon(maxThread, duration);
         }
@@ -305,14 +300,9 @@ namespace EInfrastructure.Core.Tools.Tasks
         {
             if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsStartNewProcess)
             {
-                TaskJobParam<T> taskJobParam = _taskBaseCommon.GetFirstJob<TaskJobParam<T>>(_taskBaseCommon.AwaitList);
+                TaskJobParam<T> taskJobParam = _taskBaseCommon.GetNextJob<T>();
                 if (taskJobParam != null)
                 {
-                    if (_taskBaseCommon.AwaitList.ContainsKey(taskJobParam.Id))
-                    {
-                        _taskBaseCommon.AwaitList.Remove(taskJobParam.Id);
-                    }
-
                     StartNewProcess(taskJobParam, action);
                 }
             }
@@ -332,14 +322,9 @@ namespace EInfrastructure.Core.Tools.Tasks
         {
             if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsStartNewProcess)
             {
-                TaskJobParam<T> taskJobParam = _taskBaseCommon.GetFirstJob<TaskJobParam<T>>(_taskBaseCommon.AwaitList);
+                TaskJobParam<T> taskJobParam = _taskBaseCommon.GetNextJob<T>();
                 if (taskJobParam != null)
                 {
-                    if (_taskBaseCommon.AwaitList.ContainsKey(taskJobParam.Id))
-                    {
-                        _taskBaseCommon.AwaitList.Remove(taskJobParam.Id);
-                    }
-
                     StartNewProcess(taskJobParam, action);
                 }
             }

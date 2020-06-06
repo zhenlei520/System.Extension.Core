@@ -35,11 +35,11 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// </summary>
         /// <param name="maxThread">最大线程数</param>
         /// <param name="duration">默认无任务后休息3000ms</param>
-        public TaskBaseCommon(int maxThread, int duration = 3000)
+        public TaskBaseCommon(int maxThread, int duration = 0)
         {
             _maxThread = maxThread;
             _duration = duration;
-            Check.True(_duration > 0, "duration设置有误");
+            Check.True(_duration >= 0, "duration设置有误");
         }
 
         /// <summary>
@@ -75,6 +75,32 @@ namespace EInfrastructure.Core.Tools.Tasks
             ArrayList arrayList = new ArrayList(hashtable.Keys);
             arrayList.Sort();
             return (T) hashtable[arrayList[0]];
+        }
+
+        #endregion
+
+        #region 得到下一个待执行的任务并移除此任务
+
+        /// <summary>
+        /// 得到下一个待执行的任务并移除此任务
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        internal TaskJobParam<T> GetNextJob<T>()
+        {
+            lock (AwaitList)
+            {
+                var taskJobParam = GetFirstJob<TaskJobParam<T>>(AwaitList);
+                if (taskJobParam != null)
+                {
+                    if (AwaitList.ContainsKey(taskJobParam.Id))
+                    {
+                        AwaitList.Remove(taskJobParam.Id);
+                    }
+                }
+
+                return taskJobParam;
+            }
         }
 
         #endregion
