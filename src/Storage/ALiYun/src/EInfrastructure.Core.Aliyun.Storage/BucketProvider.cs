@@ -10,7 +10,6 @@ using EInfrastructure.Core.Aliyun.Storage.Config;
 using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Aliyun.Storage.Validator.Bucket;
 using EInfrastructure.Core.Configuration.Enumerations;
-using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;

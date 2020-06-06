@@ -8,17 +8,14 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using Aliyun.OSS;
-using Aliyun.OSS.Common;
 using Aliyun.OSS.Common.Authentication;
 using Aliyun.OSS.Model;
 using EInfrastructure.Core.Aliyun.Storage.Config;
 using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Aliyun.Storage.Validator.Storage;
 using EInfrastructure.Core.Configuration.Enumerations;
-using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config.Pictures;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
@@ -1095,7 +1092,6 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// </summary>
         /// <param name="fetchFileParam"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public bool FetchFile(FetchFileParam fetchFileParam)
         {
             var ret = DownloadStream(new FileDownloadStreamParam(fetchFileParam.SourceFileKey,

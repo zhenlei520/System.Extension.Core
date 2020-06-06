@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Words;
-using EInfrastructure.Core.HelpCommon.Files;
 using EInfrastructure.Core.Words.Extension.ImportDict.Common;
 using FileCommon = EInfrastructure.Core.Tools.Files.FileCommon;
 

@@ -14,7 +14,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config.Pictures
         /// <summary>
         ///
         /// </summary>
-        public ImgPersistentOps():base()
+        public ImgPersistentOps() : base()
         {
             IsAllowOverlap = null;
         }
@@ -28,21 +28,19 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config.Pictures
         /// <param name="model">缩放信息</param>
         /// <param name="waterMark">水印信息</param>
         public ImgPersistentOps(string key, int width = 0, int height = 0, int? model = null,
-            StorageWaterMark waterMark = null):this()
+            StorageWaterMark waterMark = null) : this()
         {
-            Key = key;
-            Width = width;
-            Height = height;
-            Mode = model == null
-                ? ImageMode.Nothing
-                : Enumeration.FromValue<ImageMode>(model.Value);
-            WaterMark = waterMark;
+            this.Key = key;
+            this.Width = width;
+            this.Height = height;
+            this.Mode = model == null ? null : Enumeration.FromValue<ImageModeType>(model.Value);
+            this.WaterMark = waterMark;
         }
 
         /// <summary>
         /// 图片缩放信息
         /// </summary>
-        public virtual ImageMode Mode { get; set; } = ImageMode.Nothing;
+        public virtual ImageModeType Mode { get; set; }
 
         /// <summary>
         /// 图片相对地址

@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using EInfrastructure.Core.QiNiu.Storage.Test.Base;
 using Microsoft.Extensions.DependencyInjection;
