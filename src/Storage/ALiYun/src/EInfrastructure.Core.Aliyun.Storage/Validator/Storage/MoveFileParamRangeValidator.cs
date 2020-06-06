@@ -17,23 +17,6 @@ namespace EInfrastructure.Core.Aliyun.Storage.Validator.Storage
         public MoveFileParamRangeValidator()
         {
             RuleFor(x => x.MoveFiles).Must(x => x.Count > 0).WithMessage("移动文件信息异常");
-            RuleForEach(x=>x.MoveFiles).SetValidator(new MoveFileParamValidator());
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        internal class MoveFileParamValidator:AbstractValidator<MoveFileRangeParam.MoveFileParam>
-        {
-            /// <summary>
-            ///
-            /// </summary>
-            public MoveFileParamValidator()
-            {
-                RuleFor(x => x.OptBucket).Must(x => !string.IsNullOrEmpty(x)).WithMessage("目标空间不能为空");
-                RuleFor(x => x.SourceKey).Must(x => !string.IsNullOrEmpty(x)).WithMessage("源空间key不能为空");
-                RuleFor(x => x.OptKey).Must(x => !string.IsNullOrEmpty(x)).WithMessage("目标文件key不能为空");
-            }
         }
     }
 }

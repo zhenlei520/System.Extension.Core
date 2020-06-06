@@ -6,7 +6,7 @@ using System.Net.Sockets;
 
 namespace EInfrastructure.Core.Redis.Common.Internal.IO
 {
-    class RedisSocketException : System.Exception
+    class RedisSocketException : Exception
     {
         public RedisSocketException(string message)
             : base(message)

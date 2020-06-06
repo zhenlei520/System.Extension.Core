@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         public MoveFileRangeParam(List<MoveFileParam> moveFiles,
             BasePersistentOps persistentOps = null)
         {
-            MoveFiles = moveFiles;
+            MoveFiles = moveFiles ?? new List<MoveFileParam>();
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
 
@@ -48,17 +48,11 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
             /// <param name="isForce">是否覆盖</param>
             public MoveFileParam(string optBucket, string sourceKey, string optKey, bool isForce)
             {
-                FileId = Guid.NewGuid().ToString("N");
                 OptBucket = optBucket;
                 SourceKey = sourceKey;
                 OptKey = optKey;
                 IsForce = isForce;
             }
-
-            /// <summary>
-            /// 文件标识
-            /// </summary>
-            public string FileId { get; }
 
             /// <summary>
             /// 目标空间

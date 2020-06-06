@@ -100,7 +100,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <param name="opsParam">上传信息</param>
         public string GetUploadCredentials(UploadPersistentOpsParam opsParam)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -383,7 +383,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <returns></returns>
         public bool FetchFile(FetchFileParam fetchFileParam)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         #endregion

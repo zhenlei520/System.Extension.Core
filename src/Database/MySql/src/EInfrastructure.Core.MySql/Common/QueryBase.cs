@@ -33,7 +33,7 @@ namespace EInfrastructure.Core.MySql.Common
         /// <param name="unitOfWork">工作单元</param>
         internal QueryBase(IUnitOfWork unitOfWork)
         {
-            this.Dbcontext = unitOfWork as DbContext;
+            Dbcontext = unitOfWork as DbContext;
         }
 
         #region 得到唯一标示

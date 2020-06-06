@@ -22,7 +22,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         /// </summary>
         public StorageUnitTest() : base()
         {
-            _storageProvider = base.provider.GetService<IStorageProvider>();
+            _storageProvider = provider.GetService<IStorageProvider>();
         }
 
 
@@ -36,7 +36,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [InlineData("upload/seller/userlogo/image/3.jpg")]
         public void GetPrivateUrl(string key)
         {
-            var url = base.provider.GetService<IStorageProvider>().GetVisitUrl(new GetVisitUrlParam(key));
+            var url = provider.GetService<IStorageProvider>().GetVisitUrl(new GetVisitUrlParam(key));
         }
 
         #endregion

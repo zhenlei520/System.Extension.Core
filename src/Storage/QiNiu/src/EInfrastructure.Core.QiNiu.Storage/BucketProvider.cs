@@ -130,7 +130,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new CreateBucketParamValidator().Validate(request).Check(HttpStatus.Err.Name);
 
-            var zone = Core.Tools.GetZonePrivate(this._qiNiuConfig, request.Zone, () => ZoneEnum.ZoneCnSouth);
+            var zone = Core.Tools.GetZonePrivate(_qiNiuConfig, request.Zone, () => ZoneEnum.ZoneCnSouth);
             var scheme = Core.Tools.GetScheme(_qiNiuConfig, request.PersistentOps.IsUseHttps);
             string url = $"{scheme}rs.qbox.me/mkbucketv3/{request.BucketName}/region/{Core.Tools.GetRegion(zone)}";
             _httpClient.Headers = new Dictionary<string, string>()
@@ -157,7 +157,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             new SetBucketSourceValidator().Validate(request).Check(HttpStatus.Err.Name);
             var scheme = Core.Tools.GetScheme(_qiNiuConfig, request.PersistentOps.IsUseHttps);
             string url =
-                $"{scheme}uc.qbox.me/image/{Core.Tools.GetBucket(this._qiNiuConfig, request.PersistentOps.Bucket)}/from/{Base64.UrlSafeBase64Encode(request.ImageSource)}/host/{Base64.UrlSafeBase64Encode(request.ReferHost)}";
+                $"{scheme}uc.qbox.me/image/{Core.Tools.GetBucket(_qiNiuConfig, request.PersistentOps.Bucket)}/from/{Base64.UrlSafeBase64Encode(request.ImageSource)}/host/{Base64.UrlSafeBase64Encode(request.ReferHost)}";
             _httpClient.Headers = new Dictionary<string, string>()
             {
                 {"Authorization", $"{_storageProvider.GetManageToken(new GetManageTokenParam(url))}"}
@@ -181,7 +181,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public OperateResultDto Exist(ExistBucketParam request)
         {
             Check.True(request != null, $"{nameof(request)} is null");
-            var bucket = Core.Tools.GetBucket(this._qiNiuConfig, request.PersistentOps.Bucket);
+            var bucket = Core.Tools.GetBucket(_qiNiuConfig, request.PersistentOps.Bucket);
             var ret = GetBucketList(new GetBucketParam());
             if (!ret.State)
             {
@@ -210,7 +210,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             new DeleteBucketParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             var scheme = Core.Tools.GetScheme(_qiNiuConfig, request.PersistentOps.IsUseHttps);
             string url =
-                $"{scheme}rs.qbox.me/drop/{Core.Tools.GetBucket(this._qiNiuConfig, request.PersistentOps.Bucket)}";
+                $"{scheme}rs.qbox.me/drop/{Core.Tools.GetBucket(_qiNiuConfig, request.PersistentOps.Bucket)}";
             _httpClient.Headers = new Dictionary<string, string>()
             {
                 {"Authorization", $"{_storageProvider.GetManageToken(new GetManageTokenParam(url))}"}
@@ -236,7 +236,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             new GetBucketHostParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             var scheme = Core.Tools.GetScheme(_qiNiuConfig, request.PersistentOps.IsUseHttps);
             string url =
-                $"{scheme}api.qiniu.com/v6/domain/list?tbl={Core.Tools.GetBucket(this._qiNiuConfig, request.PersistentOps.Bucket)}";
+                $"{scheme}api.qiniu.com/v6/domain/list?tbl={Core.Tools.GetBucket(_qiNiuConfig, request.PersistentOps.Bucket)}";
             _httpClient.Headers = new Dictionary<string, string>()
             {
                 {"Authorization", $"{_storageProvider.GetManageToken(new GetManageTokenParam(url))}"}
@@ -273,7 +273,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new SetPermissParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             string url =
-                $"http://uc.qbox.me/private?bucket={Core.Tools.GetBucket(this._qiNiuConfig, request.PersistentOps.Bucket)}&private={request.Permiss.Id}";
+                $"http://uc.qbox.me/private?bucket={Core.Tools.GetBucket(_qiNiuConfig, request.PersistentOps.Bucket)}&private={request.Permiss.Id}";
             _httpClient.Headers = new Dictionary<string, string>()
             {
                 {"Authorization", $"{_storageProvider.GetManageToken(new GetManageTokenParam(url))}"}
@@ -369,7 +369,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             new SetTagBucketParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             var scheme = Core.Tools.GetScheme(_qiNiuConfig, request.PersistentOps.IsUseHttps);
             RestClient restClient = new RestClient($"{scheme}uc.qbox.me");
-            string bucket = Core.Tools.GetBucket(this._qiNiuConfig, request.PersistentOps.Bucket);
+            string bucket = Core.Tools.GetBucket(_qiNiuConfig, request.PersistentOps.Bucket);
             RestRequest restRequest = new RestRequest($"/bucketTagging?bucket={bucket}", Method.PUT);
             GetManageTokenParam param =
                 new GetManageTokenParam($"{scheme}uc.qbox.me/bucketTagging?bucket={bucket}");
@@ -408,7 +408,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             new GetTagsBucketParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             var scheme = Core.Tools.GetScheme(_qiNiuConfig, request.PersistentOps.IsUseHttps);
             string url =
-                $"{scheme}uc.qbox.me/bucketTagging?bucket={Core.Tools.GetBucket(this._qiNiuConfig, request.PersistentOps.Bucket)}";
+                $"{scheme}uc.qbox.me/bucketTagging?bucket={Core.Tools.GetBucket(_qiNiuConfig, request.PersistentOps.Bucket)}";
             _httpClient.Headers = new Dictionary<string, string>()
             {
                 {"Authorization", $"{_storageProvider.GetManageToken(new GetManageTokenParam(url))}"}
@@ -450,7 +450,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new ClearTagBucketParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             var scheme = Core.Tools.GetScheme(_qiNiuConfig, request.PersistentOps.IsUseHttps);
-            string bucket = Core.Tools.GetBucket(this._qiNiuConfig, request.PersistentOps.Bucket);
+            string bucket = Core.Tools.GetBucket(_qiNiuConfig, request.PersistentOps.Bucket);
             RestClient restClient = new RestClient($"{scheme}uc.qbox.me");
             RestRequest restRequest = new RestRequest($"/bucketTagging?bucket={bucket}", Method.DELETE);
 

@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
 
         public BucketUnitTest() : base()
         {
-            _bucketProvider = base.provider.GetService<IBucketProvider>();
+            _bucketProvider = provider.GetService<IBucketProvider>();
         }
 
         #region 得到空间列表

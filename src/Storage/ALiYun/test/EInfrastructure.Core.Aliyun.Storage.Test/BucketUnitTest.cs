@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
 
         public BucketUnitTest() : base()
         {
-            _bucketProvider = base.provider.GetService<IBucketProvider>();
+            _bucketProvider = provider.GetService<IBucketProvider>();
         }
 
         [Fact]

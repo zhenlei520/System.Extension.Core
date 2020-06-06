@@ -16,8 +16,8 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params.VoiceSms
         /// </summary>
         public SendVoiceSmsParam()
         {
-            this.PlatTimes = 3;
-            this.Volume = 100;
+            PlatTimes = 3;
+            Volume = 100;
         }
         /// <summary>
         /// 手机号

@@ -22,7 +22,7 @@ namespace EInfrastructure.Core.Redis.Test
         [InlineData("key", "hashKey", "123", 5)]
         public void HashSet(string key, string hashKey, string value, long expire)
         {
-            Check.True(base._redisCacheService.HashSet(key, hashKey, value, expire, true), "方法有误");
+            Check.True(_redisCacheService.HashSet(key, hashKey, value, expire, true), "方法有误");
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace EInfrastructure.Core.Redis.Test
                 dics.Add(hashKey.Split(',')[i], value.Split(',')[i]);
             }
 
-            Check.True(base._redisCacheService.HashSet(key, dics, expire, true), "方法有误");
+            Check.True(_redisCacheService.HashSet(key, dics, expire, true), "方法有误");
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace EInfrastructure.Core.Redis.Test
                 });
             }
 
-            Check.True(base._redisCacheService.HashSet(dics, expire, true), "方法有误");
+            Check.True(_redisCacheService.HashSet(dics, expire, true), "方法有误");
         }
 
         [Fact]

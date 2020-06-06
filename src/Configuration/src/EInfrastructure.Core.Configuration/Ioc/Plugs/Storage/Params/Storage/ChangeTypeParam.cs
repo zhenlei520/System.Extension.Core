@@ -16,7 +16,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <param name="key"></param>
         /// <param name="type"></param>
         /// <param name="persistentOps"></param>
-        public ChangeTypeParam(string key, EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass type, BasePersistentOps persistentOps = null)
+        public ChangeTypeParam(string key, Enumerations.StorageClass type, BasePersistentOps persistentOps = null)
         {
             Key = key;
             Type = type;
@@ -31,7 +31,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <summary>
         /// 存储类型
         /// </summary>
-        public EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass Type { get; }
+        public Enumerations.StorageClass Type { get; }
 
         /// <summary>
         /// 策略

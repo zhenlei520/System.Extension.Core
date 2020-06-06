@@ -17,8 +17,8 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pi
         /// <param name="imgPersistentOps">上传图片策略</param>
         public UploadByBase64Param(string base64, ImgPersistentOps imgPersistentOps = null)
         {
-            this.Base64 = base64;
-            this.ImgPersistentOps = imgPersistentOps ?? new ImgPersistentOps();
+            Base64 = base64;
+            ImgPersistentOps = imgPersistentOps ?? new ImgPersistentOps();
         }
 
         /// <summary>

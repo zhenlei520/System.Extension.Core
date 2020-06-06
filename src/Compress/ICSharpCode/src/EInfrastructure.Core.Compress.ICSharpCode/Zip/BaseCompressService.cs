@@ -55,12 +55,12 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
         {
             if (string.IsNullOrEmpty(zipDirectory))
             {
-                zipDirectory = new System.IO.FileInfo(sourceFilePath).DirectoryName;
+                zipDirectory = new FileInfo(sourceFilePath).DirectoryName;
             }
 
             if (string.IsNullOrEmpty(zipName))
             {
-                zipName = new System.IO.FileInfo(sourceFilePath).Name;
+                zipName = new FileInfo(sourceFilePath).Name;
             }
 
             return Path.Combine(zipDirectory, zipName);
@@ -287,7 +287,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
                                     zipStream.Write(buffer, 0, sizeRead);
                                 } while (sizeRead > 0);
                             }
-                            catch (System.Exception ex)
+                            catch (Exception ex)
                             {
                                 throw ex;
                             }
@@ -322,7 +322,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
                 byte[] buffer = new byte[fs.Length];
                 fs.Read(buffer, 0, buffer.Length);
 
-                string fileName = new System.IO.FileInfo(sourceFile).Name;
+                string fileName = new FileInfo(sourceFile).Name;
                 ZipEntry entry = new ZipEntry(fileName) {DateTime = DateTime.Now, Size = fs.Length};
 
                 fs.Close();

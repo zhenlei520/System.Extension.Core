@@ -160,7 +160,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// <returns></returns>
         internal Mac GetMac()
         {
-            return _mac ?? (_mac = new Mac(this.AccessKey, this.SecretKey));
+            return _mac ?? (_mac = new Mac(AccessKey, SecretKey));
         }
 
         #endregion
@@ -195,10 +195,10 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
             string callbackBody =
                 "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsiz\":$(fsize),\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\",\"mimeType\":\"$(mimeType)\"}")
         {
-            CallbackBodyType = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.CallbackBodyType
+            CallbackBodyType = Configuration.Ioc.Plugs.Storage.Enumerations.CallbackBodyType
                 .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.
                     CallbackBodyType>(
-                    callbackBodyType)?.Id ?? EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
+                    callbackBodyType)?.Id ?? Configuration.Ioc.Plugs.Storage
                 .Enumerations.CallbackBodyType.Json.Id;
             CallbackHost = callbackHost;
             if (!string.IsNullOrEmpty(callbackUrl) && callbackUrl.Substring(0, 1) != "/")

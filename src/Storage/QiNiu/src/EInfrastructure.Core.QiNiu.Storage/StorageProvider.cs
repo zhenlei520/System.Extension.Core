@@ -65,7 +65,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             if (isResume)
             {
                 ResumableUploader target =
-                    new ResumableUploader(Core.Tools.GetConfig(this.QiNiuConfig, uploadPersistentOps));
+                    new ResumableUploader(Core.Tools.GetConfig(QiNiuConfig, uploadPersistentOps));
                 HttpResult result =
                     target.UploadStream(param.Stream, param.Key, token, GetPutExtra(uploadPersistentOps));
                 bool res = result.Code == (int) HttpCode.OK;
@@ -73,7 +73,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             }
             else
             {
-                FormUploader target = new FormUploader(Core.Tools.GetConfig(this.QiNiuConfig, uploadPersistentOps));
+                FormUploader target = new FormUploader(Core.Tools.GetConfig(QiNiuConfig, uploadPersistentOps));
                 HttpResult result =
                     target.UploadStream(param.Stream, param.Key, token, GetPutExtra(uploadPersistentOps));
                 bool res = result.Code == (int) HttpCode.OK;
@@ -99,7 +99,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             if (isResume)
             {
                 ResumableUploader target =
-                    new ResumableUploader(Core.Tools.GetConfig(this.QiNiuConfig, uploadPersistentOps));
+                    new ResumableUploader(Core.Tools.GetConfig(QiNiuConfig, uploadPersistentOps));
                 HttpResult result =
                     target.UploadStream(param.ByteArray.ConvertToStream(), param.Key, token,
                         GetPutExtra(uploadPersistentOps));
@@ -108,7 +108,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             }
             else
             {
-                FormUploader target = new FormUploader(Core.Tools.GetConfig(this.QiNiuConfig, uploadPersistentOps));
+                FormUploader target = new FormUploader(Core.Tools.GetConfig(QiNiuConfig, uploadPersistentOps));
                 HttpResult result =
                     target.UploadData(param.ByteArray, param.Key, token, GetPutExtra(uploadPersistentOps));
                 bool res = result.Code == (int) HttpCode.OK;
@@ -128,7 +128,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public UploadResultDto UploadByToken(UploadByTokenParam param)
         {
             var uploadPersistentOps = GetUploadPersistentOps(param.UploadPersistentOps);
-            FormUploader target = new FormUploader(Core.Tools.GetConfig(this.QiNiuConfig, uploadPersistentOps));
+            FormUploader target = new FormUploader(Core.Tools.GetConfig(QiNiuConfig, uploadPersistentOps));
             HttpResult result = null;
             if (param.Stream != null)
             {
@@ -229,7 +229,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new ListFileFilterValidator().Validate(filter).Check(HttpStatus.Err.Name);
             var listRet = base.GetBucketManager(filter.PersistentOps).ListFiles(
-                Core.Tools.GetBucket(this.QiNiuConfig, filter.PersistentOps.Bucket), filter.Prefix, filter.Marker,
+                Core.Tools.GetBucket(QiNiuConfig, filter.PersistentOps.Bucket), filter.Prefix, filter.Marker,
                 filter.PageSize,
                 filter.Delimiter);
             if (listRet.Code == (int) HttpCode.OK)
@@ -245,7 +245,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                         Size = x.Fsize,
                         PutTime = x.PutTime,
                         MimeType = x.MimeType,
-                        FileType = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass
+                        FileType = Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass
                             .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass>(
                                 x.FileType),
                     }).ToList()
@@ -268,7 +268,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new GetFileParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             StatResult statRet = GetBucketManager(request.PersistentOps)
-                .Stat(Core.Tools.GetBucket(this.QiNiuConfig, request.PersistentOps.Bucket), request.Key);
+                .Stat(Core.Tools.GetBucket(QiNiuConfig, request.PersistentOps.Bucket), request.Key);
             if (statRet.Code != (int) HttpCode.OK)
             {
                 return new FileInfoDto(false, statRet.ToString());
@@ -280,7 +280,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 Hash = statRet.Result.Hash,
                 MimeType = statRet.Result.MimeType,
                 PutTime = statRet.Result.PutTime,
-                FileType = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass
+                FileType = Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass
                     .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass>(
                         statRet.Result.FileType),
                 Key = request.Key,
@@ -311,7 +311,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             List<string> ops = keyList.Select(key =>
                 GetBucketManager(persistentOps)
-                    .StatOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), key)).ToList();
+                    .StatOp(Core.Tools.GetBucket(QiNiuConfig, persistentOps.Bucket), key)).ToList();
             BatchResult ret = GetBucketManager(persistentOps).Batch(ops);
 
             var index = 0;
@@ -326,7 +326,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                         Hash = item.Data.Hash,
                         MimeType = item.Data.MimeType,
                         PutTime = item.Data.PutTime,
-                        FileType = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass
+                        FileType = Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass
                             .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass>(
                                 item.Data.FileType),
                         Key = keyList[index - 1]
@@ -355,7 +355,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new RemoveParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             HttpResult deleteRet = GetBucketManager(request.PersistentOps)
-                .Delete(Core.Tools.GetBucket(this.QiNiuConfig, request.PersistentOps.Bucket), request.Key);
+                .Delete(Core.Tools.GetBucket(QiNiuConfig, request.PersistentOps.Bucket), request.Key);
             var res = deleteRet.Code == (int) HttpCode.OK;
             return new DeleteResultDto(res, request.Key, res ? "删除成功" : deleteRet.ToString());
         }
@@ -384,7 +384,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             var enumerable = keyList as string[] ?? keyList.ToArray();
             List<string> ops = enumerable.Select(key =>
                     GetBucketManager(persistentOps)
-                        .DeleteOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), key))
+                        .DeleteOp(Core.Tools.GetBucket(QiNiuConfig, persistentOps.Bucket), key))
                 .ToList();
             BatchResult ret = GetBucketManager(persistentOps).Batch(ops);
             var index = 0;
@@ -415,8 +415,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new CopyFileParamValidator().Validate(copyFileParam).Check(HttpStatus.Err.Name);
             HttpResult copyRet = GetBucketManager(copyFileParam.PersistentOps).Copy(
-                Core.Tools.GetBucket(this.QiNiuConfig, copyFileParam.PersistentOps.Bucket), copyFileParam.SourceKey,
-                Core.Tools.GetBucket(this.QiNiuConfig, copyFileParam.PersistentOps.Bucket, copyFileParam.OptBucket),
+                Core.Tools.GetBucket(QiNiuConfig, copyFileParam.PersistentOps.Bucket), copyFileParam.SourceKey,
+                Core.Tools.GetBucket(QiNiuConfig, copyFileParam.PersistentOps.Bucket, copyFileParam.OptBucket),
                 copyFileParam.OptKey, copyFileParam.IsForce);
             var res = copyRet.Code == (int) HttpCode.OK;
             return new CopyFileResultDto(res, copyFileParam.SourceKey, res ? "复制成功" : copyRet.Text);
@@ -446,9 +446,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
             BasePersistentOps persistentOps)
         {
             List<string> ops = copyFileParam.Select(x =>
-                    GetBucketManager(persistentOps).CopyOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket),
+                    GetBucketManager(persistentOps).CopyOp(Core.Tools.GetBucket(QiNiuConfig, persistentOps.Bucket),
                         x.SourceKey,
-                        Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket, x.OptBucket), x.OptKey, x.IsForce))
+                        Core.Tools.GetBucket(QiNiuConfig, persistentOps.Bucket, x.OptBucket), x.OptKey, x.IsForce))
                 .ToList();
             BatchResult ret = GetBucketManager(persistentOps).Batch(ops);
             var index = 0;
@@ -481,7 +481,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new MoveFileParamValidator().Validate(moveFileParam).Check(HttpStatus.Err.Name);
             HttpResult copyRet = GetBucketManager(moveFileParam.PersistentOps).Move(
-                Core.Tools.GetBucket(this.QiNiuConfig, moveFileParam.PersistentOps.Bucket), moveFileParam.SourceKey,
+                Core.Tools.GetBucket(QiNiuConfig, moveFileParam.PersistentOps.Bucket), moveFileParam.SourceKey,
                 moveFileParam.OptBucket, moveFileParam.OptKey, moveFileParam.IsForce);
             var res = copyRet.Code == (int) HttpCode.OK;
             return new MoveFileResultDto(res, moveFileParam.FileId, res ? "移动成功" : copyRet.Text);
@@ -512,7 +512,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             var bucketManager = GetBucketManager(persistentOps);
             List<string> ops = moveFileParamList.Select(x =>
-                bucketManager.MoveOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), x.SourceKey,
+                bucketManager.MoveOp(Core.Tools.GetBucket(QiNiuConfig, persistentOps.Bucket), x.SourceKey,
                     x.OptBucket, x.OptKey, x.IsForce)).ToList();
             BatchResult ret = bucketManager.Batch(ops);
             var index = 0;
@@ -521,12 +521,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 index++;
                 if (info.Code == (int) HttpCode.OK)
                 {
-                    yield return new MoveFileResultDto(true, moveFileParamList.ToList()[index - 1].FileId,
+                    yield return new MoveFileResultDto(true, moveFileParamList.ToList()[index - 1].SourceKey,
                         "复制成功");
                 }
                 else
                 {
-                    yield return new MoveFileResultDto(false, moveFileParamList.ToList()[index - 1].FileId,
+                    yield return new MoveFileResultDto(false, moveFileParamList.ToList()[index - 1].SourceKey,
                         info.Data.Error);
                 }
             }
@@ -546,8 +546,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
             try
             {
                 new GetVisitUrlParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-                var url = DownloadManager.CreatePrivateUrl(this.QiNiuConfig.GetMac(),
-                    Core.Tools.GetHost(this.QiNiuConfig, request.PersistentOps.Host), request.Key, request.Expire);
+                var url = DownloadManager.CreatePrivateUrl(QiNiuConfig.GetMac(),
+                    Core.Tools.GetHost(QiNiuConfig, request.PersistentOps.Host), request.Key, request.Expire);
 
                 if (string.IsNullOrEmpty(url))
                 {
@@ -557,7 +557,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     }
 
                     url = DownloadManager.CreatePublishUrl(
-                        Core.Tools.GetHost(this.QiNiuConfig, request.PersistentOps.Host),
+                        Core.Tools.GetHost(QiNiuConfig, request.PersistentOps.Host),
                         request.Key);
                 }
 
@@ -627,7 +627,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new SetExpireParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             var expireRet = base.GetBucketManager(request.PersistentOps)
-                .DeleteAfterDays(Core.Tools.GetBucket(this.QiNiuConfig, request.PersistentOps.Bucket), request.Key,
+                .DeleteAfterDays(Core.Tools.GetBucket(QiNiuConfig, request.PersistentOps.Bucket), request.Key,
                     request.Expire);
             if (expireRet.Code != (int) HttpCode.OK)
             {
@@ -671,7 +671,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             foreach (string key in keys)
             {
                 string op = bucketManager.DeleteAfterDaysOp(
-                    Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket), key, expire);
+                    Core.Tools.GetBucket(QiNiuConfig, persistentOps.Bucket), key, expire);
                 ops.Add(op);
             }
 
@@ -704,7 +704,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new ChangeMimeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             var ret = base.GetBucketManager(request.PersistentOps)
-                .ChangeMime(Core.Tools.GetBucket(this.QiNiuConfig, request.PersistentOps.Bucket), request.Key,
+                .ChangeMime(Core.Tools.GetBucket(QiNiuConfig, request.PersistentOps.Bucket), request.Key,
                     request.MimeType);
             if (ret.Code != (int) HttpCode.OK)
             {
@@ -746,7 +746,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             List<string> ops = new List<string>();
             foreach (string key in keys)
             {
-                string op = bucketManager.ChangeMimeOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket),
+                string op = bucketManager.ChangeMimeOp(Core.Tools.GetBucket(QiNiuConfig, persistentOps.Bucket),
                     key, mime);
                 ops.Add(op);
             }
@@ -780,7 +780,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new ChangeTypeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             HttpResult ret = base.GetBucketManager(request.PersistentOps)
-                .ChangeType(Core.Tools.GetBucket(this.QiNiuConfig, request.PersistentOps.Bucket), request.Key,
+                .ChangeType(Core.Tools.GetBucket(QiNiuConfig, request.PersistentOps.Bucket), request.Key,
                     request.Type.Id);
             if (ret.Code == (int) HttpCode.OK)
             {
@@ -823,7 +823,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             List<string> ops = new List<string>();
             foreach (string key in keys)
             {
-                string op = bucketManager.ChangeTypeOp(Core.Tools.GetBucket(this.QiNiuConfig, persistentOps.Bucket),
+                string op = bucketManager.ChangeTypeOp(Core.Tools.GetBucket(QiNiuConfig, persistentOps.Bucket),
                     key, type);
                 ops.Add(op);
             }
@@ -889,7 +889,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             FetchResult ret = GetBucketManager(fetchFileParam.PersistentOps)
                 .Fetch(fetchFileParam.SourceFileKey,
-                    Core.Tools.GetBucket(this.QiNiuConfig, fetchFileParam.PersistentOps.Bucket), fetchFileParam.Key);
+                    Core.Tools.GetBucket(QiNiuConfig, fetchFileParam.PersistentOps.Bucket), fetchFileParam.Key);
             switch (ret.Code)
             {
                 case (int) HttpCode.OK:

@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         public static IServiceCollection AddQiNiuStorage(this IServiceCollection services,
             Func<ALiYunStorageConfig> func)
         { 
-            EInfrastructure.Core.StartUp.Run();
+            StartUp.Run();
             var aliyunConfig = func.Invoke();
             ValidationCommon.Check(aliyunConfig, "阿里云存储配置异常", HttpStatus.Err.Name);
             services.AddSingleton(aliyunConfig);

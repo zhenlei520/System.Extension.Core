@@ -19,7 +19,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test.Base
         {
             var services = new ServiceCollection();
             services.AddQiNiuStorage(() => { return new ALiYunStorageConfig("LTAI4FzFN6pt9xQioej9w5sN", "Ic4CFE49gWzDfxb0RJtp834ydmP7Dc"); });
-            provider = EInfrastructure.Core.AutoFac.AutofacAutoRegister.Use(services, builder => { });
+            provider = AutoFac.AutofacAutoRegister.Use(services, builder => { });
         }
     }
 }

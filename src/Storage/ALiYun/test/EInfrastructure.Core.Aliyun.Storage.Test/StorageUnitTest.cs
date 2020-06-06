@@ -26,7 +26,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
         /// </summary>
         public StorageUnitTest() : base()
         {
-            _storageProvider = base.provider.GetService<IStorageProvider>();
+            _storageProvider = provider.GetService<IStorageProvider>();
         }
 
         #region 根据文件流上传

@@ -176,8 +176,8 @@ namespace EInfrastructure.Core.Test
 
             public List<string> Tags
             {
-                get => (List<string>) new NewtonsoftJsonProvider().Deserialize(this.TagJson, typeof(List<string>));
-                set => this.TagJson = new NewtonsoftJsonProvider().Serializer(value);
+                get => (List<string>) new NewtonsoftJsonProvider().Deserialize(TagJson, typeof(List<string>));
+                set => TagJson = new NewtonsoftJsonProvider().Serializer(value);
             }
 
             public string TagJson { get; private set; }

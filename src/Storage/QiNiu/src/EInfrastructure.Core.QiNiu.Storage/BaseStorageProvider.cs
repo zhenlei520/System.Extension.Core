@@ -123,7 +123,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             if (_bucketManager == null)
             {
                 _bucketManager = new BucketManager(_qiNiuConfig.GetMac(),
-                    EInfrastructure.Core.QiNiu.Storage.Core.Tools.GetConfig(this._qiNiuConfig, persistentOps));
+                    Core.Tools.GetConfig(_qiNiuConfig, persistentOps));
             }
 
             return _bucketManager;
@@ -159,7 +159,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         protected virtual Auth GetAuth()
         {
-            return new Auth(this._qiNiuConfig.GetMac());
+            return new Auth(_qiNiuConfig.GetMac());
         }
 
         #endregion

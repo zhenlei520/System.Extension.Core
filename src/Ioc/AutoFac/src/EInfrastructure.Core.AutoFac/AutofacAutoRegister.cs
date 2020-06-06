@@ -36,7 +36,7 @@ namespace EInfrastructure.Core.AutoFac
         public static IServiceProvider Use(IServiceCollection services,
             Action<ContainerBuilder> action = null)
         {
-            EInfrastructure.Core.StartUp.Run();
+            StartUp.Run();
             var builder = new ContainerBuilder();
             builder.RegisterModule<AutomaticInjectionModule>();
             action?.Invoke(builder);

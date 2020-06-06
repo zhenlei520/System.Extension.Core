@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test.Base
             {
                 return new QiNiuStorageConfig("","",ZoneEnum.ZoneCnSouth,"","");
             });
-            provider = EInfrastructure.Core.AutoFac.AutofacAutoRegister.Use(services, builder => { });
+            provider = AutoFac.AutofacAutoRegister.Use(services, builder => { });
         }
     }
 }

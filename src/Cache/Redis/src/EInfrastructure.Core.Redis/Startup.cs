@@ -37,7 +37,7 @@ namespace EInfrastructure.Core.Redis
         public static IServiceCollection AddRedis(this IServiceCollection services,
             Func<RedisConfig> func)
         {
-            EInfrastructure.Core.StartUp.Run();
+            StartUp.Run();
             services.AddSingleton(func.Invoke());
             services.AddHostedService<Bootstrapper>();
             return services;
@@ -68,7 +68,7 @@ namespace EInfrastructure.Core.Redis
         public static IServiceCollection AddRedis(this IServiceCollection services,
             IConfiguration configuration)
         {
-            EInfrastructure.Core.StartUp.Run();
+            StartUp.Run();
             return services.AddRedis(() => configuration.GetSection(nameof(RedisConfig)).Get<RedisConfig>());
         }
 

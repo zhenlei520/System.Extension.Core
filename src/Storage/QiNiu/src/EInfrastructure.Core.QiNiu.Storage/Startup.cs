@@ -49,7 +49,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public static IServiceCollection AddQiNiuStorage(this IServiceCollection services,
             Func<QiNiuStorageConfig> func)
         {
-            EInfrastructure.Core.StartUp.Run();
+            StartUp.Run();
             var qiNiuConfig = func.Invoke();
             ValidationCommon.Check(qiNiuConfig, "七牛云存储配置异常", HttpStatus.Err.Name);
             services.AddSingleton(qiNiuConfig);
@@ -68,7 +68,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         public static IServiceCollection AddQiNiuStorage(this IServiceCollection services,
             IConfiguration configuration)
         {
-            EInfrastructure.Core.StartUp.Run();
+            StartUp.Run();
             var section = configuration.GetSection(nameof(QiNiuStorageConfig));
             if (section == null)
             {
@@ -85,10 +85,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 PersistentNotifyUrl = section.GetValue<string>("PersistentNotifyUrl"),
                 PersistentPipeline = section.GetValue<string>("PersistentPipeline"),
                 ChunkUnit =
-                    EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit
-                        .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit>((section
-                            .GetValue<string>("ChunkUnit").ConvertToInt(EInfrastructure.Core.Configuration.Ioc.Plugs
-                                .Storage.Enumerations.ChunkUnit.U2048K.Id)))
+                    ChunkUnit
+                        .FromValue<ChunkUnit>((section
+                            .GetValue<string>("ChunkUnit").ConvertToInt(ChunkUnit.U2048K.Id)))
             };
             qiNiuStorageConfig.SetCallBack(section.GetValue<string>("CallbackBodyType").ConvertToInt(CallbackBodyType.Json.Id),
                 section.GetValue<string>("CallbackHost"), section.GetValue<string>("CallbackUrl"),

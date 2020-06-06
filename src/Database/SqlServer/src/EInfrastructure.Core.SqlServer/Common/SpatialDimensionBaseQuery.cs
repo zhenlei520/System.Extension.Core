@@ -31,7 +31,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// <param name="execute"></param>
         public SpatialDimensionBaseQuery(IUnitOfWork unitOfWork, IExecute execute)
         {
-            this.Dbcontext = unitOfWork as DbContext;
+            Dbcontext = unitOfWork as DbContext;
             _execute = execute;
         }
 
@@ -45,7 +45,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// <returns></returns>
         public virtual List<T> GetList<T>(SpatialDimensionParam param)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -58,7 +58,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// <returns></returns>
         public virtual PageData<T> GetPageData<T>(SpatialDimensionPagingParam param)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         #region get IQueryable
@@ -69,7 +69,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// <returns></returns>
         public IQueryable<TEntity> GetQueryable(SpatialDimensionParam param)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         #endregion

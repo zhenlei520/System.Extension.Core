@@ -16,7 +16,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config.Pictures
         /// </summary>
         public ImgPersistentOps():base()
         {
-            this.IsAllowOverlap = null;
+            IsAllowOverlap = null;
         }
 
         /// <summary>

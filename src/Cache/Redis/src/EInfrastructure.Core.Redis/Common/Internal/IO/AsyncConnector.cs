@@ -44,7 +44,7 @@ namespace EInfrastructure.Core.Redis.Common.Internal.IO
 
         public async Task<bool> ConnectAsync()
         {
-			this.InitConnection();
+			InitConnection();
 			if (_redisSocket.Connected)
                 _connectionTaskSource.SetResult(true);
 
@@ -66,7 +66,7 @@ namespace EInfrastructure.Core.Redis.Common.Internal.IO
 
         public async Task<T> CallAsync<T>(RedisCommand<T> command)
         {
-			this.InitConnection();
+			InitConnection();
 			var token = new RedisAsyncCommandToken<T>(command);
             _asyncWriteQueue.Enqueue(token);
             await ConnectAsync().ContinueWith(CallAsyncDeferred);
@@ -87,7 +87,7 @@ namespace EInfrastructure.Core.Redis.Common.Internal.IO
             {
                 IRedisAsyncCommandToken token;
                 if (!_asyncWriteQueue.TryDequeue(out token))
-                    throw new System.Exception();
+                    throw new Exception();
 
                 _asyncReadQueue.Enqueue(token);
 
@@ -152,7 +152,7 @@ namespace EInfrastructure.Core.Redis.Common.Internal.IO
                         _asyncWriteQueue.Enqueue(token);
                         ConnectAsync().ContinueWith(CallAsyncDeferred);
                     }*/
-                    catch (System.Exception e)
+                    catch (Exception e)
                     {
                         token.SetException(e);
                     }

@@ -172,7 +172,7 @@ namespace EInfrastructure.Core.Words
         /// <returns></returns>
         public string GetJapanese(string text)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         #endregion

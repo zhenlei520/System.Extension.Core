@@ -67,7 +67,7 @@ namespace EInfrastructure.Core.Words.Extension
             for (int i = 0; i < part.Length; i++)
             {
                 result += Convert.ToDecimal(GetArabThousandPart(part[part.Length - i - 1]))
-                          * Convert.ToDecimal((System.Math.Pow(10000, Convert.ToDouble(i))));
+                          * Convert.ToDecimal((Math.Pow(10000, Convert.ToDouble(i))));
             }
 
             return result;

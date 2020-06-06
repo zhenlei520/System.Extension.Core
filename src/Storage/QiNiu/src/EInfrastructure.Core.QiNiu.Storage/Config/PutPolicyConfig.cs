@@ -52,7 +52,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
 
             #region 覆盖上传
 
-            var bucket = Core.Tools.GetBucket(this._qiNiuConfig, opsParam.UploadPersistentOps.Bucket);
+            var bucket = Core.Tools.GetBucket(_qiNiuConfig, opsParam.UploadPersistentOps.Bucket);
             if (opsParam.UploadPersistentOps.IsAllowOverlap == null ||
                 !opsParam.UploadPersistentOps.IsAllowOverlap.Value)
             {

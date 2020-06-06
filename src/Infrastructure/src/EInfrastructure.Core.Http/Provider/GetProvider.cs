@@ -25,7 +25,7 @@ namespace EInfrastructure.Core.Http.Provider
         public RestRequest GetRequest(Method method, string url, RequestBody requestBody,
             Dictionary<string, string> headers, int timeOut)
         {
-            return base.GetRestRequest(url, Method.GET, timeOut, headers);
+            return GetRestRequest(url, Method.GET, timeOut, headers);
         }
 
         #endregion

@@ -88,9 +88,9 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public UploadResultDto UploadStream(UploadByStreamParam param, bool isResume = false)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, param.UploadPersistentOps.Zone,
+                var zone = Core.Tools.GetZone(_aLiYunConfig, param.UploadPersistentOps.Zone,
                     () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
                 return Upload(isResume, (bucket, newPersistentOps, objectMetadata) =>
@@ -101,7 +101,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
                         var request = new UploadObjectRequest(bucket, param.Key, param.Stream)
                         {
                             PartSize = Core.Tools.GetPartSize(
-                                Core.Tools.GetChunkUnit(this._aLiYunConfig, newPersistentOps.ChunkUnit,
+                                Core.Tools.GetChunkUnit(_aLiYunConfig, newPersistentOps.ChunkUnit,
                                     () => ChunkUnit.U2048K)),
                             Metadata = objectMetadata
                         };
@@ -114,16 +114,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
                     return ret;
                 }, param.UploadPersistentOps);
-            }
-            catch (BusinessException<string>e)
-            {
-                return new UploadResultDto(false, e, e.Message);
-            }
-            catch (Exception e)
-            {
-                return new UploadResultDto(false, e,
-                    Core.Tools.GetMessage(e));
-            }
+            }, (message, ex) => new UploadResultDto(false, ex, message));
         }
 
         #endregion
@@ -138,9 +129,9 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public UploadResultDto UploadByteArray(UploadByByteArrayParam param, bool isResume = false)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, param.UploadPersistentOps.Zone,
+                var zone = Core.Tools.GetZone(_aLiYunConfig, param.UploadPersistentOps.Zone,
                     () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
                 return Upload(isResume, (bucket, newPersistentOps, objectMetadata) =>
@@ -151,7 +142,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
                         var request = new UploadObjectRequest(bucket, param.Key, param.ByteArray.ConvertToStream())
                         {
                             PartSize = Core.Tools.GetPartSize(
-                                Core.Tools.GetChunkUnit(this._aLiYunConfig, newPersistentOps.ChunkUnit,
+                                Core.Tools.GetChunkUnit(_aLiYunConfig, newPersistentOps.ChunkUnit,
                                     () => ChunkUnit.U2048K)),
                             Metadata = objectMetadata
                         };
@@ -164,16 +155,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
                     return ret;
                 }, param.UploadPersistentOps);
-            }
-            catch (BusinessException<string>e)
-            {
-                return new UploadResultDto(false, e, e.Message);
-            }
-            catch (Exception e)
-            {
-                return new UploadResultDto(false, e,
-                    Core.Tools.GetMessage(e));
-            }
+            }, (message, ex) => new UploadResultDto(false, ex, message));
         }
 
         #endregion
@@ -187,9 +169,9 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public UploadResultDto UploadByToken(UploadByTokenParam param)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, param.UploadPersistentOps.Zone,
+                var zone = Core.Tools.GetZone(_aLiYunConfig, param.UploadPersistentOps.Zone,
                     () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone, param.Token);
                 return Upload(param.IsResume, (bucket, newPersistentOps, objectMetadata) =>
@@ -200,7 +182,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
                         var request = new UploadObjectRequest(bucket, param.Key, param.Stream)
                         {
                             PartSize = Core.Tools.GetPartSize(
-                                Core.Tools.GetChunkUnit(this._aLiYunConfig, newPersistentOps.ChunkUnit,
+                                Core.Tools.GetChunkUnit(_aLiYunConfig, newPersistentOps.ChunkUnit,
                                     () => ChunkUnit.U2048K)),
                             Metadata = objectMetadata
                         };
@@ -213,16 +195,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
                     return ret;
                 }, param.UploadPersistentOps);
-            }
-            catch (BusinessException<string>e)
-            {
-                return new UploadResultDto(false, e, e.Message);
-            }
-            catch (Exception e)
-            {
-                return new UploadResultDto(false, e,
-                    Core.Tools.GetMessage(e));
-            }
+            }, (message, ex) => new UploadResultDto(false, ex, message));
         }
 
         #endregion
@@ -242,11 +215,11 @@ namespace EInfrastructure.Core.Aliyun.Storage
             Func<string, UploadPersistentOps, ObjectMetadata, PutObjectResult> funcAction,
             UploadPersistentOps uploadPersistentOps)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
-                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, uploadPersistentOps.Bucket);
+                var bucket = Core.Tools.GetBucket(_aLiYunConfig, uploadPersistentOps.Bucket);
                 var persistentOps = base.GetUploadPersistentOps(uploadPersistentOps);
-                var metadata = base.GetCallbackMetadata(persistentOps);
+                var metadata = GetCallbackMetadata(persistentOps);
                 PutObjectResult ret = funcAction.Invoke(bucket, persistentOps, metadata);
                 if (ret.HttpStatusCode == HttpStatusCode.OK)
                 {
@@ -254,16 +227,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 }
 
                 return new UploadResultDto(false, ret, $"RequestId：{ret.RequestId}");
-            }
-            catch (BusinessException<string>e)
-            {
-                return new UploadResultDto(false, e, e.Message);
-            }
-            catch (Exception e)
-            {
-                return new UploadResultDto(false, e,
-                    Core.Tools.GetMessage(e));
-            }
+            }, (message, ex) => new UploadResultDto(false, ex, message));
         }
 
         #endregion
@@ -331,27 +295,14 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public OperateResultDto Exist(ExistParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
-                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var bucket = Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket);
                 var exist = client.DoesObjectExist(bucket, request.Key);
                 return new OperateResultDto(exist, "success");
-            }
-            catch (OssException ex)
-            {
-                return new OperateResultDto(false,
-                    $"Failed with error code: {ex.ErrorCode}; Error info: {ex.Message}. \nRequestID:{ex.RequestId}\tHostID:{ex.HostId}");
-            }
-            catch (BusinessException<string>e)
-            {
-                return new UploadResultDto(false, e, e.Message);
-            }
-            catch (Exception ex)
-            {
-                return new OperateResultDto(false, Core.Tools.GetMessage(ex));
-            }
+            }, message => new OperateResultDto(false, message));
         }
 
         #endregion
@@ -365,12 +316,12 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public ListFileItemResultDto ListFiles(ListFileFilter filter)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
                 new ListFileFilterValidator().Validate(filter).Check(HttpStatus.Err.Name);
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, filter.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var zone = Core.Tools.GetZone(_aLiYunConfig, filter.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
-                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, filter.PersistentOps.Bucket);
+                var bucket = Core.Tools.GetBucket(_aLiYunConfig, filter.PersistentOps.Bucket);
                 var listObjectsRequest = new ListObjectsRequest(bucket)
                 {
                     MaxKeys = filter.PageSize
@@ -411,15 +362,8 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
                 return new ListFileItemResultDto(false,
                     $"RequestId：{ret.RequestId}，HttpStatusCode：{ret.HttpStatusCode}");
-            }
-            catch (BusinessException<string>ex)
-            {
-                return new ListFileItemResultDto(false, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return new ListFileItemResultDto(false, Core.Tools.GetMessage(ex));
-            }
+            }, message => new ListFileItemResultDto(false,
+                message));
         }
 
         #endregion
@@ -433,18 +377,18 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public FileInfoDto Get(GetFileParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
                 new GetFileParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
-                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var bucket = Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket);
                 var ret = client.GetObject(bucket, request.Key);
                 if (ret.HttpStatusCode == HttpStatusCode.OK)
                 {
                     string fileTypeStr = ret.Metadata.HttpMetadata.Where(x => x.Key == "x-oss-storage-class")
                         .Select(x => x.Value.ToString()).FirstOrDefault();
-                    EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass fileType = null;
+                    StorageClass fileType = null;
                     if (!string.IsNullOrEmpty(fileTypeStr))
                     {
                         fileType = Core.Tools.GetStorageClass(fileTypeStr);
@@ -465,15 +409,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 {
                     Key = request.Key
                 };
-            }
-            catch (BusinessException<string> ex)
-            {
-                return new FileInfoDto(false, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return new FileInfoDto(false, Core.Tools.GetMessage(ex));
-            }
+            }, message => new FileInfoDto(false, message));
         }
 
         #endregion
@@ -487,21 +423,14 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public IEnumerable<FileInfoDto> GetList(GetFileRangeParam request)
         {
-            try
+            new GetFileRangeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
+            List<FileInfoDto> list = new List<FileInfoDto>();
+            foreach (var key in request.Keys)
             {
-                new GetFileRangeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-                List<FileInfoDto> list = new List<FileInfoDto>();
-                foreach (var key in request.Keys)
-                {
-                    list.Add(Get(new GetFileParam(key, request.PersistentOps)));
-                }
+                list.Add(Get(new GetFileParam(key, request.PersistentOps)));
+            }
 
-                return list;
-            }
-            catch (Exception e)
-            {
-                return new List<FileInfoDto>();
-            }
+            return list;
         }
 
         #endregion
@@ -517,12 +446,12 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public DeleteResultDto Remove(RemoveParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
                 new RemoveParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
-                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var bucket = Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket);
                 var ret = client.DeleteObject(bucket, request.Key);
                 if (ret.HttpStatusCode == HttpStatusCode.OK)
                 {
@@ -531,15 +460,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
                 return new DeleteResultDto(false, request.Key,
                     $"RequestId：{ret.RequestId}，HttpStatusCode：{ret.HttpStatusCode}");
-            }
-            catch (BusinessException<string> ex)
-            {
-                return new DeleteResultDto(false, request.Key, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return new DeleteResultDto(false, request.Key, Core.Tools.GetMessage(ex));
-            }
+            }, message => new DeleteResultDto(false, request.Key, message));
         }
 
         #endregion
@@ -553,12 +474,12 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public IEnumerable<DeleteResultDto> RemoveRange(RemoveRangeParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
                 new RemoveRangeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
-                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var bucket = Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket);
                 var ret = client.DeleteObjects(new DeleteObjectsRequest(bucket, request.Keys, false));
                 if (ret.HttpStatusCode == HttpStatusCode.OK)
                 {
@@ -581,17 +502,9 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 return request.Keys.Select(x =>
                     new DeleteResultDto(false, x,
                         $"delete lose，RequestId：{ret.RequestId}，HttpStatusCode：{ret.HttpStatusCode}"));
-            }
-            catch (BusinessException<string> ex)
-            {
-                return request.Keys.Select(x =>
-                    new DeleteResultDto(false, x, ex.Message));
-            }
-            catch (Exception ex)
-            {
-                return request.Keys.Select(x =>
-                    new DeleteResultDto(false, x, Core.Tools.GetMessage(ex)));
-            }
+            }, message =>
+                request.Keys.Select(x =>
+                    new DeleteResultDto(false, x, message)));
         }
 
         #endregion
@@ -609,31 +522,23 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public CopyFileResultDto CopyTo(CopyFileParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
                 new CopyFileParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
-                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var bucket = Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket);
                 var targetBucket =
-                    Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket, request.OptBucket);
+                    Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket, request.OptBucket);
 
-                if (Core.Tools.GetChunkUnit(this._aLiYunConfig, request.PersistentOps.ChunkUnit).Id !=
+                if (Core.Tools.GetChunkUnit(_aLiYunConfig, request.PersistentOps.ChunkUnit).Id !=
                     ChunkUnit.U4096K.Id)
                 {
                     return CopySmallFile(client, bucket, request.SourceKey, targetBucket, request.OptKey);
                 }
 
                 return CopyBigFile(client, bucket, request.SourceKey, targetBucket, request.OptKey);
-            }
-            catch (BusinessException<string>ex)
-            {
-                return new CopyFileResultDto(false, request.SourceKey, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return new CopyFileResultDto(false, request.SourceKey, Core.Tools.GetMessage(ex));
-            }
+            }, message => new CopyFileResultDto(false, request.SourceKey, message));
         }
 
         /// <summary>
@@ -762,11 +667,14 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public MoveFileResultDto Move(MoveFileParam moveFileParam)
         {
-            new MoveFileParamValidator().Validate(moveFileParam).Check(HttpStatus.Err.Name);
-            CopyTo(new CopyFileParam(moveFileParam.SourceKey, moveFileParam.OptKey, moveFileParam.OptBucket, true,
-                moveFileParam.PersistentOps));
-            Remove(new RemoveParam(moveFileParam.SourceKey, moveFileParam.PersistentOps));
-            return new MoveFileResultDto(true, moveFileParam.OptKey, "success");
+            return ToolCommon.GetResponse(() =>
+            {
+                new MoveFileParamValidator(_aLiYunConfig).Validate(moveFileParam).Check(HttpStatus.Err.Name);
+                CopyTo(new CopyFileParam(moveFileParam.SourceKey, moveFileParam.OptKey, moveFileParam.OptBucket, true,
+                    moveFileParam.PersistentOps));
+                Remove(new RemoveParam(moveFileParam.SourceKey, moveFileParam.PersistentOps));
+                return new MoveFileResultDto(true, moveFileParam.SourceKey, "success");
+            }, message => new MoveFileResultDto(false, moveFileParam.SourceKey, message));
         }
 
         #endregion
@@ -784,8 +692,10 @@ namespace EInfrastructure.Core.Aliyun.Storage
             List<MoveFileResultDto> list = new List<MoveFileResultDto>();
             request.MoveFiles.ForEach(file =>
             {
-                list.Add(Move(new MoveFileParam(file.SourceKey, file.OptBucket, file.OptKey, file.IsForce,
-                    request.PersistentOps)));
+                var ret = Move(new MoveFileParam(file.SourceKey, file.OptBucket,
+                    file.OptKey, file.IsForce,
+                    request.PersistentOps));
+                list.Add(ret);
             });
             return list;
         }
@@ -803,24 +713,16 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public GetVisitUrlResultDto GetVisitUrl(GetVisitUrlParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
                 new GetVisitUrlParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
-                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var bucket = Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket);
                 var req = new GeneratePresignedUriRequest(bucket, request.Key, SignHttpMethod.Get);
                 var uri = client.GeneratePresignedUri(req);
                 return new GetVisitUrlResultDto(uri.ToString(), "success");
-            }
-            catch (BusinessException<string>ex)
-            {
-                return new GetVisitUrlResultDto(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return new GetVisitUrlResultDto(Core.Tools.GetMessage(ex));
-            }
+            }, message => new GetVisitUrlResultDto(message));
         }
 
         #endregion
@@ -836,7 +738,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public DownloadResultDto Download(FileDownloadParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
                 new FileDownloadParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 Uri uri = new Uri(request.Url);
@@ -856,15 +758,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 }
 
                 return new DownloadResultDto(true, "success");
-            }
-            catch (BusinessException<string>ex)
-            {
-                return new DownloadResultDto(false, ex.Message, ex);
-            }
-            catch (Exception ex)
-            {
-                return new DownloadResultDto(false, Core.Tools.GetMessage(ex));
-            }
+            }, (message, ex) => new DownloadResultDto(false, message, ex));
         }
 
         #endregion
@@ -878,22 +772,14 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public DownloadStreamResultDto DownloadStream(FileDownloadStreamParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
                 new FileDownloadStreamParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 Uri uri = new Uri(request.Url);
                 string host = $"{uri.Scheme}://{uri.Host}";
                 return new DownloadStreamResultDto(true, "success",
                     new HttpClient(host).GetStream(request.Url.Replace(host, "")), null);
-            }
-            catch (BusinessException<string>ex)
-            {
-                return new DownloadStreamResultDto(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return new DownloadStreamResultDto(Core.Tools.GetMessage(ex));
-            }
+            }, message => new DownloadStreamResultDto(message));
         }
 
         #endregion
@@ -911,11 +797,11 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public ExpireResultDto SetExpire(SetExpireParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
-                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var bucket = Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket);
                 var setBucketLifecycleRequest = new SetBucketLifecycleRequest(bucket);
 
                 LifecycleRule lcr = new LifecycleRule()
@@ -928,15 +814,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 setBucketLifecycleRequest.AddLifecycleRule(lcr);
                 client.SetBucketLifecycle(setBucketLifecycleRequest); //调整生命周期
                 return new ExpireResultDto(true, request.Key, "success");
-            }
-            catch (BusinessException<string>ex)
-            {
-                return new ExpireResultDto(false, request.Key, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return new ExpireResultDto(false, request.Key, Core.Tools.GetMessage(ex));
-            }
+            }, message => new ExpireResultDto(false, request.Key, message));
         }
 
         #endregion
@@ -950,11 +828,11 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public List<ExpireResultDto> SetExpireRange(SetExpireRangeParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
-                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var bucket = Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket);
                 var setBucketLifecycleRequest = new SetBucketLifecycleRequest(bucket);
 
                 List<ExpireResultDto> list = new List<ExpireResultDto>();
@@ -973,19 +851,12 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
                 client.SetBucketLifecycle(setBucketLifecycleRequest); //调整生命周期
                 return list;
-            }
-            catch (BusinessException<string>ex)
+            }, message =>
             {
                 List<ExpireResultDto> list = new List<ExpireResultDto>();
-                request.Keys.ForEach(key => { list.Add(new ExpireResultDto(false, key, ex.Message)); });
+                request.Keys.ForEach(key => { list.Add(new ExpireResultDto(false, key, message)); });
                 return list;
-            }
-            catch (Exception ex)
-            {
-                List<ExpireResultDto> list = new List<ExpireResultDto>();
-                request.Keys.ForEach(key => { list.Add(new ExpireResultDto(false, key, ex.Message)); });
-                return list;
-            }
+            });
         }
 
         #endregion
@@ -1003,12 +874,12 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public ChangeMimeResultDto ChangeMime(ChangeMimeParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
                 new ChangeMimeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
-                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var bucket = Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket);
                 var ret = client.GetObject(bucket, request.Key);
                 if (ret != null && ret.HttpStatusCode == HttpStatusCode.OK)
                 {
@@ -1030,15 +901,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 }
 
                 return new ChangeMimeResultDto(false, request.Key, "lose");
-            }
-            catch (BusinessException<string>ex)
-            {
-                return new ChangeMimeResultDto(false, request.Key, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return new ChangeMimeResultDto(false, request.Key, Core.Tools.GetMessage(ex));
-            }
+            }, message => new ChangeMimeResultDto(false, request.Key, message));
         }
 
         #endregion
@@ -1056,7 +919,9 @@ namespace EInfrastructure.Core.Aliyun.Storage
             List<ChangeMimeResultDto> mimeResultList = new List<ChangeMimeResultDto>();
             request.Keys.ForEach(key =>
             {
-                mimeResultList.Add(ChangeMime(new ChangeMimeParam(key, request.MimeType, request.PersistentOps)));
+                mimeResultList.Add(string.IsNullOrEmpty(request.MimeType)
+                    ? new ChangeMimeResultDto(false, key, "请输入文件MimeType")
+                    : ChangeMime(new ChangeMimeParam(key, request.MimeType, request.PersistentOps)));
             });
             return mimeResultList;
         }
@@ -1076,16 +941,16 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public ChangeTypeResultDto ChangeType(ChangeTypeParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
                 new ChangeTypeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var fileInfo = Get(new GetFileParam(request.Key, request.PersistentOps));
                 if (fileInfo.State)
                 {
-                    var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone,
+                    var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone,
                         () => ZoneEnum.HangZhou);
                     var client = _aLiYunConfig.GetClient(zone);
-                    var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                    var bucket = Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket);
                     if (fileInfo.FileType.Id == StorageClass.Archive.Id)
                     {
                         //解除归档
@@ -1135,15 +1000,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 }
 
                 return new ChangeTypeResultDto(false, request.Key, fileInfo.Msg);
-            }
-            catch (BusinessException<string>ex)
-            {
-                return new ChangeTypeResultDto(false, request.Key, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return new ChangeTypeResultDto(false, request.Key, Core.Tools.GetMessage(ex));
-            }
+            }, message => new ChangeTypeResultDto(false, request.Key, message));
         }
 
         #endregion
@@ -1159,9 +1016,12 @@ namespace EInfrastructure.Core.Aliyun.Storage
         {
             new ChangeTypeRangeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             List<ChangeTypeResultDto> resultList = new List<ChangeTypeResultDto>();
+            List<StorageClass> storageClasList = StorageClass.GetAll<StorageClass>().ToList();
             request.Keys.ForEach(key =>
             {
-                resultList.Add(ChangeType(new ChangeTypeParam(key, request.Type, request.PersistentOps)));
+                resultList.Add(storageClasList.Any(x => x.Id == request.Type.Id)
+                    ? ChangeType(new ChangeTypeParam(key, request.Type, request.PersistentOps))
+                    : new ChangeTypeResultDto(false, key, "文件存储类型不支持，请输入1或者0"));
             });
             return resultList;
         }
@@ -1181,23 +1041,18 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public OperateResultDto SetPermiss(SetPermissParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
                 new SetPermissParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
-                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var bucket = Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket);
                 var permiss = request.Permiss != null
                     ? Core.Tools.GetCannedAccessControl(request.Permiss)
                     : CannedAccessControlList.Default;
                 client.SetObjectAcl(bucket, request.Key, permiss);
                 return new OperateResultDto(true, "success");
-            }
-            catch (Exception e)
-            {
-                return new OperateResultDto(false,
-                    Core.Tools.GetMessage(e));
-            }
+            }, message => new OperateResultDto(false, message));
         }
 
         #endregion
@@ -1211,12 +1066,12 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public FilePermissResultInfo GetPermiss(GetFilePermissParam request)
         {
-            try
+            return ToolCommon.GetResponse(() =>
             {
                 new GetFilePermissParamValidator().Validate(request).Check(HttpStatus.Err.Name);
-                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
-                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                var bucket = Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket);
                 var ret = client.GetObjectAcl(bucket, request.Key);
 
                 if (ret.HttpStatusCode == HttpStatusCode.OK)
@@ -1225,12 +1080,8 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 }
 
                 return new FilePermissResultInfo(false, null, "文件不存在" + ret.ToString());
-            }
-            catch (Exception e)
-            {
-                return new FilePermissResultInfo(false, null,
-                    Core.Tools.GetMessage(e));
-            }
+            }, message => new FilePermissResultInfo(false, null,
+                message));
         }
 
         #endregion

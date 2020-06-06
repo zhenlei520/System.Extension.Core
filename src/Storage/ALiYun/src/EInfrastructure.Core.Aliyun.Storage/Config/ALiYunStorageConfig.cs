@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Config
         /// </summary>
         public ALiYunStorageConfig()
         {
-            this.MaxRetryTimes = 5;
+            MaxRetryTimes = 5;
         }
 
         /// <summary>
@@ -135,10 +135,10 @@ namespace EInfrastructure.Core.Aliyun.Storage.Config
             string callbackBody =
                 "{\"key\":\"${key}\",\"size\":${size},\"bucket\":\"${bucket}\",\"mimeType\":\"${mimeType}\"}")
         {
-            CallbackBodyType = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.CallbackBodyType
+            CallbackBodyType = Configuration.Ioc.Plugs.Storage.Enumerations.CallbackBodyType
                 .FromValue<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.
                     CallbackBodyType>(
-                    callbackBodyType)?.Id ?? EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
+                    callbackBodyType)?.Id ?? Configuration.Ioc.Plugs.Storage
                 .Enumerations.CallbackBodyType.Json.Id;
             CallbackHost = callbackHost;
             if (!string.IsNullOrEmpty(callbackUrl) && callbackUrl.Substring(0, 1) != "/")
@@ -192,7 +192,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Config
             }
 
             var scheme = "http://";
-            return new OssClient($"{scheme}{endpoint}", this.AccessKey, this.SecretKey, securityToken);
+            return new OssClient($"{scheme}{endpoint}", AccessKey, SecretKey, securityToken);
         }
 
         #endregion

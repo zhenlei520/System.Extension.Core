@@ -13,7 +13,7 @@ namespace EInfrastructure.Core.Tools.Tasks.Dto
         /// <summary>
         /// 任务回调
         /// </summary>
-        public Action<Dto.JobItem> Action { get; set; }
+        public Action<JobItem> Action { get; set; }
 
         /// <summary>
         ///

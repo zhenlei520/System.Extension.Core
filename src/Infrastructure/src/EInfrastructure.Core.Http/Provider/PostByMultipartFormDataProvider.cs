@@ -27,7 +27,7 @@ namespace EInfrastructure.Core.Http.Provider
             Dictionary<string, string> headers,
             int timeOut)
         {
-            RestRequest request = base.GetRestRequest(url, method, timeOut, headers);
+            RestRequest request = GetRestRequest(url, method, timeOut, headers);
             request.AddHeader("Content-Type", "multipart/form-data");
             var bodyDic = ObjectCommon.GetParams(requestBody.Data??new {},"Newtonsoft.Json.JsonPropertyAttribute,Newtonsoft.Json");
             foreach (var item in bodyDic)

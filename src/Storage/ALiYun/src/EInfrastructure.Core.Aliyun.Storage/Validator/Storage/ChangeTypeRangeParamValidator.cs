@@ -16,8 +16,6 @@ namespace EInfrastructure.Core.Aliyun.Storage.Validator.Storage
         /// </summary>
         public ChangeTypeRangeParamValidator()
         {
-            RuleFor(x => x.Keys).Must(x => x.Count > 0).WithMessage("请选择文件");
-            RuleFor(x => x.Type).IsInEnum().WithMessage("文件存储类型不支持，请输入1或者0");
         }
     }
 }

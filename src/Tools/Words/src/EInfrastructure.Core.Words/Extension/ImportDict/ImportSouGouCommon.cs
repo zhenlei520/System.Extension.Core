@@ -8,6 +8,7 @@ using System.Linq;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Words;
 using EInfrastructure.Core.HelpCommon.Files;
 using EInfrastructure.Core.Words.Extension.ImportDict.Common;
+using FileCommon = EInfrastructure.Core.Tools.Files.FileCommon;
 
 namespace EInfrastructure.Core.Words.Extension.ImportDict
 {

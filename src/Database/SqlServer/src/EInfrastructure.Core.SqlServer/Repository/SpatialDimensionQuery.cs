@@ -17,7 +17,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
         where TEntity : class, IEntity<T>
         where T : IComparable
     {
-        private EInfrastructure.Core.SqlServer.Common.SpatialDimensionBaseQuery<TEntity, T> _spatialDimensionBase;
+        private Common.SpatialDimensionBaseQuery<TEntity, T> _spatialDimensionBase;
         protected DbContext Dbcontext;
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
         {
             Dbcontext = unitOfWork as DbContext;
             _spatialDimensionBase =
-                new EInfrastructure.Core.SqlServer.Common.SpatialDimensionBaseQuery<TEntity, T>(unitOfWork, execute);
+                new Common.SpatialDimensionBaseQuery<TEntity, T>(unitOfWork, execute);
         }
 
         /// <summary>

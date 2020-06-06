@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using Aliyun.OSS;
-using Aliyun.OSS.Util;
 using EInfrastructure.Core.Aliyun.Storage.Config;
 using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -56,7 +55,6 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
         }
 
         #endregion
-
 
         #region 得到空间区域
 
@@ -140,10 +138,10 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
         /// <param name="chunkUnit">分片大小</param>
         /// <param name="defaultChunkUnit">默认分片大小</param>
         /// <returns></returns>
-        internal static EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit GetChunkUnit(
+        internal static ChunkUnit GetChunkUnit(
             ALiYunStorageConfig aliyunConfig,
-            EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit chunkUnit,
-            Func<EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit> defaultChunkUnit = null)
+            ChunkUnit chunkUnit,
+            Func<ChunkUnit> defaultChunkUnit = null)
         {
             if (chunkUnit == null && aliyunConfig.ChunkUnit == null)
             {
@@ -168,7 +166,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
         /// </summary>
         /// <returns></returns>
         internal static long GetPartSize(
-            EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit chunkUnit)
+            ChunkUnit chunkUnit)
         {
             return ChunkUnitList.Where(x => x.Key.Id == chunkUnit.Id).Select(x => x.Value).FirstOrDefault();
         }
@@ -197,25 +195,6 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
             EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass storageClass)
         {
             return StorageClassList.Where(x => x.Key.Id == storageClass.Id).Select(x => x.Value).FirstOrDefault();
-        }
-
-        #endregion
-
-
-        #region 得到Message
-
-        /// <summary>
-        /// 得到Message
-        /// </summary>
-        /// <returns></returns>
-        internal static string GetMessage(Exception ex)
-        {
-            if (ex.InnerException != null)
-            {
-                return $"Message：{ex.Message}，InnerExceptionMessage：{ex.InnerException?.Message}";
-            }
-
-            return $"Message：{ex.Message}";
         }
 
         #endregion
