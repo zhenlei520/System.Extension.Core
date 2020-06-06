@@ -135,6 +135,50 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 判断精度是否正确
+
+        /// <summary>
+        /// 判断精度是否正确
+        /// </summary>
+        /// <param name="str">带匹配的字符串</param>
+        /// <param name="maxScale">最大保留小数位数</param>
+        /// <returns></returns>
+        public static bool IsMaxScale(this string str, int maxScale)
+        {
+            if (double.TryParse(str, out double temp))
+            {
+                var numberArray = str.Split('.');
+                if (numberArray.Length==1)
+                {
+                    return maxScale >= 0;
+                }
+
+                var numberStr = numberArray[1];
+                int index;
+                do
+                {
+                    if (numberStr.Length == 1)
+                    {
+                        return 1 <= maxScale;
+                    }
+
+                    index = numberStr.Length - 1;
+                    if (numberStr[index] == '0')
+                    {
+                        numberStr = numberStr.Substring(0, index);
+                    }
+                    else
+                    {
+                        return numberStr.Length <= maxScale;
+                    }
+                } while (index > 0);
+            }
+
+            return false;
+        }
+
+        #endregion
+
         #region 是否是身份证号
 
         /// <summary>

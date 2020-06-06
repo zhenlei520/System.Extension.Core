@@ -3,7 +3,7 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\wangz\.nuget\packages\qiniu\7.3.1.1\lib\Net40\Qiniu.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1cc2a448_002D3d10_002D4059_002Da9ac_002Dcc8945530f0f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetBucketList" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=952393ee_002Db983_002D461e_002Da4e2_002D9f9279c24d00/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="IsScale" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.BucketUnitTest.GetBucketList&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.BucketUnitTest.CreateBucket&lt;/TestId&gt;&#xD;
