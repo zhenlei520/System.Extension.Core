@@ -131,12 +131,19 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public OperateResultDto Delete(DeleteBucketParam request)
         {
-            Check.TrueByString(request != null, $"{nameof(request)} is null", HttpStatus.Err.Name);
-            var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
-            var client = _aLiYunConfig.GetClient(zone);
-            var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
-            client.DeleteBucket(bucket);
-            return new OperateResultDto(true, "success");
+            try
+            {
+                Check.TrueByString(request != null, $"{nameof(request)} is null", HttpStatus.Err.Name);
+                var zone = Core.Tools.GetZone(this._aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
+                var client = _aLiYunConfig.GetClient(zone);
+                var bucket = Core.Tools.GetBucket(this._aLiYunConfig, request.PersistentOps.Bucket);
+                client.DeleteBucket(bucket);
+                return new OperateResultDto(true, "success");
+            }
+            catch (Exception ex)
+            {
+                return new OperateResultDto(false, ex.Message);
+            }
         }
 
         #endregion

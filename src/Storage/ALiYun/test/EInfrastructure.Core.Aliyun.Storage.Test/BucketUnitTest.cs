@@ -32,7 +32,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
         }
 
         [Theory]
-        [InlineData("einfrastructuretest")]
+        [InlineData("einfrastructuretest2")]
         public void CreateBucket(string bucket)
         {
             var ret = _bucketProvider.Create(new CreateBucketParam(bucket, (int) ZoneEnum.HangZhou,
@@ -40,7 +40,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
         }
 
         [Theory]
-        [InlineData("einfrastructuretest")]
+        [InlineData("einfrastructuretest2")]
         public void DeleteBucket(string bucket)
         {
             var ret = _bucketProvider.Delete(new DeleteBucketParam(new BasePersistentOps()
