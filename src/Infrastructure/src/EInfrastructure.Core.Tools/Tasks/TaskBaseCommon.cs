@@ -103,6 +103,28 @@ namespace EInfrastructure.Core.Tools.Tasks
             }
         }
 
+        /// <summary>
+        /// 得到下一个待执行的任务并移除此任务
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        internal TaskJobParam2<T, T2> GetNextJob<T, T2>()
+        {
+            lock (AwaitList)
+            {
+                var taskJobParam = GetFirstJob<TaskJobParam2<T, T2>>(AwaitList);
+                if (taskJobParam != null)
+                {
+                    if (AwaitList.ContainsKey(taskJobParam.Id))
+                    {
+                        AwaitList.Remove(taskJobParam.Id);
+                    }
+                }
+
+                return taskJobParam;
+            }
+        }
+
         #endregion
 
         #endregion

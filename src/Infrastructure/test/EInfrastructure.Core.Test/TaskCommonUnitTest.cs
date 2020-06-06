@@ -30,24 +30,48 @@ namespace EInfrastructure.Core.Test
             {
                 userses.Add(new Users()
                 {
-                    Name = "我的名字是" + i
+                    Name = "我的名字是" + i,
+                    Gender = i%2==1
                 });
             }
 
+            int success = 0;
             foreach (var item in userses)
             {
-                taskCommon.Add(item.Name, (name, cts) =>
+                if (item.Gender)
                 {
-                    cts.Cancel(); //取消任务
-                    Console.WriteLine("我的名字是：" + name);
-                    Thread.Sleep(new Random().Next(1000, 3999));
-                    return "结束了" + "我的名字是：" + name;
-                }, (state, res, exception) =>
-                {
-                    if (state)
+                    taskCommon.Add(item.Name, (name, cts) =>
                     {
-                    }
-                });
+                        Console.WriteLine($"性别：男，我的名字是：" + name);
+                        Thread.Sleep(new Random().Next(1000, 3999));
+                        success++;
+                        return "结束了" + "我的名字是：" + name;
+                    }, (state, res, exception) =>
+                    {
+                        if (state)
+                        {
+                        }
+                    });
+                }
+                else
+                {
+                    taskCommon.Add(item.Name, (name, cts) =>
+                    {
+                        Console.WriteLine($"性别：女，我的名字是：" + name);
+                        Thread.Sleep(new Random().Next(1000, 3999));
+                        success++;
+                        return "结束了" + "我的名字是：" + name;
+                    }, (state, res, exception) =>
+                    {
+                        if (state)
+                        {
+                        }
+                    });
+                }
+            }
+            while  (success<userses.Count)
+            {
+                Thread.Sleep(500);
             }
         }
 
@@ -81,6 +105,8 @@ namespace EInfrastructure.Core.Test
         public class Users
         {
             public string Name { get; set; }
+
+            public bool Gender { get; set; }
         }
     }
 }

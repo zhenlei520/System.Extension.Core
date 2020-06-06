@@ -37,13 +37,10 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// </summary>
         /// <param name="item">传入任务参数</param>
         /// <param name="func">需要执行的任务，返回值为任务完成后需要接受的值</param>
-        /// <param name="taskFinishAction">任务结束后需要返回的结果，如果执行成功，其中T2的值为func委托的响应值</param>
-        public void Add(T item, Func<T, CancellationTokenSource, T2> func,
-            Action<bool, T2, Exception> taskFinishAction = null)
+        public void Add(T item, Func<T, CancellationTokenSource, T2> func)
         {
             Guid guid = Guid.NewGuid();
-            _taskBaseCommon.AwaitList.Add(guid, new TaskJobParam<T>(guid, item));
-            StartProcessForWait(func, taskFinishAction);
+            _taskBaseCommon.AwaitList.Add(guid, new TaskJobParam2<T, T2>(guid, item, func));
         }
 
         /// <summary>
@@ -51,12 +48,10 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// </summary>
         /// <param name="list">传入任务参数</param>
         /// <param name="func">需要执行的任务，返回值为任务完成后需要接受的值</param>
-        /// <param name="taskFinishAction">任务结束后需要返回的结果，如果执行成功，其中T2的值为func委托的响应值</param>
         /// <typeparam name="T"></typeparam>
-        public void AddRang(List<T> list, Func<T, CancellationTokenSource, T2> func,
-            Action<bool, T2, Exception> taskFinishAction)
+        public void AddRang(List<T> list, Func<T, CancellationTokenSource, T2> func)
         {
-            list.ForEach(item => { Add(item, func, taskFinishAction); });
+            list.ForEach(item => { Add(item, func); });
         }
 
         #endregion
@@ -69,10 +64,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// 开始新的任务
         /// </summary>
         /// <param name="item"></param>
-        /// <param name="func"></param>
-        /// <param name="taskFinishAction"></param>
-        private void StartNewProcess(TaskJobParam<T> item, Func<T, CancellationTokenSource, T2> func,
-            Action<bool, T2, Exception> taskFinishAction)
+        private void StartNewProcess(TaskJobParam2<T, T2> item)
         {
             if (!_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
             {
@@ -80,49 +72,55 @@ namespace EInfrastructure.Core.Tools.Tasks
             }
             else
             {
-                StartProcessForWait(func, taskFinishAction);
+                StartProcessForWait();
             }
 
             var cts = new CancellationTokenSource();
             var token = cts.Token;
             var task = Task.Factory.StartNew(() =>
-                    func.Invoke(item.Data, cts), token)
-                .ContinueWith((res) =>
+            {
+                if (item.IsCanCancel)
                 {
-                    try
-                    {
-                        if (res == null)
-                        {
-                            taskFinishAction?.Invoke(false, default(T2), null);
-                        }
-                        else if (res.Exception != null)
-                        {
-                            taskFinishAction?.Invoke(false, ObjectCommon.SafeObject(res.Result != null, () =>
-                                    ValueTuple.Create(res.Result, default(T2))),
-                                res.Exception);
-                        }
-                        else
-                        {
-                            taskFinishAction?.Invoke(true,
-                                ObjectCommon.SafeObject(res.Result != null, () =>
-                                    ValueTuple.Create(res.Result, default(T2))),
-                                null);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // ignored
-                    }
-                    finally
-                    {
-                        if (_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
-                        {
-                            _taskBaseCommon.OnGoingList.Remove(item.Id);
-                        }
+                    return item.Func2(item.Data, cts);
+                }
 
-                        StartProcessForWait(func, taskFinishAction);
+                return item.Func(item.Data);
+            }).ContinueWith((res) =>
+            {
+                try
+                {
+                    // if (res == null)
+                    // {
+                    //     taskFinishAction?.Invoke(false, default(T2), null);
+                    // }
+                    // else if (res.Exception != null)
+                    // {
+                    //     taskFinishAction?.Invoke(false, ObjectCommon.SafeObject(res.Result != null, () =>
+                    //             ValueTuple.Create(res.Result, default(T2))),
+                    //         res.Exception);
+                    // }
+                    // else
+                    // {
+                    //     taskFinishAction?.Invoke(true,
+                    //         ObjectCommon.SafeObject(res.Result != null, () =>
+                    //             ValueTuple.Create(res.Result, default(T2))),
+                    //         null);
+                    // }
+                }
+                catch (Exception ex)
+                {
+                    // ignored
+                }
+                finally
+                {
+                    if (_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
+                    {
+                        _taskBaseCommon.OnGoingList.Remove(item.Id);
                     }
-                }, token);
+
+                    StartProcessForWait();
+                }
+            }, token);
         }
 
         #endregion
@@ -132,15 +130,14 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         /// 开始执行等待进行的任务
         /// </summary>
-        private void StartProcessForWait(Func<T, CancellationTokenSource, T2> func,
-            Action<bool, T2, Exception> taskFinishAction)
+        private void StartProcessForWait()
         {
             if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsStartNewProcess)
             {
-                TaskJobParam<T> taskJobParam = _taskBaseCommon.GetNextJob<T>();
+                TaskJobParam2<T, T2> taskJobParam = _taskBaseCommon.GetNextJob<T, T2>();
                 if (taskJobParam != null)
                 {
-                    StartNewProcess(taskJobParam, func, taskFinishAction);
+                    StartNewProcess(taskJobParam);
                 }
             }
             else
@@ -185,8 +182,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         public void Add(T item, Action<T> action)
         {
             Guid guid = Guid.NewGuid();
-            _taskBaseCommon.AwaitList.Add(guid, new TaskJobParam<T>(guid, item));
-            StartProcessForWait(action);
+            _taskBaseCommon.AwaitList.Add(guid, new TaskJobParam<T>(guid, item, action));
         }
 
         /// <summary>
@@ -197,8 +193,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         public void Add(T item, Action<T, CancellationTokenSource> action)
         {
             Guid guid = Guid.NewGuid();
-            _taskBaseCommon.AwaitList.Add(guid, new TaskJobParam<T>(guid, item));
-            StartProcessForWait(action);
+            _taskBaseCommon.AwaitList.Add(guid, new TaskJobParam<T>(guid, item, action));
         }
 
         /// <summary>
@@ -225,6 +220,18 @@ namespace EInfrastructure.Core.Tools.Tasks
 
         #endregion
 
+        #region 启动任务
+
+        /// <summary>
+        /// 启动任务
+        /// </summary>
+        public void Run()
+        {
+            StartProcessForWait();
+        }
+
+        #endregion
+
         #region private methods
 
         #region 开始新的任务
@@ -233,8 +240,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// 开始新的任务
         /// </summary>
         /// <param name="item"></param>
-        /// <param name="action"></param>
-        private void StartNewProcess(TaskJobParam<T> item, Action<T> action)
+        private void StartNewProcess(TaskJobParam<T> item)
         {
             if (!_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
             {
@@ -242,11 +248,22 @@ namespace EInfrastructure.Core.Tools.Tasks
             }
             else
             {
-                StartProcessForWait(action);
+                StartProcessForWait();
             }
 
             var task = Task.Factory.StartNew(() =>
-                    action.Invoke(item.Data))
+                {
+                    if (item.IsCanCancel)
+                    {
+                        var cts = new CancellationTokenSource();
+                        var token = cts.Token;
+                        item.Action2.Invoke(item.Data, cts);
+                    }
+                    else
+                    {
+                        item.Action.Invoke(item.Data);
+                    }
+                })
                 .ContinueWith(res =>
                 {
                     if (_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
@@ -254,39 +271,8 @@ namespace EInfrastructure.Core.Tools.Tasks
                         _taskBaseCommon.OnGoingList.Remove(item.Id);
                     }
 
-                    StartProcessForWait(action);
+                    StartProcessForWait();
                 });
-        }
-
-        /// <summary>
-        /// 开始新的任务
-        /// </summary>
-        /// <param name="item"></param>
-        /// <param name="action"></param>
-        private void StartNewProcess(TaskJobParam<T> item, Action<T, CancellationTokenSource> action)
-        {
-            if (!_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
-            {
-                _taskBaseCommon.OnGoingList.Add(item.Id, item.Data);
-            }
-            else
-            {
-                StartProcessForWait(action);
-            }
-
-            var cts = new CancellationTokenSource();
-            var token = cts.Token;
-            var task = Task.Factory.StartNew(() =>
-                    action.Invoke(item.Data, cts), token)
-                .ContinueWith((res) =>
-                {
-                    if (_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
-                    {
-                        _taskBaseCommon.OnGoingList.Remove(item.Id);
-                    }
-
-                    StartProcessForWait(action);
-                }, token);
         }
 
         #endregion
@@ -296,36 +282,14 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         /// 开始执行等待进行的任务
         /// </summary>
-        private void StartProcessForWait(Action<T> action)
+        private void StartProcessForWait()
         {
             if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsStartNewProcess)
             {
                 TaskJobParam<T> taskJobParam = _taskBaseCommon.GetNextJob<T>();
                 if (taskJobParam != null)
                 {
-                    StartNewProcess(taskJobParam, action);
-                }
-            }
-            else
-            {
-                if (_taskBaseCommon._duration > 0)
-                {
-                    Thread.Sleep(_taskBaseCommon._duration);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 开始执行等待进行的任务
-        /// </summary>
-        private void StartProcessForWait(Action<T, CancellationTokenSource> action)
-        {
-            if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsStartNewProcess)
-            {
-                TaskJobParam<T> taskJobParam = _taskBaseCommon.GetNextJob<T>();
-                if (taskJobParam != null)
-                {
-                    StartNewProcess(taskJobParam, action);
+                    StartNewProcess(taskJobParam);
                 }
             }
             else
