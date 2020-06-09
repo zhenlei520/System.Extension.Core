@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections;
-using EInfrastructure.Core.Tools.Attributes;
 
 namespace EInfrastructure.Core.Tools.Tasks
 {
@@ -97,7 +96,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         /// 判断是否可开启新的任务
         /// </summary>
-        public bool IsStartNewProcess => OnGoingList.Count < GetMaxThread;
+        public bool IsCanProcess => OnGoingList.Count < GetMaxThread;
 
         #endregion
 
@@ -132,6 +131,28 @@ namespace EInfrastructure.Core.Tools.Tasks
         #endregion
 
         #region 得到下一个待执行的任务并移除此任务
+
+        /// <summary>
+        /// 得到下一个待执行的任务并移除此任务
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        internal TaskJobBaseParam<T> GetNextJob2<T>()
+        {
+            lock (AwaitList)
+            {
+                var taskJobParam = GetFirstJob<TaskJobBaseParam<T>>(AwaitList);
+                if (taskJobParam != null)
+                {
+                    if (AwaitList.ContainsKey(taskJobParam.Id))
+                    {
+                        AwaitList.Remove(taskJobParam.Id);
+                    }
+                }
+
+                return taskJobParam;
+            }
+        }
 
         /// <summary>
         /// 得到下一个待执行的任务并移除此任务

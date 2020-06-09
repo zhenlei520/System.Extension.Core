@@ -138,7 +138,10 @@ namespace EInfrastructure.Core.Tools.Tasks
                     StartProcessForWait();
                 }
             }, token);
+        }
 
+        private void StartNewProcess(TaskJobParam2<T, T2> item, Task task, Action action)
+        {
         }
 
         #endregion
@@ -150,7 +153,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// </summary>
         private void StartProcessForWait()
         {
-            if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsStartNewProcess)
+            if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsCanProcess)
             {
                 TaskJobParam2<T, T2> taskJobParam = _taskBaseCommon.GetNextJob<T, T2>();
                 if (taskJobParam != null)
@@ -302,7 +305,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// </summary>
         private void StartProcessForWait()
         {
-            if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsStartNewProcess)
+            if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsCanProcess)
             {
                 TaskJobParam<T> taskJobParam = _taskBaseCommon.GetNextJob<T>();
                 if (taskJobParam != null)
