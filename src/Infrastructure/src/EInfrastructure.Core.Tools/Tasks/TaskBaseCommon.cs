@@ -1,7 +1,9 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections;
+using EInfrastructure.Core.Tools.Attributes;
 
 namespace EInfrastructure.Core.Tools.Tasks
 {
@@ -13,7 +15,12 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         /// 最大线程数
         /// </summary>
-        public int _maxThread;
+        private int _maxThread;
+
+        /// <summary>
+        /// 得到最大线程数
+        /// </summary>
+        public int GetMaxThread => _maxThread;
 
         /// <summary>
         /// 等待中的任务
@@ -26,9 +33,19 @@ namespace EInfrastructure.Core.Tools.Tasks
         public readonly Hashtable OnGoingList = Hashtable.Synchronized(new Hashtable());
 
         /// <summary>
+        /// 执行任务完成数
+        /// </summary>
+        public int SuccessCount { get; private set; }
+
+        /// <summary>
         /// 无任务后休息的时间
         /// </summary>
         public readonly int _duration;
+
+        /// <summary>
+        /// 结束后执行
+        /// </summary>
+        public readonly Action FinishAction;
 
         /// <summary>
         ///
@@ -39,13 +56,39 @@ namespace EInfrastructure.Core.Tools.Tasks
         {
             _maxThread = maxThread;
             _duration = duration;
+            SuccessCount = 0;
             Check.True(_duration >= 0, "duration设置有误");
         }
 
         /// <summary>
-        /// 得到最大线程数
+        ///
         /// </summary>
-        public int GetMaxThread => _maxThread;
+        /// <param name="maxThread">最大线程数</param>
+        /// <param name="finishAction">执行成功</param>
+        /// <param name="duration">默认无任务后休息3000ms</param>
+        public TaskBaseCommon(int maxThread, Action finishAction, int duration = 0) : this(maxThread, duration)
+        {
+            if (finishAction != null)
+            {
+                this.FinishAction = finishAction;
+            }
+        }
+
+        #region methods
+
+        #region 运行成功
+
+        /// <summary>
+        /// 运行成功
+        /// </summary>
+        public void RunSuccess()
+        {
+            this.SuccessCount++;
+        }
+
+        #endregion
+
+        #endregion
 
         #region private methods
 
@@ -54,7 +97,16 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         /// 判断是否可开启新的任务
         /// </summary>
-        public bool IsStartNewProcess => OnGoingList.Count < _maxThread;
+        public bool IsStartNewProcess => OnGoingList.Count < GetMaxThread;
+
+        #endregion
+
+        #region 判断线程是否全部结束
+
+        /// <summary>
+        /// 是否结束
+        /// </summary>
+        public bool IsFinish => AwaitList.Count == 0;
 
         #endregion
 

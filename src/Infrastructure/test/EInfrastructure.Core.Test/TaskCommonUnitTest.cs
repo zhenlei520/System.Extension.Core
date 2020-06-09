@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void Test()
         {
-            TaskCommon<string, object> taskCommon = new TaskCommon<string, object>(20);
+            TaskCommon<string, object> taskCommon = new TaskCommon<string, object>(20,0);
 
             List<Users> userses = new List<Users>();
             for (var i = 0; i < 30; i++)
@@ -43,14 +43,8 @@ namespace EInfrastructure.Core.Test
                     taskCommon.Add(item.Name, (name, cts) =>
                     {
                         Console.WriteLine($"性别：男，我的名字是：" + name);
-                        Thread.Sleep(new Random().Next(1000, 3999));
                         success++;
                         return "结束了" + "我的名字是：" + name;
-                    }, (state, res, exception) =>
-                    {
-                        if (state)
-                        {
-                        }
                     });
                 }
                 else
@@ -58,17 +52,12 @@ namespace EInfrastructure.Core.Test
                     taskCommon.Add(item.Name, (name, cts) =>
                     {
                         Console.WriteLine($"性别：女，我的名字是：" + name);
-                        Thread.Sleep(new Random().Next(1000, 3999));
                         success++;
                         return "结束了" + "我的名字是：" + name;
-                    }, (state, res, exception) =>
-                    {
-                        if (state)
-                        {
-                        }
                     });
                 }
             }
+            taskCommon.Run();
             while  (success<userses.Count)
             {
                 Thread.Sleep(500);

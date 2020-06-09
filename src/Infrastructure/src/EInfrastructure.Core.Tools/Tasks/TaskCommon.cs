@@ -56,6 +56,18 @@ namespace EInfrastructure.Core.Tools.Tasks
 
         #endregion
 
+        #region 启动任务
+
+        /// <summary>
+        /// 启动任务
+        /// </summary>
+        public void Run()
+        {
+            StartProcessForWait();
+        }
+
+        #endregion
+
         #region private methods
 
         #region 开始新的任务
@@ -89,6 +101,10 @@ namespace EInfrastructure.Core.Tools.Tasks
             {
                 try
                 {
+                    if (res == null)
+                    {
+                    }
+
                     // if (res == null)
                     // {
                     //     taskFinishAction?.Invoke(false, default(T2), null);
@@ -118,9 +134,11 @@ namespace EInfrastructure.Core.Tools.Tasks
                         _taskBaseCommon.OnGoingList.Remove(item.Id);
                     }
 
+                    _taskBaseCommon.RunSuccess();
                     StartProcessForWait();
                 }
             }, token);
+
         }
 
         #endregion
