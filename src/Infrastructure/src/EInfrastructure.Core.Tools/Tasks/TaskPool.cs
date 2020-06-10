@@ -155,6 +155,7 @@ namespace EInfrastructure.Core.Tools.Tasks
 
         /// <summary>
         /// 设置线程超时空闲被移除
+        /// 设置为-1时，子线程永不过期，永不释放
         /// </summary>
         /// <param name="continueTimer">空闲时长</param>
         public void SetContinueTimer(int continueTimer)
@@ -264,26 +265,37 @@ namespace EInfrastructure.Core.Tools.Tasks
             if (jobParam == null)
             {
                 taskInfo.Value?.Stop();
-                if (taskInfo.Value?.ElapsedMilliseconds < this._continueTimer)
+                if (this._continueTimer != -1)
                 {
-                    taskInfo.Value?.Start();
-                    StartJob();
+                    if (taskInfo.Value?.ElapsedMilliseconds < this._continueTimer)
+                    {
+                        taskInfo.Value?.Start();
+                        StartJob();
+                    }
+                    else
+                    {
+                        RemoveTask(taskInfo);
+                        lock (this._tasks)
+                        {
+                            if (this._tasks.Count == 0)
+                            {
+                                this._destroyTaskAction?.Invoke();
+                            }
+                        }
+                    }
                 }
                 else
                 {
-                    RemoveTask(taskInfo);
-                    lock (this._tasks)
-                    {
-                        if (this._tasks.Count == 0)
-                        {
-                            this._destroyTaskAction?.Invoke();
-                        }
-                    }
+                    StartJob();
                 }
             }
             else
             {
-                taskInfo.Value?.Reset();
+                if (this._continueTimer != -1)
+                {
+                    taskInfo.Value?.Reset();
+                }
+
                 StartJob();
             }
         }
