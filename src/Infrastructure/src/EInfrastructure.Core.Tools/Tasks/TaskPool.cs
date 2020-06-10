@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EInfrastructure.Core.Tools.Tasks.Request;
 
 namespace EInfrastructure.Core.Tools.Tasks
 {
@@ -16,7 +15,12 @@ namespace EInfrastructure.Core.Tools.Tasks
     /// </summary>
     public class TaskPool<T>
     {
-        private readonly TaskBaseCommon _taskBaseCommon;
+        private readonly TaskBaseCommon<T> _taskBaseCommon;
+
+        /// <summary>
+        ///
+        /// </summary>
+        private List<KeyValuePair<Task, Stopwatch>> _tasks;
 
         /// <summary>
         ///
@@ -25,19 +29,8 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <param name="duration">默认无任务后休息0ms</param>
         private TaskPool(int maxThread, int duration = 0)
         {
-            this._taskBaseCommon = new TaskBaseCommon(maxThread, duration);
-            this._tasks = new List<TaskStateRequest>();
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="maxThread">最大线程数</param>
-        /// <param name="action"></param>
-        /// <param name="duration">默认无任务后休息0ms</param>
-        public TaskPool(int maxThread, Action<object> action, int duration = 0) : this(maxThread, duration)
-        {
-            this._jobAction = action;
+            this._taskBaseCommon = new TaskBaseCommon<T>(maxThread, duration);
+            this._tasks = new List<KeyValuePair<Task, Stopwatch>>();
         }
 
         /// <summary>
@@ -45,30 +38,52 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// </summary>
         /// <param name="maxThread">最大线程数</param>
         /// <param name="jobAction"></param>
-        /// <param name="finishAction"></param>
         /// <param name="duration">默认无任务后休息0ms</param>
-        public TaskPool(int maxThread, Action<object> jobAction, Action finishAction, int duration = 0) : this(
-            maxThread,
-            jobAction,
-            duration)
+        public TaskPool(int maxThread, Action<T> jobAction, int duration = 0) : this(maxThread, duration)
         {
-            this._finishAction = finishAction;
+            this._jobAction = jobAction;
         }
 
-        /// <summary>
-        /// 工作任务
-        /// </summary>
-        private Action<object> _jobAction;
-
-        /// <summary>
-        /// 完成后执行
-        /// </summary>
-        private Action _finishAction;
 
         /// <summary>
         ///
         /// </summary>
-        private List<TaskStateRequest> _tasks;
+        /// <param name="maxThread">最大线程数</param>
+        /// <param name="jobAction">任务</param>
+        /// <param name="destroyJobAction">全部线程销毁后执行</param>
+        /// <param name="duration">默认无任务后休息0ms</param>
+        public TaskPool(int maxThread, Action<T> jobAction, Action destroyJobAction,
+            int duration = 0) : this(
+            maxThread,
+            jobAction,
+            duration)
+        {
+            this._destroyTaskAction = destroyJobAction;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="maxThread">最大线程数</param>
+        /// <param name="jobAction">任务</param>
+        /// <param name="errJobAction">错误委托任务</param>
+        /// <param name="destroyJobAction">全部线程销毁后执行</param>
+        /// <param name="duration">默认无任务后休息0ms</param>
+        public TaskPool(int maxThread, Action<T> jobAction, Action<T, Exception> errJobAction, Action destroyJobAction,
+            int duration = 0) : this(
+            maxThread,
+            jobAction,
+            destroyJobAction,
+            duration)
+        {
+            this._errJobAction = errJobAction;
+        }
+
+        /// <summary>
+        /// 持续多久无任务，线程关闭
+        /// 当此时间大于0时，子线程需要连续达到此时间后才会触发
+        /// </summary>
+        private int _continueTimer { get; set; }
 
         /// <summary>
         /// 是否启动
@@ -76,37 +91,106 @@ namespace EInfrastructure.Core.Tools.Tasks
         private bool IsRun;
 
         /// <summary>
-        ///
+        /// 工作任务
+        /// </summary>
+        private Action<T> _jobAction;
+
+        /// <summary>
+        /// 错误joib工作任务
+        /// </summary>
+        private Action<T, Exception> _errJobAction;
+
+        /// <summary>
+        /// 全部子线程销毁后完成后执行(任务执行完成)
+        /// 当_continueTimer时间大于0时，可能会导致销毁时间拉长
+        /// </summary>
+        private Action _destroyTaskAction;
+
+        #region 添加任务
+
+        /// <summary>
+        /// 添加任务
         /// </summary>
         /// <param name="item"></param>
-        public void AddJob(T item)
+        private void AddJob(T item)
         {
             Guid guid = Guid.NewGuid();
-            _taskBaseCommon.AwaitList.Add(guid, new TaskJobBaseParam<T>(guid, item));
+            _taskBaseCommon.AddJob(new TaskJobBaseParam<T>(guid, item));
+
+            if (this.IsRun)
+            {
+                CheckAndAddTask();
+            }
         }
 
         /// <summary>
-        ///
+        /// 添加任务集合
+        /// </summary>
+        /// <param name="items"></param>
+        public void AddJob(params T[] items)
+        {
+            items.ToList().ForEach(AddJob);
+        }
+
+        #endregion
+
+        #region 启动任务
+
+        /// <summary>
+        /// 启动任务
         /// </summary>
         public void Run()
         {
             if (!IsRun)
             {
                 IsRun = true;
-                Start();
+                CheckAndAddTask();
+                this._tasks.ForEach(task => { task.Key.Start(); });
             }
         }
 
-        private void Start()
+        #endregion
+
+        #region 设置线程超时空闲被移除
+
+        /// <summary>
+        /// 设置线程超时空闲被移除
+        /// </summary>
+        /// <param name="continueTimer">空闲时长</param>
+        public void SetContinueTimer(int continueTimer)
         {
-            Task.Run(() =>
-            {
-                while (this._taskBaseCommon.IsCanProcess)
-                {
-                    StartProcessForWait();
-                }
-            });
+            this._continueTimer = continueTimer;
         }
+
+        #endregion
+
+        #region 设置错误任务
+
+        /// <summary>
+        /// 设置错误任务
+        /// </summary>
+        /// <param name="errJobAction"></param>
+        public void SetErrorJobAction(Action<T, Exception> errJobAction)
+        {
+            this._errJobAction = errJobAction;
+        }
+
+        #endregion
+
+        #region 设置全部子线程销毁后执行任务
+
+        /// <summary>
+        /// 设置全部子线程销毁后执行任务
+        /// </summary>
+        /// <param name="destroyTaskAction"></param>
+        public void SetDestroyJobAction(Action destroyTaskAction)
+        {
+            this._destroyTaskAction = destroyTaskAction;
+        }
+
+        #endregion
+
+        #region 停止任务
 
         /// <summary>
         /// 停止任务
@@ -119,102 +203,122 @@ namespace EInfrastructure.Core.Tools.Tasks
             }
         }
 
-        #region 执行等待中的任务
+        #endregion
 
-        #region 开始执行等待进行的任务
+        #region 清空任务并停止
 
         /// <summary>
-        /// 开始执行等待进行的任务
+        /// 清空任务并停止
         /// </summary>
-        private void StartProcessForWait()
+        public void Clear()
         {
-            if (_taskBaseCommon.AwaitList.Count > 0 && _taskBaseCommon.IsCanProcess)
+            this._taskBaseCommon.Clear();
+            this.IsRun = false;
+        }
+
+        #endregion
+
+        #region private methods
+
+        #region 检查任务数量
+
+        /// <summary>
+        /// 检查任务数量
+        /// </summary>
+        private void CheckAndAddTask()
+        {
+            while (this._tasks.Count < this._taskBaseCommon.GetMaxThread)
             {
-                TaskJobBaseParam<T> taskJobParam = _taskBaseCommon.GetNextJob2<T>();
-                if (taskJobParam != null)
+                this._tasks.Add(new KeyValuePair<Task, Stopwatch>(new Task(StartJob), Stopwatch.StartNew()));
+            }
+        }
+
+        #endregion
+
+        #region 执行任务
+
+        /// <summary>
+        /// 执行任务
+        /// </summary>
+        private void StartJob()
+        {
+            if (this._taskBaseCommon.GetNextJob(out TaskJobBaseParam<T> jobParam) && this.IsRun)
+            {
+                try
                 {
-                    var task = GetTask(taskJobParam.Id);
-                    StartProcess(task, taskJobParam).ContinueWith(taskNow =>
+                    _jobAction.Invoke(jobParam.Data);
+                }
+                catch (Exception ex)
+                {
+                    this._errJobAction?.Invoke(jobParam.Data, ex);
+                }
+
+                this._taskBaseCommon.RemoveJob(jobParam);
+            }
+            else
+            {
+                Thread.Sleep(this._taskBaseCommon._duration);
+            }
+
+            var taskInfo = GetTaskInfo();
+            if (jobParam == null)
+            {
+                taskInfo.Value?.Stop();
+                if (taskInfo.Value?.ElapsedMilliseconds < this._continueTimer)
+                {
+                    taskInfo.Value?.Start();
+                    StartJob();
+                }
+                else
+                {
+                    RemoveTask(taskInfo);
+                    lock (this._tasks)
                     {
-                        if (_taskBaseCommon.OnGoingList.ContainsKey(taskNow.Result))
+                        if (this._tasks.Count == 0)
                         {
-                            _taskBaseCommon.OnGoingList.Remove(taskNow);
+                            this._destroyTaskAction?.Invoke();
                         }
-
-                        var taskInfo = this._tasks.FirstOrDefault(x => x.Task.Result == taskNow.Result);
-                        taskInfo?.Stop();
-                        StartProcessForWait();
-                        return taskNow.Result;
-                    });
+                    }
                 }
             }
             else
             {
-                //无任务
-                if (_taskBaseCommon._duration > 0)
-                {
-                    Thread.Sleep(_taskBaseCommon._duration);
-                }
-
-                StartProcessForWait();
+                taskInfo.Value?.Reset();
+                StartJob();
             }
         }
 
-        #endregion
-
-        #region 开始执行任务
+        #region 得到当前线程任务
 
         /// <summary>
-        /// 开始执行任务
-        /// </summary>
-        /// <param name="task">任务</param>
-        /// <param name="item"></param>
-        private Task<Guid> StartProcess(Task<Guid> task, TaskJobBaseParam<T> item)
-        {
-            if (!_taskBaseCommon.OnGoingList.ContainsKey(item.Id))
-            {
-                _taskBaseCommon.OnGoingList.Add(item.Id, item.Data);
-            }
-            else
-            {
-                return task;
-            }
-
-            return task.ContinueWith(taskNow =>
-            {
-                var taskInfo = this._tasks.FirstOrDefault(x => x.Task.Result == item.Id);
-                taskInfo?.Run();
-                this._jobAction.Invoke(item);
-                return item.Id;
-            });
-        }
-
-        #endregion
-
-        #region MyRegion
-
-        #endregion
-
-        #region 得到空闲的线程任务
-
-        /// <summary>
-        /// 得到空闲的线程任务
+        /// 得到当前线程任务
         /// </summary>
         /// <returns></returns>
-        private Task<Guid> GetTask(Guid id)
+        private KeyValuePair<Task, Stopwatch> GetTaskInfo()
         {
             lock (this._tasks)
             {
-                var task = this._tasks.Where(x => x.IsFree).Select(x => x.Task).FirstOrDefault();
-                if (task == null)
-                {
-                    task = Task.Factory.StartNew(() => { return id; });
-                    this._tasks.Add(new TaskStateRequest(task));
-                }
-
-                return task;
+                return this._tasks.FirstOrDefault(x => x.Key.Id == Task.CurrentId);
             }
         }
+
+        #endregion
+
+        #region 移除当前线程任务
+
+        /// <summary>
+        /// 移除当前线程任务
+        /// </summary>
+        /// <param name="task"></param>
+        private void RemoveTask(KeyValuePair<Task, Stopwatch> task)
+        {
+            lock (this._tasks)
+            {
+                this._tasks.Remove(task);
+            }
+        }
+
+        #endregion
 
         #endregion
 

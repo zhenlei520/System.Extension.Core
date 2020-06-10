@@ -100,16 +100,23 @@ namespace EInfrastructure.Core.Test
         public void Test3()
         {
             int index = 0;
-            TaskPool<string> taskCommon = new TaskPool<string>(2, (name) =>
+            TaskPool<string> taskCommon = null;
+            taskCommon = new TaskPool<string>(200, (name) =>
             {
-                index++;
-                Console.WriteLine("我的名字是：" + name + "，线程id：" + Thread.CurrentThread.ManagedThreadId + "，任务index：" +
-                                  index);
-                Thread.Sleep(new Random().Next(300, 800));
-            },500);
+                lock (index + "")
+                {
+                    index++;
+                    Console.WriteLine("我的名字是：" + name + "，线程id：" + Task.CurrentId + "，任务index：" +
+                                      index);
+                    Thread.Sleep(new Random().Next(100, 300));
+                }
+            }, () =>
+            {
+                Console.WriteLine("线程已销毁");
+            }, 300);
 
             List<Users> userses = new List<Users>();
-            for (var i = 0; i < 30; i++)
+            for (var i = 0; i < 500; i++)
             {
                 userses.Add(new Users()
                 {
@@ -122,10 +129,13 @@ namespace EInfrastructure.Core.Test
                 taskCommon.AddJob(item.Name);
             }
 
+            taskCommon.SetContinueTimer(0);
             taskCommon.Run();
-            while (index < userses.Count)
+            while (index < userses.Count + 1)
             {
-                Thread.Sleep(500);
+                // Thread.Sleep(10000);
+                // Thread.Yield();
+                Thread.Sleep(100);
             }
         }
 

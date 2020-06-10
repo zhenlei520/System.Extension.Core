@@ -3,14 +3,33 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\wangz\.nuget\packages\qiniu\7.3.1.1\lib\Net40\Qiniu.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	
-	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e6365d28_002D3d17_002D4717_002D81af_002D2af962ea3406/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test3 #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=407276d8_002Ddecf_002D4afc_002Dbdcb_002D29424669a4e9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TaskCommonUnitTest.Test3&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.EnvironmentUnitTest.GetProcessorCount&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=82ff0712_002D29ed_002D4c76_002Daffd_002D02189645ca0e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test3 #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TaskCommonUnitTest.Test3&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

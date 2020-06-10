@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.Tools.Tasks
     /// <typeparam name="T2">任务响应的信息</typeparam>
     public class TaskCommon<T, T2>
     {
-        private readonly TaskBaseCommon _taskBaseCommon;
+        private readonly TaskBase2Common _taskBaseCommon;
 
         /// <summary>
         ///
@@ -27,7 +27,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <param name="duration">默认无任务后休息0ms</param>
         public TaskCommon(int maxThread, int duration = 0)
         {
-            _taskBaseCommon = new TaskBaseCommon(maxThread, duration);
+            _taskBaseCommon = new TaskBase2Common(maxThread, duration);
         }
 
         #region 添加任务(有返回值)
@@ -181,7 +181,7 @@ namespace EInfrastructure.Core.Tools.Tasks
     /// <typeparam name="T">传入任务参数</typeparam>
     public class TaskCommon<T>
     {
-        private readonly TaskBaseCommon _taskBaseCommon;
+        private readonly TaskBase2Common _taskBaseCommon;
 
         /// <summary>
         ///
@@ -190,7 +190,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <param name="duration">默认无任务后休息0ms</param>
         public TaskCommon(int maxThread, int duration = 0)
         {
-            _taskBaseCommon = new TaskBaseCommon(maxThread, duration);
+            _taskBaseCommon = new TaskBase2Common(maxThread, duration);
         }
 
         #region 添加任务(无响应值)
