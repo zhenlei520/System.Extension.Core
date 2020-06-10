@@ -105,8 +105,8 @@ namespace EInfrastructure.Core.Test
                 index++;
                 Console.WriteLine("我的名字是：" + name + "，线程id：" + Thread.CurrentThread.ManagedThreadId + "，任务index：" +
                                   index);
-                Thread.Sleep(new Random().Next(1000, 3999));
-            });
+                Thread.Sleep(new Random().Next(300, 800));
+            },500);
 
             List<Users> userses = new List<Users>();
             for (var i = 0; i < 30; i++)
