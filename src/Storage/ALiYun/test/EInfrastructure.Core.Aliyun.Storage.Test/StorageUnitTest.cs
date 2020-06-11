@@ -39,8 +39,8 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
         /// <param name="bucket">空间名</param>
         /// <param name="isResume">开启断点续传</param>
         [Theory]
-        [InlineData("1.jpg", "D:\\temp\\1.jpeg", "einfrastructuretest", false)]
-        [InlineData("2.jpg", "D:\\temp\\2.jpeg", "einfrastructuretest", true)]
+        [InlineData("1.jpg", "D:\\temp\\1.jpg", "einfrastructuretest", false)]
+        [InlineData("2.jpg", "D:\\temp\\2.jpg", "einfrastructuretest", true)]
         public void UploadStream(string key, string sourceKey, string bucket, bool isResume)
         {
             var stream = File.OpenRead(sourceKey);
@@ -81,7 +81,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
         /// <param name="key">文件key</param>
         /// <param name="bucket">空间名</param>
         [Theory]
-        [InlineData("3.jpg", "einfrastructuretest")]
+        [InlineData("2.jpg", "einfrastructuretest")]
         public void SetPermiss(string key, string bucket)
         {
             var ret = _storageProvider.SetPermiss(new SetPermissParam(key, Permiss.Public, new BasePersistentOps()
@@ -101,7 +101,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
         /// <param name="key">文件key</param>
         /// <param name="bucket">空间名</param>
         [Theory]
-        [InlineData("3.jpg", "einfrastructuretest")]
+        [InlineData("2.jpg", "einfrastructuretest")]
         public void GetPermiss(string key, string bucket)
         {
             var ret = _storageProvider.GetPermiss(new GetFilePermissParam(key, new BasePersistentOps()
@@ -142,7 +142,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
         [InlineData("einfrastructuretest")]
         public void ListFiles(string bucket)
         {
-            var ret = _storageProvider.ListFiles(new ListFileFilter("", "", "", 100, new BasePersistentOps()
+            var ret = _storageProvider.ListFiles(new ListFileFilter("", "", true, "", 100, new BasePersistentOps()
             {
                 Bucket = bucket
             }));

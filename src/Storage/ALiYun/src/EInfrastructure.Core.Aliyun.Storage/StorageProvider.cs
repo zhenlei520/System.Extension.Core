@@ -341,7 +341,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 var ret = client.ListObjects(listObjectsRequest);
                 if (ret.HttpStatusCode == HttpStatusCode.OK)
                 {
-                    return new ListFileItemResultDto(true, "success")
+                    var list = new ListFileItemResultDto(true, "success")
                     {
                         CommonPrefixes = ret.CommonPrefixes?.ToList() ?? new List<string>(),
                         Marker = ret.NextMarker,
@@ -355,6 +355,22 @@ namespace EInfrastructure.Core.Aliyun.Storage
                             FileType = Core.Tools.GetStorageClass(x.StorageClass),
                         }).ToList()
                     };
+
+                    if (filter.IsShowHash)
+                    {
+                        var fileList = GetList(new GetFileRangeParam(list.Items.Select(x => x.Key).ToList(),
+                            filter.PersistentOps));
+                        list.Items.ForEach(item =>
+                        {
+                            var fileInfo = fileList.FirstOrDefault(x => x.Key == item.Key);
+                            if (fileInfo != null)
+                            {
+                                item.Hash = fileInfo.Hash;
+                            }
+                        });
+                    }
+
+                    return list;
                 }
 
                 return new ListFileItemResultDto(false,

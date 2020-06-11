@@ -18,6 +18,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
 
         /// <summary>
         /// 根据文件流上传
+        /// 阿里云会覆盖上传
         /// </summary>
         /// <param name="param">文件流上传配置</param>
         /// <param name="isResume">是否允许续传</param>

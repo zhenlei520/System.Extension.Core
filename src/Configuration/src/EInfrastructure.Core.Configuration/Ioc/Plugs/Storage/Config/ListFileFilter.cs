@@ -13,18 +13,26 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
         /// </summary>
         /// <param name="prefix">前缀</param>
         /// <param name="delimiter">指定目录分隔符，列出所有公共前缀（模拟列出目录效果）</param>
+        /// <param name="isShowHash">是否展示文件Hash(阿里云oss计算hash会极大的影响响应速度，谨慎选择)</param>
         /// <param name="marker">标明本次列举文件的起点</param>
         /// <param name="pageSize">每页数量（默认1000条）</param>
         /// <param name="persistentOps">策略</param>
-        public ListFileFilter(string prefix, string delimiter, string marker = "", int pageSize = 1000,
+        public ListFileFilter(string prefix, string delimiter,bool isShowHash=false, string marker = "", int pageSize = 1000,
             BasePersistentOps persistentOps = null)
         {
+            IsShowHash = isShowHash;
             Prefix = prefix;
             Delimiter = delimiter;
             Marker = marker;
             PageSize = pageSize;
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
+
+        /// <summary>
+        /// 是否展示文件Hash
+        /// 阿里云计算hash会极大的影响响应速度，谨慎选择
+        /// </summary>
+        public bool IsShowHash { get; set; }
 
         /// <summary>
         /// 前缀

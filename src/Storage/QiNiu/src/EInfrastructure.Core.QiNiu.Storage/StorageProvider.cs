@@ -241,7 +241,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     Items = listRet.Result.Items.Select(x => new FileInfoDto(true, "success")
                     {
                         Key = x.Key,
-                        Hash = x.Hash,
+                        Hash = filter.IsShowHash ? x.Hash : "",
                         Size = x.Fsize,
                         PutTime = x.PutTime,
                         MimeType = x.MimeType,
