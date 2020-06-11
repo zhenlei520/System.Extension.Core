@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EInfrastructure.Core.Tools.Tasks.Request;
 
 namespace EInfrastructure.Core.Tools.Tasks
 {
@@ -20,7 +21,12 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         ///
         /// </summary>
-        private List<KeyValuePair<Task, Stopwatch>> _tasks;
+        private List<TaskBaseInfo> _tasks;
+
+        /// <summary>
+        /// 是否执行过已完成任务
+        /// </summary>
+        private bool _isExcuteFinish;
 
         /// <summary>
         ///
@@ -30,7 +36,8 @@ namespace EInfrastructure.Core.Tools.Tasks
         private TaskPool(int maxThread, int duration = 0)
         {
             this._taskBaseCommon = new TaskBaseCommon<T>(maxThread, duration);
-            this._tasks = new List<KeyValuePair<Task, Stopwatch>>();
+            this._tasks = new List<TaskBaseInfo>();
+            this._isExcuteFinish = false;
         }
 
         /// <summary>
@@ -50,12 +57,30 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// </summary>
         /// <param name="maxThread">最大线程数</param>
         /// <param name="jobAction">任务</param>
-        /// <param name="destroyJobAction">全部线程销毁后执行</param>
+        /// <param name="finishTaskAction">任务执行完成后执行</param>
         /// <param name="duration">默认无任务后休息0ms</param>
-        public TaskPool(int maxThread, Action<T> jobAction, Action destroyJobAction,
+        public TaskPool(int maxThread, Action<T> jobAction, Action finishTaskAction,
             int duration = 0) : this(
             maxThread,
             jobAction,
+            duration)
+        {
+            this._finishTaskAction = finishTaskAction;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="maxThread">最大线程数</param>
+        /// <param name="jobAction">任务</param>
+        /// <param name="finishTaskAction">任务执行完成后执行</param>
+        /// <param name="destroyJobAction">全部线程销毁后执行</param>
+        /// <param name="duration">默认无任务后休息0ms</param>
+        public TaskPool(int maxThread, Action<T> jobAction, Action finishTaskAction, Action destroyJobAction,
+            int duration = 0) : this(
+            maxThread,
+            jobAction,
+            finishTaskAction,
             duration)
         {
             this._destroyTaskAction = destroyJobAction;
@@ -101,6 +126,11 @@ namespace EInfrastructure.Core.Tools.Tasks
         private Action<T, Exception> _errJobAction;
 
         /// <summary>
+        /// 全部任务执行完成后回调
+        /// </summary>
+        private Action _finishTaskAction;
+
+        /// <summary>
         /// 全部子线程销毁后完成后执行(任务执行完成)
         /// 当_continueTimer时间大于0时，可能会导致销毁时间拉长
         /// </summary>
@@ -114,8 +144,9 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <param name="item"></param>
         private void AddJob(T item)
         {
+            this._isExcuteFinish = false;
             Guid guid = Guid.NewGuid();
-            _taskBaseCommon.AddJob(new TaskJobBaseParam<T>(guid, item));
+            _taskBaseCommon.AddJob(new TaskJobRequest<T>(guid, item));
 
             if (this.IsRun)
             {
@@ -145,7 +176,11 @@ namespace EInfrastructure.Core.Tools.Tasks
             {
                 IsRun = true;
                 CheckAndAddTask();
-                this._tasks.ForEach(task => { task.Key.Start(); });
+                this._tasks.ForEach(task =>
+                {
+                    task.Run();
+                    task.Task.Start();
+                });
             }
         }
 
@@ -160,6 +195,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <param name="continueTimer">空闲时长</param>
         public void SetContinueTimer(int continueTimer)
         {
+            Check.True(continueTimer >= 0 || continueTimer == -1, "线程超时空闲时间有误");
             this._continueTimer = continueTimer;
         }
 
@@ -174,6 +210,19 @@ namespace EInfrastructure.Core.Tools.Tasks
         public void SetErrorJobAction(Action<T, Exception> errJobAction)
         {
             this._errJobAction = errJobAction;
+        }
+
+        #endregion
+
+        #region 设置全部子线程完成后执行
+
+        /// <summary>
+        /// 设置全部子线程完成后执行
+        /// </summary>
+        /// <param name="finishTaskAction"></param>
+        public void SetFinishJobAction(Action finishTaskAction)
+        {
+            this._finishTaskAction = finishTaskAction;
         }
 
         #endregion
@@ -230,7 +279,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         {
             while (this._tasks.Count < this._taskBaseCommon.GetMaxThread)
             {
-                this._tasks.Add(new KeyValuePair<Task, Stopwatch>(new Task(StartJob), Stopwatch.StartNew()));
+                this._tasks.Add(new TaskBaseInfo(new Task(StartJob)));
             }
         }
 
@@ -243,7 +292,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// </summary>
         private void StartJob()
         {
-            if (this._taskBaseCommon.GetNextJob(out TaskJobBaseParam<T> jobParam) && this.IsRun)
+            if (this._taskBaseCommon.GetNextJob(out TaskJobRequest<T> jobParam) && this.IsRun)
             {
                 try
                 {
@@ -264,23 +313,21 @@ namespace EInfrastructure.Core.Tools.Tasks
             var taskInfo = GetTaskInfo();
             if (jobParam == null)
             {
-                taskInfo.Value?.Stop();
-                if (this._continueTimer != -1)
+                taskInfo.Stop();
+                if (CheckIsDestroy(taskInfo))
                 {
-                    if (taskInfo.Value?.ElapsedMilliseconds < this._continueTimer)
+                    lock (this._tasks)
                     {
-                        taskInfo.Value?.Start();
-                        StartJob();
-                    }
-                    else
-                    {
-                        RemoveTask(taskInfo);
-                        lock (this._tasks)
+                        this._tasks.Remove(taskInfo);
+                        if (this._tasks.All(x => x.IsFree) && !this._isExcuteFinish)
                         {
-                            if (this._tasks.Count == 0)
-                            {
-                                this._destroyTaskAction?.Invoke();
-                            }
+                            this._isExcuteFinish = true;
+                            this._finishTaskAction?.Invoke();
+                        }
+
+                        if (this._tasks.Count == 0)
+                        {
+                            this._destroyTaskAction?.Invoke();
                         }
                     }
                 }
@@ -291,11 +338,7 @@ namespace EInfrastructure.Core.Tools.Tasks
             }
             else
             {
-                if (this._continueTimer != -1)
-                {
-                    taskInfo.Value?.Reset();
-                }
-
+                RunCurrentTask(taskInfo);
                 StartJob();
             }
         }
@@ -306,28 +349,41 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// 得到当前线程任务
         /// </summary>
         /// <returns></returns>
-        private KeyValuePair<Task, Stopwatch> GetTaskInfo()
+        private TaskBaseInfo GetTaskInfo()
         {
             lock (this._tasks)
             {
-                return this._tasks.FirstOrDefault(x => x.Key.Id == Task.CurrentId);
+                return this._tasks.FirstOrDefault(x => x.Task.Id == Task.CurrentId);
             }
         }
 
         #endregion
 
-        #region 移除当前线程任务
+        #region 重置当前线程任务
 
         /// <summary>
-        /// 移除当前线程任务
+        /// 重置当前线程任务
         /// </summary>
-        /// <param name="task"></param>
-        private void RemoveTask(KeyValuePair<Task, Stopwatch> task)
+        private void RunCurrentTask(TaskBaseInfo taskBaseInfo)
         {
-            lock (this._tasks)
+            if (!(this._continueTimer != -1 && taskBaseInfo.GetStagnationTotalMilliseconds() > this._continueTimer))
             {
-                this._tasks.Remove(task);
+                taskBaseInfo.Reset();
             }
+        }
+
+        #endregion
+
+        #region 检查线程是否可以被销毁
+
+        /// <summary>
+        /// 检查线程是否可以被销毁
+        /// </summary>
+        /// <param name="taskBaseInfo"></param>
+        /// <returns></returns>
+        private bool CheckIsDestroy(TaskBaseInfo taskBaseInfo)
+        {
+            return this._continueTimer != -1 && taskBaseInfo.GetStagnationTotalMilliseconds() > this._continueTimer;
         }
 
         #endregion
@@ -335,5 +391,95 @@ namespace EInfrastructure.Core.Tools.Tasks
         #endregion
 
         #endregion
+    }
+
+    /// <summary>
+    /// 线程基本信息
+    /// </summary>
+    internal class TaskBaseInfo
+    {
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="task"></param>
+        public TaskBaseInfo(Task task)
+        {
+            this.Task = task;
+            this.IsFree = true;
+            this.StagnationTime = Stopwatch.StartNew();
+        }
+
+        /// <summary>
+        /// 任务信息
+        /// </summary>
+        ///
+        internal Task Task { get; private set; }
+
+        /// <summary>
+        /// 线程是否空间
+        /// </summary>
+        public bool IsFree { get; private set; }
+
+        /// <summary>
+        /// 停滞时间
+        /// </summary>
+        public Stopwatch StagnationTime { get; private set; }
+
+        /// <summary>
+        /// 线程启动
+        /// </summary>
+        public void Run()
+        {
+            this.IsFree = false;
+            this.StagnationTime = null;
+        }
+
+        /// <summary>
+        /// 线程停滞
+        /// </summary>
+        public void Stop()
+        {
+            if (!this.IsFree)
+            {
+                this.IsFree = true;
+
+                this.StagnationTime = Stopwatch.StartNew();
+            }
+        }
+
+        /// <summary>
+        /// 重置线程
+        /// </summary>
+        public void Reset()
+        {
+            this.IsFree = false;
+            this.StagnationTime = null;
+        }
+
+        /// <summary>
+        /// 得到线程停滞时间（ms）
+        /// 返回-1为线程未停滞
+        /// </summary>
+        /// <returns></returns>
+        public long GetStagnationTotalMilliseconds()
+        {
+            try
+            {
+                if (!this.IsFree)
+                {
+                    return -1;
+                }
+
+                this.StagnationTime?.Stop();
+                var timer = this.StagnationTime?.ElapsedMilliseconds ?? 0;
+                this.StagnationTime?.Start();
+                return timer;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("异常：" + e.ExtractAllStackTrace());
+                return 0;
+            }
+        }
     }
 }

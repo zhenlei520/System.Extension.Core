@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using EInfrastructure.Core.Tools.Tasks.Request;
 
 namespace EInfrastructure.Core.Tools.Tasks
 {
@@ -26,12 +27,12 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         /// 等待中的任务
         /// </summary>
-        private readonly ConcurrentQueue<TaskJobBaseParam<T>> _awaitList;
+        private readonly ConcurrentQueue<TaskJobRequest<T>> _awaitList;
 
         /// <summary>
         /// 进行中的任务
         /// </summary>
-        private readonly HashSet<TaskJobBaseParam<T>> _onGoingList;
+        private readonly HashSet<TaskJobRequest<T>> _onGoingList;
 
         /// <summary>
         /// 无任务后休息的时间ms
@@ -50,8 +51,8 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <param name="duration">默认无任务后休息500ms(防止死循环)</param>
         internal TaskBaseCommon(int maxThread, int duration = 500)
         {
-            this._awaitList = new ConcurrentQueue<TaskJobBaseParam<T>>();
-            this._onGoingList = new HashSet<TaskJobBaseParam<T>>();
+            this._awaitList = new ConcurrentQueue<TaskJobRequest<T>>();
+            this._onGoingList = new HashSet<TaskJobRequest<T>>();
             _maxThread = maxThread;
             _duration = duration;
             Check.True(_duration >= 0, "duration设置有误");
@@ -97,7 +98,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// 添加任务
         /// </summary>
         /// <param name="taskJobBaseParam"></param>
-        internal void AddJob(TaskJobBaseParam<T> taskJobBaseParam)
+        internal void AddJob(TaskJobRequest<T> taskJobBaseParam)
         {
             if (this._awaitList.All(x => x.Id != taskJobBaseParam.Id))
             {
@@ -113,7 +114,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// 移除任务
         /// </summary>
         /// <param name="taskJobBaseParam"></param>
-        internal void RemoveJob(TaskJobBaseParam<T> taskJobBaseParam)
+        internal void RemoveJob(TaskJobRequest<T> taskJobBaseParam)
         {
             lock (this._onGoingList)
             {
@@ -132,7 +133,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// 得到下一个任务
         /// </summary>
         /// <returns></returns>
-        internal bool GetNextJob(out TaskJobBaseParam<T> jobBaseParam)
+        internal bool GetNextJob(out TaskJobRequest<T> jobBaseParam)
         {
             lock (this._onGoingList)
             {

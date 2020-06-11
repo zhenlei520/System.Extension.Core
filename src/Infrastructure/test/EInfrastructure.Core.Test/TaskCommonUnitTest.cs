@@ -26,7 +26,7 @@ namespace EInfrastructure.Core.Test
         {
             int index = 0;
             TaskPool<string> taskCommon = null;
-            taskCommon = new TaskPool<string>(200, (name) =>
+            taskCommon = new TaskPool<string>(50, (name) =>
             {
                 lock (index + "")
                 {
@@ -37,11 +37,14 @@ namespace EInfrastructure.Core.Test
                 }
             }, () =>
             {
+                Console.WriteLine("任务执行完成");
+            }, () =>
+            {
                 Console.WriteLine("线程已销毁");
             }, 300);
 
             List<Users> userses = new List<Users>();
-            for (var i = 0; i < 500; i++)
+            for (var i = 0; i < 200; i++)
             {
                 userses.Add(new Users()
                 {
