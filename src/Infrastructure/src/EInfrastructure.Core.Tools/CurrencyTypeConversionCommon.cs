@@ -30,12 +30,12 @@ namespace EInfrastructure.Core.Tools
                 currencyType = CurrencyType.Cny;
             }
 
-            IEnumerable<IDecimalConversionToCurrency> list =
-                new ServiceProvider().GetServices<IDecimalConversionToCurrency>();
+            IEnumerable<ICurrencyProvider> list =
+                new ServiceProvider().GetServices<ICurrencyProvider>();
             var provider = list.FirstOrDefault(x => x.GetCurrencyType.Equals(currencyType));
             if (provider == null)
             {
-                throw new BusinessException("不支持的货币类型");
+                throw new BusinessException("暂不支持当前货币转换");
             }
 
             return provider.ConvertToCurrency(param);

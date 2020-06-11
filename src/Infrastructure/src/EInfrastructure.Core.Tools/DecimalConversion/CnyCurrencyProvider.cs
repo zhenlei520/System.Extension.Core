@@ -9,7 +9,7 @@ namespace EInfrastructure.Core.Tools.DecimalConversion
     /// <summary>
     ///
     /// </summary>
-    internal class DecimalConversionToSimplifiedChinese : IDecimalConversionToCurrency
+    internal class CnyCurrencyProvider : ICurrencyProvider
     {
         /// <summary>
         /// 数值类型转货币

@@ -8,7 +8,7 @@ namespace EInfrastructure.Core.Tools.DecimalConversion
     /// <summary>
     ///
     /// </summary>
-    internal interface IDecimalConversionToCurrency
+    internal interface ICurrencyProvider
     {
         /// <summary>
         /// 数值类型转货币
