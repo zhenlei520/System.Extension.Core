@@ -100,12 +100,16 @@ namespace EInfrastructure.Core.QiNiu.Storage
                         if (request.PageSize != -1)
                         {
                             var isTruncated = list.Take(request.PageSize).Count() != list.Count;
-                            return new BucketItemResultDto(list.Take(request.PageSize).ToList(), request.Prefix,
+                            return new BucketItemResultDto(
+                                list.Take(request.PageSize).Select(x => new BucketItemResultDto.BucketItemDto(null, x))
+                                    .ToList(), request.Prefix,
                                 isTruncated, request.Marker,
                                 isTruncated ? list.Take(request.PageSize).LastOrDefault() : "");
                         }
 
-                        return new BucketItemResultDto(list.ToList(), request.Prefix, false, request.Marker, "");
+                        return new BucketItemResultDto(
+                            list.Select(x => new BucketItemResultDto.BucketItemDto(null, x)).ToList(), request.Prefix,
+                            false, request.Marker, "");
                     },
                     resultResponse =>
                         new BucketItemResultDto(request.Prefix, request.Marker,
@@ -188,7 +192,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
                 return new OperateResultDto(false, "lose 请稍后再试");
             }
 
-            if (ret.BucketList.Contains(bucket))
+            if (ret.BucketList.Any(x => x.Name == bucket))
             {
                 return new OperateResultDto(true, "success");
             }

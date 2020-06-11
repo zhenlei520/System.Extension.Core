@@ -13,7 +13,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket
         /// <summary>
         /// 空间列表
         /// </summary>
-        public List<string> BucketList { get; private set; }
+        public List<BucketItemDto> BucketList { get; private set; }
 
         /// <summary>
         /// 前缀
@@ -44,7 +44,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket
         /// <param name="isTruncated">请求中返回的结果是否被截断。返回值：true、false</param>
         /// <param name="marker">标明这次GetBucket（ListObjects）的起点</param>
         /// <param name="nextMaker">下次的起点</param>
-        public BucketItemResultDto(List<string> bucketList, string prefix, bool? isTruncated, string marker,
+        public BucketItemResultDto(List<BucketItemDto> bucketList, string prefix, bool? isTruncated, string marker,
             string nextMaker) : base(true, "success")
         {
             BucketList = bucketList;
@@ -67,6 +67,34 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket
             Marker = marker;
             IsTruncated = null;
             BucketList = null;
+        }
+
+        /// <summary>
+        /// 空间详细
+        /// </summary>
+        public class BucketItemDto
+        {
+            /// <summary>
+            ///
+            /// </summary>
+            /// <param name="zone">空间区域</param>
+            /// <param name="name">空间名称</param>
+            public BucketItemDto(int? zone, string name)
+            {
+                this.Zone = zone;
+                this.Name = name;
+            }
+
+            /// <summary>
+            /// 空间区域
+            /// null代表获取失败
+            /// </summary>
+            public int? Zone { get; private set; }
+
+            /// <summary>
+            /// 空间名称
+            /// </summary>
+            public string Name { get; private set; }
         }
     }
 }

@@ -74,7 +74,10 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 var ret = client.ListBuckets(listBucketsRequest);
                 if (ret.HttpStatusCode == HttpStatusCode.OK)
                 {
-                    return new BucketItemResultDto(ret.Buckets.Select(x => x.Name).ToList(), ret.Prefix,
+                    return new BucketItemResultDto(
+                        ret.Buckets.Select(x =>
+                            new BucketItemResultDto.BucketItemDto((int?)Core.Tools.GetZoneByLocation(x.Location),
+                                x.Name)).ToList(), ret.Prefix,
                         ret.IsTruncated,
                         ret.Marker, ret.NextMaker);
                 }

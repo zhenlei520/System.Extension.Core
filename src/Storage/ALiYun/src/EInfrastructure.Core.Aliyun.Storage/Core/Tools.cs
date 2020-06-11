@@ -9,6 +9,8 @@ using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
+using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Attributes;
 using StorageClass = Aliyun.OSS.StorageClass;
 
 namespace EInfrastructure.Core.Aliyun.Storage.Core
@@ -18,6 +20,23 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
     /// </summary>
     internal class Tools : Maps
     {
+        #region 根据endpoint得到存储区域
+
+        /// <summary>
+        /// 根据endpoint得到存储区域
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
+        internal static ZoneEnum? GetZoneByLocation(string location)
+        {
+            var ret= typeof(ZoneEnum).ToEnumAndAttributes<ENameAttribute>()
+                .Where(x => x.Value.Name.Contains(location))
+                .Select(x => x.Key).FirstOrDefault();
+            return (ZoneEnum?) ret;
+        }
+
+        #endregion
+
         #region 得到访问权限
 
         /// <summary>
