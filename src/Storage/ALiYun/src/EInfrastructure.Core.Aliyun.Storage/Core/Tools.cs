@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
         /// <returns></returns>
         internal static ZoneEnum? GetZoneByLocation(string location)
         {
-            var ret= typeof(ZoneEnum).ToEnumAndAttributes<ENameAttribute>()
+            var ret = typeof(ZoneEnum).ToEnumAndAttributes<ENameAttribute>()
                 .Where(x => x.Value.Name.Contains(location))
                 .Select(x => x.Key).FirstOrDefault();
             return (ZoneEnum?) ret;
@@ -214,6 +214,70 @@ namespace EInfrastructure.Core.Aliyun.Storage.Core
             EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass storageClass)
         {
             return StorageClassList.Where(x => x.Key.Id == storageClass.Id).Select(x => x.Value).FirstOrDefault();
+        }
+
+        #endregion
+
+        #region 得到新的ObjectMetadata（从原来旧的基础上）
+
+        /// <summary>
+        /// 得到新的ObjectMetadata（从原来旧的基础上）
+        /// </summary>
+        /// <param name="sourceObjectMetadata"></param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        internal static ObjectMetadata GetObjectMetadataBySourceObjectMetadata(ObjectMetadata sourceObjectMetadata,
+            string key,
+            string value)
+        {
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            if (key != "CacheControl")
+            {
+                objectMetadata.CacheControl = sourceObjectMetadata.CacheControl;
+            }
+
+            if (key != "ContentDisposition")
+            {
+                objectMetadata.ContentDisposition = sourceObjectMetadata.ContentDisposition;
+            }
+
+            if (key != "ContentEncoding")
+            {
+                objectMetadata.ContentEncoding = sourceObjectMetadata.ContentEncoding;
+            }
+
+            if (key != "ContentLength")
+            {
+                objectMetadata.ContentLength = sourceObjectMetadata.ContentLength;
+            }
+
+            if (key != "ContentMd5")
+            {
+                objectMetadata.ContentMd5 = sourceObjectMetadata.ContentMd5;
+            }
+
+            if (key != "Crc64")
+            {
+                objectMetadata.Crc64 = sourceObjectMetadata.Crc64;
+            }
+
+            if (key != "ETag")
+            {
+                objectMetadata.ETag = sourceObjectMetadata.ETag;
+            }
+
+            if (key != "ExpirationTime")
+            {
+                objectMetadata.ExpirationTime = sourceObjectMetadata.ExpirationTime;
+            }
+
+            if (objectMetadata.HttpMetadata.Any(x => x.Key != key))
+            {
+                objectMetadata.AddHeader(key, value);
+            }
+
+            return objectMetadata;
         }
 
         #endregion

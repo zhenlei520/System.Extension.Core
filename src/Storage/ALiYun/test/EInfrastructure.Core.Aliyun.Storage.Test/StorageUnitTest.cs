@@ -1,7 +1,9 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using EInfrastructure.Core.Aliyun.Storage.Test.Base;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
@@ -136,7 +138,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
         /// <summary>
         /// 获取指定前缀的文件列表
         /// </summary>
-        /// <param name="filter">筛选</param>
+        /// <param name="bucket">筛选</param>
         /// <returns></returns>
         [Theory]
         [InlineData("einfrastructuretest")]
@@ -167,6 +169,157 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
                 Bucket = bucket
             }));
             Check.True(ret.State, "校验不一致");
+        }
+
+        #endregion
+
+        #region 生存时间
+
+        #region 设置生存时间
+
+        /// <summary>
+        /// 设置生存时间
+        /// </summary>
+        /// <param name="bucuket"></param>
+        /// <param name="key">文件key</param>
+        [Theory]
+        [InlineData("einfrastructuretest", "2.jpg")]
+        public void SetExpire(string bucuket, string key)
+        {
+            var ret = this._storageProvider.SetExpire(new SetExpireParam(key, 7, new BasePersistentOps()
+            {
+                Bucket = bucuket,
+            }));
+        }
+
+        #endregion
+
+        #region 批量设置文件key的过期时间
+
+        /// <summary>
+        /// 批量设置文件key的过期时间
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <param name="bucuket"></param>
+        [Theory]
+        [InlineData("2.jpg,1.jpg", "einfrastructuretest")]
+        public void SetExpireRange(string keys, string bucuket)
+        {
+            var ret = this._storageProvider.SetExpireRange(new SetExpireRangeParam(keys.ConvertStrToList<string>(), 7,
+                new BasePersistentOps()
+                {
+                    Bucket = bucuket
+                }));
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 修改文件MimeType
+
+        #region 修改文件MimeType
+
+        /// <summary>
+        /// 修改文件MimeType
+        /// </summary>
+        /// <param name="bucket">空间名称</param>
+        /// <param name="key">文件key</param>
+        /// <param name="mimeType"></param>
+        [Theory]
+        [InlineData("einfrastructuretest", "2.jpg", "image/png")]
+        public void ChangeMime(string bucket, string key, string mimeType)
+        {
+            var ret = this._storageProvider.ChangeMime(new ChangeMimeParam(key, mimeType, new BasePersistentOps()
+            {
+                Bucket = bucket
+            }));
+        }
+
+        #endregion
+
+        #region 批量更改文件mime
+
+        /// <summary>
+        /// 批量更改文件mime
+        /// </summary>
+        /// <param name="bucket"></param>
+        /// <param name="key"></param>
+        /// <param name="mimeType"></param>
+        [Theory]
+        [InlineData("einfrastructuretest", "1.jpg,2.jpg", "image/png")]
+        public void ChangeMimeRange(string bucket, string key, string mimeType)
+        {
+            var ret = this._storageProvider.ChangeMimeRange(new ChangeMimeRangeParam(key.ConvertStrToList<string>(),
+                mimeType,
+                new BasePersistentOps()
+                {
+                    Bucket = bucket
+                }));
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 更改文件存储类型
+
+        /// <summary>
+        /// 更改文件存储类型
+        /// </summary>
+        /// <param name="bucket">空间名</param>
+        /// <param name="key">文件key</param>
+        /// <param name="storageClass">存储类型</param>
+        [Theory]
+        [InlineData("einfrastructuretest", "1.jpg", 1)]
+        public void ChangeType(string bucket, string key, int storageClass)
+        {
+            var ret = this._storageProvider.ChangeType(new ChangeTypeParam(key,
+                StorageClass.GetAll<StorageClass>().FirstOrDefault(x => x.Id == storageClass), new BasePersistentOps()
+                {
+                    Bucket = bucket
+                }));
+        }
+
+        #endregion
+
+        #region 批量更改文件类型
+
+        /// <summary>
+        /// 批量更改文件类型
+        /// </summary>
+        /// <param name="bucket"></param>
+        /// <param name="keys"></param>
+        /// <param name="storageClass"></param>
+        [Theory]
+        [InlineData("einfrastructuretest", "1.jpg,2.jpg", 1)]
+        public void ChangeTypeRange(string bucket, string keys, int storageClass)
+        {
+            var ret = this._storageProvider.ChangeTypeRange(new ChangeTypeRangeParam(keys.ConvertStrToList<string>(),
+                StorageClass.GetAll<StorageClass>().FirstOrDefault(x => x.Id == storageClass), new BasePersistentOps()
+                {
+                    Bucket = bucket
+                }));
+        }
+
+        #endregion
+
+        #region 抓取文件
+
+        /// <summary>
+        /// 抓取文件
+        /// </summary>
+        /// <param name="bucket"></param>
+        /// <param name="sourceFileKey"></param>
+        /// <param name="key"></param>
+        [Theory]
+        [InlineData("einfrastructuretest", "https://einfrastructuretest.oss-cn-hangzhou.aliyuncs.com/1.jpg?Expires=1591974037&OSSAccessKeyId=TMP.3Kk5QQChR8pvboJMzY6s2NJJxcWHrcstddxxTfvhyVN48XJXDj2qSk1VX2uinrQoFz5oaRuuu77YevaVVNfGTpcxJqPP7Y&Signature=8le47rJL0k8hl0SHSO2wCcvXc6c%3D", "3.jpg")]
+        public void FetchFile(string bucket, string sourceFileKey, string key)
+        {
+            var ret = this._storageProvider.FetchFile(new FetchFileParam(sourceFileKey,key,new BasePersistentOps()
+            {
+                Bucket = bucket
+            }));
         }
 
         #endregion

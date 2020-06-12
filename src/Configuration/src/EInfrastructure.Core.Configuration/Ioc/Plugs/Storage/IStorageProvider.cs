@@ -69,17 +69,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
 
         #endregion
 
-        #region 得到下载凭证
-
-        /// <summary>
-        /// 得到下载凭证
-        /// </summary>
-        /// <param name="url">url地址</param>
-        /// <returns></returns>
-        string GetDownloadToken(string url);
-
-        #endregion
-
         #endregion
 
         #region 检查文件是否存在

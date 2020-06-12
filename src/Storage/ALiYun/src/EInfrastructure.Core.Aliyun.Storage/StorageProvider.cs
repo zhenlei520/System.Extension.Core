@@ -266,21 +266,6 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
         #endregion
 
-        #region 得到下载凭证
-
-        /// <summary>
-        /// 得到下载凭证
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public string GetDownloadToken(string url)
-        {
-            return GetManageToken(new GetManageTokenParam(url, new BasePersistentOps()));
-        }
-
-        #endregion
-
         #endregion
 
         #region 检查文件是否存在
@@ -812,6 +797,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         {
             return ToolCommon.GetResponse(() =>
             {
+                new SetExpireParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
                 var bucket = Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket);
@@ -896,13 +882,8 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 var ret = client.GetObject(bucket, request.Key);
                 if (ret != null && ret.HttpStatusCode == HttpStatusCode.OK)
                 {
-                    ObjectMetadata objectMetadata = ret.Metadata;
-                    if (objectMetadata == null)
-                    {
-                        objectMetadata = new ObjectMetadata();
-                    }
-
-                    objectMetadata.ContentType = request.MimeType;
+                    ObjectMetadata objectMetadata =Core.Tools.GetObjectMetadataBySourceObjectMetadata(ret.Metadata, "ContentType",
+                        request.MimeType);
                     client.ModifyObjectMeta(bucket, request.Key, objectMetadata);
                     return new ChangeMimeResultDto(true, request.Key, "success");
                 }
@@ -985,20 +966,9 @@ namespace EInfrastructure.Core.Aliyun.Storage
                     var ret = client.GetObject(bucket, request.Key);
                     if (ret != null && ret.HttpStatusCode == HttpStatusCode.OK)
                     {
-                        ObjectMetadata objectMetadata = new ObjectMetadata();
-                        foreach (var metadata in ret.Metadata.HttpMetadata)
-                        {
-                            if (metadata.Key != "x-oss-storage-class")
-                            {
-                                objectMetadata.AddHeader(metadata.Key, metadata.Value);
-                            }
-                            else
-                            {
-                                objectMetadata.AddHeader(metadata.Key,
-                                    Core.Tools.GetStorageClass(request.Type).ToString());
-                            }
-                        }
-
+                        ObjectMetadata objectMetadata =
+                            Core.Tools.GetObjectMetadataBySourceObjectMetadata(ret.Metadata, "x-oss-storage-class",
+                                Core.Tools.GetStorageClass(request.Type).ToString());
                         client.ModifyObjectMeta(bucket, request.Key, objectMetadata);
                         return new ChangeTypeResultDto(true, request.Key, "success");
                     }

@@ -119,19 +119,11 @@ namespace EInfrastructure.Core.UCloud.Storage
 
         #endregion
 
-        #region 得到下载凭证
 
-        /// <summary>
-        /// 得到下载凭证
-        /// </summary>
-        /// <param name="url">url地址</param>
-        /// <returns></returns>
-        public string GetDownloadToken(string url)
+        public DownloadResultDto Download(FileDownloadParam request)
         {
             throw new NotImplementedException();
         }
-
-        #endregion
 
         #endregion
 
@@ -259,7 +251,6 @@ namespace EInfrastructure.Core.UCloud.Storage
 
         #endregion
 
-
         #region 得到访问地址
 
         /// <summary>
@@ -268,21 +259,6 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <param name="request"></param>
         /// <returns></returns>
         public GetVisitUrlResultDto GetVisitUrl(GetVisitUrlParam request)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-
-        #region 下载
-
-        /// <summary>
-        /// 下载文件
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public DownloadResultDto Download(FileDownloadParam request)
         {
             throw new NotImplementedException();
         }

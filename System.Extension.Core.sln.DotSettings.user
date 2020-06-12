@@ -23,6 +23,12 @@
     &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.SetPermiss&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.Exist&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.UploadStream&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.SetExpire&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.SetExpireRange&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.ChangeMime&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.ChangeMimeRange&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.ChangeType&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.FetchFile&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
