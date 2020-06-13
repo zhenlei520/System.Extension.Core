@@ -409,7 +409,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
                 new BasePersistentOps()
                 {
                     Bucket = sourceBucket,
-                    ChunkUnit = ChunkUnit.U4096K//如果文件大于1G，则需要设置此属性为U4096K
+                    ChunkUnit = ChunkUnit.U4096K //如果文件大于1G，则需要设置此属性为U4096K
                 }));
         }
 
@@ -418,7 +418,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
         #region 移动文件
 
         [Theory]
-        [InlineData("4", "einfrastructuretest2","4.jpg", "einfrastructuretest2")]
+        [InlineData("4", "einfrastructuretest2", "4.jpg", "einfrastructuretest2")]
         public void Move(string sourceKey, string sourceBucket, string optKey, string optBucket)
         {
             var ret = this._storageProvider.Move(new MoveFileParam(sourceKey, optBucket, optKey, false,
@@ -426,6 +426,35 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
                 {
                     Bucket = sourceBucket
                 }));
+        }
+
+        #endregion
+
+        #region 清空仓库
+
+        /// <summary>
+        /// 清空仓库
+        /// </summary>
+        /// <param name="bucket">筛选</param>
+        /// <returns></returns>
+        [Theory]
+        [InlineData("einfrastructuretest2")]
+        public void Clear(string bucket)
+        {
+            var ret = _storageProvider.ListFiles(new ListFileFilter("", "", true, "", 100, new BasePersistentOps()
+            {
+                Bucket = bucket
+            }));
+            if (ret.State)
+            {
+                var clearRet = this._storageProvider.RemoveRange(new RemoveRangeParam(ret.Items.Select(x => x.Key).ToList(),
+                    new BasePersistentOps()
+                    {
+                        Bucket = bucket
+                    }));
+            }
+
+            Check.True(ret.State, "校验不一致");
         }
 
         #endregion

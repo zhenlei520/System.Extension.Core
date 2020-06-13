@@ -7,6 +7,9 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.CopyFile&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.Move&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.DeteleBucket&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.BucketUnitTest.DeleteBucket&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.StorageUnitTest.Clear&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
