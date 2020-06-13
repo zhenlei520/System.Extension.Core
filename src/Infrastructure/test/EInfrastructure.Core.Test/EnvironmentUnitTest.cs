@@ -17,10 +17,6 @@ namespace EInfrastructure.Core.Test
     /// </summary>
     public class EnvironmentUnitTest : BaseUnitTest
     {
-        public EnvironmentUnitTest(ITestOutputHelper output) : base(output)
-        {
-        }
-
         /// <summary>
         /// 得到Cpu核心数
         /// </summary>
@@ -32,11 +28,11 @@ namespace EInfrastructure.Core.Test
             var runInfo = EnvironmentCommon.GetRun;
             var str = CustomAttributeCommon<ENameAttribute, string>.GetCustomAttributeValue(
                 typeof(EnvironmentCommon.RunInfo), x => x.Name,"UseMemory");
-            while (true)
-            {
-                Console.WriteLine(str+"："+runInfo.UseMemory);
-                Thread.Sleep(500);
-            }
+            // while (true)
+            // {
+            //     Console.WriteLine(str+"："+runInfo.UseMemory);
+            //     Thread.Sleep(500);
+            // }
 
             return EnvironmentCommon.GetRun.ProcessorCount;
         }

@@ -14,7 +14,7 @@ namespace EInfrastructure.Core.Test
         [InlineData(1, 1)]
         public void ConvertToShort(int num, short s)
         {
-            Check.True(1.ConvertToShort() == s, "方法有误");
+            Check.True(num.ConvertToShort() == s, "方法有误");
         }
 
         [Theory]
@@ -40,8 +40,10 @@ namespace EInfrastructure.Core.Test
             "http://t8.baidu.com/it/u=1484500186,1503043093&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1592303979&t=d945f1509afab787aa33a3519aa51ba4")]
         public void GetBase64String(string url)
         {
-            var stream = new HttpClient("http://t8.baidu.com").GetStream(
-                "it/u=1484500186,1503043093&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1592303979&t=d945f1509afab787aa33a3519aa51ba4");
+            Uri uri=new Uri(url);
+            string host = $"{uri.Scheme}://{uri.Host}";
+            var stream = new HttpClient(host).GetStream(
+                url.Replace(host, ""));
             string base64 = stream.ConvertToBase64();
         }
     }
