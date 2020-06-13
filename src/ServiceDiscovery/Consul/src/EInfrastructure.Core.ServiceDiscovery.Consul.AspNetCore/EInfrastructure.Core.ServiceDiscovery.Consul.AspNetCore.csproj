@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-   <Version>2.2.0</Version>
+    <Version>2.3.0</Version>
     <Authors>zhenlei520</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>zhenlei520</Company>
@@ -13,7 +13,7 @@
     <PackageTags>EInfrastructure.Core Consul</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
     <PackageIcon>packageIcon.png</PackageIcon>
-    <PackageIconUrl />
+    <PackageIconUrl/>
 
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -27,12 +27,12 @@
       <Version>0.7.2.6</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Mvc">
-      <Version>2.2.0</Version>
+      <Version>2.1.0</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.0"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Tools\Validation\src\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj" />
+    <ProjectReference Include="..\..\..\..\Tools\Validation\src\EInfrastructure.Core.Validation\EInfrastructure.Core.Validation.csproj"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\packageIcon.png">

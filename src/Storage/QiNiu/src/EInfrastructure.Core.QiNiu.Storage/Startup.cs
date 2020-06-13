@@ -76,8 +76,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
             }
 
             QiNiuStorageConfig qiNiuStorageConfig = new QiNiuStorageConfig(section.GetValue<string>("AccessKey"),
-                section.GetValue<string>("SecretKey"), section.GetValue<ZoneEnum>("Zones"),
-                section.GetValue<string>("Host"), section.GetValue<string>("Bucket"))
+                section.GetValue<string>("SecretKey"), section.GetValue<ZoneEnum>("DefaultZones"),
+                section.GetValue<string>("DefaultHost"), section.GetValue<string>("DefaultBucket"))
             {
                 IsUseHttps = section.GetValue<bool>("IsUseHttps"),
                 UseCdnDomains = section.GetValue<bool>("UseCdnDomains"),
