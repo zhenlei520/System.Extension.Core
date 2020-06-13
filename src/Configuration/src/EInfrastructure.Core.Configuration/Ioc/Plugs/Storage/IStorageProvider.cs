@@ -271,7 +271,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// </summary>
         /// <param name="fetchFileParam">资源信息</param>
         /// <returns></returns>
-        bool FetchFile(FetchFileParam fetchFileParam);
+        FetchFileResultDto FetchFile(FetchFileParam fetchFileParam);
 
         #endregion
     }

@@ -4,24 +4,24 @@
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage
 {
     /// <summary>
-    /// 复制文件响应
+    /// 抓取文件响应
     /// </summary>
-    public class CopyFileResultDto: OperateResultDto
+    public class FetchFileResultDto:OperateResultDto
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="state">操作结果</param>
-        /// <param name="key">源文件key</param>
+        /// <param name="state">状态</param>
+        /// <param name="extend">扩展信息</param>
         /// <param name="msg">提示信息</param>
-        public CopyFileResultDto(bool state, string key, string msg) : base(state, msg)
+        public FetchFileResultDto(bool state,object extend, string msg) : base(state, msg)
         {
-            Key = key;
+            Extend = extend;
         }
 
         /// <summary>
-        /// 源文件key
+        /// 扩展信息
         /// </summary>
-        public string Key { get; }
+        public object Extend { get; private set; }
     }
 }

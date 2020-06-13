@@ -357,7 +357,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="fetchFileParam">资源信息</param>
         /// <returns></returns>
-        public bool FetchFile(FetchFileParam fetchFileParam)
+        public FetchFileResultDto FetchFile(FetchFileParam fetchFileParam)
         {
             throw new NotImplementedException();
         }

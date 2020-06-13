@@ -255,7 +255,6 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public string GetManageToken(GetManageTokenParam request)
         {
             ICredentialsProvider provider = (ICredentialsProvider) new DefaultCredentialsProvider(
@@ -515,6 +514,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
 
         /// <summary>
         /// 复制文件（两个文件需要在同一账号下）
+        /// 对于小于1G的文件（不支持跨地域拷贝。例如，不支持将杭州存储空间里的文件拷贝到青岛），另外需将分片设置为4M，其他分类不支持
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -529,6 +529,16 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 var targetBucket =
                     Core.Tools.GetBucket(_aLiYunConfig, request.PersistentOps.Bucket, request.OptBucket);
 
+                if (!request.IsForce)
+                {
+                    var newBasePersistentOps = request.PersistentOps.Clone();
+                    newBasePersistentOps.Bucket = request.OptBucket;
+                    var existRet = this.Exist(new ExistParam(request.OptKey, newBasePersistentOps));
+                    if (existRet.State)
+                    {
+                        return new CopyFileResultDto(false,request.SourceKey,"复制失败，文件已存在");
+                    }
+                }
                 if (Core.Tools.GetChunkUnit(_aLiYunConfig, request.PersistentOps.ChunkUnit).Id !=
                     ChunkUnit.U4096K.Id)
                 {
@@ -661,18 +671,30 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <summary>
         /// 移动文件（两个文件需要在同一账号下）
         /// </summary>
-        /// <param name="moveFileParam"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public MoveFileResultDto Move(MoveFileParam moveFileParam)
+        public MoveFileResultDto Move(MoveFileParam request)
         {
             return ToolCommon.GetResponse(() =>
             {
-                new MoveFileParamValidator(_aLiYunConfig).Validate(moveFileParam).Check(HttpStatus.Err.Name);
-                CopyTo(new CopyFileParam(moveFileParam.SourceKey, moveFileParam.OptKey, moveFileParam.OptBucket, true,
-                    moveFileParam.PersistentOps));
-                Remove(new RemoveParam(moveFileParam.SourceKey, moveFileParam.PersistentOps));
-                return new MoveFileResultDto(true, moveFileParam.SourceKey, "success");
-            }, message => new MoveFileResultDto(false, moveFileParam.SourceKey, message));
+                new MoveFileParamValidator(_aLiYunConfig).Validate(request).Check(HttpStatus.Err.Name);
+
+                if (!request.IsForce)
+                {
+                    var newBasePersistentOps = request.PersistentOps.Clone();
+                    newBasePersistentOps.Bucket = request.OptBucket;
+                    var existRet = this.Exist(new ExistParam(request.OptKey, newBasePersistentOps));
+                    if (existRet.State)
+                    {
+                        return new MoveFileResultDto(false,request.SourceKey,"移动失败，文件已存在");
+                    }
+                }
+                CopyTo(new CopyFileParam(request.SourceKey, request.OptKey, request.OptBucket, request.IsForce,
+                    request.PersistentOps));
+                Remove(new RemoveParam(request.SourceKey, request.PersistentOps));
+
+                return new MoveFileResultDto(true, request.SourceKey, "success");
+            }, message => new MoveFileResultDto(false, request.SourceKey, message));
         }
 
         #endregion
@@ -1078,7 +1100,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// </summary>
         /// <param name="fetchFileParam"></param>
         /// <returns></returns>
-        public bool FetchFile(FetchFileParam fetchFileParam)
+        public FetchFileResultDto FetchFile(FetchFileParam fetchFileParam)
         {
             var ret = DownloadStream(new FileDownloadStreamParam(fetchFileParam.SourceFileKey,
                 fetchFileParam.PersistentOps));
@@ -1095,10 +1117,10 @@ namespace EInfrastructure.Core.Aliyun.Storage
                         ChunkUnit = fetchFileParam.PersistentOps.ChunkUnit,
                         MaxRetryTimes = fetchFileParam.PersistentOps.MaxRetryTimes,
                     }));
-                return result.State;
+                return new FetchFileResultDto(result.State,result.Extend,result.Msg);
             }
 
-            return false;
+            return new FetchFileResultDto(ret.State,ret.Extend,ret.Msg);
         }
 
         #endregion

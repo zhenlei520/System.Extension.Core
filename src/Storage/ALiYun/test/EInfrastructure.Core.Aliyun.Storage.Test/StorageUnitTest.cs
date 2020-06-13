@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using EInfrastructure.Core.Aliyun.Storage.Test.Base;
+using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config.Pictures;
@@ -46,7 +47,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
         public void UploadStream(string key, string sourceKey, string bucket, bool isResume)
         {
             var stream = File.OpenRead(sourceKey);
-            var ret = _storageProvider.UploadStream(new UploadByStreamParam(key, stream, new ImgPersistentOps()
+            var ret = _storageProvider.UploadStream(new UploadByStreamParam(key, stream, new UploadPersistentOps()
             {
                 Bucket = bucket
             }), isResume);
@@ -304,6 +305,58 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
 
         #endregion
 
+        #region 下载文件到本地
+
+        /// <summary>
+        /// 下载文件到本地
+        /// </summary>
+        [Theory]
+        [InlineData("einfrastructuretest", "1.jpg", "d:/3.jpg")]
+        public void Download(string bucket, string sourceFileKey, string locakKey)
+        {
+            var ret = this._storageProvider.GetVisitUrl(new GetVisitUrlParam(sourceFileKey, null,
+                new BasePersistentOps()
+                {
+                    Bucket = bucket
+                }));
+            if (ret.State)
+            {
+                var downloadRes = this._storageProvider.Download(new FileDownloadParam(ret.Url, locakKey,
+                    new BasePersistentOps()
+                    {
+                        Bucket = bucket
+                    }));
+            }
+        }
+
+        #endregion
+
+        #region 下载文件到本地
+
+        /// <summary>
+        /// 下载文件流
+        /// </summary>
+        [Theory]
+        [InlineData("einfrastructuretest", "1.jpg")]
+        public void DownloadStream(string bucket, string sourceFileKey)
+        {
+            var ret = this._storageProvider.GetVisitUrl(new GetVisitUrlParam(sourceFileKey, null,
+                new BasePersistentOps()
+                {
+                    Bucket = bucket
+                }));
+            if (ret.State)
+            {
+                var downloadStreamRes = this._storageProvider.DownloadStream(new FileDownloadStreamParam(ret.Url,
+                    new BasePersistentOps()
+                    {
+                        Bucket = bucket
+                    }));
+            }
+        }
+
+        #endregion
+
         #region 抓取文件
 
         /// <summary>
@@ -313,13 +366,66 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test
         /// <param name="sourceFileKey"></param>
         /// <param name="key"></param>
         [Theory]
-        [InlineData("einfrastructuretest", "https://einfrastructuretest.oss-cn-hangzhou.aliyuncs.com/1.jpg?Expires=1591974037&OSSAccessKeyId=TMP.3Kk5QQChR8pvboJMzY6s2NJJxcWHrcstddxxTfvhyVN48XJXDj2qSk1VX2uinrQoFz5oaRuuu77YevaVVNfGTpcxJqPP7Y&Signature=8le47rJL0k8hl0SHSO2wCcvXc6c%3D", "3.jpg")]
+        [InlineData("einfrastructuretest", "2.jpg", "4.jpg")]
         public void FetchFile(string bucket, string sourceFileKey, string key)
         {
-            var ret = this._storageProvider.FetchFile(new FetchFileParam(sourceFileKey,key,new BasePersistentOps()
+            var ret = this._storageProvider.GetVisitUrl(new GetVisitUrlParam(sourceFileKey, null,
+                new BasePersistentOps()
+                {
+                    Bucket = bucket
+                }));
+            if (ret.State)
             {
-                Bucket = bucket
-            }));
+                var fetchFileRes = this._storageProvider.FetchFile(new FetchFileParam(ret.Url, key,
+                    new BasePersistentOps()
+                    {
+                        Bucket = bucket
+                    }));
+                Check.True(fetchFileRes.State, "抓取失败");
+            }
+            else
+            {
+                throw new BusinessException($"抓取失败，文件信息异常，{ret.Msg}");
+            }
+        }
+
+        #endregion
+
+        #region 复制文件
+
+        /// <summary>
+        ///
+        /// 对于小于1G的文件（不支持跨地域拷贝。例如，不支持将杭州存储空间里的文件拷贝到青岛），另外需将分片设置为4M，其他分类不支持
+        /// </summary>
+        /// <param name="sourceKey"></param>
+        /// <param name="sourceBucket"></param>
+        /// <param name="optKey"></param>
+        /// <param name="optBucket"></param>
+        [Theory]
+        [InlineData("1.jpg", "einfrastructuretest", "3.jpg", "einfrastructuretest2")]
+        public void CopyFile(string sourceKey, string sourceBucket, string optKey, string optBucket)
+        {
+            var ret = this._storageProvider.CopyTo(new CopyFileParam(sourceKey, optKey, optBucket, false,
+                new BasePersistentOps()
+                {
+                    Bucket = sourceBucket,
+                    ChunkUnit = ChunkUnit.U4096K//如果文件大于1G，则需要设置此属性为U4096K
+                }));
+        }
+
+        #endregion
+
+        #region 移动文件
+
+        [Theory]
+        [InlineData("4", "einfrastructuretest2","4.jpg", "einfrastructuretest2")]
+        public void Move(string sourceKey, string sourceBucket, string optKey, string optBucket)
+        {
+            var ret = this._storageProvider.Move(new MoveFileParam(sourceKey, optBucket, optKey, false,
+                new BasePersistentOps()
+                {
+                    Bucket = sourceBucket
+                }));
         }
 
         #endregion

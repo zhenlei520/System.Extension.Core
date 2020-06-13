@@ -22,6 +22,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Config
         public ALiYunStorageConfig()
         {
             MaxRetryTimes = 5;
+            ChunkUnit = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit.U1024K;
         }
 
         /// <summary>
@@ -87,6 +88,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Config
 
         /// <summary>
         /// [可选]分片上传默认最大值
+        /// 默认1MB
         /// </summary>
         public EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit ChunkUnit { get; set; }
 

@@ -871,7 +871,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="fetchFileParam">资源信息</param>
         /// <returns></returns>
-        public bool FetchFile(FetchFileParam fetchFileParam)
+        public FetchFileResultDto FetchFile(FetchFileParam fetchFileParam)
         {
             FetchResult ret = GetBucketManager(fetchFileParam.PersistentOps)
                 .Fetch(fetchFileParam.SourceFileKey,
@@ -880,9 +880,9 @@ namespace EInfrastructure.Core.QiNiu.Storage
             {
                 case (int) HttpCode.OK:
                 case (int) HttpCode.CALLBACK_FAILED:
-                    return true;
+                    return new FetchFileResultDto(true, null, "success");
                 default:
-                    return false;
+                    return new FetchFileResultDto(false, ret, ret.ToString());
             }
         }
 
