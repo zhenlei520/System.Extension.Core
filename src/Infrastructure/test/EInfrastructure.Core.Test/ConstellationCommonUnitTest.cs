@@ -4,7 +4,6 @@ using System;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace EInfrastructure.Core.Test
 {
@@ -13,10 +12,6 @@ namespace EInfrastructure.Core.Test
     /// </summary>
     public class ConstellationCommonUnitTest : BaseUnitTest
     {
-        public ConstellationCommonUnitTest(ITestOutputHelper output) : base(output)
-        {
-        }
-
         /// <summary>
         /// 根据日期得到星座名称
         /// </summary>

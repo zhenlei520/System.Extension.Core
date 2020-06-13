@@ -10,7 +10,6 @@ using EInfrastructure.Core.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace EInfrastructure.Core.Test
 {
@@ -19,10 +18,6 @@ namespace EInfrastructure.Core.Test
     /// </summary>
     public class HttpCommonUnitTest : BaseUnitTest
     {
-        public HttpCommonUnitTest(ITestOutputHelper output) : base(output)
-        {
-        }
-
         #region Get请求
 
         /// <summary>

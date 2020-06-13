@@ -36,16 +36,16 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <summary>
         /// 地址
         /// </summary>
-        public string Url { get; private set; }
+        public string Url { get; }
 
         /// <summary>
         /// 内容
         /// </summary>
-        public byte[] Body { get; private set; }
+        public byte[] Body { get; }
 
         /// <summary>
         /// 策略
         /// </summary>
-        public BasePersistentOps PersistentOps { get; private set; }
+        public BasePersistentOps PersistentOps { get; }
     }
 }

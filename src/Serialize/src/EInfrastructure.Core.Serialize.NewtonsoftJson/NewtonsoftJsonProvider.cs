@@ -109,7 +109,7 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
                     return action.Invoke(ex);
                 }
 
-                throw new System.Exception($"json序列化出错,序列化类型：{o.GetType().FullName}");
+                throw new Exception($"json序列化出错,序列化类型：{o.GetType().FullName}");
             }
         }
 
@@ -131,7 +131,7 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
                 return JsonConvert.DeserializeObject(str, type);
             }
 
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 if (StartUp.EnableLog)
                 {

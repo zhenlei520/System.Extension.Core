@@ -7,7 +7,7 @@ using EInfrastructure.Core.Tools.Attributes;
 namespace EInfrastructure.Core.QiNiu.Storage.Enum
 {
     /// <summary>
-    /// 空间
+    /// 空间区域
     /// </summary>
     public enum ZoneEnum
     {

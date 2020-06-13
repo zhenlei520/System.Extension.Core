@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Words.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,10 @@ namespace EInfrastructure.Core.Words
         {
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration) service.ImplementationInstance;
+            if (configuration == null)
+            {
+                throw new BusinessException("获取IConfiguration失败");
+            }
             return AddWords(services, configuration);
         }
 
@@ -55,7 +60,8 @@ namespace EInfrastructure.Core.Words
         public static IServiceCollection AddWords(this IServiceCollection services,
             IConfiguration configuration)
         {
-            return services.AddWords(() => configuration.GetSection(nameof(EWordConfig)).Get<EWordConfig>());
+            return services.AddWords(() =>
+                configuration.GetSection(nameof(EWordConfig)).Get<EWordConfig>());
         }
 
         #endregion

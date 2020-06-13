@@ -6,19 +6,19 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
 {
     /// <summary>
-    /// 得到公用空间的地址
+    /// 获取文件访问权限
     /// </summary>
-    public class GetPublishUrlParam
+    public class GetFilePermissParam
     {
         /// <summary>
         ///
         /// </summary>
         /// <param name="key">文件key</param>
-        /// <param name="persistentOps"></param>
-        public GetPublishUrlParam(string key, BasePersistentOps persistentOps = null)
+        /// <param name="persistentOps">策略</param>
+        public GetFilePermissParam(string key, BasePersistentOps persistentOps)
         {
             Key = key;
-            PersistentOps = persistentOps ?? new BasePersistentOps();
+            PersistentOps = persistentOps;
         }
 
         /// <summary>

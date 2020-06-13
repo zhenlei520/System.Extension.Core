@@ -6,26 +6,34 @@ using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations
 {
     /// <summary>
-    /// 空间访问权限
+    /// 存储类型
+    /// 标准存储
+    /// 低频访问
+    /// 归档存储
     /// </summary>
-    public class BucketPermiss : Enumeration
+    public class StorageClass : Enumeration
     {
         /// <summary>
-        /// 公开
+        /// 标准存储
         /// </summary>
-        public static BucketPermiss Public = new BucketPermiss(0, "公开");
+        public static StorageClass Standard = new StorageClass(1, "标准存储");
 
         /// <summary>
-        /// 私有
+        /// 低频存储
         /// </summary>
-        public static BucketPermiss Private = new BucketPermiss(1, "私有");
+        public static StorageClass IA = new StorageClass(2, "低频存储");
+
+        /// <summary>
+        /// 归档存储
+        /// </summary>
+        public static StorageClass Archive = new StorageClass(3, "归档存储");
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
-        public BucketPermiss(int id, string name) : base(id, name)
+        public StorageClass(int id, string name) : base(id, name)
         {
         }
     }

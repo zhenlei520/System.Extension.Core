@@ -27,8 +27,8 @@ namespace EInfrastructure.Core.Redis.Common
                 if (!string.IsNullOrEmpty(pass)) rc.Auth(pass);
                 if (database > 0) rc.Select(database);
             };
-            QuickHelperBase.SetCacheFileKeyPre(redisConfig.OverTimeCacheKeyPre);
-            QuickHelperBase.SetCacheFileKeys(redisConfig.OverTimeCacheKeys);
+            SetCacheFileKeyPre(redisConfig.OverTimeCacheKeyPre);
+            SetCacheFileKeys(redisConfig.OverTimeCacheKeys);
         }
     }
 }

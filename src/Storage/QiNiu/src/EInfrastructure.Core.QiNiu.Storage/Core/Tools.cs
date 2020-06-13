@@ -1,11 +1,14 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations;
 using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.QiNiu.Storage.Enum;
+using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Attributes;
 
 namespace EInfrastructure.Core.QiNiu.Storage.Core
 {
@@ -25,9 +28,13 @@ namespace EInfrastructure.Core.QiNiu.Storage.Core
         internal static Qiniu.Storage.Config GetConfig(QiNiuStorageConfig qiNiuConfig,
             BasePersistentOps persistentOps)
         {
-            var config = new Qiniu.Storage.Config()
+            var config = new Qiniu.Storage.Config
             {
                 Zone = GetZone(qiNiuConfig, persistentOps.Zone),
+                UseHttps = GetHttpsState(qiNiuConfig, persistentOps.IsUseHttps),
+                UseCdnDomains = GetCdn(qiNiuConfig, persistentOps.UseCdnDomains),
+                ChunkSize = (Qiniu.Storage.ChunkUnit) (GetChunkUnit(qiNiuConfig, persistentOps.ChunkUnit).Id),
+                MaxRetryTimes = GetMaxRetryTimes(qiNiuConfig, persistentOps.MaxRetryTimes),
             };
 
             config.UseHttps = GetHttpsState(qiNiuConfig, persistentOps.IsUseHttps);
@@ -88,6 +95,23 @@ namespace EInfrastructure.Core.QiNiu.Storage.Core
             return qiNiuStorageConfig.DefaultBucket;
         }
 
+        /// <summary>
+        /// 得到空间名
+        /// </summary>
+        /// <param name="qiNiuStorageConfig">七牛配置</param>
+        /// <param name="bucket">空间名</param>
+        /// <param name="optBucket">目标空间</param>
+        /// <returns></returns>
+        internal static string GetBucket(QiNiuStorageConfig qiNiuStorageConfig, string bucket, string optBucket)
+        {
+            if (!string.IsNullOrEmpty(optBucket))
+            {
+                return optBucket;
+            }
+
+            return GetBucket(qiNiuStorageConfig, bucket);
+        }
+
         #endregion
 
         #region 得到空间区域
@@ -97,10 +121,12 @@ namespace EInfrastructure.Core.QiNiu.Storage.Core
         /// </summary>
         /// <param name="qiNiuConfig">七牛配置</param>
         /// <param name="zone">空间配置</param>
+        /// <param name="defaultZone">默认空间区域</param>
         /// <returns></returns>
-        internal static Qiniu.Storage.Zone GetZone(QiNiuStorageConfig qiNiuConfig, int? zone)
+        internal static Qiniu.Storage.Zone GetZone(QiNiuStorageConfig qiNiuConfig, int? zone,
+            Func<ZoneEnum> defaultZone = null)
         {
-            switch (GetZonePrivate(qiNiuConfig, zone))
+            switch (GetZonePrivate(qiNiuConfig, zone, defaultZone))
             {
                 case ZoneEnum.ZoneCnEast:
                 default:
@@ -121,12 +147,19 @@ namespace EInfrastructure.Core.QiNiu.Storage.Core
         /// </summary>
         /// <param name="qiNiuConfig"></param>
         /// <param name="zone"></param>
+        /// <param name="defaultZone">默认空间委托</param>
         /// <returns></returns>
-        private static ZoneEnum GetZonePrivate(QiNiuStorageConfig qiNiuConfig, int? zone)
+        internal static ZoneEnum GetZonePrivate(QiNiuStorageConfig qiNiuConfig, int? zone,
+            Func<ZoneEnum> defaultZone = null)
         {
             if (zone == null && qiNiuConfig.DefaultZones == null)
             {
-                throw new BusinessException("请选择要操作的空间区域");
+                if (defaultZone == null)
+                {
+                    throw new BusinessException("请选择要操作的空间区域");
+                }
+
+                return defaultZone.Invoke();
             }
 
             if (zone != null)
@@ -135,6 +168,20 @@ namespace EInfrastructure.Core.QiNiu.Storage.Core
             }
 
             return qiNiuConfig.DefaultZones.Value;
+        }
+
+        #endregion
+
+        #region 得到空间区域
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="zone">空间区域</param>
+        /// <returns></returns>
+        internal static string GetRegion(ZoneEnum zone)
+        {
+            return zone.GetCustomerObj<ENameAttribute>()?.Name ?? "";
         }
 
         #endregion
@@ -216,6 +263,24 @@ namespace EInfrastructure.Core.QiNiu.Storage.Core
             }
 
             return qiNiuConfig.MaxRetryTimes;
+        }
+
+        #endregion
+
+        #region 得到Message
+
+        /// <summary>
+        /// 得到Message
+        /// </summary>
+        /// <returns></returns>
+        internal static string GetMessage(Exception ex)
+        {
+            if (ex.InnerException != null)
+            {
+                return $"Message：{ex.Message}，InnerExceptionMessage：{ex.InnerException?.Message}";
+            }
+
+            return $"Message：{ex.Message}";
         }
 
         #endregion

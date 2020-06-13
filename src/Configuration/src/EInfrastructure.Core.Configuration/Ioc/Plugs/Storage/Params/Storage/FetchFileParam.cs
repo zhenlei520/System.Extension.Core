@@ -13,9 +13,9 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <summary>
         ///
         /// </summary>
-        /// <param name="sourceFileKey"></param>
-        /// <param name="key"></param>
-        /// <param name="persistentOps"></param>
+        /// <param name="sourceFileKey">源图,必须是完整的图片路径，有访问权限（必填）</param>
+        /// <param name="key">目标图的文件key（必填）</param>
+        /// <param name="persistentOps">策略</param>
         public FetchFileParam(string sourceFileKey, string key, BasePersistentOps persistentOps = null)
         {
             SourceFileKey = sourceFileKey;
@@ -24,18 +24,18 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         }
 
         /// <summary>
-        /// 源图（必填）
+        /// 源图,必须是完整的图片路径，有访问权限（必填）
         /// </summary>
-        public string SourceFileKey { get; private set; }
+        public string SourceFileKey { get; }
 
         /// <summary>
-        /// 目标图（必填）
+        /// 目标图的文件key（必填）
         /// </summary>
-        public string Key { get; private set; }
+        public string Key { get; }
 
         /// <summary>
         /// 策略
         /// </summary>
-        public BasePersistentOps PersistentOps { get; private set; }
+        public BasePersistentOps PersistentOps { get; }
     }
 }

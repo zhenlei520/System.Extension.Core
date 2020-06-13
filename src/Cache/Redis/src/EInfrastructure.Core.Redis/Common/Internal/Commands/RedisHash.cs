@@ -41,7 +41,7 @@ namespace EInfrastructure.Core.Redis.Common.Internal.Commands
 
             public override T Parse(RedisReader reader)
             {
-                return Serializer<T>.Deserialize(RedisHash.ToDict(reader));
+                return Serializer<T>.Deserialize(ToDict(reader));
             }
         }
     }

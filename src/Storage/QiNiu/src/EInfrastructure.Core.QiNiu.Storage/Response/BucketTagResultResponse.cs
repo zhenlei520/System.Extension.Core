@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace EInfrastructure.Core.QiNiu.Storage.Dto
+namespace EInfrastructure.Core.QiNiu.Storage.Response
 {
     /// <summary>
     /// 空间标签

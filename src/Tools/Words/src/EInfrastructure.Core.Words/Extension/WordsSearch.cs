@@ -145,7 +145,7 @@ namespace EInfrastructure.Core.Words.Extension
         {
             if (keywords.Count != indexs.Count)
             {
-                throw new System.Exception("数量不一样");
+                throw new Exception("数量不一样");
             }
 
             Dictionary<string, int> dict = new Dictionary<string, int>();
@@ -187,7 +187,7 @@ namespace EInfrastructure.Core.Words.Extension
                 nd.SetResults(p, key.Value);
             }
 
-            this._first = first;
+            _first = first;
 
             Dictionary<TrieNode, TrieNode> links = new Dictionary<TrieNode, TrieNode>();
             foreach (var item in root.m_values)

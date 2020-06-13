@@ -22,13 +22,13 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
             PartialEvaluator evaluator = new PartialEvaluator();
             Expression evaluatedExpression = evaluator.Eval(expression);
 
-            this.m_arguments = new List<object>();
-            this.m_conditionParts = new Stack<string>();
+            m_arguments = new List<object>();
+            m_conditionParts = new Stack<string>();
 
-            this.Visit(evaluatedExpression);
+            Visit(evaluatedExpression);
 
-            this.Arguments = this.m_arguments.ToArray();
-            this.Condition = this.m_conditionParts.Count > 0 ? this.m_conditionParts.Pop() : null;
+            Arguments = m_arguments.ToArray();
+            Condition = m_conditionParts.Count > 0 ? m_conditionParts.Pop() : null;
         }
 
         protected override Expression VisitBinary(BinaryExpression b)
@@ -78,14 +78,14 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
                     throw new NotSupportedException(b.NodeType + "is not supported.");
             }
 
-            this.Visit(b.Left);
-            this.Visit(b.Right);
+            Visit(b.Left);
+            Visit(b.Right);
 
-            string right = this.m_conditionParts.Pop();
-            string left = this.m_conditionParts.Pop();
+            string right = m_conditionParts.Pop();
+            string left = m_conditionParts.Pop();
 
             string condition = String.Format("({0} {1} {2})", left, opr, right);
-            this.m_conditionParts.Push(condition);
+            m_conditionParts.Push(condition);
 
             return b;
         }
@@ -94,8 +94,8 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         {
             if (c == null) return c;
 
-            this.m_arguments.Add(c.Value);
-            this.m_conditionParts.Push(String.Format("{{{0}}}", this.m_arguments.Count - 1));
+            m_arguments.Add(c.Value);
+            m_conditionParts.Push(String.Format("{{{0}}}", m_arguments.Count - 1));
 
             return c;
         }
@@ -107,7 +107,7 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
             PropertyInfo propertyInfo = m.Member as PropertyInfo;
             if (propertyInfo == null) return m;
 
-            this.m_conditionParts.Push(String.Format("[{0}]", propertyInfo.Name));
+            m_conditionParts.Push(String.Format("[{0}]", propertyInfo.Name));
 
             return m;
         }
@@ -135,11 +135,11 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
                     throw new NotSupportedException(m.NodeType + " is not supported!");
             }
 
-            this.Visit(m.Object);
-            this.Visit(m.Arguments[0]);
-            string right = this.m_conditionParts.Pop();
-            string left = this.m_conditionParts.Pop();
-            this.m_conditionParts.Push(String.Format(format, left, right));
+            Visit(m.Object);
+            Visit(m.Arguments[0]);
+            string right = m_conditionParts.Pop();
+            string left = m_conditionParts.Pop();
+            m_conditionParts.Push(String.Format(format, left, right));
 
             return m;
         }

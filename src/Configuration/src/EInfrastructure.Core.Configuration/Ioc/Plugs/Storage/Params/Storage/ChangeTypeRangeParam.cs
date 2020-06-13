@@ -17,7 +17,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <param name="keys">文件key集合</param>
         /// <param name="type">存储类型</param>
         /// <param name="persistentOps">策略</param>
-        public ChangeTypeRangeParam(List<string> keys, int type, BasePersistentOps persistentOps = null)
+        public ChangeTypeRangeParam(List<string> keys, Enumerations.StorageClass type, BasePersistentOps persistentOps = null)
         {
             Keys = keys??new List<string>();
             Type = type;
@@ -27,17 +27,17 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <summary>
         /// 文件key集合
         /// </summary>
-        public List<string> Keys { get; private set; }
+        public List<string> Keys { get; }
 
         /// <summary>
         /// 存储类型
         /// 七牛：0代表普通存储，1：代表低频存储
         /// </summary>
-        public int Type { get; private set; }
+        public Enumerations.StorageClass Type { get; }
 
         /// <summary>
         /// 策略
         /// </summary>
-        public BasePersistentOps PersistentOps { get; private set; }
+        public BasePersistentOps PersistentOps { get; }
     }
 }

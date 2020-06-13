@@ -14,7 +14,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage
         /// <param name="state">状态</param>
         /// <param name="msg"></param>
         /// <param name="extend"></param>
-        public DownloadResultDto(bool state, string msg,object extend) : base(state, msg)
+        public DownloadResultDto(bool state, string msg, object extend = null) : base(state, msg)
         {
             Extend = extend;
         }

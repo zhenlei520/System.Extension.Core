@@ -3,7 +3,7 @@
 
 using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.QiNiu.Storage.Dto
+namespace EInfrastructure.Core.QiNiu.Storage.Response
 {
     /// <summary>
     /// 错误异常

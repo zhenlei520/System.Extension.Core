@@ -41,7 +41,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <returns></returns>
         private string TpwdQuery(string tbCode)
         {
-            string response = base.GetResponse("taobao.wireless.share.tpwd.query", Method.POST,
+            string response = GetResponse("taobao.wireless.share.tpwd.query", Method.POST,
                 (Dictionary<string, string> para) =>
                 {
                     para.Add("password_content", tbCode);
@@ -93,7 +93,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
                 url = $"https:{url}";
             }
 
-            string response = base.GetResponse("taobao.tbk.tpwd.create", Method.POST,
+            string response = GetResponse("taobao.tbk.tpwd.create", Method.POST,
                 (para) =>
                 {
                     para.Add("url", url);
@@ -169,7 +169,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
             }
 
 
-            string response = base.GetResponse("taobao.tbk.tpwd.mix.create", Method.POST,
+            string response = GetResponse("taobao.tbk.tpwd.mix.create", Method.POST,
                 (Dictionary<string, string> para) =>
                 {
                     para.Add("url", url);
@@ -228,7 +228,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <returns></returns>
         public string Convert(ConvertToMarketingParam param)
         {
-            string response = base.GetResponse("taobao.tbk.item.convert", Method.POST,
+            string response = GetResponse("taobao.tbk.item.convert", Method.POST,
                 (Dictionary<string, string> para) =>
                 {
                     para.Add("fields", param.Fields);
@@ -254,7 +254,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <returns></returns>
         public string CouponGet(string goodsId, string activityId)
         {
-            string response = base.GetResponse("taobao.tbk.coupon.get", Method.POST,
+            string response = GetResponse("taobao.tbk.coupon.get", Method.POST,
                 (Dictionary<string, string> para) =>
                 {
                     para.Add("activity_id", activityId);
@@ -278,7 +278,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <returns></returns>
         public string CouponsGetByGoodsName(string adzoneId, string goodsName, int pageSize = 20, int pageIndex = 1)
         {
-            string response = base.GetResponse("taobao.tbk.dg.item.coupon.get", Method.POST,
+            string response = GetResponse("taobao.tbk.dg.item.coupon.get", Method.POST,
                 (Dictionary<string, string> para) =>
                 {
                     para.Add("adzone_id", adzoneId);
@@ -302,7 +302,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <returns></returns>
         public string GoodsGet(GoodsGetParam param)
         {
-            string response = base.GetResponse("taobao.tbk.item.get", Method.POST,
+            string response = GetResponse("taobao.tbk.item.get", Method.POST,
                 (Dictionary<string, string> para) =>
                 {
                     para.Add("fields", param.Fields);
@@ -335,7 +335,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <returns></returns>
         public string GoodsBaseGet(GoodsBaseGetParam param)
         {
-            string response = base.GetResponse("taobao.tbk.item.get", Method.POST,
+            string response = GetResponse("taobao.tbk.item.get", Method.POST,
                 (Dictionary<string, string> para) =>
                 {
                     para.Add("num_iids", param.NumIids);
@@ -357,7 +357,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <returns></returns>
         public string ShopGet(ShopGetParam param)
         {
-            string response = base.GetResponse("taobao.tbk.shop.get", Method.POST,
+            string response = GetResponse("taobao.tbk.shop.get", Method.POST,
                 (Dictionary<string, string> para) =>
                 {
                     para.Add("fields", param.Fields);
@@ -391,7 +391,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <returns></returns>
         public string ShopRelatedGet(ShopRelatedParam param)
         {
-            string response = base.GetResponse("taobao.tbk.shop.recommend.get", Method.POST,
+            string response = GetResponse("taobao.tbk.shop.recommend.get", Method.POST,
                 (Dictionary<string, string> para) =>
                 {
                     para.Add("fields", param.Fields);
@@ -414,7 +414,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <returns></returns>
         public string TqgGet(TqgGetParam param)
         {
-            string response = base.GetResponse("taobao.tbk.ju.tqg.get", Method.POST,
+            string response = GetResponse("taobao.tbk.ju.tqg.get", Method.POST,
                 (Dictionary<string, string> para) =>
                 {
                     para.Add("adzone_id", param.AdzoneId);
@@ -440,7 +440,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <returns></returns>
         public MaterialDto MaterialGet(MaterialGetParam param, Action<Dictionary<string, string>> action = null)
         {
-            string response = base.GetResponse("taobao.tbk.dg.material.optional", Method.POST,
+            string response = GetResponse("taobao.tbk.dg.material.optional", Method.POST,
                 (Dictionary<string, string> para) =>
                 {
                     para.Add("page_size", param.PageSize.ToString());

@@ -14,7 +14,7 @@ namespace EInfrastructure.Core.AspNetCore.Api.Common
         /// </summary>
         public ApiErrResult()
         {
-            this.CurrentTime = DateTime.Now;
+            CurrentTime = DateTime.Now;
         }
 
         /// <summary>
@@ -25,10 +25,10 @@ namespace EInfrastructure.Core.AspNetCore.Api.Common
         /// <param name="extend">扩展信息</param>
         public ApiErrResult(T code, string msg, object extend = null)
         {
-            this.Msg = msg;
-            this.Code = code;
-            this.Extend = extend;
-            this.CurrentTime = DateTime.Now;
+            Msg = msg;
+            Code = code;
+            Extend = extend;
+            CurrentTime = DateTime.Now;
         }
 
         /// <summary>
@@ -40,9 +40,9 @@ namespace EInfrastructure.Core.AspNetCore.Api.Common
         /// <param name="isReturnCurrentTime">是否返回方式时间</param>
         public ApiErrResult(T code, string msg, object extend, bool isReturnCurrentTime)
         {
-            this.Msg = msg;
-            this.Code = code;
-            this.Extend = extend;
+            Msg = msg;
+            Code = code;
+            Extend = extend;
             if (isReturnCurrentTime)
             {
                 CurrentTime = DateTime.Now;

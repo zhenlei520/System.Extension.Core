@@ -17,7 +17,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator.Storage
         public ChangeTypeRangeParamValidator()
         {
             RuleFor(x => x.Keys).Must(x => x.Count > 0).WithMessage("请选择文件");
-            RuleFor(x => x.Type).Must(x => x == 1 || x == 0).WithMessage("文件存储类型不支持，请输入1或者0");
+            RuleFor(x => x.Type).IsInEnum().WithMessage("文件存储类型不支持，请输入1或者0");
         }
     }
 }

@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.Http.Provider
         public RestRequest GetRequest(Method method, string url, RequestBody requestBody,
             Dictionary<string, string> headers, int timeOut)
         {
-            RestRequest request = base.GetRestRequest(url, method, timeOut, headers);
+            RestRequest request = GetRestRequest(url, method, timeOut, headers);
             request.AddBody(requestBody.Data);
             return request;
         }

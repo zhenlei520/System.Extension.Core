@@ -27,7 +27,7 @@ namespace EInfrastructure.Core.Http.Provider
             Dictionary<string, string> headers,
             int timeOut)
         {
-            RestRequest request = base.GetRestRequest(url, method, timeOut, headers);
+            RestRequest request = GetRestRequest(url, method, timeOut, headers);
             request.RequestFormat =
                 requestBody.RequestBodyFormat.Id == RequestBodyFormat.Json.Id ? DataFormat.Json : DataFormat.Xml;
 

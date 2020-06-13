@@ -166,7 +166,7 @@ namespace EInfrastructure.Core.Words.Extension
                         .ConvertStrToList<short>(',', false).ToArray()
                 };
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 throw new BusinessException($"拼音词库异常：{ex}", HttpStatus.Err.Id);
             }

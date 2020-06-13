@@ -24,9 +24,9 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Sms.Params.Sms
         /// <param name="pageSize">页大小</param>
         public SendSmsRecordParam(string phone, int pageIndex, int pageSize)
         {
-            this.Phone = phone;
-            this.PageIndex = pageIndex;
-            this.PageSize = pageSize;
+            Phone = phone;
+            PageIndex = pageIndex;
+            PageSize = pageSize;
         }
 
         /// <summary>

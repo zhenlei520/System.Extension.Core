@@ -29,6 +29,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <summary>
         /// 上传策略
         /// </summary>
-        public UploadPersistentOps UploadPersistentOps { get; private set; }
+        public UploadPersistentOps UploadPersistentOps { get; }
     }
 }

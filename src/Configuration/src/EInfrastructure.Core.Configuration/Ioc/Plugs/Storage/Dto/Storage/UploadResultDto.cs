@@ -9,12 +9,19 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage
     public class UploadResultDto : OperateResultDto
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <param name="state"></param>
-        /// <param name="msg"></param>
-        public UploadResultDto(bool state, string msg) : base(state, msg)
+        /// <param name="state">状态</param>
+        /// <param name="extend">扩展信息</param>
+        /// <param name="msg">提示信息</param>
+        public UploadResultDto(bool state, object extend, string msg) : base(state, msg)
         {
+            Extend = extend;
         }
+
+        /// <summary>
+        /// 扩展信息
+        /// </summary>
+        public object Extend { get; private set; }
     }
 }

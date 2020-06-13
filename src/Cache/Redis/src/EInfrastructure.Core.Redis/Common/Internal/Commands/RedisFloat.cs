@@ -31,7 +31,7 @@ namespace EInfrastructure.Core.Redis.Common.Internal.Commands
                 string result = reader.ReadBulkString();
                 if (result == null)
                     return null;
-                return RedisFloat.FromString(result);
+                return FromString(result);
             }
         }
     }

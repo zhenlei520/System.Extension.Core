@@ -4,19 +4,18 @@
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using FluentValidation;
 
-namespace EInfrastructure.Core.QiNiu.Storage.Validator.Storage
+namespace EInfrastructure.Core.Aliyun.Storage.Validator.Storage
 {
     /// <summary>
-    ///
+    /// 批量文件mime校验
     /// </summary>
-    internal class GetPublishUrlParamValidator:AbstractValidator<GetPublishUrlParam>
+    internal class ChangeMimeRangeParamValidator : AbstractValidator<ChangeMimeRangeParam>
     {
         /// <summary>
         ///
         /// </summary>
-        public GetPublishUrlParamValidator()
+        public ChangeMimeRangeParamValidator()
         {
-            RuleFor(x => x.Key).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请输入文件key");
         }
     }
 }

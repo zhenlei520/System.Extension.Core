@@ -5,7 +5,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
+using EInfrastructure.Core.Configuration.Exception;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -36,14 +38,117 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static Dictionary<int, string> ToDescriptionDictionary<TEnum>()
         {
-            Array values = Enum.GetValues(typeof(TEnum));
-            Dictionary<int, string> nums = new Dictionary<int, string>();
-            foreach (Enum value in values)
+            Array arrays = Enum.GetValues(typeof(TEnum));
+            Dictionary<int, string> dics = new Dictionary<int, string>();
+            foreach (Enum value in arrays)
             {
-                nums.Add(Convert.ToInt32(value), GetDescription(value));
+                dics.Add(Convert.ToInt32(value), GetDescription(value));
             }
 
-            return nums;
+            return dics;
+        }
+
+        #endregion
+
+        #region 得到枚举对应的值与自定义属性集合
+
+        /// <summary>
+        /// 得到枚举与对应的自定义属性信息
+        /// </summary>
+        /// <typeparam name="T">自定义属性</typeparam>
+        /// <returns></returns>
+        public static Dictionary<Enum, T> ToEnumAndAttributes<T>(this Type type) where T : Attribute
+        {
+            Array arrays = Enum.GetValues(type);
+            Dictionary<Enum, T> dics = new Dictionary<Enum, T>();
+            foreach (Enum item in arrays)
+            {
+                dics.Add(item, GetCustomerObj<T>(item));
+            }
+
+            return dics;
+        }
+
+        #endregion
+
+        #region 得到枚举字典key的集合
+
+        /// <summary>
+        /// 得到枚举字典key的集合（例如：enum Gender{
+        ///    Boy=0,
+        ///    Girl=1
+        /// }）//其中Girl与Boy为Key
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <returns></returns>
+        public static List<string> GetKeys<TEnum>()
+        {
+            Array arrays = Enum.GetValues(typeof(TEnum));
+            List<string> keys = new List<string>();
+            foreach (Enum key in arrays)
+            {
+                keys.Add(key.ToString());
+            }
+
+            return keys;
+        }
+
+        #endregion
+
+        #region 得到枚举字典value的集合
+
+        /// <summary>
+        /// 得到枚举字典value的集合
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <returns></returns>
+        public static List<int> GetValues<TEnum>()
+        {
+            Array arrays = Enum.GetValues(typeof(TEnum));
+            List<int> values = new List<int>();
+            foreach (Enum value in arrays)
+            {
+                values.Add(Convert.ToInt32(value));
+            }
+
+            return values;
+        }
+
+        #endregion
+
+        #region 得到枚举字典自定义属性的集合
+
+        /// <summary>
+        /// 得到枚举字典自定义属性的集合
+        /// </summary>
+        /// <param name="type">type必须是枚举</param>
+        /// <returns></returns>
+        public static List<T> GetCustomerObjects<T>(this Type type) where T : Attribute
+        {
+            if (!type.IsEnum)
+            {
+                throw new BusinessException(nameof(type) + "不是枚举");
+            }
+
+            Array arrays = Enum.GetValues(type);
+            List<T> list = new List<T>();
+            foreach (Enum array in arrays)
+            {
+                list.Add(CustomAttributeCommon<T>.GetCustomAttribute(type, nameof(array)));
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// 得到枚举字典自定义属性的集合
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Obsolete("此方法已过时，建议使用typeof(Enum).GetCustomerObjects()")]
+        public static List<T> GetCustomerObjects<T>(this Enum value) where T : Attribute
+        {
+            return GetCustomerObjects<T>(value.GetType());
         }
 
         #endregion
@@ -57,25 +162,8 @@ namespace EInfrastructure.Core.Tools
         /// <returns>枚举想的描述信息。</returns>
         public static string GetDescription(this Enum value)
         {
-            Type enumType = value.GetType();
-            // 获取枚举常数名称。
-            string name = Enum.GetName(enumType, value);
-            if (name != null)
-            {
-                // 获取枚举字段。
-                FieldInfo fieldInfo = enumType.GetField(name);
-                if (fieldInfo != null)
-                {
-                    // 获取描述的属性。
-                    if (Attribute.GetCustomAttribute(fieldInfo,
-                        typeof(DescriptionAttribute), false) is DescriptionAttribute attr)
-                    {
-                        return attr.Description;
-                    }
-                }
-            }
-
-            return null;
+            return CustomAttributeCommon<DescriptionAttribute>.GetCustomAttribute(value.GetType(), value.ToString())
+                ?.Description;
         }
 
         #endregion
@@ -90,25 +178,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static T GetCustomerObj<T>(this Enum value) where T : Attribute
         {
-            Type enumType = value.GetType();
-            // 获取枚举常数名称。
-            string name = Enum.GetName(enumType, value);
-            if (name != null)
-            {
-                // 获取枚举字段。
-                FieldInfo fieldInfo = enumType.GetField(name);
-                if (fieldInfo != null)
-                {
-                    // 获取描述的属性。
-                    if (Attribute.GetCustomAttribute(fieldInfo,
-                        typeof(T), false) is T attr)
-                    {
-                        return attr;
-                    }
-                }
-            }
-
-            return null;
+            return CustomAttributeCommon<T>.GetCustomAttribute(value.GetType(), value.ToString());
         }
 
         #endregion

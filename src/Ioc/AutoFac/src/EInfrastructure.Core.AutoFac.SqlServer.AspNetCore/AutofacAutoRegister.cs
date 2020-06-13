@@ -22,7 +22,7 @@ namespace EInfrastructure.Core.AutoFac.SqlServer.AspNetCore
         public override IServiceProvider Build(IServiceCollection services,
             Action<ContainerBuilder> action = null)
         {
-            return AutofacAutoRegister.Use(services, action);
+            return Use(services, action);
         }
 
         /// <summary>

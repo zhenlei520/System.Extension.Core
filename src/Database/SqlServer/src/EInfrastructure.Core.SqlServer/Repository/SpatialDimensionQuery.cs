@@ -17,7 +17,7 @@ namespace EInfrastructure.Core.SqlServer.Repository
         where TEntity : class, IEntity<T>
         where T : IComparable
     {
-        private EInfrastructure.Core.SqlServer.Common.SpatialDimensionBaseQuery<TEntity, T> _spatialDimensionBase;
+        private Common.SpatialDimensionBaseQuery<TEntity, T> _spatialDimensionBase;
         protected DbContext Dbcontext;
 
         /// <summary>
@@ -29,14 +29,14 @@ namespace EInfrastructure.Core.SqlServer.Repository
         {
             Dbcontext = unitOfWork as DbContext;
             _spatialDimensionBase =
-                new EInfrastructure.Core.SqlServer.Common.SpatialDimensionBaseQuery<TEntity, T>(unitOfWork, execute);
+                new Common.SpatialDimensionBaseQuery<TEntity, T>(unitOfWork, execute);
         }
 
         /// <summary>
         /// get list
         /// </summary>
         /// <param name="param"></param>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TOpt"></typeparam>
         /// <returns></returns>
         public List<TOpt> GetList<TOpt>(SpatialDimensionParam param)
         {
@@ -47,7 +47,6 @@ namespace EInfrastructure.Core.SqlServer.Repository
         /// GetPageData
         /// </summary>
         /// <param name="param"></param>
-        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public PageData<TOpt> GetPageData<TOpt>(SpatialDimensionPagingParam param)
         {

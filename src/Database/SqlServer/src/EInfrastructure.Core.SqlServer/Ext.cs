@@ -102,10 +102,10 @@ namespace EInfrastructure.Core.SqlServer
             LogLevel logLevel,
             EventId eventId,
             TState state,
-            System.Exception exception,
-            Func<TState, System.Exception, string> formatter)
+            Exception exception,
+            Func<TState, Exception, string> formatter)
         {
-            Trace.WriteLine($"{DateTime.Now:o} {logLevel} {eventId.Id} {this.categoryName}");
+            Trace.WriteLine($"{DateTime.Now:o} {logLevel} {eventId.Id} {categoryName}");
             Trace.WriteLine(formatter(state, exception));
         }
 

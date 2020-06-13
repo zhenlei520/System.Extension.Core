@@ -39,7 +39,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         public static IServiceCollection AddUCloudStorage(this IServiceCollection services,
             Func<UCloudStorageConfig> func)
         {
-            EInfrastructure.Core.StartUp.Run();
+            StartUp.Run();
             services.AddSingleton(func.Invoke());
             return services;
         }

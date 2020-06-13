@@ -1,7 +1,6 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 
@@ -26,12 +25,12 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         /// <summary>
         /// 复制文件集合
         /// </summary>
-        public List<CopyFileParam> CopyFiles { get; private set; }
+        public List<CopyFileParam> CopyFiles { get; }
 
         /// <summary>
         /// 策略
         /// </summary>
-        public BasePersistentOps PersistentOps { get; private set; }
+        public BasePersistentOps PersistentOps { get; }
 
         /// <summary>
         /// 复制文件到新的空间
@@ -47,17 +46,11 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
             /// <param name="isForce">是否覆盖</param>
             public CopyFileParam(string optBucket, string sourceKey, string optKey, bool isForce)
             {
-                FileId = Guid.NewGuid().ToString("N");
                 OptBucket = optBucket;
                 SourceKey = sourceKey;
                 OptKey = optKey;
                 IsForce = isForce;
             }
-
-            /// <summary>
-            /// 文件标识
-            /// </summary>
-            public string FileId { get; }
 
             /// <summary>
             /// 目标空间

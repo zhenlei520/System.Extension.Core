@@ -618,10 +618,10 @@ namespace EInfrastructure.Core.Redis.Common
         public RedisSentinelInfo(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-			SDownTime = this.GetSerializationItemValue<long>(info, "s-down-time");
-            LastHelloMessage = this.GetSerializationItemValue<long>(info, "last-hello-message");
-            VotedLeader = this.GetSerializationItemValue<string>(info, "voted-leader");
-			VotedLeaderEpoch = this.GetSerializationItemValue<long>(info, "voted-leader-epoch");
+			SDownTime = GetSerializationItemValue<long>(info, "s-down-time");
+            LastHelloMessage = GetSerializationItemValue<long>(info, "last-hello-message");
+            VotedLeader = GetSerializationItemValue<string>(info, "voted-leader");
+			VotedLeaderEpoch = GetSerializationItemValue<long>(info, "voted-leader-epoch");
 
 			if (SDownTime == 0) SDownTime = -1;
 			if (LastHelloMessage == 0) LastHelloMessage = -1;

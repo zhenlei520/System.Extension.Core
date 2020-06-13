@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         /// <param name="fnCanBeEvaluated"></param>
         public PartialEvaluator(Func<Expression, bool> fnCanBeEvaluated)
         {
-            this.m_fnCanBeEvaluated = fnCanBeEvaluated;
+            m_fnCanBeEvaluated = fnCanBeEvaluated;
         }
 
         /// <summary>
@@ -39,9 +39,9 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         /// <returns></returns>
         public Expression Eval(Expression exp)
         {
-            this.m_candidates = new Nominator(this.m_fnCanBeEvaluated).Nominate(exp);
+            m_candidates = new Nominator(m_fnCanBeEvaluated).Nominate(exp);
 
-            return this.Visit(exp);
+            return Visit(exp);
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
                 return null;
             }
 
-            if (this.m_candidates.Contains(exp))
+            if (m_candidates.Contains(exp))
             {
-                return this.Evaluate(exp);
+                return Evaluate(exp);
             }
 
             return base.Visit(exp);
@@ -96,38 +96,38 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
 
             internal Nominator(Func<Expression, bool> fnCanBeEvaluated)
             {
-                this.m_fnCanBeEvaluated = fnCanBeEvaluated;
+                m_fnCanBeEvaluated = fnCanBeEvaluated;
             }
 
             internal HashSet<Expression> Nominate(Expression expression)
             {
-                this.m_candidates = new HashSet<Expression>();
-                this.Visit(expression);
-                return this.m_candidates;
+                m_candidates = new HashSet<Expression>();
+                Visit(expression);
+                return m_candidates;
             }
 
             protected override Expression Visit(Expression expression)
             {
                 if (expression != null)
                 {
-                    bool saveCannotBeEvaluated = this.m_cannotBeEvaluated;
-                    this.m_cannotBeEvaluated = false;
+                    bool saveCannotBeEvaluated = m_cannotBeEvaluated;
+                    m_cannotBeEvaluated = false;
 
                     base.Visit(expression);
 
-                    if (!this.m_cannotBeEvaluated)
+                    if (!m_cannotBeEvaluated)
                     {
-                        if (this.m_fnCanBeEvaluated(expression))
+                        if (m_fnCanBeEvaluated(expression))
                         {
-                            this.m_candidates.Add(expression);
+                            m_candidates.Add(expression);
                         }
                         else
                         {
-                            this.m_cannotBeEvaluated = true;
+                            m_cannotBeEvaluated = true;
                         }
                     }
 
-                    this.m_cannotBeEvaluated |= saveCannotBeEvaluated;
+                    m_cannotBeEvaluated |= saveCannotBeEvaluated;
                 }
 
                 return expression;
