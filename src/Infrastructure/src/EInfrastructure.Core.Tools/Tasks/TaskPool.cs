@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Tools.Tasks.Request;
+using EInfrastructure.Core.Tools.Unique;
 
 namespace EInfrastructure.Core.Tools.Tasks
 {
@@ -16,6 +17,11 @@ namespace EInfrastructure.Core.Tools.Tasks
     /// </summary>
     public class TaskPool<T>
     {
+        /// <summary>
+        ///
+        /// </summary>
+        private SnowflakeId _snowflake;
+
         private readonly TaskBaseCommon<T> _taskBaseCommon;
 
         /// <summary>
@@ -38,6 +44,7 @@ namespace EInfrastructure.Core.Tools.Tasks
             this._taskBaseCommon = new TaskBaseCommon<T>(maxThread, duration);
             this._tasks = new List<TaskBaseInfo>();
             this._isExcuteFinish = false;
+            this._snowflake = new SnowflakeId(3, 0);
         }
 
         /// <summary>
@@ -145,8 +152,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         private void AddJob(T item)
         {
             this._isExcuteFinish = false;
-            Guid guid = Guid.NewGuid();
-            _taskBaseCommon.AddJob(new TaskJobRequest<T>(guid, item));
+            _taskBaseCommon.AddJob(new[] {new TaskJobRequest<T>(this._snowflake.NextId(), item)});
             if (this.IsRun)
             {
                 CheckAndAddTask();
@@ -159,6 +165,19 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <param name="items"></param>
         public void AddJob(params T[] items)
         {
+            if (items.Length > 0)
+            {
+                this._isExcuteFinish = false;
+            }
+
+            TaskJobRequest<T>[] array = items.Select(item => new TaskJobRequest<T>(this._snowflake.NextId(), item))
+                .ToArray();
+            _taskBaseCommon.AddJob(array);
+            if (this.IsRun)
+            {
+                CheckAndAddTask();
+            }
+
             items.ToList().ForEach(AddJob);
         }
 

@@ -11,11 +11,11 @@ namespace EInfrastructure.Core.Tools.Tasks.Request
         /// <summary>
         ///
         /// </summary>
-        /// <param name="guid"></param>
+        /// <param name="unique"></param>
         /// <param name="data">数据</param>
-        internal TaskJobRequest(Guid guid, T data)
+        internal TaskJobRequest(long unique, T data)
         {
-            Id = guid;
+            Id = unique;
             Data = data;
         }
 
@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.Tools.Tasks.Request
         /// 任务id
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        internal Guid Id { get; set; }
+        internal long Id { get; set; }
 
         /// <summary>
         /// 数据

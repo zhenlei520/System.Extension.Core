@@ -138,8 +138,7 @@ namespace EInfrastructure.Core.Tools
                 encoding = Encoding.UTF8;
             }
 
-            MD5 myMd5 = new MD5CryptoServiceProvider();
-            var signed = myMd5.ComputeHash(encoding.GetBytes(input));
+            var signed = GetMd5Provider().ComputeHash(encoding.GetBytes(input));
             string signResult = is16 ? GetSignResult(signed, 4, 8) : GetSignResult(signed);
             return isUpper ? signResult.ToUpper() : signResult.ToLower();
         }
@@ -157,6 +156,25 @@ namespace EInfrastructure.Core.Tools
             return (startIndex == null
                 ? BitConverter.ToString(signed)
                 : BitConverter.ToString(signed, (int) startIndex, length ?? default(int))).Replace("-", "");
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        private static MD5 _md5CryptoServiceProvider;
+
+        static SecurityCommon()
+        {
+            _md5CryptoServiceProvider= MD5.Create();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        private static MD5 GetMd5Provider()
+        {
+            return _md5CryptoServiceProvider ?? (_md5CryptoServiceProvider = MD5.Create());
         }
 
         #endregion

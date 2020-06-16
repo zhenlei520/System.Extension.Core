@@ -97,12 +97,15 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         /// 添加任务
         /// </summary>
-        /// <param name="taskJobBaseParam"></param>
-        internal void AddJob(TaskJobRequest<T> taskJobBaseParam)
+        /// <param name="taskJobBaseParamArray"></param>
+        internal void AddJob(TaskJobRequest<T>[] taskJobBaseParamArray)
         {
-            if (this._awaitList.All(x => x.Id != taskJobBaseParam.Id))
+            foreach (var taskJobRequest in taskJobBaseParamArray)
             {
-                this._awaitList.Enqueue(taskJobBaseParam);
+                if (this._awaitList.All(x => x.Id != taskJobRequest.Id))
+                {
+                    this._awaitList.Enqueue(taskJobRequest);
+                }
             }
         }
 
