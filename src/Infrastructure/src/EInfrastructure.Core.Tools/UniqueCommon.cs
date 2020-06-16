@@ -49,5 +49,45 @@ namespace EInfrastructure.Core.Tools
         }
 
         #endregion
+
+        public static string Base62(long x)
+        {
+            string show = "";
+            x = Math.Abs(x);
+            while (x > 0)
+            {
+                long s = x % 62;
+                string str = "";
+                if (s > 35)
+                {
+                    str = Chr(s + 61);
+                }
+                else if (s > 9 && s <= 35)
+                {
+                    str = Chr(s + 55);
+                }
+                else
+                {
+                    str = Chr(s + 65);
+                }
+                show += str;
+                x = long.Parse(Math.Floor(x / 62m).ToString());
+            }
+            return show;
+        }
+        public static string Chr(long asciiCode)
+        {
+            if (asciiCode >= 0 && asciiCode <= 255)
+            {
+                System.Text.ASCIIEncoding asciiEncoding = new System.Text.ASCIIEncoding();
+                byte[] byteArray = new byte[] { (byte)asciiCode };
+                string strCharacter = asciiEncoding.GetString(byteArray);
+                return (strCharacter);
+            }
+            else
+            {
+                throw new Exception("ASCII Code is not valid.");
+            }
+        }
     }
 }

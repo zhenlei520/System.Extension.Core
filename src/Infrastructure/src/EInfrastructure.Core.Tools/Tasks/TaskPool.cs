@@ -147,7 +147,6 @@ namespace EInfrastructure.Core.Tools.Tasks
             this._isExcuteFinish = false;
             Guid guid = Guid.NewGuid();
             _taskBaseCommon.AddJob(new TaskJobRequest<T>(guid, item));
-
             if (this.IsRun)
             {
                 CheckAndAddTask();

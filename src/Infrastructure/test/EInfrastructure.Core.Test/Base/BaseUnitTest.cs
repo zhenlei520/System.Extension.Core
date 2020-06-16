@@ -16,12 +16,10 @@ namespace EInfrastructure.Core.Test.Base
     /// </summary>
     public class BaseUnitTest
     {
-        protected readonly ITestOutputHelper output;
         protected IServiceProvider provider;
 
         public BaseUnitTest()
         {
-            output = provider.GetService<ITestOutputHelper>();
         }
 
         /// <summary>

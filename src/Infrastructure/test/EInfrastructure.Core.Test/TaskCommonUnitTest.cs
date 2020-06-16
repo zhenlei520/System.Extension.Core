@@ -102,7 +102,6 @@ namespace EInfrastructure.Core.Test
                 //线程等待是为了估计造成计算缓慢的情况
             }, jobItems);
             double duration = (DateTime.Now - startTime).TotalMilliseconds;
-            output.WriteLine($"结果是：{new NewtonsoftJsonProvider().Serializer(list)}" + "，消耗时间：{duration}s");
         }
 
         public class Users

@@ -2,7 +2,7 @@
 
 namespace EInfrastructure.Core.Test
 {
-    public class UniqueCommonUnitTest:BaseUnitTest
+    public class UniqueCommonUnitTest : BaseUnitTest
     {
     }
 }
