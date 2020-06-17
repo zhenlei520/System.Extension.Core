@@ -38,7 +38,6 @@ namespace EInfrastructure.Core.Tools
         /// <returns>得到短参数的值（有四个，任选其一即可）</returns>
         public static string[] GetShortParam(string param, string key = null, int number = 6)
         {
-            //对传入网址进行MD5加密
             string hex = SecurityCommon.GetMd5Hash(key + param);
             string[] resUrl = new string[4];
             for (int i = 0; i < 4; i++)

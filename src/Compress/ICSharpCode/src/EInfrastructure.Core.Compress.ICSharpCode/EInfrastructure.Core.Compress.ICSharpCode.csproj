@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-   <Version>2.3.0</Version>
+   <Version>2.3.1</Version>
     <Authors>zhenlei520</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>zhenlei520</Company>
