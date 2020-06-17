@@ -30,7 +30,7 @@ namespace EInfrastructure.Core.Test
         {
             int index = 0;
             TaskPool<string> taskCommon = null;
-            taskCommon = new TaskPool<string>(50, (name) =>
+            taskCommon = new TaskPool<string>(200, (name) =>
             {
                 lock (index + "")
                 {
@@ -48,7 +48,7 @@ namespace EInfrastructure.Core.Test
             }, 300);
 
             List<Users> userses = new List<Users>();
-            for (var i = 0; i < 200; i++)
+            for (var i = 0; i < 9999; i++)
             {
                 userses.Add(new Users()
                 {
@@ -63,7 +63,7 @@ namespace EInfrastructure.Core.Test
 
             taskCommon.SetContinueTimer(0);
             taskCommon.Run();
-            while (index < userses.Count + 1)
+            while (index < userses.Count)
             {
                 // Thread.Sleep(10000);
                 // Thread.Yield();

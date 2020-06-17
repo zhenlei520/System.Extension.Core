@@ -27,7 +27,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         /// 等待中的任务
         /// </summary>
-        private readonly ConcurrentQueue<TaskJobRequest<T>> _awaitList;
+        private readonly Queue<TaskJobRequest<T>> _awaitList;
 
         /// <summary>
         /// 进行中的任务
@@ -51,7 +51,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <param name="duration">默认无任务后休息500ms(防止死循环)</param>
         internal TaskBaseCommon(int maxThread, int duration = 500)
         {
-            this._awaitList = new ConcurrentQueue<TaskJobRequest<T>>();
+            this._awaitList = new Queue<TaskJobRequest<T>>();
             this._onGoingList = new HashSet<TaskJobRequest<T>>();
             _maxThread = maxThread;
             _duration = duration;
@@ -88,7 +88,16 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         /// 是否结束
         /// </summary>
-        internal bool IsFinish => _awaitList.Count == 0;
+        internal bool IsFinish
+        {
+            get
+            {
+                lock (_awaitList)
+                {
+                    return _awaitList.Count == 0;
+                }
+            }
+        }
 
         #endregion
 
@@ -102,9 +111,12 @@ namespace EInfrastructure.Core.Tools.Tasks
         {
             foreach (var taskJobRequest in taskJobBaseParamArray)
             {
-                if (this._awaitList.All(x => x.Id != taskJobRequest.Id))
+                lock (_awaitList)
                 {
-                    this._awaitList.Enqueue(taskJobRequest);
+                    if (this._awaitList.All(x => x.Id != taskJobRequest.Id))
+                    {
+                        this._awaitList.Enqueue(taskJobRequest);
+                    }
                 }
             }
         }
@@ -140,13 +152,32 @@ namespace EInfrastructure.Core.Tools.Tasks
         {
             lock (this._onGoingList)
             {
-                bool result = this._awaitList.TryDequeue(out jobBaseParam);
-                if (result)
+                lock (this._awaitList)
                 {
-                    this._onGoingList.Add(jobBaseParam);
-                }
+                    try
+                    {
+                        if (this._awaitList.Count > 0)
+                        {
+                            jobBaseParam = this._awaitList.Dequeue();
+                            if (jobBaseParam != null)
+                            {
+                                this._onGoingList.Add(jobBaseParam);
+                            }
 
-                return result;
+                            return jobBaseParam != null;
+                        }
+                        else
+                        {
+                            jobBaseParam = null;
+                            return false;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        jobBaseParam = null;
+                        return false;
+                    }
+                }
             }
         }
 
@@ -159,12 +190,11 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// </summary>
         internal void Clear()
         {
-            while (this._awaitList.TryDequeue(out _))
+            lock (this._awaitList)
             {
-                //清空等待中的任务
+                this._awaitList.Clear();
+                this._onGoingList.Clear();
             }
-
-            this._onGoingList.Clear();
         }
 
         #endregion

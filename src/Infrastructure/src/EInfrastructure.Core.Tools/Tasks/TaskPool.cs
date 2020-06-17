@@ -177,8 +177,6 @@ namespace EInfrastructure.Core.Tools.Tasks
             {
                 CheckAndAddTask();
             }
-
-            items.ToList().ForEach(AddJob);
         }
 
         #endregion
@@ -297,7 +295,8 @@ namespace EInfrastructure.Core.Tools.Tasks
         {
             while (this._tasks.Count < this._taskBaseCommon.GetMaxThread)
             {
-                this._tasks.Add(new TaskBaseInfo(new Task(StartJob)));
+                CancellationTokenSource cancellationToken = new CancellationTokenSource();
+                this._tasks.Add(new TaskBaseInfo(new Task(StartJob, cancellationToken.Token),cancellationToken));
             }
         }
 
@@ -336,6 +335,8 @@ namespace EInfrastructure.Core.Tools.Tasks
                 {
                     lock (this._tasks)
                     {
+                        Console.WriteLine("释放线程，线程：" + Task.CurrentId);
+                        taskInfo.CancellationTokenSource.Cancel();
                         this._tasks.Remove(taskInfo);
                         if (this._tasks.All(x => x.IsFree) && !this._isExcuteFinish)
                         {
@@ -420,9 +421,11 @@ namespace EInfrastructure.Core.Tools.Tasks
         ///
         /// </summary>
         /// <param name="task"></param>
-        public TaskBaseInfo(Task task)
+        /// <param name="cancellationTokenSource"></param>
+        public TaskBaseInfo(Task task,CancellationTokenSource cancellationTokenSource)
         {
             this.Task = task;
+            this.CancellationTokenSource = cancellationTokenSource;
             this.IsFree = true;
             this.StagnationTime = Stopwatch.StartNew();
         }
@@ -434,19 +437,24 @@ namespace EInfrastructure.Core.Tools.Tasks
         internal Task Task { get; private set; }
 
         /// <summary>
+        ///
+        /// </summary>
+        internal CancellationTokenSource CancellationTokenSource { get; private set; }
+
+        /// <summary>
         /// 线程是否空间
         /// </summary>
-        public bool IsFree { get; private set; }
+        internal bool IsFree { get; private set; }
 
         /// <summary>
         /// 停滞时间
         /// </summary>
-        public Stopwatch StagnationTime { get; private set; }
+        internal Stopwatch StagnationTime { get; private set; }
 
         /// <summary>
         /// 线程启动
         /// </summary>
-        public void Run()
+        internal void Run()
         {
             this.IsFree = false;
             this.StagnationTime = null;
@@ -455,7 +463,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         /// 线程停滞
         /// </summary>
-        public void Stop()
+        internal void Stop()
         {
             if (!this.IsFree)
             {
@@ -468,7 +476,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// <summary>
         /// 重置线程
         /// </summary>
-        public void Reset()
+        internal void Reset()
         {
             this.IsFree = false;
             this.StagnationTime = null;
@@ -479,7 +487,7 @@ namespace EInfrastructure.Core.Tools.Tasks
         /// 返回-1为线程未停滞
         /// </summary>
         /// <returns></returns>
-        public long GetStagnationTotalMilliseconds()
+        internal long GetStagnationTotalMilliseconds()
         {
             try
             {

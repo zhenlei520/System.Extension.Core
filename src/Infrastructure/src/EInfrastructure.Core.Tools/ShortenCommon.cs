@@ -34,8 +34,9 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="param">参数</param>
         /// <param name="key">md5盐（默认）</param>
+        /// <param name="number">生成短连接的长度</param>
         /// <returns>得到短参数的值（有四个，任选其一即可）</returns>
-        public static string[] GetShortParam(string param, string key = null)
+        public static string[] GetShortParam(string param, string key = null, int number = 6)
         {
             //对传入网址进行MD5加密
             string hex = SecurityCommon.GetMd5Hash(key + param);
@@ -45,7 +46,7 @@ namespace EInfrastructure.Core.Tools
                 int hexint =
                     0x3FFFFFFF & Convert.ToInt32("0x" + hex.Substring(i * 8, 8), 16); //把加密字符按照8位一组16进制与0x3FFFFFFF进行位与运算
                 string outChars = string.Empty;
-                for (int j = 0; j < 6; j++)
+                for (int j = 0; j < number; j++)
                 {
                     //把得到的值与0x0000003D进行位与运算，取得字符数组chars索引
                     int index = 0x0000003D & hexint;
