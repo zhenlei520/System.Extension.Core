@@ -1,5 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using EInfrastructure.Core.AutomationConfiguration.Config;
+using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Tools.Systems;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -10,30 +15,28 @@ namespace EInfrastructure.Core.AutomationConfiguration.Extension
     /// 设置读写接口的实现类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class WritableOptions<T> : IWritableOptions<T> where T : class, new()
+    public class WritableOptions<T> : IIdentify, IWritableOptions<T> where T : class, new()
     {
         private readonly IOptionsMonitor<T> _options;
+        private readonly AppSettingConfig _appSettingConfig;
         private readonly string _section;
         private readonly string _file;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="options"></param>
-        /// <param name="section"></param>
-        /// <param name="file"></param>
-        public WritableOptions(
-            IOptionsMonitor<T> options,
-            string section,
-            string file)
+        /// <param name="appSettingConfig">配置文件</param>
+        public WritableOptions(IOptionsMonitor<T> options, IOptions<AppSettingConfig> appSettingConfig)
         {
             _options = options;
-            _section = section;
-            _file = file;
+            _appSettingConfig = appSettingConfig.Value;
+            _section = nameof(T);
+            _file = Get()
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public T Value => _options.CurrentValue;
 
@@ -113,6 +116,54 @@ namespace EInfrastructure.Core.AutomationConfiguration.Extension
 
             jObject[_section] = JObject.Parse(JsonConvert.SerializeObject(sectionObject));
             File.WriteAllText(physicalPath, JsonConvert.SerializeObject(jObject, Formatting.Indented));
+        }
+
+        #endregion
+
+        #region 权重
+
+        /// <summary>
+        /// 权重
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 99;
+        }
+
+        #endregion
+
+        #region 得到实现类唯一标示
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentify()
+        {
+            MethodBase method = MethodBase.GetCurrentMethod();
+            return method.ReflectedType.Namespace;
+        }
+
+        #endregion
+
+        #region 得到文件地址
+
+        private AppSettingConfig GetAppSettingConfig(IOptions<AppSettingConfig> appSettingConfig)
+        {
+            var settingConfig = appSettingConfig?.Value??new AppSettingConfig();
+            settingConfig.Maps=settingConfig.Maps.SafeString()
+
+            return _appSettingConfig;
+        }
+
+        /// <summary>
+        /// 得到文件地址
+        /// </summary>
+        /// <returns></returns>
+        private string GetFilePath()
+        {
+            string _appSettingConfig.DefaultPath
         }
 
         #endregion

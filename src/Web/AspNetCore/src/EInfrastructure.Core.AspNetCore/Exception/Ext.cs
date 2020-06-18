@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using EInfrastructure.Core.HelpCommon;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -49,27 +50,36 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// <param name="isOptional"></param>
         /// <param name="reloadOnChange"></param>
         /// <returns></returns>
+        public static IConfigurationBuilder AddAppsettings(this IHostingEnvironment env, bool useEnvironment = true,
+            List<string> configPathList = null, bool isOptional = true, bool reloadOnChange = true)
+        {
+            return ConfigurationCommon.CreateConfigurationBuilder(configurationBuilder =>
+            {
+                List<string> pathList = new List<string>();
+                if (useEnvironment)
+                {
+                    pathList.Add($"appsettings.{env.EnvironmentName}.json");
+                }
+
+                pathList.AddRange(configPathList ?? new List<string>());
+                configurationBuilder.SetBasePath(env.ContentRootPath)
+                    .UseAppsettings(pathList, isOptional, reloadOnChange);
+            });
+        }
+
+        /// <summary>
+        /// 使用自定义配置
+        /// </summary>
+        /// <param name="env">环境信息</param>
+        /// <param name="useEnvironment">是否使用环境变量</param>
+        /// <param name="configPathList">自定义配置列表</param>
+        /// <param name="isOptional"></param>
+        /// <param name="reloadOnChange"></param>
+        /// <returns></returns>
         public static IConfigurationRoot UseAppsettings(this IHostingEnvironment env, bool useEnvironment = true,
             List<string> configPathList = null, bool isOptional = true, bool reloadOnChange = true)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath);
-            if (useEnvironment)
-            {
-                builder.AddJsonFile($"appsettings.{env.EnvironmentName}.json", isOptional, reloadOnChange)
-                    .AddEnvironmentVariables();
-            }
-
-            if (configPathList == null)
-            {
-                configPathList = new List<string>();
-            }
-
-            configPathList.ForEach(configPath => { builder.AddJsonFile(configPath, isOptional, reloadOnChange); });
-
-            var config = builder.Build();
-
-            return config;
+            return env.AddAppsettings(useEnvironment, configPathList, isOptional, reloadOnChange).Build();
         }
 
         #endregion
