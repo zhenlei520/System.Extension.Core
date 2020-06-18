@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using EInfrastructure.Core.AutomationConfiguration.Config;
 using EInfrastructure.Core.Configuration.Ioc;
@@ -15,10 +15,9 @@ namespace EInfrastructure.Core.AutomationConfiguration.Extension
     /// 设置读写接口的实现类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class WritableOptions<T> : IIdentify, IWritableOptions<T> where T : class, new()
+    public class WritableOptions<T> : IIdentify, IDependency, IWritableOptions<T> where T : class, new()
     {
         private readonly IOptionsMonitor<T> _options;
-        private readonly AppSettingConfig _appSettingConfig;
         private readonly string _section;
         private readonly string _file;
 
@@ -30,9 +29,9 @@ namespace EInfrastructure.Core.AutomationConfiguration.Extension
         public WritableOptions(IOptionsMonitor<T> options, IOptions<AppSettingConfig> appSettingConfig)
         {
             _options = options;
-            _appSettingConfig = appSettingConfig.Value;
+            var config = GetAppSettingConfig(appSettingConfig);
             _section = nameof(T);
-            _file = Get()
+            _file = GetFilePath(config);
         }
 
         /// <summary>
@@ -149,22 +148,41 @@ namespace EInfrastructure.Core.AutomationConfiguration.Extension
 
         #region 得到文件地址
 
+        #region 得到配置
+
+        /// <summary>
+        /// 得到配置
+        /// </summary>
+        /// <param name="appSettingConfig"></param>
+        /// <returns></returns>
         private AppSettingConfig GetAppSettingConfig(IOptions<AppSettingConfig> appSettingConfig)
         {
-            var settingConfig = appSettingConfig?.Value??new AppSettingConfig();
-            settingConfig.Maps=settingConfig.Maps.SafeString()
-
-            return _appSettingConfig;
+            var settingConfig = appSettingConfig?.Value ?? new AppSettingConfig();
+            settingConfig.Maps = settingConfig.Maps.SafeList();
+            settingConfig.DefaultPath = settingConfig.DefaultPath.SafeString();
+            return settingConfig;
         }
+
+        #endregion
+
+        #region 得到文件地址
 
         /// <summary>
         /// 得到文件地址
         /// </summary>
         /// <returns></returns>
-        private string GetFilePath()
+        private string GetFilePath(AppSettingConfig appSettingConfig)
         {
-            string _appSettingConfig.DefaultPath
+            var path = appSettingConfig.Maps.Where(x => x.Key == _section).Select(x => x.Value).FirstOrDefault();
+            if (string.IsNullOrEmpty(path))
+            {
+                return appSettingConfig.DefaultPath;
+            }
+
+            return path;
         }
+
+        #endregion
 
         #endregion
     }
