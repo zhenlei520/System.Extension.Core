@@ -15,6 +15,7 @@ namespace EInfrastructure.Core.AutomationConfiguration.Extension
 {
     /// <summary>
     /// 设置读写接口的实现类（支持本地文件，如果是需要连接数据库，则需要自行实现IWritableOptions类接口，并且，权重应该大于当前类权重1，接口注入时通过InjectionSelectionCommon.GetImplement<IWritableOptions<T>>(provider)）获取
+    /// 其中配置的名称仅支持类名称，不支持类的完整名称
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class WritableOptions<T> : IWritableOptions<T> where T : class, new()
