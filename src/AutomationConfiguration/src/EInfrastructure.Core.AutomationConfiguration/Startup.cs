@@ -15,7 +15,7 @@ namespace EInfrastructure.Core.AutomationConfiguration
         #region 自动注入配置文件
 
         /// <summary>
-        /// 自动注入配置文件
+        /// 自动注入配置文件（调用方法前，需要将配置信息注入IConfiguration中）
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
@@ -52,7 +52,7 @@ namespace EInfrastructure.Core.AutomationConfiguration
         }
 
         /// <summary>
-        /// 自动注入配置文件
+        /// 自动注入配置文件（调用方法前，需要将配置信息注入IConfiguration中）
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>

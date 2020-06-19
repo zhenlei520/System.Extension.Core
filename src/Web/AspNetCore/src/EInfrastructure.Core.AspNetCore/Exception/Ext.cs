@@ -56,8 +56,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
             {
                 if (!string.IsNullOrEmpty(configPath))
                 {
-                    configurationBuilder.SetBasePath(env.ContentRootPath)
-                        .AddJsonFile(configPath, isOptional, reloadOnChange);
+                    ConfigurationCommon.AddJsonAppsettings(env.ContentRootPath, configPath, isOptional, reloadOnChange);
                 }
             });
         }
