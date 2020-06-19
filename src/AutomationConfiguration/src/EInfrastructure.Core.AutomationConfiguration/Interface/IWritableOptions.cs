@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Options;
 
-namespace EInfrastructure.Core.AutomationConfiguration.Extension
+namespace EInfrastructure.Core.AutomationConfiguration.Interface
 {
     /// <summary>
     /// 更改配置文件的读写接口

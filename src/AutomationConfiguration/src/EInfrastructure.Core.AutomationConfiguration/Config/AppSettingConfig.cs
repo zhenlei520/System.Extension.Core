@@ -2,14 +2,20 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using EInfrastructure.Core.AutomationConfiguration.Interface;
 
 namespace EInfrastructure.Core.AutomationConfiguration.Config
 {
     /// <summary>
     /// 配置文件
     /// </summary>
-    public class AppSettingConfig
+    public class AppSettingConfig : IScopedConfigModel
     {
+        /// <summary>
+        /// 根目录
+        /// </summary>
+        public string RootPath { get; set; }
+
         /// <summary>
         /// 默认配置文件名称（相对路径）
         /// </summary>

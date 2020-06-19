@@ -42,44 +42,38 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         #region 使用自定义配置
 
         /// <summary>
-        /// 使用自定义配置
+        /// 使用自定义配置（默认读取json，不支持其他格式文件）
         /// </summary>
         /// <param name="env">环境信息</param>
-        /// <param name="useEnvironment">是否使用环境变量</param>
-        /// <param name="configPathList">自定义配置列表</param>
-        /// <param name="isOptional"></param>
-        /// <param name="reloadOnChange"></param>
+        /// <param name="configPath">配置文件</param>
+        /// <param name="isOptional">文件必须存在</param>
+        /// <param name="reloadOnChange">监听文件更改</param>
         /// <returns></returns>
-        public static IConfigurationBuilder AddAppsettings(this IHostingEnvironment env, bool useEnvironment = true,
-            List<string> configPathList = null, bool isOptional = true, bool reloadOnChange = true)
+        public static IConfigurationBuilder AddAppsettings(this IHostingEnvironment env,
+            string configPath, bool isOptional = true, bool reloadOnChange = true)
         {
             return ConfigurationCommon.CreateConfigurationBuilder(configurationBuilder =>
             {
-                List<string> pathList = new List<string>();
-                if (useEnvironment)
+                if (!string.IsNullOrEmpty(configPath))
                 {
-                    pathList.Add($"appsettings.{env.EnvironmentName}.json");
+                    configurationBuilder.SetBasePath(env.ContentRootPath)
+                        .AddJsonFile(configPath, isOptional, reloadOnChange);
                 }
-
-                pathList.AddRange(configPathList ?? new List<string>());
-                configurationBuilder.SetBasePath(env.ContentRootPath)
-                    .UseAppsettings(pathList, isOptional, reloadOnChange);
             });
         }
 
         /// <summary>
-        /// 使用自定义配置
+        /// 使用默认环境配置，appsettings.EnvironmentName.json
         /// </summary>
         /// <param name="env">环境信息</param>
-        /// <param name="useEnvironment">是否使用环境变量</param>
-        /// <param name="configPathList">自定义配置列表</param>
-        /// <param name="isOptional"></param>
-        /// <param name="reloadOnChange"></param>
+        /// <param name="isOptional">文件必须存在</param>
+        /// <param name="reloadOnChange">监听文件更改</param>
         /// <returns></returns>
-        public static IConfigurationRoot UseAppsettings(this IHostingEnvironment env, bool useEnvironment = true,
-            List<string> configPathList = null, bool isOptional = true, bool reloadOnChange = true)
+        public static IConfigurationRoot UseDefaultAppsettings(this IHostingEnvironment env, bool isOptional = true,
+            bool reloadOnChange = true)
         {
-            return env.AddAppsettings(useEnvironment, configPathList, isOptional, reloadOnChange).Build();
+            return env.AddAppsettings($"appsettings.{env.EnvironmentName}.json", isOptional, reloadOnChange)
+                .Build();
         }
 
         #endregion
