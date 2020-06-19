@@ -19,7 +19,7 @@ namespace EInfrastructure.Core.AutomationConfiguration
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        /// <param name="appSettingConfig">默认文件配置</param>
+        /// <param name="appSettingConfig">默认更改或者读取的文件配置，如果不设置，则默认读取根目录的appsettings.json</param>
         /// <param name="isCompleteName">是否输入完整的类名，默认：false，为true时则需要输入命名空间+类名</param>
         /// <param name="action"></param>
         /// <param name="errConfigAction">配置信息错误回调</param>
@@ -43,10 +43,15 @@ namespace EInfrastructure.Core.AutomationConfiguration
                 action.Invoke(configAutoRegisterExt);
             }
 
-            if (appSettingConfig != null)
+            if (appSettingConfig == null)
             {
-                services.AddTransient(provider => appSettingConfig);
+                appSettingConfig = new AppSettingConfig()
+                {
+                    DefaultPath = "appsettings.json"
+                };
             }
+
+            services.AddTransient(provider => appSettingConfig);
             services.AddTransient(typeof(IWritableOptions<>), typeof(WritableOptions<>));
             return services;
         }

@@ -12,11 +12,6 @@ namespace EInfrastructure.Core.AutomationConfiguration.Config
     public class AppSettingConfig : IScopedConfigModel
     {
         /// <summary>
-        /// 根目录
-        /// </summary>
-        public string RootPath { get; set; }
-
-        /// <summary>
         /// 默认配置文件名称（相对路径）
         /// </summary>
         public string DefaultPath { get; set; }
