@@ -183,6 +183,7 @@ namespace EInfrastructure.Core.AutomationConfiguration.Extension
         private string GetFilePath(AppSettingConfig appSettingConfig)
         {
             var path = appSettingConfig.Maps.Where(x => x.Key == _section).Select(x => x.Value).FirstOrDefault();
+
             if (string.IsNullOrEmpty(path))
             {
                 return appSettingConfig.DefaultPath;
