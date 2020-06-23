@@ -91,10 +91,10 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
 
         #endregion
 
-        #region 得到IQueryable<T>分页
+        #region 得到IQueryable<T>分页（若query中存在条件，则可能会导致数据分页查询出现问题）
 
         /// <summary>
-        /// 得到IQueryable分页
+        /// 得到IQueryable分页（若query中存在条件，则可能会导致数据分页查询出现问题）
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="query"></param>
