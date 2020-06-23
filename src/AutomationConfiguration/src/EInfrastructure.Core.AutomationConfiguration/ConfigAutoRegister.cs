@@ -33,11 +33,10 @@ namespace EInfrastructure.Core.AutomationConfiguration
                         configuration.GetSection(sectionName).Get(type), type, isCompleteName, errConfigAction);
                     if (config == null)
                     {
-                        services.AddSingleton(type, provider => Get(sectionName =>
-                        {
-                            var configObj = provider.GetService<IConfiguration>().GetSection(sectionName).Get(type);
-                            return configObj;
-                        }, type, isCompleteName, errConfigAction));
+                        services.AddSingleton(type,
+                            provider => Get(
+                                sectionName => provider.GetService<IConfiguration>().GetSection(sectionName).Get(type),
+                                type, isCompleteName, errConfigAction));
                     }
                     else
                     {
@@ -49,7 +48,7 @@ namespace EInfrastructure.Core.AutomationConfiguration
 
         #endregion
 
-        #region  自动注入配置文件（请求开始-请求结束）
+        #region 自动注入配置文件（请求开始-请求结束）
 
         /// <summary>
         /// 自动注入配置文件（请求开始-请求结束）
@@ -65,16 +64,20 @@ namespace EInfrastructure.Core.AutomationConfiguration
             AddConfig<IScopedConfigModel>(services,
                 type =>
                 {
-                    services.AddScoped(type, provider => Get(sectionName =>
-                            provider.GetService<IConfiguration>().GetSection(sectionName).Get(type)
-                        , type, isCompleteName, errConfigAction));
+                    services.AddScoped(type, provider =>
+                    {
+                        var obj = Get(
+                            sectionName => provider.GetService<IConfiguration>().GetSection(sectionName).Get(type),
+                            type, isCompleteName, errConfigAction);
+                        return obj;
+                    });
                 });
             return services;
         }
 
         #endregion
 
-        #region  自动注入配置文件（请求开始-请求结束）
+        #region 自动注入配置文件（请求开始-请求结束）
 
         /// <summary>
         /// 自动注入配置文件（请求获取-（GC回收-主动释放），每一次获取的对象都不是同一个）
@@ -90,9 +93,10 @@ namespace EInfrastructure.Core.AutomationConfiguration
             AddConfig<ITransientConfigModel>(services,
                 type =>
                 {
-                    services.AddTransient(type, provider => Get(sectionName =>
-                            provider.GetService<IConfiguration>().GetSection(sectionName).Get(type)
-                        , type, isCompleteName, errConfigAction));
+                    services.AddTransient(type,
+                        provider => Get(
+                            sectionName => provider.GetService<IConfiguration>().GetSection(sectionName).Get(type),
+                            type, isCompleteName, errConfigAction));
                 });
             return services;
         }
