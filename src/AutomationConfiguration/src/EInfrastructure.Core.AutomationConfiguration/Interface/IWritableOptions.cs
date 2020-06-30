@@ -1,10 +1,10 @@
 using System;
 using Microsoft.Extensions.Options;
 
-namespace EInfrastructure.Core.AutomationConfiguration.Extension
+namespace EInfrastructure.Core.AutomationConfiguration.Interface
 {
     /// <summary>
-    /// 读写接口
+    /// 更改配置文件的读写接口
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public interface IWritableOptions<out T> : IOptionsSnapshot<T> where T : class, new()

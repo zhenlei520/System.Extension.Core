@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
 
@@ -105,6 +106,22 @@ namespace EInfrastructure.Core.Serialize.Xml
 
                 throw ex;
             }
+        }
+
+        #endregion
+
+        #region 获取Xml根节点名称
+
+        /// <summary>
+        /// 获取Xml根节点名称
+        /// </summary>
+        /// <param name="xmlStr">xml字符串</param>
+        /// <returns></returns>
+        public XmlElement GetXmlElement(string xmlStr)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(xmlStr);
+            return xmlDoc.DocumentElement;
         }
 
         #endregion
