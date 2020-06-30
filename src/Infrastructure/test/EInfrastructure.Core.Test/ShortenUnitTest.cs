@@ -34,6 +34,7 @@ namespace EInfrastructure.Core.Test
         public void GetShortParam(string param)
         {
             var stortUrls = ShortenCommon.GetShortParam(param);
+            var stortUrls4 = ShortenCommon.GetShortParam(param,10);
         }
 
         #endregion
