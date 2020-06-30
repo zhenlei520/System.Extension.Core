@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Ioc\Plugs\ContentCensor\Dto" />
     <Folder Include="Ioc\Plugs\Sms\Dto\VoiceSms" />
   </ItemGroup>
 
