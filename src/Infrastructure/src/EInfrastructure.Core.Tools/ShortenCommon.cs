@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using EInfrastructure.Core.Tools.Systems;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -33,14 +34,26 @@ namespace EInfrastructure.Core.Tools
         /// 得到短参数信息
         /// </summary>
         /// <param name="param">参数</param>
+        /// <param name="number">生成短连接的长度</param>
+        /// <returns>得到短参数的值（有四个，任选其一即可）</returns>
+        public static string[] GetShortParam(string param, int number = 6)
+        {
+            return GetShortParam(param, ShortKey, number);
+        }
+
+        /// <summary>
+        /// 得到短参数信息
+        /// </summary>
+        /// <param name="param">参数</param>
         /// <param name="key">md5盐（默认）</param>
         /// <param name="number">生成短连接的长度</param>
         /// <returns>得到短参数的值（有四个，任选其一即可）</returns>
-        public static string[] GetShortParam(string param, string key = null, int number = 6)
+        public static string[] GetShortParam(string param, string key, int number = 6)
         {
-            string hex = SecurityCommon.GetMd5Hash(key + param);
+            string hex = SecurityCommon.GetMd5Hash(key.SafeString() + param);
+
             string[] resUrl = new string[4];
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < hex.Length/8; i++)
             {
                 int hexint =
                     0x3FFFFFFF & Convert.ToInt32("0x" + hex.Substring(i * 8, 8), 16); //把加密字符按照8位一组16进制与0x3FFFFFFF进行位与运算
@@ -52,7 +65,7 @@ namespace EInfrastructure.Core.Tools
                     //把取得的字符相加
                     outChars += _chars[index];
                     //每次循环按位右移5位
-                    hexint = hexint >> 5;
+                    hexint = hexint >> (30 / number);
                 }
 
                 resUrl[i] = outChars; //把字符串存入对应索引的输出数组

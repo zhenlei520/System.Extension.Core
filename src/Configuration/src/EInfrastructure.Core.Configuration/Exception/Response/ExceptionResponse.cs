@@ -28,16 +28,19 @@ namespace EInfrastructure.Core.Configuration.Exception.Response
         /// <summary>
         /// 异常码
         /// </summary>
+        [JsonIgnore]
         public T GetCode => Code;
 
         /// <summary>
         /// 异常响应内容
         /// </summary>
+        [JsonIgnore]
         public string GetContent => Content;
 
         /// <summary>
         /// 扩展信息
         /// </summary>
+        [JsonIgnore]
         public object GetExtend => Extend;
     }
 

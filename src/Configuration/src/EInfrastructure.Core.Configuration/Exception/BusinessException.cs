@@ -11,7 +11,6 @@ namespace EInfrastructure.Core.Configuration.Exception
         /// <summary>
         /// 业务异常
         /// </summary>
-        /// <param name="code">状态码</param>
         /// <param name="content">异常详情</param>
         public BusinessException(string content) :
             base(content, HttpStatus.Err.Id)
