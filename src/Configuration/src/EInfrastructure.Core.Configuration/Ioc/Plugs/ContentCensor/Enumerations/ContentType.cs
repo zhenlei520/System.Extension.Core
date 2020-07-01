@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.ContentCensor.Enumeration
         public static ContentType Advertising = new ContentType(3, "广告");
 
         /// <summary>
-        /// 二维码
+        /// 一维码、二维码
         /// </summary>
         public static ContentType QrCode = new ContentType(4, "二维码");
 
@@ -41,6 +41,27 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.ContentCensor.Enumeration
         /// 涉政
         /// </summary>
         public static ContentType Politics = new ContentType(7, "涉政");
+
+        /// <summary>
+        /// 恶心
+        /// </summary>
+        public static ContentType Nausea = new ContentType(8, "恶心");
+
+        /// <summary>
+        /// 文本反作弊
+        /// </summary>
+        public static ContentType TextAntiCheat = new ContentType(9, "文本反作弊");
+
+        /// <summary>
+        /// 不良场景
+        /// </summary>
+        public static ContentType BadScene = new ContentType(10, "不良场景");
+
+
+        /// <summary>
+        /// 自定义
+        /// </summary>
+        public static ContentType Customer = new ContentType(98, "自定义");
 
         /// <summary>
         /// 其他
