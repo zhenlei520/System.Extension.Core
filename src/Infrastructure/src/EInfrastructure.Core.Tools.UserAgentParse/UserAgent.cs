@@ -24,6 +24,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         public UserAgent(string userAgent) : this()
         {
             this.Os=new Os(userAgent);
+
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace EInfrastructure.Core.Test
     /// </summary>
     public class UserAgentCommon : BaseUnitTest
     {
-        public UserAgentCommon(ITestOutputHelper output) : base(output)
+        public UserAgentCommon() : base()
         {
         }
 
