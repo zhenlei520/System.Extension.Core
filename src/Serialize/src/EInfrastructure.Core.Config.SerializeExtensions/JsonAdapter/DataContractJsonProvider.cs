@@ -58,7 +58,7 @@ namespace EInfrastructure.Core.Config.SerializeExtensions.JsonAdapter
                     return action.Invoke(ex);
                 }
 
-                throw new System.Exception($"json序列化出错,序列化类型：{o.GetType().FullName}");
+                throw new Exception($"json序列化出错,序列化类型：{o.GetType().FullName}");
             }
         }
 
@@ -89,7 +89,7 @@ namespace EInfrastructure.Core.Config.SerializeExtensions.JsonAdapter
                     return action.Invoke(ex);
                 }
 
-                throw new System.Exception($"json反序列化出错,待反序列化的json字符串为：{str}");
+                throw new Exception($"json反序列化出错,待反序列化的json字符串为：{str}");
             }
         }
 

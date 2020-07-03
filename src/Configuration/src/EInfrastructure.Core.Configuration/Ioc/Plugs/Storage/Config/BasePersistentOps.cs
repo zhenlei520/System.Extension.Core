@@ -52,6 +52,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
 
         /// <summary>
         /// [可选]分片上传默认最大值
+        /// 阿里云大文件（大于1G）操作时，请将此属性设置为U4096K，以免无法操作
         /// </summary>
         public virtual ChunkUnit ChunkUnit { get; set; }
 
@@ -59,5 +60,23 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
         /// 最大重试次数
         /// </summary>
         public virtual int? MaxRetryTimes { set; get; }
+
+        /// <summary>
+        /// 复制一份新的策略
+        /// </summary>
+        /// <returns></returns>
+        public BasePersistentOps Clone()
+        {
+            return new BasePersistentOps()
+            {
+                Bucket = Bucket,
+                ChunkUnit = ChunkUnit,
+                Host = Host,
+                IsUseHttps = IsUseHttps,
+                MaxRetryTimes = MaxRetryTimes,
+                UseCdnDomains = UseCdnDomains,
+                Zone = Zone
+            };
+        }
     }
 }

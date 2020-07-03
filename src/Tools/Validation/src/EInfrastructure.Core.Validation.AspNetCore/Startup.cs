@@ -22,17 +22,17 @@ namespace EInfrastructure.Core.Validation.AspNetCore
         /// <param name="func"></param>
         /// <param name="cascadeMode">开启全局级联验证模式，当出现一个错误时，不再继续执行;默认开启级联验证</param>
         public static IServiceCollection AddModelValidation(this IServiceCollection services,
-            Func<List<IEnumerable<KeyValuePair<System.Exception, string>>>, object> func,
+            Func<List<IEnumerable<KeyValuePair<Exception, string>>>, object> func,
             CascadeMode cascadeMode = CascadeMode.StopOnFirstFailure)
         {
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = context =>
                 {
-                    List<IEnumerable<KeyValuePair<System.Exception, string>>> errors = context.ModelState.Values.Select(
+                    List<IEnumerable<KeyValuePair<Exception, string>>> errors = context.ModelState.Values.Select(
                             x =>
                                 x.Errors.Select(
-                                    y => new KeyValuePair<System.Exception, string>(y.Exception, y.ErrorMessage)))
+                                    y => new KeyValuePair<Exception, string>(y.Exception, y.ErrorMessage)))
                         .ToList();
                     return new BadRequestObjectResult(func.Invoke(errors));
                 };

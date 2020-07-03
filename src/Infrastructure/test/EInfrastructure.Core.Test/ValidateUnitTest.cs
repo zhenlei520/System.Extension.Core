@@ -3,7 +3,6 @@
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace EInfrastructure.Core.Test
 {
@@ -12,10 +11,6 @@ namespace EInfrastructure.Core.Test
     /// </summary>
     public class ValidateUnitTest : BaseUnitTest
     {
-        public ValidateUnitTest(ITestOutputHelper output) : base(output)
-        {
-        }
-
         [Theory]
         [InlineData("450000", true)]
         [InlineData("4500002", false)]
@@ -106,6 +101,17 @@ namespace EInfrastructure.Core.Test
         public void IsChinese(string param, bool result)
         {
             Check.True(param.IsChinese() == result, "方法异常");
+        }
+
+        [Theory]
+        [InlineData("0.1210", 2, false)]
+        [InlineData("0.120", 2, true)]
+        [InlineData("0.12", 2, true)]
+        [InlineData("0.1", 2, true)]
+        [InlineData("2", 2, true)]
+        public void IsMaxScale(string str, int scale, bool state)
+        {
+            Check.True(str.IsMaxScale(scale) == state, "状态不一致");
         }
     }
 }

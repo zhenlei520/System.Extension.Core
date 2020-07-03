@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using EInfrastructure.Core.AliYun.DaYu.Config;
+using EInfrastructure.Core.Configuration.Exception;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,6 +25,10 @@ namespace EInfrastructure.Core.AliYun.DaYu
         {
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration)service.ImplementationInstance;
+            if (configuration == null)
+            {
+                throw new BusinessException("获取IConfiguration失败");
+            }
             return AddAliDaYu(services, configuration);
         }
 

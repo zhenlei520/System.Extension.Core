@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using EInfrastructure.Core.HelpCommon;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -41,35 +42,37 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         #region 使用自定义配置
 
         /// <summary>
-        /// 使用自定义配置
+        /// 使用自定义配置（默认读取json，不支持其他格式文件）
         /// </summary>
         /// <param name="env">环境信息</param>
-        /// <param name="useEnvironment">是否使用环境变量</param>
-        /// <param name="configPathList">自定义配置列表</param>
-        /// <param name="isOptional"></param>
-        /// <param name="reloadOnChange"></param>
+        /// <param name="configPath">配置文件</param>
+        /// <param name="isOptional">文件必须存在</param>
+        /// <param name="reloadOnChange">监听文件更改</param>
         /// <returns></returns>
-        public static IConfigurationRoot UseAppsettings(this IHostingEnvironment env, bool useEnvironment = true,
-            List<string> configPathList = null, bool isOptional = true, bool reloadOnChange = true)
+        public static IConfigurationBuilder AddAppsettings(this IHostingEnvironment env,
+            string configPath, bool isOptional = true, bool reloadOnChange = true)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath);
-            if (useEnvironment)
+            return ConfigurationCommon.CreateConfigurationBuilder(configurationBuilder =>
             {
-                builder.AddJsonFile($"appsettings.{env.EnvironmentName}.json", isOptional, reloadOnChange)
-                    .AddEnvironmentVariables();
-            }
+                if (!string.IsNullOrEmpty(configPath))
+                {
+                    ConfigurationCommon.AddJsonAppsettings(env.ContentRootPath, configPath, isOptional, reloadOnChange);
+                }
+            });
+        }
 
-            if (configPathList == null)
-            {
-                configPathList = new List<string>();
-            }
-
-            configPathList.ForEach(configPath => { builder.AddJsonFile(configPath, isOptional, reloadOnChange); });
-
-            var config = builder.Build();
-
-            return config;
+        /// <summary>
+        /// 使用默认环境配置，appsettings.EnvironmentName.json
+        /// </summary>
+        /// <param name="env">环境信息</param>
+        /// <param name="isOptional">文件必须存在</param>
+        /// <param name="reloadOnChange">监听文件更改</param>
+        /// <returns></returns>
+        public static IConfigurationRoot UseDefaultAppsettings(this IHostingEnvironment env, bool isOptional = true,
+            bool reloadOnChange = true)
+        {
+            return env.AddAppsettings($"appsettings.{env.EnvironmentName}.json", isOptional, reloadOnChange)
+                .Build();
         }
 
         #endregion

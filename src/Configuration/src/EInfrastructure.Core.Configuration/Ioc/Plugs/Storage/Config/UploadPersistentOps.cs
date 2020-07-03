@@ -17,7 +17,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
         /// </summary>
         public UploadPersistentOps():base()
         {
-
             IsAllowOverlap = null;
             ExpireInSeconds = 3600;
             FileType = null;

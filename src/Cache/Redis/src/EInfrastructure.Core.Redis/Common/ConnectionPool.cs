@@ -65,7 +65,7 @@ namespace EInfrastructure.Core.Redis.Common
                 {
                     conn.Pool = this;
                     var ips = Dns.GetHostAddresses(_ip);
-                    if (ips.Length == 0) throw new System.Exception($"无法解析“{_ip}”");
+                    if (ips.Length == 0) throw new Exception($"无法解析“{_ip}”");
                     conn.Client = new RedisClient(new IPEndPoint(ips[0], _port));
                     conn.Client.Connected += Connected;
                 }
@@ -84,7 +84,7 @@ namespace EInfrastructure.Core.Redis.Common
                     GetConnectionQueue.Enqueue(wait);
                 if (wait.Wait(TimeSpan.FromSeconds(10)))
                     return GetConnection();
-                throw new System.Exception("CSRedis.ConnectionPool.GetConnection 连接池获取超时（10秒）");
+                throw new Exception("CSRedis.ConnectionPool.GetConnection 连接池获取超时（10秒）");
             }
 
             conn.ThreadId = Thread.CurrentThread.ManagedThreadId;
@@ -98,7 +98,7 @@ namespace EInfrastructure.Core.Redis.Common
                 catch
                 {
                     var ips = Dns.GetHostAddresses(_ip);
-                    if (ips.Length == 0) throw new System.Exception($"无法解析“{_ip}”");
+                    if (ips.Length == 0) throw new Exception($"无法解析“{_ip}”");
                     conn.Client = new RedisClient(new IPEndPoint(ips[0], _port));
                     conn.Client.Connected += Connected;
                 }
@@ -128,7 +128,7 @@ namespace EInfrastructure.Core.Redis.Common
                 catch
                 {
                     var ips = Dns.GetHostAddresses(_ip);
-                    if (ips.Length == 0) throw new System.Exception($"无法解析“{_ip}”");
+                    if (ips.Length == 0) throw new Exception($"无法解析“{_ip}”");
                     conn.Client = new RedisClient(new IPEndPoint(ips[0], _port));
                     conn.Client.Connected += Connected;
                 }

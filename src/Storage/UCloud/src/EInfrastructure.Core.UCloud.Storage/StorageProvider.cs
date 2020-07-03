@@ -55,7 +55,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         public UploadResultDto UploadStream(UploadByStreamParam param, bool isResume = false)
         {
             var res = base.UploadFile(param.Stream, param.Key, Path.GetExtension(param.Key));
-            return new UploadResultDto(res, res ? "上传成功" : "上传失败");
+            return new UploadResultDto(res, "", res ? "上传成功" : "上传失败");
         }
 
         #endregion
@@ -71,7 +71,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         public UploadResultDto UploadByteArray(UploadByByteArrayParam param, bool isResume = false)
         {
             var res = base.UploadFile(param.ByteArray.ConvertToStream(), param.Key, Path.GetExtension(param.Key));
-            return new UploadResultDto(res, res ? "上传成功" : "上传失败");
+            return new UploadResultDto(res, "", res ? "上传成功" : "上传失败");
         }
 
         #endregion
@@ -100,7 +100,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <param name="opsParam">上传信息</param>
         public string GetUploadCredentials(UploadPersistentOpsParam opsParam)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -119,19 +119,11 @@ namespace EInfrastructure.Core.UCloud.Storage
 
         #endregion
 
-        #region 得到下载凭证
 
-        /// <summary>
-        /// 得到下载凭证
-        /// </summary>
-        /// <param name="url">url地址</param>
-        /// <returns></returns>
-        public string GetDownloadToken(string url)
+        public DownloadResultDto Download(FileDownloadParam request)
         {
             throw new NotImplementedException();
         }
-
-        #endregion
 
         #endregion
 
@@ -259,28 +251,14 @@ namespace EInfrastructure.Core.UCloud.Storage
 
         #endregion
 
-        #region 得到公开空间的访问地址
+        #region 得到访问地址
 
         /// <summary>
-        /// 得到公开空间的访问地址
+        /// 得到访问地址
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public string GetPublishUrl(GetPublishUrlParam request)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region 得到私有空间的地址
-
-        /// <summary>
-        /// 得到私有空间的地址
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public string GetPrivateUrl(GetPrivateUrlParam request)
+        public GetVisitUrlResultDto GetVisitUrl(GetVisitUrlParam request)
         {
             throw new NotImplementedException();
         }
@@ -290,12 +268,10 @@ namespace EInfrastructure.Core.UCloud.Storage
         #region 下载文件
 
         /// <summary>
-        /// 下载文件
+        /// 下载文件流
         /// </summary>
-        /// <param name="url">文件访问地址</param>
-        /// <param name="savePath">保存路径</param>
-        /// <returns></returns>
-        public DownloadResultDto Download(string url, string savePath)
+        /// <param name="request"></param>
+        public DownloadStreamResultDto DownloadStream(FileDownloadStreamParam request)
         {
             throw new NotImplementedException();
         }
@@ -381,10 +357,43 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// </summary>
         /// <param name="fetchFileParam">资源信息</param>
         /// <returns></returns>
-        public bool FetchFile(FetchFileParam fetchFileParam)
+        public FetchFileResultDto FetchFile(FetchFileParam fetchFileParam)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region 文件权限
+
+        #region 设置文件权限
+
+        /// <summary>
+        /// 设置文件权限
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public OperateResultDto SetPermiss(SetPermissParam request)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region 获取文件权限
+
+        /// <summary>
+        /// 获取文件权限
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public FilePermissResultInfo GetPermiss(GetFilePermissParam request)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
         #endregion
     }

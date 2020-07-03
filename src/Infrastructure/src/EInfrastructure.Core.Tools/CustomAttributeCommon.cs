@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -146,6 +147,45 @@ namespace EInfrastructure.Core.Tools
         }
 
         #endregion
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 自定义属性帮助类
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public static class CustomAttributeCommon<T> where T : Attribute
+    {
+        #region 得到自定义描述
+
+        /// <summary>
+        /// 得到自定义描述
+        /// </summary>
+        /// <param name="sourceType">类类型</param>
+        /// <param name="name">属性名称</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T GetCustomAttribute(Type sourceType, string name)
+        {
+            // 获取枚举常数名称。
+            if (!string.IsNullOrEmpty(name))
+            {
+                // 获取枚举字段。
+                FieldInfo fieldInfo = sourceType.GetField(name);
+                if (fieldInfo != null)
+                {
+                    // 获取描述的属性。
+                    if (Attribute.GetCustomAttribute(fieldInfo,
+                        typeof(T), false) is T attr)
+                    {
+                        return attr;
+                    }
+                }
+            }
+
+            return null;
+        }
 
         #endregion
     }

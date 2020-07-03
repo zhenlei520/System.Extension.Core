@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using EInfrastructure.Core.HelpCommon.Files;
 using EInfrastructure.Core.Tools;
 using ICSharpCode.SharpZipLib.Zip;
+using FileCommon = EInfrastructure.Core.Tools.Files.FileCommon;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
 {
@@ -161,7 +161,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
                             stream.Password = password;
                         }
 
-                        ZipSetp(sourceFilePath, stream, new System.IO.FileInfo(sourceFilePath).DirectoryName,
+                        ZipSetp(sourceFilePath, stream, new FileInfo(sourceFilePath).DirectoryName,
                             isRecursive,
                             compressionLevel);
                     }

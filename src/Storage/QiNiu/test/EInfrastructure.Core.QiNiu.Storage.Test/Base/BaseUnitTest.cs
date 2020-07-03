@@ -21,9 +21,9 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test.Base
             var services = new ServiceCollection();
             services.AddQiNiuStorage(() =>
             {
-                return new QiNiuStorageConfig("","",ZoneEnum.ZoneCnSouth,"","");
+                return new QiNiuStorageConfig("accessKey","secretKey",ZoneEnum.ZoneCnSouth,"","");
             });
-            provider = EInfrastructure.Core.AutoFac.AutofacAutoRegister.Use(services, builder => { });
+            provider = AutoFac.AutofacAutoRegister.Use(services, builder => { });
         }
     }
 }

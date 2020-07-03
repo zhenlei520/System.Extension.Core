@@ -32,7 +32,7 @@ namespace EInfrastructure.Core.Redis.Common.Internal.IO
         public SocketAsyncEventArgs Acquire()
         {
             if (!_acquisitionGate.WaitOne())
-                throw new System.Exception();
+                throw new Exception();
 
             lock (_pool)
             {

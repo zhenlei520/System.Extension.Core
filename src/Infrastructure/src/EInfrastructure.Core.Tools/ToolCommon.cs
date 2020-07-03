@@ -83,7 +83,7 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="dic"></param>
         /// <returns></returns>
-        public T DicToObject<T>(Dictionary<string, object> dic) where T : new()
+        public static T DicToObject<T>(Dictionary<string, object> dic) where T : new()
         {
             var md = new T();
             CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
@@ -103,6 +103,48 @@ namespace EInfrastructure.Core.Tools
             }
 
             return md;
+        }
+
+        #endregion
+
+        #region 得到响应信息
+
+        /// <summary>
+        /// 得到响应信息
+        /// </summary>
+        /// <param name="res"></param>
+        /// <param name="errFunc"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T GetResponse<T>(Func<T> res, Func<string, T> errFunc)
+        {
+            try
+            {
+                return res.Invoke();
+            }
+            catch (Exception ex)
+            {
+                return errFunc(ex.ExtractAllStackTrace());
+            }
+        }
+
+        /// <summary>
+        /// 得到响应信息
+        /// </summary>
+        /// <param name="res"></param>
+        /// <param name="errFunc"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T GetResponse<T>(Func<T> res, Func<string, Exception, T> errFunc)
+        {
+            try
+            {
+                return res.Invoke();
+            }
+            catch (Exception ex)
+            {
+                return errFunc(ex.ExtractAllStackTrace(), ex);
+            }
         }
 
         #endregion

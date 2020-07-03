@@ -1,0 +1,21 @@
+﻿using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
+using EInfrastructure.Core.Tools;
+using FluentValidation;
+
+namespace EInfrastructure.Core.QiNiu.Storage.Validator.Storage
+{
+    /// <summary>
+    /// 文件下载地址
+    /// </summary>
+    public class FileDownloadParamValidator : AbstractValidator<FileDownloadParam>
+    {
+        /// <summary>
+        ///
+        /// </summary>
+        public FileDownloadParamValidator()
+        {
+            RuleFor(x => x.Url).Must(x => x.IsUrl()).WithMessage("访问地址异常");
+            RuleFor(x => x.SavePath).Must(x => !string.IsNullOrEmpty(x)).WithMessage("保存地址异常");
+        }
+    }
+}

@@ -69,7 +69,7 @@ namespace EInfrastructure.Core.UCloud.Storage
                     return false;
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 LogService.Error(e.ToString());
                 return false;

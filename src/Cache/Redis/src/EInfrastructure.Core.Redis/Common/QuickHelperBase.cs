@@ -357,7 +357,7 @@ namespace EInfrastructure.Core.Redis.Common
         {
             if (expire > TimeSpan.Zero)
             {
-                QuickHelperBase.ZAdd(GetCacheFileKey(),
+                ZAdd(GetCacheFileKey(),
                     (DateTime.Now.AddSeconds(expire.TotalSeconds).ToUnixTimestamp(TimestampType.Millisecond).ConvertToDouble(0),
                         GetOverTimeExpireValue(key, HashKey)));
             }

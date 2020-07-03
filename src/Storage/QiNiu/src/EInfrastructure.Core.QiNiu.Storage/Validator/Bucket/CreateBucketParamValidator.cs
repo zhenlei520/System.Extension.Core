@@ -19,7 +19,8 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator.Bucket
         public CreateBucketParamValidator()
         {
             RuleFor(x => x.BucketName).Must(x => !string.IsNullOrEmpty(x)).WithMessage("空间名称不能为空");
-            RuleFor(x => x.Region).Must(x => x.IsExist(typeof(ZoneEnum))).WithMessage("不支持的存储区域");
+            RuleFor(x => x.Zone).Must(x => x.IsExist(typeof(ZoneEnum))).WithMessage("不支持的存储区域")
+                .When(x => x.Zone != null);
         }
     }
 }

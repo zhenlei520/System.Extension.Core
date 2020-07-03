@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,10 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         {
             var service = services.First(x => x.ServiceType == typeof(IConfiguration));
             var configuration = (IConfiguration) service.ImplementationInstance;
+            if (configuration == null)
+            {
+                throw new BusinessException("获取IConfiguration失败");
+            }
             return AddConsul(services, configuration);
         }
 
@@ -42,7 +47,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         public static IServiceCollection AddConsul(this IServiceCollection services,
             Func<ConsulConfig> func)
         {
-            EInfrastructure.Core.StartUp.Run();
+            StartUp.Run();
             services.AddSingleton(func.Invoke());
             return services;
         }
@@ -70,7 +75,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         public static IServiceCollection AddConsul(this IServiceCollection services,
             Func<List<ConsulConfig>> action)
         {
-            EInfrastructure.Core.StartUp.Run();
+            StartUp.Run();
             services.AddSingleton(action.Invoke());
             return services;
         }
@@ -88,7 +93,7 @@ namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
         public static IServiceCollection AddConsul(this IServiceCollection services,
             IConfiguration configuration)
         {
-            EInfrastructure.Core.StartUp.Run();
+            StartUp.Run();
             return services.AddConsul(() => configuration.GetSection(nameof(ConsulConfig)).Get<ConsulConfig>());
         }
 

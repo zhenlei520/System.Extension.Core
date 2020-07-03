@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.MySql.Repository
         where T : IComparable
         where TDbContext : IDbContext, IUnitOfWork
     {
-        private EInfrastructure.Core.MySql.Common.SpatialDimensionBaseQuery<TEntity, T> _spatialDimensionBase;
+        private Common.SpatialDimensionBaseQuery<TEntity, T> _spatialDimensionBase;
         protected DbContext Dbcontext;
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace EInfrastructure.Core.MySql.Repository
         {
             Dbcontext = unitOfWork as DbContext;
             _spatialDimensionBase =
-                new EInfrastructure.Core.MySql.Common.SpatialDimensionBaseQuery<TEntity, T>(unitOfWork, execute);
+                new Common.SpatialDimensionBaseQuery<TEntity, T>(unitOfWork, execute);
         }
 
 

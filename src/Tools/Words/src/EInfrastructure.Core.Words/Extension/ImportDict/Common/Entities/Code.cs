@@ -13,7 +13,7 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Entities
         {
             foreach (var c in code)
             {
-                this.Add(c);
+                Add(c);
             }
         }
 
@@ -28,12 +28,12 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Entities
             {
                 foreach (var py in code)
                 {
-                    this.Add(new List<string> {py});
+                    Add(new List<string> {py});
                 }
             }
             else
             {
-                this.Add(code);
+                Add(code);
             }
         }
 
@@ -43,7 +43,7 @@ namespace EInfrastructure.Core.Words.Extension.ImportDict.Common.Entities
         /// <param name="code">五笔这种一词一码类型</param>
         public Code(string code)
         {
-            this.Add(new List<string>() {code});
+            Add(new List<string>() {code});
         }
 
         public Code()

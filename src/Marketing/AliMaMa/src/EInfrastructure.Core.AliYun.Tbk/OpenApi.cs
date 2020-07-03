@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         /// <param name="jsonProvider"></param>
         protected OpenApi(string appKey, string appSecret, IJsonProvider jsonProvider = null)
         {
-            this._jsonProvider = jsonProvider ?? new NewtonsoftJsonProvider();
+            _jsonProvider = jsonProvider ?? new NewtonsoftJsonProvider();
             AliConfig = new AliTbkConfig
             {
                 AppKey = appKey,

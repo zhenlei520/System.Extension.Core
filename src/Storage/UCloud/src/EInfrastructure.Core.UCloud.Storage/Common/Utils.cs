@@ -46,7 +46,7 @@ namespace EInfrastructure.Core.UCloud.Storage.Common
         internal static void CopyFile(HttpWebRequest request, Stream sourceStream)
         {
             Stream rs = request.GetRequestStream();
-            Utils.CopyNBit(rs, sourceStream, sourceStream.Length);
+            CopyNBit(rs, sourceStream, sourceStream.Length);
             sourceStream.Close();
             rs.Close();
         }

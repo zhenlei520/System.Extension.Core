@@ -1,7 +1,6 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 
@@ -20,19 +19,19 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         public MoveFileRangeParam(List<MoveFileParam> moveFiles,
             BasePersistentOps persistentOps = null)
         {
-            MoveFiles = moveFiles;
+            MoveFiles = moveFiles ?? new List<MoveFileParam>();
             PersistentOps = persistentOps ?? new BasePersistentOps();
         }
 
         /// <summary>
         /// 移动文件信息
         /// </summary>
-        public List<MoveFileParam> MoveFiles { get; private set; }
+        public List<MoveFileParam> MoveFiles { get; }
 
         /// <summary>
         /// 策略
         /// </summary>
-        public BasePersistentOps PersistentOps { get; private set; }
+        public BasePersistentOps PersistentOps { get; }
 
         /// <summary>
         /// 移动或重命名文件
@@ -48,17 +47,11 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
             /// <param name="isForce">是否覆盖</param>
             public MoveFileParam(string optBucket, string sourceKey, string optKey, bool isForce)
             {
-                FileId = Guid.NewGuid().ToString("N");
                 OptBucket = optBucket;
                 SourceKey = sourceKey;
                 OptKey = optKey;
                 IsForce = isForce;
             }
-
-            /// <summary>
-            /// 文件标识
-            /// </summary>
-            public string FileId { get; }
 
             /// <summary>
             /// 目标空间

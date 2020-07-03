@@ -111,7 +111,8 @@ namespace EInfrastructure.Core.Tools
         {
             if (!status)
             {
-                throw new BusinessException<string>(string.Format(errorMessageFormat), HttpStatus.Err.Name);
+                throw new BusinessException<string>(string.Format(errorMessageFormat),
+                    string.IsNullOrEmpty(errCode) ? HttpStatus.Err.Name : errCode);
             }
         }
 

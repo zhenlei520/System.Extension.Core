@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.AutoFac.MySql
         public override IServiceProvider Build(IServiceCollection services,
             Action<ContainerBuilder> action=null)
         {
-            return AutofacAutoRegister.Use(services, action);
+            return Use(services, action);
         }
 
         /// <summary>

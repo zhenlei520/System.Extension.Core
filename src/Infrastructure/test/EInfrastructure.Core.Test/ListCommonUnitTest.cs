@@ -8,16 +8,11 @@ using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace EInfrastructure.Core.Test
 {
     public class ListCommonUnitTest : BaseUnitTest
     {
-        public ListCommonUnitTest(ITestOutputHelper output) : base(output)
-        {
-        }
-
         [Fact]
         public void Add()
         {
@@ -181,8 +176,8 @@ namespace EInfrastructure.Core.Test
 
             public List<string> Tags
             {
-                get => (List<string>) new NewtonsoftJsonProvider().Deserialize(this.TagJson, typeof(List<string>));
-                set => this.TagJson = new NewtonsoftJsonProvider().Serializer(value);
+                get => (List<string>) new NewtonsoftJsonProvider().Deserialize(TagJson, typeof(List<string>));
+                set => TagJson = new NewtonsoftJsonProvider().Serializer(value);
             }
 
             public string TagJson { get; private set; }

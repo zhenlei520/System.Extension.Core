@@ -66,7 +66,7 @@ namespace EInfrastructure.Core.WeChat
                     throw new BusinessException("参数错误",HttpStatus.Err.Id);
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 _logService.Error("接受用户信息错误：", e);
             }

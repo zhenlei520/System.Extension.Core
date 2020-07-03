@@ -18,6 +18,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
 
         /// <summary>
         /// 根据文件流上传
+        /// 阿里云会覆盖上传
         /// </summary>
         /// <param name="param">文件流上传配置</param>
         /// <param name="isResume">是否允许续传</param>
@@ -65,17 +66,6 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <param name="request"></param>
         /// <returns></returns>
         string GetManageToken(GetManageTokenParam request);
-
-        #endregion
-
-        #region 得到下载凭证
-
-        /// <summary>
-        /// 得到下载凭证
-        /// </summary>
-        /// <param name="url">url地址</param>
-        /// <returns></returns>
-        string GetDownloadToken(string url);
 
         #endregion
 
@@ -144,9 +134,9 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// <summary>
         /// 复制文件（两个文件需要在同一账号下）
         /// </summary>
-        /// <param name="copyFileParam">复制到新空间的参数</param>
+        /// <param name="request">复制到新空间的参数</param>
         /// <returns></returns>
-        CopyFileResultDto CopyTo(CopyFileParam copyFileParam);
+        CopyFileResultDto CopyTo(CopyFileParam request);
 
         /// <summary>
         /// 复制文件（两个文件需要在同一账号下）
@@ -175,31 +165,29 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
 
         #endregion
 
-        #region 得到地址
+        #region 得到访问地址
 
         /// <summary>
-        /// 得到公开空间的访问地址
+        /// 得到访问地址
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        string GetPublishUrl(GetPublishUrlParam request);
-
-        /// <summary>
-        /// 得到私有空间的访问地址
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        string GetPrivateUrl(GetPrivateUrlParam request);
+        GetVisitUrlResultDto GetVisitUrl(GetVisitUrlParam request);
 
         #endregion
 
         /// <summary>
-        /// 下载文件
+        /// 下载文件（根据已授权的地址）
         /// </summary>
-        /// <param name="url">文件访问地址(绝对地址，非文件key)</param>
-        /// <param name="savePath">保存路径</param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        DownloadResultDto Download(string url, string savePath);
+        DownloadResultDto Download(FileDownloadParam request);
+
+        /// <summary>
+        /// 下载文件流（根据已授权的地址）
+        /// </summary>
+        /// <param name="request"></param>
+        DownloadStreamResultDto DownloadStream(FileDownloadStreamParam request);
 
         #region 设置生存时间
 
@@ -255,6 +243,27 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
 
         #endregion
 
+        #region 文件访问权限
+
+        /// <summary>
+        /// 设置文件访问权限
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        OperateResultDto SetPermiss(SetPermissParam request);
+
+        /// <summary>
+        /// 获取文件的访问权限
+        /// 七牛云存储不支持获取文件权限
+        /// 阿里云Oss支持
+        /// Uc云不支持
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        FilePermissResultInfo GetPermiss(GetFilePermissParam request);
+
+        #endregion
+
         #region 抓取资源到空间
 
         /// <summary>
@@ -262,7 +271,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage
         /// </summary>
         /// <param name="fetchFileParam">资源信息</param>
         /// <returns></returns>
-        bool FetchFile(FetchFileParam fetchFileParam);
+        FetchFileResultDto FetchFile(FetchFileParam fetchFileParam);
 
         #endregion
     }

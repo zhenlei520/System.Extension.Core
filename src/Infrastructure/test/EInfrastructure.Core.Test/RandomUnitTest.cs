@@ -5,28 +5,27 @@ using EInfrastructure.Core.HelpCommon.Randoms.Interface;
 using EInfrastructure.Core.Test.Base;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace EInfrastructure.Core.Test
 {
     /// <summary>
-    /// Random 
+    /// Random
     /// </summary>
     public class RandomUnitTest : BaseUnitTest
     {
         private readonly IRandomBuilder _randomBuilder;
-        public RandomUnitTest(ITestOutputHelper output) : base(output)
+        public RandomUnitTest() : base()
         {
             _randomBuilder = provider.GetService<IRandomBuilder>();
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Fact]
         public void GetIdentify()
         {
-            
+
         }
     }
 }

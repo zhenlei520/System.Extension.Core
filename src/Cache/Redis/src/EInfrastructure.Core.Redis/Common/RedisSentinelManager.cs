@@ -126,7 +126,7 @@ namespace EInfrastructure.Core.Redis.Common
                         if (!sentinel.Connect(timeout))
                             continue;
                     }
-                    catch (System.Exception)
+                    catch (Exception)
                     {
                         continue;
                     }

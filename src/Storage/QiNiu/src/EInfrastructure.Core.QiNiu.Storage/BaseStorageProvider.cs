@@ -118,11 +118,14 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// </summary>
         /// <param name="persistentOps">策略</param>
         /// <returns></returns>
-        protected virtual BucketManager GetBucketManager(BasePersistentOps persistentOps = null)
+        protected virtual BucketManager GetBucketManager(BasePersistentOps persistentOps)
         {
             if (_bucketManager == null)
+            {
                 _bucketManager = new BucketManager(_qiNiuConfig.GetMac(),
-                    EInfrastructure.Core.QiNiu.Storage.Core.Tools.GetConfig(this._qiNiuConfig, persistentOps));
+                    Core.Tools.GetConfig(_qiNiuConfig, persistentOps));
+            }
+
             return _bucketManager;
         }
 
@@ -156,7 +159,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <returns></returns>
         protected virtual Auth GetAuth()
         {
-            return new Auth(this._qiNiuConfig.GetMac());
+            return new Auth(_qiNiuConfig.GetMac());
         }
 
         #endregion
@@ -198,21 +201,20 @@ namespace EInfrastructure.Core.QiNiu.Storage
             if ((uploadPersistentOps.EnableCallback == null && _qiNiuConfig.EnableCallback) ||
                 uploadPersistentOps.EnableCallback == true)
             {
-                string callbackHost = string.IsNullOrEmpty(uploadPersistentOps.CallbackHost)
-                    ? _qiNiuConfig.CallbackHost
-                    : uploadPersistentOps.CallbackHost;
-                string callbackUrl = string.IsNullOrEmpty(uploadPersistentOps.CallbackUrl)
-                    ? _qiNiuConfig.CallbackUrl
-                    : uploadPersistentOps.CallbackUrl;
-                string callbackBody = string.IsNullOrEmpty(uploadPersistentOps.CallbackBody)
-                    ? _qiNiuConfig.CallbackBody
-                    : uploadPersistentOps.CallbackBody;
-                string callbackBodyType = string.IsNullOrEmpty(uploadPersistentOps.CallbackBodyType)
-                    ? CallbackBodyType
-                          .FromValue<CallbackBodyType>(_qiNiuConfig.CallbackBodyType)?.Name ??
-                      CallbackBodyType.Json.Name
-                    : uploadPersistentOps.CallbackBodyType;
-                uploadPersistentOps.SetCallBack(callbackBodyType, callbackHost, callbackUrl, callbackBody);
+                if (uploadPersistentOps.EnableCallback == null && _qiNiuConfig.EnableCallback)
+                {
+                    uploadPersistentOps.SetCallBack(CallbackBodyType
+                                                        .FromValue<CallbackBodyType>(_qiNiuConfig.CallbackBodyType)
+                                                        ?.Name ??
+                                                    CallbackBodyType.Json.Name, _qiNiuConfig.CallbackHost,
+                        _qiNiuConfig.CallbackUrl, _qiNiuConfig.CallbackBody);
+                }
+                else
+                {
+                    uploadPersistentOps.SetCallBack(uploadPersistentOps.CallbackBodyType,
+                        uploadPersistentOps.CallbackHost, uploadPersistentOps.CallbackUrl,
+                        uploadPersistentOps.CallbackBody);
+                }
             }
 
             if (uploadPersistentOps.EnablePersistentNotifyUrl)

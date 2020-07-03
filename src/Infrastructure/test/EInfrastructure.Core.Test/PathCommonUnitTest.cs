@@ -4,7 +4,6 @@
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace EInfrastructure.Core.Test
 {
@@ -13,14 +12,6 @@ namespace EInfrastructure.Core.Test
     /// </summary>
     public class PathCommonUnitTest : BaseUnitTest
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="output"></param>
-        public PathCommonUnitTest(ITestOutputHelper output) : base(output)
-        {
-        }
-
         [Fact]
         public void GetPath()
         {

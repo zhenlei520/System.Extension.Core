@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
 
 namespace EInfrastructure.Core.Configuration.Ioc.Plugs
 {
@@ -33,5 +34,12 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         T Deserialize<T>(string xml, Encoding encoding = null, Func<System.Exception, T> func = null);
+
+        /// <summary>
+        /// 获取Xml根节点名称
+        /// </summary>
+        /// <param name="xmlStr">xml字符串</param>
+        /// <returns></returns>
+        XmlElement GetXmlElement(string xmlStr);
     }
 }

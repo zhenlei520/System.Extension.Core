@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
 
         public BucketUnitTest() : base()
         {
-            _bucketProvider = base.provider.GetService<IBucketProvider>();
+            _bucketProvider = provider.GetService<IBucketProvider>();
         }
 
         #region 得到空间列表
@@ -32,7 +32,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [Fact]
         public void GetBucketList()
         {
-            var bucketList = _bucketProvider.GetBucketList(new List<KeyValuePair<string, string>>());
+            var bucketList = _bucketProvider.GetBucketList(new GetBucketParam("te","",1));
         }
 
         #endregion
@@ -111,7 +111,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [InlineData("test", 0)]
         public void SetPermiss(string bucket, int permiss)
         {
-            var ret = _bucketProvider.SetPermiss(new SetPermissParam(BucketPermiss.FromValue<BucketPermiss>(permiss),
+            var ret = _bucketProvider.SetPermiss(new SetPermissParam(Permiss.FromValue<Permiss>(permiss),
                 new BasePersistentOps()
                 {
                     Bucket = bucket,
