@@ -187,6 +187,10 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         this.Version = "5.1";
                         this.Alias = "Xp";
                     }
+                    else if (userAgent.Contains("WP7"))
+                    {
+
+                    }
                 }
             }
         }
