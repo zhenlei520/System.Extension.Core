@@ -31,6 +31,19 @@ namespace EInfrastructure.Core.Aliyun.Storage
             return services;
         }
 
+        /// <summary>
+        /// 加载阿里云oss服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="action">委托</param>
+        public static IServiceCollection AddAliYunStorage(this IServiceCollection services,
+            Action<ALiYunStorageConfig> action)
+        {
+            var aliyunConfig = new ALiYunStorageConfig();
+            action.Invoke(aliyunConfig);
+            return AddAliYunStorage(services, () => aliyunConfig);
+        }
+
         #endregion
     }
 }
