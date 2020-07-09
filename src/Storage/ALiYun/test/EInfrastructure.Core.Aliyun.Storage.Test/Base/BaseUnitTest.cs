@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Test.Base
         public BaseUnitTest()
         {
             var services = new ServiceCollection();
-            services.AddQiNiuStorage(() =>
+            services.AddAliYunStorage(() =>
             {
                 return new ALiYunStorageConfig("accessKey", "secretKey");
             });

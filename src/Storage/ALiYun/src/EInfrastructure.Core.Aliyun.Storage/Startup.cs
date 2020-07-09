@@ -21,9 +21,9 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// </summary>
         /// <param name="services"></param>
         /// <param name="func">委托</param>
-        public static IServiceCollection AddQiNiuStorage(this IServiceCollection services,
+        public static IServiceCollection AddAliYunStorage(this IServiceCollection services,
             Func<ALiYunStorageConfig> func)
-        { 
+        {
             StartUp.Run();
             var aliyunConfig = func.Invoke();
             ValidationCommon.Check(aliyunConfig, "阿里云存储配置异常", HttpStatus.Err.Name);
