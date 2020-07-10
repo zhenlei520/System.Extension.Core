@@ -66,7 +66,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     var match = new Regex("/CentOS\\/[0-9\\.\\-]+el([0-9_]+)/").Matches(userAgent);
                     if (match.Count > 0)
                     {
-                        this.Version = match[1].Value.Replace("/_/g", "");
+                        this.Version = match[1].Value.Replace("/_/g", "").ConvertToDecimal(0);
                     }
                 }
                 else if (Name == "Fedora")
@@ -74,7 +74,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     var match = new Regex("/Fedora\\/[0-9\\.\\-]+fc([0-9]+)/").Matches(userAgent);
                     if (match.Count > 0)
                     {
-                        this.Version = match[1].Value;
+                        this.Version = match[1].Value.ConvertToDecimal(0);
                     }
                 }
                 else if (Name == "Mandriva Linux")
@@ -83,7 +83,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     var match = new Regex("/Mandriva Linux\\/[0-9\\.\\-]+mdv([0-9]+)/").Matches(userAgent);
                     if (match.Count > 0)
                     {
-                        this.Version = match[1].Value;
+                        this.Version = match[1].Value.ConvertToDecimal(0);
                     }
                 }
                 else if (Name == "Mageia")
@@ -91,7 +91,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     var match = new Regex("/Mageia\\/[0-9\\.\\-]+mga([0-9]+)/").Matches(userAgent);
                     if (match.Count > 0)
                     {
-                        this.Version = match[1].Value;
+                        this.Version = match[1].Value.ConvertToDecimal(0);
                     }
                 }
                 else if (Name == "Red Hat")
@@ -99,7 +99,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     var match = new Regex("/Red Hat[^\\/]*\\/[0-9\\.\\-]+el([0-9_]+)/").Matches(userAgent);
                     if (match.Count > 0)
                     {
-                        this.Version = match[1].Value.Replace("/_/g", "");
+                        this.Version = match[1].Value.Replace("/_/g", "").ConvertToDecimal(0);
                     }
                 }
                 else if (Name == "Ubuntu")
@@ -107,7 +107,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     var match = new Regex("/Ubuntu\\/([0-9.]*)/").Matches(userAgent);
                     if (match.Count > 0)
                     {
-                        this.Version = match[1].Value;
+                        this.Version = match[1].Value.ConvertToDecimal(0);
                     }
                 }
                 else if (Name == "Mac OS X")
@@ -115,7 +115,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     var match = new Regex("/Mac OS X (10[0-9\\._]*)/").Matches(userAgent);
                     if (match.Count > 0)
                     {
-                        this.Version = match[1].Value.Replace("/_/g", "");
+                        this.Version = match[1].Value.Replace("/_/g", "").ConvertToDecimal(0);
                     }
                 }
                 else if (Name == "Windows")
@@ -123,39 +123,25 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     var match = new Regex("/Windows NT ([0-9]\\.[0-9])/").Matches(userAgent);
                     if (match.Count > 0)
                     {
-                        this.Version = match[1].Value;
-                    }
-                }
-            }
-            else
-            {
-                if (IosRegexList.Any(x => x.IsMatch(userAgent)))
-                {
-                    Name = "Ios";
-                    Version = "1.0";
-
-                    var match = new Regex("/OS (.*) like Mac OS X/").Matches(userAgent);
-                    if (match.Count > 0)
-                    {
-                        this.Version = match[1].ToString().Replace("/_/g", "");
+                        this.Version = match[1].Value.ConvertToDecimal(0);
                         switch (this.Version)
                         {
-                            case "6.2":
+                            case 6.2m:
                                 this.Alias = "8";
                                 break;
-                            case "6.1":
+                            case 6.1m:
                                 this.Alias = "7";
                                 break;
-                            case "6.0":
+                            case 6.0m:
                                 this.Alias = "Vista";
                                 break;
-                            case "5.2":
+                            case 5.2m:
                                 this.Alias = "Server 2003";
                                 break;
-                            case "5.1":
+                            case 5.1m:
                                 this.Alias = "XP";
                                 break;
-                            case "5.0":
+                            case 5.0m:
                                 this.Alias = "2000";
                                 break;
                             default:
@@ -164,33 +150,129 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         }
                     }
 
+
                     if (userAgent.Contains("Windows 95") || userAgent.Contains("Win95") ||
                         userAgent.Contains("Win 9x 4.00"))
                     {
-                        this.Version = "4.0";
+                        this.Version = 4.0m;
                         this.Alias = "95";
                     }
-                    else if (userAgent.Contains("Windows 98") || userAgent.Contains("Win98") ||
-                             userAgent.Contains("Win 9x 4.10"))
+
+                    if (userAgent.Contains("Windows 98") || userAgent.Contains("Win98") ||
+                        userAgent.Contains("Win 9x 4.10"))
                     {
-                        this.Version = "4.1";
+                        this.Version = 4.1m;
                         this.Alias = "98";
                     }
-                    else if (userAgent.Contains("Windows ME") || userAgent.Contains("WinME") ||
-                             userAgent.Contains("Win 9x 4.90"))
+
+                    if (userAgent.Contains("Windows ME") || userAgent.Contains("WinME") ||
+                        userAgent.Contains("Win 9x 4.90"))
                     {
-                        this.Version = "4.9";
+                        this.Version = 4.9m;
                         this.Alias = "ME";
                     }
-                    else if (userAgent.Contains("Windows XP") || userAgent.Contains("WinXP"))
+
+                    if (userAgent.Contains("Windows XP") || userAgent.Contains("WinXP"))
                     {
-                        this.Version = "5.1";
+                        this.Version = 5.1m;
                         this.Alias = "Xp";
                     }
-                    else if (userAgent.Contains("WP7"))
+
+                    if (userAgent.Contains("WP7"))
                     {
+                        this.Name = "Windows Phone";
+                        this.Version = 7.0m;
+                        this.Details = "2";
+                    }
+
+                    if (userAgent.Contains("Windows CE") || userAgent.Contains("WinCE") ||
+                        userAgent.Contains("WindowsCE"))
+                    {
+                        if (userAgent.Contains("IEMobile"))
+                        {
+                            this.Name = "Windows Mobile";
+                            if (userAgent.Contains("IEMobile 8"))
+                            {
+                                this.Version = 6.5m;
+                                this.Details = "2";
+                            }
+                            else if (userAgent.Contains("IEMobile 7"))
+                            {
+                                this.Version = 6.1m;
+                                this.Details = "2";
+                            }
+                            else if (userAgent.Contains("IEMobile 6"))
+                            {
+                                this.Version = 6.0m;
+                                this.Details = "2";
+                            }
+                        }
+                        else
+                        {
+                            this.Name = "Windows CE";
+
+                            match = new Regex("/WindowsCEOS\\/([0-9.]*)/").Matches(userAgent);
+                            if (match.Count > 0)
+                            {
+                                this.Version = match[1].Value.ConvertToDecimal(0);
+                                this.Details = "2";
+                            }
+
+                            match = new Regex("/Windows CE ([0-9.]*)/").Matches(userAgent);
+                            if (match.Count > 0)
+                            {
+                                this.Version = match[1].Value.ConvertToDecimal(0);
+                                this.Details = "2";
+                            }
+                        }
+                    }
+
+                    if (userAgent.Contains("Windows Mobile"))
+                    {
+                        this.Name = "Windows Mobile";
+                    }
+
+                    match = new Regex("/WindowsMobile\\/([0-9.]*)/").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "Windows Mobile";
+                        this.Version = match[1].ConvertToDecimal(0);
+                        this.Details = "2";
+                    }
+
+                    match = new Regex("Windows Phone [0-9]").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "Windows Mobile";
+                        this.Version = new Regex("/Windows Phone ([0-9.]*)/").Matches(userAgent)[1].ToString().ConvertToDecimal(0);
+                        this.Details = "2";
+                    }
+
+                    if (userAgent.Contains("Windows Phone OS"))
+                    {
+                        this.Name = "Windows Phone";
+                        this.Version = new Regex("/Windows Phone OS ([0-9.]*)/").Matches(userAgent)[1].ConvertToDecimal(0);
+                        this.Details = "2";
+
 
                     }
+                }
+            }
+            else
+            {
+                if (IosRegexList.Any(x => x.IsMatch(userAgent)))
+                {
+                    Name = "Ios";
+                    Version = 1.0m;
+
+                    var match = new Regex("/OS (.*) like Mac OS X/").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Version = match[1].ToString().Replace("/_/g", "").ConvertToDecimal(0);
+                    }
+                }
+                else if (userAgent.Contains(""))
+                {
                 }
             }
         }
@@ -203,7 +285,12 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <summary>
         /// 系统版本
         /// </summary>
-        public string Version { get; internal set; }
+        public decimal Version { get; internal set; }
+
+        /// <summary>
+        /// 详情
+        /// </summary>
+        public string Details { get; private set; }
 
         /// <summary>
         /// 别名
