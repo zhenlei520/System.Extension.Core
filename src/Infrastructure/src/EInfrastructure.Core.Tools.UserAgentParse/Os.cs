@@ -38,7 +38,8 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
             "Ubuntu",
             "Linux",
             "Mac OS X",
-            "Windows"
+            "Windows",
+            "Android"
         };
 
         /// <summary>
@@ -254,7 +255,26 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         this.Version = new Regex("/Windows Phone OS ([0-9.]*)/").Matches(userAgent)[1].ConvertToDecimal(0);
                         this.Details = "2";
 
+                        if (this.Version < 7)
+                        {
+                            this.Name = "Windows Mobile";
+                        }
+                    }
+                }
+                else if (Name == "Android")
+                {
+                    this.Name = "Android";
+                    var match=new Regex("/Android(?: )?(?:AllPhone_|CyanogenMod_)?(?:\\/)?v?([0-9.]+)/").Matches(userAgent.Replace("-update","."));
+                    if (match.Count > 0)
+                    {
+                        this.Version = match[1].ConvertToDecimal(0);
+                        this.Details = "3";
+                    }
 
+                    if (userAgent.Contains("Android Eclair"))
+                    {
+                        this.Version = 2.0m;
+                        this.Details = "3";
                     }
                 }
             }
@@ -271,8 +291,9 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         this.Version = match[1].ToString().Replace("/_/g", "").ConvertToDecimal(0);
                     }
                 }
-                else if (userAgent.Contains(""))
+                else if (userAgent.Contains("GoogleTV"))
                 {
+                    this.Name = "Google TV";
                 }
             }
         }
