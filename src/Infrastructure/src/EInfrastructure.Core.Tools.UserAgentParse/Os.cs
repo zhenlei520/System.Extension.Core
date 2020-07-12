@@ -39,7 +39,12 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
             "Linux",
             "Mac OS X",
             "Windows",
-            "Android"
+            "Android",
+            "WoPhone",
+            "Series40",
+            "MeeGo",
+            "Tizen",
+            ""
         };
 
         /// <summary>
@@ -245,14 +250,16 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     if (match.Count > 0)
                     {
                         this.Name = "Windows Mobile";
-                        this.Version = new Regex("/Windows Phone ([0-9.]*)/").Matches(userAgent)[1].ToString().ConvertToDecimal(0);
+                        this.Version = new Regex("/Windows Phone ([0-9.]*)/").Matches(userAgent)[1].ToString()
+                            .ConvertToDecimal(0);
                         this.Details = "2";
                     }
 
                     if (userAgent.Contains("Windows Phone OS"))
                     {
                         this.Name = "Windows Phone";
-                        this.Version = new Regex("/Windows Phone OS ([0-9.]*)/").Matches(userAgent)[1].ConvertToDecimal(0);
+                        this.Version = new Regex("/Windows Phone OS ([0-9.]*)/").Matches(userAgent)[1]
+                            .ConvertToDecimal(0);
                         this.Details = "2";
 
                         if (this.Version < 7)
@@ -264,7 +271,9 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 else if (Name == "Android")
                 {
                     this.Name = "Android";
-                    var match=new Regex("/Android(?: )?(?:AllPhone_|CyanogenMod_)?(?:\\/)?v?([0-9.]+)/").Matches(userAgent.Replace("-update","."));
+                    var match =
+                        new Regex("/Android(?: )?(?:AllPhone_|CyanogenMod_)?(?:\\/)?v?([0-9.]+)/").Matches(
+                            userAgent.Replace("-update", "."));
                     if (match.Count > 0)
                     {
                         this.Version = match[1].ConvertToDecimal(0);
@@ -275,6 +284,22 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     {
                         this.Version = 2.0m;
                         this.Details = "3";
+                    }
+                }
+                else if (Name == "WoPhone")
+                {
+                    var match = new Regex("/WoPhone\\/([0-9\\.]*)/").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Version = match[1].ConvertToDecimal(0);
+                    }
+                }
+                else if (Name == "Tizen")
+                {
+                    var match = new Regex("/Tizen[\\/ ]([0-9.]*)/").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Version = match[1].ConvertToDecimal(0);
                     }
                 }
             }
@@ -294,6 +319,85 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 else if (userAgent.Contains("GoogleTV"))
                 {
                     this.Name = "Google TV";
+                    var match = new Regex("Chrome/5.").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Version = 1;
+                    }
+
+                    match = new Regex("Chrome/11.").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Version = 2;
+                    }
+                }
+                else if (userAgent.Contains("BlackBerry"))
+                {
+                    this.Name = "BlackBerry OS";
+
+                    if (!userAgent.Contains("Opera"))
+                    {
+                        var match = new Regex("/BlackBerry([0-9]*)\\/([0-9.]*)/").Matches(userAgent);
+                        if (match.Count > 0)
+                        {
+                            this.Version = match[2].ConvertToDecimal(0);
+                            this.Details = "2";
+                        }
+
+                        match = new Regex("/Version\\/([0-9.]*)/").Matches(userAgent);
+                        if (match.Count > 0)
+                        {
+                            this.Version = match[1].ConvertToDecimal(0);
+                            this.Details = "2";
+                        }
+
+                        if (this.Version >= 10)
+                        {
+                            this.Name = "BlackBerry";
+                        }
+                    }
+                }
+                else if (userAgent.Contains("RIM Tablet OS"))
+                {
+                    this.Name = "BlackBerry Tablet OS";
+                    this.Version = new Regex("/RIM Tablet OS ([0-9.]*)/").Matches(userAgent)[1].ConvertToDecimal(0);
+                    this.Details = "2";
+                }
+                else if (userAgent.Contains("PlayBook"))
+                {
+                    var match = new Regex("/Version\\/(10[0-9.]*)/").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "name";
+                        this.Version = match[1].ConvertToDecimal(0);
+                        this.Details = "2";
+                    }
+                }
+                else
+                {
+                    var match = new Regex("(?:web|hpw)OS").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "webOS";
+                        match = new Regex("/(?:web|hpw)OS\\/([0-9.]*)/").Matches(userAgent);
+                        if (match.Count > 0)
+                        {
+                            this.Version = match[1].ConvertToDecimal(0);
+                        }
+                    }
+
+                    match = new Regex("Series[ ]?60").Matches(userAgent);
+                    if (userAgent.Contains("Symbian") || userAgent.Contains("S60") || match.Count > 0)
+                    {
+                        this.Name = "Series60";
+                        this.Version = 3.0m;
+                    }
+
+                    match = new Regex("/Series60\\/([0-9.]*)/").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Version = match[1].ConvertToDecimal(0);
+                    }
                 }
             }
         }
