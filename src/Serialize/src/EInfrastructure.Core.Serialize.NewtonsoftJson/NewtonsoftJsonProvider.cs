@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.Serialize.NewtonsoftJson
@@ -24,17 +25,15 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
         {
         }
 
-        private readonly ILogProvider _logService;
+        private readonly ILogger<NewtonsoftJsonProvider> _logger;
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="providers"></param>
-        public NewtonsoftJsonProvider(ICollection<ILogProvider> providers) : this()
+        /// <param name="logger"></param>
+        public NewtonsoftJsonProvider(ILogger<NewtonsoftJsonProvider> logger) : this()
         {
-            _logService = providers.Count == 1
-                ? providers.FirstOrDefault()
-                : providers.OrderByDescending(x => x.GetWeights()).FirstOrDefault();
+            _logger = logger;
         }
 
         #region 得到实现类唯一标示
@@ -135,7 +134,7 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
             {
                 if (StartUp.EnableLog)
                 {
-                    _logService?.Info($"反序列化失败，待转字符串str：{str}" + "，异常信息：" + ex.Message);
+                    _logger?.LogError($"反序列化失败，待转字符串str：{str}" + "，异常信息：" + ex.ExtractAllStackTrace());
                 }
 
                 if (func != null)

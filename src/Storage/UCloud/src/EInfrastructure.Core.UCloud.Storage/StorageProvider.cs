@@ -13,19 +13,20 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.UCloud.Storage.Config;
+using Microsoft.Extensions.Logging;
 
 namespace EInfrastructure.Core.UCloud.Storage
 {
     /// <summary>
     /// UCloud存储实现类
     /// </summary>
-    public class StorageProvider : BaseStorageProvider, IStorageProvider
+    public class StorageProvider : BaseStorageProvider<StorageProvider>, IStorageProvider
     {
         /// <summary>
         /// UCloud存储实现类
         /// </summary>
-        public StorageProvider(ICollection<ILogProvider> logService, UCloudStorageConfig uCloudStorageConfig) : base(
-            logService,
+        public StorageProvider(ILogger<StorageProvider>logger, UCloudStorageConfig uCloudStorageConfig) : base(
+            logger,
             uCloudStorageConfig)
         {
         }

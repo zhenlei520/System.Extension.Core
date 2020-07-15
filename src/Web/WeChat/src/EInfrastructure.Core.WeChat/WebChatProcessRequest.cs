@@ -12,6 +12,7 @@ using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.WeChat.Common;
 using EInfrastructure.Core.WeChat.Config;
 using EInfrastructure.Core.WeChat.Enumerations;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -22,20 +23,20 @@ namespace EInfrastructure.Core.WeChat
     /// </summary>
     public class WebChatProcessRequest
     {
-        private readonly ILogProvider _logService;
+        private readonly ILogger<WebChatProcessRequest> _logger;
         private readonly IJsonProvider _jsonProvider;
         private readonly IXmlProvider _xmlProvider;
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="logServices"></param>
+        /// <param name="logger"></param>
         /// <param name="jsonProviders"></param>
         /// <param name="xmlProviders"></param>
-        public WebChatProcessRequest(ICollection<ILogProvider> logServices, ICollection<IJsonProvider> jsonProviders,
+        public WebChatProcessRequest(ILogger<WebChatProcessRequest> logger, ICollection<IJsonProvider> jsonProviders,
             ICollection<IXmlProvider> xmlProviders)
         {
-            _logService = InjectionSelectionCommon.GetImplement(logServices);
+            _logger = logger;
             _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
             _xmlProvider = InjectionSelectionCommon.GetImplement(xmlProviders);
         }
@@ -66,9 +67,9 @@ namespace EInfrastructure.Core.WeChat
                     throw new BusinessException("参数错误",HttpStatus.Err.Id);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logService.Error("接受用户信息错误：", e);
+                _logger.LogError("接受用户信息错误：", ex.ExtractAllStackTrace());
             }
 
             return refundReponse;
@@ -89,7 +90,7 @@ namespace EInfrastructure.Core.WeChat
             string token = wxConfig.Token; //从配置文件获取Token
             if (string.IsNullOrEmpty(token))
             {
-                _logService.Error("WeixinToken 配置项没有配置！");
+                _logger.LogError("WeixinToken 配置项没有配置！");
             }
 
             if (CheckSignature(token, chatAuthConfig.Signature, chatAuthConfig.Timestamp, chatAuthConfig.Nonce) &&
@@ -198,8 +199,8 @@ namespace EInfrastructure.Core.WeChat
 
                 if (!loginResult.Success)
                 {
-                    _logService.Warn("[微信登陆失败]\r\n请求参数：" + getAccessTokenUrl + "\r\n返回参数：" +
-                                     _jsonProvider.Serializer(getAccessTokenResult, true));
+                    _logger.LogError("[微信登陆失败]\r\n请求参数：" + getAccessTokenUrl + "\r\n返回参数：" +
+                                 _jsonProvider.Serializer(getAccessTokenResult, true));
                 }
             }
 

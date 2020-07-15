@@ -7,20 +7,21 @@ using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pictures;
 using EInfrastructure.Core.UCloud.Storage.Config;
+using Microsoft.Extensions.Logging;
 
 namespace EInfrastructure.Core.UCloud.Storage
 {
     /// <summary>
     /// 图片服务
     /// </summary>
-    public class PictureProvider : BaseStorageProvider, IPictureProvider
+    public class PictureProvider : BaseStorageProvider<PictureProvider>, IPictureProvider
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="logService"></param>
+        /// <param name="logger"></param>
         /// <param name="uCloudConfig"></param>
-        public PictureProvider(ICollection<ILogProvider> logService, UCloudStorageConfig uCloudConfig) : base(logService,
+        public PictureProvider(ILogger<PictureProvider>logger, UCloudStorageConfig uCloudConfig) : base(logger,
             uCloudConfig)
         {
         }

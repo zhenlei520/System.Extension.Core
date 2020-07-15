@@ -17,6 +17,7 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Validation.Common;
+using Microsoft.Extensions.Logging;
 
 namespace EInfrastructure.Core.Aliyun.Storage
 {
@@ -26,9 +27,11 @@ namespace EInfrastructure.Core.Aliyun.Storage
     public class BucketProvider : IBucketProvider
     {
         private readonly ALiYunStorageConfig _aLiYunConfig;
+        private readonly ILogger<BucketProvider> _logger;
 
-        public BucketProvider(ALiYunStorageConfig aliyunConfig)
+        public BucketProvider(ALiYunStorageConfig aliyunConfig, ILogger<BucketProvider> logger = null)
         {
+            _logger = logger;
             _aLiYunConfig = aliyunConfig;
         }
 
@@ -41,7 +44,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public BucketItemResultDto GetBucketList(GetBucketParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
@@ -76,7 +79,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 {
                     return new BucketItemResultDto(
                         ret.Buckets.Select(x =>
-                            new BucketItemResultDto.BucketItemDto((int?)Core.Tools.GetZoneByLocation(x.Location),
+                            new BucketItemResultDto.BucketItemDto((int?) Core.Tools.GetZoneByLocation(x.Location),
                                 x.Name)).ToList(), ret.Prefix,
                         ret.IsTruncated,
                         ret.Marker, ret.NextMaker);
@@ -98,7 +101,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public OperateResultDto Create(CreateBucketParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new CreateBucketParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.Zone, () => ZoneEnum.HangZhou);
@@ -139,7 +142,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public OperateResultDto Delete(DeleteBucketParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 Check.TrueByString(request != null, $"{nameof(request)} is null", HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -161,7 +164,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public OperateResultDto Exist(ExistBucketParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 Check.TrueByString(request != null, $"{nameof(request)} is null", HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -201,7 +204,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public OperateResultDto SetPermiss(SetPermissParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new SetPermissParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -223,7 +226,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public BucketPermissItemResultDto GetPermiss(BasePersistentOps persistentOps)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 Check.True(persistentOps != null, "策略信息异常");
                 var zone = Core.Tools.GetZone(_aLiYunConfig, persistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -258,7 +261,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public OperateResultDto SetReferer(SetRefererParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new SetRefererParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -281,7 +284,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public RefererResultDto GetReferer(GetRefererParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 Check.TrueByString(request != null, $"{nameof(request)} is null", HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -309,7 +312,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public OperateResultDto ClearReferer(ClearRefererParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 Check.TrueByString(request != null, $"{nameof(request)} is null", HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -335,7 +338,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public OperateResultDto SetTag(SetTagBucketParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new SetTagBucketParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -366,7 +369,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public TagResultDto GetTags(GetTagsBucketParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new GetTagsBucketParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -401,7 +404,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public OperateResultDto ClearTag(ClearTagBucketParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);

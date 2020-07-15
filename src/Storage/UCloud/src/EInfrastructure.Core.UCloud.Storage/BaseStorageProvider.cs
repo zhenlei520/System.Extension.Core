@@ -9,21 +9,23 @@ using System.Runtime.Serialization.Json;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.UCloud.Storage.Common;
 using EInfrastructure.Core.UCloud.Storage.Config;
 using EInfrastructure.Core.Validation.Common;
+using Microsoft.Extensions.Logging;
 
 namespace EInfrastructure.Core.UCloud.Storage
 {
     /// <summary>
     /// 基类UCloud实现
     /// </summary>
-    public abstract class BaseStorageProvider
+    public abstract class BaseStorageProvider<T>
     {
         /// <summary>
         ///
         /// </summary>
-        protected readonly ILogProvider LogService;
+        protected readonly ILogger<T> _logger;
 
         /// <summary>
         /// UCloud配置
@@ -33,9 +35,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 基类UCloud实现
         /// </summary>
-        public BaseStorageProvider(ICollection<ILogProvider> logServices, UCloudStorageConfig uCloudConfig)
+        public BaseStorageProvider(ILogger<T> logger, UCloudStorageConfig uCloudConfig)
         {
-            LogService = InjectionSelectionCommon.GetImplement(logServices);
+            _logger = logger;
             UCloudConfig = uCloudConfig;
             ValidationCommon.Check(uCloudConfig,"Uc云存储配置异常",HttpStatus.Err.Name);
         }
@@ -65,13 +67,13 @@ namespace EInfrastructure.Core.UCloud.Storage
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     string e = FormatString(body);
-                    LogService.Error(string.Format("{0} {1}", response.StatusDescription, e));
+                    _logger.LogError($"{response.StatusDescription} {e}");
                     return false;
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                LogService.Error(e.ToString());
+                _logger.LogError(ex.ExtractAllStackTrace());
                 return false;
             }
             finally
