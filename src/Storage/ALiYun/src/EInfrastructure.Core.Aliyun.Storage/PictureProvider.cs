@@ -14,11 +14,13 @@ namespace EInfrastructure.Core.Aliyun.Storage
     public class PictureProvider : BaseStorageProvider, IPictureProvider
     {
         private readonly IStorageProvider _storageProvider;
+        private readonly ILogger _logger;
 
-        public PictureProvider(ILogger<StorageProvider> logger, ALiYunStorageConfig aLiYunStorageConfig) : base(
+        public PictureProvider(ILogger<PictureProvider> logger, ALiYunStorageConfig aLiYunStorageConfig) : base(
             aLiYunStorageConfig)
         {
-            _storageProvider = new StorageProvider(logger, aLiYunStorageConfig);
+            this._logger = logger;
+            _storageProvider = new StorageProvider(aLiYunStorageConfig, logger);
         }
 
         #region 返回权重

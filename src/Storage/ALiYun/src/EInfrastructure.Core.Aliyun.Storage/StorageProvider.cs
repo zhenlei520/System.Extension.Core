@@ -37,17 +37,27 @@ namespace EInfrastructure.Core.Aliyun.Storage
     public class StorageProvider : BaseStorageProvider, IStorageProvider
     {
         private readonly ALiYunStorageConfig _aLiYunConfig;
-        private readonly ILogger<StorageProvider> _logger;
+        private readonly ILogger _logger;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="aliyunConfig"></param>
-        public StorageProvider(ILogger<StorageProvider> logger, ALiYunStorageConfig aliyunConfig) : base(aliyunConfig)
+        public StorageProvider(ALiYunStorageConfig aliyunConfig, ILogger logger) : base(aliyunConfig)
         {
             _logger = logger;
             _aLiYunConfig = aliyunConfig;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="aliyunConfig"></param>
+        public StorageProvider(ILogger<StorageProvider> logger, ALiYunStorageConfig aliyunConfig) : this(
+            aliyunConfig, logger)
+        {
         }
 
         #region 返回权重

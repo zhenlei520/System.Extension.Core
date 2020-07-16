@@ -3,13 +3,19 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\wangz\.nuget\packages\qiniu\7.3.1.1\lib\Net40\Qiniu.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bd522c25_002D4a20_002D44aa_002Dab47_002D13dc6a63feb0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetBucketList" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=02d0405c_002Df0eb_002D46a0_002D9d14_002D7fd44b77caf8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateBucket" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.BucketUnitTest.GetBucketList&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Aliyun.Storage.Test.BucketUnitTest.CreateBucket&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v2.1::EInfrastructure.Core.Aliyun.Storage.Test.BucketUnitTest.CreateBucket&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b3ea5d12_002Da325_002D40c6_002D84fa_002Decb5ba3eeabe/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetBucketList" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v2.1::EInfrastructure.Core.Aliyun.Storage.Test.BucketUnitTest.GetBucketList&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	
+	
 	
 	
 	

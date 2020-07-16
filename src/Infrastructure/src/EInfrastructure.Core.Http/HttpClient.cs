@@ -13,6 +13,7 @@ using EInfrastructure.Core.Http.Params;
 using EInfrastructure.Core.Http.Provider;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Serialize.Xml;
+using Microsoft.Extensions.Logging;
 using RestSharp;
 
 namespace EInfrastructure.Core.Http
@@ -161,6 +162,11 @@ namespace EInfrastructure.Core.Http
 
             throw new BusinessException("不支持的请求", HttpStatus.Err.Id);
         }
+
+        /// <summary>
+        /// 日志
+        /// </summary>
+        private ILogger _logger;
 
         /// <summary>
         ///域
@@ -557,7 +563,7 @@ namespace EInfrastructure.Core.Http
         private IRestResponse Get(string url)
         {
             RestRequest request = GetProvider(RequestType.Get)
-                .GetRequest(Method.GET, url, new RequestBody(null), GetHeaders(), GetTimeOut());
+                .GetRequest(_logger, Method.GET, url, new RequestBody(null), GetHeaders(), GetTimeOut());
             if (Proxy != null)
             {
                 _restClient.Proxy = Proxy;
@@ -574,7 +580,7 @@ namespace EInfrastructure.Core.Http
         private async Task<IRestResponse> GetAsync(string url)
         {
             RestRequest request = GetProvider(RequestType.Get)
-                .GetRequest(Method.GET, url, new RequestBody(null), GetHeaders(), GetTimeOut());
+                .GetRequest(_logger, Method.GET, url, new RequestBody(null), GetHeaders(), GetTimeOut());
             if (Proxy != null)
             {
                 _restClient.Proxy = Proxy;
@@ -839,7 +845,7 @@ namespace EInfrastructure.Core.Http
             var body = _requestBodyType.Id == RequestBodyType.TextXml.Id
                 ? _xmlProvider.Serializer(data)
                 : data;
-            var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
+            var request = GetProvider(RequestType.Post).GetRequest(_logger,Method.POST, url,
                 new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());
             return GetClient().Execute(request);
@@ -858,7 +864,7 @@ namespace EInfrastructure.Core.Http
             var body = _requestBodyType.Id == RequestBodyType.TextXml.Id
                 ? _xmlProvider.Serializer(data)
                 : _jsonProvider.Serializer((data ?? new { }));
-            var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
+            var request = GetProvider(RequestType.Post).GetRequest(_logger, Method.POST, url,
                 new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());
             return await GetClient().ExecuteTaskAsync(request);
@@ -935,6 +941,19 @@ namespace EInfrastructure.Core.Http
             Headers = new Dictionary<string, string>();
             Proxy = null;
             _requestBodyFormat = null;
+        }
+
+        #endregion
+
+        #region 设置请求日志
+
+        /// <summary>
+        /// 设置请求日志
+        /// </summary>
+        /// <param name="logger"></param>
+        public void UseLogger(ILogger logger)
+        {
+            this._logger = logger;
         }
 
         #endregion

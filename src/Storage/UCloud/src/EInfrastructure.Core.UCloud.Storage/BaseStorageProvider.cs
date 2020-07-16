@@ -20,12 +20,12 @@ namespace EInfrastructure.Core.UCloud.Storage
     /// <summary>
     /// 基类UCloud实现
     /// </summary>
-    public abstract class BaseStorageProvider<T>
+    public abstract class BaseStorageProvider
     {
         /// <summary>
         ///
         /// </summary>
-        protected readonly ILogger<T> _logger;
+        protected readonly ILogger _logger;
 
         /// <summary>
         /// UCloud配置
@@ -35,7 +35,7 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         /// 基类UCloud实现
         /// </summary>
-        public BaseStorageProvider(ILogger<T> logger, UCloudStorageConfig uCloudConfig)
+        public BaseStorageProvider(ILogger logger, UCloudStorageConfig uCloudConfig)
         {
             _logger = logger;
             UCloudConfig = uCloudConfig;

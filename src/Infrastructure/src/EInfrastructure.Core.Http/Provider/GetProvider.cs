@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using RestSharp;
 
 namespace EInfrastructure.Core.Http.Provider
@@ -16,16 +17,17 @@ namespace EInfrastructure.Core.Http.Provider
         /// <summary>
         /// 得到请求
         /// </summary>
+        /// <param name="logger"></param>
         /// <param name="method">方法类型</param>
         /// <param name="url">地址</param>
         /// <param name="requestBody">数据</param>
         /// <param name="headers">请求头</param>
         /// <param name="timeOut">超时限制</param>
         /// <returns></returns>
-        public RestRequest GetRequest(Method method, string url, RequestBody requestBody,
+        public RestRequest GetRequest(ILogger logger, Method method, string url, RequestBody requestBody,
             Dictionary<string, string> headers, int timeOut)
         {
-            return GetRestRequest(url, Method.GET, timeOut, headers);
+            return GetRestRequest(logger, url, Method.GET, timeOut, headers);
         }
 
         #endregion
