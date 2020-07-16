@@ -24,32 +24,17 @@ namespace EInfrastructure.Core.Http.Provider
         /// <param name="headers">请求头</param>
         /// <param name="timeOut">超时限制</param>
         /// <returns></returns>
-        public RestRequest GetRequest(ILogger logger, Method method, string url, RequestBody requestBody,
+        public RestRequest GetRequest(Method method, string url, RequestBody requestBody,
             Dictionary<string, string> headers,
             int timeOut)
         {
-            RestRequest request = GetRestRequest(logger, url, method, timeOut, headers);
+            RestRequest request = GetRestRequest(url, method, timeOut, headers);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             var bodyDic = ObjectCommon.GetParams(requestBody.Data ?? new { },
                 "Newtonsoft.Json.JsonPropertyAttribute,Newtonsoft.Json");
             foreach (var item in bodyDic)
             {
                 request.AddParameter(item.Key, item.Value);
-            }
-
-            if (logger != null)
-            {
-                string log = "";
-                var list = request.Parameters.Where(x => x.Type == ParameterType.HttpHeader)
-                    .Select(x => $"key：{x.Name}，value：{x.Value}").ToList();
-                list.ForEach(item => { log += $"{item}，"; });
-                if (!string.IsNullOrEmpty(log))
-                {
-                    log = log.Substring(0, log.Length - 1);
-                }
-
-                logger.LogDebug(
-                    $"url：{url}，method:{method.ToString()}，timeOut：{timeOut}，Header：{log}，data：{request.Parameters.FirstOrDefault(x => x.Type == ParameterType.GetOrPost)}");
             }
 
             return request;

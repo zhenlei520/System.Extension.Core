@@ -19,14 +19,13 @@ namespace EInfrastructure.Core.Http.Provider
         /// <summary>
         /// 得到请求
         /// </summary>
-        /// <param name="logger"></param>
         /// <param name="method">方法类型</param>
         /// <param name="url">地址</param>
         /// <param name="requestBody">数据</param>
         /// <param name="headers">请求头</param>
         /// <param name="timeOut">超时限制</param>
         /// <returns></returns>
-        RestRequest GetRequest(ILogger logger, Method method, string url, RequestBody requestBody,
+        RestRequest GetRequest(Method method, string url, RequestBody requestBody,
             Dictionary<string, string> headers,
             int timeOut);
     }
@@ -41,13 +40,12 @@ namespace EInfrastructure.Core.Http.Provider
         /// <summary>
         /// 得到基本的请求
         /// </summary>
-        /// <param name="logger">日志</param>
         /// <param name="url">请求地址</param>
         /// <param name="method">请求方法类型</param>
         /// <param name="timeOut">超时时间</param>
         /// <param name="headers">请求头（可为空）</param>
         /// <returns></returns>
-        protected RestRequest GetRestRequest(ILogger logger, string url, Method method, int timeOut,
+        protected RestRequest GetRestRequest(string url, Method method, int timeOut,
             Dictionary<string, string> headers)
         {
             RestRequest request = string.IsNullOrEmpty(url)

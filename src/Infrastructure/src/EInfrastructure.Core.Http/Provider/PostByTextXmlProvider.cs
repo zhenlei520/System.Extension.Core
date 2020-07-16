@@ -15,17 +15,16 @@ namespace EInfrastructure.Core.Http.Provider
         /// <summary>
         /// 得到请求
         /// </summary>
-        /// <param name="logger"></param>
         /// <param name="method">方法类型</param>
         /// <param name="url">地址</param>
         /// <param name="requestBody">数据</param>
         /// <param name="headers">请求头</param>
         /// <param name="timeOut">超时限制</param>
         /// <returns></returns>
-        public RestRequest GetRequest(ILogger logger, Method method, string url, RequestBody requestBody,
+        public RestRequest GetRequest(Method method, string url, RequestBody requestBody,
             Dictionary<string, string> headers, int timeOut)
         {
-            RestRequest request = GetRestRequest(logger, url, method, timeOut, headers);
+            RestRequest request = GetRestRequest(url, method, timeOut, headers);
             request.AddBody(requestBody.Data);
             return request;
         }

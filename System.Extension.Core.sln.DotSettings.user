@@ -12,6 +12,7 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b3ea5d12_002Da325_002D40c6_002D84fa_002Decb5ba3eeabe/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetBucketList" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::F53FB607-ACED-4B94-A1A3-593BC282C8E4::.NETCoreApp,Version=v2.1::EInfrastructure.Core.Aliyun.Storage.Test.BucketUnitTest.GetBucketList&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.HttpCommonUnitTest.GetString1&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

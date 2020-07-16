@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using EInfrastructure.Core.Http;
@@ -8,6 +9,8 @@ using EInfrastructure.Core.Http.Params;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -65,6 +68,7 @@ namespace EInfrastructure.Core.Test
         public string GetString1()
         {
             HttpClient client = GetClient();
+            client.UseLogger(GetLogger());
             string client_credential = "";
             string appid = "";
             string secret = "";
@@ -298,6 +302,27 @@ namespace EInfrastructure.Core.Test
             [JsonProperty(PropertyName = "data")]
             public object Data { get; set; }
         }
+
+        #endregion
+
+        #region private methods
+
+        #region 得到logger
+
+        /// <summary>
+        /// 得到logger
+        /// </summary>
+        /// <returns></returns>
+        private ILogger GetLogger()
+        {
+            ILoggerFactory loggerFactory = new LoggerFactory();
+            Func<string, LogLevel, bool> filter = (category, level) => level >= LogLevel.Debug;
+            loggerFactory.AddProvider(new ConsoleLoggerProvider(filter, false));
+            ILogger logger = loggerFactory.CreateLogger(nameof(HttpCommonUnitTest));
+            return logger;
+        }
+
+        #endregion
 
         #endregion
     }
