@@ -205,6 +205,27 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 判断字符串是否全部相等
+
+        /// <summary>
+        /// 判断字符串是否全部相等
+        /// </summary>
+        /// <param name="number">待验证的字符串</param>
+        /// <returns></returns>
+        public static bool IsEqualNumber(string number)
+        {
+            for (int i = 0; i < number.Length - 1; i++)
+            {
+                if (number[i] != number[i + 1])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        #endregion
+
         #region 字符串转换为泛型集合
 
         /// <summary>

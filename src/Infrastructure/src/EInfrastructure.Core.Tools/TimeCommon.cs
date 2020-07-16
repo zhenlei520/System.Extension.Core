@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -281,7 +282,7 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 得到月初与月末时间
+        #region 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
 
         /// <summary>
         /// 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
@@ -915,6 +916,28 @@ namespace EInfrastructure.Core.Tools
             Enum[] days)
         {
             return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
+        }
+
+        #endregion
+
+        #region 根据日期获取当前星期几
+
+        /// <summary>
+        /// 将星期几转成数字表示
+        /// </summary>
+        public static int GetDayOfWeek(DayOfWeek dayOfWeek)
+        {
+            List<KeyValuePair<DayOfWeek, int>> maps = new List<KeyValuePair<DayOfWeek, int>>()
+            {
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Sunday, 1),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Monday, 2),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Tuesday, 3),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Wednesday, 4),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Thursday, 5),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Friday, 6),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Saturday, 7)
+            };
+            return maps.Where(x => x.Key == dayOfWeek).Select(x => x.Value).FirstOrDefault();
         }
 
         #endregion
