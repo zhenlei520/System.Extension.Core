@@ -484,9 +484,11 @@ namespace EInfrastructure.Core.Tools.Files
             fileName = fileName.Replace("/", "\\");
             if (fileName.IndexOf("\\", StringComparison.Ordinal) > -1)
                 CreateDirectory(directory);
-            using StreamWriter sw = new System.IO.StreamWriter(Path.Combine(directory, fileName), false, encoding);
-            sw.Write(content);
-            sw.Close();
+            using (StreamWriter sw = new System.IO.StreamWriter(Path.Combine(directory, fileName), false, encoding))
+            {
+                sw.Write(content);
+                sw.Close();
+            }
         }
 
         #endregion
