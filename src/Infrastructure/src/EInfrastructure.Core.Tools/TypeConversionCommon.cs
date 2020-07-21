@@ -214,7 +214,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="obj"></param>
         /// <param name="defaultVal">默认值</param>
         /// <returns></returns>
-        public static long ConvertToLong(this object obj, long defaultVal = default(long))
+        public static long ConvertToLong(this object obj, long defaultVal)
         {
             var result = obj.ConvertToLong(() => defaultVal);
             if (result != null)

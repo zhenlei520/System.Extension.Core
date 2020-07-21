@@ -2,6 +2,7 @@
 
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Enumerations;
 using Xunit;
 
 namespace EInfrastructure.Core.Test
@@ -43,22 +44,18 @@ namespace EInfrastructure.Core.Test
         }
 
         [Theory]
-        [InlineData("123asd", true)]
-        [InlineData("asd12", true)]
+        [InlineData("123asd", false)]
+        [InlineData("+123", true)]
+        [InlineData("123", true)]
+        [InlineData("++123", false)]
+        [InlineData("+-123", false)]
+        [InlineData("-123", true)]
+        [InlineData("--123", false)]
+        [InlineData("asd12", false)]
         [InlineData("asd", false)]
         public void IsNumber(string param, bool result)
         {
-            Check.True(param.IsNumber() == result, "方法异常");
-        }
-
-        [Theory]
-        [InlineData("13653777777", true)]
-        [InlineData("13653777777w", false)]
-        [InlineData("asd", false)]
-        [InlineData("a123a", false)]
-        public void IsOnlyNumber(string param, bool result)
-        {
-            Check.True(param.IsOnlyNumber() == result, "方法异常");
+            Check.True(param.IsNumber(NumericType.Minus) == result, "方法异常");
         }
 
         [Theory]
