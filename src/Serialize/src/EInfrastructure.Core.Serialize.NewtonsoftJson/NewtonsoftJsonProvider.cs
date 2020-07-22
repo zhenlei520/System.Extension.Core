@@ -132,11 +132,7 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
 
             catch (Exception ex)
             {
-                if (StartUp.EnableLog)
-                {
-                    _logger?.LogError($"反序列化失败，待转字符串str：{str}" + "，异常信息：" + ex.ExtractAllStackTrace());
-                }
-
+                _logger?.LogError($"反序列化失败，待转字符串str：{str}" + "，异常信息：" + ex.ExtractAllStackTrace());
                 if (func != null)
                 {
                     return func.Invoke(ex);

@@ -123,20 +123,20 @@ namespace EInfrastructure.Core.Tools
         /// List转换为string
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="s">待转换的list集合</param>
+        /// <param name="str">待转换的list集合</param>
         /// <param name="c">分割字符</param>
         /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
         /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
         /// <returns></returns>
-        public static string ConvertListToString<T>(this IEnumerable<T> s, char c = ',', bool isReplaceEmpty = true,
+        public static string ConvertListToString<T>(this IEnumerable<T> str, char c = ',', bool isReplaceEmpty = true,
             bool isReplaceSpace = true) where T : struct
         {
-            if (s == null || s.ToList().Count == 0)
+            if (str == null || str.ToList().Count == 0)
             {
                 return "";
             }
 
-            return ConvertListToString(s.Select(x => x.ToString()).ToList(), c, isReplaceEmpty, isReplaceSpace);
+            return ConvertListToString(str.Select(x => x.ToString()).ToList(), c, isReplaceEmpty, isReplaceSpace);
         }
 
         #endregion
@@ -146,21 +146,21 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// List转换为string
         /// </summary>
-        /// <param name="s">待转换的list集合</param>
+        /// <param name="str">待转换的list集合</param>
         /// <param name="c">分割字符</param>
         /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
         /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
         /// <returns></returns>
-        public static string ConvertListToString(this IEnumerable<string> s, char c = ',', bool isReplaceEmpty = true,
+        public static string ConvertListToString(this IEnumerable<string> str, char c = ',', bool isReplaceEmpty = true,
             bool isReplaceSpace = true)
         {
-            if (s == null || s.ToList().Count == 0)
+            if (str == null || str.ToList().Count == 0)
             {
                 return "";
             }
 
             string temp = "";
-            foreach (var item in s)
+            foreach (var item in str)
             {
                 if (isReplaceEmpty)
                 {

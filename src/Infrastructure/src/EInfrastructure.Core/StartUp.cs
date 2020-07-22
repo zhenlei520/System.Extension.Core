@@ -17,12 +17,10 @@ namespace EInfrastructure.Core
         /// <summary>
         /// 启用配置
         /// </summary>
-        /// <param name="enableLog">默认不启用日志</param>
-        public static void Run(bool enableLog = false)
+        public static void Run()
         {
             if (!_isStartUp)
             {
-                EInfrastructureCoreConfigurations.SetLog(enableLog);
                 _isStartUp = true;
                 Load();
             }
@@ -35,9 +33,9 @@ namespace EInfrastructure.Core
         /// </summary>
         private static void Load()
         {
-            Serialize.Xml.StartUp.Run(EInfrastructureCoreConfigurations.EnableLog);
-            Serialize.NewtonsoftJson.StartUp.Run(EInfrastructureCoreConfigurations.EnableLog);
-            Tools.StartUp.Run(EInfrastructureCoreConfigurations.EnableLog);
+            Serialize.Xml.StartUp.Run();
+            Serialize.NewtonsoftJson.StartUp.Run();
+            Tools.StartUp.Run();
         }
 
         #endregion

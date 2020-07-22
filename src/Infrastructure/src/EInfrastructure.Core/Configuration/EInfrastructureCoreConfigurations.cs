@@ -8,19 +8,6 @@ namespace EInfrastructure.Core.Configuration
     /// </summary>
     internal static class EInfrastructureCoreConfigurations
     {
-        /// <summary>
-        /// 设置是否启用日志
-        /// </summary>
-        /// <param name="enableLog">启用日志</param>
-        /// <returns></returns>
-        internal static void SetLog(bool enableLog= false)
-        {
-            EnableLog = enableLog;
-        }
 
-        /// <summary>
-        /// 是否启用日志
-        /// </summary>
-        internal static bool EnableLog { get; private set; }
     }
 }

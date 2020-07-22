@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Tools.Enumerations;
+using EInfrastructure.Core.Tools.Systems;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -22,18 +23,19 @@ namespace EInfrastructure.Core.Tools
                 RegexOptions.IgnoreCase);
 
         //手机号正则表达式
-        private static readonly Regex Mobileregex = new Regex("^(13|14|15|16|17|18|19)[0-9]{9}$");
+        private static readonly Regex Mobileregex =
+            new Regex("^(13|14|15|16|17|18|19)[0-9]{9}$", RegexOptions.IgnoreCase);
 
         //固话号正则表达式
-        private static readonly Regex Phoneregex = new Regex(@"^(\d{3,4}-?)?\d{7,8}$");
+        private static readonly Regex Phoneregex = new Regex(@"^(\d{3,4}-?)?\d{7,8}$", RegexOptions.IgnoreCase);
 
         //邮政编码正则表达式
-        private static readonly Regex ZipCodeRegex = new Regex(@"^\d{6}$");
+        private static readonly Regex ZipCodeRegex = new Regex(@"^\d{6}$", RegexOptions.IgnoreCase);
 
         /// <summary>
         /// 中文正则表达式
         /// </summary>
-        private static readonly Regex ChineseRegex = new Regex("^[\u4e00-\u9fa5]");
+        private static readonly Regex ChineseRegex = new Regex("^[\u4e00-\u9fa5]", RegexOptions.IgnoreCase);
 
         //IP正则表达式
         private static readonly Regex IpRegex =
@@ -42,7 +44,8 @@ namespace EInfrastructure.Core.Tools
 
         //网址正则表达式
         private static readonly Regex WebSiteRegex =
-            new Regex(@"((http|https)://)?(www.)?[a-z0-9\.]+(\.(com|net|cn|com\.cn|com\.net|net\.cn))(/[^\s\n]*)?");
+            new Regex(@"((http|https)://)?(www.)?[a-z0-9\.]+(\.(com|net|cn|com\.cn|com\.net|net\.cn))(/[^\s\n]*)?",
+                RegexOptions.IgnoreCase);
 
         #region 是否邮政编码
 
@@ -542,13 +545,19 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 是否中文
         /// </summary>
-        /// <param name="s"></param>
+        /// <param name="str"></param>
+        /// <param name="isAll">是否全部中文，默认有中文就可以，true：全部都是中文</param>
         /// <returns></returns>
-        public static bool IsChinese(this string s)
+        public static bool IsChinese(this string str, bool isAll = false)
         {
-            if (string.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(str))
                 return false;
-            return ChineseRegex.IsMatch(s);
+            if (!isAll)
+            {
+                return ChineseRegex.IsMatch(str);
+            }
+
+            return ChineseRegex.Match(str).Success && ChineseRegex.Matches(str).Count == str.SafeString().Length;
         }
 
         #endregion

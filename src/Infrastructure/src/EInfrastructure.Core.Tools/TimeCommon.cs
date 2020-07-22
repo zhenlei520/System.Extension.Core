@@ -344,6 +344,66 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 得到过期时间
+
+        /// <summary>
+        /// 得到过期时间
+        /// </summary>
+        /// <param name="timeType">时间类型</param>
+        /// <param name="duration">时长</param>
+        /// <returns></returns>
+        public static DateTimeOffset GetScheduleTime(DurationType timeType, int duration)
+        {
+            if (timeType.Equals(DurationType.MilliSecond))
+            {
+                return DateTime.Now.AddMilliseconds(duration);
+            }
+
+            if (timeType.Equals(DurationType.Second))
+            {
+                return DateTime.Now.AddSeconds(duration);
+            }
+
+            if (timeType.Equals(DurationType.Minutes))
+            {
+                return DateTime.Now.AddMinutes(duration);
+            }
+
+            if (timeType.Equals(DurationType.Hour))
+            {
+                return DateTime.Now.AddHours(duration);
+            }
+
+            if (timeType.Equals(DurationType.Day))
+            {
+                return DateTime.Now.AddDays(duration);
+            }
+
+            if (timeType.Equals(DurationType.Weeks))
+            {
+                return DateTime.Now.AddDays(7 * duration);
+            }
+
+            if (timeType.Equals(DurationType.Month))
+            {
+                return DateTime.Now.AddMonths(7 * duration);
+            }
+
+            if (timeType.Equals(DurationType.Quarter))
+            {
+                return DateTime.Now.AddMonths(3 * duration);
+            }
+
+            if (timeType.Equals(DurationType.Year))
+            {
+                return DateTime.Now.AddYears(duration);
+            }
+
+            return DateTime.Now;
+        }
+
+        #endregion
+
         #region 得到前N秒的时间
 
         /// <summary>
