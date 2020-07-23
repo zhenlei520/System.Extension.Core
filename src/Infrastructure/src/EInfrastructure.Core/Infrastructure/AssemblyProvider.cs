@@ -163,7 +163,7 @@ namespace EInfrastructure.Core.Infrastructure
             if (LoadAppDomainAssemblies)
                 AddAssembliesInAppDomain(addedAssemblyNames, assemblies);
             AddConfiguredAssemblies(addedAssemblyNames, assemblies);
-            return assemblies;
+            return assemblies.Distinct();
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace EInfrastructure.Core.Infrastructure
                 }
             }
 
-            return assemblies;
+            return assemblies.Distinct();
         }
 
         #endregion

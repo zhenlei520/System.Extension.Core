@@ -46,13 +46,9 @@ namespace EInfrastructure.Core.Configuration.Ioc
         /// <param name="assignTypeFrom">Assign type from</param>
         /// <param name="assemblies">Assemblies</param>
         /// <param name="onlyConcreteClasses">A value indicating whether to find only concrete classes</param>
+        /// <param name="ignoreReflectionErrors">是否忽略错误，默认忽略</param>
         /// <returns>Result</returns>
-        IEnumerable<Type> FindClassesOfType(Type assignTypeFrom, IEnumerable<Assembly> assemblies, bool onlyConcreteClasses = true);
-
-        /// <summary>
-        /// Gets the assemblies related to the current implementation.
-        /// </summary>
-        /// <returns>A list of assemblies</returns>
-        IList<Assembly> GetAssemblies();
+        IEnumerable<Type> FindClassesOfType(Type assignTypeFrom, IEnumerable<Assembly> assemblies,
+            bool onlyConcreteClasses = true, bool ignoreReflectionErrors = true);
     }
 }
