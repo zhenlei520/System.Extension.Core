@@ -119,6 +119,12 @@ namespace EInfrastructure.Core.Infrastructure
         /// </summary>
         public IEnumerable<string> AssemblyNames { get; set; }
 
+        /// <summary>
+        /// Gets or sets assemblies loaded a startup in addition to those loaded in the AppDomain.
+        /// 根据完整的程序集文件路径获得程序集信息集合（会加载目标程序集所引用和依赖的其他程序集）
+        /// </summary>
+        public IEnumerable<string> AssemblyFileList { get; set; }
+
         #endregion
 
         #region 跳过的程序集dll
@@ -158,11 +164,13 @@ namespace EInfrastructure.Core.Infrastructure
         public IEnumerable<Assembly> GetAssemblies()
         {
             var addedAssemblyNames = new List<string>();
+            var addedAssemblyFiles = new List<string>();
             var assemblies = new List<Assembly>();
 
             if (LoadAppDomainAssemblies)
                 AddAssembliesInAppDomain(addedAssemblyNames, assemblies);
             AddConfiguredAssemblies(addedAssemblyNames, assemblies);
+            AddConfiguredAssembliesByFile(addedAssemblyFiles, assemblies);
             return assemblies.Distinct();
         }
 
@@ -304,6 +312,29 @@ namespace EInfrastructure.Core.Infrastructure
 
                 assemblies.Add(assembly);
                 addedAssemblyNames.Add(assembly.FullName);
+            }
+        }
+
+        #endregion
+
+        #region 加载指定的应用程序集
+
+        /// <summary>
+        /// Adds specifically configured assemblies.
+        /// </summary>
+        /// <param name="addedAssemblyFileList"></param>
+        /// <param name="assemblies"></param>
+        protected virtual void AddConfiguredAssembliesByFile(List<string> addedAssemblyFileList,
+            List<Assembly> assemblies)
+        {
+            foreach (var assemblyName in AssemblyNames)
+            {
+                var assembly = Assembly.LoadFrom(assemblyName);
+                if (addedAssemblyFileList.Contains(assembly.FullName))
+                    continue;
+
+                assemblies.Add(assembly);
+                addedAssemblyFileList.Add(assembly.FullName);
             }
         }
 

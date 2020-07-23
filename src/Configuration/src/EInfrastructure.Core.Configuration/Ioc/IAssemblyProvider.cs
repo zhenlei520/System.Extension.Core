@@ -19,6 +19,12 @@ namespace EInfrastructure.Core.Configuration.Ioc
         IEnumerable<string> AssemblyNames { get; set; }
 
         /// <summary>
+        /// Gets or sets assemblies loaded a startup in addition to those loaded in the AppDomain.
+        /// 根据完整的程序集文件路径获得程序集信息集合（会加载目标程序集所引用和依赖的其他程序集）
+        /// </summary>
+        IEnumerable<string> AssemblyFileList { get; set; }
+
+        /// <summary>
         /// 跳过的dll
         /// </summary>
         IEnumerable<string> AssemblySkipLoadingPattern { get; set; }
