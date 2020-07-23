@@ -297,10 +297,10 @@ namespace EInfrastructure.Core.Tools
         /// <param name="strArray">字符串数组</param>
         /// <param name="maxElementLength">字符串数组中单个元素的最大长度 当其值大于0时，对其进行剪切</param>
         /// <returns></returns>
-        public static string[] DistinctStringArray(string[] strArray, int maxElementLength)
+        public static IEnumerable<string> DistinctStringArray(IEnumerable<string> strArray, int maxElementLength)
         {
             Hashtable h = new Hashtable();
-            foreach (string s in strArray)
+            foreach (var s in strArray.ToList())
             {
                 string k = s;
                 if (maxElementLength > 0 && k.Length > maxElementLength)
