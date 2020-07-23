@@ -124,11 +124,28 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="str">待转换的list集合</param>
-        /// <param name="c">分割字符</param>
+        /// <param name="split">分割字符</param>
         /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
         /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
         /// <returns></returns>
-        public static string ConvertListToString<T>(this IEnumerable<T> str, char c = ',', bool isReplaceEmpty = true,
+        public static string ConvertListToString<T>(this IEnumerable<T> str, char split = ',',
+            bool isReplaceEmpty = true,
+            bool isReplaceSpace = true) where T : struct
+        {
+            return str.ConvertListToString(split + "", isReplaceEmpty, isReplaceSpace);
+        }
+
+        /// <summary>
+        /// List转换为string
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="str">待转换的list集合</param>
+        /// <param name="split">分割字符</param>
+        /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
+        /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
+        /// <returns></returns>
+        public static string ConvertListToString<T>(this IEnumerable<T> str, string split = ",",
+            bool isReplaceEmpty = true,
             bool isReplaceSpace = true) where T : struct
         {
             if (str == null || str.ToList().Count == 0)
@@ -136,7 +153,7 @@ namespace EInfrastructure.Core.Tools
                 return "";
             }
 
-            return ConvertListToString(str.Select(x => x.ToString()).ToList(), c, isReplaceEmpty, isReplaceSpace);
+            return ConvertListToString(str.Select(x => x.ToString()).ToList(), split, isReplaceEmpty, isReplaceSpace);
         }
 
         #endregion
@@ -147,43 +164,46 @@ namespace EInfrastructure.Core.Tools
         /// List转换为string
         /// </summary>
         /// <param name="str">待转换的list集合</param>
-        /// <param name="c">分割字符</param>
+        /// <param name="split">分割字符</param>
         /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
         /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
         /// <returns></returns>
-        public static string ConvertListToString(this IEnumerable<string> str, char c = ',', bool isReplaceEmpty = true,
+        public static string ConvertListToString(this IEnumerable<string> str, char split = ',',
+            bool isReplaceEmpty = true,
             bool isReplaceSpace = true)
         {
-            if (str == null || str.ToList().Count == 0)
+            return str.ConvertListToString(split + "", isReplaceEmpty, isReplaceSpace);
+        }
+
+        /// <summary>
+        /// List转换为string
+        /// </summary>
+        /// <param name="str">待转换的list集合</param>
+        /// <param name="split">分割字符</param>
+        /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
+        /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
+        /// <returns></returns>
+        public static string ConvertListToString(this IEnumerable<string> str, string split = ",",
+            bool isReplaceEmpty = true,
+            bool isReplaceSpace = true)
+        {
+            if (str == null || !str.Any())
             {
                 return "";
             }
 
-            string temp = "";
-            foreach (var item in str)
+            IEnumerable<string> tempList = str.ToList();
+            if (isReplaceEmpty)
             {
-                if (isReplaceEmpty)
+                if (isReplaceSpace)
                 {
-                    string itemTemp = "";
-                    if (isReplaceSpace)
-                    {
-                        itemTemp = item.Trim();
-                    }
+                    tempList = tempList.Select(x => x.Trim());
+                }
 
-                    if (!string.IsNullOrEmpty(itemTemp))
-                    {
-                        temp = temp + itemTemp + c;
-                    }
-                }
-                else
-                {
-                    temp = temp + item + c;
-                }
+                tempList = tempList.Where(x => !string.IsNullOrEmpty(x));
             }
 
-            if (temp.Length > 0)
-                temp = temp.Substring(0, temp.Length - 1);
-            return temp;
+            return string.Join(split + "", tempList);
         }
 
         #endregion
@@ -352,10 +372,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static void RemoveRangeNew<T>(this List<T> list, ICollection<T> delList)
         {
-            delList.ToList().ForEach(item =>
-            {
-                list.Remove(item);
-            });
+            delList.ToList().ForEach(item => { list.Remove(item); });
         }
 
         #endregion

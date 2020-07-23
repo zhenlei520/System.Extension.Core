@@ -3,17 +3,12 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\wangz\.nuget\packages\qiniu\7.3.1.1\lib\Net40\Qiniu.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7e0cb16c_002Defd1_002D43bc_002Db58c_002Db019141e0ae0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="IsNumber" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	
+	
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c3ea3176_002De366_002D4902_002Da8d2_002De70e564a70dc/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ConvertListToString" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.ValidateUnitTest.IsNumber&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.ValidateUnitTest.IsMaxScale&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.UrlCommonUnitTest.GetFullUrl&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.BarCodeUnitTest.GetAnimalEnumFromBirthday&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=82b0d04e_002D0b77_002D4523_002Dbdc3_002D51c3e0c0371c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetFullUrl" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.UrlCommonUnitTest.GetFullUrl&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.ListCommonUnitTest.ConvertListToString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TaskCommonUnitTest.ParallelExecute&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

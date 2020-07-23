@@ -652,6 +652,32 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 更改类型
+
+        /// <summary>
+        /// 更改源参数类型
+        /// </summary>
+        /// <param name="obj">源数据</param>
+        /// <typeparam name="T">类型</typeparam>
+        /// <returns></returns>
+        public static T ChangeType<T>(this object obj)
+        {
+            return (T) Convert.ChangeType(obj, typeof(T));
+        }
+
+        /// <summary>
+        /// 更改源参数类型集合
+        /// </summary>
+        /// <param name="objList">源数据集合</param>
+        /// <typeparam name="T">类型</typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> ChangeType<T>(this IEnumerable<object> objList)
+        {
+            return from s in objList select ChangeType<T>(s);
+        }
+
+        #endregion
+
         #endregion
 
         #region 文件类型转换

@@ -5,7 +5,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using EInfrastructure.Core.Config.Entities.Extensions;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -30,7 +32,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static int IndexOf(this string parameter, char character, int number = 1, int defaultIndexof = -1)
         {
-            if (string.IsNullOrEmpty(parameter)||number<=0)
+            if (string.IsNullOrEmpty(parameter) || number <= 0)
             {
                 return defaultIndexof;
             }
@@ -39,13 +41,13 @@ namespace EInfrastructure.Core.Tools
             int count = 1; //第1次匹配
             while (count < number)
             {
-                var tempIndex= (parameter.IndexOf(character));
+                var tempIndex = (parameter.IndexOf(character));
                 index += tempIndex;
-                parameter = parameter.Substring(tempIndex+1);
+                parameter = parameter.Substring(tempIndex + 1);
                 count++;
             }
 
-            return index + parameter.IndexOf(character)+number-1;
+            return index + parameter.IndexOf(character) + number - 1;
         }
 
         #endregion
@@ -63,7 +65,7 @@ namespace EInfrastructure.Core.Tools
         // ReSharper disable once InconsistentNaming
         public static int LastIndexOf(this string parameter, char character, int number = 1, int defaultIndexof = -1)
         {
-            return IndexOf(parameter, character, parameter.Split(character).Length-number, defaultIndexof);
+            return IndexOf(parameter, character, parameter.Split(character).Length - number, defaultIndexof);
         }
 
         #endregion
@@ -221,6 +223,7 @@ namespace EInfrastructure.Core.Tools
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -232,23 +235,24 @@ namespace EInfrastructure.Core.Tools
         /// 字符串转化为泛型集合
         /// </summary>
         /// <param name="str">字符串</param>
-        /// <param name="splitstr">要分割的字符,默认以,分割</param>
+        /// <param name="splitStr">要分割的字符,默认以,分割</param>
         /// <param name="isReplaceSpace">是否移除空格</param>
         /// <returns></returns>
-        public static List<T> ConvertStrToList<T>(this string str, char splitstr = ',', bool isReplaceSpace = true)
+        public static List<T> ConvertStrToList<T>(this string str, char splitStr = ',', bool isReplaceSpace = true)
         {
             if (string.IsNullOrEmpty(str))
             {
                 return new List<T>();
             }
 
-            string[] strarray = str.Split(splitstr);
+            string[] strArray = str.Split(splitStr);
+            Expression<Func<string, bool>> condition = x => true;
             if (isReplaceSpace)
             {
-                return (from s in strarray where s != "" select (T) Convert.ChangeType(s, typeof(T))).ToList();
+                condition = condition.And(x => !string.IsNullOrEmpty(x));
             }
 
-            return (from s in strarray select (T) Convert.ChangeType(s, typeof(T))).ToList();
+            return strArray.Where(condition.Compile()).ChangeType<T>().ToList();
         }
 
         #endregion
