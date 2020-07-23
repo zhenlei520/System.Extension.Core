@@ -49,3 +49,7 @@
 [wiki中每个包的用法Demo](https://github.com/zhenlei520/System.Extension.Core.Demo)
 
 [Grpc+AspNetCore 3.1 用户服务Demo](https://github.com/zhenlei520/Wolf.User.Service.Demo)
+
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/zhenlei520/System.Extension.Core.svg)](https://starchart.cc/zhenlei520/System.Extension.Core)
