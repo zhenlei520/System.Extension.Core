@@ -4,8 +4,6 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
-using EInfrastructure.Core.Configuration.Enumerations;
-using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Attributes;
 using Xunit;

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
-using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Tools;

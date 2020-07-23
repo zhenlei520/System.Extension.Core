@@ -1,7 +1,5 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
-using EInfrastructure.Core.Configuration;
-
 namespace EInfrastructure.Core
 {
     /// <summary>

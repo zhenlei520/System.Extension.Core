@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
 using RestSharp;
 
 namespace EInfrastructure.Core.Http.Provider
