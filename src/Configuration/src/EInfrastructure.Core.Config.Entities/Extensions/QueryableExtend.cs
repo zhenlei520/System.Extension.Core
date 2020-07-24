@@ -134,6 +134,8 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
 
         #endregion
 
+        #region 添加linq查询扩展(仅在Debug下生效，不建议在数据太多时使用)
+
         /// <summary>
         /// 添加linq查询扩展(仅在Debug下生效，不建议在数据太多时使用)
         /// </summary>
@@ -161,5 +163,7 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
 #endif
             return query;
         }
+
+        #endregion
     }
 }

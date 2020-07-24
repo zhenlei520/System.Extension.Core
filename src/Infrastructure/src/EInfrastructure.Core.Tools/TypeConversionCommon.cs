@@ -802,6 +802,40 @@ namespace EInfrastructure.Core.Tools
 
         #region 文件流转字符串
 
+        #region 复制流并转换成字符串
+
+        /// <summary>
+        /// 复制流并转换成字符串
+        /// </summary>
+        /// <param name="stream">流</param>
+        /// <param name="encoding">字符编码</param>
+        public static async Task<string> CopyToStringAsync(Stream stream, Encoding encoding = null)
+        {
+            if (stream == null)
+                return string.Empty;
+            if (encoding == null)
+                encoding = Encoding.UTF8;
+            if (stream.CanRead == false)
+                return string.Empty;
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var reader = new StreamReader(memoryStream, encoding))
+                {
+                    if (stream.CanSeek)
+                        stream.Seek(0, SeekOrigin.Begin);
+                    await stream.CopyToAsync(memoryStream);
+                    if (memoryStream.CanSeek)
+                        memoryStream.Seek(0, SeekOrigin.Begin);
+                    var result = await reader.ReadToEndAsync();
+                    if (stream.CanSeek)
+                        stream.Seek(0, SeekOrigin.Begin);
+                    return result;
+                }
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// 文件流转字符串
         /// </summary>
