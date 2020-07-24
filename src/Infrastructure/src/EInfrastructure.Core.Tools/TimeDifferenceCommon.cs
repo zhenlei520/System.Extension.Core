@@ -9,6 +9,7 @@ namespace EInfrastructure.Core.Tools
 {
     /// <summary>
     /// 可计算方法总共耗时情况
+    /// 调用获取其耗时方法会触发一次委托方法，不调用获取计算耗时的方法不会执行委托
     /// </summary>
     public class TimeDifferenceCommon
     {

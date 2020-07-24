@@ -304,7 +304,7 @@ namespace EInfrastructure.Core.Infrastructure
         /// <param name="assemblies"></param>
         protected virtual void AddConfiguredAssemblies(List<string> addedAssemblyNames, List<Assembly> assemblies)
         {
-            foreach (var assemblyName in AssemblyNames)
+            foreach (var assemblyName in AssemblyNames??new List<string>())
             {
                 var assembly = Assembly.Load(assemblyName);
                 if (addedAssemblyNames.Contains(assembly.FullName))
@@ -327,7 +327,7 @@ namespace EInfrastructure.Core.Infrastructure
         protected virtual void AddConfiguredAssembliesByFile(List<string> addedAssemblyFileList,
             List<Assembly> assemblies)
         {
-            foreach (var assemblyName in AssemblyFileList)
+            foreach (var assemblyName in AssemblyFileList??new List<string>())
             {
                 var assembly = Assembly.LoadFrom(assemblyName);
                 if (addedAssemblyFileList.Contains(assembly.FullName))

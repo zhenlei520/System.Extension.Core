@@ -2,10 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using Autofac.Core;
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Infrastructure;
 
 namespace EInfrastructure.Core.AutoFac.Modules
 {
@@ -15,11 +17,20 @@ namespace EInfrastructure.Core.AutoFac.Modules
     public class AutomaticInjectionModule : Autofac.Module
     {
         private readonly Assembly[] _assemblies;
+        private readonly ITypeFinder _typeFinder;
 
         /// <summary>
         ///
         /// </summary>
-        public AutomaticInjectionModule() : this(AppDomain.CurrentDomain.GetAssemblies())
+        public AutomaticInjectionModule() : this(null, null)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="typeFinder"></param>
+        public AutomaticInjectionModule(ITypeFinder typeFinder) : this(null, typeFinder)
         {
         }
 
@@ -27,9 +38,11 @@ namespace EInfrastructure.Core.AutoFac.Modules
         ///
         /// </summary>
         /// <param name="assemblies"></param>
-        public AutomaticInjectionModule(Assembly[] assemblies)
+        /// <param name="typeFinder"></param>
+        public AutomaticInjectionModule(Assembly[] assemblies, ITypeFinder typeFinder)
         {
-            _assemblies = assemblies ?? AppDomain.CurrentDomain.GetAssemblies();
+            _typeFinder = typeFinder ?? new TypeFinder();
+            _assemblies = assemblies;
         }
 
         /// <summary>
@@ -38,24 +51,20 @@ namespace EInfrastructure.Core.AutoFac.Modules
         /// <param name="moduleBuilder"></param>
         protected override void Load(ContainerBuilder moduleBuilder)
         {
-            var assemblys = this._assemblies;
-            var perRequestType = typeof(IPerRequest);
-            moduleBuilder.RegisterAssemblyTypes(assemblys)
-                .Where(t => perRequestType.IsAssignableFrom(t) && t != perRequestType)
+            var perRequestTypes = _typeFinder.FindClassesOfType<IPerRequest>(this._assemblies).ToArray();
+            moduleBuilder.RegisterTypes(perRequestTypes)
                 .PropertiesAutowired()
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
 
-            var perDependencyType = typeof(IDependency);
-            moduleBuilder.RegisterAssemblyTypes(assemblys)
-                .Where(t => perDependencyType.IsAssignableFrom(t) && t != perDependencyType)
+            var perDependencyTypes = _typeFinder.FindClassesOfType<IDependency>(this._assemblies).ToArray();
+            moduleBuilder.RegisterTypes(perDependencyTypes)
                 .PropertiesAutowired()
                 .AsImplementedInterfaces()
                 .InstancePerDependency();
 
-            var singleInstanceType = typeof(ISingleInstance);
-            moduleBuilder.RegisterAssemblyTypes(assemblys)
-                .Where(t => singleInstanceType.IsAssignableFrom(t) && t != singleInstanceType)
+            var singleInstanceTypes = _typeFinder.FindClassesOfType<ISingleInstance>(this._assemblies).ToArray();
+            moduleBuilder.RegisterTypes(singleInstanceTypes)
                 .PropertiesAutowired()
                 .AsImplementedInterfaces()
                 .SingleInstance();

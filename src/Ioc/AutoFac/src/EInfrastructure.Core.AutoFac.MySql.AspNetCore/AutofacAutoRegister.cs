@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using EInfrastructure.Core.AspNetCore;
@@ -38,7 +39,7 @@ namespace EInfrastructure.Core.AutoFac.MySql.AspNetCore
         public new static IServiceProvider Use(IServiceCollection services,
             Action<ContainerBuilder> action = null)
         {
-            return Use(services, AssemblyProvider.GetDefaultAssemblyProvider, action);
+            return Use(services, AssemblyProvider.GetDefaultAssemblyProvider.GetAssemblies().ToArray(), action);
         }
 
         /// <summary>
@@ -63,14 +64,14 @@ namespace EInfrastructure.Core.AutoFac.MySql.AspNetCore
         ///
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="assemblyProvider"></param>
+        /// <param name="typeFinder"></param>
         /// <param name="action"></param>
         /// <returns></returns>
         public new static IServiceProvider Use(IServiceCollection services,
-            IAssemblyProvider assemblyProvider,
+            ITypeFinder typeFinder,
             Action<ContainerBuilder> action = null)
         {
-            return EInfrastructure.Core.AutoFac.MySql.AutofacAutoRegister.Use(services, assemblyProvider, (builder) =>
+            return Use(services, typeFinder, (builder) =>
             {
                 EInfrastructure.Core.AspNetCore.StartUp.AddMvc(services.AddBasicNetCore())
                     .AddControllersAsServices();

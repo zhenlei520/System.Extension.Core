@@ -4,6 +4,7 @@
 using Autofac;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 using System.Reflection;
 using EInfrastructure.Core.Config.Entities.Ioc;
 using EInfrastructure.Core.Configuration.Ioc;
@@ -39,7 +40,7 @@ namespace EInfrastructure.Core.AutoFac.MySql
         public new static IServiceProvider Use(IServiceCollection services,
             Action<ContainerBuilder> action = null)
         {
-            return Use(services, AssemblyProvider.GetDefaultAssemblyProvider, action);
+            return Use(services, AssemblyProvider.GetDefaultAssemblyProvider.GetAssemblies().ToArray(), action);
         }
 
         /// <summary>
@@ -96,14 +97,14 @@ namespace EInfrastructure.Core.AutoFac.MySql
         ///
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="assemblyProvider"></param>
+        /// <param name="typeFinder"></param>
         /// <param name="action"></param>
         /// <returns></returns>
         public new static IServiceProvider Use(IServiceCollection services,
-            IAssemblyProvider assemblyProvider,
+            ITypeFinder typeFinder,
             Action<ContainerBuilder> action = null)
         {
-            return AutoFac.AutofacAutoRegister.Use(services, assemblyProvider, (builder) =>
+            return AutoFac.AutofacAutoRegister.Use(services, typeFinder, (builder) =>
             {
                 #region 单数据库查询
 

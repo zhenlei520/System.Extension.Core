@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using EInfrastructure.Core.AspNetCore;
@@ -38,7 +39,7 @@ namespace EInfrastructure.Core.AutoFac.AspNetCore
         public new static IServiceProvider Use(IServiceCollection services,
             Action<ContainerBuilder> action = null)
         {
-            return Use(services, AssemblyProvider.GetDefaultAssemblyProvider, action);
+            return Use(services, AssemblyProvider.GetDefaultAssemblyProvider.GetAssemblies().ToArray(), action);
         }
 
         /// <summary>
@@ -62,13 +63,13 @@ namespace EInfrastructure.Core.AutoFac.AspNetCore
         ///
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="assemblyProvider"></param>
+        /// <param name="typeFinder"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public new static IServiceProvider Use(IServiceCollection services, IAssemblyProvider assemblyProvider,
+        public new static IServiceProvider Use(IServiceCollection services, ITypeFinder typeFinder,
             Action<ContainerBuilder> action = null)
         {
-            return EInfrastructure.Core.AutoFac.AutofacAutoRegister.Use(services, assemblyProvider, (builder) =>
+            return EInfrastructure.Core.AutoFac.AutofacAutoRegister.Use(services, typeFinder, (builder) =>
             {
                 EInfrastructure.Core.AspNetCore.StartUp.AddMvc(services.AddBasicNetCore()).AddControllersAsServices();
                 action?.Invoke(builder);

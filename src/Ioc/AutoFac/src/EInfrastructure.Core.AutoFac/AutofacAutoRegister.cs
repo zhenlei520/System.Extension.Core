@@ -40,7 +40,7 @@ namespace EInfrastructure.Core.AutoFac
         public static IServiceProvider Use(IServiceCollection services,
             Action<ContainerBuilder> action = null)
         {
-            return Use(services, AssemblyProvider.GetDefaultAssemblyProvider, action);
+            return Use(services, AssemblyProvider.GetDefaultAssemblyProvider.GetAssemblies().ToArray(), action);
         }
 
         /// <summary>
@@ -53,9 +53,23 @@ namespace EInfrastructure.Core.AutoFac
         public static IServiceProvider Use(IServiceCollection services, Assembly[] assemblies,
             Action<ContainerBuilder> action = null)
         {
+            return Use(services, assemblies, null, action);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="assemblies"></param>
+        /// <param name="typeFinder"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static IServiceProvider Use(IServiceCollection services, Assembly[] assemblies, ITypeFinder typeFinder,
+            Action<ContainerBuilder> action = null)
+        {
             StartUp.Run();
             var builder = new ContainerBuilder();
-            builder.RegisterModule(new AutomaticInjectionModule(assemblies));
+            builder.RegisterModule(new AutomaticInjectionModule(assemblies, typeFinder));
             action?.Invoke(builder);
             builder.Populate(services);
             var container = builder.Build();
@@ -67,14 +81,13 @@ namespace EInfrastructure.Core.AutoFac
         ///
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="assemblyProvider"></param>
+        /// <param name="typeFinder"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static IServiceProvider Use(IServiceCollection services, IAssemblyProvider assemblyProvider,
+        public static IServiceProvider Use(IServiceCollection services, ITypeFinder typeFinder,
             Action<ContainerBuilder> action = null)
         {
-            return Use(services,
-                (assemblyProvider ?? AssemblyProvider.GetDefaultAssemblyProvider).GetAssemblies().ToArray(), action);
+            return Use(services, null, typeFinder, action);
         }
     }
 }

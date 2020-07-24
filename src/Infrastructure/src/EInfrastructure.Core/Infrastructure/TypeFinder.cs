@@ -21,11 +21,26 @@ namespace EInfrastructure.Core.Infrastructure
         /// <summary>
         ///
         /// </summary>
+        public TypeFinder() : this(AssemblyProvider.GetDefaultAssemblyProvider)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="assemblyProvider"></param>
+        public TypeFinder(IAssemblyProvider assemblyProvider) : this(assemblyProvider, null)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="assemblyProvider"></param>
         /// <param name="logger"></param>
         public TypeFinder(IAssemblyProvider assemblyProvider, ILogger<TypeFinder> logger)
         {
-            this._assemblyProvider = assemblyProvider;
+            this._assemblyProvider = assemblyProvider ?? AssemblyProvider.GetDefaultAssemblyProvider;
             this._logger = logger;
         }
 
@@ -77,6 +92,11 @@ namespace EInfrastructure.Core.Infrastructure
         public IEnumerable<Type> FindClassesOfType(Type assignTypeFrom, IEnumerable<Assembly> assemblies,
             bool onlyConcreteClasses = true, bool ignoreReflectionErrors = true)
         {
+            if (assemblies == null)
+            {
+                return FindClassesOfType(assignTypeFrom, onlyConcreteClasses);
+            }
+
             var result = new List<Type>();
             try
             {
