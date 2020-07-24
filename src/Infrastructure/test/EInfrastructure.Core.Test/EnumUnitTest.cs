@@ -4,8 +4,10 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Attributes;
+using EInfrastructure.Core.Tools.Systems;
 using Xunit;
 
 namespace EInfrastructure.Core.Test
@@ -39,6 +41,19 @@ namespace EInfrastructure.Core.Test
         public void GetDescriptionDictionary()
         {
             var result = EnumCommon.ToDescriptionDictionary<GenderEnum>();
+        }
+
+        /// <summary>
+        /// Get Description
+        /// </summary>
+        [Theory]
+        [InlineData("Boy")]
+        [InlineData(1)]
+        [InlineData("3")]
+        [InlineData(GenderEnum.Boy)]
+        public void GetDescriptionDictionary2(object member)
+        {
+            var str = EnumCommon.GetDescription<GenderEnum>(member);
         }
 
         #endregion
@@ -82,6 +97,44 @@ namespace EInfrastructure.Core.Test
                 GenderEnum.Boy.ToString());
             var result = typeof(GenderEnum).ToEnumAndAttributes<ENameAttribute>();
             var result2 = typeof(User).ToEnumAndAttributes<ENameAttribute>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        [Theory]
+        [InlineData("Boy")]
+        [InlineData("1")]
+        [InlineData("3")]
+        public void Parse(string member)
+        {
+            var gender = EnumCommon.Parse<GenderEnum>(member);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        [Theory]
+        [InlineData("Boy")]
+        [InlineData(1)]
+        [InlineData("3")]
+        [InlineData(GenderEnum.Boy)]
+        public void GetKey(object member)
+        {
+            var gender = EnumCommon.GetKey<GenderEnum>(member);
+        }
+
+        /// <summary>
+        /// GetList
+        /// </summary>
+        [Theory]
+        [InlineData("Boy")]
+        [InlineData(1)]
+        [InlineData("3")]
+        [InlineData(GenderEnum.Boy)]
+        public void GetValue(object member)
+        {
+            var gender = EnumCommon.GetValue<GenderEnum>(member);
         }
     }
 
