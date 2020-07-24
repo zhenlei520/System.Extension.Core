@@ -114,6 +114,7 @@ namespace EInfrastructure.Core.Tools.Systems
         /// <summary>
         /// 根据指定程序集的强名称（名称，版本，语言，公钥标记）获取程序集信息集合
         /// 例如.NET 2.0中的FileIOPermission类，它的强名称是：System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+        /// 因为相同标识的程序集在内存中只会加载一次，所以每次功能发生变化，都要增加程序集的版本号
         /// </summary>
         /// <param name="assemblyStringList">程序集的强名称集合</param>
         /// <returns></returns>
@@ -131,6 +132,7 @@ namespace EInfrastructure.Core.Tools.Systems
         /// <summary>
         /// 根据指定程序集的强名称（名称，版本，语言，公钥标记）获取程序集信息集合
         /// 例如.NET 2.0中的FileIOPermission类，它的强名称是：System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+        /// 因为相同标识的程序集在内存中只会加载一次，所以每次功能发生变化，都要增加程序集的版本号
         /// </summary>
         /// <param name="assemblyStringList">程序集的强名称集合</param>
         /// <returns></returns>
@@ -145,8 +147,9 @@ namespace EInfrastructure.Core.Tools.Systems
 
         /// <summary>
         /// 根据完整的程序集文件路径获得程序集信息集合（会加载目标程序集所引用和依赖的其他程序集）
+        /// 因为相同标识的程序集在内存中只会加载一次，所以每次功能发生变化，都要增加程序集的版本号
         /// </summary>
-        /// <param name="assemblyFileList"></param>
+        /// <param name="assemblyFileList">程序集所在的绝对路径集合</param>
         /// <returns></returns>
         public static IEnumerable<Assembly> LoadFrom(IEnumerable<string> assemblyFileList)
         {
@@ -161,8 +164,9 @@ namespace EInfrastructure.Core.Tools.Systems
 
         /// <summary>
         /// 根据完整的程序集文件路径获得程序集信息集合（会加载目标程序集所引用和依赖的其他程序集）
+        /// 因为相同标识的程序集在内存中只会加载一次，所以每次功能发生变化，都要增加程序集的版本号
         /// </summary>
-        /// <param name="assemblyFileList"></param>
+        /// <param name="assemblyFileList">程序集所在的绝对路径集合</param>
         /// <returns></returns>
         public static IEnumerable<Assembly> LoadFrom(params string[] assemblyFileList)
         {
@@ -175,8 +179,9 @@ namespace EInfrastructure.Core.Tools.Systems
 
         /// <summary>
         /// 根据完整的程序集文件路径获得程序集信息集合（不会加载目标程序集所引用和依赖的其他程序集）
+        /// 可以多次加载相同标识的程序集，只要程序集所在的目录位置不同
         /// </summary>
-        /// <param name="assemblyFileList"></param>
+        /// <param name="assemblyFileList">程序集所在的绝对路径集合</param>
         /// <returns></returns>
         public static IEnumerable<Assembly> LoadFile(IEnumerable<string> assemblyFileList)
         {
@@ -191,8 +196,9 @@ namespace EInfrastructure.Core.Tools.Systems
 
         /// <summary>
         /// 根据完整的程序集文件路径获得程序集信息集合（不会加载目标程序集所引用和依赖的其他程序集）
+        /// 可以多次加载相同标识的程序集，只要程序集所在的目录位置不同
         /// </summary>
-        /// <param name="assemblyFileList"></param>
+        /// <param name="assemblyFileList">程序集所在的绝对路径集合</param>
         /// <returns></returns>
         public static IEnumerable<Assembly> LoadFile(params string[] assemblyFileList)
         {
