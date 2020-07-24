@@ -42,7 +42,7 @@ namespace EInfrastructure.Core.AutoFac.Modules
         public AutomaticInjectionModule(Assembly[] assemblies, ITypeFinder typeFinder)
         {
             _typeFinder = typeFinder ?? new TypeFinder();
-            _assemblies = assemblies;
+            _assemblies = assemblies ?? AssemblyProvider.GetDefaultAssemblyProvider.GetAssemblies().ToArray();
         }
 
         /// <summary>

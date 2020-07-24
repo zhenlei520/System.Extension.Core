@@ -412,6 +412,10 @@ namespace EInfrastructure.Core.Infrastructure
         /// </returns>
         protected virtual bool Matches(string assemblyFullName, string pattern)
         {
+            if (string.IsNullOrEmpty(pattern))
+            {
+                return false;
+            }
             return Regex.IsMatch(assemblyFullName, pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
         }
 
