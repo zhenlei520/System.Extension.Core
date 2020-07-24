@@ -655,7 +655,7 @@ namespace EInfrastructure.Core.Tools
         #region 更改类型
 
         /// <summary>
-        /// 更改源参数类型
+        /// 更改源参数类型（适用于简单的类型转换，序列化反序列化不适用）
         /// </summary>
         /// <param name="obj">源数据</param>
         /// <typeparam name="T">类型</typeparam>
@@ -666,7 +666,7 @@ namespace EInfrastructure.Core.Tools
         }
 
         /// <summary>
-        /// 更改源参数类型集合
+        /// 更改源参数类型集合（适用于简单的类型转换，序列化反序列化不适用）
         /// </summary>
         /// <param name="objList">源数据集合</param>
         /// <typeparam name="T">类型</typeparam>
@@ -674,6 +674,17 @@ namespace EInfrastructure.Core.Tools
         public static IEnumerable<T> ChangeType<T>(this IEnumerable<object> objList)
         {
             return from s in objList select ChangeType<T>(s);
+        }
+
+        /// <summary>
+        /// 更改源参数类型集合（适用于简单的类型转换，序列化反序列化不适用）
+        /// </summary>
+        /// <param name="objArray">源数据集合</param>
+        /// <typeparam name="T">类型</typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> ChangeType<T>(params object[] objArray)
+        {
+            return objArray.ToList().ChangeType<T>();
         }
 
         #endregion
