@@ -18,6 +18,7 @@ using EInfrastructure.Core.QiNiu.Storage.Config;
 using EInfrastructure.Core.QiNiu.Storage.Validator.Storage;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Validation.Common;
+using Microsoft.Extensions.Logging;
 using Qiniu.Http;
 using Qiniu.Storage;
 
@@ -28,11 +29,22 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// </summary>
     public class StorageProvider : BaseStorageProvider, IStorageProvider
     {
+        private readonly ILogger _logger;
+
         /// <summary>
         /// 文件实现类
         /// </summary>
-        public StorageProvider(QiNiuStorageConfig qiNiuConfig) : base(qiNiuConfig)
+        public StorageProvider(ILogger logger, QiNiuStorageConfig qiNiuConfig) : base(qiNiuConfig)
         {
+            this._logger = logger;
+        }
+
+        /// <summary>
+        /// 文件实现类
+        /// </summary>
+        public StorageProvider(ILogger<StorageProvider> logger, QiNiuStorageConfig qiNiuConfig) : base(qiNiuConfig)
+        {
+            this._logger = logger;
         }
 
         #region 得到实现类唯一标示
@@ -551,10 +563,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
             }
             catch (BusinessException<string>ex)
             {
+                this._logger?.LogError(ex.ExtractAllStackTrace());
                 return new GetVisitUrlResultDto(ex.Message);
             }
             catch (Exception ex)
             {
+                this._logger?.LogError(ex.ExtractAllStackTrace());
                 return new GetVisitUrlResultDto(Core.Tools.GetMessage(ex));
             }
         }
@@ -592,10 +606,12 @@ namespace EInfrastructure.Core.QiNiu.Storage
             }
             catch (BusinessException<string> ex)
             {
+                this._logger?.LogError(ex.ExtractAllStackTrace());
                 return new DownloadStreamResultDto(ex.Message);
             }
             catch (Exception ex)
             {
+                this._logger?.LogError(ex.ExtractAllStackTrace());
                 return new DownloadStreamResultDto(Core.Tools.GetMessage(ex));
             }
         }

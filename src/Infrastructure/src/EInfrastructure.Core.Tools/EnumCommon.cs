@@ -5,9 +5,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
+using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Tools.Systems;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -100,7 +101,7 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 得到枚举字典value的集合
         /// </summary>
-        /// <typeparam name="TEnum"></typeparam>
+        /// <typeparam name="TEnum">枚举类型</typeparam>
         /// <returns></returns>
         public static List<int> GetValues<TEnum>()
         {
@@ -158,17 +159,68 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 返回枚举项的描述信息。
         /// </summary>
+        /// <param name="type">类型</param>
+        /// <param name="member">成员名、值、实例均可</param>
+        /// <returns>枚举想的描述信息。</returns>
+        public static string GetDescription(Type type, object member)
+        {
+            return GetCustomerObj<DescriptionAttribute>(type,member)?.Description;
+        }
+
+        /// <summary>
+        /// 返回枚举项的描述信息。
+        /// </summary>
+        /// <param name="member">成员名、值、实例均可</param>
+        /// <typeparam name="TEnum">枚举类型</typeparam>
+        /// <returns>枚举想的描述信息。</returns>
+        public static string GetDescription<TEnum>(object member)
+        {
+            return GetDescription(TypeCommon.GetType<TEnum>(), member);
+        }
+
+        /// <summary>
+        /// 返回枚举项的描述信息。
+        /// </summary>
         /// <param name="value">要获取描述信息的枚举项。</param>
         /// <returns>枚举想的描述信息。</returns>
         public static string GetDescription(this Enum value)
         {
-            return CustomAttributeCommon<DescriptionAttribute>.GetCustomAttribute(value.GetType(), value.ToString())
-                ?.Description;
+            return GetCustomerObj<DescriptionAttribute>(value)?.Description;
         }
 
         #endregion
 
         #region 得到自定义描述
+
+        /// <summary>
+        /// 得到自定义描述
+        /// </summary>
+        /// <param name="member">成员名、值、实例均可</param>
+        /// <typeparam name="T">得到自定义描述</typeparam>
+        /// <typeparam name="TEnum">枚举类型</typeparam>
+        /// <returns></returns>
+        public static T GetCustomerObj<T, TEnum>(object member) where T : Attribute
+        {
+            return GetCustomerObj<T>(TypeCommon.GetType<TEnum>(), member);
+        }
+
+        /// <summary>
+        /// 得到自定义描述
+        /// </summary>
+        /// <param name="type">类型</param>
+        /// <param name="member">成员名、值、实例均可</param>
+        /// <typeparam name="T">得到自定义描述</typeparam>
+        /// <returns></returns>
+        public static T GetCustomerObj<T>(Type type, object member) where T : Attribute
+        {
+            if (member.IsExist(type))
+            {
+                return CustomAttributeCommon<T>
+                    .GetCustomAttribute(type, GetKey(type, member));
+            }
+
+            return default;
+        }
 
         /// <summary>
         /// 得到自定义描述
@@ -191,22 +243,130 @@ namespace EInfrastructure.Core.Tools
         /// <param name="enumValue">需要判断的参数</param>
         /// <param name="enumType">枚举类型</param>
         /// <returns></returns>
-        public static bool IsExist(this int enumValue, Type enumType)
+        public static bool IsExist(this object enumValue, Type enumType)
         {
+            if (enumValue == null)
+            {
+                return false;
+            }
+
             return Enum.IsDefined(enumType, enumValue);
         }
 
+        #endregion
+
+        #region 获取枚举实例
+
         /// <summary>
-        /// 判断值是否在枚举中存在
+        /// 获取枚举实例
         /// </summary>
-        /// <param name="enumValue">需要判断的参数</param>
-        /// <param name="enumType">枚举类型</param>
+        /// <param name="member">成员名或者枚举值，例如：Gender中有Boy=1,则传入Boy或者1可获得Gender.Boy</param>
+        /// <typeparam name="TEnum">枚举类型</typeparam>
         /// <returns></returns>
-        public static bool IsExist(this int? enumValue, Type enumType)
+        public static TEnum Parse<TEnum>(object member)
         {
-            if (enumValue == null)
-                return false;
-            return ((int) enumValue).IsExist(enumType);
+            if (TryParse(member, out TEnum value))
+            {
+                return value;
+            }
+
+            throw new BusinessException("转换失败，枚举中未找到当前成员信息", HttpStatus.NoFind.Id);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="member">成员名或者枚举值，例如：Gender中有Boy=1,则传入Boy或者1可获得Gender.Boy</param>
+        /// <param name="value"></param>
+        /// <typeparam name="TEnum">枚举类型</typeparam>
+        /// <returns></returns>
+        public static bool TryParse<TEnum>(object member, out TEnum value)
+        {
+            value = default;
+            string memberStr = member.SafeString();
+            if (string.IsNullOrWhiteSpace(memberStr))
+            {
+                if (typeof(TEnum).IsGenericType)
+                    return false;
+                throw new ArgumentNullException(nameof(member));
+            }
+
+            value = (TEnum) Enum.Parse(TypeCommon.GetType<TEnum>(), memberStr, true);
+            return value.IsExist(TypeCommon.GetType<TEnum>());
+        }
+
+        #endregion
+
+        #region 获取枚举的成员名
+
+        /// <summary>
+        /// 获取枚举实例
+        /// </summary>
+        /// <param name="member">枚举类型</param>
+        /// <typeparam name="TEnum">成员名或者枚举值，例如：Gender中有Boy=1,则传入Boy或者1或者Gender.Boy可获得其key</typeparam>
+        /// <returns></returns>
+        public static string GetKey<TEnum>(object member)
+        {
+            return GetKey(TypeCommon.GetType<TEnum>(), member);
+        }
+
+        /// <summary>
+        /// 获取成员名
+        /// </summary>
+        /// <param name="type">枚举类型</param>
+        /// <param name="member">成员名或者枚举值，例如：Gender中有Boy=1,则传入Boy或者1或者Gender.Boy可获得其Key</param>
+        public static string GetKey(Type type, object member)
+        {
+            if (type == null || member == null || !TypeCommon.IsEnum(type))
+                return string.Empty;
+            if (member.IsInt())
+            {
+                return System.Enum.GetName(type, member.ConvertToInt(0));
+            }
+
+            if (member is string)
+            {
+                return member.ToString();
+            }
+
+            return System.Enum.GetName(type, member);
+        }
+
+        #endregion
+
+        #region 获取枚举的成员值
+
+        /// <summary>
+        /// 获取枚举的成员值
+        /// </summary>
+        /// <param name="member">枚举类型</param>
+        /// <typeparam name="TEnum">成员名或者枚举值，例如：Gender中有Boy=1,则传入Boy或者1或者Gender.Boy可获得其value</typeparam>
+        /// <returns></returns>
+        public static int? GetValue<TEnum>(object member) where TEnum : struct
+        {
+            return GetValue(TypeCommon.GetType<TEnum>(), member);
+        }
+
+        /// <summary>
+        /// 获取枚举的成员值
+        /// </summary>
+        /// <param name="type">枚举类型</param>
+        /// <param name="member">成员名或者枚举值，例如：Gender中有Boy=1,则传入Boy或者1或者Gender.Boy可获得其value</param>
+        public static int? GetValue(Type type, object member)
+        {
+            if (type == null || member == null || !TypeCommon.IsEnum(type))
+                return null;
+            string value = member.SafeString();
+            if (string.IsNullOrEmpty(value))
+                return null;
+            var val = (System.Enum.Parse(type, value, true));
+
+            if (val.IsExist(type))
+            {
+                return (int) val;
+            }
+
+            return null;
         }
 
         #endregion

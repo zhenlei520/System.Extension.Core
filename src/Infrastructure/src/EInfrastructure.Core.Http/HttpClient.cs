@@ -13,6 +13,7 @@ using EInfrastructure.Core.Http.Params;
 using EInfrastructure.Core.Http.Provider;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Serialize.Xml;
+using Microsoft.Extensions.Logging;
 using RestSharp;
 
 namespace EInfrastructure.Core.Http
@@ -163,6 +164,11 @@ namespace EInfrastructure.Core.Http
         }
 
         /// <summary>
+        /// 日志
+        /// </summary>
+        private ILogger _logger;
+
+        /// <summary>
         ///域
         /// </summary>
         public string Host { get; }
@@ -240,7 +246,10 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public string GetString(string url)
         {
-            return Get(url).Content;
+            var request = GetRequest(url);
+            var content = GetClient().Execute(request).Content;
+            AddLog(request, content);
+            return content;
         }
 
         /// <summary>
@@ -251,7 +260,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public string GetString(string url, object data)
         {
-            return Get(SetUrlParam(url, GetParams(data))).Content;
+            return GetString(SetUrlParam(url, GetParams(data)));
         }
 
         #endregion
@@ -268,7 +277,7 @@ namespace EInfrastructure.Core.Http
         public T GetJson<T>(string url)
             where T : class, new()
         {
-            var res = Get(url).Content;
+            var res = GetString(url);
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -286,7 +295,7 @@ namespace EInfrastructure.Core.Http
         public T GetJson<T>(string url, object data)
             where T : class, new()
         {
-            var res = Get(SetUrlParam(url, GetParams(data))).Content;
+            var res = GetString(url, GetParams(data));
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -307,7 +316,7 @@ namespace EInfrastructure.Core.Http
         public T GetXml<T>(string url)
             where T : class, new()
         {
-            var res = Get(url).Content;
+            var res = GetString(url);
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -325,7 +334,7 @@ namespace EInfrastructure.Core.Http
         public T GetXml<T>(string url, object data)
             where T : class, new()
         {
-            var res = Get(SetUrlParam(url, GetParams(data))).Content;
+            var res = GetString(url, GetParams(data));
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
@@ -347,7 +356,8 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public byte[] GetBytes(string url)
         {
-            return Get(url).RawBytes;
+            var request = GetRequest(url);
+            return GetClient().Execute(request).RawBytes;
         }
 
         /// <summary>
@@ -358,7 +368,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public byte[] GetBytes(string url, object data)
         {
-            return Get(SetUrlParam(url, GetParams(data))).RawBytes;
+            return GetBytes(SetUrlParam(url, GetParams(data)));
         }
 
         #endregion
@@ -401,7 +411,10 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public async Task<string> GetStringAsync(string url)
         {
-            return (await GetAsync(url)).Content;
+            var request = GetRequest(url);
+            var content = (await GetClient().ExecuteTaskAsync(request)).Content;
+            AddLog(request, content);
+            return content;
         }
 
         /// <summary>
@@ -412,7 +425,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public async Task<string> GetStringAsync(string url, object data)
         {
-            return (await GetAsync(SetUrlParam(url, GetParams(data)))).Content;
+            return await GetStringAsync(SetUrlParam(url, GetParams(data)));
         }
 
         #endregion
@@ -504,7 +517,8 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public async Task<byte[]> GetBytesAsync(string url)
         {
-            return (await GetAsync(url)).RawBytes;
+            var request = GetRequest(url);
+            return (await GetClient().ExecuteTaskAsync(request)).RawBytes;
         }
 
         /// <summary>
@@ -515,7 +529,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public async Task<byte[]> GetBytesAsync(string url, object data)
         {
-            return (await GetAsync(SetUrlParam(url, GetParams(data)))).RawBytes;
+            return await GetBytesAsync(SetUrlParam(url, GetParams(data)));
         }
 
         #endregion
@@ -554,33 +568,10 @@ namespace EInfrastructure.Core.Http
         /// </summary>
         /// <param name="url">请求地址</param>
         /// <returns></returns>
-        private IRestResponse Get(string url)
+        private RestRequest GetRequest(string url)
         {
-            RestRequest request = GetProvider(RequestType.Get)
+            return GetProvider(RequestType.Get)
                 .GetRequest(Method.GET, url, new RequestBody(null), GetHeaders(), GetTimeOut());
-            if (Proxy != null)
-            {
-                _restClient.Proxy = Proxy;
-            }
-
-            return GetClient().Execute(request);
-        }
-
-        /// <summary>
-        /// Get请求 异步
-        /// </summary>
-        /// <param name="url">请求地址</param>
-        /// <returns></returns>
-        private async Task<IRestResponse> GetAsync(string url)
-        {
-            RestRequest request = GetProvider(RequestType.Get)
-                .GetRequest(Method.GET, url, new RequestBody(null), GetHeaders(), GetTimeOut());
-            if (Proxy != null)
-            {
-                _restClient.Proxy = Proxy;
-            }
-
-            return await GetClient().ExecuteTaskAsync(request);
         }
 
         /// <summary>
@@ -678,7 +669,10 @@ namespace EInfrastructure.Core.Http
         public string GetStringByPost(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
-            return GetByPost(url, data, requestBodyFormat).Content;
+            var request = GetByPost(url, data, requestBodyFormat);
+            var content = GetClient().Execute(request).Content;
+            AddLog(request, content);
+            return content;
         }
 
         #endregion
@@ -695,7 +689,8 @@ namespace EInfrastructure.Core.Http
         public byte[] GetBytesByPost(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
-            return GetByPost(url, data, requestBodyFormat).RawBytes;
+            var request = GetByPost(url, data, requestBodyFormat);
+            return GetClient().Execute(request).RawBytes;
         }
 
         #endregion
@@ -833,7 +828,7 @@ namespace EInfrastructure.Core.Http
         /// <param name="data">请求对象</param>
         /// <param name="requestBodyFormat">请求类型格式化 默认为Json</param>
         /// <returns></returns>
-        private IRestResponse GetByPost(string url, object data,
+        private RestRequest GetByPost(string url, object data,
             RequestBodyFormat requestBodyFormat = null)
         {
             var body = _requestBodyType.Id == RequestBodyType.TextXml.Id
@@ -842,7 +837,7 @@ namespace EInfrastructure.Core.Http
             var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
                 new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());
-            return GetClient().Execute(request);
+            return request;
         }
 
         /// <summary>
@@ -935,6 +930,19 @@ namespace EInfrastructure.Core.Http
             Headers = new Dictionary<string, string>();
             Proxy = null;
             _requestBodyFormat = null;
+        }
+
+        #endregion
+
+        #region 设置请求日志
+
+        /// <summary>
+        /// 设置请求日志
+        /// </summary>
+        /// <param name="logger"></param>
+        public void UseLogger(ILogger logger)
+        {
+            this._logger = logger;
         }
 
         #endregion
@@ -1035,6 +1043,33 @@ namespace EInfrastructure.Core.Http
         private RequestBodyFormat GetRequestBody(RequestBodyFormat requestBodyFormat)
         {
             return requestBodyFormat ?? _requestBodyFormat;
+        }
+
+        #endregion
+
+        #region 记录日志
+
+        /// <summary>
+        /// 记录日志
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="content"></param>
+        private void AddLog(RestRequest request, string content)
+        {
+            if (_logger != null)
+            {
+                string header = "";
+                var list = request.Parameters.Where(x => x.Type == ParameterType.HttpHeader)
+                    .Select(x => $"key：{x.Name}，value：{x.Value}").ToList();
+                list.ForEach(item => { header += $"{item}，"; });
+                if (!string.IsNullOrEmpty(header))
+                {
+                    header = header.Substring(0, header.Length - 1);
+                }
+
+                _logger.LogDebug(
+                    $"url：{request.Resource}，method:{request.Method.ToString()}，timeOut：{request.Timeout}，Header：{header}，result：{content}");
+            }
         }
 
         #endregion
