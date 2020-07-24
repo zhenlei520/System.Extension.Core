@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using EInfrastructure.Core.Config.Entities.Data;
@@ -235,6 +236,10 @@ namespace EInfrastructure.Core.Tools
 
         #region 对list集合分页
 
+        #endregion
+
+        #region 对list集合分页
+
         /// <summary>
         /// 对list集合分页
         /// </summary>
@@ -263,7 +268,7 @@ namespace EInfrastructure.Core.Tools
             {
                 list.Data = query.Take(pageSize).ToList();
             }
-            else if (pageSize < 1 && pageSize != -1)
+            else if (pageSize != -1)
             {
                 throw new BusinessException("页大小须等于-1或者大于0", HttpStatus.Err.Id);
             }
@@ -274,10 +279,6 @@ namespace EInfrastructure.Core.Tools
 
             return list;
         }
-
-        #endregion
-
-        #region 对list集合分页
 
         /// <summary>
         /// 对list集合分页执行某个方法
@@ -311,6 +312,36 @@ namespace EInfrastructure.Core.Tools
             {
                 action(query.Skip((index - 1) * pageSize).Take(pageSize).ToList());
             }
+        }
+
+        /// <summary>
+        /// 添加linq查询扩展(仅在Debug下生效)
+        /// </summary>
+        /// <param name="enumerable"></param>
+        /// <param name="logName">日志名称</param>
+        /// <param name="logMethod">输出日志</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> LogLinq<T>(this IEnumerable<T> enumerable, string logName,
+            Func<T, string> logMethod)
+        {
+#if DEBUG
+            int count = 0;
+            foreach (var item in enumerable)
+            {
+                if (logMethod != null)
+                {
+                    Debug.WriteLine($"{logName}|item {count} = {logMethod(item)}");
+                }
+
+                count++;
+                yield return item;
+            }
+
+            Debug.WriteLine($"{logName}|count = {count}");
+#else
+            return enumerable;
+#endif
         }
 
         #endregion

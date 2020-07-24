@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using EInfrastructure.Core.Config.Entities.Data;
@@ -132,5 +133,33 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         }
 
         #endregion
+
+        /// <summary>
+        /// 添加linq查询扩展(仅在Debug下生效，不建议在数据太多时使用)
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="logName">日志名称</param>
+        /// <param name="logMethod">输出日志</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static IQueryable<T> LogLinq<T>(this IQueryable<T> query, string logName,
+            Func<T, string> logMethod)
+        {
+#if DEBUG
+            int count = 0;
+            query.ToList().ForEach(item =>
+            {
+                if (logMethod != null)
+                {
+                    Debug.WriteLine($"{logName}|item {count} = {logMethod(item)}");
+                }
+
+                count++;
+            });
+
+            Debug.WriteLine($"{logName}|count = {count}");
+#endif
+            return query;
+        }
     }
 }
