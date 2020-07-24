@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -148,6 +149,36 @@ namespace EInfrastructure.Core.Tools
         }
 
         #endregion
+
+        /// <summary>
+        /// 格式化时间
+        /// </summary>
+        /// <param name="timeSpan"></param>
+        /// <param name="timeSpanFormatDateType">显示模式，默认：{0}天{1}小时{2}分钟{3}秒</param>
+        /// <returns></returns>
+        public static string FormatDate(this TimeSpan timeSpan, TimeSpanFormatDateType timeSpanFormatDateType = null)
+        {
+            if (timeSpanFormatDateType == null)
+            {
+                timeSpanFormatDateType = TimeSpanFormatDateType.Zero;
+            }
+
+            if (!timeSpanFormatDateType.IsExist(timeSpanFormatDateType))
+            {
+                throw new BusinessException("不支持的类型", HttpStatus.Err.Id);
+            }
+
+            if (timeSpanFormatDateType.Equals(TimeSpanFormatDateType.Zero) ||
+                timeSpanFormatDateType.Equals(TimeSpanFormatDateType.One) ||
+                timeSpanFormatDateType.Equals(TimeSpanFormatDateType.Two))
+            {
+                return string.Format(timeSpanFormatDateType.Name, timeSpan.Days, timeSpan.Hours, timeSpan.Minutes,
+                    timeSpan.Seconds);
+            }
+
+            return string.Format(timeSpanFormatDateType.Name, timeSpan.Days, timeSpan.Hours, timeSpan.Minutes,
+                timeSpan.Seconds, timeSpan.Milliseconds);
+        }
 
         #region 得到随机日期
 
