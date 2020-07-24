@@ -327,7 +327,7 @@ namespace EInfrastructure.Core.Infrastructure
         protected virtual void AddConfiguredAssembliesByFile(List<string> addedAssemblyFileList,
             List<Assembly> assemblies)
         {
-            foreach (var assemblyName in AssemblyNames)
+            foreach (var assemblyName in AssemblyFileList)
             {
                 var assembly = Assembly.LoadFrom(assemblyName);
                 if (addedAssemblyFileList.Contains(assembly.FullName))
