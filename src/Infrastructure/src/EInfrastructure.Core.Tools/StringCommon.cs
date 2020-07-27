@@ -319,5 +319,43 @@ namespace EInfrastructure.Core.Tools
         #endregion
 
         #endregion
+
+        #region 在字符串左或者右侧增加字符串，如果无，则返回原字符串
+
+        /// <summary>
+        /// 在字符串左侧增加字符串，如果待增加的字符串为空，则返回原字符串
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="content">内容</param>
+        /// <param name="split">分隔符（默认为空，当内容不为空时添加）</param>
+        /// <returns></returns>
+        public static string AppendLeft(this string str, string content, string split = "")
+        {
+            if (!string.IsNullOrEmpty(content))
+            {
+                return content + split + str;
+            }
+
+            return str;
+        }
+
+        /// <summary>
+        /// 在字符串左侧增加字符串，如果待增加的字符串为空，则返回原字符串
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="content">内容</param>
+        /// <param name="split">分隔符（默认为空，当内容不为空时添加）</param>
+        /// <returns></returns>
+        public static string AppendRight(this string str, string content, string split = "")
+        {
+            if (!string.IsNullOrEmpty(content))
+            {
+                return str + split + content;
+            }
+
+            return str;
+        }
+
+        #endregion
     }
 }
