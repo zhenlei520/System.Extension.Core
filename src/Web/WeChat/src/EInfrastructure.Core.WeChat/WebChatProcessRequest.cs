@@ -55,7 +55,8 @@ namespace EInfrastructure.Core.WeChat
             WebChatMessage refundReponse = null;
             try
             {
-                if (!string.IsNullOrEmpty(Auth(webChatAuthConfig, wxConfig)))
+                string sign = Auth(webChatAuthConfig, wxConfig);
+                if (!string.IsNullOrEmpty(sign))
                 {
                     throw new BusinessException("签名错误",HttpStatus.Err.Id);
                 }
@@ -63,7 +64,7 @@ namespace EInfrastructure.Core.WeChat
                 refundReponse = _xmlProvider.Deserialize<WebChatMessage>(xml);
                 if (refundReponse == null)
                 {
-                    throw new BusinessException("参数错误",HttpStatus.Err.Id);
+                    throw new ArgumentNullException(nameof(refundReponse)+"，参数错误");
                 }
             }
             catch (Exception ex)

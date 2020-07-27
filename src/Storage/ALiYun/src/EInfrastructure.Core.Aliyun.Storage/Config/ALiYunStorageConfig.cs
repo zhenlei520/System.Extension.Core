@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using Aliyun.OSS;
 using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -190,7 +191,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Config
             var endpoint = zone.GetCustomerObj<ENameAttribute>()?.Name;
             if (string.IsNullOrEmpty(endpoint))
             {
-                throw new BusinessException<string>("不支持的空间区域", HttpStatus.Err.Name);
+                throw new ArgumentNullException(nameof(endpoint)+"(空间区域)");
             }
 
             var scheme = "http://";

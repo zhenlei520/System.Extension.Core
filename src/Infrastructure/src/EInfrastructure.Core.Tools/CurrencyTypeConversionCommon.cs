@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -35,7 +36,7 @@ namespace EInfrastructure.Core.Tools
             var provider = list.FirstOrDefault(x => x.GetCurrencyType.Equals(currencyType));
             if (provider == null)
             {
-                throw new BusinessException("暂不支持当前货币转换");
+                throw new NotImplementedException(nameof(currencyType));
             }
 
             return provider.ConvertToCurrency(param);

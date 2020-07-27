@@ -156,7 +156,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Core
             {
                 if (defaultZone == null)
                 {
-                    throw new BusinessException("请选择要操作的空间区域");
+                    throw new ArgumentNullException(nameof(zone));
                 }
 
                 return defaultZone.Invoke();

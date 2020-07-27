@@ -72,7 +72,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             var section = configuration.GetSection(nameof(QiNiuStorageConfig));
             if (section == null)
             {
-                throw new BusinessException<string>("七牛云存储配置异常", HttpStatus.Err.Name);
+                throw new ArgumentNullException(nameof(QiNiuStorageConfig));
             }
 
             QiNiuStorageConfig qiNiuStorageConfig = new QiNiuStorageConfig(section.GetValue<string>("AccessKey"),

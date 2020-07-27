@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace EInfrastructure.Core.Http
         {
             if (string.IsNullOrEmpty(host))
             {
-                throw new BusinessException("域名不能为空", HttpStatus.Err.Id);
+                throw new ArgumentNullException(nameof(host));
             }
 
             Host = host;

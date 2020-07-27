@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.Tools.Url
         public Url(string url, bool? isUseHttps)
         {
             if (string.IsNullOrEmpty(url))
-                throw new BusinessException("url is not empty", HttpStatus.Err.Id);
+                throw new ArgumentNullException(nameof(url));
             var uri = new Uri(url);
             Host = uri.Host;
             if (isUseHttps == null)
