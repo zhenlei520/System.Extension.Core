@@ -1,43 +1,56 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using EInfrastructure.Core.Configuration.Ioc.Plugs;
-using Microsoft.Extensions.Hosting;
+using EInfrastructure.Core.CustomConfiguration.Core.Logging;
 
 namespace EInfrastructure.Core.CustomConfiguration.Core.Internal
 {
     /// <summary>
     /// Default implement of
     /// </summary>
-    internal class Bootstrapper : BackgroundService
+    internal class Bootstrapper
     {
-        private readonly CustomConfigurationOptions _configurationOptions;
+        private static readonly Func<Action<LogLevel, string, Exception>> Logger = () =>
+            LogManager.CreateLogger(typeof(Bootstrapper));
 
-        public Bootstrapper(CustomConfigurationOptions configurationOptions)
+        private readonly CustomConfigurationOptions _customConfigurationOptions;
+        private readonly ICustomConfigurationDataProvider _configurationDataProvider;
+
+        public Bootstrapper(CustomConfigurationOptions customConfigurationOptions,
+            ICustomConfigurationDataProvider customConfigurationDataProvider)
         {
-            _configurationOptions = configurationOptions;
+            this._customConfigurationOptions = customConfigurationOptions;
+            this._configurationDataProvider = customConfigurationDataProvider;
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="stoppingToken"></param>
         /// <returns></returns>
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        public void Execute()
         {
-            await Task.Run(() =>
-            {
-                while (!stoppingToken.IsCancellationRequested)
-                {
-                    Thread.Sleep(_configurationOptions.Duration);
-                }
-            }, stoppingToken);
-
-            await Task.CompletedTask;
+            // Task.Run(() =>
+            // {
+            //     while (true)
+            //     {
+            //         try
+            //         {
+            //             var data = _configurationDataProvider.GetAllData();
+            //             
+            //         }
+            //         catch (Exception ex)
+            //         {
+            //             Logger().Error(ex);
+            //         }
+            //         finally
+            //         {
+            //             Thread.Sleep(_customConfigurationOptions.Duration);
+            //         }
+            //     }
+            // });
         }
     }
 }

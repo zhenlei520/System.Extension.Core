@@ -27,7 +27,8 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql
         /// <param name="configurationOptions"></param>
         public CustomerConfigurationDbContext(ConfigurationMySqlOptions configurationOptions)
         {
-            _configurationOptions = configurationOptions??throw new ArgumentNullException(nameof(configurationOptions));
+            _configurationOptions =
+                configurationOptions ?? throw new ArgumentNullException(nameof(configurationOptions));
         }
 
         /// <summary>

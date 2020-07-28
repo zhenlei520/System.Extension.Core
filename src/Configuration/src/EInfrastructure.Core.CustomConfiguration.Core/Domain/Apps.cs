@@ -63,5 +63,37 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Domain
         /// 删除时间
         /// </summary>
         public DateTime? DelTime { get; private set; }
+
+        #region 更新
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="appid">应用新appid（为空不更新）</param>
+        /// <param name="name">应用新名称（为空不更新）</param>
+        public void Update(string appid, string name)
+        {
+            this.AppId = appid;
+            this.Name = name;
+            this.EditTime = DateTime.Now;
+        }
+
+        #endregion
+
+        #region 删除
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        public void Del()
+        {
+            if (!this.IsDel)
+            {
+                this.IsDel = true;
+                this.DelTime = DateTime.Now;
+            }
+        }
+
+        #endregion
     }
 }

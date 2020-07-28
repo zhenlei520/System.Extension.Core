@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Domain
         /// <param name="environmentName">环境名称</param>
         /// <param name="key">参数名</param>
         /// <param name="value">参数值</param>
-        /// <param name="remark">备足</param>
+        /// <param name="remark">备注</param>
         public NamespaceItems(string environmentName, string key, string value, string remark) : this()
         {
             EnvironmentName = environmentName;

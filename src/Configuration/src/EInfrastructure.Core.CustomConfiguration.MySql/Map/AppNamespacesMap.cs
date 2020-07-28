@@ -16,7 +16,11 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Map
     {
         private readonly ConfigurationMySqlOptions _options;
 
-        public AppNamespacesMap(ConfigurationMySqlOptions options = null)
+        public AppNamespacesMap() : this(null)
+        {
+        }
+
+        public AppNamespacesMap(ConfigurationMySqlOptions options)
         {
             _options = options ?? ConfigurationMySqlOptions.Default;
         }

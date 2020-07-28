@@ -9,11 +9,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EInfrastructure.Core.CustomConfiguration.MySql.Map
 {
-    public class NamespaceItemsMap: IEntityMap<NamespaceItems>
+    public class NamespaceItemsMap : IEntityMap<NamespaceItems>
     {
         private readonly ConfigurationMySqlOptions _options;
 
-        public NamespaceItemsMap(ConfigurationMySqlOptions options = null)
+        public NamespaceItemsMap() : this(null)
+        {
+        }
+
+        public NamespaceItemsMap(ConfigurationMySqlOptions options)
         {
             _options = options ?? ConfigurationMySqlOptions.Default;
         }

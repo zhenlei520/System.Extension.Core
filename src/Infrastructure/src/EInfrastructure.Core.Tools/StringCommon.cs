@@ -357,5 +357,20 @@ namespace EInfrastructure.Core.Tools
         }
 
         #endregion
+
+        #region 返回不为空的值
+
+        /// <summary>
+        /// 返回不为空的值
+        /// </summary>
+        /// <param name="str">待检查的字符串</param>
+        /// <param name="value">如果str为空或者null，则返回此值</param>
+        /// <returns></returns>
+        public static string GetNotNullAndNotEmpty(this string str, string value)
+        {
+            return ObjectCommon.SafeObject(!string.IsNullOrEmpty(str), () => ValueTuple.Create(str, value));
+        }
+
+        #endregion
     }
 }
