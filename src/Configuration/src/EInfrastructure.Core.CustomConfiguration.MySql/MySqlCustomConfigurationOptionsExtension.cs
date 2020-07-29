@@ -7,6 +7,7 @@ using EInfrastructure.Core.CustomConfiguration.Core.Domain;
 using EInfrastructure.Core.CustomConfiguration.Core.Internal;
 using EInfrastructure.Core.MySql.Repository;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace EInfrastructure.Core.CustomConfiguration.MySql
 {
@@ -40,29 +41,15 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql
 
             #region 注入数据库信息
 
-            services.AddScoped(typeof(IUnitOfWork<CustomerConfigurationDbContext>),
+            services.TryAddScoped(typeof(IUnitOfWork<CustomerConfigurationDbContext>),
                 typeof(CustomerConfigurationDbContext));
-
-            // services.AddScoped(typeof(IQuery<Apps, long, CustomerConfigurationDbContext>),
-            //     typeof(QueryBase<Apps, long, CustomerConfigurationDbContext>));
-            //
-            // services.AddScoped(typeof(IQuery<AppNamespaces, long, CustomerConfigurationDbContext>),
-            //     typeof(QueryBase<AppNamespaces, long, CustomerConfigurationDbContext>));
-
-            services.AddScoped(typeof(IQuery<NamespaceItems, long, CustomerConfigurationDbContext>),
+            services.TryAddScoped(typeof(IQuery<NamespaceItems, long, CustomerConfigurationDbContext>),
                 typeof(QueryBase<NamespaceItems, long, CustomerConfigurationDbContext>));
-
-            // services.AddScoped(typeof(IRepository<Apps, long, CustomerConfigurationDbContext>),
-            //     typeof(RepositoryBase<Apps, long, CustomerConfigurationDbContext>));
-            //
-            // services.AddScoped(typeof(IRepository<AppNamespaces, long, CustomerConfigurationDbContext>),
-            //     typeof(RepositoryBase<AppNamespaces, long, CustomerConfigurationDbContext>));
-
             services.AddDbContext<CustomerConfigurationDbContext>();
 
             #endregion
 
-            services.AddTransient<ICustomConfigurationDataProvider, CustomConfigurationDataProvider>();
+            services.TryAddTransient<ICustomConfigurationDataProvider, CustomConfigurationDataProvider>();
         }
     }
 }

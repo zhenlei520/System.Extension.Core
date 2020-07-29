@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Internal.Data
         /// <param name="appid">应用id</param>
         /// <param name="name">名称空间</param>
         /// <param name="remark">备注</param>
-        void Add(string appid, string name,  string remark);
+        void Add(string appid, string name, string remark);
 
         /// <summary>
         /// 更新应用名称空间
@@ -54,7 +54,7 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Internal.Data
         /// <param name="name">应用名称</param>
         /// <returns></returns>
         AppNamespacesDetailDto Get(string appid, string name);
-        
+
         /// <summary>
         /// 添加名称空间的值
         /// </summary>
@@ -65,12 +65,22 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Internal.Data
         void AddItem(long namespacesId, string environmentName, string value, string remark);
 
         /// <summary>
+        /// 添加名称空间的值
+        /// </summary>
+        /// <param name="namespacesId">名称空间id</param>
+        /// <param name="environmentName">环境信息</param>
+        /// <param name="key">键</param>
+        /// <param name="value">值</param>
+        /// <param name="remark">备注</param>
+        void AddItem(long namespacesId, string environmentName, string key, string value, string remark);
+
+        /// <summary>
         /// 得到名称空间下的值列表
         /// </summary>
         /// <param name="namespaceId">名称空间id</param>
         /// <param name="environmentName">环境信息</param>
         /// <returns></returns>
-        List<NamespaceItemDto> GetItemList(string namespaceId,string environmentName);
+        List<NamespaceItemDto> GetItemList(long namespaceId, string environmentName);
 
         /// <summary>
         /// 根据值id获取值信息

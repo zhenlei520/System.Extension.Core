@@ -166,7 +166,7 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Repository
         {
             if (string.IsNullOrEmpty(appid))
             {
-                throw new BusinessException("appid is not empty");
+                throw new ArgumentNullException(nameof(appid));
             }
 
             if (appid.Length > 50)

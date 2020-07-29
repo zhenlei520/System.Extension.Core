@@ -16,7 +16,7 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Internal
         void InitConfig();
 
         /// <summary>
-        /// 
+        /// 添加文件
         /// </summary>
         /// <param name="configurationBuilder"></param>
         void AddFile(IConfigurationBuilder configurationBuilder);

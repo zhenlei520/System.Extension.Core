@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using EInfrastructure.Core.CustomConfiguration.Core.Domain;
 using EInfrastructure.Core.MySql;
 using EInfrastructure.Core.Tools;
@@ -22,7 +23,7 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Map
 
         public AppNamespacesMap(ConfigurationMySqlOptions options)
         {
-            _options = options ?? ConfigurationMySqlOptions.Default;
+            _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         /// <summary>

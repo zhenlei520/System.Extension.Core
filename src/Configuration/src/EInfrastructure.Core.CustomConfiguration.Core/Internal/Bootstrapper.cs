@@ -2,8 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using EInfrastructure.Core.CustomConfiguration.Core.Logging;
 
 namespace EInfrastructure.Core.CustomConfiguration.Core.Internal

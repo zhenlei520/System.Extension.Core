@@ -27,7 +27,7 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql
         /// <returns></returns>
         public List<ConfigurationDto> GetAllData(string appid, string environmentName, params string[] namespaces)
         {
-            return Core.ServiceCollectionExtensions.Invoke(serviceProvider =>
+            return Core.CustomConfigurationExtensions.Invoke(serviceProvider =>
             {
                 var namespaceItemsQuery = serviceProvider
                     .GetService<IQuery<NamespaceItems, long, CustomerConfigurationDbContext>>();

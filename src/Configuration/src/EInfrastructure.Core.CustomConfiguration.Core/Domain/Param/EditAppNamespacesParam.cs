@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Validation;
 using FluentValidation;
 using Newtonsoft.Json;
@@ -27,7 +28,8 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Domain.Param
         /// <summary>
         /// 
         /// </summary>
-        public class EditAppNamespacesParamValidator : AbstractValidator<EditAppNamespacesParam>, IFluentlValidator<EditAppNamespacesParam>
+        public class EditAppNamespacesParamValidator : AbstractValidator<EditAppNamespacesParam>,
+            IFluentlValidator<EditAppNamespacesParam>
         {
             /// <summary>
             /// 
@@ -36,6 +38,8 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Domain.Param
             {
                 RuleFor(x => x.Name).Must(x => !string.IsNullOrEmpty(x?.Trim())).WithMessage("name is not empty");
                 RuleFor(x => x.Name).MaximumLength(50).WithMessage("the name length is less than or equal to 50")
+                    .Must(x => PathCommon.GetExtension(x).Contains("json") ||
+                               string.IsNullOrEmpty(PathCommon.GetExtension(x))).WithMessage("unsupported namespace type")
                     .When(x => x.Name != null);
                 RuleFor(x => x.Remark).MaximumLength(200).WithMessage("the remark length is less than or equal to 200")
                     .When(x => x.Remark != null);

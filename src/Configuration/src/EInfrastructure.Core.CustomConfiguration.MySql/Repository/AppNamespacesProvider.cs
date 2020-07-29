@@ -27,6 +27,7 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Repository
     {
         private readonly IAppNamespacesRepository _repository;
         private readonly IQuery<AppNamespaces, long, CustomerConfigurationDbContext> _query;
+        private readonly IQuery<NamespaceItems, long, CustomerConfigurationDbContext> _itemQuery;
         private readonly IQuery<Apps, long, CustomerConfigurationDbContext> _appQuery;
 
         /// <summary>
@@ -34,13 +35,16 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Repository
         /// </summary>
         /// <param name="repository"></param>
         /// <param name="query"></param>
+        /// <param name="itemQuery"></param>
         /// <param name="appQuery"></param>
         internal AppNamespacesProvider(IAppNamespacesRepository repository,
             IQuery<AppNamespaces, long, CustomerConfigurationDbContext> query,
+            IQuery<NamespaceItems, long, CustomerConfigurationDbContext> itemQuery,
             IQuery<Apps, long, CustomerConfigurationDbContext> appQuery)
         {
             this._repository = repository;
             this._query = query;
+            this._itemQuery = itemQuery;
             this._appQuery = appQuery;
         }
 
@@ -64,7 +68,7 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Repository
                 throw new BusinessException($"{name}在应用{appid}中已存在");
             }
 
-            appNamespaces = new AppNamespaces(appid, name, "json", remark);
+            appNamespaces = new AppNamespaces(appid, name, remark);
             this._repository.Add(appNamespaces);
             this._repository.UnitOfWork.Commit();
         }
@@ -183,7 +187,29 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Repository
         /// <param name="remark">备注</param>
         public void AddItem(long namespacesId, string environmentName, string value, string remark)
         {
-            throw new NotImplementedException();
+            AddItem(namespacesId, environmentName, "", value, remark);
+        }
+
+        /// <summary>
+        /// 添加名称空间的值
+        /// </summary>
+        /// <param name="namespacesId">名称空间id</param>
+        /// <param name="environmentName">环境信息</param>
+        /// <param name="key">键</param>
+        /// <param name="value">值</param>
+        /// <param name="remark">备注</param>
+        public void AddItem(long namespacesId, string environmentName, string key, string value, string remark)
+        {
+            CheckNamespaces(environmentName);
+            CheckValue(value);
+            CheckRemark(remark);
+            var namespaceItem = this._repository.LoadIntegrate(namespacesId);
+            if (namespaceItem == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceItem));
+            }
+
+            namespaceItem.AddItem(environmentName, value, remark, key);
         }
 
         #endregion
@@ -196,9 +222,17 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Repository
         /// <param name="namespaceId">名称空间id</param>
         /// <param name="environmentName">环境信息</param>
         /// <returns></returns>
-        public List<NamespaceItemDto> GetItemList(string namespaceId, string environmentName)
+        public List<NamespaceItemDto> GetItemList(long namespaceId, string environmentName)
         {
-            throw new NotImplementedException();
+            return this._itemQuery.GetQueryable().Where(x =>
+                !x.IsDel && x.AppNamespaceId == namespaceId && !x.AppNamespaces.IsDel &&
+                x.EnvironmentName == environmentName).Select(x => new NamespaceItemDto()
+            {
+                Id = x.Id,
+                Key = x.Key,
+                Value = x.Value,
+                EditTime = x.EditTime
+            }).ToList();
         }
 
         #endregion
@@ -212,7 +246,15 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Repository
         /// <returns></returns>
         public NamespaceDetailDto GetItem(long itemId)
         {
-            throw new NotImplementedException();
+            return this._itemQuery.GetQueryable().Where(x => !x.IsDel && x.Id == itemId).Select(x =>
+                new NamespaceDetailDto()
+                {
+                    Id = x.Id,
+                    Key = x.Key,
+                    Value = x.Value,
+                    AddTime = x.AddTime,
+                    EditTime = x.EditTime
+                }).FirstOrDefault();
         }
 
         #endregion
@@ -245,7 +287,7 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Repository
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new BusinessException("name is not empty");
+                throw new ArgumentNullException(nameof(name));
             }
 
             if (name.Length > 50)
@@ -254,9 +296,9 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Repository
             }
 
             string format = PathCommon.GetExtension(name).ToLower();
-            if (!format.Equals(".json"))
+            if (!format.Equals(".json") && !string.IsNullOrEmpty(format))
             {
-                throw new BusinessException("暂时不支持json之外的格式");
+                throw new BusinessException("unsupported namespace type");
             }
         }
 
@@ -271,6 +313,60 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Repository
         void CheckNamespaceRemark(string remark)
         {
             if (remark != null && remark.Length > 200)
+            {
+                throw new BusinessException("the remark length is less than or equal to 200");
+            }
+        }
+
+        #endregion
+
+        #region 检查环境信息
+
+        /// <summary>
+        /// 检查环境信息
+        /// </summary>
+        /// <param name="environmentName">环境信息</param>
+        void CheckNamespaces(string environmentName)
+        {
+            if (string.IsNullOrEmpty(environmentName))
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+
+            if (environmentName.Length > 50)
+            {
+                throw new BusinessException("the environmentName length is less than or equal to 50");
+            }
+        }
+
+        #endregion
+
+        #region 检查名称空间的值
+
+        /// <summary>
+        /// 检查名称空间的值
+        /// </summary>
+        /// <param name="value"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        void CheckValue(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+        }
+
+        #endregion
+
+        #region 检查备注信息
+
+        /// <summary>
+        /// 检查备注信息
+        /// </summary>
+        /// <param name="remark">备注信息</param>
+        void CheckRemark(string remark)
+        {
+            if (remark?.Length > 200)
             {
                 throw new BusinessException("the remark length is less than or equal to 200");
             }
@@ -317,6 +413,20 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Repository
         public AppNamespaces Get(string appid, string name)
         {
             return Dbcontext.Set<AppNamespaces>().FirstOrDefault(x => x.AppId == appid && x.Name == name && !x.IsDel);
+        }
+
+        #endregion
+
+        #region 根据id得到实体信息
+
+        /// <summary>
+        /// 根据id得到实体信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public override AppNamespaces LoadIntegrate(long id)
+        {
+            return Dbcontext.Set<AppNamespaces>().FirstOrDefault(x => x.Id == id && !x.IsDel);
         }
 
         #endregion

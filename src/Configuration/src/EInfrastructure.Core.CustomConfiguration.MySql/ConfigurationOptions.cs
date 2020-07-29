@@ -9,11 +9,6 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql
     public class ConfigurationMySqlOptions
     {
         /// <summary>
-        ///
-        /// </summary>
-        public static ConfigurationMySqlOptions Default = new ConfigurationMySqlOptions();
-
-        /// <summary>
         /// 前缀
         /// </summary>
         public string Pre { get; set; }

@@ -3,7 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using EInfrastructure.Core.Config.Entities.Configuration;
+using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.CustomConfiguration.Core.Enumerations;
 using EInfrastructure.Core.Tools;
 
 namespace EInfrastructure.Core.CustomConfiguration.Core.Domain
@@ -23,6 +26,7 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Domain
             this.EditTime = DateTime.Now;
             this.IsDel = false;
             this.DelTime = null;
+            this._namespaceItems = new List<NamespaceItems>();
         }
 
         /// <summary>
@@ -30,13 +34,12 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Domain
         /// </summary>
         /// <param name="appId">应用id</param>
         /// <param name="name">命名空间</param>
-        /// <param name="format">格式</param>
         /// <param name="remark">备注</param>
-        public AppNamespaces(string appId, string name,string format, string remark) : this()
+        public AppNamespaces(string appId, string name, string remark) : this()
         {
             AppId = appId;
             Name = name;
-            Format = format;
+            Format = PathCommon.GetExtension(name).Contains("json") ? DataType.Json.Name : DataType.Property.Name;
             Remark = remark;
         }
 
@@ -52,7 +55,7 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Domain
 
         /// <summary>
         /// 格式
-        /// 目前仅支持Json
+        /// 目前仅支持Json、Property
         /// </summary>
         public string Format { get; private set; }
 
@@ -95,16 +98,55 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Domain
 
         #endregion
 
-        #region 更新
+        #region 添加名称空间值
 
         /// <summary>
-        /// 更新
+        /// 添加名称空间值
+        /// </summary>
+        /// <param name="environmentName">环境信息</param>
+        /// <param name="value">值</param>
+        /// <param name="remark">备注</param>
+        /// <param name="key">键</param>
+        public void AddItem(string environmentName, string value, string remark, string key)
+        {
+            if (this.IsDel)
+            {
+                throw new BusinessException("当前名称空间不存在或者已经被删除");
+            }
+
+            if (this.Format.Equals(DataType.Json.Name, StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (this._namespaceItems.Count > 0)
+                {
+                    throw new BusinessException("请修改名称空间信息");
+                }
+
+                this._namespaceItems.Add(new NamespaceItems(environmentName, "content", value, remark));
+            }
+            else
+            {
+                if (this._namespaceItems.Any(x => x.Key == key))
+                {
+                    throw new BusinessException("请更换key，当前key已经存在");
+                }
+
+                this._namespaceItems.Add(new NamespaceItems(environmentName, key, value, remark));
+            }
+        }
+
+        #endregion
+
+        #region 更新应用名称空间
+
+        /// <summary>
+        /// 更新应用名称空间
         /// </summary>
         /// <param name="name">应用新名称（为空不更新）</param>
         /// <param name="remark">应用备注</param>
         public void Update(string name, string remark)
         {
             this.Name = name;
+            Format = PathCommon.GetExtension(name).Contains("json") ? DataType.Json.Name : DataType.Property.Name;
             this.Remark = remark;
             this.EditTime = DateTime.Now;
         }

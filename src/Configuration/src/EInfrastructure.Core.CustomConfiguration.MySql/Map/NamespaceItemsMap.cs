@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using EInfrastructure.Core.CustomConfiguration.Core.Domain;
 using EInfrastructure.Core.MySql;
 using EInfrastructure.Core.Tools;
@@ -19,7 +20,7 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Map
 
         public NamespaceItemsMap(ConfigurationMySqlOptions options)
         {
-            _options = options ?? ConfigurationMySqlOptions.Default;
+            _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace EInfrastructure.Core.CustomConfiguration.MySql.Map
 
             builder.Property(t => t.EnvironmentName).HasMaxLength(50).HasColumnName("environment_name").IsRequired();
             builder.Property(t => t.Key).HasMaxLength(50).HasColumnName("key").IsRequired();
-            builder.Property(t => t.Value).HasMaxLength(50).HasColumnName("value").IsRequired();
+            builder.Property(t => t.Value).HasColumnName("value").IsRequired();
             builder.Property(t => t.Remark).HasMaxLength(200).HasColumnName("remark");
             builder.Property(t => t.AppNamespaceId).HasMaxLength(36).HasColumnName("app_namespace_id");
 

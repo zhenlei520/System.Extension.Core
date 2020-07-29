@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.IO;
 using System.Linq;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Files;
@@ -31,14 +30,16 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Internal
             this._cacheFileProvider = cacheFileProvider;
         }
 
+        #region 初始化配置
+
         /// <summary>
-        /// 
+        /// 初始化配置
         /// </summary>
         public void InitConfig()
         {
             var configurationList = this._configurationDataProvider.GetAllData(this._customConfigurationOptions.Appid,
                 this._customConfigurationOptions.EnvironmentName,
-                this._customConfigurationOptions.Namespaces.ToArray());
+                this._customConfigurationOptions.Namespaces.Distinct().ToArray());
             if (configurationList == null)
             {
                 return;
@@ -49,33 +50,62 @@ namespace EInfrastructure.Core.CustomConfiguration.Core.Internal
                 var data = configurationList.FirstOrDefault(x => x.Key == namespaces);
                 if (data != null)
                 {
-                    this._cacheFileProvider.Save(_customConfigurationOptions.GetCacheFile(namespaces), data.Value);
+                    this._cacheFileProvider.Save(GetFileFullPath(namespaces), data.Value);
                 }
                 else
                 {
-                    FileCommon.DeleteFile(_customConfigurationOptions.GetCacheFile(namespaces));
+                    FileCommon.DeleteFile(GetFileFullPath(namespaces));
                 }
             });
         }
 
+        #endregion
+
+        #region 添加文件
+
         /// <summary>
-        /// 
+        /// 添加文件
         /// </summary>
         /// <param name="configurationBuilder"></param>
         public void AddFile(IConfigurationBuilder configurationBuilder)
         {
             this._customConfigurationOptions.Namespaces.ForEach(namespaces =>
             {
-                if (PathCommon.GetExtension(namespaces).Equals(".json", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    configurationBuilder.AddJsonFile(this._customConfigurationOptions.GetCacheFile(namespaces), true,
-                        true);
-                }
-                else
-                {
-                    throw new NotImplementedException("暂不支持xml配置");
-                }
+                configurationBuilder.AddJsonFile(
+                    this._customConfigurationOptions.GetCacheFile(GetFileFullPath(namespaces)), true,
+                    true);
             });
         }
+
+        #endregion
+
+        #region private methods
+
+        #region 得到完整的文件地址信息
+
+        /// <summary>
+        /// 得到完整的文件地址信息
+        /// </summary>
+        /// <param name="namespaces"></param>
+        /// <returns></returns>
+        string GetFileFullPath(string namespaces)
+        {
+            var ext = PathCommon.GetExtension(namespaces);
+            if (ext.Equals(".json", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return this._customConfigurationOptions.GetCacheFile(namespaces);
+            }
+
+            if (string.IsNullOrEmpty(ext))
+            {
+                return this._customConfigurationOptions.GetCacheFile(namespaces + ".property.json");
+            }
+
+            throw new NotImplementedException(nameof(namespaces));
+        }
+
+        #endregion
+
+        #endregion
     }
 }
