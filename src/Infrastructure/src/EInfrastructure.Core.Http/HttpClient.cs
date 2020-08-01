@@ -441,7 +441,7 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         public async Task<T> GetJsonAsync<T>(string url)
         {
-            var res = await GetStringAsync(url, GetHeaders());
+            var res = await GetStringAsync(url);
             if (string.IsNullOrEmpty(res))
             {
                 return default(T);
