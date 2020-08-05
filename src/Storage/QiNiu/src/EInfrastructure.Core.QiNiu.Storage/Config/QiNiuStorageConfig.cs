@@ -21,6 +21,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
             UseCdnDomains = false;
             IsAllowOverlap = false;
             MaxRetryTimes = 5;
+            ChunkUnit = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.ChunkUnit.U2048K;
         }
 
         /// <summary>
@@ -134,7 +135,6 @@ namespace EInfrastructure.Core.QiNiu.Storage.Config
         /// 是否覆盖上传 默认false
         /// </summary>
         public bool IsAllowOverlap { get; set; }
-
 
         /// <summary>
         /// 最大重试次数

@@ -42,6 +42,15 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <summary>
         ///
         /// </summary>
+        /// <param name="aliyunConfig"></param>
+        public StorageProvider(ALiYunStorageConfig aliyunConfig) : base(aliyunConfig)
+        {
+
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="logger"></param>
         /// <param name="aliyunConfig"></param>
         public StorageProvider(ALiYunStorageConfig aliyunConfig, ILogger logger) : base(aliyunConfig)

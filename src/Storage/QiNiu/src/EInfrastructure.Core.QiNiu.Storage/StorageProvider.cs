@@ -34,6 +34,13 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         /// 文件实现类
         /// </summary>
+        public StorageProvider(QiNiuStorageConfig qiNiuConfig) : base(qiNiuConfig)
+        {
+        }
+
+        /// <summary>
+        /// 文件实现类
+        /// </summary>
         public StorageProvider(ILogger logger, QiNiuStorageConfig qiNiuConfig) : base(qiNiuConfig)
         {
             this._logger = logger;

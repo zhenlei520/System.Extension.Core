@@ -7,6 +7,8 @@ using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.HelpCommon;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
+using EInfrastructure.Core.Serialize.Xml;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.WeChat.Common;
 using EInfrastructure.Core.WeChat.Config;
@@ -25,6 +27,53 @@ namespace EInfrastructure.Core.WeChat
         private readonly ILogger<WebChatProcessRequest> _logger;
         private readonly IJsonProvider _jsonProvider;
         private readonly IXmlProvider _xmlProvider;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public WebChatProcessRequest() : this(null, new List<IJsonProvider>()
+        {
+            new NewtonsoftJsonProvider()
+        }, new List<IXmlProvider>()
+        {
+            new XmlProvider()
+        })
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="jsonProviders"></param>
+        public WebChatProcessRequest(ICollection<IJsonProvider> jsonProviders) : this(null, jsonProviders,
+            new List<IXmlProvider>()
+            {
+                new XmlProvider()
+            })
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="xmlProviders"></param>
+        public WebChatProcessRequest(
+            ICollection<IXmlProvider> xmlProviders) : this(null, new List<IJsonProvider>()
+        {
+            new NewtonsoftJsonProvider()
+        }, xmlProviders)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="jsonProviders"></param>
+        /// <param name="xmlProviders"></param>
+        public WebChatProcessRequest(ICollection<IJsonProvider> jsonProviders,
+            ICollection<IXmlProvider> xmlProviders) : this(null, jsonProviders, xmlProviders)
+        {
+        }
 
         /// <summary>
         ///
@@ -57,18 +106,18 @@ namespace EInfrastructure.Core.WeChat
             {
                 if (!string.IsNullOrEmpty(Auth(webChatAuthConfig, wxConfig)))
                 {
-                    throw new BusinessException("签名错误",HttpStatus.Err.Id);
+                    throw new BusinessException("签名错误", HttpStatus.Err.Id);
                 }
 
                 refundReponse = _xmlProvider.Deserialize<WebChatMessage>(xml);
                 if (refundReponse == null)
                 {
-                    throw new BusinessException("参数错误",HttpStatus.Err.Id);
+                    throw new BusinessException("参数错误", HttpStatus.Err.Id);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError("接受用户信息错误：", ex.ExtractAllStackTrace());
+                _logger?.LogError("接受用户信息错误：", ex.ExtractAllStackTrace());
             }
 
             return refundReponse;
@@ -89,7 +138,7 @@ namespace EInfrastructure.Core.WeChat
             string token = wxConfig.Token; //从配置文件获取Token
             if (string.IsNullOrEmpty(token))
             {
-                _logger.LogError("WeixinToken 配置项没有配置！");
+                _logger?.LogError("WeixinToken 配置项没有配置！");
             }
 
             if (CheckSignature(token, chatAuthConfig.Signature, chatAuthConfig.Timestamp, chatAuthConfig.Nonce) &&
@@ -198,8 +247,8 @@ namespace EInfrastructure.Core.WeChat
 
                 if (!loginResult.Success)
                 {
-                    _logger.LogError("[微信登陆失败]\r\n请求参数：" + getAccessTokenUrl + "\r\n返回参数：" +
-                                 _jsonProvider.Serializer(getAccessTokenResult, true));
+                    _logger?.LogError("[微信登陆失败]\r\n请求参数：" + getAccessTokenUrl + "\r\n返回参数：" +
+                                      _jsonProvider.Serializer(getAccessTokenResult, true));
                 }
             }
 
