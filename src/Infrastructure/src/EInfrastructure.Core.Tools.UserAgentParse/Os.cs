@@ -44,7 +44,8 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
             "Series40",
             "MeeGo",
             "Tizen",
-            ""
+            "Maemo",
+            "Grid OS"
         };
 
         /// <summary>
@@ -302,6 +303,14 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         this.Version = match[1].ConvertToDecimal(0);
                     }
                 }
+                else if (Name == "Grid OS")
+                {
+                    var match = new Regex("/Grid OS ([0-9.]*)/i").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Version = match[1].ConvertToDecimal(0);
+                    }
+                }
             }
             else
             {
@@ -375,6 +384,8 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 }
                 else
                 {
+                    #region WebOS
+
                     var match = new Regex("(?:web|hpw)OS").Matches(userAgent);
                     if (match.Count > 0)
                     {
@@ -386,18 +397,203 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         }
                     }
 
+                    #endregion
+
+
                     match = new Regex("Series[ ]?60").Matches(userAgent);
                     if (userAgent.Contains("Symbian") || userAgent.Contains("S60") || match.Count > 0)
                     {
                         this.Name = "Series60";
-                        this.Version = 3.0m;
+                        if (userAgent.Contains("SymbianOS/9.1") && !userAgent.Contains("Series60"))
+                        {
+                            this.Version = 3.0m;
+                        }
+
+                        match = new Regex("/Series60\\/([0-9.]*)/").Matches(userAgent);
+                        if (match.Count > 0)
+                        {
+                            this.Version = match[1].ConvertToDecimal(0);
+                        }
                     }
 
-                    match = new Regex("/Series60\\/([0-9.]*)/").Matches(userAgent);
+                    match = new Regex("[b|B]ada").Matches(userAgent);
                     if (match.Count > 0)
                     {
-                        this.Version = match[1].ConvertToDecimal(0);
+                        this.Name = "Bada";
+                        match = new Regex("/[b|B]ada\\/([0-9.]*)/").Matches(userAgent);
+                        if (match.Count > 0)
+                        {
+                            this.Version = match[1].ConvertToDecimal(0);
+                        }
                     }
+
+                    if (new Regex("/BREW/i").Matches(userAgent).Count > 0 ||
+                        new Regex("BMP; U").Matches(userAgent).Count > 0)
+                    {
+                        this.Name = "Brew";
+
+                        match = new Regex("/BREW; U; ([0-9.]*)/i").Matches(userAgent);
+                        if (match.Count > 0)
+                        {
+                            this.Version = match[1].ConvertToDecimal(0);
+                        }
+                        else if ((match = new Regex("/;BREW\\/([0-9.]*)/i").Matches(userAgent)).Count > 0)
+                        {
+                            this.Version = match[1].ConvertToDecimal(0);
+                        }
+                    }
+
+
+                    match = new Regex("/\\(MTK;/").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "MTK";
+                    }
+
+                    match = new Regex("CrOS").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "Chrome OS";
+                    }
+
+                    match = new Regex("Joli OS").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "Joli OS";
+                        match = new Regex("/Joli OS\\/([0-9.]*)/i").Matches(userAgent);
+                        if (match.Count > 0)
+                        {
+                            this.Version = match[1].ConvertToDecimal(0);
+                        }
+                    }
+
+                    match = new Regex("Haiku").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "Haiku";
+                    }
+
+                    match = new Regex("QNX").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "QNX";
+                    }
+
+                    match = new Regex("OS\\/2; Warp").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "OS/2 Warp";
+
+                        match = new Regex("/OS\\/2; Warp ([0-9.]*)/i").Matches(userAgent);
+                        if (match.Count > 0)
+                        {
+                            this.Version = match[1].ConvertToDecimal(0);
+                        }
+                    }
+
+                    match = new Regex("/AmigaOS/i").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "AmigaOS";
+                    }
+
+                    match = new Regex("/MorphOS/i").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "MorphOS";
+                        match = new Regex("/MorphOS ([0-9.]*)/i").Matches(userAgent);
+                        if (match.Count > 0)
+                        {
+                            this.Version = match[1].ConvertToDecimal(0);
+                        }
+                    }
+
+                    match = new Regex("nook browser").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "Android";
+                    }
+
+                    match = new Regex("Nintendo 3DS").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "";
+
+                        match = new Regex(" /Version\\/([0-9.]*)/").Matches(userAgent);
+                        if (match.Count > 0)
+                        {
+                            this.Version = match[1].ConvertToDecimal(0);
+                        }
+                    }
+
+                    match = new Regex("PlayStation Vita").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "";
+
+                        match = new Regex("/PlayStation Vita ([0-9.]*)/").Matches(userAgent);
+                        if (match.Count > 0)
+                        {
+                            this.Version = match[1].ConvertToDecimal(0);
+                        }
+                    }
+
+                    match = new Regex("/PlayStation 3/i").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "";
+
+                        match = new Regex("/PLAYSTATION 3;? ([0-9.]*)/").Matches(userAgent);
+                        if (match.Count > 0)
+                        {
+                            this.Version = match.Count;
+                        }
+                    }
+
+                    match = new Regex("Viera").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "";
+                    }
+
+                    if (new Regex("AQUOSBrowser").Matches(userAgent).Count > 0 ||
+                        new Regex("AQUOS-AS").Matches(userAgent).Count > 0)
+                    {
+                        this.Name = "";
+                    }
+
+                    match= new Regex("SMART-TV").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "";
+                    }
+
+
+                    match= new Regex("SonyDTV|SonyBDP|SonyCEBrowser").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "";
+                    }
+
+                    match= new Regex("NETTV\\/").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "";
+                    }
+
+                    match=new Regex("/LG NetCast\\.(?:TV|Media)-([0-9]*)/").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "";
+                    }
+
+                    match=new Regex("/LGSmartTV/").Matches(userAgent);
+                    if (match.Count > 0)
+                    {
+                        this.Name = "";
+                    }
+
+
                 }
             }
         }
