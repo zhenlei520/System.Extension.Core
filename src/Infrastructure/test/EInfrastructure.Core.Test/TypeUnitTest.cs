@@ -1,7 +1,9 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
 using System;
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Http;
+using EInfrastructure.Core.Infrastructure;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Xunit;
@@ -14,6 +16,8 @@ namespace EInfrastructure.Core.Test
         [InlineData(1, 1)]
         public void ConvertToShort(int num, short s)
         {
+            var assemblies = AssemblyProvider.GetDefaultAssemblyProvider.GetAssemblies();
+            var type=new TypeFinder().FindClassesOfType<ISingleInstance>();
             Check.True(num.ConvertToShort() == s, "方法有误");
         }
 

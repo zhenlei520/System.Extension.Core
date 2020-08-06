@@ -2,6 +2,7 @@
 
 using System;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Infrastructure;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Xunit;
@@ -13,6 +14,7 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void DeepClone()
         {
+            var item = new AssemblyProvider().GetAssemblies();
             Person person = new Person
             {
                 Name = "小明",

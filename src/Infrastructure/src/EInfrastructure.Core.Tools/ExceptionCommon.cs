@@ -3,8 +3,9 @@
 
 using System;
 using System.Collections;
+using EInfrastructure.Core.Tools.Systems;
 
-namespace EInfrastructure.Core.Tools
+ namespace EInfrastructure.Core.Tools
 {
     /// <summary>
     /// 异常帮助类
@@ -36,7 +37,7 @@ namespace EInfrastructure.Core.Tools
             var ex = exception;
             const string entryFormat = "#{0}: {1}\r\n{2}";
             //修复最后一个堆栈跟踪参数
-            lastStackTrace = lastStackTrace ?? string.Empty;
+            lastStackTrace = lastStackTrace.SafeString();
             //添加异常的堆栈跟踪
             lastStackTrace += string.Format(entryFormat, exCount, ex.Message, ex.StackTrace);
             if (exception.Data.Count > 0)

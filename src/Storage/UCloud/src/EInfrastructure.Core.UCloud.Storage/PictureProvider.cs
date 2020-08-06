@@ -1,12 +1,11 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
 using System.Reflection;
-using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pictures;
 using EInfrastructure.Core.UCloud.Storage.Config;
+using Microsoft.Extensions.Logging;
 
 namespace EInfrastructure.Core.UCloud.Storage
 {
@@ -18,9 +17,9 @@ namespace EInfrastructure.Core.UCloud.Storage
         /// <summary>
         ///
         /// </summary>
-        /// <param name="logService"></param>
+        /// <param name="logger"></param>
         /// <param name="uCloudConfig"></param>
-        public PictureProvider(ICollection<ILogProvider> logService, UCloudStorageConfig uCloudConfig) : base(logService,
+        public PictureProvider(ILogger logger, UCloudStorageConfig uCloudConfig) : base(logger,
             uCloudConfig)
         {
         }

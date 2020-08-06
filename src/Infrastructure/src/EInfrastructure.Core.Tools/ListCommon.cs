@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using EInfrastructure.Core.Config.Entities.Data;
@@ -123,20 +124,37 @@ namespace EInfrastructure.Core.Tools
         /// List转换为string
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="s">待转换的list集合</param>
-        /// <param name="c">分割字符</param>
+        /// <param name="str">待转换的list集合</param>
+        /// <param name="split">分割字符</param>
         /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
         /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
         /// <returns></returns>
-        public static string ConvertListToString<T>(this IEnumerable<T> s, char c = ',', bool isReplaceEmpty = true,
+        public static string ConvertListToString<T>(this IEnumerable<T> str, char split = ',',
+            bool isReplaceEmpty = true,
             bool isReplaceSpace = true) where T : struct
         {
-            if (s == null || s.ToList().Count == 0)
+            return str.ConvertListToString(split + "", isReplaceEmpty, isReplaceSpace);
+        }
+
+        /// <summary>
+        /// List转换为string
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="str">待转换的list集合</param>
+        /// <param name="split">分割字符</param>
+        /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
+        /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
+        /// <returns></returns>
+        public static string ConvertListToString<T>(this IEnumerable<T> str, string split = ",",
+            bool isReplaceEmpty = true,
+            bool isReplaceSpace = true) where T : struct
+        {
+            if (str == null || str.ToList().Count == 0)
             {
                 return "";
             }
 
-            return ConvertListToString(s.Select(x => x.ToString()).ToList(), c, isReplaceEmpty, isReplaceSpace);
+            return ConvertListToString(str.Select(x => x.ToString()).ToList(), split, isReplaceEmpty, isReplaceSpace);
         }
 
         #endregion
@@ -146,44 +164,47 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// List转换为string
         /// </summary>
-        /// <param name="s">待转换的list集合</param>
-        /// <param name="c">分割字符</param>
+        /// <param name="str">待转换的list集合</param>
+        /// <param name="split">分割字符</param>
         /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
         /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
         /// <returns></returns>
-        public static string ConvertListToString(this IEnumerable<string> s, char c = ',', bool isReplaceEmpty = true,
+        public static string ConvertListToString(this IEnumerable<string> str, char split = ',',
+            bool isReplaceEmpty = true,
             bool isReplaceSpace = true)
         {
-            if (s == null || s.ToList().Count == 0)
+            return str.ConvertListToString(split + "", isReplaceEmpty, isReplaceSpace);
+        }
+
+        /// <summary>
+        /// List转换为string
+        /// </summary>
+        /// <param name="str">待转换的list集合</param>
+        /// <param name="split">分割字符</param>
+        /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
+        /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
+        /// <returns></returns>
+        public static string ConvertListToString(this IEnumerable<string> str, string split = ",",
+            bool isReplaceEmpty = true,
+            bool isReplaceSpace = true)
+        {
+            if (str == null || !str.Any())
             {
                 return "";
             }
 
-            string temp = "";
-            foreach (var item in s)
+            IEnumerable<string> tempList = str.ToList();
+            if (isReplaceEmpty)
             {
-                if (isReplaceEmpty)
+                if (isReplaceSpace)
                 {
-                    string itemTemp = "";
-                    if (isReplaceSpace)
-                    {
-                        itemTemp = item.Trim();
-                    }
+                    tempList = tempList.Select(x => x.Trim());
+                }
 
-                    if (!string.IsNullOrEmpty(itemTemp))
-                    {
-                        temp = temp + itemTemp + c;
-                    }
-                }
-                else
-                {
-                    temp = temp + item + c;
-                }
+                tempList = tempList.Where(x => !string.IsNullOrEmpty(x));
             }
 
-            if (temp.Length > 0)
-                temp = temp.Substring(0, temp.Length - 1);
-            return temp;
+            return string.Join(split + "", tempList);
         }
 
         #endregion
@@ -210,6 +231,10 @@ namespace EInfrastructure.Core.Tools
         }
 
         #endregion
+
+        #endregion
+
+        #region 对list集合分页
 
         #endregion
 
@@ -243,7 +268,7 @@ namespace EInfrastructure.Core.Tools
             {
                 list.Data = query.Take(pageSize).ToList();
             }
-            else if (pageSize < 1 && pageSize != -1)
+            else if (pageSize != -1)
             {
                 throw new BusinessException("页大小须等于-1或者大于0", HttpStatus.Err.Id);
             }
@@ -254,10 +279,6 @@ namespace EInfrastructure.Core.Tools
 
             return list;
         }
-
-        #endregion
-
-        #region 对list集合分页
 
         /// <summary>
         /// 对list集合分页执行某个方法
@@ -291,6 +312,36 @@ namespace EInfrastructure.Core.Tools
             {
                 action(query.Skip((index - 1) * pageSize).Take(pageSize).ToList());
             }
+        }
+
+        /// <summary>
+        /// 添加linq查询扩展(仅在Debug下生效)
+        /// </summary>
+        /// <param name="enumerable"></param>
+        /// <param name="logName">日志名称</param>
+        /// <param name="logMethod">输出日志</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> LogLinq<T>(this IEnumerable<T> enumerable, string logName,
+            Func<T, string> logMethod)
+        {
+#if DEBUG
+            int count = 0;
+            foreach (var item in enumerable)
+            {
+                if (logMethod != null)
+                {
+                    Debug.WriteLine($"{logName}|item {count} = {logMethod(item)}");
+                }
+
+                count++;
+                yield return item;
+            }
+
+            Debug.WriteLine($"{logName}|count = {count}");
+#else
+            return enumerable;
+#endif
         }
 
         #endregion
@@ -352,10 +403,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static void RemoveRangeNew<T>(this List<T> list, ICollection<T> delList)
         {
-            delList.ToList().ForEach(item =>
-            {
-                list.Remove(item);
-            });
+            delList.ToList().ForEach(item => { list.Remove(item); });
         }
 
         #endregion

@@ -4,6 +4,7 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage.Pictures;
 using EInfrastructure.Core.Tools;
+using Microsoft.Extensions.Logging;
 
 namespace EInfrastructure.Core.Aliyun.Storage
 {
@@ -13,10 +14,13 @@ namespace EInfrastructure.Core.Aliyun.Storage
     public class PictureProvider : BaseStorageProvider, IPictureProvider
     {
         private readonly IStorageProvider _storageProvider;
+        private readonly ILogger _logger;
 
-        public PictureProvider(ALiYunStorageConfig aLiYunStorageConfig) : base(aLiYunStorageConfig)
+        public PictureProvider(ILogger<PictureProvider> logger, ALiYunStorageConfig aLiYunStorageConfig) : base(
+            aLiYunStorageConfig)
         {
-            _storageProvider = new StorageProvider(aLiYunStorageConfig);
+            this._logger = logger;
+            _storageProvider = new StorageProvider(aLiYunStorageConfig, logger);
         }
 
         #region 返回权重

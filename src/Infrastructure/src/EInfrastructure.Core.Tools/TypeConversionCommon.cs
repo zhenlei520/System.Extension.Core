@@ -214,7 +214,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="obj"></param>
         /// <param name="defaultVal">默认值</param>
         /// <returns></returns>
-        public static long ConvertToLong(this object obj, long defaultVal = default(long))
+        public static long ConvertToLong(this object obj, long defaultVal)
         {
             var result = obj.ConvertToLong(() => defaultVal);
             if (result != null)
@@ -652,6 +652,43 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 更改类型
+
+        /// <summary>
+        /// 更改源参数类型（适用于简单的类型转换，序列化反序列化不适用）
+        /// </summary>
+        /// <param name="obj">源数据</param>
+        /// <typeparam name="T">类型</typeparam>
+        /// <returns></returns>
+        public static T ChangeType<T>(this object obj)
+        {
+            return (T) Convert.ChangeType(obj, typeof(T));
+        }
+
+        /// <summary>
+        /// 更改源参数类型集合（适用于简单的类型转换，序列化反序列化不适用）
+        /// </summary>
+        /// <param name="objList">源数据集合</param>
+        /// <typeparam name="T">类型</typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> ChangeType<T>(this IEnumerable<object> objList)
+        {
+            return from s in objList select ChangeType<T>(s);
+        }
+
+        /// <summary>
+        /// 更改源参数类型集合（适用于简单的类型转换，序列化反序列化不适用）
+        /// </summary>
+        /// <param name="objArray">源数据集合</param>
+        /// <typeparam name="T">类型</typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> ChangeType<T>(params object[] objArray)
+        {
+            return objArray.ToList().ChangeType<T>();
+        }
+
+        #endregion
+
         #endregion
 
         #region 文件类型转换
@@ -764,6 +801,40 @@ namespace EInfrastructure.Core.Tools
         #region 转换为String
 
         #region 文件流转字符串
+
+        #region 复制流并转换成字符串
+
+        /// <summary>
+        /// 复制流并转换成字符串
+        /// </summary>
+        /// <param name="stream">流</param>
+        /// <param name="encoding">字符编码</param>
+        public static async Task<string> CopyToStringAsync(Stream stream, Encoding encoding = null)
+        {
+            if (stream == null)
+                return string.Empty;
+            if (encoding == null)
+                encoding = Encoding.UTF8;
+            if (stream.CanRead == false)
+                return string.Empty;
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var reader = new StreamReader(memoryStream, encoding))
+                {
+                    if (stream.CanSeek)
+                        stream.Seek(0, SeekOrigin.Begin);
+                    await stream.CopyToAsync(memoryStream);
+                    if (memoryStream.CanSeek)
+                        memoryStream.Seek(0, SeekOrigin.Begin);
+                    var result = await reader.ReadToEndAsync();
+                    if (stream.CanSeek)
+                        stream.Seek(0, SeekOrigin.Begin);
+                    return result;
+                }
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// 文件流转字符串

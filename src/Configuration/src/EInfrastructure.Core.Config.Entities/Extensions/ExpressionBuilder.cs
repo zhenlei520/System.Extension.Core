@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
 
             // replace parameters in the second lambda expression with parameters from the first
             var secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);
-            // apply composition of lambda expression bodies to parameters from the first expression 
+            // apply composition of lambda expression bodies to parameters from the first expression
             return Expression.Lambda<T>(merge(first.Body, secondBody), first.Parameters);
         }
 
@@ -43,6 +43,10 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> first,
             Expression<Func<T, bool>> second)
         {
+            if (first == null)
+                return second;
+            if (second == null)
+                return first;
             return first.Compose(second, Expression.AndAlso);
         }
 
@@ -56,6 +60,10 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> first,
             Expression<Func<T, bool>> second)
         {
+            if (first == null)
+                return second;
+            if (second == null)
+                return first;
             return first.Compose(second, Expression.Or);
         }
     }

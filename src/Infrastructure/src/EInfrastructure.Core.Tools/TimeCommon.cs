@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -148,6 +150,36 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        /// <summary>
+        /// 格式化时间
+        /// </summary>
+        /// <param name="timeSpan"></param>
+        /// <param name="timeSpanFormatDateType">显示模式，默认：{0}天{1}小时{2}分钟{3}秒</param>
+        /// <returns></returns>
+        public static string FormatDate(this TimeSpan timeSpan, TimeSpanFormatDateType timeSpanFormatDateType = null)
+        {
+            if (timeSpanFormatDateType == null)
+            {
+                timeSpanFormatDateType = TimeSpanFormatDateType.Zero;
+            }
+
+            if (!timeSpanFormatDateType.IsExist(timeSpanFormatDateType))
+            {
+                throw new BusinessException("不支持的类型", HttpStatus.Err.Id);
+            }
+
+            if (timeSpanFormatDateType.Equals(TimeSpanFormatDateType.Zero) ||
+                timeSpanFormatDateType.Equals(TimeSpanFormatDateType.One) ||
+                timeSpanFormatDateType.Equals(TimeSpanFormatDateType.Two))
+            {
+                return string.Format(timeSpanFormatDateType.Name, timeSpan.Days, timeSpan.Hours, timeSpan.Minutes,
+                    timeSpan.Seconds);
+            }
+
+            return string.Format(timeSpanFormatDateType.Name, timeSpan.Days, timeSpan.Hours, timeSpan.Minutes,
+                timeSpan.Seconds, timeSpan.Milliseconds);
+        }
+
         #region 得到随机日期
 
         /// <summary>
@@ -281,7 +313,7 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 得到月初与月末时间
+        #region 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
 
         /// <summary>
         /// 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
@@ -339,6 +371,66 @@ namespace EInfrastructure.Core.Tools
             }
 
             return dateNow;
+        }
+
+        #endregion
+
+        #region 得到过期时间
+
+        /// <summary>
+        /// 得到过期时间
+        /// </summary>
+        /// <param name="timeType">时间类型</param>
+        /// <param name="duration">时长</param>
+        /// <returns></returns>
+        public static DateTimeOffset GetScheduleTime(DurationType timeType, int duration)
+        {
+            if (timeType.Equals(DurationType.MilliSecond))
+            {
+                return DateTime.Now.AddMilliseconds(duration);
+            }
+
+            if (timeType.Equals(DurationType.Second))
+            {
+                return DateTime.Now.AddSeconds(duration);
+            }
+
+            if (timeType.Equals(DurationType.Minutes))
+            {
+                return DateTime.Now.AddMinutes(duration);
+            }
+
+            if (timeType.Equals(DurationType.Hour))
+            {
+                return DateTime.Now.AddHours(duration);
+            }
+
+            if (timeType.Equals(DurationType.Day))
+            {
+                return DateTime.Now.AddDays(duration);
+            }
+
+            if (timeType.Equals(DurationType.Weeks))
+            {
+                return DateTime.Now.AddDays(7 * duration);
+            }
+
+            if (timeType.Equals(DurationType.Month))
+            {
+                return DateTime.Now.AddMonths(7 * duration);
+            }
+
+            if (timeType.Equals(DurationType.Quarter))
+            {
+                return DateTime.Now.AddMonths(3 * duration);
+            }
+
+            if (timeType.Equals(DurationType.Year))
+            {
+                return DateTime.Now.AddYears(duration);
+            }
+
+            return DateTime.Now;
         }
 
         #endregion
@@ -915,6 +1007,28 @@ namespace EInfrastructure.Core.Tools
             Enum[] days)
         {
             return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
+        }
+
+        #endregion
+
+        #region 根据日期获取当前星期几
+
+        /// <summary>
+        /// 将星期几转成数字表示
+        /// </summary>
+        public static int GetDayOfWeek(DayOfWeek dayOfWeek)
+        {
+            List<KeyValuePair<DayOfWeek, int>> maps = new List<KeyValuePair<DayOfWeek, int>>()
+            {
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Sunday, 1),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Monday, 2),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Tuesday, 3),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Wednesday, 4),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Thursday, 5),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Friday, 6),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Saturday, 7)
+            };
+            return maps.Where(x => x.Key == dayOfWeek).Select(x => x.Value).FirstOrDefault();
         }
 
         #endregion

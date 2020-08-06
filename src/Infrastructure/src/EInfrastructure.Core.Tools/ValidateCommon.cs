@@ -2,7 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using EInfrastructure.Core.Tools.Enumerations;
+using EInfrastructure.Core.Tools.Systems;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -11,55 +17,35 @@ namespace EInfrastructure.Core.Tools
     /// </summary>
     public static class ValidateCommon
     {
-        /// <summary>
-        /// 邮件正则表达式
-        /// </summary>
+        //邮件正则表达式
         private static readonly Regex Emailregex =
             new Regex(@"^([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$",
                 RegexOptions.IgnoreCase);
 
-        /// <summary>
-        /// 手机号正则表达式
-        /// </summary>
-        private static readonly Regex Mobileregex = new Regex("^(13|14|15|16|17|18|19)[0-9]{9}$");
+        //手机号正则表达式
+        private static readonly Regex Mobileregex =
+            new Regex("^(13|14|15|16|17|18|19)[0-9]{9}$", RegexOptions.IgnoreCase);
 
-        /// <summary>
-        /// 固话号正则表达式
-        /// </summary>
-        private static readonly Regex Phoneregex = new Regex(@"^(\d{3,4}-?)?\d{7,8}$");
+        //固话号正则表达式
+        private static readonly Regex Phoneregex = new Regex(@"^(\d{3,4}-?)?\d{7,8}$", RegexOptions.IgnoreCase);
 
-        /// <summary>
-        /// 邮政编码正则表达式
-        /// </summary>
-        private static readonly Regex ZipCodeRegex = new Regex(@"^\d{6}$");
-
-        /// <summary>
-        /// 数字正则表达式
-        /// </summary>
-        private static readonly Regex NumberRegex = new Regex(@"\d");
-
-        /// <summary>
-        /// 纯数字
-        /// </summary>
-        private static readonly Regex OnlyNumberRegex = new Regex(@"^-?\d+$");
+        //邮政编码正则表达式
+        private static readonly Regex ZipCodeRegex = new Regex(@"^\d{6}$", RegexOptions.IgnoreCase);
 
         /// <summary>
         /// 中文正则表达式
         /// </summary>
-        private static readonly Regex Chineseregex = new Regex("^[\u4e00-\u9fa5]");
+        private static readonly Regex ChineseRegex = new Regex("^[\u4e00-\u9fa5]", RegexOptions.IgnoreCase);
 
-        /// <summary>
-        /// IP正则表达式
-        /// </summary>
-        private static readonly Regex Ipregex =
+        //IP正则表达式
+        private static readonly Regex IpRegex =
             new Regex(
                 @"^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$");
 
-        /// <summary>
-        /// 网址正则表达式
-        /// </summary>
+        //网址正则表达式
         private static readonly Regex WebSiteRegex =
-            new Regex(@"((http|https)://)?(www.)?[a-z0-9\.]+(\.(com|net|cn|com\.cn|com\.net|net\.cn))(/[^\s\n]*)?");
+            new Regex(@"((http|https)://)?(www.)?[a-z0-9\.]+(\.(com|net|cn|com\.cn|com\.net|net\.cn))(/[^\s\n]*)?",
+                RegexOptions.IgnoreCase);
 
         #region 是否邮政编码
 
@@ -119,34 +105,244 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 是否包含数字
+        #region 是否是纯数字（支持正负数）
 
         /// <summary>
-        /// 是否包含数字
+        /// 是否是纯数字（支持正负数）
         /// </summary>
-        /// <param name="s"></param>
+        /// <param name="str"></param>
         /// <returns></returns>
-        public static bool IsNumber(this string s)
+        public static bool IsNumber(this string str)
         {
-            if (string.IsNullOrEmpty(s))
+            return IsNumber(str, null);
+        }
+
+        /// <summary>
+        /// 是否是纯数字（支持正负数，默认不验证正负数）
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="numericType">类型，当为null时指的是不限制大小写</param>
+        /// <returns></returns>
+        public static bool IsNumber(this string str, NumericType numericType)
+        {
+            if (numericType == null)
+            {
+                numericType = NumericType.Nolimit;
+            }
+
+            if (string.IsNullOrEmpty(str)) //验证这个参数是否为空
+                return false; //是，就返回False
+            ASCIIEncoding ascii = new ASCIIEncoding(); //new ASCIIEncoding 的实例
+            byte[] bytestr = ascii.GetBytes(str); //把string类型的参数保存到数组里
+            List<int> asciiList = new List<int>();
+            foreach (byte c in bytestr) //遍历这个数组里的内容
+            {
+                if (numericType.Equals(NumericType.Nolimit))
+                {
+                    if (((c < 48 || c > 57) && c != 45 && c != 43) ||
+                        ((c == 45 || c == 43) && asciiList.Any(x => x == 45 || x == 43))) //判断是否为数字
+                    {
+                        return false; //不是，就返回False
+                    }
+                }
+                else if (numericType.Equals(NumericType.Plus))
+                {
+                    if (((c < 48 || c > 57) && c != 43) ||
+                        c == 43 && asciiList.Any(x => x == 43))
+                    {
+                        return false; //不是，就返回False
+                    }
+                }
+                else if (numericType.Equals(NumericType.Minus))
+                {
+                    if (((c < 48 || c > 57) && c != 45) ||
+                        c == 45 && asciiList.Any(x => x == 45))
+                    {
+                        return false; //不是，就返回False
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+
+                asciiList.Add(c);
+            }
+
+            if (numericType.Equals(NumericType.Minus) && asciiList.All(x => x != 45))
+            {
                 return false;
-            return NumberRegex.IsMatch(s);
+            }
+
+            return true;
         }
 
         #endregion
 
-        #region 是否为纯数字
+        #region 是否为Double类型
 
         /// <summary>
-        /// 是否为纯数字
+        /// 是否为Double类型
         /// </summary>
-        /// <param name="s"></param>
+        /// <param name="expression"></param>
         /// <returns></returns>
-        public static bool IsOnlyNumber(this string s)
+        public static bool IsDouble(this object expression)
         {
-            if (string.IsNullOrEmpty(s))
-                return false;
-            return OnlyNumberRegex.IsMatch(s);
+            return expression.ConvertToDouble() != null;
+        }
+
+        #endregion
+
+        #region 是否为Decimal类型
+
+        /// <summary>
+        /// 是否为Decimal类型
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static bool IsDecimal(this object expression)
+        {
+            return expression.ConvertToDecimal() != null;
+        }
+
+        #endregion
+
+        #region 是否为Long类型
+
+        /// <summary>
+        /// 是否为Long类型
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static bool IsLong(this object expression)
+        {
+            return expression.ConvertToLong() != null;
+        }
+
+        #endregion
+
+        #region 是否为Int类型
+
+        /// <summary>
+        /// 是否为Int类型
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static bool IsInt(this object expression)
+        {
+            return expression.ConvertToInt() != null;
+        }
+
+        #endregion
+
+        #region 是否为Short类型
+
+        /// <summary>
+        /// 是否为Short类型
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static bool IsShort(this object expression)
+        {
+            return expression.ConvertToShort() != null;
+        }
+
+        #endregion
+
+        #region 是否为Guid类型
+
+        /// <summary>
+        /// 是否为Guid类型
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static bool IsGuid(this object expression)
+        {
+            return expression.ConvertToGuid() != null;
+        }
+
+        #endregion
+
+        #region 是否为Char类型
+
+        /// <summary>
+        /// 是否为Char类型
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static bool IsChar(this object expression)
+        {
+            return expression.ConvertToChar() != null;
+        }
+
+        #endregion
+
+        #region 是否为Float类型
+
+        /// <summary>
+        /// 是否为Float类型
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static bool IsFloat(this object expression)
+        {
+            return expression.ConvertToFloat() != null;
+        }
+
+        #endregion
+
+        #region 是否为DateTime类型
+
+        /// <summary>
+        /// 是否为DateTime类型
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static bool IsDateTime(this object expression)
+        {
+            return expression.ConvertToDateTime() != null;
+        }
+
+        #endregion
+
+        #region 是否为Byte类型
+
+        /// <summary>
+        /// 是否为Byte类型
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static bool IsByte(this object expression)
+        {
+            return expression.ConvertToByte() != null;
+        }
+
+        #endregion
+
+        #region 是否为SByte类型
+
+        /// <summary>
+        /// 是否为SByte类型
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static bool IsSByte(this object expression)
+        {
+            return expression.ConvertToSByte() != null;
+        }
+
+        #endregion
+
+        #region 是否为Bool类型
+
+        /// <summary>
+        /// 是否为Bool类型
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static bool IsBool(this object expression)
+        {
+            return expression.ConvertToBool() != null;
         }
 
         #endregion
@@ -164,7 +360,7 @@ namespace EInfrastructure.Core.Tools
             if (double.TryParse(str, out double temp))
             {
                 var numberArray = str.Split('.');
-                if (numberArray.Length==1)
+                if (numberArray.Length == 1)
                 {
                     return maxScale >= 0;
                 }
@@ -191,6 +387,51 @@ namespace EInfrastructure.Core.Tools
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// 判断精度是否正确
+        /// </summary>
+        /// <param name="str">带匹配的字符串</param>
+        /// <param name="maxScale">最大保留小数位数</param>
+        /// <returns></returns>
+        public static bool IsMaxScale(this double str, int maxScale)
+        {
+            return str.ToString(CultureInfo.InvariantCulture).IsMaxScale(maxScale);
+        }
+
+        /// <summary>
+        /// 判断精度是否正确
+        /// </summary>
+        /// <param name="str">带匹配的字符串</param>
+        /// <param name="maxScale">最大保留小数位数</param>
+        /// <returns></returns>
+        public static bool IsMaxScale(this int str, int maxScale)
+        {
+            return str.ToString(CultureInfo.InvariantCulture).IsMaxScale(maxScale);
+        }
+
+        /// <summary>
+        /// 判断精度是否正确
+        /// </summary>
+        /// <param name="str">带匹配的字符串</param>
+        /// <param name="maxScale">最大保留小数位数</param>
+        /// <returns></returns>
+        public static bool IsMaxScale(this decimal str, int maxScale)
+        {
+            return str.ToString(CultureInfo.InvariantCulture).IsMaxScale(maxScale);
+        }
+
+
+        /// <summary>
+        /// 判断精度是否正确
+        /// </summary>
+        /// <param name="str">带匹配的字符串</param>
+        /// <param name="maxScale">最大保留小数位数</param>
+        /// <returns></returns>
+        public static bool IsMaxScale(this float str, int maxScale)
+        {
+            return str.ToString(CultureInfo.InvariantCulture).IsMaxScale(maxScale);
         }
 
         #endregion
@@ -228,7 +469,8 @@ namespace EInfrastructure.Core.Tools
                 return false; //省份验证
 
             string birth = id.Substring(6, 8).Insert(6, "-").Insert(4, "-");
-            if (DateTime.TryParse(birth, out _) == false)
+            DateTime time;
+            if (DateTime.TryParse(birth, out time) == false)
                 return false; //生日验证
 
             string[] arrVarifyCode = ("1,0,x,9,8,7,6,5,4,3,2").Split(',');
@@ -261,24 +503,11 @@ namespace EInfrastructure.Core.Tools
                 return false; //省份验证
 
             string birth = id.Substring(6, 6).Insert(4, "-").Insert(2, "-");
-            if (DateTime.TryParse(birth, out _) == false)
+            DateTime time;
+            if (DateTime.TryParse(birth, out time) == false)
                 return false; //生日验证
 
             return true; //符合15位身份证标准
-        }
-
-        #endregion
-
-        #region 判断是否为Guid
-
-        /// <summary>
-        /// 判断是否为Guid
-        /// </summary>
-        /// <param name="strSrc"></param>
-        /// <returns></returns>
-        public static bool IsGuid(this string strSrc)
-        {
-            return Guid.TryParse(strSrc, out _);
         }
 
         #endregion
@@ -290,7 +519,7 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         public static bool IsIp(this string s)
         {
-            return Ipregex.IsMatch(s);
+            return IpRegex.IsMatch(s);
         }
 
         #endregion
@@ -316,13 +545,19 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 是否中文
         /// </summary>
-        /// <param name="s"></param>
+        /// <param name="str"></param>
+        /// <param name="isAll">是否全部中文，默认有中文就可以，true：全部都是中文</param>
         /// <returns></returns>
-        public static bool IsChinese(this string s)
+        public static bool IsChinese(this string str, bool isAll = false)
         {
-            if (string.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(str))
                 return false;
-            return Chineseregex.IsMatch(s);
+            if (!isAll)
+            {
+                return ChineseRegex.IsMatch(str);
+            }
+
+            return ChineseRegex.Match(str).Success && ChineseRegex.Matches(str).Count == str.SafeString().Length;
         }
 
         #endregion

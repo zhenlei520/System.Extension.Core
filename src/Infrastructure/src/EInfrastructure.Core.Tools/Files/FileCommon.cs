@@ -143,33 +143,6 @@ namespace EInfrastructure.Core.Tools.Files
 
         #endregion
 
-        #region 得到文件地址信息
-
-        /// <summary>
-        /// 得到当前文件夹下的所有文件地址
-        /// </summary>
-        /// <param name="path">要搜索的目录的相对或绝对路径</param>
-        /// <returns></returns>
-        public static string[] GetFiles(string path)
-        {
-            return Directory.GetFiles(path);
-        }
-
-        /// <summary>
-        /// 根据通配符搜索文件下的所有地址信息，可选择查询所有层级的或者当前层级的
-        /// </summary>
-        /// <param name="path">要搜索的目录的相对或绝对路径</param>
-        /// <param name="searchPattern">要与 path 中的文件名匹配的搜索字符串。此参数可以包含有效文本路径和通配符（* 和 ?）的组合（请参见“备注”），但不支持正则表达式。</param>
-        /// <param name="searchOption">默认当前文件夹下 TopDirectoryOnly，若查询包含所有子目录为AllDirectories</param>
-        /// <returns></returns>
-        public static string[] GetFiles(string path, string searchPattern,
-            SearchOption searchOption = SearchOption.TopDirectoryOnly)
-        {
-            return Directory.GetFiles(path, searchPattern, searchOption);
-        }
-
-        #endregion
-
         #region 将文件转换成Base64格式
 
         /// <summary>
@@ -315,6 +288,8 @@ namespace EInfrastructure.Core.Tools.Files
 
         #endregion
 
+        #region 文件
+
         #region 获取文件内容
 
         #region 获取文件内容（支持换行读取）
@@ -438,6 +413,432 @@ namespace EInfrastructure.Core.Tools.Files
             }
 
             return result;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 获取指定目录中的文件列表
+
+        /// <summary>
+        /// 得到当前文件夹下的所有文件地址
+        /// </summary>
+        /// <param name="path">要搜索的目录的相对或绝对路径</param>
+        /// <returns></returns>
+        public static string[] GetFiles(string path)
+        {
+            return Directory.GetFiles(path);
+        }
+
+        /// <summary>
+        /// 根据通配符搜索文件下的所有地址信息，可选择查询所有层级的或者当前层级的
+        /// </summary>
+        /// <param name="path">要搜索的目录的相对或绝对路径</param>
+        /// <param name="searchPattern">要与 path 中的文件名匹配的搜索字符串。此参数可以包含有效文本路径和通配符（* 和 ?）的组合（请参见“备注”），但不支持正则表达式。</param>
+        /// <param name="searchOption">默认当前文件夹下 TopDirectoryOnly，若查询包含所有子目录为AllDirectories</param>
+        /// <returns></returns>
+        public static string[] GetFiles(string path, string searchPattern,
+            SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        {
+            return Directory.GetFiles(path, searchPattern, searchOption);
+        }
+
+        #endregion
+
+        #region 检测指定文件是否存在,如果存在返回true
+
+        /// <summary>
+        /// 检测指定文件是否存在,如果存在则返回true。
+        /// </summary>
+        /// <param name="filePath">文件的绝对路径</param>
+        public static bool IsExistFile(string filePath)
+        {
+            return File.Exists(filePath);
+        }
+
+        #endregion
+
+        #region 创建文件
+
+        /// <summary>
+        /// 创建文件
+        /// </summary>
+        /// <param name="directory">文件夹</param>
+        /// <param name="fileName">带后缀的文件名</param>
+        /// <param name="content">文件内容</param>
+        public static void CreateFile(string directory, string fileName, string content)
+        {
+            CreateFile(directory, fileName, content, Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// 创建文件
+        /// </summary>
+        /// <param name="directory">文件夹</param>
+        /// <param name="fileName">带后缀的文件名</param>
+        /// <param name="content">文件内容</param>
+        /// <param name="encoding">编码格式</param>
+        public static void CreateFile(string directory, string fileName, string content, Encoding encoding)
+        {
+            fileName = fileName.Replace("/", "\\");
+            if (fileName.IndexOf("\\", StringComparison.Ordinal) > -1)
+                CreateDirectory(directory);
+            using (StreamWriter sw = new System.IO.StreamWriter(Path.Combine(directory, fileName), false, encoding))
+            {
+                sw.Write(content);
+                sw.Close();
+            }
+        }
+
+        #endregion
+
+        #region 移动文件(剪贴--粘贴)
+
+        /// <summary>
+        /// 移动文件(剪贴--粘贴)
+        /// </summary>
+        /// <param name="dir1">要移动的文件的完整路径及全名(包括后缀)</param>
+        /// <param name="dir2">文件移动到新的位置,并指定新的完整路径及文件名(包括后缀)</param>
+        public static void MoveFile(string dir1, string dir2)
+        {
+            dir1 = dir1.Replace("/", "\\");
+            dir2 = dir2.Replace("/", "\\");
+            if (File.Exists(dir1))
+                File.Move(dir1, dir2);
+        }
+
+        #endregion
+
+        #region 复制文件
+
+        /// <summary>
+        /// 复制文件
+        /// </summary>
+        /// <param name="dir1">要复制的文件的完整路径及全名(包括后缀)</param>
+        /// <param name="dir2">目标位置,并指定新的完整路径及全名(包括后缀)</param>
+        /// <param name="overwrite">是否覆盖</param>
+        public static void CopyFile(string dir1, string dir2, bool overwrite = true)
+        {
+            dir1 = dir1.Replace("/", "\\");
+            dir2 = dir2.Replace("/", "\\");
+            if (File.Exists(dir1))
+            {
+                File.Copy(dir1, dir2, overwrite);
+            }
+        }
+
+        #endregion
+
+        #region 删除文件
+
+        /// <summary>
+        /// 删除文件
+        /// </summary>
+        /// <param name="file">文件地址及文件名（完整的信息）</param>
+        public static void DeleteFile(string file)
+        {
+            if (File.Exists(file))
+                File.Delete(file);
+        }
+
+        #endregion
+
+        #region 向文本文件写入内容
+
+        /// <summary>
+        /// 向文本文件中写入内容(默认Utf8)
+        /// </summary>
+        /// <param name="filePath">文件的绝对路径</param>
+        /// <param name="content">写入的内容</param>
+        public static void WriteText(string filePath, string content)
+        {
+            WriteText(filePath, content, Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// 向文本文件中写入内容
+        /// </summary>
+        /// <param name="filePath">文件的绝对路径</param>
+        /// <param name="content">写入的内容</param>
+        /// <param name="encoding">编码</param>
+        public static void WriteText(string filePath, string content, Encoding encoding)
+        {
+            File.WriteAllText(filePath, content, encoding);
+        }
+
+        #endregion
+
+        #region 向文本文件的尾部追加内容
+
+        /// <summary>
+        /// 向文本文件的尾部追加内容
+        /// </summary>
+        /// <param name="filePath">文件的绝对路径</param>
+        /// <param name="content">写入的内容</param>
+        public static void AppendText(string filePath, string content)
+        {
+            File.AppendAllText(filePath, content);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 文件夹
+
+        #region 获取指定目录中所有子目录列表,若要搜索嵌套的子目录列表,请使用重载方法.
+
+        /// <summary>
+        /// 获取指定目录中所有子目录列表,若要搜索嵌套的子目录列表,请使用重载方法.
+        /// </summary>
+        /// <param name="directoryPath">指定目录的绝对路径</param>
+        public static string[] GetDirectories(string directoryPath)
+        {
+            try
+            {
+                return Directory.GetDirectories(directoryPath);
+            }
+            catch (IOException ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
+
+        #region 检测指定文件夹是否存在
+
+        /// <summary>
+        /// 检测指定文件夹是否存在
+        /// </summary>
+        /// <param name="directoryPath">文件夹的绝对路径</param>
+        /// <returns></returns>
+        public static bool IsExistDirectory(string directoryPath)
+        {
+            return Directory.Exists(directoryPath);
+        }
+
+        #endregion
+
+        #region 判断指定文件目录是否是空目录
+
+        /// <summary>
+        /// 判断指定文件目录是否是空目录
+        /// </summary>
+        /// <param name="directoryPath">指定目录的绝对路径</param>
+        public static bool IsEmptyDirectory(string directoryPath)
+        {
+            try
+            {
+                if (GetFiles(directoryPath).Length > 0 || GetDirectories(directoryPath).Length > 0)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return true;
+            }
+        }
+
+        #endregion
+
+        #region 创建目录
+
+        /// <summary>
+        /// 创建目录
+        /// </summary>
+        /// <param name="directory">文件夹绝对路径</param>
+        public static void CreateDirectory(string directory)
+        {
+            if (directory.Length == 0) return;
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+        }
+
+        #endregion
+
+        #region 删除目录
+
+        /// <summary>
+        /// 删除目录
+        /// </summary>
+        /// <param name="directory">要删除的目录路径和名称</param>
+        /// <param name="recursive">是否递归删除子目录（默认递归删除）</param>
+        public static void DeleteDirectory(string directory, bool recursive = true)
+        {
+            if (directory.Length == 0) return;
+            if (Directory.Exists(directory))
+                Directory.Delete(directory, recursive);
+        }
+
+        #endregion
+
+        #region 复制文件夹
+
+        /// <summary>
+        /// 复制文件夹(递归)
+        /// </summary>
+        /// <param name="sourceDirectory">源文件夹路径</param>
+        /// <param name="optDirectory">目标文件夹路径</param>
+        /// <param name="isOverWrite">是否覆盖</param>
+        public static void CopyFolder(string sourceDirectory, string optDirectory, bool isOverWrite = true)
+        {
+            CreateDirectory(optDirectory);
+
+            if (!IsExistDirectory(sourceDirectory)) return;
+
+            string[] directories = GetDirectories(sourceDirectory);
+
+            if (directories.Length > 0)
+            {
+                foreach (string directory in directories)
+                {
+                    CopyFolder(directory, Path.Combine(optDirectory, directory),
+                        isOverWrite);
+                }
+            }
+
+            string[] files = GetFiles(sourceDirectory);
+            if (files.Length > 0)
+            {
+                foreach (string file in files)
+                {
+                    File.Copy(file, Path.Combine(optDirectory, file),
+                        isOverWrite);
+                }
+            }
+        }
+
+        #endregion
+
+        #region 删除文件夹B中在文件夹A中存在的文件
+
+        /// <summary>
+        /// 删除文件夹B中在文件夹A中存在的文件
+        /// 例如：文件夹B中有1.jpg，2.jpg，3.jpg
+        /// 文件夹A中1.jpg，2.jpg，则需要删除文件夹B中1.jpg，2.jpg
+        /// </summary>
+        /// <param name="sourceDirectory">源文件夹</param>
+        /// <param name="optDirectory">目标文件夹</param>
+        public static void DeleteFolderFiles(string sourceDirectory, string optDirectory)
+        {
+            if (!IsExistDirectory(optDirectory) || !IsExistDirectory(sourceDirectory))
+            {
+                return;
+            }
+
+            string[] directories = GetDirectories(sourceDirectory);
+
+            if (directories.Length > 0)
+            {
+                foreach (string directory in directories)
+                {
+                    DeleteFolderFiles(directory, Path.Combine(optDirectory + directory));
+                }
+            }
+
+            string[] files = GetFiles(sourceDirectory);
+            if (files.Length > 0)
+            {
+                foreach (string file in files)
+                {
+                    File.Delete(Path.Combine(optDirectory, file));
+                }
+            }
+        }
+
+        #endregion
+
+        #region 清空指定目录
+
+        /// <summary>
+        /// 清空指定目录下所有文件及子目录,但该目录依然保存.
+        /// </summary>
+        /// <param name="directoryPath">指定目录的绝对路径</param>
+        public static void ClearDirectory(string directoryPath)
+        {
+            if (IsExistDirectory(directoryPath))
+            {
+                //删除目录中所有的文件
+                string[] fileNames = GetFiles(directoryPath);
+                foreach (var fileName in fileNames)
+                {
+                    DeleteFile(fileName);
+                }
+
+                //删除目录中所有的子目录
+                string[] directoryNames = GetDirectories(directoryPath);
+                foreach (var directory in directoryNames)
+                {
+                    DeleteDirectory(directory, true);
+                }
+            }
+        }
+
+        #endregion
+
+        #region 删除指定目录下的文件(不包含文件夹)
+
+        /// <summary>
+        /// 删除指定目录下的文件(文件夹不删除)
+        /// </summary>
+        /// <param name="directoryPath">指定目录的绝对路径</param>
+        /// <param name="recursive">是否递归删除子目录文件（默认递归删除，若为false，则只删除指定目录下的文件）</param>
+        public static void DeleteFile(string directoryPath, bool recursive = true)
+        {
+            if (IsExistDirectory(directoryPath))
+            {
+                //删除目录中所有的文件
+                string[] fileNames = GetFiles(directoryPath);
+                foreach (var fileName in fileNames)
+                {
+                    DeleteFile(fileName);
+                }
+
+                if (recursive)
+                {
+                    string[] directoryNames = GetDirectories(directoryPath);
+                    foreach (var directory in directoryNames)
+                    {
+                        DeleteFile(directory, recursive);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region 删除指定目录下的空文件夹，当前目录不删除
+
+        /// <summary>
+        /// 删除指定目录下的空文件夹，当前目录不删除
+        /// </summary>
+        /// <param name="directoryPath">指定目录的绝对路径</param>
+        /// <param name="recursive">是否递归删除目录下的空文件夹（默认递归删除，若为false，则只删除指定目录下的空文件夹）</param>
+        public static void DeleteEmptyDirectory(string directoryPath, bool recursive = true)
+        {
+            if (IsExistDirectory(directoryPath))
+            {
+                string[] directoryNames = GetDirectories(directoryPath);
+                if (directoryNames.Length > 0)
+                {
+                    foreach (var directory in directoryNames)
+                    {
+                        if (IsEmptyDirectory(directory))
+                        {
+                            DeleteDirectory(directoryPath, false);
+                        }
+                        else
+                        {
+                            DeleteEmptyDirectory(directory, recursive);
+                        }
+                    }
+                }
+            }
         }
 
         #endregion

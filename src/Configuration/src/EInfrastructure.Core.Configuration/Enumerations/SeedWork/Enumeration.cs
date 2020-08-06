@@ -1,6 +1,7 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
 using System;
+using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations.SeedWork.Configurations;
 
 namespace EInfrastructure.Core.Configuration.Enumerations.SeedWork
@@ -29,6 +30,18 @@ namespace EInfrastructure.Core.Configuration.Enumerations.SeedWork
         {
             var absoluteDifference = Math.Abs(firstValue.Id - secondValue.Id);
             return absoluteDifference;
+        }
+
+        /// <summary>
+        /// 是否存在
+        /// </summary>
+        /// <param name="enumeration"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public bool IsExist<T>(T enumeration) where T : Enumeration<int, string>
+        {
+            var all = GetAll<T>();
+            return all.Any(x => x.Id == enumeration.Id);
         }
     }
 }

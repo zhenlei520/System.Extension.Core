@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
@@ -176,6 +177,22 @@ namespace EInfrastructure.Core.Test
             result = TimeCommon.Get(DateTime.Parse(time), TimeType.EndWeek);
             result = TimeCommon.Get(DateTime.Parse(time), TimeType.StartQuarter);
             result = TimeCommon.Get(DateTime.Parse(time), TimeType.EndQuarter);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        [Fact]
+        public void GetTotalTime()
+        {
+            var str = new TimeDifferenceCommon(() =>
+            {
+                for (int i = 0; i < 1000; i++)
+                {
+                    Console.WriteLine($"i：{i}");
+                }
+                Thread.Sleep(1000);
+            }).ToString();
         }
     }
 }

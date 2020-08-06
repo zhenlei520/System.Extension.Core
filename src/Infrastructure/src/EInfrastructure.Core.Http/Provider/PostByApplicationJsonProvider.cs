@@ -30,11 +30,9 @@ namespace EInfrastructure.Core.Http.Provider
             RestRequest request = GetRestRequest(url, method, timeOut, headers);
             request.RequestFormat =
                 requestBody.RequestBodyFormat.Id == RequestBodyFormat.Json.Id ? DataFormat.Json : DataFormat.Xml;
-
             request.AddParameter("application/json; charset=utf-8;",
                 requestBody._jsonProvider.Serializer(requestBody.Data ?? new { }),
                 ParameterType.RequestBody);
-
             return request;
         }
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using Microsoft.Extensions.Logging;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -112,11 +113,12 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 得到响应信息
         /// </summary>
+        /// <param name="logger"></param>
         /// <param name="res"></param>
         /// <param name="errFunc"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T GetResponse<T>(Func<T> res, Func<string, T> errFunc)
+        public static T GetResponse<T>(ILogger logger, Func<T> res, Func<string, T> errFunc)
         {
             try
             {
@@ -124,6 +126,7 @@ namespace EInfrastructure.Core.Tools
             }
             catch (Exception ex)
             {
+                logger?.LogError(ex.ExtractAllStackTrace());
                 return errFunc(ex.ExtractAllStackTrace());
             }
         }

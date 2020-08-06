@@ -114,10 +114,12 @@ namespace EInfrastructure.Core.Test
             List<string> nameList = new List<string>
             {
                 "小李",
-                "",
+                " ",
                 "小红"
             };
             str = nameList.ConvertListToString(',', true, true);
+            List<string> nameList2 = null;
+            str = nameList2.ConvertListToString(',', true, true);
         }
 
         [Fact]

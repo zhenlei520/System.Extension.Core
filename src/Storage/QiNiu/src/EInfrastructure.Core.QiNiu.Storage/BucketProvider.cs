@@ -24,6 +24,7 @@ using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Url;
 using EInfrastructure.Core.Validation.Common;
+using Microsoft.Extensions.Logging;
 using Qiniu.Util;
 using RestSharp;
 
@@ -34,6 +35,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
     /// </summary>
     public class BucketProvider : IBucketProvider
     {
+        private readonly ILogger _logger;
         private readonly HttpClient _httpClient;
         private readonly QiNiuStorageConfig _qiNiuConfig;
         private readonly IStorageProvider _storageProvider;
@@ -42,10 +44,11 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         ///
         /// </summary>
-        public BucketProvider(QiNiuStorageConfig qiNiuConfig)
+        public BucketProvider(ILogger<BucketProvider> logger, QiNiuStorageConfig qiNiuConfig)
         {
+            this._logger = logger;
             _qiNiuConfig = qiNiuConfig;
-            _storageProvider = new StorageProvider(qiNiuConfig);
+            _storageProvider = new StorageProvider(logger, qiNiuConfig);
             _jsonProvider = new NewtonsoftJsonProvider();
             _httpClient = new HttpClient("http://rs.qbox.me");
         }
@@ -53,7 +56,8 @@ namespace EInfrastructure.Core.QiNiu.Storage
         /// <summary>
         ///
         /// </summary>
-        public BucketProvider(QiNiuStorageConfig qiNiuConfig, IJsonProvider jsonProvider) : this(qiNiuConfig)
+        public BucketProvider(ILogger<BucketProvider> logger, QiNiuStorageConfig qiNiuConfig,
+            IJsonProvider jsonProvider) : this(logger, qiNiuConfig)
         {
             _jsonProvider = jsonProvider;
         }
@@ -115,9 +119,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
                         new BucketItemResultDto(request.Prefix, request.Marker,
                             $"{resultResponse.Error}|{resultResponse.ErrorCode}"));
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return new BucketItemResultDto(request.Prefix, request.Marker, $"lose {e.Message}");
+                this._logger?.LogError(ex.ExtractAllStackTrace());
+                return new BucketItemResultDto(request.Prefix, request.Marker, $"lose {ex.Message}");
             }
         }
 
@@ -255,9 +260,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     resultResponse =>
                         new DomainResultDto(false, null, $"{resultResponse.Error}|{resultResponse.ErrorCode}"));
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return new DomainResultDto(false, null, $"lose {e.Message}");
+                this._logger?.LogError(ex.ExtractAllStackTrace());
+                return new DomainResultDto(false, null, $"lose {ex.Message}");
             }
         }
 
@@ -289,9 +295,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     resultResponse =>
                         new OperateResultDto(false, $"{resultResponse.Error}|{resultResponse.ErrorCode}"));
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return new OperateResultDto(false, $"lose {e.Message}");
+                this._logger?.LogError(ex.ExtractAllStackTrace());
+                return new OperateResultDto(false, $"lose {ex.Message}");
             }
         }
 
@@ -392,9 +399,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     resultResponse =>
                         new OperateResultDto(false, $"{resultResponse.Error}|{resultResponse.ErrorCode}"));
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return new OperateResultDto(false, $"lose {e.Message}");
+                this._logger?.LogError(ex.ExtractAllStackTrace());
+                return new OperateResultDto(false, $"lose {ex.Message}");
             }
         }
 
@@ -435,9 +443,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     resultResponse =>
                         new TagResultDto(false, null, $"{resultResponse.Error}|{resultResponse.ErrorCode}"));
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return new TagResultDto(false, null, $"lose {e.Message}");
+                this._logger?.LogError(ex.ExtractAllStackTrace());
+                return new TagResultDto(false, null, $"lose {ex.Message}");
             }
         }
 
@@ -472,9 +481,10 @@ namespace EInfrastructure.Core.QiNiu.Storage
                     resultResponse =>
                         new OperateResultDto(false, $"{resultResponse.Error}|{resultResponse.ErrorCode}"));
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return new OperateResultDto(false, $"lose {e.Message}");
+                this._logger?.LogError(ex.ExtractAllStackTrace());
+                return new OperateResultDto(false, $"lose {ex.Message}");
             }
         }
 

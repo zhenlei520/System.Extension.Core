@@ -25,6 +25,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations.SeedWork.Configuration
         /// </summary>
         public T2 Name { get; private set; }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
         protected Enumeration(T1 id, T2 name)
         {
             Id = id;
@@ -40,6 +45,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations.SeedWork.Configuration
             return fields.Select(f => f.GetValue(null)).Cast<T>();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             var otherValue = obj as Enumeration<T1, T2>;

@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using EInfrastructure.Core.HelpCommon;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +23,7 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         /// </summary>
         /// <param name="services"></param>
         /// <param name="action">拦截器，默认无</param>
+        [Obsolete("此方法已过时，请更换为services.AddMvcJson()")]
         public static void SetJsonOption(this IServiceCollection services, Action<MvcOptions> action = null)
         {
             services.AddMvc(options => { action?.Invoke(options); })

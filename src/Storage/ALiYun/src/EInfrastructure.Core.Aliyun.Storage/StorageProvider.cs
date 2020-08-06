@@ -24,6 +24,7 @@ using EInfrastructure.Core.Http;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Enumerations;
 using EInfrastructure.Core.Validation.Common;
+using Microsoft.Extensions.Logging;
 using ICredentials = Aliyun.OSS.Common.Authentication.ICredentials;
 using LifecycleRule = Aliyun.OSS.LifecycleRule;
 using StorageClass = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass;
@@ -36,14 +37,27 @@ namespace EInfrastructure.Core.Aliyun.Storage
     public class StorageProvider : BaseStorageProvider, IStorageProvider
     {
         private readonly ALiYunStorageConfig _aLiYunConfig;
+        private readonly ILogger _logger;
 
         /// <summary>
         ///
         /// </summary>
+        /// <param name="logger"></param>
         /// <param name="aliyunConfig"></param>
-        public StorageProvider(ALiYunStorageConfig aliyunConfig) : base(aliyunConfig)
+        public StorageProvider(ALiYunStorageConfig aliyunConfig, ILogger logger) : base(aliyunConfig)
         {
+            _logger = logger;
             _aLiYunConfig = aliyunConfig;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="aliyunConfig"></param>
+        public StorageProvider(ILogger<StorageProvider> logger, ALiYunStorageConfig aliyunConfig) : this(
+            aliyunConfig, logger)
+        {
         }
 
         #region 返回权重
@@ -276,7 +290,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public OperateResultDto Exist(ExistParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
@@ -297,7 +311,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public ListFileItemResultDto ListFiles(ListFileFilter filter)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new ListFileFilterValidator().Validate(filter).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, filter.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -374,7 +388,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public FileInfoDto Get(GetFileParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new GetFileParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -443,7 +457,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public DeleteResultDto Remove(RemoveParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new RemoveParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -471,7 +485,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public IEnumerable<DeleteResultDto> RemoveRange(RemoveRangeParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new RemoveRangeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -520,7 +534,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public CopyFileResultDto CopyTo(CopyFileParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new CopyFileParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -536,9 +550,10 @@ namespace EInfrastructure.Core.Aliyun.Storage
                     var existRet = this.Exist(new ExistParam(request.OptKey, newBasePersistentOps));
                     if (existRet.State)
                     {
-                        return new CopyFileResultDto(false,request.SourceKey,"复制失败，文件已存在");
+                        return new CopyFileResultDto(false, request.SourceKey, "复制失败，文件已存在");
                     }
                 }
+
                 if (Core.Tools.GetChunkUnit(_aLiYunConfig, request.PersistentOps.ChunkUnit).Id !=
                     ChunkUnit.U4096K.Id)
                 {
@@ -675,7 +690,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public MoveFileResultDto Move(MoveFileParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new MoveFileParamValidator(_aLiYunConfig).Validate(request).Check(HttpStatus.Err.Name);
 
@@ -686,9 +701,10 @@ namespace EInfrastructure.Core.Aliyun.Storage
                     var existRet = this.Exist(new ExistParam(request.OptKey, newBasePersistentOps));
                     if (existRet.State)
                     {
-                        return new MoveFileResultDto(false,request.SourceKey,"移动失败，文件已存在");
+                        return new MoveFileResultDto(false, request.SourceKey, "移动失败，文件已存在");
                     }
                 }
+
                 CopyTo(new CopyFileParam(request.SourceKey, request.OptKey, request.OptBucket, request.IsForce,
                     request.PersistentOps));
                 Remove(new RemoveParam(request.SourceKey, request.PersistentOps));
@@ -733,7 +749,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public GetVisitUrlResultDto GetVisitUrl(GetVisitUrlParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new GetVisitUrlParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -792,7 +808,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public DownloadStreamResultDto DownloadStream(FileDownloadStreamParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new FileDownloadStreamParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 Uri uri = new Uri(request.Url);
@@ -817,7 +833,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public ExpireResultDto SetExpire(SetExpireParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new SetExpireParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -849,7 +865,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public List<ExpireResultDto> SetExpireRange(SetExpireRangeParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
                 var client = _aLiYunConfig.GetClient(zone);
@@ -895,7 +911,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public ChangeMimeResultDto ChangeMime(ChangeMimeParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new ChangeMimeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -904,7 +920,8 @@ namespace EInfrastructure.Core.Aliyun.Storage
                 var ret = client.GetObject(bucket, request.Key);
                 if (ret != null && ret.HttpStatusCode == HttpStatusCode.OK)
                 {
-                    ObjectMetadata objectMetadata =Core.Tools.GetObjectMetadataBySourceObjectMetadata(ret.Metadata, "ContentType",
+                    ObjectMetadata objectMetadata = Core.Tools.GetObjectMetadataBySourceObjectMetadata(ret.Metadata,
+                        "ContentType",
                         request.MimeType);
                     client.ModifyObjectMeta(bucket, request.Key, objectMetadata);
                     return new ChangeMimeResultDto(true, request.Key, "success");
@@ -957,7 +974,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public ChangeTypeResultDto ChangeType(ChangeTypeParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new ChangeTypeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var fileInfo = Get(new GetFileParam(request.Key, request.PersistentOps));
@@ -1046,7 +1063,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public OperateResultDto SetPermiss(SetPermissParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new SetPermissParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -1071,7 +1088,7 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// <returns></returns>
         public FilePermissResultInfo GetPermiss(GetFilePermissParam request)
         {
-            return ToolCommon.GetResponse(() =>
+            return ToolCommon.GetResponse(_logger, () =>
             {
                 new GetFilePermissParamValidator().Validate(request).Check(HttpStatus.Err.Name);
                 var zone = Core.Tools.GetZone(_aLiYunConfig, request.PersistentOps.Zone, () => ZoneEnum.HangZhou);
@@ -1117,10 +1134,10 @@ namespace EInfrastructure.Core.Aliyun.Storage
                         ChunkUnit = fetchFileParam.PersistentOps.ChunkUnit,
                         MaxRetryTimes = fetchFileParam.PersistentOps.MaxRetryTimes,
                     }));
-                return new FetchFileResultDto(result.State,result.Extend,result.Msg);
+                return new FetchFileResultDto(result.State, result.Extend, result.Msg);
             }
 
-            return new FetchFileResultDto(ret.State,ret.Extend,ret.Msg);
+            return new FetchFileResultDto(ret.State, ret.Extend, ret.Msg);
         }
 
         #endregion
