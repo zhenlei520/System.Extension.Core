@@ -444,18 +444,107 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 CheckUserAgent(userAgent, "GoogleTV", mc2 =>
                 {
                     this.Os.Name = "Google TV";
-                    this.Device.DeviceType=DeviceType.Television;
-                    CheckUserAgent(userAgent, "Chrome/5.", mc3 =>
-                    {
-                        this.Os.Version = 2m;
-                    });
-                    CheckUserAgent(userAgent, "Chrome/11.", mc3 =>
-                    {
-                        this.Os.Version = 2m;
-                    });
+                    this.Device.DeviceType = DeviceType.Television;
+                    CheckUserAgent(userAgent, "Chrome/5.", mc3 => { this.Os.Version = 2m; });
+                    CheckUserAgent(userAgent, "Chrome/11.", mc3 => { this.Os.Version = 2m; });
                 });
 
                 /* WoPhone */
+                CheckUserAgent(userAgent, "WoPhone", mc2 =>
+                {
+                    this.Os.Name = "WoPhone";
+                    this.Device.DeviceType = DeviceType.Mobile;
+                    CheckUserAgent(userAgent, "/WoPhone\\/([0-9\\.]*)/",
+                        mc3 => { this.Os.Version = mc3[1].ConvertToDecimal(0); });
+                });
+
+                /* BlackBerry */
+                CheckUserAgent(userAgent, "BlackBerry", mc2 =>
+                {
+                    this.Os.Name = "BlackBerry OS";
+
+                    if (!CheckUserAgent(userAgent, "Opera"))
+                    {
+                        MatchCollection mc3;
+                        if (CheckUserAgent(userAgent, "/BlackBerry([0-9]*)\\/([0-9.]*)/", out mc3))
+                        {
+                            this.Device.Name = mc3[1].SafeString();
+                            this.Os.Version = mc3[2].SafeString().ConvertToDecimal(0);
+                            this.Os.Details = "2";
+                        }
+
+                        if (CheckUserAgent(userAgent, "/; BlackBerry ([0-9]*);/", out mc3))
+                        {
+                            this.Device.Name = mc3[1].SafeString();
+                        }
+
+                        if (CheckUserAgent(userAgent, "/Version\\/([0-9.]*)/", out mc3))
+                        {
+                            this.Os.Version = mc3[1].ConvertToDecimal(0);
+                            this.Os.Details = "2";
+                        }
+
+                        if (this.Os.Version >= 10m)
+                        {
+                            this.Os.Name = "BlackBerry";
+                        }
+
+                        if (!string.IsNullOrEmpty(this.Device.Name))
+                        {
+                            var deviceInfo =
+                                GloableConfigurations.BlackberryModels.FirstOrDefault(x => x.Key == this.Device.Name);
+                            if (!string.IsNullOrEmpty(deviceInfo.Key))
+                            {
+                                this.Device.Name = "BlackBerry " + deviceInfo.Value + " " + this.Device.Name;
+                            }
+                            else
+                            {
+                                this.Device.Name = "BlackBerry " + this.Device.Name;
+                            }
+                        }
+                        else
+                        {
+                            this.Device.Name = "BlackBerry";
+                        }
+                    }
+                    else
+                    {
+                        this.Device.Name = "BlackBerry";
+                    }
+
+                    this.Device.Manufacturer = "RIM";
+                    this.Device.DeviceType = DeviceType.Mobile;
+                    this.Device.Identified = true;
+                });
+
+                /*  BlackBerry PlayBook  */
+                if (CheckUserAgent(userAgent, "RIM Tablet OS"))
+                {
+                    this.Os.Name = "BlackBerry Tablet OS";
+                    this.Os.Version = new Regex("/RIM Tablet OS ([0-9.]*)/").Matches(userAgent)[1].SafeString()
+                        .ConvertToDecimal(0);
+                    this.Os.Details = "2";
+                    this.Device.Manufacturer = "RIM";
+                    this.Device.Name = "BlackBerry PlayBook";
+                    this.Device.DeviceType = DeviceType.Tablet;
+                    this.Device.Identified = true;
+                }
+                else if (CheckUserAgent(userAgent, "PlayBook"))
+                {
+                    CheckUserAgent(userAgent, "/Version\\/(10[0-9.]*)/", mc2 =>
+                    {
+                        this.Os.Name = "BlackBerry";
+                        this.Os.Version = mc2[1].ConvertToDecimal(0);
+                        this.Os.Details = "2";
+
+                        this.Device.Manufacturer = "RIM";
+                        this.Device.Name = "BlackBerry PlayBook";
+                        this.Device.DeviceType = DeviceType.Tablet;
+                        this.Device.Identified = true;
+                    });
+                }
+
+                /* WebOS */
 
             });
         }
