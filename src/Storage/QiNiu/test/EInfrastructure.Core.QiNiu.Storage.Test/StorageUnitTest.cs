@@ -4,7 +4,6 @@
 using System.IO;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage;
-using EInfrastructure.Core.HelpCommon.Files;
 using EInfrastructure.Core.QiNiu.Storage.Test.Base;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;

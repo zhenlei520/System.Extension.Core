@@ -4,7 +4,6 @@
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools.UserAgentParse;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace EInfrastructure.Core.Test
 {

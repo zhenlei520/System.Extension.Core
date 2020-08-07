@@ -9,18 +9,28 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
     public class Browser
     {
         /// <summary>
-        ///
+        /// 浏览器名称
         /// </summary>
-        public bool Stock { get;internal set; }
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 版本号
+        /// </summary>
+        public string Version { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        public bool Hidden { get;internal set; }
+        public bool Stock { get; internal set; }
 
         /// <summary>
         ///
         /// </summary>
-        public string Channel { get;internal set; }
+        public bool Hidden { get; internal set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public string Channel { get; internal set; }
     }
 }

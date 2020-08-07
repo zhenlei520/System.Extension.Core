@@ -1,11 +1,9 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using EInfrastructure.Core.Tools.UserAgentParse.Property;
 
 namespace EInfrastructure.Core.Tools.UserAgentParse
 {
@@ -58,6 +56,10 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
             new Regex("iPod;"),
             new Regex("/iPhone\\s*\\d*s?[cp]?;/i")
         };
+
+        public Os()
+        {
+        }
 
         /// <summary>
         ///
@@ -562,38 +564,36 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         this.Name = "";
                     }
 
-                    match= new Regex("SMART-TV").Matches(userAgent);
+                    match = new Regex("SMART-TV").Matches(userAgent);
                     if (match.Count > 0)
                     {
                         this.Name = "";
                     }
 
 
-                    match= new Regex("SonyDTV|SonyBDP|SonyCEBrowser").Matches(userAgent);
+                    match = new Regex("SonyDTV|SonyBDP|SonyCEBrowser").Matches(userAgent);
                     if (match.Count > 0)
                     {
                         this.Name = "";
                     }
 
-                    match= new Regex("NETTV\\/").Matches(userAgent);
+                    match = new Regex("NETTV\\/").Matches(userAgent);
                     if (match.Count > 0)
                     {
                         this.Name = "";
                     }
 
-                    match=new Regex("/LG NetCast\\.(?:TV|Media)-([0-9]*)/").Matches(userAgent);
+                    match = new Regex("/LG NetCast\\.(?:TV|Media)-([0-9]*)/").Matches(userAgent);
                     if (match.Count > 0)
                     {
                         this.Name = "";
                     }
 
-                    match=new Regex("/LGSmartTV/").Matches(userAgent);
+                    match = new Regex("/LGSmartTV/").Matches(userAgent);
                     if (match.Count > 0)
                     {
                         this.Name = "";
                     }
-
-
                 }
             }
         }
@@ -604,21 +604,47 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         public string Name { get; internal set; }
 
         /// <summary>
+        /// 别名
+        /// </summary>
+        public string Alias { get; internal set; }
+
+        /// <summary>
         /// 系统版本
         /// </summary>
-        public decimal Version { get; internal set; }
+        public decimal? Version { get; internal set; }
 
         /// <summary>
         /// 详情
         /// </summary>
-        public string Details { get; private set; }
+        public string Details { get; internal set; }
 
         /// <summary>
-        /// 别名
+        /// 版本与系统别名关系
         /// </summary>
-        public string Alias { get; private set; }
+        private List<KeyValuePair<decimal, string>> VersionAndAliasRelarionList =
+            new List<KeyValuePair<decimal, string>>()
+            {
+                new KeyValuePair<decimal, string>(6.2m, "8"),
+                new KeyValuePair<decimal, string>(6.1m, "7"),
+                new KeyValuePair<decimal, string>(6.0m, "Vista"),
+                new KeyValuePair<decimal, string>(5.2m, "Server 2003"),
+                new KeyValuePair<decimal, string>(5.1m, "XP"),
+                new KeyValuePair<decimal, string>(5.0m, "2000"),
+            };
 
-        #region private methods
+        #region 设置别名
+
+        /// <summary>
+        /// 设置别名
+        /// </summary>
+        internal void SetAlias()
+        {
+            Alias = VersionAndAliasRelarionList.Where(x => x.Key == Version).Select(x => x.Value).FirstOrDefault();
+            if (string.IsNullOrEmpty(Alias))
+            {
+                Alias = "NT" + Version;
+            }
+        }
 
         #endregion
     }

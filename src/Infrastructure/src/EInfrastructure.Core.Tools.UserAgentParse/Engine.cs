@@ -5,6 +5,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
 {
     /// <summary>
     /// 引擎
+    /// 浏览器内核
     /// </summary>
     public class Engine
     {

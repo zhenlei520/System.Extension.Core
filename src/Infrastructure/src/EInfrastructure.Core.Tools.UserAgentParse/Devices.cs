@@ -30,24 +30,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
 
             new DeviceProperty("Windows Mobile", new[] {""}, DeviceType.Mobile, "", "", false),
             new DeviceProperty("Windows CE", new[] {""}, DeviceType.Mobile, "", "", true),
-
-
-
-            new DeviceProperty("iOS", new[] {"iPod;"}, DeviceType.Media, "Apple", "iPod Touch", true),
-            new DeviceProperty("iOS", new[] {"iPod;"}, DeviceType.Media, "Apple", "iPod Touch", true),
-            new DeviceProperty("iOS", new[] {"iPod;"}, DeviceType.Media, "Apple", "iPod Touch", true),
-            new DeviceProperty("iOS", new[] {"iPod;"}, DeviceType.Media, "Apple", "iPod Touch", true),
-            new DeviceProperty("iOS", new[] {"iPod;"}, DeviceType.Media, "Apple", "iPod Touch", true),
         };
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="os"></param>
-        /// <param name="userAgent"></param>
-        public Devices(Os os, string userAgent)
-        {
-        }
 
         /// <summary>
         /// 设备类型
@@ -55,7 +38,18 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         public DeviceType DeviceType { get; internal set; }
 
         /// <summary>
-        ///
+        /// 设备信息
+        /// 例如：IPhone
+        /// </summary>
+        public string Name { get; internal set; }
+
+        /// <summary>
+        /// 制造商
+        /// </summary>
+        public string Manufacturer { get; internal set; }
+
+        /// <summary>
+        /// 是否确认
         /// </summary>
         public bool Identified { get; internal set; }
     }
