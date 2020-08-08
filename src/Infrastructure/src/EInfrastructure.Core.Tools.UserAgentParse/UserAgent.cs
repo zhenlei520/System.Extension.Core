@@ -1102,8 +1102,32 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 *      Opera/9.80 (Linux armv6l ; U; (SonyBDP/BDV11); en) Presto/2.6.33 Version/10.60
                 *      Opera/9.80 (Linux armv6l; U; (SonyBDP/BDV11); en) Presto/2.8.115 Version/11.10
                 */
+                if (CheckUserAgent(userAgent, "SonyDTV|SonyBDP|SonyCEBrowser"))
+                {
+                    this.Os.Name = "";
+                    this.Device.Manufacturer = "Sony";
+                    this.Device.Name = "Internet TV";
+                    this.Device.DeviceType = DeviceType.Television;
+                    this.Device.Identified = true;
+                }
 
+                /****************************************************
+                 *      Philips Net TV
+                 *
+                 *      Opera/9.70 (Linux armv6l ; U; CE-HTML/1.0 NETTV/2.0.2; en) Presto/2.2.1
+                 *      Opera/9.80 (Linux armv6l ; U; CE-HTML/1.0 NETTV/3.0.1;; en) Presto/2.6.33 Version/10.60
+                 *      Opera/9.80 (Linux mips; U; CE-HTML/1.0 NETTV/3.0.1; PHILIPS-AVM-2012; en) Presto/2.9.167 Version/11.50
+                 *      Opera/9.80 (Linux mips ; U; HbbTV/1.1.1 (; Philips; ; ; ; ) CE-HTML/1.0 NETTV/3.1.0; en) Presto/2.6.33 Version/10.70
+                 *      Opera/9.80 (Linux i686; U; HbbTV/1.1.1 (; Philips; ; ; ; ) CE-HTML/1.0 NETTV/3.1.0; en) Presto/2.9.167 Version/11.50
+                 */
 
+                if (CheckUserAgent(userAgent,@"NETTV\/")) {
+                    this.Os.Name = "";
+                    this.Device.Manufacturer = "Philips";
+                    this.Device.Name = "Net TV";
+                    this.Device.DeviceType = "television";
+                    this.Device.Identified = true;
+                }
             });
         }
 
