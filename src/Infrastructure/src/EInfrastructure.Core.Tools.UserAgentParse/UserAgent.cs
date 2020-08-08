@@ -1125,7 +1125,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     this.Os.Name = "";
                     this.Device.Manufacturer = "Philips";
                     this.Device.Name = "Net TV";
-                    this.Device.DeviceType = "television";
+                    this.Device.DeviceType = DeviceType.Television;
                     this.Device.Identified = true;
                 }
             });
