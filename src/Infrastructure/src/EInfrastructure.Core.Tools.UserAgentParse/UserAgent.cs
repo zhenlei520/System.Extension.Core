@@ -545,6 +545,484 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 }
 
                 /* WebOS */
+                CheckUserAgent(userAgent, "(?:web|hpw)OS", mc2 =>
+                {
+                    this.Os.Name = "webOS";
+                    this.Os.Version = new Regex("/(?:web|hpw)OS\\/([0-9.]*)/").Matches(userAgent)[1].SafeString()
+                        .ConvertToDecimal(0);
+
+                    if (CheckUserAgent(userAgent, "tablet"))
+                    {
+                        this.Device.DeviceType = DeviceType.Tablet;
+                    }
+
+                    this.Device.Manufacturer = CheckUserAgent(userAgent, "hpwOS") ? "HP" : "Palm";
+                    if (CheckUserAgent(userAgent, "Pre\\/1.0"))
+                    {
+                        this.Device.Name = "Pre";
+                    }
+
+                    if (CheckUserAgent(userAgent, "Pre\\/1.1"))
+                    {
+                        this.Device.Name = "Pre Plus";
+                    }
+
+                    if (CheckUserAgent(userAgent, "Pre\\/1.2"))
+                    {
+                        this.Device.Name = "Pre2";
+                    }
+
+                    if (CheckUserAgent(userAgent, "Pre\\/3.0"))
+                    {
+                        this.Device.Name = "Pre3";
+                    }
+
+                    if (CheckUserAgent(userAgent, "Pixi\\/1.0"))
+                    {
+                        this.Device.Name = "Pixi";
+                    }
+
+                    if (CheckUserAgent(userAgent, "Pixi\\/1.1"))
+                    {
+                        this.Device.Name = "Pixi Plus";
+                    }
+
+                    if (CheckUserAgent(userAgent, "P160UN?A?\\/1.0"))
+                    {
+                        this.Device.Name = "Veer";
+                    }
+
+                    if (CheckUserAgent(userAgent, "TouchPad\\/1.0"))
+                    {
+                        this.Device.Name = "TouchPad";
+                    }
+
+                    if (CheckUserAgent(userAgent, "Emulator\\/") || CheckUserAgent(userAgent, "Desktop\\/"))
+                    {
+                        this.Device.DeviceType = DeviceType.Emulator;
+                        this.Device.Name = null;
+                        this.Device.Manufacturer = null;
+                    }
+
+                    this.Device.Identified = true;
+                });
+
+                /* S60 */
+                CheckUserAgent(userAgent, new[] {"Symbian", "Series[ ]?60", "S60"}, (mc2, regex) =>
+                {
+                    this.Os.Name = "Series60";
+
+                    if (CheckUserAgent(userAgent, "SymbianOS/9.1") && !CheckUserAgent(userAgent, "Series60"))
+                    {
+                        this.Os.Version = 3.0m;
+                    }
+
+                    CheckUserAgent(userAgent, "/Series60\\/([0-9.]*)/",
+                        mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
+
+                    CheckUserAgent(userAgent, "/Nokia([^\\/;]+)[\\/|;]/", mc3 =>
+                    {
+                        if (mc3[1].SafeString() != "Browser")
+                        {
+                            this.Device.Manufacturer = "Nokia";
+                            this.Device.Name = mc3[1].SafeString();
+                            this.Device.Identified = true;
+                        }
+                    });
+
+                    CheckUserAgent(userAgent, "/Vertu([^\\/;]+)[\\/|;]/", mc3 =>
+                    {
+                        this.Device.Manufacturer = "Vertu";
+                        this.Device.Name = mc3[1].SafeString();
+                        this.Device.Identified = true;
+                    });
+
+
+                    CheckUserAgent(userAgent, "/Symbian; U; ([^;]+); [a-z][a-z]\\-[a-z][a-z]/i", mc3 =>
+                    {
+                        this.Device.Manufacturer = "Nokia";
+                        this.Device.Name = mc3[1].SafeString();
+                        this.Device.Identified = true;
+                    });
+
+                    CheckUserAgent(userAgent, "/Samsung\\/([^;]*);/", mc3 =>
+                    {
+                        this.Device.Manufacturer = GloableConfigurations.StringsSamsung;
+                        this.Device.Name = mc3[1].SafeString();
+                        this.Device.Identified = true;
+                    });
+
+                    this.Device.DeviceType = DeviceType.Mobile;
+                });
+
+                /* S40 */
+                CheckUserAgent(userAgent, "Series40", mc2 =>
+                {
+                    this.Os.Name = "Series40";
+
+                    CheckUserAgent(userAgent, "/Nokia([^\\/]+)\\//", mc3 =>
+                    {
+                        this.Device.Manufacturer = "Nokia";
+                        this.Device.Name = mc3[1].SafeString();
+                        this.Device.Identified = true;
+                    });
+
+                    this.Device.DeviceType = DeviceType.Mobile;
+                });
+
+                /* MeeGo */
+                CheckUserAgent(userAgent, "MeeGo", mc2 =>
+                {
+                    this.Os.Name = "MeeGo";
+                    this.Device.DeviceType = DeviceType.Mobile;
+
+                    CheckUserAgent(userAgent, "/Nokia([^\\)]+)\\)/", mc3 =>
+                    {
+                        this.Device.Manufacturer = "Nokia";
+                        this.Device.Name = mc3[1].SafeString();
+                        this.Device.Identified = true;
+                    });
+                });
+
+                /* Maemo */
+                CheckUserAgent(userAgent, "Maemo", mc2 =>
+                {
+                    this.Os.Name = "Maemo";
+                    this.Device.DeviceType = DeviceType.Mobile;
+
+                    CheckUserAgent(userAgent, "/(N[0-9]+)/", mc3 =>
+                    {
+                        this.Device.Manufacturer = "Nokia";
+                        this.Device.Name = mc3[1].SafeString();
+                        this.Device.Identified = true;
+                    });
+                });
+
+                /* Tizen */
+                CheckUserAgent(userAgent, "Tizen", mc2 =>
+                {
+                    this.Os.Name = "Tizen";
+
+                    CheckUserAgent(userAgent, "/Tizen[\\/ ]([0-9.]*)/",
+                        mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
+
+                    this.Device.DeviceType = DeviceType.Mobile;
+
+                    CheckUserAgent(userAgent, "/\\(([^;]+); ([^\\/]+)\\//", mc3 =>
+                    {
+                        if (mc3[1].SafeString() != "Linux")
+                        {
+                            this.Device.Manufacturer = mc3[1].SafeString();
+                            this.Device.Name = mc3[2].SafeString();
+
+                            List<KeyValuePair<string, string[]>> tizenModel =
+                                GloableConfigurations.TizenModels.Where(x =>
+                                    x.Key == this.Device.Manufacturer).Select(x => x.Value).FirstOrDefault() ??
+                                new List<KeyValuePair<string, string[]>>();
+                            if (tizenModel.Count > 0 && tizenModel
+                                .Any(x => x.Key == this.Device.Name))
+                            {
+                                var manufacturer = this.Device.Manufacturer;
+                                var model = CleanupModel(this.Device.Name);
+
+                                var temp = GloableConfigurations.TizenModels
+                                    .Where(x => x.Key == manufacturer).Select(x => x.Value).FirstOrDefault();
+                                if (temp != null)
+                                {
+                                    this.Device.Manufacturer =
+                                        temp.Where(x => x.Key == model).Select(x => x.Value).ToList()[0].SafeString();
+                                    this.Device.Name = temp.Where(x => x.Key == model).Select(x => x.Value).ToList()[1]
+                                        .SafeString();
+                                    this.Device.Identified = true;
+                                }
+                            }
+                        }
+                    });
+                });
+
+                /* Bada */
+                CheckUserAgent(userAgent, "[b|B]ada", mc2 =>
+                {
+                    this.Os.Name = "Bada";
+                    CheckUserAgent(userAgent, "/[b|B]ada\\/([0-9.]*)/",
+                        mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
+
+                    this.Device.DeviceType = DeviceType.Mobile;
+
+                    CheckUserAgent(userAgent, "/\\(([^;]+); ([^\\/]+)\\//", mc3 =>
+                    {
+                        this.Device.Manufacturer = mc3[1].SafeString();
+                        this.Device.Name = CleanupModel(mc3[2].SafeString());
+                    });
+
+                    var badaModel = GloableConfigurations.BadaModels.Where(x => x.Key == this.Device.Manufacturer)
+                        .Select(x => x.Value).FirstOrDefault();
+                    if (badaModel != null && badaModel.Count > 0 && badaModel.Any(x => x.Key == this.Device.Name))
+                    {
+                        var manufacturer = this.Device.Manufacturer;
+                        var model = CleanupModel(this.Device.Name);
+
+
+                        badaModel = GloableConfigurations.BadaModels.Where(x => x.Key == manufacturer)
+                            .Select(x => x.Value).FirstOrDefault();
+
+                        this.Device.Manufacturer =
+                            badaModel.Where(x => x.Key == model).Select(x => x.Value).FirstOrDefault()?[0];
+                        this.Device.Name =
+                            badaModel.Where(x => x.Key == model).Select(x => x.Value).FirstOrDefault()?[1];
+                        this.Device.Identified = true;
+                    }
+                });
+
+                /* Brew */
+                CheckUserAgent(userAgent, "/BREW/i", mc2 =>
+                {
+                    this.Os.Name = "Brew";
+                    this.Device.DeviceType = DeviceType.Mobile;
+
+                    MatchCollection mc3;
+
+                    if (CheckUserAgent(userAgent, "/BREW; U; ([0-9.]*)/i", out mc3))
+                    {
+                        this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0);
+                    }
+                    else if (CheckUserAgent(userAgent, "/;BREW\\/([0-9.]*)/i", out mc3))
+                    {
+                        this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0);
+                    }
+
+                    CheckUserAgent(userAgent,
+                        "/\\(([^;]+);U;REX\\/[^;]+;BREW\\/[^;]+;(?:.*;)?[0-9]+\\*[0-9]+;CTC\\/2.0\\)/",
+                        mc4 => { this.Device.Name = mc4[1].SafeString(); });
+
+                    if (!string.IsNullOrEmpty(this.Device.Name))
+                    {
+                        var model = CleanupModel(this.Device.Name);
+
+                        if (GloableConfigurations.BrewModels.Any(x => x.Key == model))
+                        {
+                            this.Device.Manufacturer = GloableConfigurations.BrewModels.Where(x => x.Key == model)
+                                .Select(x => x.Value).FirstOrDefault()?[0];
+                            this.Device.Name = GloableConfigurations.BrewModels.Where(x => x.Key == model)
+                                .Select(x => x.Value).FirstOrDefault()?[1];
+                            this.Device.Identified = true;
+                        }
+                    }
+                });
+
+                /* MTK */
+
+                CheckUserAgent(userAgent, "/\\(MTK;/", mc2 =>
+                {
+                    this.Os.Name = "MTK";
+                    this.Device.DeviceType = DeviceType.Mobile;
+                });
+
+                /* CrOS */
+                CheckUserAgent(userAgent, "CrOS", mc2 =>
+                {
+                    this.Os.Name = "Chrome OS";
+                    this.Device.DeviceType = DeviceType.Pc;
+                });
+
+                /* Joli OS */
+                CheckUserAgent(userAgent, "Joli OS", mc2 =>
+                {
+                    this.Os.Name = "Joli OS";
+                    this.Device.DeviceType = DeviceType.Pc;
+
+                    CheckUserAgent(userAgent, "/Joli OS\\/([0-9.]*)/i",
+                        mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
+                });
+
+                /* Haiku */
+                CheckUserAgent(userAgent, "Haiku", mc2 =>
+                {
+                    this.Os.Name = "Haiku";
+                    this.Device.DeviceType = DeviceType.Pc;
+                });
+
+                /* QNX */
+                CheckUserAgent(userAgent, "QNX", mc2 =>
+                {
+                    this.Os.Name = "QNX";
+                    this.Device.DeviceType = DeviceType.Mobile;
+                });
+
+                /* OS/2 Warp */
+                CheckUserAgent(userAgent, "OS\\/2; Warp", mc2 =>
+                {
+                    this.Os.Name = "OS/2 Warp";
+                    this.Device.DeviceType = DeviceType.Pc;
+
+                    CheckUserAgent(userAgent, "/OS\\/2; Warp ([0-9.]*)/i",
+                        mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
+                });
+
+
+                /* Grid OS */
+                CheckUserAgent(userAgent, "Grid OS", mc2 =>
+                {
+                    this.Os.Name = "Grid OS";
+                    this.Device.DeviceType = DeviceType.Tablet;
+
+                    CheckUserAgent(userAgent, "/Grid OS ([0-9.]*)/i",
+                        mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
+                });
+
+                /* AmigaOS */
+                CheckUserAgent(userAgent, "/AmigaOS/i", mc2 =>
+                {
+                    this.Os.Name = "AmigaOS";
+                    this.Device.DeviceType = DeviceType.Pc;
+
+                    CheckUserAgent(userAgent, "/AmigaOS ([0-9.]*)/i",
+                        mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
+                });
+
+                /* MorphOS */
+                CheckUserAgent(userAgent, "/MorphOS/i", mc2 =>
+                {
+                    this.Os.Name = "MorphOS";
+                    this.Device.DeviceType = DeviceType.Pc;
+                    CheckUserAgent(userAgent, "/MorphOS ([0-9.]*)/i",
+                        mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
+                });
+
+                /* Kindle */
+                if (CheckUserAgent(userAgent, "Kindle") && !CheckUserAgent(userAgent, "Fire"))
+                {
+                    this.Os.Name = "";
+
+                    this.Device.Manufacturer = "Amazon";
+                    this.Device.Name = "Kindle";
+                    this.Device.DeviceType = DeviceType.Reader;
+
+                    if (CheckUserAgent(userAgent, "Kindle\\/2.0"))
+                    {
+                        this.Device.Name = "Kindle 2";
+                    }
+
+                    if (CheckUserAgent(userAgent, "Kindle\\/3.0"))
+                    {
+                        this.Device.Name = "Kindle 3 or later";
+                    }
+
+                    this.Device.Identified = true;
+                }
+
+                /* NOOK */
+                CheckUserAgent(userAgent, "nook browser", mc2 =>
+                {
+                    this.Os.Name = "Android";
+                    this.Device.Manufacturer = "Barnes & Noble";
+                    this.Device.Name = "NOOK";
+                    this.Device.DeviceType = DeviceType.Reader;
+                    this.Device.Identified = true;
+                });
+
+                /* Bookeen */
+                CheckUserAgent(userAgent, "bookeen\\/cybook", mc2 =>
+                {
+                    this.Os.Name = "";
+                    this.Device.Manufacturer = "Bookeen";
+                    this.Device.Name = "Cybook";
+                    this.Device.DeviceType = DeviceType.Reader;
+
+                    CheckUserAgent(userAgent, "Orizon", mc3 => { this.Device.Name = "Cybook Orizon"; });
+
+                    this.Device.Identified = true;
+                });
+
+                /* Sony Reader */
+                CheckUserAgent(userAgent, "EBRD1101", mc2 =>
+                {
+                    this.Os.Name = "";
+
+                    this.Device.Manufacturer = "Sony";
+                    this.Device.Name = "Reader";
+                    this.Device.DeviceType = DeviceType.Reader;
+                    this.Device.Identified = true;
+                });
+
+                /* iRiver */
+                CheckUserAgent(userAgent, "Iriver ;", mc2 =>
+                {
+                    this.Os.Name = "";
+
+                    this.Device.Manufacturer = "iRiver";
+                    this.Device.Name = "Story";
+                    this.Device.DeviceType = DeviceType.Reader;
+
+                    if (CheckUserAgent(userAgent, "EB07"))
+                    {
+                        this.Device.Name = "Story HD EB07";
+                    }
+
+                    this.Device.Identified = true;
+                });
+
+                /****************************************************
+                 *      Nintendo
+                 *
+                 *      Opera/9.30 (Nintendo Wii; U; ; 3642; en)
+                 *      Opera/9.30 (Nintendo Wii; U; ; 2047-7; en)
+                 *      Opera/9.50 (Nintendo DSi; Opera/507; U; en-US)
+                 *      Mozilla/5.0 (Nintendo 3DS; U; ; en) Version/1.7455.US
+                 *      Mozilla/5.0 (Nintendo 3DS; U; ; en) Version/1.7455.EU
+                 */
+                if (CheckUserAgent(userAgent, "Nintendo Wii"))
+                {
+                    this.Os.Name = "";
+                    this.Device.Manufacturer = "Nintendo";
+                    this.Device.Name = "Wii";
+                    this.Device.DeviceType = DeviceType.Gaming;
+                    this.Device.Identified = true;
+                }
+
+                if (CheckUserAgent(userAgent, "Nintendo DSi"))
+                {
+                    this.Os.Name = "";
+                    this.Device.Manufacturer = "Nintendo";
+                    this.Device.Name = "DSi";
+                    this.Device.DeviceType = DeviceType.Gaming;
+                    this.Device.Identified = true;
+                }
+
+                if (CheckUserAgent(userAgent, "Nintendo 3DS"))
+                {
+                    this.Os.Name = "";
+
+                    this.Device.Manufacturer = "Nintendo";
+                    this.Device.Name = "3DS";
+                    this.Device.DeviceType = DeviceType.Gaming;
+
+                    CheckUserAgent(userAgent, "/Version\\/([0-9.]*)/",
+                        mc2 => { this.Os.Version = mc2[1].ConvertToDecimal(0); });
+
+                    this.Device.Identified = true;
+                }
+
+                if (CheckUserAgent(userAgent, "PlayStation Portable"))
+                {
+                    this.Os.Name = "";
+                    this.Device.Manufacturer = "Sony";
+                    this.Device.Name = "Playstation Portable";
+                    this.Device.DeviceType = DeviceType.Gaming;
+                    this.Device.Identified = true;
+                }
+
+                if (CheckUserAgent(userAgent, "PlayStation Vita"))
+                {
+                    this.Os.Name = "";
+                    CheckUserAgent(userAgent, "/PlayStation Vita ([0-9.]*)/",
+                        mc2 => { this.Os.Version = mc2[1].SafeString().ConvertToDecimal(0); });
+                    this.Device.Manufacturer = "Sony";
+                    this.Device.Name = "PlayStation Vita";
+                    this.Device.DeviceType = DeviceType.Gaming;
+                    this.Device.Identified = true;
+                }
+
 
             });
         }

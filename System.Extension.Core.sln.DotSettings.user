@@ -15,6 +15,11 @@
     &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.StorageUnitTest.UploadStream&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b6706268_002Dc93b_002D480d_002D91ca_002Df61353be47cd/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetDistance #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.UserAgentCommon.GetDistance&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	
 	
 	

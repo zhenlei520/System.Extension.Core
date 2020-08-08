@@ -25,7 +25,7 @@ namespace EInfrastructure.Core.Test
         // [InlineData(
         //     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36")]
         // [InlineData("Mozilla/5.0 (X11; Linux x86_64;CentOS; rv:68.0) Gecko/20100101 Firefox/68.0")]
-        [InlineData("Mozilla/5.0 (X11; U; Linux  CentOS/7el7; en-US; rv:1.9.0.1) Gecko/2008072403 Mandriva/3.0.1-1mdv2008.1 (2008.1) Firefox/3.0.1")]
+        [InlineData("CoolPad8720_CMCC_TD/1.0 Linux/3.0.8 Android/4.0 Release/03.31.2013 Browser/AppleWebkit534.3")]
         public void GetDistance(string userAgent)
         {
             var us = new UserAgent(userAgent);
