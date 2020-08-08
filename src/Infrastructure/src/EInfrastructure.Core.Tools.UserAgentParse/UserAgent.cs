@@ -56,21 +56,21 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 CheckUserAgent(userAgent, "CentOS", (mc2) =>
                 {
                     this.Os.Name = "CentOS";
-                    CheckUserAgent(userAgent, "/CentOS\\/[0-9\\.\\-]+el([0-9_]+)/",
+                    CheckUserAgent(userAgent, @"/CentOS\/[0-9\.\-]+el([0-9_]+)/",
                         (mc3) => { this.Os.Version = mc3[1].SafeString().Replace("/_/", "").ConvertToDecimal(0); });
                 });
 
                 CheckUserAgent(userAgent, "Fedora", (mc2) =>
                 {
                     this.Os.Name = "Fedora";
-                    CheckUserAgent(userAgent, "/Fedora\\/[0-9\\.\\-]+fc([0-9]+)/",
+                    CheckUserAgent(userAgent, @"/Fedora\/[0-9\.\-]+fc([0-9]+)/",
                         (mc3) => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
                 });
 
                 CheckUserAgent(userAgent, "Ubuntu", mc2 =>
                 {
                     this.Os.Name = "Ubuntu";
-                    CheckUserAgent(userAgent, "/Ubuntu\\/([0-9.]*)/",
+                    CheckUserAgent(userAgent, @"/Ubuntu\/([0-9.]*)/",
                         mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
                 });
 
@@ -80,7 +80,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 CheckUserAgent(userAgent, "Mandriva Linux", (mc2) =>
                 {
                     this.Os.Name = "Mandriva";
-                    CheckUserAgent(userAgent, "/Mandriva Linux\\/[0-9\\.\\-]+mdv([0-9]+)/",
+                    CheckUserAgent(userAgent, @"/Mandriva Linux\/[0-9\.\-]+mdv([0-9]+)/",
                         (mc3) => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
                 });
 
@@ -88,14 +88,14 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     (mc2) =>
                     {
                         this.Os.Name = "Red Hat";
-                        CheckUserAgent(userAgent, "/Red Hat[^\\/]*\\/[0-9\\.\\-]+el([0-9_]+)/",
+                        CheckUserAgent(userAgent, @"/Red Hat[^\/]*\/[0-9\.\-]+el([0-9_]+)/",
                             (mc3) =>
                             {
                                 this.Os.Version = mc3[1].SafeString().Replace("/_/g", ".").ConvertToDecimal(0);
                             });
                     });
 
-                CheckUserAgent(userAgent, new[] {"iPhone( Simulator)?;", "iPad;", "iPod;", "/iPhone\\s*\\d*s?[cp]?;/i"},
+                CheckUserAgent(userAgent, new[] {"iPhone( Simulator)?;", "iPad;", "iPod;", @"/iPhone\s*\d*s?[cp]?;/i"},
                     (mc2, regex) =>
                     {
                         this.Os.Name = "iOS";
@@ -114,7 +114,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                             this.Device.Name = "iPod Touch";
                         }
                         else if (CheckUserAgent(userAgent, "iPhone;") ||
-                                 CheckUserAgent(userAgent, "/iPhone\\s*\\d*s?[cp]?;/i"))
+                                 CheckUserAgent(userAgent, @"/iPhone\s*\d*s?[cp]?;/i"))
                         {
                             this.Device.DeviceType = DeviceType.Mobile;
                             this.Device.Manufacturer = "Apple";
@@ -133,14 +133,14 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 CheckUserAgent(userAgent, "Mac OS X", mc2 =>
                 {
                     this.Os.Name = "Mac OS X";
-                    CheckUserAgent(userAgent, "/Mac OS X (10[0-9\\._]*)/",
+                    CheckUserAgent(userAgent, @"/Mac OS X (10[0-9\._]*)/",
                         mc3 => { this.Os.Version = mc3[1].SafeString().Replace("/_/g", ".").ConvertToDecimal(0); });
                 });
 
                 CheckUserAgent(userAgent, "Windows", mc2 =>
                 {
                     this.Os.Name = "Windows";
-                    CheckUserAgent(userAgent, "/Windows NT ([0-9]\\.[0-9])/", mc3 =>
+                    CheckUserAgent(userAgent, @"/Windows NT ([0-9]\.[0-9])/", mc3 =>
                     {
                         this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0);
                         this.Os.SetAlias();
@@ -203,7 +203,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         else
                         {
                             this.Os.Name = "Windows CE";
-                            CheckUserAgent(userAgent, new[] {"/WindowsCEOS\\/([0-9.]*)/", "/Windows CE ([0-9.]*)/"},
+                            CheckUserAgent(userAgent, new[] {@"/WindowsCEOS\/([0-9.]*)/", "/Windows CE ([0-9.]*)/"},
                                 (mc4, regex2) =>
                                 {
                                     this.Os.Version = mc4[1].SafeString().ConvertToDecimal(0);
@@ -220,7 +220,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         this.Device.DeviceType = DeviceType.Mobile;
                     });
 
-                    CheckUserAgent(userAgent, "/WindowsMobile\\/([0-9.]*)/", mc3 =>
+                    CheckUserAgent(userAgent, @"/WindowsMobile\/([0-9.]*)/", mc3 =>
                     {
                         this.Os.Name = "Windows Mobile";
                         this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0);
@@ -249,7 +249,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                             this.Os.Name = "Windows Mobile";
                         }
 
-                        CheckUserAgent(userAgent, "/IEMobile\\/[^;]+; ([^;]+); ([^;]+)[;|\\)]/", mc4 =>
+                        CheckUserAgent(userAgent, @"/IEMobile\/[^;]+; ([^;]+); ([^;]+)[;|\)]/", mc4 =>
                         {
                             this.Device.Name = mc4[2].SafeString();
                             this.Device.Manufacturer = mc4[1].SafeString();
@@ -289,7 +289,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     this.Os.Name = "Android";
                     this.Os.Version = null;
                     CheckUserAgent(userAgent.Replace("-update", "."),
-                        "/Android(?: )?(?:AllPhone_|CyanogenMod_)?(?:\\/)?v?([0-9.]+)/", mc3 =>
+                        @"/Android(?: )?(?:AllPhone_|CyanogenMod_)?(?:\/)?v?([0-9.]+)/", mc3 =>
                         {
                             this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0);
                             this.Os.Details = "3";
@@ -316,41 +316,41 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
 
                     MatchCollection mc4;
                     if (CheckUserAgent(userAgent,
-                        "/Eclair; (?:[a-zA-Z][a-zA-Z](?:[-_][a-zA-Z][a-zA-Z])?) Build\\/([^\\/]*)\\//", out mc4))
+                        @"/Eclair; (?:[a-zA-Z][a-zA-Z](?:[-_][a-zA-Z][a-zA-Z])?) Build\/([^\/]*)\//", out mc4))
                     {
                         this.Device.Name = mc4[1].SafeString();
                     }
-                    else if (CheckUserAgent(userAgent, "/; ([^;]*[^;\\s])\\s+Build/", out mc4))
+                    else if (CheckUserAgent(userAgent, @"/; ([^;]*[^;\s])\s+Build/", out mc4))
                     {
                         this.Device.Name = mc4[1].SafeString();
                     }
                     else if (CheckUserAgent(userAgent,
-                        "/[a-zA-Z][a-zA-Z](?:[-_][a-zA-Z][a-zA-Z])?; ([^;]*[^;\\s]);\\s+Build/", out mc4))
+                        @"/[a-zA-Z][a-zA-Z](?:[-_][a-zA-Z][a-zA-Z])?; ([^;]*[^;\s]);\s+Build/", out mc4))
                     {
                         this.Device.Name = mc4[1].SafeString();
                     }
-                    else if (CheckUserAgent(userAgent, "/\\(([^;]+);U;Android\\/[^;]+;[0-9]+\\*[0-9]+;CTC\\/2.0\\)/",
+                    else if (CheckUserAgent(userAgent, @"/\(([^;]+);U;Android\/[^;]+;[0-9]+\*[0-9]+;CTC\/2.0\)/",
                         out mc4))
                     {
                         this.Device.Name = mc4[1].SafeString();
                     }
-                    else if (CheckUserAgent(userAgent, "/;\\s?([^;]+);\\s?[0-9]+\\*[0-9]+;\\s?CTC\\/2.0/", out mc4))
+                    else if (CheckUserAgent(userAgent, @"/;\s?([^;]+);\s?[0-9]+\*[0-9]+;\s?CTC\/2.0/", out mc4))
                     {
                         this.Device.Name = mc4[1].SafeString();
                     }
-                    else if (CheckUserAgent(userAgent, "/zh-cn;\\s*(.*?)(\\/|build)/i", out mc4))
+                    else if (CheckUserAgent(userAgent, @"/zh-cn;\s*(.*?)(\/|build)/i", out mc4))
                     {
                         this.Device.Name = mc4[1].SafeString();
                     }
                     else if (CheckUserAgent(userAgent,
-                        "/Android [^;]+; (?:[a-zA-Z][a-zA-Z](?:[-_][a-zA-Z][a-zA-Z])?; )?([^)]+)\\)/", out mc4))
+                        @"/Android [^;]+; (?:[a-zA-Z][a-zA-Z](?:[-_][a-zA-Z][a-zA-Z])?; )?([^)]+)\)/", out mc4))
                     {
                         if (!CheckUserAgent(userAgent, "/[a-zA-Z][a-zA-Z](?:[-_][a-zA-Z][a-zA-Z])?/", out mc4))
                         {
                             this.Device.Name = mc4[1].SafeString();
                         }
                     }
-                    else if (CheckUserAgent(userAgent, "/^(.+?)\\/\\S+/i", out mc4))
+                    else if (CheckUserAgent(userAgent, @"/^(.+?)\/\S+/i", out mc4))
                     {
                         this.Device.Name = mc4[1].SafeString();
                     }
@@ -395,44 +395,44 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         this.Device.DeviceType = DeviceType.Tablet;
                         this.Device.Identified = true;
                     });
-                    CheckUserAgent(userAgent, "Pre\\/1.0", mc3 =>
+                    CheckUserAgent(userAgent, @"Pre\/1.0", mc3 =>
                     {
                         this.Device.Manufacturer = "Palm";
                         this.Device.Name = "Pre";
                         this.Device.Identified = true;
                     });
-                    CheckUserAgent(userAgent, "Pre\\/1.1", mc3 =>
+                    CheckUserAgent(userAgent, @"Pre\/1.1", mc3 =>
                     {
                         this.Device.Manufacturer = "Palm";
                         this.Device.Name = "Pre Plus";
                         this.Device.Identified = true;
                     });
 
-                    CheckUserAgent(userAgent, "Pre\\/1.2", mc3 =>
+                    CheckUserAgent(userAgent, @"Pre\/1.2", mc3 =>
                     {
                         this.Device.Manufacturer = "Palm";
                         this.Device.Name = "Pre 2";
                         this.Device.Identified = true;
                     });
-                    CheckUserAgent(userAgent, "Pre\\/3.0", mc3 =>
+                    CheckUserAgent(userAgent, @"Pre\/3.0", mc3 =>
                     {
                         this.Device.Manufacturer = "HP";
                         this.Device.Name = "Pre 3";
                         this.Device.Identified = true;
                     });
-                    CheckUserAgent(userAgent, "Pixi\\/1.0", mc3 =>
+                    CheckUserAgent(userAgent, @"Pixi\/1.0", mc3 =>
                     {
                         this.Device.Manufacturer = "Palm";
                         this.Device.Name = "Pixi";
                         this.Device.Identified = true;
                     });
-                    CheckUserAgent(userAgent, "Pixi\\/1.1", mc3 =>
+                    CheckUserAgent(userAgent, @"Pixi\/1.1", mc3 =>
                     {
                         this.Device.Manufacturer = "Palm";
                         this.Device.Name = "Pixi Plus";
                         this.Device.Identified = true;
                     });
-                    CheckUserAgent(userAgent, "P160UN?A?\\/1.0", mc3 =>
+                    CheckUserAgent(userAgent, @"P160UN?A?\/1.0", mc3 =>
                     {
                         this.Device.Manufacturer = "HP";
                         this.Device.Name = "Veer";
@@ -454,7 +454,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 {
                     this.Os.Name = "WoPhone";
                     this.Device.DeviceType = DeviceType.Mobile;
-                    CheckUserAgent(userAgent, "/WoPhone\\/([0-9\\.]*)/",
+                    CheckUserAgent(userAgent, @"/WoPhone\/([0-9\.]*)/",
                         mc3 => { this.Os.Version = mc3[1].ConvertToDecimal(0); });
                 });
 
@@ -466,7 +466,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     if (!CheckUserAgent(userAgent, "Opera"))
                     {
                         MatchCollection mc3;
-                        if (CheckUserAgent(userAgent, "/BlackBerry([0-9]*)\\/([0-9.]*)/", out mc3))
+                        if (CheckUserAgent(userAgent, @"/BlackBerry([0-9]*)\/([0-9.]*)/", out mc3))
                         {
                             this.Device.Name = mc3[1].SafeString();
                             this.Os.Version = mc3[2].SafeString().ConvertToDecimal(0);
@@ -478,7 +478,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                             this.Device.Name = mc3[1].SafeString();
                         }
 
-                        if (CheckUserAgent(userAgent, "/Version\\/([0-9.]*)/", out mc3))
+                        if (CheckUserAgent(userAgent, @"/Version\/([0-9.]*)/", out mc3))
                         {
                             this.Os.Version = mc3[1].ConvertToDecimal(0);
                             this.Os.Details = "2";
@@ -531,7 +531,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 }
                 else if (CheckUserAgent(userAgent, "PlayBook"))
                 {
-                    CheckUserAgent(userAgent, "/Version\\/(10[0-9.]*)/", mc2 =>
+                    CheckUserAgent(userAgent, @"/Version\/(10[0-9.]*)/", mc2 =>
                     {
                         this.Os.Name = "BlackBerry";
                         this.Os.Version = mc2[1].ConvertToDecimal(0);
@@ -548,7 +548,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 CheckUserAgent(userAgent, "(?:web|hpw)OS", mc2 =>
                 {
                     this.Os.Name = "webOS";
-                    this.Os.Version = new Regex("/(?:web|hpw)OS\\/([0-9.]*)/").Matches(userAgent)[1].SafeString()
+                    this.Os.Version = new Regex(@"/(?:web|hpw)OS\/([0-9.]*)/").Matches(userAgent)[1].SafeString()
                         .ConvertToDecimal(0);
 
                     if (CheckUserAgent(userAgent, "tablet"))
@@ -557,47 +557,47 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     }
 
                     this.Device.Manufacturer = CheckUserAgent(userAgent, "hpwOS") ? "HP" : "Palm";
-                    if (CheckUserAgent(userAgent, "Pre\\/1.0"))
+                    if (CheckUserAgent(userAgent, @"Pre\/1.0"))
                     {
                         this.Device.Name = "Pre";
                     }
 
-                    if (CheckUserAgent(userAgent, "Pre\\/1.1"))
+                    if (CheckUserAgent(userAgent, @"Pre\/1.1"))
                     {
                         this.Device.Name = "Pre Plus";
                     }
 
-                    if (CheckUserAgent(userAgent, "Pre\\/1.2"))
+                    if (CheckUserAgent(userAgent, @"Pre\/1.2"))
                     {
                         this.Device.Name = "Pre2";
                     }
 
-                    if (CheckUserAgent(userAgent, "Pre\\/3.0"))
+                    if (CheckUserAgent(userAgent, @"Pre\/3.0"))
                     {
                         this.Device.Name = "Pre3";
                     }
 
-                    if (CheckUserAgent(userAgent, "Pixi\\/1.0"))
+                    if (CheckUserAgent(userAgent, @"Pixi\/1.0"))
                     {
                         this.Device.Name = "Pixi";
                     }
 
-                    if (CheckUserAgent(userAgent, "Pixi\\/1.1"))
+                    if (CheckUserAgent(userAgent, @"Pixi\/1.1"))
                     {
                         this.Device.Name = "Pixi Plus";
                     }
 
-                    if (CheckUserAgent(userAgent, "P160UN?A?\\/1.0"))
+                    if (CheckUserAgent(userAgent, @"P160UN?A?\/1.0"))
                     {
                         this.Device.Name = "Veer";
                     }
 
-                    if (CheckUserAgent(userAgent, "TouchPad\\/1.0"))
+                    if (CheckUserAgent(userAgent, @"TouchPad\/1.0"))
                     {
                         this.Device.Name = "TouchPad";
                     }
 
-                    if (CheckUserAgent(userAgent, "Emulator\\/") || CheckUserAgent(userAgent, "Desktop\\/"))
+                    if (CheckUserAgent(userAgent, @"Emulator\/") || CheckUserAgent(userAgent, @"Desktop\/"))
                     {
                         this.Device.DeviceType = DeviceType.Emulator;
                         this.Device.Name = null;
@@ -617,10 +617,10 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         this.Os.Version = 3.0m;
                     }
 
-                    CheckUserAgent(userAgent, "/Series60\\/([0-9.]*)/",
+                    CheckUserAgent(userAgent, @"/Series60\/([0-9.]*)/",
                         mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
 
-                    CheckUserAgent(userAgent, "/Nokia([^\\/;]+)[\\/|;]/", mc3 =>
+                    CheckUserAgent(userAgent, @"/Nokia([^\/;]+)[\/|;]/", mc3 =>
                     {
                         if (mc3[1].SafeString() != "Browser")
                         {
@@ -630,7 +630,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         }
                     });
 
-                    CheckUserAgent(userAgent, "/Vertu([^\\/;]+)[\\/|;]/", mc3 =>
+                    CheckUserAgent(userAgent, @"/Vertu([^\/;]+)[\/|;]/", mc3 =>
                     {
                         this.Device.Manufacturer = "Vertu";
                         this.Device.Name = mc3[1].SafeString();
@@ -638,14 +638,14 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     });
 
 
-                    CheckUserAgent(userAgent, "/Symbian; U; ([^;]+); [a-z][a-z]\\-[a-z][a-z]/i", mc3 =>
+                    CheckUserAgent(userAgent, @"/Symbian; U; ([^;]+); [a-z][a-z]\-[a-z][a-z]/i", mc3 =>
                     {
                         this.Device.Manufacturer = "Nokia";
                         this.Device.Name = mc3[1].SafeString();
                         this.Device.Identified = true;
                     });
 
-                    CheckUserAgent(userAgent, "/Samsung\\/([^;]*);/", mc3 =>
+                    CheckUserAgent(userAgent, @"/Samsung\/([^;]*);/", mc3 =>
                     {
                         this.Device.Manufacturer = GloableConfigurations.StringsSamsung;
                         this.Device.Name = mc3[1].SafeString();
@@ -660,7 +660,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 {
                     this.Os.Name = "Series40";
 
-                    CheckUserAgent(userAgent, "/Nokia([^\\/]+)\\//", mc3 =>
+                    CheckUserAgent(userAgent, @"/Nokia([^\/]+)\//", mc3 =>
                     {
                         this.Device.Manufacturer = "Nokia";
                         this.Device.Name = mc3[1].SafeString();
@@ -676,7 +676,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     this.Os.Name = "MeeGo";
                     this.Device.DeviceType = DeviceType.Mobile;
 
-                    CheckUserAgent(userAgent, "/Nokia([^\\)]+)\\)/", mc3 =>
+                    CheckUserAgent(userAgent, @"/Nokia([^\)]+)\)/", mc3 =>
                     {
                         this.Device.Manufacturer = "Nokia";
                         this.Device.Name = mc3[1].SafeString();
@@ -703,12 +703,12 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 {
                     this.Os.Name = "Tizen";
 
-                    CheckUserAgent(userAgent, "/Tizen[\\/ ]([0-9.]*)/",
+                    CheckUserAgent(userAgent, @"/Tizen[\/ ]([0-9.]*)/",
                         mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
 
                     this.Device.DeviceType = DeviceType.Mobile;
 
-                    CheckUserAgent(userAgent, "/\\(([^;]+); ([^\\/]+)\\//", mc3 =>
+                    CheckUserAgent(userAgent, @"/\(([^;]+); ([^\/]+)\//", mc3 =>
                     {
                         if (mc3[1].SafeString() != "Linux")
                         {
@@ -744,12 +744,12 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 CheckUserAgent(userAgent, "[b|B]ada", mc2 =>
                 {
                     this.Os.Name = "Bada";
-                    CheckUserAgent(userAgent, "/[b|B]ada\\/([0-9.]*)/",
+                    CheckUserAgent(userAgent, @"/[b|B]ada\/([0-9.]*)/",
                         mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
 
                     this.Device.DeviceType = DeviceType.Mobile;
 
-                    CheckUserAgent(userAgent, "/\\(([^;]+); ([^\\/]+)\\//", mc3 =>
+                    CheckUserAgent(userAgent, @"/\(([^;]+); ([^\/]+)\//", mc3 =>
                     {
                         this.Device.Manufacturer = mc3[1].SafeString();
                         this.Device.Name = CleanupModel(mc3[2].SafeString());
@@ -766,10 +766,14 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         badaModel = GloableConfigurations.BadaModels.Where(x => x.Key == manufacturer)
                             .Select(x => x.Value).FirstOrDefault();
 
-                        this.Device.Manufacturer =
-                            badaModel.Where(x => x.Key == model).Select(x => x.Value).FirstOrDefault()?[0];
-                        this.Device.Name =
-                            badaModel.Where(x => x.Key == model).Select(x => x.Value).FirstOrDefault()?[1];
+                        if (badaModel != null)
+                        {
+                            this.Device.Manufacturer =
+                                badaModel.Where(x => x.Key == model).Select(x => x.Value).FirstOrDefault()?[0];
+                            this.Device.Name =
+                                badaModel.Where(x => x.Key == model).Select(x => x.Value).FirstOrDefault()?[1];
+                        }
+
                         this.Device.Identified = true;
                     }
                 });
@@ -786,13 +790,13 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     {
                         this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0);
                     }
-                    else if (CheckUserAgent(userAgent, "/;BREW\\/([0-9.]*)/i", out mc3))
+                    else if (CheckUserAgent(userAgent, @"/;BREW\/([0-9.]*)/i", out mc3))
                     {
                         this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0);
                     }
 
                     CheckUserAgent(userAgent,
-                        "/\\(([^;]+);U;REX\\/[^;]+;BREW\\/[^;]+;(?:.*;)?[0-9]+\\*[0-9]+;CTC\\/2.0\\)/",
+                        @"/\(([^;]+);U;REX\/[^;]+;BREW\/[^;]+;(?:.*;)?[0-9]+\*[0-9]+;CTC\/2.0\)/",
                         mc4 => { this.Device.Name = mc4[1].SafeString(); });
 
                     if (!string.IsNullOrEmpty(this.Device.Name))
@@ -812,7 +816,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
 
                 /* MTK */
 
-                CheckUserAgent(userAgent, "/\\(MTK;/", mc2 =>
+                CheckUserAgent(userAgent, @"/\(MTK;/", mc2 =>
                 {
                     this.Os.Name = "MTK";
                     this.Device.DeviceType = DeviceType.Mobile;
@@ -831,7 +835,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     this.Os.Name = "Joli OS";
                     this.Device.DeviceType = DeviceType.Pc;
 
-                    CheckUserAgent(userAgent, "/Joli OS\\/([0-9.]*)/i",
+                    CheckUserAgent(userAgent, @"/Joli OS\/([0-9.]*)/i",
                         mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
                 });
 
@@ -850,12 +854,12 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 });
 
                 /* OS/2 Warp */
-                CheckUserAgent(userAgent, "OS\\/2; Warp", mc2 =>
+                CheckUserAgent(userAgent, @"OS\/2; Warp", mc2 =>
                 {
                     this.Os.Name = "OS/2 Warp";
                     this.Device.DeviceType = DeviceType.Pc;
 
-                    CheckUserAgent(userAgent, "/OS\\/2; Warp ([0-9.]*)/i",
+                    CheckUserAgent(userAgent, @"/OS\/2; Warp ([0-9.]*)/i",
                         mc3 => { this.Os.Version = mc3[1].SafeString().ConvertToDecimal(0); });
                 });
 
@@ -898,12 +902,12 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     this.Device.Name = "Kindle";
                     this.Device.DeviceType = DeviceType.Reader;
 
-                    if (CheckUserAgent(userAgent, "Kindle\\/2.0"))
+                    if (CheckUserAgent(userAgent, @"Kindle\/2.0"))
                     {
                         this.Device.Name = "Kindle 2";
                     }
 
-                    if (CheckUserAgent(userAgent, "Kindle\\/3.0"))
+                    if (CheckUserAgent(userAgent, @"Kindle\/3.0"))
                     {
                         this.Device.Name = "Kindle 3 or later";
                     }
@@ -922,7 +926,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 });
 
                 /* Bookeen */
-                CheckUserAgent(userAgent, "bookeen\\/cybook", mc2 =>
+                CheckUserAgent(userAgent, @"bookeen\/cybook", mc2 =>
                 {
                     this.Os.Name = "";
                     this.Device.Manufacturer = "Bookeen";
@@ -997,7 +1001,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     this.Device.Name = "3DS";
                     this.Device.DeviceType = DeviceType.Gaming;
 
-                    CheckUserAgent(userAgent, "/Version\\/([0-9.]*)/",
+                    CheckUserAgent(userAgent, @"/Version\/([0-9.]*)/",
                         mc2 => { this.Os.Version = mc2[1].ConvertToDecimal(0); });
 
                     this.Device.Identified = true;
@@ -1022,6 +1026,82 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     this.Device.DeviceType = DeviceType.Gaming;
                     this.Device.Identified = true;
                 }
+
+                if (CheckUserAgent(userAgent, "/PlayStation 3/i"))
+                {
+                    this.Os.Name = "";
+                    CheckUserAgent(userAgent, "/PLAYSTATION 3;? ([0-9.]*)/", mc2 =>
+                    {
+                        this.Os.Version = mc2[1].SafeString().ConvertToDecimal(0);
+                    });
+                    this.Device.Manufacturer = "Sony";
+                    this.Device.Name = "Playstation 3";
+                    this.Device.DeviceType = DeviceType.Gaming;
+                    this.Device.Identified = true;
+                }
+
+                /****************************************************
+                 *      Panasonic Smart Viera
+                 *
+                 *      Mozilla/5.0 (FreeBSD; U; Viera; ja-JP) AppleWebKit/535.1 (KHTML, like Gecko) Viera/1.2.4 Chrome/14.0.835.202 Safari/535.1
+                 */
+                if (CheckUserAgent(userAgent, "Viera"))
+                {
+                    this.Os.Name = "";
+                    this.Device.Manufacturer = "Panasonic";
+                    this.Device.Name = "Smart Viera";
+                    this.Device.DeviceType = DeviceType.Television;
+                    this.Device.Identified = true;
+                }
+
+                /****************************************************
+                 *      Sharp AQUOS TV
+                 *
+                 *      Mozilla/5.0 (DTV) AppleWebKit/531.2  (KHTML, like Gecko) AQUOSBrowser/1.0 (US00DTV;V;0001;0001)
+                 *      Mozilla/5.0 (DTV) AppleWebKit/531.2+ (KHTML, like Gecko) Espial/6.0.4 AQUOSBrowser/1.0 (CH00DTV;V;0001;0001)
+                 *      Opera/9.80 (Linux armv6l; U; en) Presto/2.8.115 Version/11.10 AQUOS-AS/1.0 LC-40LE835X
+                 */
+                if (CheckUserAgent(userAgent, "AQUOSBrowser") || CheckUserAgent(userAgent, "AQUOS-AS"))
+                {
+                    this.Os.Name = "";
+                    this.Device.Manufacturer = GloableConfigurations.StringsSharp;
+                    this.Device.Name = "Aquos TV";
+                    this.Device.DeviceType = DeviceType.Television;
+                    this.Device.Identified = true;
+                }
+
+                /****************************************************
+                 *      Samsung Smart TV
+                 *
+                 *      Mozilla/5.0 (SmartHub; SMART-TV; U; Linux/SmartTV; Maple2012) AppleWebKit/534.7 (KHTML, like Gecko) SmartTV Safari/534.7
+                 *      Mozilla/5.0 (SmartHub; SMART-TV; U; Linux/SmartTV) AppleWebKit/531.2+ (KHTML, like Gecko) WebBrowser/1.0 SmartTV Safari/531.2+
+                 */
+                if (CheckUserAgent(userAgent, "SMART-TV"))
+                {
+                    this.Os.Name = "";
+                    this.Device.Manufacturer = GloableConfigurations.StringsSamsung;
+                    this.Device.Name = "Smart TV";
+                    this.Device.DeviceType = DeviceType.Television;
+                    this.Device.Identified = true;
+
+                    CheckUserAgent(userAgent, "/Maple([0-9]*)/", mc2 =>
+                    {
+                        this.Device.Name += " "+mc2[1];
+                    });
+                }
+
+                /****************************************************
+                *      Sony Internet TV
+                *
+                *      Opera/9.80 (Linux armv7l; U; InettvBrowser/2.2(00014A;SonyDTV115;0002;0100) KDL-46EX640; CC/USA; en) Presto/2.8.115 Version/11.10
+                *      Opera/9.80 (Linux armv7l; U; InettvBrowser/2.2(00014A;SonyDTV115;0002;0100) KDL-40EX640; CC/USA; en) Presto/2.10.250 Version/11.60
+                *      Opera/9.80 (Linux armv7l; U; InettvBrowser/2.2(00014A;SonyDTV115;0002;0100) N/A; CC/USA; en) Presto/2.8.115 Version/11.10
+                *      Opera/9.80 (Linux mips; U; InettvBrowser/2.2 (00014A;SonyDTV115;0002;0100) ; CC/JPN; en) Presto/2.9.167 Version/11.50
+                *      Opera/9.80 (Linux mips; U; InettvBrowser/2.2 (00014A;SonyDTV115;0002;0100) AZ2CVT2; CC/CAN; en) Presto/2.7.61 Version/11.00
+                *      Opera/9.80 (Linux armv6l; Opera TV Store/4207; U; (SonyBDP/BDV11); en) Presto/2.9.167 Version/11.50
+                *      Opera/9.80 (Linux armv6l ; U; (SonyBDP/BDV11); en) Presto/2.6.33 Version/10.60
+                *      Opera/9.80 (Linux armv6l; U; (SonyBDP/BDV11); en) Presto/2.8.115 Version/11.10
+                */
 
 
             });
@@ -1154,9 +1234,9 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
             str = str.Replace("/_CMCC$/", "");
 
             str = str.Replace("/_/g", " ");
-            str = str.Replace("/^\\s+|\\s+$/g", "");
-            str = str.Replace("/\\/[^/]+$/", "");
-            str = str.Replace("/\\/[^/]+ Android\\/.*/", "");
+            str = str.Replace(@"/^\s+|\s+$/g", "");
+            str = str.Replace(@"/\/[^/]+$/", "");
+            str = str.Replace(@"/\/[^/]+ Android\/.*/", "");
 
             str = str.Replace("/^tita on /", "");
             str = str.Replace("/^Android on /", "");
@@ -1184,17 +1264,17 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
             str = str.Replace("/^Lenovo Lenovo/", "Lenovo");
             str = str.Replace("/^LNV-Lenovo/", "Lenovo");
             str = str.Replace("/^Lenovo-/", "Lenovo ");
-            str = str.Replace("/^(LG)[ _\\/]/", "$1-");
-            str = str.Replace("/^(HTC.*)\\s(?:v|V)?[0-9.]+$/", "$1");
-            str = str.Replace("/^(HTC)[-\\/]/", "$1 ");
+            str = str.Replace(@"/^(LG)[ _\/]/", "$1-");
+            str = str.Replace(@"/^(HTC.*)\s(?:v|V)?[0-9.]+$/", "$1");
+            str = str.Replace(@"/^(HTC)[-\/]/", "$1 ");
             str = str.Replace("/^(HTC)([A-Z][0-9][0-9][0-9])/", "$1 $2");
-            str = str.Replace("/^(Motorola[\\s|-])/", "");
+            str = str.Replace(@"/^(Motorola[\s|-])/", "");
             str = str.Replace("/^(Moto|MOT-)/", "");
 
             str = str.Replace("/-?(orange(-ls)?|vodafone|bouygues)$/i", "");
-            str = str.Replace("/http:\\/\\/.+$/i", "");
+            str = str.Replace(@"/http:\/\/.+$/i", "");
 
-            str = str.Replace("/^\\s+|\\s+$/g", "");
+            str = str.Replace(@"/^\s+|\s+$/g", "");
 
             return str;
         }
