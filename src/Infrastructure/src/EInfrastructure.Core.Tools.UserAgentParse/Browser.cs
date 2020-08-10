@@ -1,4 +1,4 @@
-﻿// Copyright (c) zhenlei520 All rights reserved.
+// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace EInfrastructure.Core.Tools.UserAgentParse
@@ -14,9 +14,19 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         public string Name { get; set; }
 
         /// <summary>
+        /// 模式
+        /// </summary>
+        public string Mode { get; set; }
+
+        /// <summary>
         /// 版本号
         /// </summary>
-        public string Version { get; set; }
+        public decimal? Version { get; set; }
+
+        /// <summary>
+        /// 版本类型
+        /// </summary>
+        public string VersionType { get; set; }
 
         /// <summary>
         ///
@@ -32,5 +42,10 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         ///
         /// </summary>
         public string Channel { get; internal set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public string Detail { get; internal set; }
     }
 }
