@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <summary>
         /// 版本号
         /// </summary>
-        public decimal? Version { get; set; }
+        public Versions Version { get; set; }
 
         /// <summary>
         /// 版本类型
@@ -47,5 +47,10 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         ///
         /// </summary>
         public string Detail { get; internal set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public bool Builds { get;internal set; }
     }
 }
