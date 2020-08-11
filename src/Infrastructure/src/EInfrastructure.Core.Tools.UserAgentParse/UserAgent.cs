@@ -29,6 +29,11 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
             "SunOS",
         };
 
+        /// <summary>
+        /// 检测伪装
+        /// </summary>
+        private bool DetectCamouflage = true;
+
         #endregion
 
         /// <summary>
@@ -37,16 +42,35 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         private UserAgent()
         {
             this.Os = new Os();
-            this.Browser = new Browser();
-            this.Device = new Devices();
+            this.Browser = new Browser()
+            {
+                Stock = true,
+                Hidden = false,
+                Channel = ""
+            };
+            this.Device = new Devices()
+            {
+                DeviceType = DeviceType.Pc,
+                Identified = false
+            };
             this.Engine = new Engine();
+            this.Features = new List<string>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="useFeatures"></param>
+        private UserAgent(bool useFeatures) : this()
+        {
+            UseFeatures = useFeatures;
         }
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="userAgent"></param>
-        public UserAgent(string userAgent) : this()
+        public UserAgent(string userAgent, bool useFeatures = false) : this(useFeatures)
         {
             CheckUserAgent(userAgent, _osNameList.ToArray(), (mc, regex) => { this.Os.Name = regex; });
             CheckUserAgent(userAgent, "SunOS", (mc) => { this.Os.Name = "Solaris"; });
@@ -2161,8 +2185,416 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 /****************************************************
                  *      NineSky
                  */
+                CheckUserAgent(userAgent, @"/Ninesky(?:-android-mobile(?:-cn)?)?\/([0-9.]*)/", mc2 =>
+                {
+                    this.Browser.Name = "NineSky";
+                    this.Browser.Version = new Versions(mc2[1].SafeString());
+
+                    if (this.Os.Name != "Android")
+                    {
+                        this.Os.Name = "Android";
+                        this.Os.Version = null;
+
+                        this.Device.Manufacturer = null;
+                        this.Device.Name = null;
+                    }
+                });
+
+                /****************************************************
+                 *      Skyfire
+                 */
+                CheckUserAgent(userAgent, @"/Skyfire\/([0-9.]*)/", mc2 =>
+                {
+                    this.Browser.Name = "Skyfire";
+                    this.Browser.Version = new Versions(mc2[1].SafeString());
+
+                    this.Device.DeviceType = DeviceType.Mobile;
+                    this.Os.Name = "Android";
+                    this.Os.Version = null;
+                });
 
 
+                /****************************************************
+                 *      Dolphin HD
+                 */
+                CheckUserAgent(userAgent, @"/DolphinHDCN\/([0-9.]*)/", mc2 =>
+                {
+                    this.Browser.Name = "Dolphin";
+                    this.Browser.Version = new Versions(mc2[1].SafeString());
+
+                    this.Device.DeviceType = DeviceType.Mobile;
+
+                    if (this.Os.Name != "Android")
+                    {
+                        this.Os.Name = "Android";
+                        this.Os.Version = null;
+                    }
+                });
+
+                CheckUserAgent(userAgent, @"/Dolphin\/INT/", mc2 =>
+                {
+                    this.Browser.Name = "Dolphin";
+                    this.Device.DeviceType = DeviceType.Mobile;
+                });
+
+                /****************************************************
+                  *      QQ Browser
+                  */
+                CheckUserAgent(userAgent, @"/(M?QQBrowser)\/([0-9.]*)/", mc2 =>
+                {
+                    this.Browser.Name = "QQ Browser";
+
+                    var version = mc2[2].SafeString();
+
+                    if (CheckUserAgent(version, @"/^[0-9][0-9]$/"))
+                    {
+                        version = version[0] + "." + version[1];
+                    }
+
+                    this.Browser.Version = new Versions(version);
+                    this.Browser.Detail = "2";
+
+                    this.Browser.Channel = "";
+
+                    if (string.IsNullOrEmpty(this.Os.Name) && mc2[1].SafeString() == "QQBrowser")
+                    {
+                        this.Os.Name = "Windows";
+                    }
+                });
+
+                /* iBrowser */
+                CheckUserAgent(userAgent, @"/(iBrowser)\/([0-9.]*)/", mc2 =>
+                {
+                    this.Browser.Name = "iBrowser";
+                    var version = mc2[2].SafeString();
+
+                    if (CheckUserAgent(version, @"/[0-9][0-9]/"))
+                    {
+                        version = version[0] + "." + version[1];
+                    }
+
+                    this.Browser.Version = new Versions(version);
+                    this.Browser.Detail = "2";
+                    this.Browser.Channel = "";
+                });
+
+                /****************************************************
+                 *      Puffin
+                 */
+                CheckUserAgent(userAgent, @"/Puffin\/([0-9.]*)/", mc2 =>
+                {
+                    this.Browser.Name = "Puffin";
+                    this.Browser.Version = new Versions(mc2[1].SafeString());
+                    this.Browser.Detail = "2";
+
+                    this.Device.DeviceType = DeviceType.Mobile;
+                    if (this.Os.Name == "Linux")
+                    {
+                        this.Os.Name = null;
+                        this.Os.Version = null;
+                    }
+                });
+
+                /****************************************************
+                 *      360 Extreme Explorer
+                 */
+                if (CheckUserAgent(userAgent, "360EE"))
+                {
+                    this.Browser.Stock = false;
+                    this.Browser.Name = "360 Extreme Explorer";
+                    this.Browser.Version = null;
+                }
+
+                /****************************************************
+                 *      Midori
+                 */
+                CheckUserAgent(userAgent, @"/Midori\/([0-9.]*)/", mc2 =>
+                {
+                    this.Browser.Name = "Midori";
+                    this.Browser.Version = new Versions(mc2[1].SafeString());
+
+                    if (this.Os.Name != "Linux")
+                    {
+                        this.Os.Name = "Linux";
+                        this.Os.Version = null;
+                    }
+
+                    this.Device.Manufacturer = null;
+                    this.Device.Name = null;
+                    this.Device.DeviceType = DeviceType.Pc;
+                });
+
+                /****************************************************
+                 *      Others
+                 */
+                var browsers =
+                    new List<KeyValuePair<string, string[]>>()
+                    {
+                        new KeyValuePair<string, string[]>("AdobeAIR", new[] {@"/AdobeAIR\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Awesomium", new[] {@"/Awesomium\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Canvace", new[] {@"/Canvace Standalone\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Ekioh", new[] {@"/Ekioh\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("JavaFX", new[] {@"/JavaFX\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("GFXe", new[] {@"/GFXe\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("LuaKit", new[] {@"/luakit/", ""}),
+                        new KeyValuePair<string, string[]>("Titanium", new[] {@"/Titanium\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("OpenWebKitSharp", new[] {@"/OpenWebKitSharp/", ""}),
+                        new KeyValuePair<string, string[]>("Prism", new[] {@"/Prism\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Qt", new[] {@"/Qt\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("QtEmbedded", new[] {@"/QtEmbedded/", ""}),
+                        new KeyValuePair<string, string[]>("QtEmbedded", new[] {@"/QtEmbedded.*Qt\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("RhoSimulator", new[] {@"/RhoSimulator/", ""}),
+                        new KeyValuePair<string, string[]>("UWebKit", new[] {@"/UWebKit\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("PhantomJS", new[] {@"/PhantomJS\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Google Web Preview", new[] {@"/Google Web Preview/", ""}),
+                        new KeyValuePair<string, string[]>("Google Earth", new[] {@"/Google Earth\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("EA Origin", new[] {@"/Origin\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("SecondLife", new[] {@"/SecondLife\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Valve Steam", new[] {@"/Valve Steam/", ""}),
+                        new KeyValuePair<string, string[]>("Songbird", new[] {@"/Songbird\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Thunderbird", new[] {@"/Thunderbird\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Abrowser", new[] {@"/Abrowser\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("arora", new[] {@"/[Aa]rora\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Baidu Browser",
+                            new[] {@"/M?BaiduBrowser\/([0-9.]*)/i", ""}),
+                        new KeyValuePair<string, string[]>("Camino", new[] {@"/Camino\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Canure", new[] {@"/Canure\/([0-9.]*)/,", ""}),
+                        new KeyValuePair<string, string[]>("CometBird", new[] {@"/CometBird\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Comodo Dragon", new[] {@"/Comodo_Dragon\/([0-9.]*)/", "2"}),
+                        new KeyValuePair<string, string[]>("Conkeror", new[] {@"/[Cc]onkeror\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("CoolNovo",
+                            new[] {@"/(?:CoolNovo|CoolNovoChromePlus)\/([0-9.]*)/", "3"}),
+                        new KeyValuePair<string, string[]>("ChromePlus", new[] {@"/ChromePlus(?:\/([0-9.]*))?$/", "3"}),
+                        new KeyValuePair<string, string[]>("Daedalus", new[] {@"/Daedalus ([0-9.]*)/", "2"}),
+                        new KeyValuePair<string, string[]>("Demobrowser", new[] {@"/demobrowser\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Dooble", new[] {@"/Dooble(?:\/([0-9.]*))?/", ""}),
+                        new KeyValuePair<string, string[]>("DWB", new[] {@"/dwb(?:-hg)?(?:\/([0-9.]*))?/", ""}),
+                        new KeyValuePair<string, string[]>("Epiphany", new[] {@"/Epiphany\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("FireWeb", new[] {@"/FireWeb\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Flock", new[] {@"/Flock\/([0-9.]*)/", "3"}),
+                        new KeyValuePair<string, string[]>("Galeon", new[] {@"/Galeon\/([0-9.]*)/", "3"}),
+                        new KeyValuePair<string, string[]>("Helium", new[] {@"/HeliumMobileBrowser\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("iCab", new[] {@"/iCab\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Iceape", new[] {@"/Iceape\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("IceCat", new[] {@"/IceCat ([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Iceweasel", new[] {@"/Iceweasel\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("InternetSurfboard",
+                            new[] {@"/InternetSurfboard\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Iron", new[] {@"/Iron\/([0-9.]*)/", "2"}),
+                        new KeyValuePair<string, string[]>("Isis", new[] {@"/BrowserServer/", ""}),
+                        new KeyValuePair<string, string[]>("Jumanji", new[] {@"/jumanji/", ""}),
+                        new KeyValuePair<string, string[]>("Kazehakase", new[] {@"/Kazehakase\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("KChrome", new[] {@"/KChrome\/([0-9.]*)/", "3"}),
+                        new KeyValuePair<string, string[]>("K-Meleon", new[] {@"/K-Meleon\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Leechcraft", new[] {@"/Leechcraft(?:\/([0-9.]*))?/", "2"}),
+                        new KeyValuePair<string, string[]>("Lightning", new[] {@"/Lightning\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Lunascape", new[] {@"/Lunascape[\/| ]([0-9.]*)/", "3"}),
+                        new KeyValuePair<string, string[]>("iLunascape", new[] {@"/iLunascape\/([0-9.]*)/", "3"}),
+                        new KeyValuePair<string, string[]>("Maxthon", new[] {@"/Maxthon[\/ ]([0-9.]*)/", "3"}),
+                        new KeyValuePair<string, string[]>("MiniBrowser", new[] {@"/MiniBr?owserM\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("MiniBrowser",
+                            new[] {@"/MiniBrowserMobile\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("MixShark", new[] {@"/MixShark\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Motorola WebKit",
+                            new[] {@"/MotorolaWebKit\/([0-9.]*)/", "3"}),
+                        new KeyValuePair<string, string[]>("NetFront LifeBrowser",
+                            new[] {@"/NetFrontLifeBrowser\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Netscape Navigator",
+                            new[] {@"/Navigator\/([0-9.]*)/", "3"}),
+                        new KeyValuePair<string, string[]>("Odyssey", new[] {@"/OWB\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("OmniWeb", new[] {@"/OmniWeb/", ""}),
+                        new KeyValuePair<string, string[]>("Orca", new[] {@"/Orca\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Origyn", new[] {@"/Origyn Web Browser/", ""}),
+                        new KeyValuePair<string, string[]>("Palemoon", new[] {@"/Pale[mM]oon\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Phantom", new[] {@"/Phantom\/V([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Polaris", new[] {@"/Polaris\/v?([0-9.]*)/i", "2"}),
+                        new KeyValuePair<string, string[]>("QtCreator", new[] {@"/QtCreator\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("QtQmlViewer", new[] {@"/QtQmlViewer/", ""}),
+                        new KeyValuePair<string, string[]>("QtTestBrowser", new[] {@"/QtTestBrowser\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("QtWeb", new[] {@"/QtWeb Internet Browser\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("QupZilla", new[] {@"/QupZilla\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Roccat", new[] {@"/Roccat\/([0-9]\.[0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Raven for Mac", new[] {@"/Raven for Mac\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("rekonq", new[] {@"/rekonq/", ""}),
+                        new KeyValuePair<string, string[]>("RockMelt", new[] {@"/RockMelt\/([0-9.]*)/", "2"}),
+                        new KeyValuePair<string, string[]>("Sleipnir", new[] {@"/Sleipnir\/([0-9.]*)/", "3"}),
+                        new KeyValuePair<string, string[]>("SMBrowser", new[] {@"/SMBrowser/", ""}),
+                        new KeyValuePair<string, string[]>("Sogou Explorer", new[] {@"/SE 2.X MetaSr/", ""}),
+                        new KeyValuePair<string, string[]>("Snowshoe", new[] {@"/Snowshoe\/([0-9.]*)/", "2"}),
+                        new KeyValuePair<string, string[]>("Sputnik", new[] {@"/Sputnik\/([0-9.]*)/i", "3"}),
+                        new KeyValuePair<string, string[]>("Stainless", new[] {@"/Stainless\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("SunChrome", new[] {@"/SunChrome\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Surf", new[] {@"/Surf\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("TaoBrowser", new[] {@"/TaoBrowser\/([0-9.]*)/", "2"}),
+                        new KeyValuePair<string, string[]>("TaomeeBrowser", new[] {@"/TaomeeBrowser\/([0-9.]*)/", "2"}),
+                        new KeyValuePair<string, string[]>("TazWeb", new[] {@"/TazWeb/", ""}),
+                        new KeyValuePair<string, string[]>("Viera", new[] {@"/Viera\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Villanova", new[] {@"/Villanova\/([0-9.]*)/", "3"}),
+                        new KeyValuePair<string, string[]>("Wavelink Velocity",
+                            new[] {@"/Wavelink Velocity Browser\/([0-9.]*)/", "2"}),
+                        new KeyValuePair<string, string[]>("WebPositive", new[] {@"/WebPositive/", ""}),
+                        new KeyValuePair<string, string[]>("WebRender", new[] {@"/WebRender/", ""}),
+                        new KeyValuePair<string, string[]>("Wyzo", new[] {@"/Wyzo\/([0-9.]*)/", "3"}),
+                        new KeyValuePair<string, string[]>("Zetakey", new[] {@"/Zetakey Webkit\/([0-9.]*)/", ""}),
+                        new KeyValuePair<string, string[]>("Zetakey", new[] {@"/Zetakey\/([0-9.]*)/", ""}),
+                    };
+
+                for (var b = 0; b < browsers.Count; b++)
+                {
+                    CheckUserAgent(userAgent, browsers[b].Value[0], mc2 =>
+                    {
+                        this.Browser.Name = browsers[b].Key;
+                        this.Browser.Channel = "";
+                        this.Browser.Stock = false;
+
+                        if (!string.IsNullOrEmpty(mc2[1].SafeString()))
+                        {
+                            this.Browser.Version = new Versions(mc[1].SafeString());
+                            this.Browser.Detail = browsers[b].Value[1];
+                        }
+                        else
+                        {
+                            this.Browser.Version = null;
+                        }
+                    });
+                }
+
+                /****************************************************
+                 *      WebKit
+                 */
+                CheckUserAgent(userAgent, @"/WebKit\/([0-9.]*)/i", mc2 =>
+                {
+                    this.Engine.Name = "Webkit";
+                    this.Engine.Version = new Versions(mc2[1].SafeString());
+                });
+
+                CheckUserAgent(userAgent, @"/Browser\/AppleWebKit([0-9.]*)/i", mc2 =>
+                {
+                    this.Engine.Name = "Webkit";
+                    this.Engine.Version = new Versions(mc2[1].SafeString());
+                });
+
+                /* KHTML */
+                CheckUserAgent(userAgent, @"/KHTML\/([0-9.]*)/", mc2 =>
+                {
+                    this.Engine.Name = "KHTML";
+                    this.Engine.Version = new Versions(mc2[1].SafeString());
+                });
+
+                /****************************************************
+                 *      Gecko
+                 */
+                if (CheckUserAgent(userAgent, @"/Gecko/") && !CheckUserAgent(userAgent, @"/like Gecko/i"))
+                {
+                    this.Engine.Name = "Gecko";
+                    CheckUserAgent(userAgent, @"/; rv:([^\)]+)\)/",
+                        mc2 => { this.Engine.Version = new Versions(mc2[1].SafeString()); });
+                }
+
+                /****************************************************
+                 *      Presto
+                 */
+                CheckUserAgent(userAgent, @"/Presto\/([0-9.]*)/", mc2 =>
+                {
+                    this.Engine.Name = "Presto";
+                    this.Engine.Version = new Versions(mc2[1].SafeString());
+                });
+
+                /****************************************************
+                 *      Trident
+                 */
+                CheckUserAgent(userAgent, @"/Trident\/([0-9.]*)/", mc2 =>
+                {
+                    this.Engine.Name = "Trident";
+                    this.Engine.Version = new Versions(mc2[1].SafeString());
+
+                    if (this.Browser.Name == "Internet Explorer")
+                    {
+                        if (this.ParseVersion(this.Engine.Version.ToString()) == 6 &&
+                            (this.Browser.Version.ToString()).ConvertToDecimal(0) < 10)
+                        {
+                            this.Browser.Version = new Versions("10.0");
+                            this.Browser.Mode = "compat";
+                        }
+
+                        if (ParseVersion(this.Engine.Version.ToString()) == 5 &&
+                            (this.Browser.Version.ToString()).ConvertToDecimal(0) < 9)
+                        {
+                            this.Browser.Version = new Versions("9.0");
+                            this.Browser.Mode = "compat";
+                        }
+
+                        if (ParseVersion(this.Engine.Version.ToString()) == 4 &&
+                            (this.Browser.Version.ToString()).ConvertToDecimal(0) < 8)
+                        {
+                            this.Browser.Version = new Versions("8.0");
+                            this.Browser.Mode = "compat";
+                        }
+                    }
+
+                    if (this.Os.Name == "Windows Phone")
+                    {
+                        if (ParseVersion(this.Engine.Version.ToString()) == 5 &&
+                            this.Os.Version.ToString().ConvertToDecimal(0) < 7.5m)
+                        {
+                            this.Os.Version = new Versions("7.5");
+                        }
+                    }
+                });
+
+                /****************************************************
+                 *      Corrections
+                 */
+                if (this.Os.Name == "Android" && this.Browser.Stock)
+                {
+                    this.Browser.Hidden = true;
+                }
+
+                if (this.Os.Name == "iOS" && this.Browser.Name == "Opera Mini")
+                {
+                    this.Os.Version = null;
+                }
+
+                if (this.Browser.Name == "" && this.Engine.Name != "Webkit")
+                {
+                    this.Engine.Name = "Webkit";
+                    this.Engine.Version = null;
+                }
+
+                if (this.Device.DeviceType.Id == DeviceType.Television.Id && this.Browser.Name == "Opera")
+                {
+                    this.Browser.Name = "Opera Devices";
+
+                    List<KeyValuePair<string, string>> versionMaps = new List<KeyValuePair<string, string>>()
+                    {
+                        new KeyValuePair<string, string>("2.10", "3.2"),
+                        new KeyValuePair<string, string>("2.9", "3.1"),
+                        new KeyValuePair<string, string>("2.8", "3.0"),
+                        new KeyValuePair<string, string>("2.7", "2.9"),
+                        new KeyValuePair<string, string>("2.6", "2.8"),
+                        new KeyValuePair<string, string>("2.4", "10.3"),
+                        new KeyValuePair<string, string>("2.3", "10"),
+                        new KeyValuePair<string, string>("2.2", "9.7"),
+                        new KeyValuePair<string, string>("2.1", "9.6")
+                    };
+
+                    if (versionMaps.Any(x => x.Key == this.Engine.Version.ToString()))
+                    {
+                        this.Browser.Version = new Versions(versionMaps
+                            .Where(x => x.Key == this.Engine.Version.ToString()).Select(x => x.Value).FirstOrDefault());
+                    }
+                    else
+                    {
+                        this.Browser.Version = null;
+                    }
+
+                    this.Os.Name = null;
+                    this.Os.Version = null;
+                }
+
+                /****************************************************
+                 *      Camouflage
+                 */
             });
         }
 
@@ -2195,6 +2627,11 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// 特性信息
         /// </summary>
         public List<string> Features { get; set; }
+
+        /// <summary>
+        /// 是否使用特性
+        /// </summary>
+        public bool UseFeatures { get; private set; }
 
         #region private methods
 
@@ -2336,6 +2773,22 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
             str = str.Replace(@"/^\s+|\s+$/g", "");
 
             return str;
+        }
+
+        #endregion
+
+        #region 转换版本号
+
+        /// <summary>
+        /// 转换版本号
+        /// </summary>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        private decimal ParseVersion(string version)
+        {
+            var components = version.Split('.');
+            string major = components.Shift();
+            return (major + '.' + components.ToList().ConvertListToString("")).ConvertToDecimal(0);
         }
 
         #endregion

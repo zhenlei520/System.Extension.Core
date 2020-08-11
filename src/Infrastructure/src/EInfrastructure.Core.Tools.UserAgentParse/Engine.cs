@@ -17,6 +17,6 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <summary>
         /// 版本
         /// </summary>
-        public string Version { get; internal set; }
+        public Versions Version { get; internal set; }
     }
 }

@@ -346,6 +346,27 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 返回集合原来的第一个元素的值
+
+        /// <summary>
+        /// 返回集合原来的第一个元素的值,list集合中移除第一个值
+        /// </summary>
+        /// <param name="list"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>返回集合原来的第一个元素的值</returns>
+        public static T Shift<T>(this List<T> list)
+        {
+            if (list.Count == 0)
+            {
+                return default(T);
+            }
+            T res = list[0];
+            list = list.Skip(1).ToList();
+            return res;
+        }
+
+        #endregion
+
         #region 添加单个对象
 
         /// <summary>

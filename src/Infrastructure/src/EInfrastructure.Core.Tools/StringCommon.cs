@@ -287,6 +287,21 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 返回数组原来的第一个元素的值,数组中移除第一个值
+
+        /// <summary>
+        /// 返回数组原来的第一个元素的值,数组中移除第一个值
+        /// </summary>
+        /// <param name="list"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>返回数组原来的第一个元素的值</returns>
+        public static T Shift<T>(this T[] list)
+        {
+            return list.ToList().Shift();
+        }
+
+        #endregion
+
         #region 操作
 
         #region 清除字符串数组中的重复项以及对字符串进行剪切
