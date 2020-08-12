@@ -61,16 +61,21 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         ///
         /// </summary>
         /// <param name="useFeatures"></param>
-        private UserAgent(bool useFeatures) : this()
+        /// <param name="activeXObject"></param>
+        private UserAgent(bool useFeatures, bool activeXObject) : this()
         {
             UseFeatures = useFeatures;
+            IsSupportActiveXObject = activeXObject;
         }
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="userAgent"></param>
-        public UserAgent(string userAgent, bool useFeatures = false) : this(useFeatures)
+        /// <param name="useFeatures"></param>
+        /// <param name="activeXObject"></param>
+        public UserAgent(string userAgent, bool useFeatures = false, bool activeXObject = false) : this(useFeatures,
+            activeXObject)
         {
             CheckUserAgent(userAgent, _osNameList.ToArray(), (mc, regex) => { this.Os.Name = regex; });
             CheckUserAgent(userAgent, "SunOS", (mc) => { this.Os.Name = "Solaris"; });
@@ -2595,6 +2600,123 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 /****************************************************
                  *      Camouflage
                  */
+                if (this.DetectCamouflage)
+                {
+                    CheckUserAgent(userAgent, @"/Mac OS X 10_6_3; ([^;]+); [a-z]{2}-(?:[a-z]{2})?\)/", mc2 =>
+                    {
+                        this.Browser.Name = "";
+                        this.Browser.Version = null;
+                        this.Browser.Mode = "desktop";
+                        this.Os.Name = "Android";
+                        this.Os.Version = null;
+                        this.Engine.Name = "Webkit";
+                        this.Engine.Version = null;
+                        this.Device.Name = mc[1].SafeString();
+                        this.Device.DeviceType = DeviceType.Mobile;
+
+                        var model = CleanupModel(this.Device.Name);
+                        var androidInfo = GloableConfigurations.AndroidModels.Where(x => x.Key == model)
+                            .Select(x => x.Value).FirstOrDefault();
+
+                        if (androidInfo != null && androidInfo.Length > 0)
+                        {
+                            this.Device.Manufacturer = androidInfo[0];
+                            this.Device.Name = androidInfo[1];
+
+                            if (androidInfo.Length > 2)
+                            {
+                                this.Device.DeviceType = DeviceType.GetAll<DeviceType>()
+                                    .FirstOrDefault(x => x.Extend == androidInfo[2]);
+                                this.Device.Identified = true;
+                            }
+                        }
+                    });
+
+                    CheckUserAgent(userAgent, @"/Linux Ventana; [a-z]{2}-[a-z]{2}; (.+) Build/", mc2 =>
+                    {
+                        this.Browser.Name = "";
+                        this.Browser.Version = null;
+                        this.Browser.Mode = "desktop";
+
+                        this.Os.Name = "Android";
+                        this.Os.Version = null;
+                        this.Engine.Name = "Webkit";
+                        this.Engine.Version = null;
+
+                        this.Device.Name = mc2[1].SafeString();
+                        this.Device.DeviceType = DeviceType.Mobile;
+
+                        var model = CleanupModel(this.Device.Name);
+                        var androidInfo = GloableConfigurations.AndroidModels.Where(x => x.Key == model)
+                            .Select(x => x.Value).FirstOrDefault();
+
+                        if (androidInfo != null && androidInfo.Length > 0)
+                        {
+                            this.Device.Manufacturer = androidInfo[0];
+                            this.Device.Name = androidInfo[1];
+
+                            if (androidInfo.Length > 2)
+                            {
+                                this.Device.DeviceType = DeviceType.GetAll<DeviceType>()
+                                    .FirstOrDefault(x => x.Extend == androidInfo[2]);
+                                this.Device.Identified = true;
+                            }
+                        }
+                    });
+
+                    if (this.Browser.Name == "Safari")
+                    {
+                        if (this.Os.Name != "iOS" &&
+                            new Regex(@"/AppleWebKit\/([0-9]+.[0-9]+)/i").Matches(userAgent)[1] !=
+                            new Regex(@"/Safari\/([0-9]+.[0-9]+)/i").Matches(userAgent)[1])
+                        {
+                            this.Features.Add("safariMismatch");
+                            this.CamouFlage = true;
+                        }
+
+                        if (this.Os.Name == "iOS" && CheckUserAgent(userAgent, @"/^Mozilla/"))
+                        {
+                            this.Features.Add("noMozillaPrefix");
+                            this.CamouFlage = true;
+                        }
+
+                        if (CheckUserAgent(userAgent, @"!/Version\/[0-9\.]+/"))
+                        {
+                            this.Features.Add("noVersion");
+                            this.CamouFlage = true;
+                        }
+                    }
+
+                    if (this.Browser.Name == "Chrome")
+                    {
+                        if (CheckUserAgent(userAgent,
+                            @"!/(?:Chrome|CrMo|CriOS)\/([0-9]{1,2}\.[0-9]\.[0-9]{3,4}\.[0-9]+)/"))
+                        {
+                            this.Features.Add("wrongVersion");
+                            this.CamouFlage = true;
+                        }
+                    }
+
+                    if (this.UseFeatures)
+                    {
+                        /* If it claims not to be Trident, but it is probably Trident running camouflage mode */
+                        if (this.IsSupportActiveXObject)
+                        {
+                            this.Features.Add("trident");
+
+                            if (!string.IsNullOrEmpty(this.Engine.Name) && this.Engine.Name != "Trident")
+                            {
+
+                            }
+
+
+                            if (typeof this.engine.name != = 'undefined' && this.engine.name != = 'Trident') {
+                                this.camouflage = typeof this.browser.name == =
+                                    'undefined' || this.browser.name != = 'Maxthon';
+                            }
+                        }
+                    }
+                }
             });
         }
 
@@ -2632,6 +2754,11 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// 是否使用特性
         /// </summary>
         public bool UseFeatures { get; private set; }
+
+        /// <summary>
+        /// 是否支持ActiveX
+        /// </summary>
+        public bool IsSupportActiveXObject { get; private set; }
 
         #region private methods
 

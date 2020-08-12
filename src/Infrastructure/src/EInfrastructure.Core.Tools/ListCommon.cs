@@ -236,10 +236,6 @@ namespace EInfrastructure.Core.Tools
 
         #region 对list集合分页
 
-        #endregion
-
-        #region 对list集合分页
-
         /// <summary>
         /// 对list集合分页
         /// </summary>
