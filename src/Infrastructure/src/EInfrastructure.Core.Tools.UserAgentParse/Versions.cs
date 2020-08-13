@@ -52,6 +52,11 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// </summary>
         public decimal? Minor { get; set; }
 
+        /// <summary>
+        /// 原始版本
+        /// </summary>
+        public string Original { get; set; }
+
         #region 重写运算符
 
         /// <summary>
@@ -110,6 +115,11 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <returns></returns>
         public static bool operator >(Versions source, string version)
         {
+            if (source == null)
+            {
+                return false;
+            }
+
             var opt = new Versions(version);
             return source > opt;
         }
@@ -122,6 +132,11 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <returns></returns>
         public static bool operator >=(Versions source, string version)
         {
+            if (source == null)
+            {
+                return false;
+            }
+
             var opt = new Versions(version);
             return source >= opt;
         }
@@ -134,6 +149,11 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <returns></returns>
         public static bool operator <(Versions source, string version)
         {
+            if (source == null)
+            {
+                return true;
+            }
+
             var opt = new Versions(version);
             return source < opt;
         }
@@ -146,6 +166,11 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <returns></returns>
         public static bool operator <=(Versions source, string version)
         {
+            if (source == null)
+            {
+                return true;
+            }
+
             var opt = new Versions(version);
             return source <= opt;
         }

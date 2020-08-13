@@ -8,6 +8,16 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
     /// </summary>
     public class Browser
     {
+        public Browser()
+        {
+            this.Version = new Versions();
+        }
+
+        public Browser(string version)
+        {
+            this.Version = new Versions(version);
+        }
+
         /// <summary>
         /// 浏览器名称
         /// </summary>
@@ -51,6 +61,6 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <summary>
         ///
         /// </summary>
-        public bool Builds { get;internal set; }
+        public bool Builds { get; internal set; }
     }
 }

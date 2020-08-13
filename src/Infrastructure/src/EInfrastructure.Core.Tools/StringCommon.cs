@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Text.RegularExpressions;
 using EInfrastructure.Core.Config.Entities.Extensions;
 
 namespace EInfrastructure.Core.Tools
@@ -298,6 +299,123 @@ namespace EInfrastructure.Core.Tools
         public static T Shift<T>(this T[] list)
         {
             return list.ToList().Shift();
+        }
+
+        #endregion
+
+        #region Replace 结合正则表达式移除
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="str">原参数</param>
+        /// <param name="regex">正则表达式</param>
+        /// <param name="newStr">替换后的值</param>
+        /// <returns></returns>
+        public static string ReplaceRegex(this string str, string regex, string newStr)
+        {
+            Regex reg = new Regex(regex);
+            return reg.Replace(str, newStr);
+        }
+
+        #endregion
+
+        #region 正则表达式
+
+        /// <summary>
+        /// 正则表达式
+        /// </summary>
+        /// <param name="str">待校验的字符串</param>
+        /// <param name="regex">正则表达式</param>
+        /// <returns></returns>
+        public static string[] Match(this string str, string regex)
+        {
+            return str.Match(regex, RegexOptions.None);
+        }
+
+        /// <summary>
+        /// 正则匹配，得到匹配到的字符串集合
+        /// </summary>
+        /// <param name="str">待匹配的字符串</param>
+        /// <param name="regex">正则表达式</param>
+        /// <param name="options">正则表达式设置</param>
+        /// <returns></returns>
+        public static string[] Match(this string str, string regex, RegexOptions options)
+        {
+            int startat = (uint) (options & RegexOptions.RightToLeft) > 0U ? str.Length : 0;
+            return str.Match(regex, RegexOptions.None, startat);
+        }
+
+        /// <summary>
+        /// 正则匹配，得到匹配到的字符串集合
+        /// </summary>
+        /// <param name="str">待匹配的字符串</param>
+        /// <param name="regex">正则表达式</param>
+        /// <param name="options">正则表达式设置</param>
+        /// <param name="startat"></param>
+        /// <returns></returns>
+        public static string[] Match(this string str, string regex, RegexOptions options, int startat)
+        {
+            Regex reg = new Regex(regex, options);
+            var res = reg.Matches(str, startat);
+            List<string> list = new List<string>();
+            for (int i = 0; i < res.Count; i++)
+            {
+                list.Add(res[i].Value);
+            }
+
+            return list.ToArray();
+        }
+
+        #endregion
+
+        #region 判断正则表达式是否匹配到
+
+        /// <summary>
+        /// 判断正则表达式是否匹配到
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="regex"></param>
+        /// <returns></returns>
+        public static bool Test(this string str, string regex)
+        {
+            return str.Test(regex, RegexOptions.None);
+        }
+
+        /// <summary>
+        /// 判断正则表达式是否匹配到
+        /// </summary>
+        /// <param name="str">待匹配的字符串</param>
+        /// <param name="regex">正则表达式</param>
+        /// <param name="options">正则表达式设置</param>
+        /// <returns></returns>
+        public static bool Test(this string str, string regex, RegexOptions options)
+        {
+            return new Regex(regex,options).IsMatch(str);
+        }
+
+        #endregion
+
+        #region Indicates whether the specified string is null or an
+
+        /// <summary>
+        /// Indicates whether the specified string is null or an
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty(this string str)
+        {
+            return string.IsNullOrEmpty(str);
+        }
+
+        /// <summary>
+        /// Indicates whether the specified string is null or an
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool IsNullOrWhiteSpace(this string str)
+        {
+            return string.IsNullOrWhiteSpace(str);
         }
 
         #endregion
