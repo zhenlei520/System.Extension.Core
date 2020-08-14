@@ -10,6 +10,7 @@ namespace EInfrastructure.Core.Configuration.Ioc
     {
         /// <summary>
         /// 权重 越高越优先选择
+        /// 系统包默认权重都为99
         /// </summary>
         /// <returns></returns>
         int GetWeights();

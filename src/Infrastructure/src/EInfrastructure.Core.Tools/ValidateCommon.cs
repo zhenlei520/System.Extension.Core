@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Tools.Enumerations;
 using EInfrastructure.Core.Tools.Systems;
 
@@ -17,35 +18,58 @@ namespace EInfrastructure.Core.Tools
     /// </summary>
     public static class ValidateCommon
     {
-        //邮件正则表达式
+        private static IRegexConfigurations _regexConfigurations;
+
+        /// <summary>
+        ///
+        /// </summary>
+        static ValidateCommon()
+        {
+            _regexConfigurations = new RegexConfigurationsValidateDefault();
+        }
+
+        /// <summary>
+        /// 邮件正则表达式
+        /// </summary>
         private static readonly Regex Emailregex =
-            new Regex(@"^([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$",
+            new Regex(RegexDefault.Email.Regex,
                 RegexOptions.IgnoreCase);
 
-        //手机号正则表达式
+        /// <summary>
+        /// 手机号正则表达式
+        /// </summary>
         private static readonly Regex Mobileregex =
-            new Regex("^(13|14|15|16|17|18|19)[0-9]{9}$", RegexOptions.IgnoreCase);
+            new Regex(GetRegexConfigurations().GetRegexRule(RegexDefault.Mobile), RegexOptions.IgnoreCase);
 
-        //固话号正则表达式
-        private static readonly Regex Phoneregex = new Regex(@"^(\d{3,4}-?)?\d{7,8}$", RegexOptions.IgnoreCase);
+        /// <summary>
+        /// 固话号正则表达式
+        /// </summary>
+        private static readonly Regex Phoneregex = new Regex(GetRegexConfigurations().GetRegexRule(RegexDefault.Phone),
+            RegexOptions.IgnoreCase);
 
-        //邮政编码正则表达式
-        private static readonly Regex ZipCodeRegex = new Regex(@"^\d{6}$", RegexOptions.IgnoreCase);
+        /// <summary>
+        /// 邮政编码正则表达式
+        /// </summary>
+        private static readonly Regex ZipCodeRegex =
+            new Regex(GetRegexConfigurations().GetRegexRule(RegexDefault.ZipCode), RegexOptions.IgnoreCase);
 
         /// <summary>
         /// 中文正则表达式
         /// </summary>
-        private static readonly Regex ChineseRegex = new Regex("^[\u4e00-\u9fa5]", RegexOptions.IgnoreCase);
+        private static readonly Regex ChineseRegex =
+            new Regex(GetRegexConfigurations().GetRegexRule(RegexDefault.Chinese), RegexOptions.IgnoreCase);
 
-        //IP正则表达式
+        /// <summary>
+        /// IP正则表达式
+        /// </summary>
         private static readonly Regex IpRegex =
-            new Regex(
-                @"^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$");
+            new Regex(GetRegexConfigurations().GetRegexRule(RegexDefault.Ip));
 
-        //网址正则表达式
+        /// <summary>
+        /// 网址正则表达式
+        /// </summary>
         private static readonly Regex WebSiteRegex =
-            new Regex(@"((http|https)://)?(www.)?[a-z0-9\.]+(\.(com|net|cn|com\.cn|com\.net|net\.cn))(/[^\s\n]*)?",
-                RegexOptions.IgnoreCase);
+            new Regex(GetRegexConfigurations().GetRegexRule(RegexDefault.WebSite), RegexOptions.IgnoreCase);
 
         #region 是否邮政编码
 
@@ -558,6 +582,32 @@ namespace EInfrastructure.Core.Tools
             }
 
             return ChineseRegex.Match(str).Success && ChineseRegex.Matches(str).Count == str.SafeString().Length;
+        }
+
+        #endregion
+
+        #region 设置正则表达式配置驱动（不建议更换默认配置）
+
+        /// <summary>
+        /// 设置正则表达式配置驱动（不建议更换默认配置）
+        /// </summary>
+        /// <param name="regexConfigurations"></param>
+        public static void SetRegexConfigurations(IRegexConfigurations regexConfigurations)
+        {
+            _regexConfigurations = regexConfigurations ?? throw new ArgumentNullException(nameof(regexConfigurations));
+        }
+
+        #endregion
+
+        #region 得到正则表达式配置驱动
+
+        /// <summary>
+        /// 得到正则表达式配置驱动
+        /// </summary>
+        /// <returns></returns>
+        public static IRegexConfigurations GetRegexConfigurations()
+        {
+            return _regexConfigurations;
         }
 
         #endregion

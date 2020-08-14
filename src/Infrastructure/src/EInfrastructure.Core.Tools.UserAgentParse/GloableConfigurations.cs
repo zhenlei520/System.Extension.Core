@@ -112,41 +112,42 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <summary>
         /// windows mobile设备
         /// </summary>
-        internal static List<KeyValuePair<string, string[]>> WindowsMobileModels = new List<KeyValuePair<string, string[]>>()
-        {
-            new KeyValuePair<string, string[]>("DX900", new[] {StringsAcer, "Tempo DX900"}),
-            new KeyValuePair<string, string[]>("F900", new[] {StringsAcer, "Tempo F900"}),
-            new KeyValuePair<string, string[]>("Coolpad F800", new[] {StringsCoolpad, "F800"}),
-            new KeyValuePair<string, string[]>("garmin-asus-Nuvifone-M10", new[] {"Garmin-Asus", "Nuvifone M10"}),
-            new KeyValuePair<string, string[]>("HP iPAQ 510", new[] {"HP", "iPAQ 510"}),
-            new KeyValuePair<string, string[]>("HD mini T5555", new[] {StringsHtc, "HD mini"}),
-            new KeyValuePair<string, string[]>("HTC HD mini", new[] {StringsHtc, "HD mini"}),
-            new KeyValuePair<string, string[]>("HTC HD mini T5555", new[] {StringsHtc, "HD mini"}),
-            new KeyValuePair<string, string[]>("HTC HD2", new[] {StringsHtc, "HD2"}),
-            new KeyValuePair<string, string[]>("HTC HD2 T8585", new[] {StringsHtc, "HD2"}),
-            new KeyValuePair<string, string[]>("HD2 T8585", new[] {StringsHtc, "HD2"}),
-            new KeyValuePair<string, string[]>("T-Mobile LEO", new[] {StringsHtc, "HD2"}),
-            new KeyValuePair<string, string[]>("dopodT5588", new[] {StringsHtc, "Hengshan"}),
-            new KeyValuePair<string, string[]>("HTC Mega-T3333", new[] {StringsHtc, "Mega"}),
-            new KeyValuePair<string, string[]>("HTC Snap S521", new[] {StringsHtc, "Snap"}),
-            new KeyValuePair<string, string[]>("HTC Touch2 T3320", new[] {StringsHtc, "Touch 2"}),
-            new KeyValuePair<string, string[]>("HTC Touch2 T3333", new[] {StringsHtc, "Touch 2"}),
-            new KeyValuePair<string, string[]>("HTC Touch2 T3335", new[] {StringsHtc, "Touch 2"}),
-            new KeyValuePair<string, string[]>("HTC P3700", new[] {StringsHtc, "Touch Diamond"}),
-            new KeyValuePair<string, string[]>("HTC Touch Diamond2 T5353", new[] {StringsHtc, "Touch Diamond 2"}),
-            new KeyValuePair<string, string[]>("HTC Touch HD T8282", new[] {StringsHtc, "Touch HD"}),
-            new KeyValuePair<string, string[]>("HTC Touch HD T8283", new[] {StringsHtc, "Touch HD"}),
-            new KeyValuePair<string, string[]>("HTC Touch HD2 T8585", new[] {StringsHtc, "Touch HD2"}),
-            new KeyValuePair<string, string[]>("HTC Touch Pro2 T7373", new[] {StringsHtc, "Touch Pro 2"}),
-            new KeyValuePair<string, string[]>("T7380", new[] {StringsHtc, "Touch Pro 2"}),
-            new KeyValuePair<string, string[]>("HTC TyTN II", new[] {StringsHtc, "TyTN II"}),
-            new KeyValuePair<string, string[]>("GT-B7300", new[] {StringsSamsung, "Omnia Lite"}),
-            new KeyValuePair<string, string[]>("GT-B7610", new[] {StringsSamsung, "Omnia Pro"}),
-            new KeyValuePair<string, string[]>("GT-i8000", new[] {StringsSamsung, "Omnia 2"}),
-            new KeyValuePair<string, string[]>("GT-I8000", new[] {StringsSamsung, "Omnia 2"}),
-            new KeyValuePair<string, string[]>("GT-I8000U", new[] {StringsSamsung, "Omnia 2"}),
-            new KeyValuePair<string, string[]>("M1i", new[] {StringsSonyEricsson, "M1i Aspen"})
-        };
+        internal static List<KeyValuePair<string, string[]>> WindowsMobileModels =
+            new List<KeyValuePair<string, string[]>>()
+            {
+                new KeyValuePair<string, string[]>("DX900", new[] {StringsAcer, "Tempo DX900"}),
+                new KeyValuePair<string, string[]>("F900", new[] {StringsAcer, "Tempo F900"}),
+                new KeyValuePair<string, string[]>("Coolpad F800", new[] {StringsCoolpad, "F800"}),
+                new KeyValuePair<string, string[]>("garmin-asus-Nuvifone-M10", new[] {"Garmin-Asus", "Nuvifone M10"}),
+                new KeyValuePair<string, string[]>("HP iPAQ 510", new[] {"HP", "iPAQ 510"}),
+                new KeyValuePair<string, string[]>("HD mini T5555", new[] {StringsHtc, "HD mini"}),
+                new KeyValuePair<string, string[]>("HTC HD mini", new[] {StringsHtc, "HD mini"}),
+                new KeyValuePair<string, string[]>("HTC HD mini T5555", new[] {StringsHtc, "HD mini"}),
+                new KeyValuePair<string, string[]>("HTC HD2", new[] {StringsHtc, "HD2"}),
+                new KeyValuePair<string, string[]>("HTC HD2 T8585", new[] {StringsHtc, "HD2"}),
+                new KeyValuePair<string, string[]>("HD2 T8585", new[] {StringsHtc, "HD2"}),
+                new KeyValuePair<string, string[]>("T-Mobile LEO", new[] {StringsHtc, "HD2"}),
+                new KeyValuePair<string, string[]>("dopodT5588", new[] {StringsHtc, "Hengshan"}),
+                new KeyValuePair<string, string[]>("HTC Mega-T3333", new[] {StringsHtc, "Mega"}),
+                new KeyValuePair<string, string[]>("HTC Snap S521", new[] {StringsHtc, "Snap"}),
+                new KeyValuePair<string, string[]>("HTC Touch2 T3320", new[] {StringsHtc, "Touch 2"}),
+                new KeyValuePair<string, string[]>("HTC Touch2 T3333", new[] {StringsHtc, "Touch 2"}),
+                new KeyValuePair<string, string[]>("HTC Touch2 T3335", new[] {StringsHtc, "Touch 2"}),
+                new KeyValuePair<string, string[]>("HTC P3700", new[] {StringsHtc, "Touch Diamond"}),
+                new KeyValuePair<string, string[]>("HTC Touch Diamond2 T5353", new[] {StringsHtc, "Touch Diamond 2"}),
+                new KeyValuePair<string, string[]>("HTC Touch HD T8282", new[] {StringsHtc, "Touch HD"}),
+                new KeyValuePair<string, string[]>("HTC Touch HD T8283", new[] {StringsHtc, "Touch HD"}),
+                new KeyValuePair<string, string[]>("HTC Touch HD2 T8585", new[] {StringsHtc, "Touch HD2"}),
+                new KeyValuePair<string, string[]>("HTC Touch Pro2 T7373", new[] {StringsHtc, "Touch Pro 2"}),
+                new KeyValuePair<string, string[]>("T7380", new[] {StringsHtc, "Touch Pro 2"}),
+                new KeyValuePair<string, string[]>("HTC TyTN II", new[] {StringsHtc, "TyTN II"}),
+                new KeyValuePair<string, string[]>("GT-B7300", new[] {StringsSamsung, "Omnia Lite"}),
+                new KeyValuePair<string, string[]>("GT-B7610", new[] {StringsSamsung, "Omnia Pro"}),
+                new KeyValuePair<string, string[]>("GT-i8000", new[] {StringsSamsung, "Omnia 2"}),
+                new KeyValuePair<string, string[]>("GT-I8000", new[] {StringsSamsung, "Omnia 2"}),
+                new KeyValuePair<string, string[]>("GT-I8000U", new[] {StringsSamsung, "Omnia 2"}),
+                new KeyValuePair<string, string[]>("M1i", new[] {StringsSonyEricsson, "M1i Aspen"})
+            };
 
         /// <summary>
         /// wp设备

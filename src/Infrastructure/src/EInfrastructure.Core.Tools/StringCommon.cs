@@ -314,7 +314,20 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static string ReplaceRegex(this string str, string regex, string newStr)
         {
-            Regex reg = new Regex(regex);
+            return ReplaceRegex(str, regex, RegexOptions.None, newStr);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="str">原参数</param>
+        /// <param name="regex">正则表达式</param>
+        /// <param name="options"></param>
+        /// <param name="newStr">替换后的值</param>
+        /// <returns></returns>
+        public static string ReplaceRegex(this string str, string regex, RegexOptions options, string newStr)
+        {
+            Regex reg = new Regex(regex, options);
             return reg.Replace(str, newStr);
         }
 
@@ -391,7 +404,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool Test(this string str, string regex, RegexOptions options)
         {
-            return new Regex(regex,options).IsMatch(str);
+            return new Regex(regex, options).IsMatch(str);
         }
 
         #endregion
