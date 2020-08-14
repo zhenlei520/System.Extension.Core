@@ -359,9 +359,8 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// 得到版本信息
         /// </summary>
         /// <param name="mc"></param>
-        /// <param name="regexDefault"></param>
         /// <returns></returns>
-        internal string GetVersionResult(MatchCollection mc,RegexDefault regexDefault=null)
+        internal string GetVersionResult(MatchCollection mc)
         {
             string str = "";
             if (mc.Count > 1)
@@ -373,12 +372,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 str = mc[0].SafeString();
             }
 
-            if (regexDefault == null)
-            {
-                return str;
-            }
-
-            return str.Match(_regexConfigurations.GetRegexRule(regexDefault))[0];
+            return str.Match(@"(\d*\.)*\d*").Where(x => !string.IsNullOrEmpty(x)).ToList()[0];
         }
 
         /// <summary>
@@ -388,7 +382,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <returns></returns>
         internal Versions GetVersion(MatchCollection mc)
         {
-            return new Versions(GetVersionResult(mc,RegexDefault.FloatingPointNumbers));
+            return new Versions(GetVersionResult(mc));
         }
 
         #endregion

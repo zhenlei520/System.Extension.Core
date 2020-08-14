@@ -356,7 +356,7 @@ namespace EInfrastructure.Core.Tools
         public static string[] Match(this string str, string regex, RegexOptions options)
         {
             int startat = (uint) (options & RegexOptions.RightToLeft) > 0U ? str.Length : 0;
-            return str.Match(regex, RegexOptions.None, startat);
+            return str.Match(regex, options, startat);
         }
 
         /// <summary>

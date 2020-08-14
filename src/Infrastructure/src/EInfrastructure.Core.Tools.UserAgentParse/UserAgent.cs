@@ -44,20 +44,20 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 uaData.Device.DeviceType.Equals(DeviceType.Tablet))
             {
                 if ((mc = UA.Match(
-                        @"(ZTE|Samsung|Motorola|HTC|Coolpad|Huawei|Lenovo|LG|Sony Ericsson|Oppo|TCL|Vivo|Sony|Meizu|Nokia)",RegexOptions.IgnoreCase)
+                        @"ZTE|Samsung|Motorola|HTC|Coolpad|Huawei|Lenovo|LG|Sony Ericsson|Oppo|TCL|Vivo|Sony|Meizu|Nokia",RegexOptions.IgnoreCase)
                     ).Length > 0)
                 {
-                    uaData.Device.Manufacturer = mc[1].SafeString();
+                    uaData.Device.Manufacturer = mc[0];
                     if (!string.IsNullOrEmpty(uaData.Device.Name) &&
-                        uaData.Device.Name.IndexOf(mc[1].SafeString(), StringComparison.Ordinal) >= 0)
+                        uaData.Device.Name.IndexOf(mc[0], StringComparison.Ordinal) >= 0)
                     {
-                        uaData.Device.Name = uaData.Device.Name.ReplaceRegex(mc[1].SafeString(), "");
+                        uaData.Device.Name = uaData.Device.Name.ReplaceRegex(mc[0], "");
                     }
                 }
 
                 // handle Apple
                 // 苹果就这3种iPod iPad iPhone
-                if ((mc = UA.Match(@"(iPod|iPad|iPhone)",RegexOptions.IgnoreCase)).Length > 0)
+                if ((mc = UA.Match(@"iPod|iPad|iPhone",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Device.Manufacturer = "Apple";
                     uaData.Device.Name = mc[1].SafeString();
@@ -99,7 +99,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 // 兼容build结尾或直接)结尾
                 // 华为机型特征：Huawei[\s-_](\w*[-_]?\w*)  或者以 7D-  ALE-  CHE-等开头
                 else if ((mc = UA.Match(
-                        @"(Huawei[\s-_](\w*[-_]?\w*)|\s(7D-\w*|ALE-\w*|ATH-\w*|CHE-\w*|CHM-\w*|Che1-\w*|Che2-\w*|D2-\w*|G616-\w*|G620S-\w*|G621-\w*|G660-\w*|G750-\w*|GRA-\w*|Hol-\w*|MT2-\w*|MT7-\w*|PE-\w*|PLK-\w*|SC-\w*|SCL-\w*|H60-\w*|H30-\w*)[\s\)])",RegexOptions.IgnoreCase)
+                        @"Huawei[\s-_](\w*[-_]?\w*)|\s(7D-\w*|ALE-\w*|ATH-\w*|CHE-\w*|CHM-\w*|Che1-\w*|Che2-\w*|D2-\w*|G616-\w*|G620S-\w*|G621-\w*|G660-\w*|G750-\w*|GRA-\w*|Hol-\w*|MT2-\w*|MT7-\w*|PE-\w*|PLK-\w*|SC-\w*|SCL-\w*|H60-\w*|H30-\w*)[\s\)]",RegexOptions.IgnoreCase)
                     ).Length > 0)
                 {
                     uaData.Device.Manufacturer = "Huawei";
@@ -126,16 +126,16 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 // hongmi有特殊判断build/hm2015011
                 else if ((mc = UA.Match(@";\s(mi|m1|m2|m3|m4|hm)(\s*\w*)[\s\)]",RegexOptions.IgnoreCase)).Length > 0)
                 {
-                    if ((tempMc = UA.Match(@"(meitu|MediaPad)",RegexOptions.IgnoreCase)).Length > 0)
+                    if ((tempMc = UA.Match(@"meitu|MediaPad",RegexOptions.IgnoreCase)).Length > 0)
                     {
                         // 美图手机名字冒充小米 比如 meitu m4 mizhi
                         uaData.Device.Manufacturer = tempMc[1].SafeString();
                         uaData.Device.Name = "";
                     }
                     // 若匹配出的 match[2]没空格 会出现很多例如 mizi mizhi miha 但也会出现mi3 minote之类 特殊处理下
-                    else if (mc[2].SafeString().Length > 0 && !new Regex(@"(/\s/)").IsMatch(mc[2].SafeString()))
+                    else if (mc[2].SafeString().Length > 0 && !new Regex(@"/\s/").IsMatch(mc[2].SafeString()))
                     {
-                        if ((tempMc = mc[2].Match(@"(\d)",RegexOptions.IgnoreCase)).Length > 0)
+                        if ((tempMc = mc[2].Match(@"\d",RegexOptions.IgnoreCase)).Length > 0)
                         {
                             uaData.Device.Name = mc[1].SafeString() + "-" + tempMc[1].SafeString();
                         }
@@ -261,13 +261,13 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     }
                 }
                 else if ((mc = UA.Match(
-                        @"(vivo[\s-_](\w*)|\s(E1\w?|E3\w?|E5\w?|V1\w?|V2\w?|S11\w?|S12\w?|S1\w?|S3\w?|S6\w?|S7\w?|S9\w?|X1\w?|X3\w?|X520\w?|X5\w?|X5Max|X5Max+|X5Pro|X5SL|X710F|X710L|Xplay|Xshot|Xpaly3S|Y11\w?|Y11i\w?|Y11i\w?|Y13\w?|Y15\w?|Y17\w?|Y18\w?|Y19\w?|Y1\w?|Y20\w?|Y22\w?|Y22i\w?|Y23\w?|Y27\w?|Y28\w?|Y29\w?|Y33\w?|Y37\w?|Y3\w?|Y613\w?|Y622\w?|Y627\w?|Y913\w?|Y923\w?|Y927\w?|Y928\w?|Y929\w?|Y937\w?)[\s\)])",RegexOptions.IgnoreCase)
+                        @"vivo[\s-_](\w*)|\s(E1\w?|E3\w?|E5\w?|V1\w?|V2\w?|S11\w?|S12\w?|S1\w?|S3\w?|S6\w?|S7\w?|S9\w?|X1\w?|X3\w?|X520\w?|X5\w?|X5Max|X5Max+|X5Pro|X5SL|X710F|X710L|Xplay|Xshot|Xpaly3S|Y11\w?|Y11i\w?|Y11i\w?|Y13\w?|Y15\w?|Y17\w?|Y18\w?|Y19\w?|Y1\w?|Y20\w?|Y22\w?|Y22i\w?|Y23\w?|Y27\w?|Y28\w?|Y29\w?|Y33\w?|Y37\w?|Y3\w?|Y613\w?|Y622\w?|Y627\w?|Y913\w?|Y923\w?|Y927\w?|Y928\w?|Y929\w?|Y937\w?)[\s\)]",RegexOptions.IgnoreCase)
                     ).Length > 0)
                 {
                     uaData.Device.Manufacturer = "Vivo";
                     uaData.Device.Name = mc[1];
                     // 首先剔除 viv-  vivo-  bbg- 等打头的内容
-                    uaData.Device.Name = uaData.Device.Name.ReplaceRegex(@"(viv[\s-_]|vivo[\s-_]|bbg[\s-_])",RegexOptions.IgnoreCase, "");
+                    uaData.Device.Name = uaData.Device.Name.ReplaceRegex(@"viv[\s-_]|vivo[\s-_]|bbg[\s-_]",RegexOptions.IgnoreCase, "");
                     // 解决移动联通等不同发行版导致的机型不同问题
                     // 特征：[A-Z][0-9]+[A-Z] 例如  X5F X5L X5M X5iL 都应该是 X5
                     if ((mc = uaData.Device.Name.Match(@"([a-z]+[0-9]+)i?[a-z]?[\s-_]?",RegexOptions.IgnoreCase)).Length > 0)
@@ -277,7 +277,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 }
                 // handle Oppo
                 else if ((mc = UA.Match(
-                        @"(Oppo[\s-_](\w*)|\s(1100|1105|1107|3000|3005|3007|6607|A100|A103|A105|A105K|A109|A109K|A11|A113|A115|A115K|A121|A125|A127|A129|A201|A203|A209|A31|A31c|A31t|A31u|A51kc|A520|A613|A615|A617|E21W|Find|Mirror|N5110|N5117|N5207|N5209|R2010|R2017|R6007|R7005|R7007|R7c|R7t|R8000|R8007|R801|R805|R807|R809T|R8107|R8109|R811|R811W|R813T|R815T|R815W|R817|R819T|R8200|R8205|R8207|R821T|R823T|R827T|R830|R830S|R831S|R831T|R833T|R850|Real|T703|U2S|U521|U525|U529|U539|U701|U701T|U705T|U705W|X9000|X9007|X903|X905|X9070|X9077|X909|Z101|R829T)[\s\)])",RegexOptions.IgnoreCase)
+                        @"Oppo[\s-_](\w*)|\s(1100|1105|1107|3000|3005|3007|6607|A100|A103|A105|A105K|A109|A109K|A11|A113|A115|A115K|A121|A125|A127|A129|A201|A203|A209|A31|A31c|A31t|A31u|A51kc|A520|A613|A615|A617|E21W|Find|Mirror|N5110|N5117|N5207|N5209|R2010|R2017|R6007|R7005|R7007|R7c|R7t|R8000|R8007|R801|R805|R807|R809T|R8107|R8109|R811|R811W|R813T|R815T|R815W|R817|R819T|R8200|R8205|R8207|R821T|R823T|R827T|R830|R830S|R831S|R831T|R833T|R850|Real|T703|U2S|U521|U525|U529|U539|U701|U701T|U705T|U705W|X9000|X9007|X903|X905|X9070|X9077|X909|Z101|R829T)[\s\)]",RegexOptions.IgnoreCase)
                     ).Length > 0)
                 {
                     uaData.Device.Manufacturer = "Oppo";
@@ -297,7 +297,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     {
                         uaData.Device.Name = mc[1] + '-' + mc[2];
                     }
-                    else if ((mc = uaData.Device.Name.Match(@"(\w*-?[a-z]+[0-9]+)",RegexOptions.IgnoreCase)).Length > 0)
+                    else if ((mc = uaData.Device.Name.Match(@"\w*-?[a-z]+[0-9]+",RegexOptions.IgnoreCase)).Length > 0)
                     {
                         uaData.Device.Name = mc[1];
                     }
@@ -313,7 +313,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     {
                         uaData.Device.Name = mc[1] + '-' + mc[2];
                     }
-                    else if ((mc = uaData.Device.Name.Match(@"(\w*-?[a-z]+[0-9]+)",RegexOptions.IgnoreCase)).Length > 0)
+                    else if ((mc = uaData.Device.Name.Match(@"\w*-?[a-z]+[0-9]+",RegexOptions.IgnoreCase)).Length > 0)
                     {
                         uaData.Device.Name = mc[1];
                     }
@@ -321,7 +321,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 // handle Lenovo
                 // 兼容build结尾或直接)结尾 兼容Lenovo-xxx/xxx以及Leveno xxx build等
                 else if ((mc = UA.Match(
-                        @"(Lenovo[\s-_](\w*[-_]?\w*)|\s(A3580|A3860|A5500|A5600|A5860|A7600|A806|A800|A808T|A808T-I|A936|A938t|A788t|K30-E|K30-T|K30-W|K50-T3s|K50-T5|K80M|K910|K910e|K920|S90-e|S90-t|S90-u|S968T|X2-CU|X2-TO|Z90-3|Z90-7)[\s\)])",RegexOptions.IgnoreCase)
+                        @"Lenovo[\s-_](\w*[-_]?\w*)|\s(A3580|A3860|A5500|A5600|A5860|A7600|A806|A800|A808T|A808T-I|A936|A938t|A788t|K30-E|K30-T|K30-W|K50-T3s|K50-T5|K80M|K910|K910e|K920|S90-e|S90-t|S90-u|S968T|X2-CU|X2-TO|Z90-3|Z90-7)[\s\)]",RegexOptions.IgnoreCase)
                     ).Length > 0)
                 {
                     uaData.Device.Manufacturer = "Lenovo";
@@ -336,14 +336,14 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
 
                     // 解决移动联通等不同发行版导致的机型不同问题
                     // 特征：[A-Z][0-9]+[A-Z] 例如  A360t A360 都应该是 A360
-                    if ((mc = uaData.Device.Name.Match(@"([a-z]+[0-9]+)",RegexOptions.IgnoreCase)).Length > 0)
+                    if ((mc = uaData.Device.Name.Match(@"[a-z]+[0-9]+",RegexOptions.IgnoreCase)).Length > 0)
                     {
                         uaData.Device.Name = mc[1];
                     }
                 }
                 // handle coolpad
                 else if ((mc = UA.Match(
-                        @"(Coolpad[\s-_](\w*)|\s(7295C|7298A|7620L|8908|8085|8970L|9190L|Y80D)[\s\)])",RegexOptions.IgnoreCase))
+                        @"Coolpad[\s-_](\w*)|\s(7295C|7298A|7620L|8908|8085|8970L|9190L|Y80D)[\s\)]",RegexOptions.IgnoreCase))
                     .Length > 0)
                 {
                     uaData.Device.Manufacturer = "Coolpad";
@@ -358,7 +358,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
 
                     // 解决移动联通等不同发行版导致的机型不同问题
                     // 特征：[A-Z][0-9]+[A-Z] 例如  8297-t01 8297-c01 8297w 都应该是 8297
-                    if ((mc = uaData.Device.Name.Match(@"([a-z]?[0-9]+)",RegexOptions.IgnoreCase)).Length > 0)
+                    if ((mc = uaData.Device.Name.Match(@"[a-z]?[0-9]+",RegexOptions.IgnoreCase)).Length > 0)
                     {
                         uaData.Device.Name = mc[1];
                     }
@@ -369,9 +369,9 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     // base 库适配
                     // 解决移动联通等不同发行版导致的机型不同问题
                     // 特征：[A-Z][0-9]+[A-Z] 例如  8297-t01 8297-c01 8297w 都应该是 8297
-                    if ((mc = uaData.Device.Name.Match(@"([a-z]?[0-9]+)",RegexOptions.IgnoreCase)).Length > 0)
+                    if ((mc = uaData.Device.Name.Match(@"[a-z]?[0-9]+",RegexOptions.IgnoreCase)).Length > 0)
                     {
-                        uaData.Device.Name = mc[1];
+                        uaData.Device.Name = mc[0];
                     }
                 }
                 // handle meizu
@@ -395,14 +395,14 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 }
                 // handle htc
                 else if ((mc = UA.Match(
-                        @"(Htc[-_\s](\w*)|\s(601e|606w|608t|609d|610t|6160|619d|620G|626d|626s|626t|626w|709d|801e|802d|802t|802w|809D|816d|816e|816t|816v|816w|826d|826s|826t|826w|828w|901e|919d|A310e|A50AML|A510e|A620d|A620e|A620t|A810e|A9191|Aero|C620d|C620e|C620t|D316d|D516d|D516t|D516w|D820mt|D820mu|D820t|D820ts|D820u|D820us|E9pt|E9pw|E9sw|E9t|HD7S|M8Et|M8Sd|M8St|M8Sw|M8d|M8e|M8s|M8si|M8t|M8w|M9W|M9ew|Phablet|S510b|S510e|S610d|S710d|S710e|S720e|S720t|T327t|T328d|T328t|T328w|T329d|T329t|T329w|T528d|T528t|T528w|T8698|WF5w|X315e|X710e|X715e|X720d|X920e|Z560e|Z710e|Z710t|Z715e)[\s\)])")
+                        @"Htc[-_\s](\w*)|\s(601e|606w|608t|609d|610t|6160|619d|620G|626d|626s|626t|626w|709d|801e|802d|802t|802w|809D|816d|816e|816t|816v|816w|826d|826s|826t|826w|828w|901e|919d|A310e|A50AML|A510e|A620d|A620e|A620t|A810e|A9191|Aero|C620d|C620e|C620t|D316d|D516d|D516t|D516w|D820mt|D820mu|D820t|D820ts|D820u|D820us|E9pt|E9pw|E9sw|E9t|HD7S|M8Et|M8Sd|M8St|M8Sw|M8d|M8e|M8s|M8si|M8t|M8w|M9W|M9ew|Phablet|S510b|S510e|S610d|S710d|S710e|S720e|S720t|T327t|T328d|T328t|T328w|T329d|T329t|T329w|T528d|T528t|T528w|T8698|WF5w|X315e|X710e|X715e|X720d|X920e|Z560e|Z710e|Z710t|Z715e)[\s\)]")
                     ).Length > 0)
                 {
                     uaData.Device.Manufacturer = "Htc";
                     uaData.Device.Name = mc[1];
                 }
                 // handle Gionee
-                else if ((mc = UA.Match(@"(Gionee[\s-_](\w*)|\s(GN\d+\w*)[\s\)])",RegexOptions.IgnoreCase)).Length > 0)
+                else if ((mc = UA.Match(@"Gionee[\s-_](\w*)|\s(GN\d+\w*)[\s\)]",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Device.Manufacturer = "Gionee";
                     if (!mc[2].IsNullOrEmpty())
@@ -416,7 +416,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 }
                 // handle LG
                 else if ((mc = UA.Match(
-                        @"(LG[-_](\w*)|\s(D728|D729|D802|D855|D856|D857|D858|D859|E985T|F100L|F460|H778|H818|H819|P895|VW820)[\s\)])",RegexOptions.IgnoreCase)
+                        @"LG[-_](\w*)|\s(D728|D729|D802|D855|D856|D857|D858|D859|E985T|F100L|F460|H778|H818|H819|P895|VW820)[\s\)]",RegexOptions.IgnoreCase)
                     ).Length > 0)
                 {
                     uaData.Device.Manufacturer = "Lg";
@@ -430,13 +430,13 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     }
                 }
                 // handle tcl
-                else if ((mc = UA.Match(@"(Tcl[\s-_](\w*)|\s(H916T|P588L|P618L|P620M|P728M)[\s\)])")).Length > 0)
+                else if ((mc = UA.Match(@"Tcl[\s-_](\w*)|\s(H916T|P588L|P618L|P620M|P728M)[\s\)]")).Length > 0)
                 {
                     uaData.Device.Manufacturer = "Tcl";
                     uaData.Device.Name = mc[1];
                 }
                 // ZTE
-                else if ((mc = UA.Match(@"(V9180|N918)",RegexOptions.IgnoreCase)).Length > 0)
+                else if ((mc = UA.Match(@"V9180|N918",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Device.Manufacturer = "Zte";
                     uaData.Device.Name = mc[1];
@@ -447,7 +447,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     // base 库适配
                     // 解决移动联通等不同发行版导致的机型不同问题
                     // 特征：[A-Z][0-9]+[A-Z] 例如  Q505T Q505u 都应该是 Q505
-                    if ((mc = uaData.Device.Name.Match(@"([a-z]?[0-9]+)",RegexOptions.IgnoreCase)).Length > 0)
+                    if ((mc = uaData.Device.Name.Match(@"[a-z]?[0-9]+",RegexOptions.IgnoreCase)).Length > 0)
                     {
                         uaData.Device.Name = mc[1];
                     }
@@ -472,7 +472,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     uaData.Device.Name = mc[1];
                 }
                 // Smartisan
-                else if ((mc = UA.Match(@"(SM705|SM701|YQ601|YQ603)",RegexOptions.IgnoreCase)).Length > 0)
+                else if ((mc = UA.Match(@"SM705|SM701|YQ601|YQ603",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Device.Manufacturer = "Smartisan";
                     var temp = new List<KeyValuePair<string, string>>()
@@ -493,7 +493,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 }
                 // handle Asus
                 else if ((mc = UA.Match(
-                        @"(Asus[\s-_](\w*)|\s(A500CG|A500KL|A501CG|A600CG|PF400CG|PF500KL|T001|X002|X003|ZC500TG|ZE550ML|ZE551ML)[\s\)])",RegexOptions.IgnoreCase)
+                        @"Asus[\s-_](\w*)|\s(A500CG|A500KL|A501CG|A600CG|PF400CG|PF500KL|T001|X002|X003|ZC500TG|ZE550ML|ZE551ML)[\s\)]",RegexOptions.IgnoreCase)
                     ).Length > 0)
                 {
                     uaData.Device.Manufacturer = "Asus";
@@ -507,7 +507,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                     }
                 }
 // handle nubia
-                else if ((mc = UA.Match(@"(Nubia[-_\s](\w*)|(NX501|NX505J|NX506J|NX507J|NX503A|nx\d+\w*)[\s\)])",RegexOptions.IgnoreCase))
+                else if ((mc = UA.Match(@"Nubia[-_\s](\w*)|(NX501|NX505J|NX506J|NX507J|NX503A|nx\d+\w*)[\s\)]",RegexOptions.IgnoreCase))
                     .Length > 0)
                 {
                     uaData.Device.Manufacturer = "Nubia";
@@ -589,7 +589,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 if (!uaData.Device.Name.IsNullOrEmpty())
                 {
                     uaData.Device.Name = uaData.Device.Name.SafeString().ToUpper().ReplaceRegex(@"-+|_+|\s+",RegexOptions.Compiled, " ");
-                    uaData.Device.Name = uaData.Device.Name.Match(@"\s*(\w*\s*\w*)")[1].ReplaceRegex(@"\s+", "-");
+                    uaData.Device.Name = uaData.Device.Name.Match(@"\s*(\w*\s*\w*)")[0].ReplaceRegex(@"\s+", "-");
 
                     // 针对三星、华为做去重的特殊处理
                     if (uaData.Device.Manufacturer == "Samsung")
@@ -655,10 +655,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 if ((mc = UA.Match(@"360se(?:[ \/]([\w.]+))?",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Browser.Name = "360 security Explorer";
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions(mc[1]);
                 }
                 /**
                  * the world
@@ -666,10 +663,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 else if ((mc = UA.Match(@"the world(?:[ \/]([\w.]+))?",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Browser.Name = "the world";
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions(mc[1]);
                 }
                 /**
                  * tencenttraveler
@@ -677,10 +671,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 else if ((mc = UA.Match(@"tencenttraveler ([\w.]+)",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Browser.Name = "tencenttraveler";
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions(mc[1]);
                 }
                 /**
                  * LBBROWSER
@@ -699,10 +690,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 if ((mc = UA.Match(@"BaiduHD\s+([\w.]+)",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Browser.Name = "BaiduHD";
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions(mc[1]);
                 }
                 /**
                  * 360 Browser
@@ -710,10 +698,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 else if ((mc = UA.Match(@"360.s*aphone\s*browser\s*\(version\s*([\w.]+)\)",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Browser.Name = "360 Browser";
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions(mc[1]);
                 }
                 /**
                  * Baidu Browser
@@ -721,10 +706,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 else if ((mc = UA.Match(@"flyflow\/([\w.]+)",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Browser.Name = "Baidu Browser";
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions(mc[1]);
                 }
                 /**
                  * Baidu HD
@@ -732,10 +714,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 else if ((mc = UA.Match(@"baiduhd ([\w.]+)",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Browser.Name = "Baidu HD";
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions(mc[1]);
                 }
                 /**
                  * baidubrowser
@@ -743,10 +722,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 else if ((mc = UA.Match(@"baidubrowser\/([\d\.]+)\s",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Browser.Name = "baidubrowser";
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions(mc[1]);
                 }
                 /**
                  * LieBaoFast
@@ -754,10 +730,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 else if ((mc = UA.Match(@"LieBaoFast\/([\w.]+)",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Browser.Name = "LieBao Fast";
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions(mc[1]);
                 }
                 /**
                  * LieBao
@@ -765,10 +738,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 else if ((mc = UA.Match(@"LieBao\/([\w.]+)",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Browser.Name = "LieBao";
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions( mc[1]);
                 }
                 /**
                  * SOUGOU
@@ -776,10 +746,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 else if ((mc = UA.Match(@"Sogou\w+\/([0-9\.]+)",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Browser.Name = "SogouMobileBrowser";
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions( mc[1]);
                 }
                 /**
                  * 百度国际
@@ -787,10 +754,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 else if ((mc = UA.Match(@"bdbrowser\w+\/([0-9\.]+)",RegexOptions.IgnoreCase)).Length > 0)
                 {
                     uaData.Browser.Name = "百度国际";
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions(mc[1]);
                 }
                 /**
                  * Android Chrome Browser
@@ -807,19 +771,13 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         }
                         else
                         {
-                            uaData.Browser.Version = new Versions()
-                            {
-                                Original = mc[1]
-                            };
+                            uaData.Browser.Version = new Versions(mc[1]);
                         }
                     }
                     else
                     {
                         uaData.Browser.Name = "Android Chrome";
-                        uaData.Browser.Version = new Versions()
-                        {
-                            Original = mc[1]
-                        };
+                        uaData.Browser.Version = new Versions(mc[1]);
                     }
                 }
                 /**
@@ -837,19 +795,13 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                         }
                         else
                         {
-                            uaData.Browser.Version = new Versions()
-                            {
-                                Original = mc[1]
-                            };
+                            uaData.Browser.Version = new Versions(mc[1]);
                         }
                     }
                     else
                     {
                         uaData.Browser.Name = "Android Browser";
-                        uaData.Browser.Version = new Versions()
-                        {
-                            Original = mc[1]
-                        };
+                        uaData.Browser.Version = new Versions(mc[1]);
                     }
                 }
                 /**
@@ -866,10 +818,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 uaData.Browser.Name = "百度框";
                 if (!mc[1].IsNullOrEmpty())
                 {
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions(mc[1]);
                 }
 
                 // uaData.Browser.Name = 'baidu box';
@@ -899,7 +848,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
             {
                 uaData.Browser.Name = "微信";
                 var tmpVersion = (mc[1]).ReplaceRegex(@"_",RegexOptions.Compiled, ".");
-                tempMc = tmpVersion.Match(@"(\d+\.\d+\.\d+\.\d+)");
+                tempMc = tmpVersion.Match(@"\d+\.\d+\.\d+\.\d+");
                 if (tempMc.Length > 0)
                 {
                     tmpVersion = tempMc[1];
@@ -911,56 +860,36 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
             if ((mc = UA.Match(@"UCBrowser\/([\w.]+)",RegexOptions.IgnoreCase)).Length > 0)
             {
                 uaData.Browser.Name = "UC Browser";
-                uaData.Browser.Version = new Versions()
-                {
-                    Original = mc[1]
-                };
+                uaData.Browser.Version = new Versions(mc[1]);
             }
 
             if ((mc = UA.Match(@"OPR\/([\w.]+)",RegexOptions.IgnoreCase)).Length > 0)
             {
                 uaData.Browser.Name = "Opera";
-                uaData.Browser.Version = new Versions()
-                {
-                    Original = mc[1]
-                };
+                uaData.Browser.Version = new Versions(mc[1]);
             }
             else if ((mc = UA.Match(@"OPiOS\/([\w.]+)",RegexOptions.IgnoreCase)).Length > 0)
             {
                 uaData.Browser.Name = "Opera";
-                uaData.Browser.Version = new Versions()
-                {
-                    Original = mc[1]
-                };
+                uaData.Browser.Version = new Versions(mc[1]);
             }
             // IE 11
             else if (UA.Test(@"Trident\/7",RegexOptions.IgnoreCase) && UA.Test(@"rv:11",RegexOptions.IgnoreCase))
             {
                 uaData.Browser.Name = "Internet Explorer";
-                uaData.Browser.Version = new Versions()
-                {
-                    Major = 11,
-                    Original = "11"
-                };
+                uaData.Browser.Version = new Versions("11");
             }
             // Microsoft Edge
             else if (UA.Test(@"Edge\/12",RegexOptions.IgnoreCase) && UA.Test(@"Windows Phone|Windows NT",RegexOptions.IgnoreCase))
             {
                 uaData.Browser.Name = "Microsoft Edge";
-                uaData.Browser.Version = new Versions()
-                {
-                    Major = 12,
-                    Original = "12"
-                };
+                uaData.Browser.Version = new Versions("12");
             }
             // miui browser
             else if ((mc = UA.Match(@"miuibrowser\/([\w.]+)",RegexOptions.IgnoreCase)).Length > 0)
             {
                 uaData.Browser.Name = "miui browser";
-                uaData.Browser.Version = new Versions()
-                {
-                    Original = mc[1]
-                };
+                uaData.Browser.Version = new Versions( mc[1]);
             }
 
             // Safari
@@ -976,10 +905,7 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
             {
                 if ((mc = UA.Match(@"Version\/([\w.]+)",RegexOptions.IgnoreCase)).Length > 0)
                 {
-                    uaData.Browser.Version = new Versions()
-                    {
-                        Original = mc[1]
-                    };
+                    uaData.Browser.Version = new Versions(mc[1]);
                 }
             }
 
@@ -996,18 +922,12 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 if (UA.Test(@"NT 6.3",RegexOptions.IgnoreCase))
                 {
                     uaData.Os.Alias = "8.1";
-                    uaData.Os.Version = new Versions()
-                    {
-                        Original = "8.1"
-                    };
+                    uaData.Os.Version = new Versions("8.1");
                 }
                 else if (UA.Test(@"NT 6.4",RegexOptions.IgnoreCase) || UA.Test(@"NT 10.0",RegexOptions.IgnoreCase))
                 {
                     uaData.Os.Alias = "10";
-                    uaData.Os.Version = new Versions()
-                    {
-                        Original = "10"
-                    };
+                    uaData.Os.Version = new Versions("10");
                 }
             }
             else if (uaData.Os.Name == "Mac OS X")
