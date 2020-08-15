@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Config.Entities.Extensions;
+using EInfrastructure.Core.Tools.Systems;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -341,7 +342,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="str">待校验的字符串</param>
         /// <param name="regex">正则表达式</param>
         /// <returns></returns>
-        public static string[] Match(this string str, string regex)
+        public static List<KeyValuePair<string, string[]>> Match(this string str, string regex)
         {
             return str.Match(regex, RegexOptions.None);
         }
@@ -353,7 +354,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="regex">正则表达式</param>
         /// <param name="options">正则表达式设置</param>
         /// <returns></returns>
-        public static string[] Match(this string str, string regex, RegexOptions options)
+        public static List<KeyValuePair<string, string[]>> Match(this string str, string regex, RegexOptions options)
         {
             int startat = (uint) (options & RegexOptions.RightToLeft) > 0U ? str.Length : 0;
             return str.Match(regex, options, startat);
@@ -367,17 +368,25 @@ namespace EInfrastructure.Core.Tools
         /// <param name="options">正则表达式设置</param>
         /// <param name="startat"></param>
         /// <returns></returns>
-        public static string[] Match(this string str, string regex, RegexOptions options, int startat)
+        public static List<KeyValuePair<string, string[]>> Match(this string str, string regex, RegexOptions options,
+            int startat)
         {
             Regex reg = new Regex(regex, options);
-            var res = reg.Matches(str, startat);
-            List<string> list = new List<string>();
-            for (int i = 0; i < res.Count; i++)
+            var matchCollection = reg.Matches(str, startat);
+            List<KeyValuePair<string, string[]>> retList = new List<KeyValuePair<string, string[]>>();
+
+            foreach (Match match in matchCollection)
             {
-                list.Add(res[i].Value);
+                string[] arrays = new string[match.Length];
+                for (int i = 0; i < match.Length; i++)
+                {
+                    arrays[i] = match.Groups[i].SafeString(false);
+                }
+
+                retList.Add(new KeyValuePair<string, string[]>(match.SafeString(false), arrays));
             }
 
-            return list.ToArray();
+            return retList;
         }
 
         #endregion

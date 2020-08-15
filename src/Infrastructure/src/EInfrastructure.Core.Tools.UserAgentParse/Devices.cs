@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Tools.UserAgentParse.Property;
+using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.Tools.UserAgentParse
 {
@@ -35,22 +36,26 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <summary>
         /// 设备类型
         /// </summary>
+        [JsonProperty(PropertyName = "type",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public DeviceType DeviceType { get; internal set; }
 
         /// <summary>
         /// 设备信息
         /// 例如：IPhone
         /// </summary>
+        [JsonProperty(PropertyName = "name",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Name { get; internal set; }
 
         /// <summary>
         /// 制造商
         /// </summary>
+        [JsonProperty(PropertyName = "manufacturer",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Manufacturer { get; internal set; }
 
         /// <summary>
         /// 是否确认
         /// </summary>
+        [JsonProperty(PropertyName = "identified",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool Identified { get; internal set; }
     }
 }

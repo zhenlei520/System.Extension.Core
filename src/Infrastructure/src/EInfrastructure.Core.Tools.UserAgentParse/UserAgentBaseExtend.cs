@@ -286,51 +286,51 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         {
             str = str.SafeString();
 
-            str = str.ReplaceRegex("_TD$/", "");
-            str = str.ReplaceRegex("_CMCC$/", "");
+            str = str.ReplaceRegex("_TD$", "");
+            str = str.ReplaceRegex("_CMCC$", "");
 
-            str = str.ReplaceRegex("_/g", " ");
-            str = str.ReplaceRegex(@"^\s+|\s+$/g", "");
-            str = str.ReplaceRegex(@"\/[^/]+$/", "");
-            str = str.ReplaceRegex(@"\/[^/]+ Android\/.*/", "");
+            str = str.ReplaceRegex("_", RegexOptions.Compiled, " ");
+            str = str.ReplaceRegex(@"^\s+|\s+$", RegexOptions.Compiled, "");
+            str = str.ReplaceRegex(@"\/[^/]+$", "");
+            str = str.ReplaceRegex(@"\/[^/]+ Android\/.*", "");
 
-            str = str.ReplaceRegex("^tita on /", "");
-            str = str.ReplaceRegex("^Android on /", "");
-            str = str.ReplaceRegex("^Android for /", "");
-            str = str.ReplaceRegex("^ICS AOSP on /", "");
-            str = str.ReplaceRegex("^Full AOSP on /", "");
-            str = str.ReplaceRegex("^Full Android on /", "");
-            str = str.ReplaceRegex("^Full Cappuccino on /", "");
-            str = str.ReplaceRegex("^Full MIPS Android on /", "");
-            str = str.ReplaceRegex("^Full Android/", "");
+            str = str.ReplaceRegex("^tita on ", "");
+            str = str.ReplaceRegex("^Android on ", "");
+            str = str.ReplaceRegex("^Android for ", "");
+            str = str.ReplaceRegex("^ICS AOSP on ", "");
+            str = str.ReplaceRegex("^Full AOSP on ", "");
+            str = str.ReplaceRegex("^Full Android on ", "");
+            str = str.ReplaceRegex("^Full Cappuccino on ", "");
+            str = str.ReplaceRegex("^Full MIPS Android on ", "");
+            str = str.ReplaceRegex("^Full Android", "");
 
             str = str.ReplaceRegex("^Acer ?", RegexOptions.IgnoreCase, "");
-            str = str.ReplaceRegex("^Iconia /", "");
-            str = str.ReplaceRegex("^Ainol /", "");
+            str = str.ReplaceRegex("^Iconia ", "");
+            str = str.ReplaceRegex("^Ainol ", "");
             str = str.ReplaceRegex("^Coolpad ?", RegexOptions.IgnoreCase, "Coolpad ");
-            str = str.ReplaceRegex("^ALCATEL /", "");
-            str = str.ReplaceRegex("^Alcatel OT-(.*)/", "one touch $1");
-            str = str.ReplaceRegex("^YL-/", "");
+            str = str.ReplaceRegex("^ALCATEL ", "");
+            str = str.ReplaceRegex("^Alcatel OT-(.*)", "one touch $1");
+            str = str.ReplaceRegex("^YL-", "");
             str = str.ReplaceRegex("^Novo7 ?", RegexOptions.IgnoreCase, "Novo7 ");
-            str = str.ReplaceRegex("^GIONEE /", "");
+            str = str.ReplaceRegex("^GIONEE ", "");
             str = str.ReplaceRegex("^HW-/", "");
             str = str.ReplaceRegex("^Huawei[ -]", RegexOptions.IgnoreCase, "Huawei ");
             str = str.ReplaceRegex("^SAMSUNG[ -]", RegexOptions.IgnoreCase, "");
-            str = str.ReplaceRegex("^SonyEricsson/", "");
-            str = str.ReplaceRegex("^Lenovo Lenovo/", "Lenovo");
-            str = str.ReplaceRegex("^LNV-Lenovo/", "Lenovo");
-            str = str.ReplaceRegex("^Lenovo-/", "Lenovo ");
-            str = str.ReplaceRegex(@"^(LG)[ _\/]/", "$1-");
-            str = str.ReplaceRegex(@"^(HTC.*)\s(?:v|V)?[0-9.]+$/", "$1");
-            str = str.ReplaceRegex(@"^(HTC)[-\/]/", "$1 ");
-            str = str.ReplaceRegex("^(HTC)([A-Z][0-9][0-9][0-9])/", "$1 $2");
-            str = str.ReplaceRegex(@"^(Motorola[\s|-])/", "");
-            str = str.ReplaceRegex("^(Moto|MOT-)/", "");
+            str = str.ReplaceRegex("^SonyEricsson", "");
+            str = str.ReplaceRegex("^Lenovo Lenovo", "Lenovo");
+            str = str.ReplaceRegex("^LNV-Lenovo", "Lenovo");
+            str = str.ReplaceRegex("^Lenovo-", "Lenovo ");
+            str = str.ReplaceRegex(@"^(LG)[ _\/]", "$1-");
+            str = str.ReplaceRegex(@"^(HTC.*)\s(?:v|V)?[0-9.]+$", "$1");
+            str = str.ReplaceRegex(@"^(HTC)[-\/]", "$1 ");
+            str = str.ReplaceRegex("^(HTC)([A-Z][0-9][0-9][0-9])", "$1 $2");
+            str = str.ReplaceRegex(@"^(Motorola[\s|-])", "");
+            str = str.ReplaceRegex("^(Moto|MOT-)", "");
 
             str = str.ReplaceRegex("-?(orange(-ls)?|vodafone|bouygues)$", RegexOptions.IgnoreCase, "");
             str = str.ReplaceRegex(@"http:\/\/.+$", RegexOptions.IgnoreCase, "");
 
-            str = str.ReplaceRegex(@"^\s+|\s+$/g", "");
+            str = str.ReplaceRegex(@"^\s+|\s+$", RegexOptions.Compiled, "");
 
             return str;
         }
@@ -365,14 +365,15 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
             string str = "";
             if (mc.Count > 1)
             {
-                str= mc[1].SafeString();
+                str = mc[1].SafeString();
             }
             else
             {
                 str = mc[0].SafeString();
             }
 
-            return str.Match(@"(\d*\.)*\d*").Where(x => !string.IsNullOrEmpty(x)).ToList()[0];
+            var list = str.Match(@"(\d*\.)*\d*");
+            return list.Where(x=>!string.IsNullOrEmpty(x.Key)).Select(x=>x.Key).FirstOrDefault();
         }
 
         /// <summary>
@@ -383,6 +384,26 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         internal Versions GetVersion(MatchCollection mc)
         {
             return new Versions(GetVersionResult(mc));
+        }
+
+        #endregion
+
+        #region 得到匹配的结果
+
+        /// <summary>
+        /// 得到匹配的结果
+        /// </summary>
+        /// <param name="mc"></param>
+        /// <param name="statIndex"></param>
+        /// <returns></returns>
+        internal string GetMatchResult(MatchCollection mc, int statIndex)
+        {
+            if (mc.Count > 0)
+            {
+                return mc[0].Groups[statIndex].SafeString();
+            }
+
+            return "";
         }
 
         #endregion

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Tools.Systems;
+using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.Tools.UserAgentParse
 {
@@ -356,48 +357,42 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
                 if (CheckUserAgent(userAgent,
                     @"Eclair; (?:[a-zA-Z][a-zA-Z](?:[-_][a-zA-Z][a-zA-Z])?) Build\/([^\/]*)\\/", out mc4))
                 {
-                    Device.Name = mc4[1].SafeString();
+                    Device.Name = GetMatchResult(mc4, 1);
                 }
                 else if (CheckUserAgent(userAgent, @"; ([^;]*[^;\s])\s+Build", out mc4))
                 {
-                    Device.Name = mc4[1].SafeString();
+                    Device.Name = GetMatchResult(mc4, 1);
                 }
                 else if (CheckUserAgent(userAgent,
                     @"[a-zA-Z][a-zA-Z](?:[-_][a-zA-Z][a-zA-Z])?; ([^;]*[^;\s]);\s+Build", out mc4))
                 {
-                    Device.Name = mc4[1].SafeString();
+                    Device.Name = GetMatchResult(mc4, 1);
                 }
                 else if (CheckUserAgent(userAgent, @"\(([^;]+);U;Android\/[^;]+;[0-9]+\*[0-9]+;CTC\/2.0\)",
                     out mc4))
                 {
-                    Device.Name = mc4[1].SafeString();
+                    Device.Name = GetMatchResult(mc4, 1);
                 }
                 else if (CheckUserAgent(userAgent, @";\s?([^;]+);\s?[0-9]+\*[0-9]+;\s?CTC\/2.0", out mc4))
                 {
-                    Device.Name = mc4[1].SafeString();
+                    Device.Name = GetMatchResult(mc4, 1);
                 }
                 else if (CheckUserAgent(userAgent, @"zh-cn;\s*(.*?)(\/|build)", RegexOptions.IgnoreCase, out mc4))
                 {
-                    Device.Name = mc4[1].SafeString();
+                    Device.Name = GetMatchResult(mc4, 1);
                 }
                 else if (CheckUserAgent(userAgent,
                     @"Android [^;]+; (?:[a-zA-Z][a-zA-Z](?:[-_][a-zA-Z][a-zA-Z])?; )?([^)]+)\)", out mc4))
                 {
                     if (!CheckUserAgent(userAgent, "[a-zA-Z][a-zA-Z](?:[-_][a-zA-Z][a-zA-Z])?", out mc4))
                     {
-                        Device.Name = mc4[1].SafeString();
+                        Device.Name = GetMatchResult(mc4, 1);
                     }
                 }
                 else if (CheckUserAgent(userAgent, @"^(.+?)\/\S+", RegexOptions.IgnoreCase, out mc4))
                 {
-                    if (mc4.Count > 1)
-                    {
-                        Device.Name = mc4[1].SafeString();
-                    }
-                    else
-                    {
-                        Device.Name = mc4[0].SafeString().Split('/')[0];
-                    }
+                    // Device.Name = mc4[0].SafeString().Split('/')[0];
+                    Device.Name = GetMatchResult(mc4, 1);
                 }
 
                 /* Sometimes we get a model name that starts with Android, in that case it is a mismatch and we should ignore it */
@@ -2758,46 +2753,55 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <summary>
         /// 浏览器信息
         /// </summary>
+        [JsonProperty(PropertyName = "browser",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public Browser Browser { get; set; }
 
         /// <summary>
         /// 系统
         /// </summary>
+        [JsonProperty(PropertyName = "os",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public Os Os { get; set; }
 
         /// <summary>
         /// 设备信息
         /// </summary>
+        [JsonProperty(PropertyName = "device",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public Devices Device { get; set; }
 
         /// <summary>
         /// 是否伪装
         /// </summary>
+        [JsonProperty(PropertyName = "camouflage",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool CamouFlage { get; set; }
 
         /// <summary>
         /// 引擎
         /// </summary>
+        [JsonProperty(PropertyName = "engine",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public Engine Engine { get; set; }
 
         /// <summary>
         /// 特性信息
         /// </summary>
+        [JsonProperty(PropertyName = "features",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public List<string> Features { get; set; }
 
         /// <summary>
         /// 是否使用特性
         /// </summary>
+        [JsonProperty(PropertyName = "use_features",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool UseFeatures { get; private set; }
 
         /// <summary>
         /// 是否支持ActiveX
         /// </summary>
+        [JsonProperty(PropertyName = "issupport_activexobject",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool IsSupportActiveXObject { get; private set; }
 
         /// <summary>
         /// 是否Opera浏览器
         /// </summary>
+        [JsonProperty(PropertyName = "isopera",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool IsOpera { get; internal set; }
 
         /// <summary>
@@ -2805,22 +2809,26 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// Mozilla
         /// </summary>
         /// <returns></returns>
+        [JsonProperty(PropertyName = "ismozilla",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool IsMozilla { get; internal set; }
 
         /// <summary>
         /// If it claims not to be Webkit, but it is probably Webkit running camouflage mode
         /// </summary>
         /// <returns></returns>
+        [JsonProperty(PropertyName = "is_webKit",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool IsWebKit { get; internal set; }
 
         /// <summary>
         /// 设备宽度
         /// </summary>
+        [JsonProperty(PropertyName = "device_width",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int DeviceWidth { get; internal set; }
 
         /// <summary>
         /// 设备高度
         /// </summary>
+        [JsonProperty(PropertyName = "device_height",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int DeviceHeight { get; internal set; }
     }
 }

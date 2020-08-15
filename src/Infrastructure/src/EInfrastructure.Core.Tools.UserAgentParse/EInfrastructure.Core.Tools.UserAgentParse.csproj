@@ -9,7 +9,7 @@
       <Company>zhenlei520</Company>
       <Description>dotnet core 基础类库</Description>
       <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core</RepositoryUrl>
-      <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.Configuration/</PackageProjectUrl>
+      <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.Tools.UserAgentParse/</PackageProjectUrl>
       <Copyright>Copyright ©zhenlei520 2019</Copyright>
       <Title>configuration</Title>
       <PackageTags>EInfrastructure.Core EInfrastructure.Core.Tools.UserAgentParse</PackageTags>

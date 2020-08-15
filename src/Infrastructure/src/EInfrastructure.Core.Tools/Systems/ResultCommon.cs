@@ -18,10 +18,19 @@ namespace EInfrastructure.Core.Tools.Systems
         /// 安全转换为字符串，去除两端空格，当值为null时返回空
         /// </summary>
         /// <param name="param">参数</param>
-        public static string SafeString(this object param)
+        /// <param name="isReplaceSpace">是否移除空格（默认移除）</param>
+        public static string SafeString(this object param, bool isReplaceSpace = true)
         {
             return ObjectCommon.SafeObject(param != null,
-                () => ValueTuple.Create(param?.ToString().Trim(), string.Empty));
+                () =>
+                {
+                    if (isReplaceSpace)
+                    {
+                        return ValueTuple.Create(param?.ToString().Trim(), string.Empty);
+                    }
+
+                    return ValueTuple.Create(param?.ToString(), string.Empty);
+                });
         }
 
         #endregion

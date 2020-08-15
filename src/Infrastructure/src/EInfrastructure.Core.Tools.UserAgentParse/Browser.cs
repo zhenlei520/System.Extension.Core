@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.Tools.UserAgentParse
 {
@@ -23,46 +24,55 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <summary>
         /// 浏览器名称
         /// </summary>
+        [JsonProperty(PropertyName = "name",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Name { get; internal set; }
 
         /// <summary>
         /// 模式
         /// </summary>
+        [JsonProperty(PropertyName = "mode",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Mode { get; internal set; }
 
         /// <summary>
         /// 版本号
         /// </summary>
+        [JsonProperty(PropertyName = "version",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public Versions Version { get; internal set; }
 
         /// <summary>
         /// 版本类型
         /// </summary>
+        [JsonProperty(PropertyName = "version_type",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string VersionType { get; internal set; }
 
         /// <summary>
         ///
         /// </summary>
+        [JsonProperty(PropertyName = "stock",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool Stock { get; internal set; }
 
         /// <summary>
         ///
         /// </summary>
+        [JsonProperty(PropertyName = "hidden",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool Hidden { get; internal set; }
 
         /// <summary>
         ///
         /// </summary>
+        [JsonProperty(PropertyName = "channel",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Channel { get; internal set; }
 
         /// <summary>
         ///
         /// </summary>
+        [JsonProperty(PropertyName = "detail",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Detail { get; internal set; }
 
         /// <summary>
         ///
         /// </summary>
+        [JsonProperty(PropertyName = "build",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool Builds { get; internal set; }
     }
 

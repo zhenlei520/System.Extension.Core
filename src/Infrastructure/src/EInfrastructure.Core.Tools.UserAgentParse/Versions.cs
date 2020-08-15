@@ -1,6 +1,8 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Newtonsoft.Json;
+
 namespace EInfrastructure.Core.Tools.UserAgentParse
 {
     /// <summary>
@@ -19,10 +21,10 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         public Versions(string version) : this()
         {
             var versionList = version.ConvertStrToList<string>('.');
-            this.Major = (versionList.Count > 0 ? versionList[0] : "").ConvertToDecimal();
-            this.Second = (versionList.Count > 1 ? versionList[1] : "").ConvertToDecimal();
-            this.Third = (versionList.Count > 2 ? versionList[2] : "").ConvertToDecimal();
-            this.Minor = (versionList.Count > 3 ? versionList[3] : "").ConvertToDecimal();
+            this.Major = (versionList.Count > 0 ? versionList[0] : "").ConvertToInt();
+            this.Second = (versionList.Count > 1 ? versionList[1] : "").ConvertToInt();
+            this.Third = (versionList.Count > 2 ? versionList[2] : "").ConvertToInt();
+            this.Minor = (versionList.Count > 3 ? versionList[3] : "").ConvertToInt();
         }
 
         /// <summary>
@@ -34,36 +36,35 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <param name="minor">最小版本号</param>
         public Versions(string major, string second, string third, string minor) : this()
         {
-            Major = major.ConvertToDecimal();
-            Second = second.ConvertToDecimal();
-            Third = third.ConvertToDecimal();
-            Minor = minor.ConvertToDecimal();
+            Major = major.ConvertToInt();
+            Second = second.ConvertToInt();
+            Third = third.ConvertToInt();
+            Minor = minor.ConvertToInt();
         }
 
         /// <summary>
         /// 主版本号
         /// </summary>
-        public decimal? Major { get; set; }
+        [JsonProperty(PropertyName = "major",DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public int? Major { get; set; }
 
         /// <summary>
         /// 次版本号
         /// </summary>
-        public decimal? Second { get; set; }
+        [JsonProperty(PropertyName = "second",DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public int? Second { get; set; }
 
         /// <summary>
         /// 第三版本号
         /// </summary>
-        public decimal? Third { get; set; }
+        [JsonProperty(PropertyName = "third",DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public int? Third { get; set; }
 
         /// <summary>
         /// 最小版本号
         /// </summary>
-        public decimal? Minor { get; set; }
-
-        /// <summary>
-        /// 原始版本
-        /// </summary>
-        public string Original { get; set; }
+        [JsonProperty(PropertyName = "minor",DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public int? Minor { get; set; }
 
         #region 重写运算符
 

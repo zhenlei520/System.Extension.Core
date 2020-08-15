@@ -8,7 +8,7 @@
     <Company>zhenlei520</Company>
     <Description>dotnet core 基础http类库</Description>
     <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core</RepositoryUrl>
-    <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core/</PackageProjectUrl>
+    <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core.Http/</PackageProjectUrl>
     <Copyright>Copyright ©zhenlei520 2020</Copyright>
     <Title>基础类库</Title>
     <PackageTags>EInfrastructure.Core EInfrastructure ECommon</PackageTags>

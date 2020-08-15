@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.Tools.UserAgentParse
 {
@@ -18,21 +19,25 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
         /// <summary>
         /// 系统名称
         /// </summary>
+        [JsonProperty(PropertyName = "name",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Name { get; internal set; }
 
         /// <summary>
         /// 别名
         /// </summary>
+        [JsonProperty(PropertyName = "alias",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Alias { get; internal set; }
 
         /// <summary>
         /// 系统版本
         /// </summary>
+        [JsonProperty(PropertyName = "version",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public Versions Version { get; internal set; }
 
         /// <summary>
         /// 详情
         /// </summary>
+        [JsonProperty(PropertyName = "detail",DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Details { get; internal set; }
 
         /// <summary>
