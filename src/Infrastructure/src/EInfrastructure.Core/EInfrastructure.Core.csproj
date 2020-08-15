@@ -31,7 +31,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EInfrastructure.Core.Tools.UserAgentParse\EInfrastructure.Core.Tools.UserAgentParse.csproj" />
     <ProjectReference Include="..\EInfrastructure.Core.Tools\EInfrastructure.Core.Tools.csproj" />
   </ItemGroup>
   <ItemGroup>

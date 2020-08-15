@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace EInfrastructure.Core.Tools.UserAgentParse.Property
+namespace EInfrastructure.Core.UserAgentParse.Property
 {
     /// <summary>
     /// os版本

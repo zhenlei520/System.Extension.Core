@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Systems;
 
-namespace EInfrastructure.Core.Tools.UserAgentParse
+namespace EInfrastructure.Core.UserAgentParse
 {
     /// <summary>
     ///
@@ -120,7 +120,6 @@ namespace EInfrastructure.Core.Tools.UserAgentParse
             new BrowserRules("Zetakey", @"Zetakey Webkit\/([0-9.]*)"),
             new BrowserRules("Zetakey", @"Zetakey\/([0-9.]*)")
         };
-
 
         #region private methods
 

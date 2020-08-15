@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
 
-namespace EInfrastructure.Core.Tools.UserAgentParse.Property
+namespace EInfrastructure.Core.UserAgentParse.Property
 {
     /// <summary>
     /// 设备

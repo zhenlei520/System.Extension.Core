@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace EInfrastructure.Core.Tools.UserAgentParse
+namespace EInfrastructure.Core.UserAgentParse
 {
     /// <summary>
     /// 全局设置配置

@@ -2,10 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Text.RegularExpressions;
-using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Test.Base;
-using EInfrastructure.Core.Tools.UserAgentParse;
+using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.UserAgentParse;
 using Xunit;
 
 namespace EInfrastructure.Core.Test
@@ -34,10 +33,10 @@ namespace EInfrastructure.Core.Test
             try
             {
                 var ua = new UserAgent(userAgent).Execute();
-                Console.WriteLine(new NewtonsoftJsonProvider().Serializer(ua));
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"UserAgent：{userAgent}，异常信息：{ex.ExtractAllStackTrace()}");
                 goto start;
             }
         }

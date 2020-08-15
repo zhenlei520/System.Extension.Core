@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\EInfrastructure.Core.UserAgentParse\EInfrastructure.Core.UserAgentParse.csproj" />
     <ProjectReference Include="..\..\src\EInfrastructure.Core\EInfrastructure.Core.csproj" />
   </ItemGroup>
 

@@ -3,7 +3,7 @@
 
 using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.Tools.UserAgentParse
+namespace EInfrastructure.Core.UserAgentParse
 {
     /// <summary>
     /// 引擎

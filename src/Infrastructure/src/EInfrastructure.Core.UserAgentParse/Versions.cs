@@ -1,9 +1,10 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using EInfrastructure.Core.Tools;
 using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.Tools.UserAgentParse
+namespace EInfrastructure.Core.UserAgentParse
 {
     /// <summary>
     /// 版本信息

@@ -4,7 +4,7 @@
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.Tools.UserAgentParse
+namespace EInfrastructure.Core.UserAgentParse
 {
     /// <summary>
     /// 浏览器信息

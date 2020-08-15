@@ -4,10 +4,10 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
-using EInfrastructure.Core.Tools.UserAgentParse.Property;
+using EInfrastructure.Core.UserAgentParse.Property;
 using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.Tools.UserAgentParse
+namespace EInfrastructure.Core.UserAgentParse
 {
     /// <summary>
     /// 设备信息
