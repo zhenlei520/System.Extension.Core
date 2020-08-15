@@ -20,4 +20,11 @@
     <ProjectReference Include="..\..\src\EInfrastructure.Core\EInfrastructure.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\useragent.txt" />
+    <Content Include="Resources\useragent.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

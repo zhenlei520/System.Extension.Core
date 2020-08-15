@@ -62,7 +62,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 if ((mc = UA.Match(@"(iPod|iPad|iPhone)", RegexOptions.IgnoreCase)).Count > 0)
                 {
                     uaData.Device.Manufacturer = "Apple";
-                    uaData.Device.Name = GetMatchResult(mc, 1).SafeString();
+                    uaData.Device.Name = GetMatchResult(mc, 1).SafeString(false);
                 }
                 // handle Samsung
                 // 特殊型号可能以xxx-开头 或者直接空格接型号 兼容build结尾或直接)结尾
@@ -76,7 +76,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     uaData.Device.Manufacturer = "Samsung";
                     // 解决移动联通等不同发行版导致的机型不同问题
                     // 特征：[A-Z]+[0-9]+[A-Z]*, 例如 G9006 G9006V 其实应该是G9006 另外三星只保留3位
-                    uaData.Device.Name = GetMatchResult(mc, 1).SafeString()
+                    uaData.Device.Name = GetMatchResult(mc, 1).SafeString(false)
                         .ReplaceRegex(@"Galaxy S VI", RegexOptions.IgnoreCase, "Galaxy S6")
                         .ReplaceRegex(@"Galaxy S V", RegexOptions.IgnoreCase, "Galaxy S5")
                         .ReplaceRegex(@"Galaxy S IV", RegexOptions.IgnoreCase, "Galaxy S4")
@@ -86,10 +86,10 @@ namespace EInfrastructure.Core.UserAgentParse
                         .ReplaceRegex(@"([a-z]+[0-9]{3})[0-9]?[a-z]*", RegexOptions.IgnoreCase, "$1");
                 }
                 // 针对三星已经匹配出的数据做处理
-                else if (uaData.Device.Manufacturer.SafeString().ToLower() ==
+                else if (uaData.Device.Manufacturer.SafeString(false).ToLower() ==
                     "samsung" && !string.IsNullOrEmpty(uaData.Device.Name))
                 {
-                    uaData.Device.Name = uaData.Device.Name.SafeString()
+                    uaData.Device.Name = uaData.Device.Name.SafeString(false)
                         .ReplaceRegex(@"Galaxy S VI", RegexOptions.IgnoreCase, "Galaxy S6")
                         .ReplaceRegex(@"Galaxy S V", RegexOptions.IgnoreCase, "Galaxy S5")
                         .ReplaceRegex(@"Galaxy S IV", RegexOptions.IgnoreCase, "Galaxy S4")
@@ -121,7 +121,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     // h30-l  h30-h  h30-t 都是H30
                     if ((mc = UA.Match(@"(\w*)[\s-_]+[a-z0-9]+", RegexOptions.IgnoreCase)).Count > 0)
                     {
-                        uaData.Device.Name = GetMatchResult(mc, 1).SafeString();
+                        uaData.Device.Name = GetMatchResult(mc, 1).SafeString(false);
                     }
                 }
                 // handle Xiaomi
@@ -141,8 +141,8 @@ namespace EInfrastructure.Core.UserAgentParse
                     {
                         if ((tempMc = GetMatchResult(mc, 2).Match(@"(\d)", RegexOptions.IgnoreCase)).Count > 0)
                         {
-                            uaData.Device.Name = GetMatchResult(mc, 1).SafeString() + "-" +
-                                                 GetMatchResult(tempMc, 1).SafeString();
+                            uaData.Device.Name = GetMatchResult(mc, 1).SafeString(false) + "-" +
+                                                 GetMatchResult(tempMc, 1).SafeString(false);
                         }
                     }
                     else
@@ -624,7 +624,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 // format the style of model
                 if (!uaData.Device.Name.IsNullOrEmpty())
                 {
-                    uaData.Device.Name = uaData.Device.Name.SafeString().ToUpper()
+                    uaData.Device.Name = uaData.Device.Name.SafeString(false).ToUpper()
                         .ReplaceRegex(@"-+|_+|\s+", RegexOptions.Compiled, " ");
                     uaData.Device.Name = GetMatchResult(uaData.Device.Name.Match(@"\s*(\w*\s*\w*)"), 1)
                         .ReplaceRegex(@"\s+", "-");
