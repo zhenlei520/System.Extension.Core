@@ -34,7 +34,8 @@ namespace EInfrastructure.Core.Test
         //     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36")]
         // [InlineData("Mozilla/5.0 (X11; Linux x86_64;CentOS; rv:68.0) Gecko/20100101 Firefox/68.0")]
         // [InlineData("CoolPad8720_CMCC_TD/1.0 Linux/3.0.8 Android/4.0 Release/03.31.2013 Browser/AppleWebkit534.3")]
-        [InlineData("HuluxiaGametools Mozilla/5.0 (Linux; Android 4.4.2; MI 4W Build/KVT49L) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36")]
+        [InlineData(
+            "HuluxiaGametools Mozilla/5.0 (Linux; Android 4.4.2; MI 4W Build/KVT49L) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36")]
         public void GetUserAgent(string userAgent)
         {
             start:
@@ -53,6 +54,7 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void Test()
         {
+            List<string> errList = new List<string>();
             List<string> list = FileCommon.GetContentFormFile(Path.Combine("Resources", "useragent.txt"));
             list.ForEach(userAgent =>
             {
@@ -62,9 +64,11 @@ namespace EInfrastructure.Core.Test
                 }
                 catch (Exception ex)
                 {
+                    errList.Add(userAgent);
                     Console.WriteLine($"UserAgent：{userAgent}，异常信息：{ex.ExtractAllStackTrace()}");
                 }
             });
+            var res = new NewtonsoftJsonProvider().Serializer(errList);
         }
     }
 }
