@@ -835,7 +835,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 else if (uaData.Os.Name == "Android" && UA.Test(@"safari", RegexOptions.IgnoreCase) &&
                          ((mc = UA.Match(@"version\/([0-9\.]+)", RegexOptions.IgnoreCase)).Count > 0))
                 {
-                    if ((tempMc = UA.Match(@"\)s+(\w+Browser)\/?([\d\.]*)")).Count > 0)
+                    if ((tempMc = UA.Match(@"\s+(\w+Browser)\/?([\d\.]*)")).Count > 0)
                     {
                         uaData.Browser.Name = GetMatchResult(tempMc, 1);
                         if (!GetMatchResult(tempMc, 2).IsNullOrEmpty())
