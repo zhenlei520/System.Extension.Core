@@ -107,13 +107,13 @@ namespace EInfrastructure.Core.UserAgentParse
                     ).Count > 0)
                 {
                     uaData.Device.Manufacturer = "Huawei";
-                    if (!string.IsNullOrEmpty(GetMatchResult(mc,2)))
+                    if (!string.IsNullOrEmpty(GetMatchResult(mc, 2)))
                     {
-                        uaData.Device.Name = GetMatchResult(mc,2);
+                        uaData.Device.Name = GetMatchResult(mc, 2);
                     }
-                    else if (!string.IsNullOrEmpty(GetMatchResult(mc,3)))
+                    else if (!string.IsNullOrEmpty(GetMatchResult(mc, 3)))
                     {
-                        uaData.Device.Name = GetMatchResult(mc,3);
+                        uaData.Device.Name = GetMatchResult(mc, 3);
                     }
 
                     // 解决移动联通等不同发行版导致的机型不同问题
@@ -137,25 +137,34 @@ namespace EInfrastructure.Core.UserAgentParse
                         uaData.Device.Name = "";
                     }
                     // 若匹配出的 match[2]没空格 会出现很多例如 mizi mizhi miha 但也会出现mi3 minote之类 特殊处理下
-                    else if (GetMatchResult(mc,2).Length > 0 && !GetMatchResult(mc,2).Test(@"\s"))
+                    else if (GetMatchResult(mc, 2).Length > 0 && !GetMatchResult(mc, 2).Test(@"\s"))
                     {
                         if ((tempMc = GetMatchResult(mc, 2).Match(@"(\d)", RegexOptions.IgnoreCase)).Count > 0)
                         {
-                            uaData.Device.Name = GetMatchResult(mc, 1).SafeString(false) + "-" +
-                                                 GetMatchResult(tempMc, 1).SafeString(false);
+                            if (GetMatchResult(mc, 1) == "M3" && tempMc[0].Value.Length == 1)
+                            {
+                                uaData.Device.Name = GetMatchResult(mc, 1) + "-" +
+                                                     GetMatchResult(tempMc, 0);
+                            }
+                            else
+                            {
+                                uaData.Device.Name = GetMatchResult(mc, 1) + "-" +
+                                                     GetMatchResult(tempMc, 1);
+                            }
                         }
                     }
                     else
                     {
                         uaData.Device.Manufacturer = "Xiaomi";
-                        if (!string.IsNullOrEmpty(GetMatchResult(mc,2)) && GetMatchResult(mc,2).Length > 0)
+                        if (!string.IsNullOrEmpty(GetMatchResult(mc, 2)) && GetMatchResult(mc, 2).Length > 0)
                         {
                             string[] temp = mc[0].Value;
                             temp[2] = GetMatchResult(mc, 2).ReplaceRegex(@"\s", "");
                             mc[0] = new KeyValuePair<string, string[]>(mc[0].Key, temp);
 
                             uaData.Device.Name =
-                                (GetMatchResult(mc, 1).Substring(GetMatchResult(mc, 1).Length - 2) + '-' + GetMatchResult(mc,2))
+                                (GetMatchResult(mc, 1).Substring(GetMatchResult(mc, 1).Length - 2) + '-' +
+                                 GetMatchResult(mc, 2))
                                 .ReplaceRegex(@"m(\d)-",
                                     RegexOptions.IgnoreCase, "MI-$1");
                         }
@@ -233,7 +242,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     // m1 m2 m3 写法不标准 另外判断是否是 m1-s
                     else if ((mc = uaData.Device.Name.Match(@"(m\d)[\s-_](s?)", RegexOptions.IgnoreCase)).Count > 0)
                     {
-                        uaData.Device.Name = GetMatchResult(mc, 1).ReplaceRegex(@"m", "MI-") + GetMatchResult(mc,2);
+                        uaData.Device.Name = GetMatchResult(mc, 1).ReplaceRegex(@"m", "MI-") + GetMatchResult(mc, 2);
                     }
                     // mi-2w  mi-3w 等格式化为mi-2  mi-3
                     else if ((mc = uaData.Device.Name.Match(@"(hm|mi)[\s-_](\d?)[a-rt-z]", RegexOptions.IgnoreCase))
@@ -263,12 +272,12 @@ namespace EInfrastructure.Core.UserAgentParse
                         // 判断是不是 hm-2s hm-1s
                         else if ((mc = uaData.Device.Name.Match(@"(hm)[\s-_](\ds)", RegexOptions.IgnoreCase)).Count > 0)
                         {
-                            uaData.Device.Name = "HM-" + GetMatchResult(mc,2);
+                            uaData.Device.Name = "HM-" + GetMatchResult(mc, 2);
                         }
                         else if ((mc = uaData.Device.Name.Match(@"(hm)[\s-_](\d)[a-z]", RegexOptions.IgnoreCase))
                             .Count > 0)
                         {
-                            uaData.Device.Name = "HM-" + GetMatchResult(mc,2);
+                            uaData.Device.Name = "HM-" + GetMatchResult(mc, 2);
                         }
                         else
                         {
@@ -412,7 +421,7 @@ namespace EInfrastructure.Core.UserAgentParse
                         : GetMatchResult(mc, 1);
                     if (!GetMatchResult(mc, 3).IsNullOrEmpty())
                     {
-                        uaData.Device.Name = tmpModel + '-' + GetMatchResult(mc,3);
+                        uaData.Device.Name = tmpModel + '-' + GetMatchResult(mc, 3);
                     }
                     else
                     {
@@ -491,7 +500,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     uaData.Device.Manufacturer = "Uimi";
                     if (!GetMatchResult(mc, 2).IsNullOrEmpty())
                     {
-                        uaData.Device.Name = GetMatchResult(mc, 1) + '-' + GetMatchResult(mc,2);
+                        uaData.Device.Name = GetMatchResult(mc, 1) + '-' + GetMatchResult(mc, 2);
                     }
                     else
                     {
@@ -611,7 +620,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 else if ((mc = UA.Match(@"(hs-|Hisense[\s-_])(\w*)", RegexOptions.IgnoreCase)).Count > 0)
                 {
                     uaData.Device.Manufacturer = "Hisense";
-                    uaData.Device.Name = GetMatchResult(mc,2);
+                    uaData.Device.Name = GetMatchResult(mc, 2);
                 }
 
                 // format the style of manufacturer
@@ -669,16 +678,16 @@ namespace EInfrastructure.Core.UserAgentParse
                 {
                     if ((mc = uaData.Device.Name.Match(@"(hm|mi)-(note)", RegexOptions.IgnoreCase)).Count > 0)
                     {
-                        uaData.Device.Name = GetMatchResult(mc, 1) + '-' + GetMatchResult(mc,2);
+                        uaData.Device.Name = GetMatchResult(mc, 1) + '-' + GetMatchResult(mc, 2);
                     }
                     else if ((mc = uaData.Device.Name.Match(@"(hm|mi)-(\ds?)", RegexOptions.IgnoreCase)).Count > 0)
                     {
-                        uaData.Device.Name = GetMatchResult(mc, 1) + '-' + GetMatchResult(mc,2);
+                        uaData.Device.Name = GetMatchResult(mc, 1) + '-' + GetMatchResult(mc, 2);
                     }
                     else if ((mc = uaData.Device.Name.Match(@"(hm|mi)-(\d)[a-rt-z]", RegexOptions.IgnoreCase)).Count >
                              0)
                     {
-                        uaData.Device.Name = GetMatchResult(mc, 1) + '-' + GetMatchResult(mc,2);
+                        uaData.Device.Name = GetMatchResult(mc, 1) + '-' + GetMatchResult(mc, 2);
                     }
                 }
             }
@@ -934,7 +943,7 @@ namespace EInfrastructure.Core.UserAgentParse
             }
 
             // Safari
-            if (!uaData.Browser.Name.IsNullOrEmpty())
+            if (uaData.Browser.Name.IsNullOrEmpty())
             {
                 if ((mc = UA.Match(@"Safari\/([\w.]+)", RegexOptions.IgnoreCase)).Count > 0 &&
                     UA.Test(@"Version", RegexOptions.IgnoreCase))
@@ -943,7 +952,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 }
             }
 
-            if (!uaData.Browser.Name.IsNullOrEmpty() && uaData.Browser.Version != null)
+            if (!uaData.Browser.Name.IsNullOrEmpty() && uaData.Browser.Version == null)
             {
                 if ((mc = UA.Match(@"Version\/([\w.]+)", RegexOptions.IgnoreCase)).Count > 0)
                 {
@@ -975,16 +984,18 @@ namespace EInfrastructure.Core.UserAgentParse
             else if (uaData.Os.Name == "Mac OS X")
             {
                 uaData.Os.Name = "Mac OS X";
-                if ((mc = UA.Match(@"Mac OS X[\s\_\-\/](\d+[\.\-\_]\d+[\.\-\_]?\d*)", RegexOptions.IgnoreCase)).Count >
+                if ((mc = UA.Match(@"Mac OS X[\s\\_\-\/](\d+[\.\-\\_]\d+[\.\-\\_]?\d*)", RegexOptions.IgnoreCase))
+                    .Count >
                     0)
                 {
                     uaData.Os.Alias = GetMatchResult(mc, 1).ReplaceRegex(@"_", RegexOptions.Compiled, ".");
-                    uaData.Os.Version = new Versions(GetMatchResult(mc, 1).ReplaceRegex(@"_", RegexOptions.Compiled, "."));
+                    uaData.Os.Version =
+                        new Versions(GetMatchResult(mc, 1).ReplaceRegex(@"_", RegexOptions.Compiled, "."));
                 }
                 else
                 {
                     uaData.Os.Alias = "";
-                    uaData.Os.Version = new Versions(GetMatchResult(mc, 1).ReplaceRegex(@"_", RegexOptions.Compiled, "."));
+                    uaData.Os.Version = new Versions();
                 }
             }
             else if (uaData.Os.Name.Test(@"Android", RegexOptions.IgnoreCase))
@@ -992,8 +1003,8 @@ namespace EInfrastructure.Core.UserAgentParse
                 if ((mc = UA.Match(@"Android[\s\\_\-\/i686]?[\s\\_\-\/](\d+[\.\-\\_]\d+[\.\-\\_]?\d*)",
                     RegexOptions.IgnoreCase)).Count > 0)
                 {
-                    uaData.Os.Alias = GetMatchResult(mc,1);
-                    uaData.Os.Version = new Versions( GetMatchResult(mc,1));
+                    uaData.Os.Alias = GetMatchResult(mc, 1);
+                    uaData.Os.Version = new Versions(GetMatchResult(mc, 1));
                 }
             }
 

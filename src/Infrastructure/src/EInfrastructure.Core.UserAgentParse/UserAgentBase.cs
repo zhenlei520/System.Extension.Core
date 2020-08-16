@@ -127,6 +127,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     });
             });
 
+
             if (userAgent.Test(@"iPhone( Simulator)?;") || userAgent.Test(@"iPad;") || userAgent.Test(@"iPod;") ||
                 userAgent.Test(@"iPhone\s*\d*s?[cp]?;", RegexOptions.IgnoreCase))
             {
@@ -136,7 +137,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     mc3 =>
                     {
                         Os.Version =
-                            new Versions(GetVersionResult(mc3).ReplaceRegex("_", RegexOptions.Compiled, "."));
+                            new Versions(GetMatchResult(mc3, 1).ReplaceRegex("_", RegexOptions.Compiled, "."));
                     });
 
                 if (CheckUserAgent(userAgent, "iPhone Simulator;"))
@@ -165,8 +166,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
                 Device.Identified = true;
             }
-
-            CheckUserAgent(userAgent, "Mac OS X", mc2 =>
+            else if (CheckUserAgent(userAgent, "Mac OS X"))
             {
                 Os.Name = "Mac OS X";
                 CheckUserAgent(userAgent, @"Mac OS X (10[0-9\._]*)",
@@ -175,7 +175,7 @@ namespace EInfrastructure.Core.UserAgentParse
                         Os.Version =
                             new Versions(GetVersionResult(mc3).ReplaceRegex("_", RegexOptions.Compiled, "."));
                     });
-            });
+            }
 
             CheckUserAgent(userAgent, "Windows", mc2 =>
             {
@@ -291,8 +291,8 @@ namespace EInfrastructure.Core.UserAgentParse
 
                     CheckUserAgent(userAgent, @"IEMobile\/[^;]+; ([^;]+); ([^;]+)[;|\)]", mc4 =>
                     {
-                        Device.Name = mc4[2].SafeString(false);
-                        Device.Manufacturer = mc4[1].SafeString(false);
+                        Device.Name = GetMatchResult(mc4, 2);
+                        Device.Manufacturer = GetMatchResult(mc4, 1);
                     });
                     Device.DeviceType = DeviceType.Mobile;
 
@@ -510,14 +510,14 @@ namespace EInfrastructure.Core.UserAgentParse
                     MatchCollection mc3;
                     if (CheckUserAgent(userAgent, @"BlackBerry([0-9]*)\/([0-9.]*)", out mc3))
                     {
-                        Device.Name = mc3[1].SafeString(false);
+                        Device.Name = GetMatchResult(mc3, 1);
                         Os.Version = GetVersion(mc3);
                         Os.Details = "2";
                     }
 
                     if (CheckUserAgent(userAgent, "; BlackBerry ([0-9]*);", out mc3))
                     {
-                        Device.Name = mc3[1].SafeString(false);
+                        Device.Name = GetMatchResult(mc3, 1);
                     }
 
                     if (CheckUserAgent(userAgent, @"Version\/([0-9.]*)", out mc3))
@@ -664,10 +664,10 @@ namespace EInfrastructure.Core.UserAgentParse
 
                 CheckUserAgent(userAgent, @"Nokia([^\/;]+)[\/|;]", mc3 =>
                 {
-                    if (mc3[1].SafeString(false) != "Browser")
+                    if (GetMatchResult(mc3, 1) != "Browser")
                     {
                         Device.Manufacturer = "Nokia";
-                        Device.Name = mc3[1].SafeString(false);
+                        Device.Name = GetMatchResult(mc3, 1);
                         Device.Identified = true;
                     }
                 });
@@ -675,7 +675,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 CheckUserAgent(userAgent, @"Vertu([^\/;]+)[\/|;]", mc3 =>
                 {
                     Device.Manufacturer = "Vertu";
-                    Device.Name = mc3[1].SafeString(false);
+                    Device.Name = GetMatchResult(mc3, 1);
                     Device.Identified = true;
                 });
 
@@ -684,14 +684,14 @@ namespace EInfrastructure.Core.UserAgentParse
                     mc3 =>
                     {
                         Device.Manufacturer = "Nokia";
-                        Device.Name = mc3[1].SafeString(false);
+                        Device.Name = GetMatchResult(mc3, 1);
                         Device.Identified = true;
                     });
 
                 CheckUserAgent(userAgent, @"Samsung\/([^;]*);", mc3 =>
                 {
                     Device.Manufacturer = GloableConfigurations.StringsSamsung;
-                    Device.Name = mc3[1].SafeString(false);
+                    Device.Name = GetMatchResult(mc3, 1);
                     Device.Identified = true;
                 });
 
@@ -706,7 +706,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 CheckUserAgent(userAgent, @"Nokia([^\/]+)\\", mc3 =>
                 {
                     Device.Manufacturer = "Nokia";
-                    Device.Name = mc3[1].SafeString(false);
+                    Device.Name = GetMatchResult(mc3, 1);
                     Device.Identified = true;
                 });
 
@@ -722,7 +722,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 CheckUserAgent(userAgent, @"Nokia([^\)]+)\)", mc3 =>
                 {
                     Device.Manufacturer = "Nokia";
-                    Device.Name = mc3[1].SafeString(false);
+                    Device.Name = GetMatchResult(mc3, 1);
                     Device.Identified = true;
                 });
             });
@@ -736,7 +736,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 CheckUserAgent(userAgent, "(N[0-9]+)", mc3 =>
                 {
                     Device.Manufacturer = "Nokia";
-                    Device.Name = mc3[1].SafeString(false);
+                    Device.Name = GetMatchResult(mc3, 1);
                     Device.Identified = true;
                 });
             });
@@ -753,10 +753,10 @@ namespace EInfrastructure.Core.UserAgentParse
 
                 CheckUserAgent(userAgent, @"\(([^;]+); ([^\/]+)\\", mc3 =>
                 {
-                    if (mc3[1].SafeString(false) != "Linux")
+                    if (GetMatchResult(mc3, 1).SafeString(false) != "Linux")
                     {
-                        Device.Manufacturer = mc3[1].SafeString(false);
-                        Device.Name = mc3[2].SafeString(false);
+                        Device.Manufacturer = GetMatchResult(mc3, 1);
+                        Device.Name = GetMatchResult(mc3, 2);
 
                         List<KeyValuePair<string, string[]>> tizenModel =
                             GloableConfigurations.TizenModels.Where(x =>
@@ -794,8 +794,8 @@ namespace EInfrastructure.Core.UserAgentParse
 
                 CheckUserAgent(userAgent, @"\(([^;]+); ([^\/]+)\\", mc3 =>
                 {
-                    Device.Manufacturer = mc3[1].SafeString(false);
-                    Device.Name = CleanupModel(mc3[2].SafeString(false));
+                    Device.Manufacturer = GetMatchResult(mc3, 1);
+                    Device.Name = CleanupModel(GetMatchResult(mc3, 2));
                 });
 
                 var badaModel = GloableConfigurations.BadaModels.Where(x => x.Key == Device.Manufacturer)
@@ -840,7 +840,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
                 CheckUserAgent(userAgent,
                     @"\(([^;]+);U;REX\/[^;]+;BREW\/[^;]+;(?:.*;)?[0-9]+\*[0-9]+;CTC\/2.0\)",
-                    mc4 => { Device.Name = mc4[1].SafeString(false); });
+                    mc4 => { Device.Name = GetMatchResult(mc4, 1); });
 
                 if (!string.IsNullOrEmpty(Device.Name))
                 {
@@ -1125,7 +1125,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 Device.DeviceType = DeviceType.Television;
                 Device.Identified = true;
 
-                CheckUserAgent(userAgent, "Maple([0-9]*)", mc2 => { Device.Name += " " + mc2[1]; });
+                CheckUserAgent(userAgent, "Maple([0-9]*)", mc2 => { Device.Name += " " + GetMatchResult(mc2, 1); });
             }
 
             /****************************************************
@@ -1182,7 +1182,7 @@ namespace EInfrastructure.Core.UserAgentParse
             {
                 Os.Name = "";
                 Device.Manufacturer = GloableConfigurations.StringsLg;
-                Device.Name = "NetCast TV " + mc2[1].SafeString(false);
+                Device.Name = "NetCast TV " + GetMatchResult(mc2, 1);
                 Device.DeviceType = DeviceType.Television;
                 Device.Identified = true;
             });
@@ -1228,8 +1228,8 @@ namespace EInfrastructure.Core.UserAgentParse
                 Os.Name = "";
                 Device.Manufacturer = "ADB";
                 Device.Name =
-                    (mc2[1].SafeString(false) != "Unknown"
-                        ? mc2[1].SafeString(false).ReplaceRegex("ADB", "") + " "
+                    (GetMatchResult(mc2, 1) != "Unknown"
+                        ? GetMatchResult(mc2, 1).SafeString(false).ReplaceRegex("ADB", "") + " "
                         : "") +
                     "IPTV receiver";
                 Device.DeviceType = DeviceType.Television;
@@ -1253,7 +1253,7 @@ namespace EInfrastructure.Core.UserAgentParse
             {
                 Os.Name = "";
                 Device.Manufacturer = "TechniSat";
-                Device.Name = mc2[1].SafeString(false);
+                Device.Name = GetMatchResult(mc2, 1);
                 Device.DeviceType = DeviceType.Television;
                 Device.Identified = true;
             });
@@ -1263,7 +1263,7 @@ namespace EInfrastructure.Core.UserAgentParse
             {
                 Os.Name = "";
                 Device.Manufacturer = "Technicolor";
-                Device.Name = mc2[1].SafeString(false);
+                Device.Name = GetMatchResult(mc2, 1);
                 Device.DeviceType = DeviceType.Television;
                 Device.Identified = true;
             });
@@ -1283,7 +1283,8 @@ namespace EInfrastructure.Core.UserAgentParse
             {
                 Device.Manufacturer = "Roku";
                 Device.DeviceType = DeviceType.Television;
-                switch (mc2[1].SafeString(false))
+                Device.Identified = true;
+                switch (GetMatchResult(mc2, 1))
                 {
                     case "2000":
                         Device.Name = "HD";
@@ -1310,8 +1311,8 @@ namespace EInfrastructure.Core.UserAgentParse
             });
             CheckUserAgent(userAgent, @"HbbTV\/1.1.1 \([^;]*;\s*([^;]*)\s*;\s*([^;]*)\s*;", mc2 =>
             {
-                var vendorName = mc2[1].SafeString(false).Trim();
-                var modelName = mc2[2].SafeString(false).Trim();
+                var vendorName = GetMatchResult(mc2, 1).Trim();
+                var modelName = GetMatchResult(mc2, 2).Trim();
 
                 if (string.IsNullOrEmpty(Device.Manufacturer) && vendorName != "" &&
                     vendorName != "vendorName")
@@ -1390,7 +1391,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 {
                     CheckUserAgent(userAgent, @"^(?:MQQBrowser\/[0-9\.]+\/)?([^\s]+)", mc2 =>
                     {
-                        var temp = mc2[0].SafeString(false);
+                        var temp = GetMatchResult(mc2, 0).SafeString(false);
                         temp = temp.ReplaceRegex(@"_TD$", "");
                         temp = temp.SafeString(false).ReplaceRegex("_CMCC$", "");
                         temp = temp.SafeString(false).ReplaceRegex(@"[_ ]Mozilla$", "");
@@ -1410,7 +1411,7 @@ namespace EInfrastructure.Core.UserAgentParse
                         @"Windows NT 5.1; ([^;]+); Windows Phone", @"\) PPC; (?:[0-9]+x[0-9]+; )?([^;\/\(\)]+)",
                         @"\(([^;]+); U; Windows Mobile", @"Vodafone\/1.0\/([^\/]+)", @"\ ([^\s]+)$"
                     },
-                    (mc2, regex) => { candidates.Add(mc2[0].SafeString(false)); });
+                    (mc2, regex) => { candidates.Add(GetMatchResult(mc2, 1).SafeString(false)); });
 
                 for (var i = 0; i < candidates.Count; i++)
                 {
@@ -1474,7 +1475,7 @@ namespace EInfrastructure.Core.UserAgentParse
                         CheckUserAgent(userAgent, @"^GIONEE-([^\s]+)", mc2 =>
                         {
                             Device.Manufacturer = "Gionee";
-                            Device.Name = CleanupModel(mc2[1].SafeString(false));
+                            Device.Name = CleanupModel(GetMatchResult(mc2, 1));
                             Device.DeviceType = DeviceType.Mobile;
                             Device.Identified = true;
                         });
@@ -1482,7 +1483,7 @@ namespace EInfrastructure.Core.UserAgentParse
                         CheckUserAgent(userAgent, @"^HTC_?([^\/_]+)(?:\/|_|$)", mc2 =>
                         {
                             Device.Manufacturer = GloableConfigurations.StringsHtc;
-                            Device.Name = CleanupModel(mc2[1].SafeString(false));
+                            Device.Name = CleanupModel(GetMatchResult(mc2, 1));
                             Device.DeviceType = DeviceType.Mobile;
                             Device.Identified = true;
                         });
@@ -1490,7 +1491,7 @@ namespace EInfrastructure.Core.UserAgentParse
                         CheckUserAgent(userAgent, @"^HUAWEI-([^\/]*)", mc2 =>
                         {
                             Device.Manufacturer = GloableConfigurations.StringsHuawei;
-                            Device.Name = CleanupModel(mc2[1].SafeString(false));
+                            Device.Name = CleanupModel(GetMatchResult(mc2, 1));
                             Device.DeviceType = DeviceType.Mobile;
                             Device.Identified = true;
                         });
@@ -1498,7 +1499,7 @@ namespace EInfrastructure.Core.UserAgentParse
                         CheckUserAgent(userAgent, @"(?:^|\()LGE?(?:\/|-|_|\s)([^\s]*)", mc2 =>
                         {
                             Device.Manufacturer = GloableConfigurations.StringsLg;
-                            Device.Name = CleanupModel(mc2[1].SafeString(false));
+                            Device.Name = CleanupModel(GetMatchResult(mc2, 1));
                             Device.DeviceType = DeviceType.Mobile;
                             Device.Identified = true;
                         });
@@ -1506,7 +1507,7 @@ namespace EInfrastructure.Core.UserAgentParse
                         CheckUserAgent(userAgent, @"^MOT-([^\/_]+)(?:\/|_|$)", mc2 =>
                         {
                             Device.Manufacturer = GloableConfigurations.StringsMotorola;
-                            Device.Name = CleanupModel(mc2[1].SafeString(false));
+                            Device.Name = CleanupModel(GetMatchResult(mc2, 1));
                             Device.DeviceType = DeviceType.Mobile;
                             Device.Identified = true;
                         });
@@ -1514,7 +1515,7 @@ namespace EInfrastructure.Core.UserAgentParse
                         CheckUserAgent(userAgent, @"^Motorola_([^\/_]+)(?:\/|_|$)", mc2 =>
                         {
                             Device.Manufacturer = GloableConfigurations.StringsMotorola;
-                            Device.Name = CleanupModel(mc2[1].SafeString(false));
+                            Device.Name = CleanupModel(GetMatchResult(mc2, 1));
                             Device.DeviceType = DeviceType.Mobile;
                             Device.Identified = true;
                         });
@@ -1522,7 +1523,7 @@ namespace EInfrastructure.Core.UserAgentParse
                         CheckUserAgent(userAgent, @"^Nokia([^\/]+)(?:\/|$)", mc2 =>
                         {
                             Device.Manufacturer = "Nokia";
-                            Device.Name = CleanupModel(mc2[1].SafeString(false));
+                            Device.Name = CleanupModel(GetMatchResult(mc2, 1));
                             Device.DeviceType = DeviceType.Mobile;
                             Device.Identified = true;
 
@@ -1534,7 +1535,7 @@ namespace EInfrastructure.Core.UserAgentParse
                         CheckUserAgent(userAgent, @"^SonyEricsson([^\/_]+)(?:\/|_|$)", mc2 =>
                         {
                             Device.Manufacturer = GloableConfigurations.StringsSonyEricsson;
-                            Device.Name = CleanupModel(mc2[1].SafeString(false));
+                            Device.Name = CleanupModel(GetMatchResult(mc2, 1));
                             Device.DeviceType = DeviceType.Mobile;
                             Device.Identified = true;
                         });
@@ -1545,7 +1546,7 @@ namespace EInfrastructure.Core.UserAgentParse
             CheckUserAgent(userAgent, @"\((?:LG[-|\/])(.*) (?:Browser\/)?AppleWebkit", mc2 =>
             {
                 Device.Manufacturer = GloableConfigurations.StringsLg;
-                Device.Name = mc2[1].SafeString(false);
+                Device.Name = GetMatchResult(mc2, 1);
                 Device.DeviceType = DeviceType.Mobile;
                 Device.Identified = true;
             });
@@ -1555,7 +1556,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 mc2 =>
                 {
                     Device.Manufacturer = "Nokia";
-                    Device.Name = mc2[1].SafeString(false);
+                    Device.Name = GetMatchResult(mc2, 1);
                     Device.DeviceType = DeviceType.Mobile;
                     Device.Identified = true;
                     Os.Name = "Series60";
@@ -2122,14 +2123,14 @@ namespace EInfrastructure.Core.UserAgentParse
                 CheckUserAgent(userAgent, @"Obigo\/([A-Z])([0-9.]*)", RegexOptions.IgnoreCase,
                     mc2 =>
                     {
-                        Browser.Name = "Obigo" + mc2[1].SafeString(false);
+                        Browser.Name = "Obigo" + GetMatchResult(mc2, 1);
                         Browser.Version = GetVersion(mc2);
                     });
 
                 CheckUserAgent(userAgent, @"Obigo-([A-Z])([0-9.]*)\\", RegexOptions.IgnoreCase,
                     mc2 =>
                     {
-                        Browser.Name = "Obigo" + mc2[1].SafeString(false);
+                        Browser.Name = "Obigo" + GetMatchResult(mc2, 1);
                         Browser.Version = GetVersion(mc2);
                     });
             }
@@ -2165,7 +2166,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     @"^JUC \(Linux; U; ([0-9\.]+)[^;]*; [^;]+; ([^;]*[^\s])\s*; [0-9]+\*[0-9]+\)",
                     mc2 =>
                     {
-                        var model = CleanupModel(mc2[2].SafeString(false));
+                        var model = CleanupModel(GetMatchResult(mc2, 2));
 
                         Os.Name = "Android";
                         Os.Version = GetVersion(mc2);
@@ -2264,7 +2265,7 @@ namespace EInfrastructure.Core.UserAgentParse
             {
                 Browser.Name = "QQ Browser";
 
-                var version = mc2[2].SafeString(false);
+                var version = GetMatchResult(mc2, 2);
 
                 if (CheckUserAgent(version, @"^[0-9][0-9]$"))
                 {
@@ -2276,7 +2277,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
                 Browser.Channel = "";
 
-                if (string.IsNullOrEmpty(Os.Name) && mc2[1].SafeString(false) == "QQBrowser")
+                if (string.IsNullOrEmpty(Os.Name) && GetMatchResult(mc2, 1) == "QQBrowser")
                 {
                     Os.Name = "Windows";
                 }
@@ -2286,7 +2287,7 @@ namespace EInfrastructure.Core.UserAgentParse
             CheckUserAgent(userAgent, @"(iBrowser)\/([0-9.]*)", mc2 =>
             {
                 Browser.Name = "iBrowser";
-                var version = mc2[2].SafeString(false);
+                var version = GetMatchResult(mc2, 2);
 
                 if (CheckUserAgent(version, @"[0-9][0-9]"))
                 {
@@ -2517,7 +2518,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     Os.Version = null;
                     Engine.Name = "Webkit";
                     Engine.Version = null;
-                    Device.Name = mc2[1].SafeString(false);
+                    Device.Name = GetMatchResult(mc2, 1);
                     Device.DeviceType = DeviceType.Mobile;
 
                     var model = CleanupModel(Device.Name);
@@ -2549,7 +2550,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     Engine.Name = "Webkit";
                     Engine.Version = null;
 
-                    Device.Name = mc2[1].SafeString(false);
+                    Device.Name = GetMatchResult(mc2, 1);
                     Device.DeviceType = DeviceType.Mobile;
 
                     var model = CleanupModel(Device.Name);
