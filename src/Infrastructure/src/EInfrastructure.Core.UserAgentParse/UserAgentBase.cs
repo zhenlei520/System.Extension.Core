@@ -271,8 +271,10 @@ namespace EInfrastructure.Core.UserAgentParse
                 CheckUserAgent(userAgent, "Windows Phone [0-9]", mc3 =>
                 {
                     Os.Name = "Windows Mobile";
+
+
                     Os.Version =
-                        new Versions(new Regex("Windows Phone ([0-9.]*)").Matches(userAgent)[1].SafeString(false));
+                        new Versions(GetMatchResult(new Regex("Windows Phone ([0-9.]*)").Matches(userAgent),1));
                     Os.Details = "2";
                     Device.DeviceType = DeviceType.Mobile;
                 });

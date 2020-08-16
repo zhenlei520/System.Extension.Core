@@ -62,6 +62,7 @@ namespace EInfrastructure.Core.Test
             List<string> list = FileCommon.GetContentFormFile(Path.Combine("Resources", "useragent.txt"));
             list.ForEach(userAgent =>
             {
+                start:
                 try
                 {
                     var ua = new UserAgent(userAgent).Execute();
@@ -70,6 +71,7 @@ namespace EInfrastructure.Core.Test
                 {
                     errList.Add(userAgent);
                     Console.WriteLine($"UserAgent：{userAgent}，异常信息：{ex.ExtractAllStackTrace()}");
+                    goto  start;
                 }
             });
             var res = new NewtonsoftJsonProvider().Serializer(errList);

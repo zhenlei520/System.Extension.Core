@@ -141,7 +141,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     {
                         if ((tempMc = GetMatchResult(mc, 2).Match(@"(\d)", RegexOptions.IgnoreCase)).Count > 0)
                         {
-                            if (GetMatchResult(mc, 1) == "M3" && tempMc[0].Value.Length == 1)
+                            if (tempMc[0].Value.Length == 1)
                             {
                                 uaData.Device.Name = GetMatchResult(mc, 1) + "-" +
                                                      GetMatchResult(tempMc, 0);
@@ -633,10 +633,17 @@ namespace EInfrastructure.Core.UserAgentParse
                 // format the style of model
                 if (!uaData.Device.Name.IsNullOrEmpty())
                 {
-                    uaData.Device.Name = uaData.Device.Name.SafeString(false).ToUpper()
-                        .ReplaceRegex(@"-+|_+|\s+", RegexOptions.Compiled, " ");
-                    uaData.Device.Name = GetMatchResult(uaData.Device.Name.Match(@"\s*(\w*\s*\w*)"), 1)
-                        .ReplaceRegex(@"\s+", "-");
+                    try
+                    {
+                        uaData.Device.Name = uaData.Device.Name.SafeString(false).ToUpper()
+                            .ReplaceRegex(@"-+|_+|\s+", RegexOptions.Compiled, " ");
+                        uaData.Device.Name = GetMatchResult(uaData.Device.Name.Match(@"\s*(\w*\s*\w*)"), 1)
+                            .ReplaceRegex(@"\s+", "-");
+                    }
+                    catch (Exception e)
+                    {
+                        uaData.Device.Name = "";
+                    }
 
                     // 针对三星、华为做去重的特殊处理
                     if (uaData.Device.Manufacturer == "Samsung")
