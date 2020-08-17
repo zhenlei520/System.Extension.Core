@@ -236,10 +236,6 @@ namespace EInfrastructure.Core.Tools
 
         #region 对list集合分页
 
-        #endregion
-
-        #region 对list集合分页
-
         /// <summary>
         /// 对list集合分页
         /// </summary>
@@ -342,6 +338,27 @@ namespace EInfrastructure.Core.Tools
 #else
             return enumerable;
 #endif
+        }
+
+        #endregion
+
+        #region 返回集合原来的第一个元素的值
+
+        /// <summary>
+        /// 返回集合原来的第一个元素的值,list集合中移除第一个值
+        /// </summary>
+        /// <param name="list"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>返回集合原来的第一个元素的值</returns>
+        public static T Shift<T>(this List<T> list)
+        {
+            if (list.Count == 0)
+            {
+                return default(T);
+            }
+            T res = list[0];
+            list = list.Skip(1).ToList();
+            return res;
         }
 
         #endregion

@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Text.RegularExpressions;
 using EInfrastructure.Core.Config.Entities.Extensions;
+using EInfrastructure.Core.Tools.Systems;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -283,6 +285,159 @@ namespace EInfrastructure.Core.Tools
             if (string.IsNullOrWhiteSpace(value))
                 return string.Empty;
             return $"{value.Substring(0, 1).ToUpper()}{value.Substring(1)}";
+        }
+
+        #endregion
+
+        #region 返回数组原来的第一个元素的值,数组中移除第一个值
+
+        /// <summary>
+        /// 返回数组原来的第一个元素的值,数组中移除第一个值
+        /// </summary>
+        /// <param name="list"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>返回数组原来的第一个元素的值</returns>
+        public static T Shift<T>(this T[] list)
+        {
+            return list.ToList().Shift();
+        }
+
+        #endregion
+
+        #region Replace 结合正则表达式移除
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="str">原参数</param>
+        /// <param name="regex">正则表达式</param>
+        /// <param name="newStr">替换后的值</param>
+        /// <returns></returns>
+        public static string ReplaceRegex(this string str, string regex, string newStr)
+        {
+            return ReplaceRegex(str, regex, RegexOptions.None, newStr);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="str">原参数</param>
+        /// <param name="regex">正则表达式</param>
+        /// <param name="options"></param>
+        /// <param name="newStr">替换后的值</param>
+        /// <returns></returns>
+        public static string ReplaceRegex(this string str, string regex, RegexOptions options, string newStr)
+        {
+            Regex reg = new Regex(regex, options);
+            return reg.Replace(str, newStr);
+        }
+
+        #endregion
+
+        #region 正则表达式
+
+        /// <summary>
+        /// 正则表达式
+        /// </summary>
+        /// <param name="str">待校验的字符串</param>
+        /// <param name="regex">正则表达式</param>
+        /// <returns></returns>
+        public static List<KeyValuePair<string, string[]>> Match(this string str, string regex)
+        {
+            return str.Match(regex, RegexOptions.None);
+        }
+
+        /// <summary>
+        /// 正则匹配，得到匹配到的字符串集合
+        /// </summary>
+        /// <param name="str">待匹配的字符串</param>
+        /// <param name="regex">正则表达式</param>
+        /// <param name="options">正则表达式设置</param>
+        /// <returns></returns>
+        public static List<KeyValuePair<string, string[]>> Match(this string str, string regex, RegexOptions options)
+        {
+            int startat = (uint) (options & RegexOptions.RightToLeft) > 0U ? str.Length : 0;
+            return str.Match(regex, options, startat);
+        }
+
+        /// <summary>
+        /// 正则匹配，得到匹配到的字符串集合
+        /// </summary>
+        /// <param name="str">待匹配的字符串</param>
+        /// <param name="regex">正则表达式</param>
+        /// <param name="options">正则表达式设置</param>
+        /// <param name="startat"></param>
+        /// <returns></returns>
+        public static List<KeyValuePair<string, string[]>> Match(this string str, string regex, RegexOptions options,
+            int startat)
+        {
+            Regex reg = new Regex(regex, options);
+            var matchCollection = reg.Matches(str, startat);
+            List<KeyValuePair<string, string[]>> retList = new List<KeyValuePair<string, string[]>>();
+
+            foreach (Match match in matchCollection)
+            {
+                string[] arrays = new string[match.Length];
+                for (int i = 0; i < match.Length; i++)
+                {
+                    arrays[i] = match.Groups[i].SafeString(false);
+                }
+
+                retList.Add(new KeyValuePair<string, string[]>(match.SafeString(false), arrays));
+            }
+
+            return retList;
+        }
+
+        #endregion
+
+        #region 判断正则表达式是否匹配到
+
+        /// <summary>
+        /// 判断正则表达式是否匹配到
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="regex"></param>
+        /// <returns></returns>
+        public static bool Test(this string str, string regex)
+        {
+            return str.Test(regex, RegexOptions.None);
+        }
+
+        /// <summary>
+        /// 判断正则表达式是否匹配到
+        /// </summary>
+        /// <param name="str">待匹配的字符串</param>
+        /// <param name="regex">正则表达式</param>
+        /// <param name="options">正则表达式设置</param>
+        /// <returns></returns>
+        public static bool Test(this string str, string regex, RegexOptions options)
+        {
+            return new Regex(regex, options).IsMatch(str);
+        }
+
+        #endregion
+
+        #region Indicates whether the specified string is null or an
+
+        /// <summary>
+        /// Indicates whether the specified string is null or an
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty(this string str)
+        {
+            return string.IsNullOrEmpty(str);
+        }
+
+        /// <summary>
+        /// Indicates whether the specified string is null or an
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool IsNullOrWhiteSpace(this string str)
+        {
+            return string.IsNullOrWhiteSpace(str);
         }
 
         #endregion
