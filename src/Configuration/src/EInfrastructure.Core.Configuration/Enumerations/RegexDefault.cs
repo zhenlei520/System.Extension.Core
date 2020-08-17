@@ -66,11 +66,6 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         public static RegexDefault NegativeFloatingPointNumbers = new RegexDefault(11, "NegativeFloatingPointNumbers");
 
         /// <summary>
-        /// 正则表达式
-        /// </summary>
-        public string Regex { get; private set; }
-
-        /// <summary>
         ///
         /// </summary>
         /// <param name="id"></param>

@@ -45,7 +45,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 uaData.Device.DeviceType.Equals(DeviceType.Tablet))
             {
                 if ((mc = UA.Match(
-                        @"(ZTE|Samsung|Motorola|HTC|Coolpad|Huawei|Lenovo|LG|Sony Ericsson|Oppo|TCL|Vivo|Sony|Meizu|Nokia)",
+                        @"(ZTE|Samsung|Motorola|HTC|Coolpad|Huawei|HONOR|Lenovo|LG|Sony Ericsson|Oppo|TCL|Vivo|Sony|Meizu|Nokia)",
                         RegexOptions.IgnoreCase)
                     ).Count > 0)
                 {
@@ -122,6 +122,25 @@ namespace EInfrastructure.Core.UserAgentParse
                     if ((mc = UA.Match(@"(\w*)[\s-_]+[a-z0-9]+", RegexOptions.IgnoreCase)).Count > 0)
                     {
                         uaData.Device.Name = GetMatchResult(mc, 1).SafeString(false);
+                    }
+                }
+                else if((mc=UA.Match(@"HONOR(\w*-?\w*\d*)",RegexOptions.IgnoreCase)).Count>0)
+                {
+
+                    uaData.Device.Manufacturer = "HONOR";
+                    uaData.Device.Name = GetMatchResult(mc,1);
+
+                    var temp = new List<KeyValuePair<string, string>>()
+                    {
+                        new KeyValuePair<string, string>("JSN-AL00a", "8X"),
+                        new KeyValuePair<string, string>("ARE-AL00", "8X Max"),
+                        new KeyValuePair<string, string>("HLK-AL00", "9X"),
+                    };
+
+                    if (temp.Any(x => x.Key == uaData.Device.Name))
+                    {
+                        uaData.Device.Name = temp.Where(x => x.Key == uaData.Device.Name).Select(x => x.Value)
+                            .FirstOrDefault();
                     }
                 }
                 // handle Xiaomi
@@ -903,7 +922,7 @@ namespace EInfrastructure.Core.UserAgentParse
             if ((mc = UA.Match(@"MicroMessenger\/([\w.]+)", RegexOptions.IgnoreCase)).Count > 0)
             {
                 uaData.Browser.Name = "微信";
-                var tmpVersion = (GetMatchResult(mc, 1)).ReplaceRegex(@"_", RegexOptions.Compiled, ".");
+                var tmpVersion = GetMatchResult(mc, 1).ReplaceRegex(@"_", RegexOptions.Compiled, ".");
                 tempMc = tmpVersion.Match(@"\d+\.\d+\.\d+\.\d+");
                 if (tempMc.Count > 0)
                 {

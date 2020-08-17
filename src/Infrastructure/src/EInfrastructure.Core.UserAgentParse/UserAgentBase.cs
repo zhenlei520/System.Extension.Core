@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Internal;
 using EInfrastructure.Core.Tools.Systems;
 using Newtonsoft.Json;
 
@@ -2351,18 +2352,18 @@ namespace EInfrastructure.Core.UserAgentParse
              *      Others
              */
 
-            for (var b = 0; b < this.BrowserRuleses.Count; b++)
+            for (var b = 0; b < BrowserRuleses.Count; b++)
             {
-                CheckUserAgent(userAgent, this.BrowserRuleses[b].Regex, mc2 =>
+                CheckUserAgent(userAgent, BrowserRuleses[b].Regex, mc2 =>
                 {
-                    Browser.Name = this.BrowserRuleses[b].Name;
+                    Browser.Name = BrowserRuleses[b].Name;
                     Browser.Channel = "";
                     Browser.Stock = false;
 
                     if (!string.IsNullOrEmpty(GetMatchResult(mc2, 1)))
                     {
                         Browser.Version = GetVersion(mc2);
-                        Browser.Detail = this.BrowserRuleses[b].Details;
+                        Browser.Detail = BrowserRuleses[b].Details;
                     }
                     else
                     {

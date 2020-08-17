@@ -418,30 +418,6 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region Indicates whether the specified string is null or an
-
-        /// <summary>
-        /// Indicates whether the specified string is null or an
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public static bool IsNullOrEmpty(this string str)
-        {
-            return string.IsNullOrEmpty(str);
-        }
-
-        /// <summary>
-        /// Indicates whether the specified string is null or an
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public static bool IsNullOrWhiteSpace(this string str)
-        {
-            return string.IsNullOrWhiteSpace(str);
-        }
-
-        #endregion
-
         #region 操作
 
         #region 清除字符串数组中的重复项以及对字符串进行剪切

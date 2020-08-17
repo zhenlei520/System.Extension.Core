@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Tools.Enumerations;
+using EInfrastructure.Core.Tools.Internal;
 using EInfrastructure.Core.Tools.Systems;
 
 namespace EInfrastructure.Core.Tools
@@ -28,49 +29,6 @@ namespace EInfrastructure.Core.Tools
             _regexConfigurations = new RegexConfigurationsValidateDefault();
         }
 
-        /// <summary>
-        /// 邮件正则表达式
-        /// </summary>
-        private static readonly Regex Emailregex =
-            new Regex(RegexDefault.Email.Regex,
-                RegexOptions.IgnoreCase);
-
-        /// <summary>
-        /// 手机号正则表达式
-        /// </summary>
-        private static readonly Regex Mobileregex =
-            new Regex(GetRegexConfigurations().GetRegexRule(RegexDefault.Mobile), RegexOptions.IgnoreCase);
-
-        /// <summary>
-        /// 固话号正则表达式
-        /// </summary>
-        private static readonly Regex Phoneregex = new Regex(GetRegexConfigurations().GetRegexRule(RegexDefault.Phone),
-            RegexOptions.IgnoreCase);
-
-        /// <summary>
-        /// 邮政编码正则表达式
-        /// </summary>
-        private static readonly Regex ZipCodeRegex =
-            new Regex(GetRegexConfigurations().GetRegexRule(RegexDefault.ZipCode), RegexOptions.IgnoreCase);
-
-        /// <summary>
-        /// 中文正则表达式
-        /// </summary>
-        private static readonly Regex ChineseRegex =
-            new Regex(GetRegexConfigurations().GetRegexRule(RegexDefault.Chinese), RegexOptions.IgnoreCase);
-
-        /// <summary>
-        /// IP正则表达式
-        /// </summary>
-        private static readonly Regex IpRegex =
-            new Regex(GetRegexConfigurations().GetRegexRule(RegexDefault.Ip));
-
-        /// <summary>
-        /// 网址正则表达式
-        /// </summary>
-        private static readonly Regex WebSiteRegex =
-            new Regex(GetRegexConfigurations().GetRegexRule(RegexDefault.WebSite), RegexOptions.IgnoreCase);
-
         #region 是否邮政编码
 
         /// <summary>
@@ -82,7 +40,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (string.IsNullOrEmpty(s))
                 return false;
-            return ZipCodeRegex.IsMatch(s);
+            return _regexConfigurations.GetRegex(RegexDefault.ZipCode, RegexOptions.IgnoreCase).IsMatch(s);
         }
 
         #endregion
@@ -96,7 +54,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (string.IsNullOrEmpty(s))
                 return false;
-            return Emailregex.IsMatch(s);
+            return _regexConfigurations.GetRegex(RegexDefault.Email, RegexOptions.IgnoreCase).IsMatch(s);
         }
 
         #endregion
@@ -110,7 +68,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (string.IsNullOrEmpty(s))
                 return false;
-            return Mobileregex.IsMatch(s);
+            return GetRegexConfigurations().GetRegex(RegexDefault.Mobile, RegexOptions.IgnoreCase).IsMatch(s);
         }
 
         #endregion
@@ -124,7 +82,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (string.IsNullOrEmpty(s))
                 return false;
-            return Phoneregex.IsMatch(s);
+            return GetRegexConfigurations().GetRegex(RegexDefault.Phone, RegexOptions.IgnoreCase).IsMatch(s);
         }
 
         #endregion
@@ -543,7 +501,7 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         public static bool IsIp(this string s)
         {
-            return IpRegex.IsMatch(s);
+            return GetRegexConfigurations().GetRegex(RegexDefault.Ip).IsMatch(s);
         }
 
         #endregion
@@ -559,7 +517,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (string.IsNullOrEmpty(webUrl))
                 return false;
-            return WebSiteRegex.IsMatch(webUrl);
+            return GetRegexConfigurations().GetRegex(RegexDefault.WebSite, RegexOptions.IgnoreCase).IsMatch(webUrl);
         }
 
         #endregion
@@ -576,12 +534,37 @@ namespace EInfrastructure.Core.Tools
         {
             if (string.IsNullOrEmpty(str))
                 return false;
+            var regex = GetRegexConfigurations().GetRegex(RegexDefault.Chinese, RegexOptions.IgnoreCase);
             if (!isAll)
             {
-                return ChineseRegex.IsMatch(str);
+                return regex.IsMatch(str);
             }
 
-            return ChineseRegex.Match(str).Success && ChineseRegex.Matches(str).Count == str.SafeString().Length;
+            return regex.Match(str).Success && regex.Matches(str).Count == str.SafeString().Length;
+        }
+
+        #endregion
+
+        #region Indicates whether the specified string is null or an
+
+        /// <summary>
+        /// Indicates whether the specified string is null or an
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty(this string str)
+        {
+            return string.IsNullOrEmpty(str);
+        }
+
+        /// <summary>
+        /// Indicates whether the specified string is null or an
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool IsNullOrWhiteSpace(this string str)
+        {
+            return string.IsNullOrWhiteSpace(str);
         }
 
         #endregion

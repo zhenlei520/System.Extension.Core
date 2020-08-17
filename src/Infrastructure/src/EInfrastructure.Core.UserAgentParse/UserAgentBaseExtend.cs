@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.UserAgentParse
         /// <summary>
         ///
         /// </summary>
-        internal List<BrowserRules> BrowserRuleses = new List<BrowserRules>()
+        internal static List<BrowserRules> BrowserRuleses = new List<BrowserRules>()
         {
             new BrowserRules("AdobeAIR", @"AdobeAIR\/([0-9.]*)"),
             new BrowserRules("Awesomium", @"Awesomium\/([0-9.]*)"),
