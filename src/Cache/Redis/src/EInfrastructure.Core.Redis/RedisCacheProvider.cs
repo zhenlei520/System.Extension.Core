@@ -22,7 +22,7 @@ namespace EInfrastructure.Core.Redis
     /// <summary>
     /// Redis缓存服务
     /// </summary>
-    public class RedisCacheProvider : ICacheProvider
+    public class RedisCacheProvider : BaseRedisCacheProvider, ICacheProvider
     {
         /// <summary>
         /// 前缀
@@ -71,9 +71,11 @@ namespace EInfrastructure.Core.Redis
         /// <param name="expiry">过期时间</param>
         /// <param name="overdueStrategy"></param>
         /// <returns></returns>
-        public bool StringSet(string key, string value, TimeSpan? expiry = default(TimeSpan?), OverdueStrategy overdueStrategy = null)
+        public bool StringSet(string key, string value, TimeSpan? expiry = default(TimeSpan?),
+            OverdueStrategy overdueStrategy = null)
         {
-            return QuickHelperBase.Set(key, value, expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
+            return base.Execute(overdueStrategy, () => QuickHelperBase.Set(key, value,
+                expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1), () => { return false; });
         }
 
         /// <summary>
@@ -85,10 +87,11 @@ namespace EInfrastructure.Core.Redis
         /// <param name="expiry"></param>
         /// <param name="overdueStrategy"></param>
         /// <returns></returns>
-        public bool StringSet<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?), OverdueStrategy overdueStrategy = null)
+        public bool StringSet<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?),
+            OverdueStrategy overdueStrategy = null)
         {
-            return QuickHelperBase.Set(key, ConvertJson(obj),
-                expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
+            return base.Execute(overdueStrategy, () => QuickHelperBase.Set(key, ConvertJson(obj),
+                expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1), () => { return false; });
         }
 
         /// <summary>
@@ -159,8 +162,12 @@ namespace EInfrastructure.Core.Redis
         public async Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry = default(TimeSpan?),
             OverdueStrategy overdueStrategy = null)
         {
-            return await QuickHelperBase.SetAsync(key, value,
-                expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
+            return await base.Execute(overdueStrategy, () =>
+                {
+                    return QuickHelperBase.SetAsync(key, value,
+                        expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
+                },
+                () => { return Task.FromResult(false); });
         }
 
         /// <summary>
@@ -175,8 +182,9 @@ namespace EInfrastructure.Core.Redis
         public async Task<bool> StringSetAsync<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?),
             OverdueStrategy overdueStrategy = null)
         {
-            return await QuickHelperBase.SetAsync(key, ConvertJson<T>(obj),
-                expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
+            return await base.Execute(overdueStrategy, () => QuickHelperBase.SetAsync(key, ConvertJson<T>(obj),
+                    expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1),
+                () => { return Task.FromResult(false); });
         }
 
         /// <summary>
@@ -248,20 +256,23 @@ namespace EInfrastructure.Core.Redis
             OverdueStrategy overdueStrategy = null)
         {
             string value = "";
-            if (!isSetHashKeyExpire)
+            return base.Execute(overdueStrategy, () =>
             {
-                value =
-                    QuickHelperBase.HashSetExpire(key, GetExpire(second), dataKey, ConvertJson(t));
-            }
-            else
-            {
-                value = QuickHelperBase.HashSetHashFileExpire(GetKey(key), GetKey(dataKey), GetExpire(second),
-                    ConvertJson(t));
-            }
+                if (!isSetHashKeyExpire)
+                {
+                    value =
+                        QuickHelperBase.HashSetExpire(key, GetExpire(second), dataKey, ConvertJson(t));
+                }
+                else
+                {
+                    value = QuickHelperBase.HashSetHashFileExpire(GetKey(key), GetKey(dataKey), GetExpire(second),
+                        ConvertJson(t));
+                }
 
-            bool result = string.Equals(value, "OK",
-                StringComparison.OrdinalIgnoreCase);
-            return result;
+                bool result = string.Equals(value, "OK",
+                    StringComparison.OrdinalIgnoreCase);
+                return result;
+            }, () => { return false; });
         }
 
         /// <summary>
@@ -277,23 +288,26 @@ namespace EInfrastructure.Core.Redis
         public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L,
             bool isSetHashKeyExpire = true, OverdueStrategy overdueStrategy = null)
         {
-            List<object> keyValues = new List<object>();
-            foreach (var kvp in kvalues)
+            return base.Execute(overdueStrategy, () =>
             {
-                keyValues.Add(isSetHashKeyExpire ? GetKey(kvp.Key) : kvp.Key);
-                keyValues.Add(ConvertJson(kvp.Value));
-            }
+                List<object> keyValues = new List<object>();
+                foreach (var kvp in kvalues)
+                {
+                    keyValues.Add(isSetHashKeyExpire ? GetKey(kvp.Key) : kvp.Key);
+                    keyValues.Add(ConvertJson(kvp.Value));
+                }
 
-            if (isSetHashKeyExpire)
-            {
-                return string.Equals(
-                    QuickHelperBase.HashSetHashFileExpire(GetKey(key), GetExpire(second), keyValues.ToArray()),
-                    "OK",
+                if (isSetHashKeyExpire)
+                {
+                    return string.Equals(
+                        QuickHelperBase.HashSetHashFileExpire(GetKey(key), GetExpire(second), keyValues.ToArray()),
+                        "OK",
+                        StringComparison.OrdinalIgnoreCase);
+                }
+
+                return string.Equals(QuickHelperBase.HashSetExpire(key, GetExpire(second), keyValues.ToArray()), "OK",
                     StringComparison.OrdinalIgnoreCase);
-            }
-
-            return string.Equals(QuickHelperBase.HashSetExpire(key, GetExpire(second), keyValues.ToArray()), "OK",
-                StringComparison.OrdinalIgnoreCase);
+            }, () => { return false; });
         }
 
         /// <summary>
@@ -308,27 +322,30 @@ namespace EInfrastructure.Core.Redis
         public bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1L,
             bool isSetHashKeyExpire = true, OverdueStrategy overdueStrategy = null)
         {
-            Dictionary<string, object[]> keyValues = new Dictionary<string, object[]>();
-            foreach (var item in kValues)
+            return base.Execute(overdueStrategy, () =>
             {
-                List<object> dataKeyValues = new List<object>();
-                foreach (var kvp in item.Value)
+                Dictionary<string, object[]> keyValues = new Dictionary<string, object[]>();
+                foreach (var item in kValues)
                 {
-                    dataKeyValues.Add(isSetHashKeyExpire ? GetKey(kvp.Key) : kvp.Key);
-                    dataKeyValues.Add(ConvertJson(kvp.Value));
+                    List<object> dataKeyValues = new List<object>();
+                    foreach (var kvp in item.Value)
+                    {
+                        dataKeyValues.Add(isSetHashKeyExpire ? GetKey(kvp.Key) : kvp.Key);
+                        dataKeyValues.Add(ConvertJson(kvp.Value));
+                    }
+
+                    keyValues.Add(isSetHashKeyExpire ? GetKey(item.Key) : item.Key, dataKeyValues.ToArray());
                 }
 
-                keyValues.Add(isSetHashKeyExpire ? GetKey(item.Key) : item.Key, dataKeyValues.ToArray());
-            }
+                if (isSetHashKeyExpire)
+                {
+                    return string.Equals(QuickHelperBase.HashSetHashFileExpire(keyValues, GetExpire(second)), "OK",
+                        StringComparison.OrdinalIgnoreCase);
+                }
 
-            if (isSetHashKeyExpire)
-            {
-                return string.Equals(QuickHelperBase.HashSetHashFileExpire(keyValues, GetExpire(second)), "OK",
+                return string.Equals(QuickHelperBase.HashSetExpire(keyValues, GetExpire(second)), "OK",
                     StringComparison.OrdinalIgnoreCase);
-            }
-
-            return string.Equals(QuickHelperBase.HashSetExpire(keyValues, GetExpire(second)), "OK",
-                StringComparison.OrdinalIgnoreCase);
+            }, () => { return false; });
         }
 
         #endregion
@@ -531,8 +548,11 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<bool> HashSetAsync<T>(string key, string dataKey, T t, OverdueStrategy overdueStrategy = null)
         {
-            return string.Equals(await QuickHelperBase.HashSetAsync(key, dataKey, ConvertJson<T>(t)), "TRUE",
-                StringComparison.OrdinalIgnoreCase);
+            return (await base.Execute(overdueStrategy,
+                () => { return QuickHelperBase.HashSetAsync(key, dataKey, ConvertJson<T>(t)); },
+                () => { return Task.FromResult("False"); })).Equals("TRUE", StringComparison.OrdinalIgnoreCase);
+            // return string.Equals(await QuickHelperBase.HashSetAsync(key, dataKey, ConvertJson<T>(t)), "TRUE",
+            //     StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -938,7 +958,8 @@ namespace EInfrastructure.Core.Redis
         public List<ValueTuple<string, string, string, string>> SortedSetRangeByRankAndOverTime(long count = 1000)
         {
             var keyList = QuickHelperBase
-                .ZRevRangeByScore(QuickHelperBase.GetCacheFileKeys(), DateTime.Now.ToUnixTimestamp(TimestampType.Millisecond), 0, count,
+                .ZRevRangeByScore(QuickHelperBase.GetCacheFileKeys(),
+                    DateTime.Now.ToUnixTimestamp(TimestampType.Millisecond), 0, count,
                     null); //得到过期的key集合
             List<ValueTuple<string, string, string, string>> result = new List<(string, string, string, string)>();
             keyList.ForEach(item =>
@@ -1311,7 +1332,7 @@ namespace EInfrastructure.Core.Redis
             }
             else
             {
-                throw new BusinessException("过期时间设置有误",HttpStatus.Err.Id);
+                throw new BusinessException("过期时间设置有误", HttpStatus.Err.Id);
             }
 
             return timeSpan;
