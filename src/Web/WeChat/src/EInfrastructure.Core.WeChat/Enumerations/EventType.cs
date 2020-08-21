@@ -25,6 +25,12 @@ namespace EInfrastructure.Core.WeChat.Enumerations
         /// </summary>
         public static EventType Unsubscribe = new EventType(2, "unsubscribe", "取消订阅");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="desc"></param>
         public EventType(int id, string name, string desc) : base(id, name)
         {
             Desc = desc;

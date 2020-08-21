@@ -31,7 +31,10 @@ namespace EInfrastructure.Core.Test
         #endregion
 
         [Theory]
-        [InlineData(1993, 9)]
+        [InlineData(1993, 10)]
+        [InlineData(1995, 12)]
+        [InlineData(1996, 1)]
+        [InlineData(2020, 1)]
         public void GetAnimalEnumFromBirthday(int year, int animal)
         {
             Check.True(

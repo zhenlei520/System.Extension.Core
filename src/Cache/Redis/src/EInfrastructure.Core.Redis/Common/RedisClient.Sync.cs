@@ -1688,6 +1688,11 @@ namespace EInfrastructure.Core.Redis.Common
         {
             return Write(RedisCommands.Get(key));
         }
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
 		public byte[] GetBytes(string key) {
 			return Write(RedisCommands.GetBytes(key));
 		}
@@ -2169,7 +2174,7 @@ namespace EInfrastructure.Core.Redis.Common
         {
             return Write(RedisCommands.SlaveOfNoOne());
         }
-        
+
         /// <summary>
         /// Get latest entries from the slow log
         /// </summary>

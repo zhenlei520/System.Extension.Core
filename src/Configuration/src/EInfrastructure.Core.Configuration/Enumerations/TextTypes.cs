@@ -13,22 +13,22 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// <summary>
         ///未知
         /// </summary>
-        public static TextTypes Unknow = new TextTypes(0, "未知");
+        public static TextTypes Unknow = new TextTypes(1, "未知");
 
         /// <summary>
         /// 简体
         /// </summary>
-        public static TextTypes Simplified = new TextTypes(1, "简体");
+        public static TextTypes Simplified = new TextTypes(2, "简体");
 
         /// <summary>
         /// 繁体
         /// </summary>
-        public static TextTypes Traditional = new TextTypes(2, "繁体");
+        public static TextTypes Traditional = new TextTypes(3, "繁体");
 
         /// <summary>
         /// 日文
         /// </summary>
-        public static TextTypes Japanese = new TextTypes(3, "日文");
+        public static TextTypes Japanese = new TextTypes(4, "日文");
 
         /// <summary>
         ///

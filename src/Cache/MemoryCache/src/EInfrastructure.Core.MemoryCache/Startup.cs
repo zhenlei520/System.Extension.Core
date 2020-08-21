@@ -17,7 +17,7 @@ namespace EInfrastructure.Core.MemoryCache
         public static IServiceCollection AddMemoryCache(this IServiceCollection services)
         {
             StartUp.Run();
-
+            MemoryCacheServiceCollectionExtensions.AddMemoryCache(services);
             return services;
         }
     }

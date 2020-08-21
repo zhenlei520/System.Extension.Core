@@ -13,42 +13,42 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// <summary>
         /// 未知
         /// </summary>
-        public static Language Unknow = new Language(0, "未知");
+        public static Language Unknow = new Language(1, "未知");
 
         /// <summary>
         /// 汉语
         /// </summary>
-        public static Language Chinese = new Language(1, "汉语");
+        public static Language Chinese = new Language(2, "汉语");
 
         /// <summary>
         /// 粤语
         /// </summary>
-        public static Language Cantonese = new Language(2, "粤语");
+        public static Language Cantonese = new Language(3, "粤语");
 
         /// <summary>
         /// 日语
         /// </summary>
-        public static Language Japanese = new Language(3, "日语");
+        public static Language Japanese = new Language(4, "日语");
 
         /// <summary>
         /// 英语
         /// </summary>
-        public static Language English = new Language(4, "英语");
+        public static Language English = new Language(5, "英语");
 
         /// <summary>
         /// 韩语
         /// </summary>
-        public static Language Korean = new Language(5, "韩语");
+        public static Language Korean = new Language(6, "韩语");
 
         /// <summary>
         /// 法语
         /// </summary>
-        public static Language French = new Language(6, "法语");
+        public static Language French = new Language(7, "法语");
 
         /// <summary>
         /// 印度语
         /// </summary>
-        public static Language Hindi = new Language(7, "印度语");
+        public static Language Hindi = new Language(8, "印度语");
 
         /// <summary>
         ///

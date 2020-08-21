@@ -349,20 +349,20 @@ namespace EInfrastructure.Core.Redis.Common
         /// 同时将多个 field-value (域-值)对设置到哈希表 key 中(设置hashkey的过期时间)
         /// </summary>
         /// <param name="key">不含prefix前辍RedisHelper.Name</param>
-        /// <param name="HashKey"></param>
+        /// <param name="hashKey"></param>
         /// <param name="expire">过期时间</param>
         /// <param name="value">结果</param>
         /// <returns></returns>
-        public static string HashSetHashFileExpire(string key, string HashKey, TimeSpan expire, string value)
+        public static string HashSetHashFileExpire(string key, string hashKey, TimeSpan expire, string value)
         {
             if (expire > TimeSpan.Zero)
             {
                 ZAdd(GetCacheFileKey(),
                     (DateTime.Now.AddSeconds(expire.TotalSeconds).ToUnixTimestamp(TimestampType.Millisecond).ConvertToDouble(0),
-                        GetOverTimeExpireValue(key, HashKey)));
+                        GetOverTimeExpireValue(key, hashKey)));
             }
 
-            return HashSetExpire(key, TimeSpan.Zero, HashKey, value);
+            return HashSetExpire(key, TimeSpan.Zero, hashKey, value);
         }
 
         /// <summary>

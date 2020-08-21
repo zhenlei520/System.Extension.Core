@@ -13,17 +13,17 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// <summary>
         /// 未知
         /// </summary>
-        public static Gender Unknow = new Gender(0, "未知");
+        public static Gender Unknow = new Gender(1, "未知");
 
         /// <summary>
         /// 男
         /// </summary>
-        public static Gender Boy = new Gender(1, "男");
+        public static Gender Boy = new Gender(2, "男");
 
         /// <summary>
         /// 女
         /// </summary>
-        public static Gender Girl = new Gender(2, "女");
+        public static Gender Girl = new Gender(3, "女");
 
         /// <summary>
         ///

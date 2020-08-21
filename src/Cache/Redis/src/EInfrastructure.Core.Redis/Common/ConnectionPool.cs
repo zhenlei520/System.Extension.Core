@@ -175,18 +175,32 @@ namespace EInfrastructure.Core.Redis.Common
         }
     }
 
+    /// <summary>
+    ///
+    /// </summary>
     public class RedisConnection2 : IDisposable
     {
+        /// <summary>
+        ///
+        /// </summary>
         public RedisClient Client;
+        /// <summary>
+        ///
+        /// </summary>
         public DateTime LastActive;
+        /// <summary>
+        ///
+        /// </summary>
         public long UseSum;
         internal int ThreadId;
         internal ConnectionPool Pool;
 
+        /// <summary>
+        ///
+        /// </summary>
         public void Dispose()
         {
-            if (Pool != null)
-                Pool.ReleaseConnection(this);
+            Pool?.ReleaseConnection(this);
         }
     }
 }

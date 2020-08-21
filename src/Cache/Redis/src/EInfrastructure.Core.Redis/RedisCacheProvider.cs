@@ -69,8 +69,9 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key">Redis Key</param>
         /// <param name="value">保存的值</param>
         /// <param name="expiry">过期时间</param>
+        /// <param name="overdueStrategy"></param>
         /// <returns></returns>
-        public bool StringSet(string key, string value, TimeSpan? expiry = default(TimeSpan?))
+        public bool StringSet(string key, string value, TimeSpan? expiry = default(TimeSpan?), OverdueStrategy overdueStrategy = null)
         {
             return QuickHelperBase.Set(key, value, expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
         }
@@ -82,8 +83,9 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="obj"></param>
         /// <param name="expiry"></param>
+        /// <param name="overdueStrategy"></param>
         /// <returns></returns>
-        public bool StringSet<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?))
+        public bool StringSet<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?), OverdueStrategy overdueStrategy = null)
         {
             return QuickHelperBase.Set(key, ConvertJson(obj),
                 expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
@@ -152,8 +154,10 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key">Redis Key</param>
         /// <param name="value">保存的值</param>
         /// <param name="expiry">过期时间</param>
+        /// <param name="overdueStrategy"></param>
         /// <returns></returns>
-        public async Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry = default(TimeSpan?))
+        public async Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry = default(TimeSpan?),
+            OverdueStrategy overdueStrategy = null)
         {
             return await QuickHelperBase.SetAsync(key, value,
                 expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
@@ -166,8 +170,10 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="obj"></param>
         /// <param name="expiry"></param>
+        /// <param name="overdueStrategy"></param>
         /// <returns></returns>
-        public async Task<bool> StringSetAsync<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?))
+        public async Task<bool> StringSetAsync<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?),
+            OverdueStrategy overdueStrategy = null)
         {
             return await QuickHelperBase.SetAsync(key, ConvertJson<T>(obj),
                 expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
@@ -236,8 +242,10 @@ namespace EInfrastructure.Core.Redis
         /// <param name="t"></param>
         /// <param name="second">秒</param>
         /// <param name="isSetHashKeyExpire">false：设置key的过期时间（整个键使用一个过期时间），true：设置hashkey的过期时间，默认设置的为HashKey的过期时间（单个datakey使用一个过期时间）。</param>
+        /// <param name="overdueStrategy"></param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, string dataKey, T t, long second = -1, bool isSetHashKeyExpire = true)
+        public bool HashSet<T>(string key, string dataKey, T t, long second = -1L, bool isSetHashKeyExpire = true,
+            OverdueStrategy overdueStrategy = null)
         {
             string value = "";
             if (!isSetHashKeyExpire)
@@ -264,9 +272,10 @@ namespace EInfrastructure.Core.Redis
         /// <param name="kvalues"></param>
         /// <param name="second">秒</param>
         /// <param name="isSetHashKeyExpire"></param>
+        /// <param name="overdueStrategy"></param>
         /// <returns></returns>
-        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1,
-            bool isSetHashKeyExpire = true)
+        public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L,
+            bool isSetHashKeyExpire = true, OverdueStrategy overdueStrategy = null)
         {
             List<object> keyValues = new List<object>();
             foreach (var kvp in kvalues)
@@ -293,10 +302,11 @@ namespace EInfrastructure.Core.Redis
         /// <param name="kValues"></param>
         /// <param name="second"></param>
         /// <param name="isSetHashKeyExpire">是否制定HashKey的过期时间</param>
+        /// <param name="overdueStrategy"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1,
-            bool isSetHashKeyExpire = true)
+        public bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1L,
+            bool isSetHashKeyExpire = true, OverdueStrategy overdueStrategy = null)
         {
             Dictionary<string, object[]> keyValues = new Dictionary<string, object[]>();
             foreach (var item in kValues)
@@ -517,8 +527,9 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="dataKey"></param>
         /// <param name="t"></param>
+        /// <param name="overdueStrategy"></param>
         /// <returns></returns>
-        public async Task<bool> HashSetAsync<T>(string key, string dataKey, T t)
+        public async Task<bool> HashSetAsync<T>(string key, string dataKey, T t, OverdueStrategy overdueStrategy = null)
         {
             return string.Equals(await QuickHelperBase.HashSetAsync(key, dataKey, ConvertJson<T>(t)), "TRUE",
                 StringComparison.OrdinalIgnoreCase);
@@ -658,6 +669,7 @@ namespace EInfrastructure.Core.Redis
         /// 入队
         /// </summary>
         /// <param name="key"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
         public long ListRightPush<T>(string key, T value)
         {
@@ -926,7 +938,7 @@ namespace EInfrastructure.Core.Redis
         public List<ValueTuple<string, string, string, string>> SortedSetRangeByRankAndOverTime(long count = 1000)
         {
             var keyList = QuickHelperBase
-                .ZRevRangeByScore(QuickHelperBase.GetCacheFileKeys(), TimeCommon.ToUnixTimestamp(DateTime.Now,TimestampType.Millisecond), 0, count,
+                .ZRevRangeByScore(QuickHelperBase.GetCacheFileKeys(), DateTime.Now.ToUnixTimestamp(TimestampType.Millisecond), 0, count,
                     null); //得到过期的key集合
             List<ValueTuple<string, string, string, string>> result = new List<(string, string, string, string)>();
             keyList.ForEach(item =>

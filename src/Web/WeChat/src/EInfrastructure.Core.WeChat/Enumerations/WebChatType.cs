@@ -25,6 +25,11 @@ namespace EInfrastructure.Core.WeChat.Enumerations
         /// </summary>
         public static WebChatType ThirdPartyLogins=new WebChatType(2,"第三方登录");
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
         public WebChatType(int id, string name) : base(id, name)
         {
         }

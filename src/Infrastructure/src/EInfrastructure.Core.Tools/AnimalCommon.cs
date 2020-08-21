@@ -20,10 +20,12 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static Animal GetAnimalFromBirthday(this int year)
         {
-            int tmp = year - 2008;
-            if (year < 2008)
-                return Animal.GetAll<Animal>().FirstOrDefault(x => x.Id == tmp % 12 + 12);
-            return Animal.GetAll<Animal>().FirstOrDefault(x => x.Id == tmp % 12);
+            var index = (year - 3) % 12;
+            if (index == 0)
+            {
+                index = 12;
+            }
+            return Animal.GetAll<Animal>().FirstOrDefault(x => x.Id == index);
         }
 
         #endregion

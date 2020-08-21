@@ -13,62 +13,62 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// <summary>
         /// 鼠
         /// </summary>
-        public static Animal Rat = new Animal(0, "鼠");
+        public static Animal Rat = new Animal(1, "鼠");
 
         /// <summary>
         /// 牛
         /// </summary>
-        public static Animal Ox = new Animal(1, "牛");
+        public static Animal Ox = new Animal(2, "牛");
 
         /// <summary>
         /// 虎
         /// </summary>
-        public static Animal Tiger = new Animal(2, "虎");
+        public static Animal Tiger = new Animal(3, "虎");
 
         /// <summary>
         /// 兔
         /// </summary>
-        public static Animal Hare = new Animal(3, "兔");
+        public static Animal Hare = new Animal(4, "兔");
 
         /// <summary>
         /// 龙
         /// </summary>
-        public static Animal Dragon = new Animal(4, "龙");
+        public static Animal Dragon = new Animal(5, "龙");
 
         /// <summary>
         /// 蛇
         /// </summary>
-        public static Animal Snake = new Animal(5, "蛇");
+        public static Animal Snake = new Animal(6, "蛇");
 
         /// <summary>
         /// 蛇
         /// </summary>
-        public static Animal Horse = new Animal(6, "马");
+        public static Animal Horse = new Animal(7, "马");
 
         /// <summary>
         /// 蛇
         /// </summary>
-        public static Animal Sheep = new Animal(7, "羊");
+        public static Animal Sheep = new Animal(8, "羊");
 
         /// <summary>
         /// 猴
         /// </summary>
-        public static Animal Monkey = new Animal(8, "猴");
+        public static Animal Monkey = new Animal(9, "猴");
 
         /// <summary>
         /// 鸡
         /// </summary>
-        public static Animal Cock = new Animal(9, "鸡");
+        public static Animal Cock = new Animal(10, "鸡");
 
         /// <summary>
         /// 狗
         /// </summary>
-        public static Animal Dog = new Animal(10, "狗");
+        public static Animal Dog = new Animal(11, "狗");
 
         /// <summary>
         /// 猪
         /// </summary>
-        public static Animal Boar = new Animal(11, "猪");
+        public static Animal Boar = new Animal(12, "猪");
 
         /// <summary>
         ///

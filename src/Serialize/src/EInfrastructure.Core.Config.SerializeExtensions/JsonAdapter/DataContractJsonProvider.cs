@@ -71,6 +71,7 @@ namespace EInfrastructure.Core.Config.SerializeExtensions.JsonAdapter
         /// </summary>
         /// <param name="str"></param>
         /// <param name="type"></param>
+        /// <param name="action"></param>
         /// <returns></returns>
         public object Deserialize(string str, Type type,  Func<Exception, object> action = null)
         {

@@ -13,27 +13,27 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// <summary>
         /// 未知
         /// </summary>
-        public static Blood Unknow = new Blood(0, "未知");
+        public static Blood Unknow = new Blood(1, "未知");
 
         /// <summary>
         /// 未知
         /// </summary>
-        public static Blood A = new Blood(1, "A型");
+        public static Blood A = new Blood(2, "A型");
 
         /// <summary>
         /// B型
         /// </summary>
-        public static Blood B = new Blood(2, "B型");
+        public static Blood B = new Blood(3, "B型");
 
         /// <summary>
         /// AB型
         /// </summary>
-        public static Blood Ab = new Blood(3, "AB型");
+        public static Blood Ab = new Blood(4, "AB型");
 
         /// <summary>
         /// O型
         /// </summary>
-        public static Blood O = new Blood(4, "O型");
+        public static Blood O = new Blood(5, "O型");
 
         /// <summary>
         ///

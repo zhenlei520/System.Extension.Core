@@ -11,11 +11,6 @@ namespace EInfrastructure.Core.Configuration.Enumerations
     public class Constellation : Enumeration
     {
         /// <summary>
-        /// 未知
-        /// </summary>
-        public static Constellation Unknow = new Constellation(0, "未知");
-
-        /// <summary>
         /// 白羊座
         /// </summary>
         public static Constellation Aries = new Constellation(1, "白羊座");
@@ -74,6 +69,12 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// 双鱼座
         /// </summary>
         public static Constellation Pisces = new Constellation(12, "双鱼座");
+
+        /// <summary>
+        /// 未知
+        /// </summary>
+        public static Constellation Unknow = new Constellation(13, "未知");
+
 
         /// <summary>
         ///
