@@ -75,7 +75,10 @@ namespace EInfrastructure.Core.Redis
             OverdueStrategy overdueStrategy = null)
         {
             return base.Execute(overdueStrategy, () => QuickHelperBase.Set(key, value,
-                expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1), () => { return false; });
+                expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1), () =>
+            {
+                return false;
+            });
         }
 
         /// <summary>

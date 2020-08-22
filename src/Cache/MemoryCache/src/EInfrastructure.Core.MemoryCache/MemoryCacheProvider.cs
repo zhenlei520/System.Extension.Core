@@ -15,7 +15,7 @@ namespace EInfrastructure.Core.MemoryCache
     /// <summary>
     /// MemoryCache缓存实现类
     /// </summary>
-    public class MemoryCacheProvider : ICacheProvider
+    public class MemoryCacheProvider : BaseMemoryCacheProvider, ICacheProvider
     {
         private readonly IMemoryCache _cache;
 
@@ -90,17 +90,10 @@ namespace EInfrastructure.Core.MemoryCache
 
             if (expiry != null)
             {
-                if (overdueStrategy == null || overdueStrategy.Equals(OverdueStrategy.AbsoluteExpiration))
-                {
-                    _cache.Set(key, obj,
-                        new MemoryCacheEntryOptions()
-                            .SetAbsoluteExpiration(expiry.Value)
-                    );
-                }
-                else
-                {
-                    _cache.Set(key, obj, new MemoryCacheEntryOptions().SetSlidingExpiration(expiry.Value));
-                }
+                base.Execute(overdueStrategy, () => _cache.Set(key, obj,
+                    new MemoryCacheEntryOptions()
+                        .SetAbsoluteExpiration(expiry.Value)
+                ), () => _cache.Set(key, obj, new MemoryCacheEntryOptions().SetSlidingExpiration(expiry.Value)));
             }
             else
             {
@@ -244,7 +237,7 @@ namespace EInfrastructure.Core.MemoryCache
         public Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry = default(TimeSpan?),
             OverdueStrategy overdueStrategy = null)
         {
-            return new Task<bool>(() => StringSet(key, value, expiry));
+            return new Task<bool>(() => StringSet(key, value, expiry,overdueStrategy));
         }
 
         #endregion
@@ -263,7 +256,8 @@ namespace EInfrastructure.Core.MemoryCache
         public Task<bool> StringSetAsync<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?),
             OverdueStrategy overdueStrategy = null)
         {
-            return new Task<bool>(() => StringSet(key, obj, expiry));
+            return base.Execute(overdueStrategy, () => new Task<bool>(() => StringSet(key, obj, expiry)),
+                () => { return new Task<bool>(() => false); });
         }
 
         #endregion
@@ -351,7 +345,7 @@ namespace EInfrastructure.Core.MemoryCache
         public bool HashSet<T>(string key, string dataKey, T t, long second = -1L, bool isSetHashKeyExpire = true,
             OverdueStrategy overdueStrategy = null)
         {
-            return false;
+            return base.Execute(overdueStrategy, () => false, () => false);
         }
 
         #endregion
@@ -371,7 +365,7 @@ namespace EInfrastructure.Core.MemoryCache
         public bool HashSet<T>(string key, Dictionary<string, T> kvalues, long second = -1L,
             bool isSetHashKeyExpire = true, OverdueStrategy overdueStrategy = null)
         {
-            return false;
+            return base.Execute(overdueStrategy, () => false, () => false);
         }
 
         /// <summary>
@@ -386,7 +380,7 @@ namespace EInfrastructure.Core.MemoryCache
         public bool HashSet<T>(Dictionary<string, Dictionary<string, T>> kValues, long second = -1L,
             bool isSetHashKeyExpire = true, OverdueStrategy overdueStrategy = null)
         {
-            return false;
+            return base.Execute(overdueStrategy, () => false, () => false);
         }
 
         #region 清除过期的hashkey(自定义hashkey删除)
@@ -562,7 +556,8 @@ namespace EInfrastructure.Core.MemoryCache
         /// <returns></returns>
         public Task<bool> HashSetAsync<T>(string key, string dataKey, T t, OverdueStrategy overdueStrategy = null)
         {
-            return new Task<bool>(() => HashSet(key, dataKey, t));
+            return base.Execute(overdueStrategy, () => new Task<bool>(() => HashSet(key, dataKey, t)),
+                () => new Task<bool>(() => false));
         }
 
         #endregion
