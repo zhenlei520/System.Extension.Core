@@ -32,10 +32,13 @@ namespace EInfrastructure.Core.MySql.Repository
         {
             Dbcontext = unitOfWork as DbContext;
             UnitOfWork = unitOfWork;
-            _repositoryBase = new EInfrastructure.Core.MySql.Common.RepositoryBase<TEntity, T>(unitOfWork);
+            _repositoryBase = new EInfrastructure.Core.MySql.Common.RepositoryBase<TEntity, T>(Dbcontext);
         }
 
-        public IUnitOfWork UnitOfWork { get; }
+        /// <summary>
+        /// 单元模式
+        /// </summary>
+        public IUnitOfWork<TDbContext> UnitOfWork { get; }
 
         #region 得到唯一标示
 

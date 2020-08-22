@@ -21,18 +21,17 @@ namespace EInfrastructure.Core.SqlServer.Repository
         where TDbContext : IDbContext, IUnitOfWork
     {
         private Common.SpatialDimensionBaseQuery<TEntity, T> _spatialDimensionBase;
-        protected DbContext Dbcontext;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="execute"></param>
-        public SpatialDimensionQuery(IUnitOfWork unitOfWork, IExecute execute)
+        public SpatialDimensionQuery(IUnitOfWork<TDbContext> unitOfWork, IExecute execute)
         {
-            Dbcontext = unitOfWork as DbContext;
+            var dbcontext = unitOfWork as DbContext;
             _spatialDimensionBase =
-                new Common.SpatialDimensionBaseQuery<TEntity, T>(unitOfWork, execute);
+                new Common.SpatialDimensionBaseQuery<TEntity, T>(dbcontext, execute);
         }
 
 

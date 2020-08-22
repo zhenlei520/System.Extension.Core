@@ -30,10 +30,10 @@ namespace EInfrastructure.Core.MySql.Common
         /// <summary>
         ///
         /// </summary>
-        /// <param name="unitOfWork">工作单元</param>
-        internal QueryBase(IUnitOfWork unitOfWork)
+        /// <param name="dbContext">上下文</param>
+        internal QueryBase(DbContext dbContext)
         {
-            Dbcontext = unitOfWork as DbContext;
+            Dbcontext = dbContext;
         }
 
         #region 得到唯一标示

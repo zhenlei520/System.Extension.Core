@@ -26,10 +26,11 @@ namespace EInfrastructure.Core.MySql.Common
         /// <summary>
         ///
         /// </summary>
-        /// <param name="unitOfWork">unitwork</param>
-        public SpatialDimensionBaseQuery(IUnitOfWork unitOfWork, IExecute execute)
+        /// <param name="dbContext">上下文</param>
+        /// <param name="execute"></param>
+        public SpatialDimensionBaseQuery(DbContext dbContext, IExecute execute)
         {
-            Dbcontext = unitOfWork as DbContext;
+            Dbcontext = dbContext;
             _execute = execute;
         }
 

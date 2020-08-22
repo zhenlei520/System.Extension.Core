@@ -30,10 +30,10 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// <summary>
         ///
         /// </summary>
-        /// <param name="unitOfWork">工作单元</param>
-        internal QueryBase(IUnitOfWork unitOfWork)
+        /// <param name="dbContext">工作单元</param>
+        internal QueryBase(DbContext dbContext)
         {
-            Dbcontext = unitOfWork as DbContext;
+            Dbcontext = dbContext;
         }
 
         #region 得到唯一标示

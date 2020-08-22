@@ -26,7 +26,6 @@ namespace EInfrastructure.Core.MySql.Repository
         where TDbContext : IDbContext, IUnitOfWork
     {
         private EInfrastructure.Core.MySql.Common.QueryBase<TEntity, T> _queryBase;
-        protected DbContext Dbcontext;
 
         /// <summary>
         ///
@@ -34,8 +33,8 @@ namespace EInfrastructure.Core.MySql.Repository
         /// <param name="unitOfWork"></param>
         public QueryBase(IUnitOfWork<TDbContext> unitOfWork)
         {
-            Dbcontext = unitOfWork as DbContext;
-            _queryBase = new EInfrastructure.Core.MySql.Common.QueryBase<TEntity, T>(unitOfWork);
+            var dbcontext = unitOfWork as DbContext;
+            _queryBase = new EInfrastructure.Core.MySql.Common.QueryBase<TEntity, T>(dbcontext);
         }
 
         #region 得到唯一标示

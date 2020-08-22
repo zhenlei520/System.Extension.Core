@@ -23,7 +23,6 @@ namespace EInfrastructure.Core.SqlServer.Repository
         where T : IComparable
     {
         private EInfrastructure.Core.SqlServer.Common.QueryBase<TEntity, T> _queryBase;
-        protected DbContext Dbcontext;
 
         /// <summary>
         ///
@@ -31,8 +30,8 @@ namespace EInfrastructure.Core.SqlServer.Repository
         /// <param name="unitOfWork"></param>
         public QueryBase(IUnitOfWork unitOfWork)
         {
-            Dbcontext = unitOfWork as DbContext;
-            _queryBase = new EInfrastructure.Core.SqlServer.Common.QueryBase<TEntity, T>(unitOfWork);
+            var dbcontext = unitOfWork as DbContext;
+            _queryBase = new EInfrastructure.Core.SqlServer.Common.QueryBase<TEntity, T>(dbcontext);
         }
 
 

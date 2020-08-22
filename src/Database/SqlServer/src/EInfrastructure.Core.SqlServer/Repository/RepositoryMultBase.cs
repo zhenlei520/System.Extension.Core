@@ -32,11 +32,13 @@ namespace EInfrastructure.Core.SqlServer.Repository
         {
             Dbcontext = unitOfWork as DbContext;
             UnitOfWork = unitOfWork;
-            _repositoryBase = new EInfrastructure.Core.SqlServer.Common.RepositoryBase<TEntity, T>(unitOfWork);
+            _repositoryBase = new EInfrastructure.Core.SqlServer.Common.RepositoryBase<TEntity, T>(Dbcontext);
         }
 
-
-        public IUnitOfWork UnitOfWork { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public IUnitOfWork<TDbContext> UnitOfWork { get; }
 
         #region 得到唯一标示
 

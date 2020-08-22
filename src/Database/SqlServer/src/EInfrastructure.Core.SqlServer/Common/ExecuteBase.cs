@@ -23,10 +23,10 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// <summary>
         ///
         /// </summary>
-        /// <param name="unitOfWork">工作单元</param>
-        public ExecuteBase(IUnitOfWork unitOfWork)
+        /// <param name="dbContext">上下文</param>
+        public ExecuteBase(DbContext dbContext)
         {
-            Dbcontext = unitOfWork as DbContext;
+            Dbcontext = dbContext;
         }
 
         #region 执行Reader

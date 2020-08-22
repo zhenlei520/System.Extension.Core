@@ -28,10 +28,10 @@ namespace EInfrastructure.Core.MySql.Common
         /// <summary>
         ///
         /// </summary>
-        /// <param name="unitOfWork"></param>
-        public RepositoryBase(IUnitOfWork unitOfWork)
+        /// <param name="dbContext"></param>
+        public RepositoryBase(DbContext dbContext)
         {
-            Dbcontext = unitOfWork as DbContext;
+            Dbcontext = dbContext;
         }
 
 

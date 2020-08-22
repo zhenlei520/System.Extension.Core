@@ -102,11 +102,89 @@ namespace EInfrastructure.Core.Config.Entities.Ioc
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TDbContext"></typeparam>
-    public interface IRepository<TEntity, T, TDbContext> :
-        IRepository<TEntity, T>
+    public interface IRepository<TEntity, T, TDbContext>
         where TEntity : IAggregateRoot<T>
         where T : IComparable
         where TDbContext : IDbContext, IUnitOfWork
     {
+        /// <summary>
+        /// 单元模式
+        /// </summary>
+        IUnitOfWork<TDbContext> UnitOfWork { get; }
+
+        /// <summary>
+        /// 得到实现类唯一标示
+        /// </summary>
+        /// <returns></returns>
+        string GetIdentify();
+
+        /// <summary>
+        /// 根据id得到实体信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        TEntity FindById(T id);
+
+        /// <summary>
+        /// 根据id得到实体信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<TEntity> FindByIdAsync(T id);
+
+        /// <summary>
+        /// 添加单个实体信息
+        /// </summary>
+        /// <param name="entity"></param>
+        void Add(TEntity entity);
+
+        /// <summary>
+        /// 添加单个实体信息
+        /// </summary>
+        /// <param name="entity"></param>
+        Task AddAsync(TEntity entity);
+
+        /// <summary>
+        /// 添加集合
+        /// </summary>
+        /// <param name="entities"></param>
+        void AddRange(List<TEntity> entities);
+
+        /// <summary>
+        /// 添加集合
+        /// </summary>
+        /// <param name="entities"></param>
+        Task AddRangeAsync(List<TEntity> entities);
+
+        /// <summary>
+        /// 移除数据
+        /// </summary>
+        /// <param name="entity"></param>
+        void Remove(TEntity entity);
+
+        /// <summary>
+        /// 移除数据
+        /// </summary>
+        /// <param name="entitys"></param>
+        void RemoveRange(params TEntity[] entitys);
+
+        /// <summary>
+        /// 更新实体
+        /// </summary>
+        /// <param name="entity"></param>
+        void Update(TEntity entity);
+
+        /// <summary>
+        /// 更新实体集合
+        /// </summary>
+        /// <param name="entitys"></param>
+        void UpdateRange(params TEntity[] entitys);
+
+        /// <summary>
+        /// 根据id得到实体信息（需要重写）
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        TEntity LoadIntegrate(T id);
     }
 }

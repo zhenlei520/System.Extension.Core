@@ -19,16 +19,11 @@ namespace EInfrastructure.Core.MySql.Repository
         /// <summary>
         ///
         /// </summary>
-        protected DbContext Dbcontext;
-
-        /// <summary>
-        ///
-        /// </summary>
         /// <param name="unitOfWork"></param>
         public ExecuteBase(IUnitOfWork unitOfWork)
         {
-            Dbcontext = unitOfWork as DbContext;
-            _executeBase = new EInfrastructure.Core.MySql.Common.ExecuteBase(unitOfWork);
+            var dbcontext = unitOfWork as DbContext;
+            _executeBase = new EInfrastructure.Core.MySql.Common.ExecuteBase(dbcontext);
         }
 
         #region 执行Reader（查询）

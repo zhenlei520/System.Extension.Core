@@ -17,7 +17,6 @@ namespace EInfrastructure.Core.SqlServer.Repository
         where TDbContext : IDbContext, IUnitOfWork
     {
         private readonly EInfrastructure.Core.SqlServer.Common.ExecuteBase _executeBase;
-        protected DbContext Dbcontext;
 
         /// <summary>
         ///
@@ -25,8 +24,8 @@ namespace EInfrastructure.Core.SqlServer.Repository
         /// <param name="unitOfWork"></param>
         public ExecuteBase(IUnitOfWork<TDbContext> unitOfWork)
         {
-            Dbcontext = unitOfWork as DbContext;
-            _executeBase = new EInfrastructure.Core.SqlServer.Common.ExecuteBase(unitOfWork);
+            var dbcontext = unitOfWork as DbContext;
+            _executeBase = new EInfrastructure.Core.SqlServer.Common.ExecuteBase(dbcontext);
         }
 
         #region 执行Reader（查询）
