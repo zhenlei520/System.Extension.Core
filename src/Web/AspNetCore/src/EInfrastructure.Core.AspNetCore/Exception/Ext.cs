@@ -26,15 +26,28 @@ namespace EInfrastructure.Core.AspNetCore.Exception
         [Obsolete("此方法已过时，请更换为services.AddMvcJson()")]
         public static void SetJsonOption(this IServiceCollection services, Action<MvcOptions> action = null)
         {
-            services.AddMvc(options => { action?.Invoke(options); })
-                .AddJsonOptions((options =>
-                {
-                    options.SerializerSettings.ContractResolver =
-                        new Newtonsoft.Json.Serialization.DefaultContractResolver();
-                    options.SerializerSettings.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                }));
+            var mvcBuilder = services.AddMvc(options => { action?.Invoke(options); });
+
+#if NETCOREAPP3_1 || NETCOREAPP3_0
+             mvcBuilder .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ContractResolver =
+                    new Newtonsoft.Json.Serialization.DefaultContractResolver();
+                options.SerializerSettings.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+            });
+#else
+
+            mvcBuilder.AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver =
+                    new Newtonsoft.Json.Serialization.DefaultContractResolver();
+                options.SerializerSettings.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+            });
+#endif
         }
 
         #endregion

@@ -71,16 +71,28 @@ namespace EInfrastructure.Core.AspNetCore
             Action<MvcOptions> mvcOptionAction = null,
             Action<MvcJsonOptions> mvcJsonOptionAction = null)
         {
-            return AddMvc(services, options => { mvcOptionAction?.Invoke(options); })
-                .AddJsonOptions(options =>
-                {
-                    options.SerializerSettings.ContractResolver =
-                        new Newtonsoft.Json.Serialization.DefaultContractResolver();
-                    options.SerializerSettings.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                    mvcJsonOptionAction?.Invoke(options);
-                });
+            var mvcBuilder = AddMvc(services, options => { mvcOptionAction?.Invoke(options); });
+#if NETCOREAPP3_1 || NETCOREAPP3_0
+            return mvcBuilder.AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ContractResolver =
+                    new Newtonsoft.Json.Serialization.DefaultContractResolver();
+                options.SerializerSettings.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                mvcJsonOptionAction?.Invoke(options);
+            });
+#else
+            return mvcBuilder.AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver =
+                    new Newtonsoft.Json.Serialization.DefaultContractResolver();
+                options.SerializerSettings.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                mvcJsonOptionAction?.Invoke(options);
+            });
+#endif
         }
 
         #endregion

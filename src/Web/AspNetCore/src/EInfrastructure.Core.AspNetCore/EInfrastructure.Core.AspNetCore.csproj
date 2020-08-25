@@ -13,7 +13,7 @@
     <PackageTags>ECommon Mvc</PackageTags>
     <NeutralLanguage>zh-CN</NeutralLanguage>
     <PackageIcon>packageIcon.png</PackageIcon>
-    <PackageIconUrl />
+    <PackageIconUrl/>
 
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -23,15 +23,21 @@
     <DocumentationFile>bin\Release\EInfrastructure.Core.AspNetCore.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.1.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.0"/>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="2.1.0"/>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.0"/>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' ">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj" />
+    <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\packageIcon.png">
@@ -40,6 +46,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common" />
+    <Folder Include="Common"/>
   </ItemGroup>
 </Project>
