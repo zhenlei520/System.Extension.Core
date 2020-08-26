@@ -149,6 +149,8 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 格式化时间
+
         /// <summary>
         /// 格式化时间
         /// </summary>
@@ -178,6 +180,8 @@ namespace EInfrastructure.Core.Tools
             return string.Format(timeSpanFormatDateType.Name, timeSpan.Days, timeSpan.Hours, timeSpan.Minutes,
                 timeSpan.Seconds, timeSpan.Milliseconds);
         }
+
+        #endregion
 
         #region 得到随机日期
 
