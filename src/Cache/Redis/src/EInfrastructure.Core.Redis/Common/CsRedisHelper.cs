@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.Redis.Common
             database = redisConfig.DataBase;
             ip = redisConfig.Ip;
             pass = redisConfig.Password;
-            Name = redisConfig.Name;
+            Name = redisConfig.Prefix;
             Instance = new ConnectionPool(ip, port, poolsize);
             Instance.Connected += (s, o) => {
                 RedisClient rc = s as RedisClient;

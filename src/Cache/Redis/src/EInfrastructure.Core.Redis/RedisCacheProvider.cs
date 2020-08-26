@@ -39,7 +39,7 @@ namespace EInfrastructure.Core.Redis
             _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
             ValidationCommon.Check(redisConfig, "redis配置异常", HttpStatus.Err.Name);
             new RedisConfigValidator().Validate(redisConfig).Check();
-            _prefix = redisConfig.Name;
+            _prefix = redisConfig.Prefix;
             CsRedisHelper.InitializeConfiguration(redisConfig);
         }
 
@@ -75,10 +75,7 @@ namespace EInfrastructure.Core.Redis
             OverdueStrategy overdueStrategy = null)
         {
             return base.Execute(overdueStrategy, () => QuickHelperBase.Set(key, value,
-                expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1), () =>
-            {
-                return false;
-            });
+                expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1), () => { return false; });
         }
 
         /// <summary>
@@ -162,10 +159,10 @@ namespace EInfrastructure.Core.Redis
         /// <param name="expiry">过期时间</param>
         /// <param name="overdueStrategy"></param>
         /// <returns></returns>
-        public async Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry = default(TimeSpan?),
+        public Task<bool> StringSetAsync(string key, string value, TimeSpan? expiry = default(TimeSpan?),
             OverdueStrategy overdueStrategy = null)
         {
-            return await base.Execute(overdueStrategy, () =>
+            return base.Execute(overdueStrategy, () =>
                 {
                     return QuickHelperBase.SetAsync(key, value,
                         expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1);
@@ -182,10 +179,10 @@ namespace EInfrastructure.Core.Redis
         /// <param name="expiry"></param>
         /// <param name="overdueStrategy"></param>
         /// <returns></returns>
-        public async Task<bool> StringSetAsync<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?),
+        public Task<bool> StringSetAsync<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?),
             OverdueStrategy overdueStrategy = null)
         {
-            return await base.Execute(overdueStrategy, () => QuickHelperBase.SetAsync(key, ConvertJson<T>(obj),
+            return base.Execute(overdueStrategy, () => QuickHelperBase.SetAsync(key, ConvertJson<T>(obj),
                     expiry.HasValue ? Convert.ToInt32(expiry.Value.TotalSeconds) : -1),
                 () => { return Task.FromResult(false); });
         }
@@ -195,9 +192,9 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         /// <param name="key">Redis Key</param>
         /// <returns></returns>
-        public async Task<string> StringGetAsync(string key)
+        public Task<string> StringGetAsync(string key)
         {
-            return await QuickHelperBase.GetAsync(key);
+            return QuickHelperBase.GetAsync(key);
         }
 
 
@@ -207,9 +204,9 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="val">可以为负</param>
         /// <returns>增长后的值</returns>
-        public async Task<long> StringIncrementAsync(string key, long val = 1)
+        public Task<long> StringIncrementAsync(string key, long val = 1)
         {
-            return await QuickHelperBase.IncrementAsync(key, val);
+            return QuickHelperBase.IncrementAsync(key, val);
         }
 
         /// <summary>
@@ -218,9 +215,9 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="val">可以为负</param>
         /// <returns>减少后的值</returns>
-        public async Task<long> StringDecrementAsync(string key, long val = 1)
+        public Task<long> StringDecrementAsync(string key, long val = 1)
         {
-            return await QuickHelperBase.IncrementAsync(key, 0 - val);
+            return QuickHelperBase.IncrementAsync(key, 0 - val);
         }
 
         #endregion 异步方法
@@ -535,9 +532,9 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="dataKey"></param>
         /// <returns></returns>
-        public async Task<bool> HashExistsAsync(string key, string dataKey)
+        public Task<bool> HashExistsAsync(string key, string dataKey)
         {
-            return await QuickHelperBase.HashExistsAsync(key, dataKey);
+            return QuickHelperBase.HashExistsAsync(key, dataKey);
         }
 
         /// <summary>
@@ -575,9 +572,9 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="dataKeys"></param>
         /// <returns></returns>
-        public async Task<long> HashDeleteAsync(string key, List<string> dataKeys)
+        public Task<long> HashDeleteAsync(string key, List<string> dataKeys)
         {
-            return await QuickHelperBase.HashDeleteAsync(key, dataKeys.ToArray());
+            return QuickHelperBase.HashDeleteAsync(key, dataKeys.ToArray());
         }
 
         #region 从hash表获取数据
@@ -614,9 +611,9 @@ namespace EInfrastructure.Core.Redis
         /// <param name="dataKey"></param>
         /// <param name="val">可以为负</param>
         /// <returns>增长后的值</returns>
-        public async Task<long> HashIncrementAsync(string key, string dataKey, long val = 1)
+        public Task<long> HashIncrementAsync(string key, string dataKey, long val = 1)
         {
-            return await QuickHelperBase.HashIncrementAsync(key, dataKey, val);
+            return QuickHelperBase.HashIncrementAsync(key, dataKey, val);
         }
 
         /// <summary>
@@ -626,9 +623,9 @@ namespace EInfrastructure.Core.Redis
         /// <param name="dataKey"></param>
         /// <param name="val">可以为负</param>
         /// <returns>减少后的值</returns>
-        public async Task<long> HashDecrementAsync(string key, string dataKey, long val = 1)
+        public Task<long> HashDecrementAsync(string key, string dataKey, long val = 1)
         {
-            return await QuickHelperBase.HashIncrementAsync(key, dataKey, 0 - val);
+            return QuickHelperBase.HashIncrementAsync(key, dataKey, 0 - val);
         }
 
         /// <summary>
@@ -638,7 +635,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<List<string>> HashKeysAsync(string key)
         {
-            return Enumerable.ToList<string>((await QuickHelperBase.HashKeysAsync(key)));
+            return Enumerable.ToList<string>(await QuickHelperBase.HashKeysAsync(key));
         }
 
         #endregion 异步方法
@@ -781,9 +778,9 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public async Task<long> ListRemoveAsync<T>(string key, T value)
+        public Task<long> ListRemoveAsync<T>(string key, T value)
         {
-            return await QuickHelperBase.LRemAsync(key, int.MaxValue, ConvertJson(value));
+            return QuickHelperBase.LRemAsync(key, int.MaxValue, ConvertJson(value));
         }
 
         /// <summary>
@@ -814,9 +811,9 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public async Task<long> ListRightPushAsync<T>(string key, T value)
+        public Task<long> ListRightPushAsync<T>(string key, T value)
         {
-            return await QuickHelperBase.RPushAsync(key, new[] {ConvertJson(value)});
+            return QuickHelperBase.RPushAsync(key, new[] {ConvertJson(value)});
         }
 
         #region 出队
@@ -826,9 +823,9 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<string> ListRightPopAsync(string key)
+        public Task<string> ListRightPopAsync(string key)
         {
-            return await QuickHelperBase.RPopAsync(key);
+            return QuickHelperBase.RPopAsync(key);
         }
 
         /// <summary>
@@ -851,9 +848,9 @@ namespace EInfrastructure.Core.Redis
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public async Task<long> ListLeftPushAsync<T>(string key, T value)
+        public Task<long> ListLeftPushAsync<T>(string key, T value)
         {
-            return await QuickHelperBase.LPushAsync(key, new string[1] {ConvertJson<T>(value)});
+            return QuickHelperBase.LPushAsync(key, new string[1] {ConvertJson<T>(value)});
         }
 
         #region 出栈
@@ -863,9 +860,9 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<string> ListLeftPopAsync(string key)
+        public Task<string> ListLeftPopAsync(string key)
         {
-            return await QuickHelperBase.LPopAsync(key);
+            return QuickHelperBase.LPopAsync(key);
         }
 
         /// <summary>
@@ -886,9 +883,9 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<long> ListLengthAsync(string key)
+        public Task<long> ListLengthAsync(string key)
         {
-            return await QuickHelperBase.LLenAsync(key);
+            return QuickHelperBase.LLenAsync(key);
         }
 
         #endregion 异步方法
@@ -1127,9 +1124,9 @@ namespace EInfrastructure.Core.Redis
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<long> SortedSetLengthAsync(string key)
+        public Task<long> SortedSetLengthAsync(string key)
         {
-            return await QuickHelperBase.ZCardAsync(key);
+            return QuickHelperBase.ZCardAsync(key);
         }
 
         #endregion
