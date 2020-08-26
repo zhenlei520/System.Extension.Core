@@ -635,7 +635,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public async Task<List<string>> HashKeysAsync(string key)
         {
-            return Enumerable.ToList<string>((await QuickHelperBase.HashKeysAsync(key)));
+            return Enumerable.ToList<string>(await QuickHelperBase.HashKeysAsync(key));
         }
 
         #endregion 异步方法

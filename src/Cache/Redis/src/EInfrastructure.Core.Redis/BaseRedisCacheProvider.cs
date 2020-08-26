@@ -38,14 +38,15 @@ namespace EInfrastructure.Core.Redis
         /// <param name="slidingFunc">滑动过期方法</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        protected virtual async Task<T> Execute<T>(OverdueStrategy overdueStrategy, Func<Task<T>> absoluteFunc, Func<Task<T>> slidingFunc)
+        protected virtual Task<T> Execute<T>(OverdueStrategy overdueStrategy, Func<Task<T>> absoluteFunc,
+            Func<Task<T>> slidingFunc)
         {
             if (overdueStrategy == null || overdueStrategy.Equals(OverdueStrategy.AbsoluteExpiration))
             {
-                return await absoluteFunc.Invoke();
+                return absoluteFunc.Invoke();
             }
 
-            return await slidingFunc.Invoke();
+            return slidingFunc.Invoke();
         }
     }
 }
