@@ -7,27 +7,27 @@ using System.Threading.Tasks;
 namespace EInfrastructure.Core.Redis.Common
 {
     /// <summary>
-    /// Connection链接池
+    /// Connection连接池
     /// </summary>
     internal partial class ConnectionPool
     {
         /// <summary>
-        ///
+        /// 所有连接
         /// </summary>
         public List<RedisConnection2> AllConnections = new List<RedisConnection2>();
 
         /// <summary>
-        ///
+        /// 空闲连接
         /// </summary>
         public Queue<RedisConnection2> FreeConnections = new Queue<RedisConnection2>();
 
         /// <summary>
-        ///
+        /// 同步连接数
         /// </summary>
         public Queue<ManualResetEventSlim> GetConnectionQueue = new Queue<ManualResetEventSlim>();
 
         /// <summary>
-        ///
+        /// 异步连接数
         /// </summary>
         public Queue<TaskCompletionSource<RedisConnection2>> GetConnectionAsyncQueue =
             new Queue<TaskCompletionSource<RedisConnection2>>();
@@ -45,6 +45,13 @@ namespace EInfrastructure.Core.Redis.Common
             _poolsize = poolsize;
         }
 
+        #region 得到空闲连接
+
+        /// <summary>
+        /// 得到空闲连接
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private RedisConnection2 GetFreeConnection()
         {
             RedisConnection2 conn = null;
@@ -74,6 +81,15 @@ namespace EInfrastructure.Core.Redis.Common
             return conn;
         }
 
+        #endregion
+
+        #region 得到同步连接
+
+        /// <summary>
+        /// 得到同步连接
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public RedisConnection2 GetConnection()
         {
             var conn = GetFreeConnection();
@@ -106,6 +122,15 @@ namespace EInfrastructure.Core.Redis.Common
             return conn;
         }
 
+        #endregion
+
+        #region 得到异步连接
+
+        /// <summary>
+        /// 得到异步连接
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<RedisConnection2> GetConnectionAsync()
         {
             var conn = GetFreeConnection();
@@ -135,6 +160,8 @@ namespace EInfrastructure.Core.Redis.Common
 
             return conn;
         }
+
+        #endregion
 
         /// <summary>
         /// 释放资源
@@ -184,14 +211,17 @@ namespace EInfrastructure.Core.Redis.Common
         ///
         /// </summary>
         public RedisClient Client;
+
         /// <summary>
         ///
         /// </summary>
         public DateTime LastActive;
+
         /// <summary>
         ///
         /// </summary>
         public long UseSum;
+
         internal int ThreadId;
         internal ConnectionPool Pool;
 

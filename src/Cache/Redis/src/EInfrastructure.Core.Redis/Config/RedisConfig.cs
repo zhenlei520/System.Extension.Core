@@ -9,7 +9,7 @@ namespace EInfrastructure.Core.Redis.Config
     public class RedisConfig : IFluentlValidatorEntity
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public RedisConfig()
         {
@@ -32,9 +32,9 @@ namespace EInfrastructure.Core.Redis.Config
         public int DataBase { get; set; }
 
         /// <summary>
-        /// 用户名
+        /// 缓存前缀
         /// </summary>
-        public string Name { get; set; }
+        public string Prefix { get; set; }
 
         /// <summary>
         /// 密码

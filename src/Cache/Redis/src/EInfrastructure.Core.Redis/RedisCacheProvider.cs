@@ -39,7 +39,7 @@ namespace EInfrastructure.Core.Redis
             _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
             ValidationCommon.Check(redisConfig, "redis配置异常", HttpStatus.Err.Name);
             new RedisConfigValidator().Validate(redisConfig).Check();
-            _prefix = redisConfig.Name;
+            _prefix = redisConfig.Prefix;
             CsRedisHelper.InitializeConfiguration(redisConfig);
         }
 

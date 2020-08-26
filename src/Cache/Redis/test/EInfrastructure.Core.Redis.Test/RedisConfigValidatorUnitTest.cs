@@ -71,5 +71,19 @@ namespace EInfrastructure.Core.Redis.Test
         {
             Check.True(_redisCacheService.ClearOverTimeHashKey(1000),"方法异常");
         }
+
+       /// <summary>
+       ///
+       /// </summary>
+       /// <param name="key"></param>
+        [Theory]
+        [InlineData("key3")]
+        public void StringGet(string key)
+       {
+           while (true)
+           {
+               var test=_redisCacheService.StringGet(key);
+           }
+       }
     }
 }
