@@ -21,11 +21,11 @@ namespace EInfrastructure.Core.Redis.Test.Base
         {
             _redisCacheService = new RedisCacheProvider(new RedisConfig()
             {
-                Ip = "192.168.1.230",
+                Ip = "",
                 Port = 36378,
                 DataBase = 3,
-                Prefix = "deyoucloud_",
-                Password = "dysh_enjoy",
+                Prefix = "",
+                Password = "",
                 PoolSize = 1,
                 OverTimeCacheKeyPre = "OverTime_HashSet",
             }, new List<IJsonProvider>()
