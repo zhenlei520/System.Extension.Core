@@ -21,6 +21,10 @@ namespace EInfrastructure.Core.Test
         [InlineData("//www.baidu.com/index?id=2")]
         public void GetFullUrl(string url)
         {
+            var url2=new Url("http://bflove.cn", "/home?id=2");
+            var url3=new Url("http://bflove.cn", "home?id=2");
+            var url4=new Url("http://bflove.cn/", "/home?id=2");
+            var url5=new Url("http://bflove.cn/", "home?id=2");
             var uri = new Url(url, true);
             var res = uri.GetFullQueryPath(isContainerScheme:true);
         }

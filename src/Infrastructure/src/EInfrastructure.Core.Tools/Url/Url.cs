@@ -16,7 +16,7 @@ namespace EInfrastructure.Core.Tools.Url
         /// <summary>
         ///
         /// </summary>
-        /// <param name="url">url地址</param>
+        /// <param name="url">完整的url地址</param>
         public Url(string url) : this(url, null)
         {
         }
@@ -24,7 +24,17 @@ namespace EInfrastructure.Core.Tools.Url
         /// <summary>
         ///
         /// </summary>
-        /// <param name="url">url地址</param>
+        /// <param name="host">域</param>
+        /// <param name="url">完整的url地址</param>
+        /// <param name="isUseHttps"></param>
+        public Url(string host, string url, bool? isUseHttps = null) : this(GetFullPath(host, url), isUseHttps)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="url">完整的url地址</param>
         /// <param name="isUseHttps">是否是https，默认自动识别</param>
         public Url(string url, bool? isUseHttps)
         {
@@ -32,23 +42,10 @@ namespace EInfrastructure.Core.Tools.Url
                 throw new BusinessException("url is not empty", HttpStatus.Err.Id);
             var uri = new Uri(url);
             Host = uri.Host;
-            if (isUseHttps == null)
-            {
-                Scheme = uri.Scheme;
-                if (!(Scheme.Equals("http", StringComparison.CurrentCultureIgnoreCase) ||
-                      Scheme.Equals("https", StringComparison.CurrentCultureIgnoreCase)))
-                {
-                    Scheme = "http";
-                }
-
-                IsHttps = Scheme.Equals("https", StringComparison.CurrentCultureIgnoreCase);
-            }
-            else
-            {
-                IsHttps = isUseHttps.Value;
-                Scheme = IsHttps ? "https" : "http";
-            }
-
+            Scheme = uri.Scheme.ToLowers();
+            IsHttps = isUseHttps ?? Scheme.Equals("https", StringComparison.CurrentCultureIgnoreCase);
+            PathAndQuery = uri.PathAndQuery;
+            Path = PathAndQuery.Split('?')[0].Trim();
             RequestUrl = url.Split('?')[0].Trim();
             RequestUrl = FormatUrl(RequestUrl, IsHttps);
             if (url.Split('?').Length > 1)
@@ -72,7 +69,17 @@ namespace EInfrastructure.Core.Tools.Url
         public string Scheme { get; }
 
         /// <summary>
-        /// 请求地址
+        /// 去除scheme以及host，携带参数
+        /// </summary>
+        public string PathAndQuery { get; }
+
+        /// <summary>
+        /// 去除scheme以及host，不携带参数
+        /// </summary>
+        public string Path { get; }
+
+        /// <summary>
+        /// 请求地址(带scheme)
         /// </summary>
         public string RequestUrl { get; }
 
@@ -207,6 +214,47 @@ namespace EInfrastructure.Core.Tools.Url
             }
 
             return url;
+        }
+
+        #endregion
+
+        #region 得到完整的url
+
+        /// <summary>
+        /// 得到完整的url
+        /// </summary>
+        /// <param name="host">host地址，带scheme</param>
+        /// <param name="url">url地址，不考虑直接就是参数的情况</param>
+        /// <returns></returns>
+        private static string GetFullPath(string host, string url)
+        {
+            if (url.IsNullOrEmpty())
+            {
+                return host;
+            }
+            else
+            {
+                if (url.StartsWith("?") || url.StartsWith("/"))
+                {
+                    if (host.EndsWith("/"))
+                    {
+                        return host.Substring(0, host.Length - 1) + url;
+                    }
+
+                    return host + url;
+                }
+                else
+                {
+                    if (host.EndsWith("/"))
+                    {
+                        return host + url;
+                    }
+                    else
+                    {
+                        return host + "/" + url;
+                    }
+                }
+            }
         }
 
         #endregion
