@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         ///
         /// </summary>
         /// <param name="dbContext">上下文</param>
-        public ExecuteBase(DbContext dbContext)
+        internal ExecuteBase(DbContext dbContext)
         {
             Dbcontext = dbContext;
         }

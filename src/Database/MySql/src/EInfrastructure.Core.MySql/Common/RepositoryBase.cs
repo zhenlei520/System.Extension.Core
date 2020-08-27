@@ -29,11 +29,10 @@ namespace EInfrastructure.Core.MySql.Common
         ///
         /// </summary>
         /// <param name="dbContext"></param>
-        public RepositoryBase(DbContext dbContext)
+        internal RepositoryBase(DbContext dbContext)
         {
             Dbcontext = dbContext;
         }
-
 
         #region 得到唯一标示
 

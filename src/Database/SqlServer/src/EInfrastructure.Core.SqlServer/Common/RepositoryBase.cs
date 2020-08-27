@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         ///
         /// </summary>
         /// <param name="dbContext"></param>
-        public RepositoryBase(DbContext dbContext)
+        internal RepositoryBase(DbContext dbContext)
         {
             Dbcontext = dbContext;
         }

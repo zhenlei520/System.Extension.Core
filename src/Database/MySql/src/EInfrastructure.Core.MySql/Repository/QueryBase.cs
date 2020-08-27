@@ -34,7 +34,6 @@ namespace EInfrastructure.Core.MySql.Repository
             _queryBase = new EInfrastructure.Core.MySql.Common.QueryBase<TEntity, T>(dbcontext);
         }
 
-
         #region 得到唯一标示
 
         /// <summary>

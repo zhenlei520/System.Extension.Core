@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.SqlServer.Common
         /// </summary>
         /// <param name="dbContext">上下文</param>
         /// <param name="execute"></param>
-        public SpatialDimensionBaseQuery(DbContext dbContext, IExecute execute)
+        internal SpatialDimensionBaseQuery(DbContext dbContext, IExecute execute)
         {
             Dbcontext = dbContext;
             _execute = execute;
