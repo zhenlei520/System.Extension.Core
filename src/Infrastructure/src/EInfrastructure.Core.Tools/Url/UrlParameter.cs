@@ -17,7 +17,7 @@ namespace EInfrastructure.Core.Tools.Url
     /// </summary>
     public class UrlParameter
     {
-        public IDictionary<string, object> _params;
+        public IDictionary<string, object> _params { get; protected set; }
 
         /// <summary>
         ///
@@ -32,16 +32,15 @@ namespace EInfrastructure.Core.Tools.Url
         /// </summary>
         /// <param name="query">例：a=1&b=2&c=3</param>
         /// <exception cref="BusinessException"></exception>
-        public UrlParameter(string query)
+        public UrlParameter(string query) : this()
         {
-            _params = new Dictionary<string, object>();
             if (string.IsNullOrEmpty(query))
                 return;
             query.Split('&').ToList().ForEach(item =>
             {
                 if (item.Split('=').Length != 2)
                 {
-                    throw new BusinessException("url参数异常",HttpStatus.Err.Id);
+                    throw new BusinessException("url参数异常", HttpStatus.Err.Id);
                 }
 
                 Add(item.Split('=')[0].ToString(), item.Split('=')[1].ToString());
