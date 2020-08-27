@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
+using EInfrastructure.Core.Configuration.Ioc.Plugs;
 using EInfrastructure.Core.Redis.Config;
 using EInfrastructure.Core.Redis.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace EInfrastructure.Core.Redis
 {

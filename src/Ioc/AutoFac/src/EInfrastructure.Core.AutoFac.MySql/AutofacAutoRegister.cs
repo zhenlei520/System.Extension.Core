@@ -4,12 +4,8 @@
 using Autofac;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Linq;
 using System.Reflection;
-using EInfrastructure.Core.Config.Entities.Ioc;
 using EInfrastructure.Core.Configuration.Ioc;
-using EInfrastructure.Core.Infrastructure;
-using EInfrastructure.Core.MySql.Repository;
 
 namespace EInfrastructure.Core.AutoFac.MySql
 {
@@ -36,112 +32,13 @@ namespace EInfrastructure.Core.AutoFac.MySql
         /// </summary>
         /// <param name="services"></param>
         /// <param name="action"></param>
-        /// <returns></returns>
-        public new static IServiceProvider Use(IServiceCollection services,
-            Action<ContainerBuilder> action = null)
-        {
-            return Use(services, AssemblyProvider.GetDefaultAssemblyProvider.GetAssemblies().ToArray(), action);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="services"></param>
         /// <param name="assemblies"></param>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public new static IServiceProvider Use(IServiceCollection services, Assembly[] assemblies,
-            Action<ContainerBuilder> action = null)
-        {
-            return AutoFac.AutofacAutoRegister.Use(services, assemblies, (builder) =>
-            {
-                #region 单数据库查询
-
-                builder.RegisterGeneric(typeof(QueryBase<,>)).As(typeof(IQuery<,>)).PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                builder.RegisterGeneric(typeof(RepositoryBase<,>)).As(typeof(IRepository<,>)).PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                builder.RegisterType<ExecuteBase>().As<IExecute>().PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                builder.RegisterGeneric(typeof(SpatialDimensionQuery<,>)).As(typeof(ISpatialDimensionQuery<,>))
-                    .PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                #endregion
-
-                #region 多数据库查询
-
-                builder.RegisterGeneric(typeof(QueryBase<,,>)).As(typeof(IQuery<,,>)).PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                builder.RegisterGeneric(typeof(RepositoryBase<,,>)).As(typeof(IRepository<,,>)).PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                builder.RegisterGeneric(typeof(ExecuteBase<>)).As(typeof(IExecute<>)).PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                builder.RegisterGeneric(typeof(SpatialDimensionQuery<,,>)).As(typeof(ISpatialDimensionQuery<,,>))
-                    .PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                #endregion
-
-                action?.Invoke(builder);
-            });
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="services"></param>
         /// <param name="typeFinder"></param>
-        /// <param name="action"></param>
         /// <returns></returns>
         public new static IServiceProvider Use(IServiceCollection services,
-            ITypeFinder typeFinder,
-            Action<ContainerBuilder> action = null)
+            Action<ContainerBuilder> action = null, Assembly[] assemblies = null, ITypeFinder typeFinder = null)
         {
-            return AutoFac.AutofacAutoRegister.Use(services, typeFinder, (builder) =>
-            {
-                #region 单数据库查询
-
-                builder.RegisterGeneric(typeof(QueryBase<,>)).As(typeof(IQuery<,>)).PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                builder.RegisterGeneric(typeof(RepositoryBase<,>)).As(typeof(IRepository<,>)).PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                builder.RegisterType<ExecuteBase>().As<IExecute>().PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                builder.RegisterGeneric(typeof(SpatialDimensionQuery<,>)).As(typeof(ISpatialDimensionQuery<,>))
-                    .PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                #endregion
-
-                #region 多数据库查询
-
-                builder.RegisterGeneric(typeof(QueryBase<,,>)).As(typeof(IQuery<,,>)).PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                builder.RegisterGeneric(typeof(RepositoryBase<,,>)).As(typeof(IRepository<,,>)).PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                builder.RegisterGeneric(typeof(ExecuteBase<>)).As(typeof(IExecute<>)).PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                builder.RegisterGeneric(typeof(SpatialDimensionQuery<,,>)).As(typeof(ISpatialDimensionQuery<,,>))
-                    .PropertiesAutowired()
-                    .InstancePerLifetimeScope();
-
-                #endregion
-
-                action?.Invoke(builder);
-            });
+            return new EInfrastructure.Core.AutoFac.MySql.AutoRegister().Use(services, action, assemblies, typeFinder);
         }
     }
 }

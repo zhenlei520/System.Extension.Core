@@ -8,6 +8,7 @@ using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace EInfrastructure.Core.ServiceDiscovery.Consul.AspNetCore
 {

@@ -21,11 +21,11 @@ namespace EInfrastructure.Core.AspNetCore
         /// <summary>
         /// 启用配置
         /// </summary>
-        [Obsolete("此方法已过时，请更换为services.AddBasicNetCore()")]
-        public static void Run()
+        private static void Run(this IServiceCollection services)
         {
             if (!_isStartUp)
             {
+                services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
                 _isStartUp = true;
                 EInfrastructure.Core.StartUp.Run();
             }
@@ -41,8 +41,7 @@ namespace EInfrastructure.Core.AspNetCore
         /// <param name="services"></param>
         public static IServiceCollection AddBasicNetCore(this IServiceCollection services)
         {
-            Run();
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.Run();
             return services;
         }
 

@@ -7,6 +7,7 @@ using EInfrastructure.Core.AliYun.DaYu.Config;
 using EInfrastructure.Core.Configuration.Exception;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace EInfrastructure.Core.AliYun.DaYu
 {

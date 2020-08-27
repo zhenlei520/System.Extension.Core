@@ -10,7 +10,10 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs;
 
 namespace EInfrastructure.Core.Config.SerializeExtensions.JsonAdapter
 {
-    internal class DataContractJsonProvider : IJsonProvider
+    /// <summary>
+    /// 
+    /// </summary>
+    public class DataContractJsonProvider : IJsonProvider
     {
         /// <summary>
         /// 默认格式 UTF8

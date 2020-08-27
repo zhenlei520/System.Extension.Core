@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using EInfrastructure.Core.Config.Entities.Ioc;
 using EInfrastructure.Core.Tools;
 using Microsoft.EntityFrameworkCore;
 

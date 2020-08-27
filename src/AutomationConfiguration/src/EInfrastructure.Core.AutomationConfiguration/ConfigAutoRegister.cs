@@ -3,6 +3,7 @@ using System.Linq;
 using EInfrastructure.Core.AutomationConfiguration.Interface;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace EInfrastructure.Core.AutomationConfiguration
 {

@@ -4,6 +4,7 @@
 using Autofac;
 using EInfrastructure.Core.Config.Entities.Configuration;
 using EInfrastructure.Core.Config.Entities.Ioc;
+using EInfrastructure.Core.MySql.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EInfrastructure.Core.AutoFac.MySql
@@ -39,6 +40,52 @@ namespace EInfrastructure.Core.AutoFac.MySql
         {
             services.AddScoped(typeof(IUnitOfWork<T>), typeof(T));
             return services;
+        }
+
+        #endregion
+
+        #region 注入mysql数据库
+
+        /// <summary>
+        /// 注入mysql数据库
+        /// </summary>
+        /// <param name="containerBuilder"></param>
+        public static void RegisterMySqlRepositoryModule(this ContainerBuilder containerBuilder)
+        {
+            #region 单数据库查询
+
+            containerBuilder.RegisterGeneric(typeof(QueryBase<,>)).As(typeof(IQuery<,>)).PropertiesAutowired()
+                .InstancePerLifetimeScope();
+
+            containerBuilder.RegisterGeneric(typeof(RepositoryBase<,>)).As(typeof(IRepository<,>)).PropertiesAutowired()
+                .InstancePerLifetimeScope();
+
+            containerBuilder.RegisterType<ExecuteBase>().As<IExecute>().PropertiesAutowired()
+                .InstancePerLifetimeScope();
+
+            containerBuilder.RegisterGeneric(typeof(SpatialDimensionQuery<,>)).As(typeof(ISpatialDimensionQuery<,>))
+                .PropertiesAutowired()
+                .InstancePerLifetimeScope();
+
+            #endregion
+
+            #region 多数据库查询
+
+            containerBuilder.RegisterGeneric(typeof(QueryBase<,,>)).As(typeof(IQuery<,,>)).PropertiesAutowired()
+                .InstancePerLifetimeScope();
+
+            containerBuilder.RegisterGeneric(typeof(RepositoryBase<,,>)).As(typeof(IRepository<,,>))
+                .PropertiesAutowired()
+                .InstancePerLifetimeScope();
+
+            containerBuilder.RegisterGeneric(typeof(ExecuteBase<>)).As(typeof(IExecute<>)).PropertiesAutowired()
+                .InstancePerLifetimeScope();
+
+            containerBuilder.RegisterGeneric(typeof(SpatialDimensionQuery<,,>)).As(typeof(ISpatialDimensionQuery<,,>))
+                .PropertiesAutowired()
+                .InstancePerLifetimeScope();
+
+            #endregion
         }
 
         #endregion
