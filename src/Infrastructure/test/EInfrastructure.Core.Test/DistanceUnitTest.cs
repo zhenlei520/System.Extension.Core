@@ -1,6 +1,7 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using EInfrastructure.Core.Tools;
 using Xunit;
 
@@ -12,7 +13,7 @@ namespace EInfrastructure.Core.Test
     public class DistanceUnitTest
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="lat1"></param>
         /// <param name="lng1"></param>
@@ -24,6 +25,15 @@ namespace EInfrastructure.Core.Test
         public void GetDistance(double lat1, double lng1, double lat2, double lng2)
         {
             var result = DistanceCommon.GetDistance(lat1, lng1, lat2, lng2);
+        }
+
+        [Theory]
+        [InlineData(4, 32, 4)]
+        [InlineData(2, 1, 4)]
+        [InlineData(3, 2, 12)]
+        public void Test(int x, int len, int res)
+        {
+            Check.True(x << len == res, "异常");
         }
     }
 }

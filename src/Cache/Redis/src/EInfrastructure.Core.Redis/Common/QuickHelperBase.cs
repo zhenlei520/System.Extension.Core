@@ -6,6 +6,7 @@ using System.Threading;
 using EInfrastructure.Core.HelpCommon.Randoms;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Enumerations;
+using EInfrastructure.Core.Tools.Randoms;
 
 namespace EInfrastructure.Core.Redis.Common
 {

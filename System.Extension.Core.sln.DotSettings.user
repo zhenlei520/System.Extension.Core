@@ -8,6 +8,7 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.AnimalUnitTest.GetAnimalEnumFromBirthday&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::1D961BB4-2FD7-4572-8D35-F66FC90CE311::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Redis.Test.RedisConfigValidatorUnitTest.StringGet&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.DistanceUnitTest.Test&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
