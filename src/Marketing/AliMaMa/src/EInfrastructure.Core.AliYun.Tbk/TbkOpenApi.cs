@@ -94,7 +94,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
             }
 
             string response = GetResponse("taobao.tbk.tpwd.create", Method.POST,
-                (para) =>
+                para =>
                 {
                     para.Add("url", url);
                     para.Add("text", text);

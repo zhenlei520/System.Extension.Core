@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.Test
         {
             int index = 0;
             TaskPool<string> taskCommon = null;
-            taskCommon = new TaskPool<string>(200, (name) =>
+            taskCommon = new TaskPool<string>(200, name =>
             {
                 lock (index + "")
                 {
@@ -80,7 +80,7 @@ namespace EInfrastructure.Core.Test
             DateTime startTime = DateTime.Now;
             List<string> studentList = "小李,小王,小红".ConvertStrToList<string>(',');
             List<JobItem> jobItems = studentList.Select(x => new JobItem(x)).ToList();
-            var list = TaskCommon.ParallelExecute((item) =>
+            var list = TaskCommon.ParallelExecute(item =>
             {
                 if (item.Source.ToString() == "小王")
                 {

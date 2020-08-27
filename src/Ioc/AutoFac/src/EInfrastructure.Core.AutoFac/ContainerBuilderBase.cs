@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.AutoFac
         /// <summary>
         ///
         /// </summary>
-        public ContainerBuilderBase() : this(new ContainerBuilder())
+        public ContainerBuilderBase() : this(null)
         {
         }
 
@@ -34,7 +34,7 @@ namespace EInfrastructure.Core.AutoFac
         /// <param name="containerBuilder"></param>
         public ContainerBuilderBase(ContainerBuilder containerBuilder)
         {
-            ContainerBuilder = containerBuilder;
+            ContainerBuilder = containerBuilder??new ContainerBuilder();
         }
 
         #region 得到配置容器

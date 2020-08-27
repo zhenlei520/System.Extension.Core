@@ -26,12 +26,9 @@ namespace EInfrastructure.Core.AutoFac.MySql.AspNetCore
         public override IServiceProvider Use(IServiceCollection services,
             Action<ContainerBuilder> action = null, Assembly[] assemblies = null, ITypeFinder typeFinder = null)
         {
-            return base.Use(services, builder =>
-                {
-                    EInfrastructure.Core.AspNetCore.StartUp.AddMvc(services.AddBasicNetCore())
-                        .AddControllersAsServices();
-                    action?.Invoke(builder);
-                }, assemblies,
+            EInfrastructure.Core.AspNetCore.StartUp.AddMvc(services.AddBasicNetCore())
+                .AddControllersAsServices();
+            return base.Use(services, builder => { action?.Invoke(builder); }, assemblies,
                 typeFinder);
         }
     }

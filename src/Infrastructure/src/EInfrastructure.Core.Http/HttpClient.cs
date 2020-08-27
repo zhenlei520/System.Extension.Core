@@ -970,7 +970,7 @@ namespace EInfrastructure.Core.Http
 
             return ObjectCommon.GetParams(data,
                     "Microsoft.AspNetCore.Mvc.FromQueryAttribute,Microsoft.AspNetCore.Mvc.Core",
-                    (res) => _jsonProvider.Serializer(data))
+                    res => _jsonProvider.Serializer(data))
                 .ToDictionary(x => x.Key, x => x.Value.ToString());
         }
 

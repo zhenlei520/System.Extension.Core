@@ -38,7 +38,8 @@ namespace EInfrastructure.Core.AutoFac.SqlServer.AspNetCore
         public new static IServiceProvider Use(IServiceCollection services,
             Action<ContainerBuilder> action = null, Assembly[] assemblies = null, ITypeFinder typeFinder = null)
         {
-            return new EInfrastructure.Core.AutoFac.SqlServer.AspNetCore.AutoRegister().Use(services,action,assemblies,typeFinder);
+            return new EInfrastructure.Core.AutoFac.SqlServer.AspNetCore.AutoRegister().Use(services, action,
+                assemblies, typeFinder);
         }
     }
 }

@@ -83,22 +83,22 @@ namespace EInfrastructure.Core.UserAgentParse
             activeXObject)
         {
             CheckUserAgent(userAgent, _osNameList.ToArray(), (mc, regex) => { Os.Name = regex; });
-            CheckUserAgent(userAgent, "SunOS", (mc) => { Os.Name = "Solaris"; });
-            CheckUserAgent(userAgent, "Linux", (mc) =>
+            CheckUserAgent(userAgent, "SunOS", mc => { Os.Name = "Solaris"; });
+            CheckUserAgent(userAgent, "Linux", mc =>
             {
                 Os.Name = "Linux";
-                CheckUserAgent(userAgent, "CentOS", (mc2) =>
+                CheckUserAgent(userAgent, "CentOS", mc2 =>
                 {
                     Os.Name = "CentOS";
                     CheckUserAgent(userAgent, @"CentOS\/[0-9\.\-]+el([0-9_]+)",
-                        (mc3) => { Os.Version = new Versions(GetVersionResult(mc3).ReplaceRegex("_", "")); });
+                        mc3 => { Os.Version = new Versions(GetVersionResult(mc3).ReplaceRegex("_", "")); });
                 });
 
-                CheckUserAgent(userAgent, "Fedora", (mc2) =>
+                CheckUserAgent(userAgent, "Fedora", mc2 =>
                 {
                     Os.Name = "Fedora";
                     CheckUserAgent(userAgent, @"Fedora\/[0-9\.\-]+fc([0-9]+)",
-                        (mc3) => { Os.Version = GetVersion(mc3); });
+                        mc3 => { Os.Version = GetVersion(mc3); });
                 });
 
                 CheckUserAgent(userAgent, "Ubuntu", mc2 =>
@@ -111,19 +111,19 @@ namespace EInfrastructure.Core.UserAgentParse
                 CheckUserAgent(userAgent, new[] {"Gentoo", "Kubuntu", "Debian", "Slackware", "SUSE", "Turbolinux"},
                     (mc2, regex) => { Os.Name = regex; });
 
-                CheckUserAgent(userAgent, "Mandriva Linux", (mc2) =>
+                CheckUserAgent(userAgent, "Mandriva Linux", mc2 =>
                 {
                     Os.Name = "Mandriva";
                     CheckUserAgent(userAgent, @"Mandriva Linux\/[0-9\.\-]+mdv([0-9]+)",
-                        (mc3) => { Os.Version = GetVersion(mc3); });
+                        mc3 => { Os.Version = GetVersion(mc3); });
                 });
 
                 CheckUserAgent(userAgent, "Red Hat",
-                    (mc2) =>
+                    mc2 =>
                     {
                         Os.Name = "Red Hat";
                         CheckUserAgent(userAgent, @"Red Hat[^\/]*\/[0-9\.\-]+el([0-9_]+)",
-                            (mc3) => { Os.Version = new Versions(GetVersionResult(mc3).ReplaceRegex("_", ".")); });
+                            mc3 => { Os.Version = new Versions(GetVersionResult(mc3).ReplaceRegex("_", ".")); });
                     });
             });
 

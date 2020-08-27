@@ -74,7 +74,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
             List<string> zipPathList = new List<string>();
             string zipPath = GetCompressZipName("", zipDirectory, zipName);
             string ext = Path.GetExtension(zipPath) ?? "";
-            sourceFileList.ToList().ListPager((sourceFiles) =>
+            sourceFileList.ToList().ListPager(sourceFiles =>
             {
                 if (index > 0)
                 {

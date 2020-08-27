@@ -12,7 +12,7 @@ namespace EInfrastructure.Core.AutoFac.SqlServer
     /// <summary>
     ///
     /// </summary>
-    public class AutoRegister: EInfrastructure.Core.AutoFac.AutoRegister
+    public class AutoRegister : EInfrastructure.Core.AutoFac.AutoRegister
     {
         /// <summary>
         ///
@@ -25,12 +25,26 @@ namespace EInfrastructure.Core.AutoFac.SqlServer
         public override IServiceProvider Use(IServiceCollection services,
             Action<ContainerBuilder> action = null, Assembly[] assemblies = null, ITypeFinder typeFinder = null)
         {
-            return base.Use(services, builder =>
-                {
-                    builder.RegisterSqlServerRepositoryModule();
-                    action?.Invoke(builder);
-                }, assemblies,
-                typeFinder);
+            return base.Use(services, this.CreateContainerBuilder(action, null, assemblies, typeFinder));
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="containerBuilder"></param>
+        /// <param name="assemblies"></param>
+        /// <param name="typeFinder"></param>
+        /// <returns></returns>
+        public override ContainerBuilderBase CreateContainerBuilder(Action<ContainerBuilder> action,
+            ContainerBuilder containerBuilder = null, Assembly[] assemblies = null,
+            ITypeFinder typeFinder = null)
+        {
+            return base.CreateContainerBuilder(builder =>
+            {
+                builder.RegisterSqlServerRepositoryModule();
+                action?.Invoke(builder);
+            }, containerBuilder, assemblies, typeFinder);
         }
     }
 }

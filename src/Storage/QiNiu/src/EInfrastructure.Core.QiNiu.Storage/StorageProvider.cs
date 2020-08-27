@@ -302,7 +302,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             new GetFileRangeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             List<FileInfoDto> res = new List<FileInfoDto>();
             request.Keys.ToList()
-                .ListPager((list) => { res.AddRange(GetMulti(list.ToArray(), request.PersistentOps)); }, 1000, 1);
+                .ListPager(list => { res.AddRange(GetMulti(list.ToArray(), request.PersistentOps)); }, 1000, 1);
             return res;
         }
 
@@ -374,7 +374,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
         {
             new RemoveRangeParamValidator().Validate(request).Check(HttpStatus.Err.Name);
             List<DeleteResultDto> res = new List<DeleteResultDto>();
-            request.Keys.ListPager((list) => { res.AddRange(DelMulti(list, request.PersistentOps)); }, 1000, 1);
+            request.Keys.ListPager(list => { res.AddRange(DelMulti(list, request.PersistentOps)); }, 1000, 1);
             return res;
         }
 
@@ -657,7 +657,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             List<ExpireResultDto> expireResult = new List<ExpireResultDto>();
             request.Keys.Distinct().ToList()
                 .ListPager(
-                    (list) =>
+                    list =>
                     {
                         expireResult.AddRange(SetExpireMulti(list.ToArray(), request.Expire, request.PersistentOps));
                     },
@@ -734,7 +734,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             List<ChangeMimeResultDto> ret = new List<ChangeMimeResultDto>();
             request.Keys.Distinct().ToList()
                 .ListPager(
-                    (list) =>
+                    list =>
                     {
                         ret.AddRange(ChangeMimeMulti(list.ToArray(), request.MimeType, request.PersistentOps));
                     }, 1000, 1);
@@ -810,7 +810,7 @@ namespace EInfrastructure.Core.QiNiu.Storage
             List<ChangeTypeResultDto> ret = new List<ChangeTypeResultDto>();
             request.Keys.Distinct().ToList()
                 .ListPager(
-                    (list) =>
+                    list =>
                     {
                         ret.AddRange(ChangeTypeMulti(list.ToArray(), request.Type.Id, request.PersistentOps));
                     },

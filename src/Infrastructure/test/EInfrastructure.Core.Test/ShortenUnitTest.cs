@@ -46,7 +46,7 @@ namespace EInfrastructure.Core.Test
         {
             List<string> shortList = new List<string>();
             List<Guid> guidList = new List<Guid>();
-            TaskPool<Guid> taskCommon = new TaskPool<Guid>(200, (guid) =>
+            TaskPool<Guid> taskCommon = new TaskPool<Guid>(200, guid =>
             {
                 lock (shortList)
                 {
