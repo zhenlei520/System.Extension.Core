@@ -158,6 +158,16 @@ namespace EInfrastructure.Core.Tools.Url
 
         #endregion
 
+        /// <summary>
+        /// 得到完整的请求地址
+        /// 格式：{host}/api/user?参数1=参数值&参数2=参数值
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return GetFullQueryPath(false, false, Encoding.UTF8, true);
+        }
+
         #region private methods
 
         #region 获取Url
