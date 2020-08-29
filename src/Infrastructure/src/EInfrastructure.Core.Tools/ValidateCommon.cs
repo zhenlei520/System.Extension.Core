@@ -485,8 +485,7 @@ namespace EInfrastructure.Core.Tools
                 return false; //省份验证
 
             string birth = id.Substring(6, 6).Insert(4, "-").Insert(2, "-");
-            DateTime time;
-            if (DateTime.TryParse(birth, out time) == false)
+            if (DateTime.TryParse(birth, out _) == false)
                 return false; //生日验证
 
             return true; //符合15位身份证标准

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using Microsoft.Extensions.Logging;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Logger;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -118,7 +118,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="errFunc"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T GetResponse<T>(ILogger logger, Func<T> res, Func<string, T> errFunc)
+        public static T GetResponse<T>(ILoggerProvider logger, Func<T> res, Func<string, T> errFunc)
         {
             try
             {

@@ -2,9 +2,7 @@
 
 using System;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.AspNetCore
@@ -54,7 +52,7 @@ namespace EInfrastructure.Core.AspNetCore
         /// </summary>
         /// <param name="services"></param>
         /// <param name="action">拦截器，默认无</param>
-        public static IMvcBuilder AddMvc(this IServiceCollection services, Action<MvcOptions> action = null)
+        public static IMvcBuilder AddMvc(this IServiceCollection services, Action<Microsoft.AspNetCore.Mvc.MvcOptions> action = null)
         {
             return Microsoft.Extensions.DependencyInjection.MvcServiceCollectionExtensions.AddMvc(services,
                 options => { action?.Invoke(options); });
@@ -65,10 +63,8 @@ namespace EInfrastructure.Core.AspNetCore
         /// </summary>
         /// <param name="services"></param>
         /// <param name="mvcOptionAction"></param>
-        /// <param name="mvcJsonOptionAction"></param>
         public static IMvcBuilder AddMvcJson(this IServiceCollection services,
-            Action<MvcOptions> mvcOptionAction = null,
-            Action<MvcJsonOptions> mvcJsonOptionAction = null)
+            Action<Microsoft.AspNetCore.Mvc.MvcOptions> mvcOptionAction = null)
         {
             var mvcBuilder = AddMvc(services, options => { mvcOptionAction?.Invoke(options); });
 #if NETCOREAPP3_1 || NETCOREAPP3_0
@@ -79,7 +75,6 @@ namespace EInfrastructure.Core.AspNetCore
                 options.SerializerSettings.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                mvcJsonOptionAction?.Invoke(options);
             });
 #else
             return mvcBuilder.AddJsonOptions(options =>
@@ -89,7 +84,7 @@ namespace EInfrastructure.Core.AspNetCore
                 options.SerializerSettings.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                mvcJsonOptionAction?.Invoke(options);
+                // mvcOptionAction?.Invoke(options);
             });
 #endif
         }

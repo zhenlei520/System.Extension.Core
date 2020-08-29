@@ -15,11 +15,13 @@ namespace EInfrastructure.Core.MySql
     /// </summary>
     public static class Ext
     {
+        #region 启动调试日志
+
         /// <summary>
-        ///
+        /// 启动追踪日志
         /// </summary>
         /// <param name="optionsBuilder"></param>
-        public static void EnableDebugTrace(this DbContextOptionsBuilder optionsBuilder)
+        public static void EnableTrace(this DbContextOptionsBuilder optionsBuilder)
         {
             LoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(new TraceLoggerProvider());
@@ -27,19 +29,40 @@ namespace EInfrastructure.Core.MySql
             optionsBuilder.EnableSensitiveDataLogging();
         }
 
+        #endregion
+
+        #region 自动映射
+
         /// <summary>
-        /// 自动映射
+        /// 自动映射（只处理映射到数据库，对参数类型以及查询的时候类型转换不做处理）
         /// </summary>
         /// <param name="modelBuilder"></param>
-        /// <param name="assType"></param>
-        public static void AutoMap(this ModelBuilder modelBuilder, Type assType)
+        /// <param name="assType">Map迁移中实现的接口</param>
+        public static void AutoMap<TDbContext>(this ModelBuilder modelBuilder, Type assType)
+            where TDbContext : DbContext
         {
-            // Interface that all of our Entity maps implement
-            var mappingInterface = typeof(IEntityMap<>);
+            if (assType == typeof(IEntityMap<>))
+            {
+                modelBuilder.AutoMap<TDbContext>(typeof(IEntityMap<>), "Map");
+            }
+            else if (assType == typeof(IEntityTypeConfiguration<>))
+            {
+                modelBuilder.AutoMap<TDbContext>(typeof(IEntityTypeConfiguration<>), "Configure");
+            }
+        }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        /// <param name="mappingInterface"></param>
+        /// <param name="methodName"></param>
+        /// <typeparam name="TDbContext"></typeparam>
+        private static void AutoMap<TDbContext>(this ModelBuilder modelBuilder, Type mappingInterface,
+            string methodName) where TDbContext : DbContext
+        {
             // Types that do entity mapping
-            var mappingTypes = assType.GetTypeInfo().Assembly.GetTypes()
+            var mappingTypes = typeof(TDbContext).GetTypeInfo().Assembly.GetTypes()
                 .Where(x => x.GetInterfaces().Any(y =>
                     y.GetTypeInfo().IsGenericType && y.GetGenericTypeDefinition() == mappingInterface));
 
@@ -62,9 +85,38 @@ namespace EInfrastructure.Core.MySql
 
                 // Create the mapping type and do the mapping
                 var mapper = Activator.CreateInstance(mappingType);
-                mapper.GetType().GetMethod("Map")?.Invoke(mapper, new[] {entityBuilder});
+                mapper.GetType().GetMethod(methodName)?.Invoke(mapper, new[] {entityBuilder});
             }
         }
+
+        #endregion
+
+        #region 设置默认参数类型
+
+        /// <summary>
+        /// 设置默认参数类型
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        /// <param name="value">设置的参数类型值</param>
+        /// <typeparam name="T">对哪些参数类型的值设置默认参数类型</typeparam>
+        public static void SetColumnType<T>(this ModelBuilder modelBuilder, string value) where T : IComparable
+        {
+            // foreach (var property in modelBuilder.Model.GetEntityTypes()
+            //     .SelectMany(t => t.GetProperties())
+            //     .Where(p => p.ClrType == typeof(decimal)))
+            // {
+            //     property.SetColumnType("decimal(18, 2)");
+            // }
+
+            foreach (var property in modelBuilder.Model.GetEntityTypes()
+                .SelectMany(t => t.GetProperties())
+                .Where(p => p.ClrType == typeof(T)))
+            {
+                property.Relational().ColumnType = value;
+            }
+        }
+
+        #endregion
     }
 
     /// <summary>
@@ -72,13 +124,16 @@ namespace EInfrastructure.Core.MySql
     /// </summary>
     public class TraceLogger : ILogger
     {
-        private readonly string categoryName;
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly string _categoryName;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="categoryName"></param>
-        public TraceLogger(string categoryName) => this.categoryName = categoryName;
+        public TraceLogger(string categoryName) => this._categoryName = categoryName;
 
         /// <summary>
         /// 是否启用日志
@@ -103,7 +158,7 @@ namespace EInfrastructure.Core.MySql
             Exception exception,
             Func<TState, Exception, string> formatter)
         {
-            Trace.WriteLine($"{DateTime.Now:o} {logLevel} {eventId.Id} {categoryName}");
+            Trace.WriteLine($"{DateTime.Now:o} {logLevel} {eventId.Id} {_categoryName}");
             Trace.WriteLine(formatter(state, exception));
         }
 

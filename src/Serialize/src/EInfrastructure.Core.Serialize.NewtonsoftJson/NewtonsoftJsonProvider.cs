@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
-using Microsoft.Extensions.Logging;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Logger;
 using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.Serialize.NewtonsoftJson
@@ -22,13 +22,13 @@ namespace EInfrastructure.Core.Serialize.NewtonsoftJson
         {
         }
 
-        private readonly ILogger<NewtonsoftJsonProvider> _logger;
+        private readonly ILoggerProvider<NewtonsoftJsonProvider> _logger;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="logger"></param>
-        public NewtonsoftJsonProvider(ILogger<NewtonsoftJsonProvider> logger) : this()
+        public NewtonsoftJsonProvider(ILoggerProvider<NewtonsoftJsonProvider> logger) : this()
         {
             _logger = logger;
         }

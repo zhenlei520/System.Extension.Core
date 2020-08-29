@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Logger;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Serialize.Xml;
@@ -13,7 +14,6 @@ using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.WeChat.Common;
 using EInfrastructure.Core.WeChat.Config;
 using EInfrastructure.Core.WeChat.Enumerations;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.WeChat
     /// </summary>
     public class WebChatProcessRequest
     {
-        private readonly ILogger<WebChatProcessRequest> _logger;
+        private readonly ILoggerProvider<WebChatProcessRequest> _logger;
         private readonly IJsonProvider _jsonProvider;
         private readonly IXmlProvider _xmlProvider;
 
@@ -81,7 +81,7 @@ namespace EInfrastructure.Core.WeChat
         /// <param name="logger"></param>
         /// <param name="jsonProviders"></param>
         /// <param name="xmlProviders"></param>
-        public WebChatProcessRequest(ILogger<WebChatProcessRequest> logger, ICollection<IJsonProvider> jsonProviders,
+        public WebChatProcessRequest(ILoggerProvider<WebChatProcessRequest> logger, ICollection<IJsonProvider> jsonProviders,
             ICollection<IXmlProvider> xmlProviders)
         {
             _logger = logger;

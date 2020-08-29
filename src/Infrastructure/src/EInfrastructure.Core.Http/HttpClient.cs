@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Configuration.Ioc.Plugs;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Logger;
 using EInfrastructure.Core.Http.Common;
 using EInfrastructure.Core.Http.Enumerations;
 using EInfrastructure.Core.Http.Params;
 using EInfrastructure.Core.Http.Provider;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Serialize.Xml;
-using Microsoft.Extensions.Logging;
 using RestSharp;
 
 namespace EInfrastructure.Core.Http
@@ -166,7 +166,7 @@ namespace EInfrastructure.Core.Http
         /// <summary>
         /// 日志
         /// </summary>
-        private ILogger _logger;
+        private ILoggerProvider _logger;
 
         /// <summary>
         ///域
@@ -940,7 +940,7 @@ namespace EInfrastructure.Core.Http
         /// 设置请求日志
         /// </summary>
         /// <param name="logger"></param>
-        public void UseLogger(ILogger logger)
+        public void UseLogger(ILoggerProvider logger)
         {
             this._logger = logger;
         }

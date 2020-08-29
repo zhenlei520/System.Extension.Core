@@ -14,6 +14,7 @@ using EInfrastructure.Core.Aliyun.Storage.Config;
 using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Aliyun.Storage.Validator.Storage;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Logger;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
@@ -24,7 +25,6 @@ using EInfrastructure.Core.Http;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Enumerations;
 using EInfrastructure.Core.Validation.Common;
-using Microsoft.Extensions.Logging;
 using ICredentials = Aliyun.OSS.Common.Authentication.ICredentials;
 using LifecycleRule = Aliyun.OSS.LifecycleRule;
 using StorageClass = EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Enumerations.StorageClass;
@@ -37,15 +37,14 @@ namespace EInfrastructure.Core.Aliyun.Storage
     public class StorageProvider : BaseStorageProvider, IStorageProvider
     {
         private readonly ALiYunStorageConfig _aLiYunConfig;
-        private readonly ILogger _logger;
+        private readonly ILoggerProvider _logger;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="aliyunConfig"></param>
-        public StorageProvider(ALiYunStorageConfig aliyunConfig) : base(aliyunConfig)
+        public StorageProvider(ALiYunStorageConfig aliyunConfig) : this(aliyunConfig, null)
         {
-
         }
 
         /// <summary>
@@ -53,20 +52,10 @@ namespace EInfrastructure.Core.Aliyun.Storage
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="aliyunConfig"></param>
-        public StorageProvider(ALiYunStorageConfig aliyunConfig, ILogger logger) : base(aliyunConfig)
+        public StorageProvider(ALiYunStorageConfig aliyunConfig, ILoggerProvider logger) : base(aliyunConfig)
         {
             _logger = logger;
             _aLiYunConfig = aliyunConfig;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="logger"></param>
-        /// <param name="aliyunConfig"></param>
-        public StorageProvider(ILogger<StorageProvider> logger, ALiYunStorageConfig aliyunConfig) : this(
-            aliyunConfig, logger)
-        {
         }
 
         #region 返回权重

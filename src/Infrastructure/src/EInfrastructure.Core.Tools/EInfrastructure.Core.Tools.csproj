@@ -15,7 +15,6 @@
     <NeutralLanguage>zh-CN</NeutralLanguage>
     <PackageIcon>packageIcon.png</PackageIcon>
     <PackageIconUrl />
-
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

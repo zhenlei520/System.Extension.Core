@@ -10,7 +10,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Sms
     /// <summary>
     /// 语音短信
     /// </summary>
-    public interface IVoiceSmsProvider: ISingleInstance, IIdentify
+    public interface IVoiceSmsProvider : ISingleInstance, IIdentify
     {
         /// <summary>
         /// 发送语音短信

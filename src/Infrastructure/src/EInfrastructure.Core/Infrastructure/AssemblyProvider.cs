@@ -7,9 +7,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Logger;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Files;
-using Microsoft.Extensions.Logging;
 
 namespace EInfrastructure.Core.Infrastructure
 {
@@ -27,7 +27,7 @@ namespace EInfrastructure.Core.Infrastructure
             LoadAppDomainAssemblies = true
         };
 
-        private readonly ILogger _logger;
+        private readonly ILoggerProvider _logger;
 
         /// <summary>
         ///
@@ -42,7 +42,7 @@ namespace EInfrastructure.Core.Infrastructure
         /// <summary>
         ///
         /// </summary>
-        public AssemblyProvider(ILogger<AssemblyProvider> logger) : this()
+        public AssemblyProvider(ILoggerProvider<AssemblyProvider> logger) : this()
         {
             _logger = logger;
         }

@@ -10,6 +10,7 @@ using EInfrastructure.Core.Aliyun.Storage.Config;
 using EInfrastructure.Core.Aliyun.Storage.Enum;
 using EInfrastructure.Core.Aliyun.Storage.Validator.Bucket;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Logger;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto;
@@ -17,7 +18,6 @@ using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Dto.Bucket;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Bucket;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Validation.Common;
-using Microsoft.Extensions.Logging;
 
 namespace EInfrastructure.Core.Aliyun.Storage
 {
@@ -27,9 +27,22 @@ namespace EInfrastructure.Core.Aliyun.Storage
     public class BucketProvider : IBucketProvider
     {
         private readonly ALiYunStorageConfig _aLiYunConfig;
-        private readonly ILogger<BucketProvider> _logger;
+        private readonly ILoggerProvider<BucketProvider> _logger;
 
-        public BucketProvider(ALiYunStorageConfig aliyunConfig, ILogger<BucketProvider> logger = null)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="aliyunConfig">阿里云配置</param>
+        public BucketProvider(ALiYunStorageConfig aliyunConfig) : this(aliyunConfig, null)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="aliyunConfig"></param>
+        /// <param name="logger"></param>
+        public BucketProvider(ALiYunStorageConfig aliyunConfig, ILoggerProvider<BucketProvider> logger)
         {
             _logger = logger;
             _aLiYunConfig = aliyunConfig;

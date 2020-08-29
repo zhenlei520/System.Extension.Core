@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using EInfrastructure.Core.Configuration.Ioc;
+using EInfrastructure.Core.Configuration.Ioc.Plugs.Logger;
 using EInfrastructure.Core.Tools;
-using Microsoft.Extensions.Logging;
 
 namespace EInfrastructure.Core.Infrastructure
 {
@@ -16,7 +16,7 @@ namespace EInfrastructure.Core.Infrastructure
     public class TypeFinder : ITypeFinder
     {
         private readonly IAssemblyProvider _assemblyProvider;
-        private readonly ILogger _logger;
+        private readonly ILoggerProvider _logger;
 
         /// <summary>
         ///
@@ -38,7 +38,7 @@ namespace EInfrastructure.Core.Infrastructure
         /// </summary>
         /// <param name="assemblyProvider"></param>
         /// <param name="logger"></param>
-        public TypeFinder(IAssemblyProvider assemblyProvider, ILogger<TypeFinder> logger)
+        public TypeFinder(IAssemblyProvider assemblyProvider, ILoggerProvider<TypeFinder> logger)
         {
             this._assemblyProvider = assemblyProvider ?? AssemblyProvider.GetDefaultAssemblyProvider;
             this._logger = logger;

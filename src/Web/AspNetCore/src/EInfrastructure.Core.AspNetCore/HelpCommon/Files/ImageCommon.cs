@@ -2,9 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Tools;
-using Microsoft.AspNetCore.Http;
 
-namespace EInfrastructure.Core.HelpCommon.Files
+namespace EInfrastructure.Core.AspNetCore.HelpCommon.Files
 {
     /// <summary>
     /// 图片帮助类
@@ -18,7 +17,7 @@ namespace EInfrastructure.Core.HelpCommon.Files
         /// </summary>
         /// <param name="formFile"></param>
         /// <returns></returns>
-        public static string GetBase64(IFormFile formFile)
+        public static string GetBase64(Microsoft.AspNetCore.Http.IFormFile formFile)
         {
             string encoding = Base64Common.GetBaseEncoding(formFile.ContentType);
             encoding.IsNullOrEmptyTip("未知的文件类型");

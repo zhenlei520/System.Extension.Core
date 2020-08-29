@@ -2,9 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.Extensions.Configuration;
 
-namespace EInfrastructure.Core.HelpCommon
+namespace EInfrastructure.Core.AspNetCore.HelpCommon
 {
     /// <summary>
     /// 配置文件
@@ -18,7 +17,8 @@ namespace EInfrastructure.Core.HelpCommon
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static IConfigurationBuilder CreateConfigurationBuilder(Action<IConfigurationBuilder> action = null)
+        public static Microsoft.Extensions.Configuration.IConfigurationBuilder CreateConfigurationBuilder(
+            Action<Microsoft.Extensions.Configuration.IConfigurationBuilder> action = null)
         {
             return CreateConfigurationBuilder(true, "", action);
         }
@@ -30,16 +30,19 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="prefix">环境变量前缀，默认为空</param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static IConfigurationBuilder CreateConfigurationBuilder(bool isUseEnvironment, string prefix = "",
-            Action<IConfigurationBuilder> action = null)
+        public static Microsoft.Extensions.Configuration.IConfigurationBuilder CreateConfigurationBuilder(
+            bool isUseEnvironment, string prefix = "",
+            Action<Microsoft.Extensions.Configuration.IConfigurationBuilder> action = null)
         {
-            var configurationBuilder = new ConfigurationBuilder();
+            var configurationBuilder = new Microsoft.Extensions.Configuration.ConfigurationBuilder();
             var builder = configurationBuilder;
             if (isUseEnvironment)
             {
                 builder = string.IsNullOrEmpty(prefix)
-                    ? (ConfigurationBuilder) configurationBuilder.AddEnvironmentVariables()
-                    : (ConfigurationBuilder) configurationBuilder.AddEnvironmentVariables(prefix);
+                    ? (Microsoft.Extensions.Configuration.ConfigurationBuilder) (Microsoft.Extensions.Configuration
+                        .EnvironmentVariablesExtensions.AddEnvironmentVariables(configurationBuilder))
+                    : (Microsoft.Extensions.Configuration.ConfigurationBuilder) (Microsoft.Extensions.Configuration
+                        .EnvironmentVariablesExtensions.AddEnvironmentVariables(configurationBuilder, prefix));
             }
 
             action?.Invoke(builder);
@@ -58,15 +61,17 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="isOptional">是否必须</param>
         /// <param name="reloadOnChange">是否监听更改</param>
         /// <returns></returns>
-        public static IConfigurationBuilder AddJsonAppsettings(string basePath,
+        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddJsonAppsettings(string basePath,
             string configPath, bool isOptional = true, bool reloadOnChange = true)
         {
             return ConfigurationCommon.CreateConfigurationBuilder(configurationBuilder =>
             {
                 if (!string.IsNullOrEmpty(configPath))
                 {
-                    configurationBuilder.SetBasePath(basePath)
-                        .AddJsonFile(configPath, isOptional, reloadOnChange);
+                    var builder = Microsoft.Extensions.Configuration.FileConfigurationExtensions
+                        .SetBasePath(configurationBuilder, basePath);
+                    Microsoft.Extensions.Configuration.JsonConfigurationExtensions.AddJsonFile(builder, configPath,
+                        isOptional, reloadOnChange);
                 }
             });
         }
@@ -77,7 +82,8 @@ namespace EInfrastructure.Core.HelpCommon
         /// <param name="isOptional">是否必须</param>
         /// <param name="reloadOnChange">是否监听更改</param>
         /// <returns></returns>
-        public static IConfigurationBuilder AddDefaultJsonAppsettings(bool isOptional = true,
+        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddDefaultJsonAppsettings(
+            bool isOptional = true,
             bool reloadOnChange = true)
         {
             return AddJsonAppsettings(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json", isOptional,

@@ -7,6 +7,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using EInfrastructure.Core.Tools.Enumerations;
 
 namespace EInfrastructure.Core.Tools.Files
 {
@@ -141,6 +142,162 @@ namespace EInfrastructure.Core.Tools.Files
             }
         }
 
+        #endregion
+        
+        #region 得到文件md5
+
+        /// <summary>
+        /// 得到文件md5
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public static string GetMd5(Stream stream)
+        {
+            int bufferSize = 1024 * 16; //自定义缓冲区大小16K
+            HashAlgorithm hashAlgorithm = new MD5CryptoServiceProvider();
+            int readLength = 0; //每次读取长度
+            var output = new byte[bufferSize];
+            byte[] buffer = new byte[bufferSize];
+            while ((readLength = stream.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                //计算MD5
+                hashAlgorithm.TransformBlock(buffer, 0, readLength, output, 0);
+            }
+        
+            //完成最后计算，必须调用(由于上一部循环已经完成所有运算，所以调用此方法时后面的两个参数都为0)
+            hashAlgorithm.TransformFinalBlock(buffer, 0, 0);
+            string md5 = BitConverter.ToString(hashAlgorithm.Hash);
+            hashAlgorithm.Clear();
+            stream.Close();
+            md5 = md5.Replace("-", "");
+            return md5;
+        }
+        
+        #endregion
+        
+        #region 得到文件的Sha1
+        
+        /// <summary>
+        /// 得到文件的Sha1
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="isUpper">是否转大写</param>
+        /// <returns></returns>
+        public static string GetSha1(Stream stream, bool isUpper = true)
+        {
+            return GetSha(stream, new SHA1CryptoServiceProvider(), isUpper);
+        }
+        
+        #endregion
+        
+        #region 得到文件的Sha256
+
+        /// <summary>
+        /// 得到文件的Sha256
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="isUpper">是否转大写</param>
+        /// <returns></returns>
+        public static string GetSha256(Stream stream, bool isUpper = true)
+        {
+            return GetSha(stream, new SHA256CryptoServiceProvider(), isUpper);
+        }
+        
+        #endregion
+        
+        #region 得到文件的Sha384
+        
+        /// <summary>
+        /// 得到文件的Sha384
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="isUpper">是否转大写</param>
+        /// <returns></returns>
+        public static string GetSha384(Stream stream, bool isUpper = true)
+        {
+            return GetSha(stream, new SHA384CryptoServiceProvider(), isUpper);
+        }
+        
+        #endregion
+        
+        #region 得到文件的Sha512
+        
+        /// <summary>
+        /// 得到文件的Sha512
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="isUpper">是否转大写</param>
+        /// <returns></returns>
+        public static string GetSha512(Stream stream, bool isUpper = true)
+        {
+            return GetSha(stream, new SHA512CryptoServiceProvider(), isUpper);
+        }
+        
+        #endregion
+        
+        #region 得到sha系列加密信息
+        
+        /// <summary>
+        /// 得到sha系列加密信息
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="hashAlgorithm"></param>
+        /// <param name="isUpper">是否转大写</param>
+        /// <returns></returns>
+        private static string GetSha(Stream stream, HashAlgorithm hashAlgorithm, bool isUpper)
+        {
+            byte[] retval = hashAlgorithm.ComputeHash(stream);
+            stream.Close();
+            return SecurityCommon.GetSha(retval, hashAlgorithm, isUpper);
+        }
+        
+        #endregion
+        
+        #region 得到文件信息
+
+        /// <summary>
+        /// 得到文件信息
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="fileName">文件名称</param>
+        /// <param name="encryptType">加密方式，默认加密方式为Sha256</param>
+        /// <returns></returns>
+        public static EInfrastructure.Core.Tools.Files.FileInfo Get(Stream stream,
+            string fileName,
+            EncryptType encryptType = null)
+        {
+            string conditionCode = "";
+            if (encryptType != null)
+            {
+                if (encryptType.Id == EncryptType.Md5.Id)
+                {
+                    conditionCode = GetMd5(stream);
+                }
+                else if (encryptType.Id == EncryptType.Sha1.Id)
+                {
+                    conditionCode = GetSha1(stream);
+                }
+                else if (encryptType.Id == EncryptType.Sha256.Id)
+                {
+                    conditionCode = GetSha256(stream);
+                }
+                else if (encryptType.Id == EncryptType.Sha384.Id)
+                {
+                    conditionCode = GetSha384(stream);
+                }
+                else if (encryptType.Id == EncryptType.Sha512.Id)
+                {
+                    conditionCode = GetSha512(stream);
+                }
+            }
+            else
+            {
+                conditionCode = GetSha256(stream);
+            }
+        
+            return new EInfrastructure.Core.Tools.Files.FileInfo(fileName, conditionCode);
+        }
+        
         #endregion
 
         #region 将文件转换成Base64格式

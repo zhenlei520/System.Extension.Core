@@ -37,7 +37,7 @@ namespace EInfrastructure.Core.Validation.AspNetCore
                     return new BadRequestObjectResult(func.Invoke(errors));
                 };
             });
-            services.AddModelValidation(cascadeMode);
+            EInfrastructure.Core.Validation.Startup.AddModelValidation(cascadeMode);
             return services;
         }
     }

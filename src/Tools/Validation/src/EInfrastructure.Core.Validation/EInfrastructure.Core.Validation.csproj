@@ -14,7 +14,6 @@
     <NeutralLanguage>zh-CN</NeutralLanguage>
     <PackageIcon>packageIcon.png</PackageIcon>
     <PackageIconUrl />
-
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DocumentationFile>bin\Debug\EInfrastructure.Core.Validation.xml</DocumentationFile>
@@ -23,9 +22,7 @@
     <DocumentationFile>bin\Release\EInfrastructure.Core.Validation.xml</DocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="8.1.3" />
-  </ItemGroup>
+ 
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj" />

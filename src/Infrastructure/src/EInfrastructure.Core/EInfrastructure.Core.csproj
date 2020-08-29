@@ -1,42 +1,38 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>2.3.7-beta-002</Version>
-    <Authors>zhenlei520</Authors>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Company>zhenlei520</Company>
-    <Description>dotnet core 基础类库,集成IOC更方便</Description>
-    <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core</RepositoryUrl>
-    <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core/</PackageProjectUrl>
-    <Copyright>Copyright ©zhenlei520 2020</Copyright>
-    <Title>基础类库</Title>
-    <PackageTags>EInfrastructure.Core EInfrastructure ECommon</PackageTags>
-    <NeutralLanguage>zh-CN</NeutralLanguage>
-    <PackageIcon>packageIcon.png</PackageIcon>
-    <PackageIconUrl />
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;netstandard2.1;</TargetFrameworks>
+        <Version>2.3.7-beta-002</Version>
+        <Authors>zhenlei520</Authors>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Company>zhenlei520</Company>
+        <Description>dotnet core 基础类库,集成IOC更方便</Description>
+        <RepositoryUrl>https://github.com/zhenlei520/System.Extension.Core</RepositoryUrl>
+        <PackageProjectUrl>https://www.nuget.org/packages/EInfrastructure.Core/</PackageProjectUrl>
+        <Copyright>Copyright ©zhenlei520 2020</Copyright>
+        <Title>基础类库</Title>
+        <PackageTags>EInfrastructure.Core EInfrastructure ECommon</PackageTags>
+        <NeutralLanguage>zh-CN</NeutralLanguage>
+        <PackageIcon>packageIcon.png</PackageIcon>
+        <PackageIconUrl/>
 
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DocumentationFile>bin\Debug\EInfrastructure.Core.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DocumentationFile>bin\Release\EInfrastructure.Core.xml</DocumentationFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EInfrastructure.Core.Tools\EInfrastructure.Core.Tools.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\packageIcon.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DocumentationFile>bin\Debug\EInfrastructure.Core.xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DocumentationFile>bin\Release\EInfrastructure.Core.xml</DocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EInfrastructure.Core.Tools\EInfrastructure.Core.Tools.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="..\..\..\..\packageIcon.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
 </Project>

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using EInfrastructure.Core.Http;
@@ -9,8 +8,6 @@ using EInfrastructure.Core.Http.Params;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -313,13 +310,14 @@ namespace EInfrastructure.Core.Test
         /// 得到logger
         /// </summary>
         /// <returns></returns>
-        private ILogger GetLogger()
+        private EInfrastructure.Core.Configuration.Ioc.Plugs.Logger.ILoggerProvider GetLogger()
         {
-            ILoggerFactory loggerFactory = new LoggerFactory();
-            Func<string, LogLevel, bool> filter = (category, level) => level >= LogLevel.Debug;
-            loggerFactory.AddProvider(new ConsoleLoggerProvider(filter, false));
-            ILogger logger = loggerFactory.CreateLogger(nameof(HttpCommonUnitTest));
-            return logger;
+            // ILoggerFactory loggerFactory = new LoggerFactory();
+            // Func<string, LogLevel, bool> filter = (category, level) => level >= LogLevel.Debug;
+            // loggerFactory.AddProvider(new ConsoleLoggerProvider(filter, false));
+            // ILogger logger = loggerFactory.CreateLogger(nameof(HttpCommonUnitTest));
+            // return logger;
+            return null;
         }
 
         #endregion
