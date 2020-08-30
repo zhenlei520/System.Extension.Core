@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-   <Version>2.3.7-beta-002</Version>
+    <Version>3.0.0-preview.200830.x0012</Version>
     <Authors>zhenlei520</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>zhenlei520</Company>
@@ -14,8 +14,7 @@
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <NeutralLanguage>zh-CN</NeutralLanguage>
     <PackageIcon>packageIcon.png</PackageIcon>
-    <PackageIconUrl />
-
+    <PackageIconUrl/>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -27,11 +26,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SharpZipLib" Version="1.1.0" />
+    <PackageReference Include="SharpZipLib" Version="1.1.0"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj" />
+    <ProjectReference Include="..\..\..\..\Infrastructure\src\EInfrastructure.Core\EInfrastructure.Core.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
