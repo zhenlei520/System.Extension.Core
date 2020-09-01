@@ -30,7 +30,7 @@
 1. 支持与MySql数据库开发
 1. 支持与SQLService数据库开发
 
-其他的就不一一列举了，感兴趣的可以查看[文档](https://docs.bflove.cn/System.Extension.Core.Doc/#/zh-cn/abstract)，有疑问的可以<a href="https://github.com/zhenlei520/System.Extension.Core/issues/new">发起Issues</a>
+其他的就不一一列举了，感兴趣的可以查看[文档](https://docs.bflove.cn/#/zh-cn/abstract)，有疑问的可以<a href="https://github.com/zhenlei520/System.Extension.Core/issues/new">发起Issues</a>
 
 
 &emsp;&emsp;本项目已同步发布至nuget.org以及github，自2.0系列开始，两平台同步发布，因为项目还在不断地优化，建议您升级到最新的正式发布版，预发布版本虽然修复了很多bug，但为了更好的使用，方法的使用上以及命名上后期还有可能变更，如果您有任何问题可进行提问
