@@ -35,7 +35,7 @@
 
 &emsp;&emsp;本项目已同步发布至nuget.org以及github，自2.0系列开始，两平台同步发布，因为项目还在不断地优化，建议您升级到最新的正式发布版，预发布版本虽然修复了很多bug，但为了更好的使用，方法的使用上以及命名上后期还有可能变更，如果您有任何问题可进行提问
 
-&emsp;&emsp;如果对项目感兴趣，欢迎大家start，如果您有好建议，也十分欢迎与我留言，如果希望深一步的沟通，可以扫码下方二维码添加好友与我沟通。[点击查看完整文档](https://docs.bflove.cn/System.Extension.Core.Doc/#/zh-cn/abstract)，如果无法正常加载网页，建议通过以下命令下载文档项目
+&emsp;&emsp;如果对项目感兴趣，欢迎大家start，如果您有好建议，也十分欢迎与我留言，如果希望深一步的沟通，可以扫码下方二维码添加好友与我沟通。[点击查看完整文档](https://docs.bflove.cn/#/zh-cn/abstract)，如果无法正常加载网页，建议通过以下命令下载文档项目
 
     git clone https://github.com/zhenlei520/System.Extension.Core.Doc
 
