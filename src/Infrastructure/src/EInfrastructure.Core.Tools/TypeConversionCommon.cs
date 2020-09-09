@@ -808,13 +808,20 @@ namespace EInfrastructure.Core.Tools
         /// 复制流并转换成字符串
         /// </summary>
         /// <param name="stream">流</param>
+        public static async Task<string> CopyToStringAsync(this Stream stream)
+        {
+            return await CopyToStringAsync(stream, Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// 复制流并转换成字符串
+        /// </summary>
+        /// <param name="stream">流</param>
         /// <param name="encoding">字符编码</param>
-        public static async Task<string> CopyToStringAsync(Stream stream, Encoding encoding = null)
+        public static async Task<string> CopyToStringAsync(this Stream stream, Encoding encoding)
         {
             if (stream == null)
                 return string.Empty;
-            if (encoding == null)
-                encoding = Encoding.UTF8;
             if (stream.CanRead == false)
                 return string.Empty;
             using (var memoryStream = new MemoryStream())
@@ -922,8 +929,18 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static string ConvertToString(this byte[] bytes)
         {
-            UnicodeEncoding converter = new UnicodeEncoding();
-            return converter.GetString(bytes);
+            return ConvertToString(bytes, Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// byte数组转换为string
+        /// </summary>
+        /// <param name="bytes">byte数组</param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
+        public static string ConvertToString(this byte[] bytes, Encoding encoding)
+        {
+            return encoding.GetString(bytes);
         }
 
         #endregion

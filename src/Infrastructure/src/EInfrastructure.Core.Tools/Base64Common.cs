@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -95,6 +96,71 @@ namespace EInfrastructure.Core.Tools
         {
             return Mappings.Where(x => x.Value == contentType).Select(x => x.Key).FirstOrDefault();
         }
+
+        #endregion
+
+        #region base64编码与解码
+
+        #region base64编码
+
+        /// <summary>
+        /// base64编码
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static string EncodeBase64(string param)
+        {
+            return EncodeBase64(param, Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// base64编码
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="encoding">编码方式</param>
+        /// <returns></returns>
+        public static string EncodeBase64(string param, Encoding encoding)
+        {
+            return param.ConvertToByteArray(encoding).ConvertToBase64();
+        }
+
+        #endregion
+
+        #region base64解码
+
+        /// <summary>
+        /// base64解码
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static string DecodeBase64(string param)
+        {
+            return DecodeBase64(param, Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// base64解码
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="encoding">编码方式</param>
+        /// <returns></returns>
+        public static string DecodeBase64(string param, Encoding encoding)
+        {
+            string decode = "";
+            byte[] bytes = Convert.FromBase64String(param);
+            try
+            {
+                decode = encoding.GetString(bytes);
+            }
+            catch
+            {
+                decode = param;
+            }
+
+            return decode;
+        }
+
+        #endregion
 
         #endregion
     }
