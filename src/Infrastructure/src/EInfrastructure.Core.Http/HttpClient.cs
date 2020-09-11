@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace EInfrastructure.Core.Http
             _xmlProvider = new XmlProvider();
             _encoding = Encoding.UTF8;
             _files = new List<RequestMultDataParam>();
-            Headers = new Dictionary<string, string>();
+            InternalHeaders = new Dictionary<string, string>();
             _requestBodyType = RequestBodyType.ApplicationJson;
             _requestBodyFormat = null;
         }
@@ -219,6 +220,21 @@ namespace EInfrastructure.Core.Http
         public Dictionary<string, string> Headers;
 
         /// <summary>
+        /// 请求头
+        /// </summary>
+        internal Dictionary<string, string> InternalHeaders;
+
+        /// <summary>
+        /// Cookie信息
+        /// </summary>
+        public List<KeyValuePair<string, string>> Cookies;
+
+        /// <summary>
+        /// Cookie信息
+        /// </summary>
+        internal List<KeyValuePair<string, string>> InternalCookies;
+
+        /// <summary>
         /// 代理
         /// </summary>
         public WebProxy Proxy;
@@ -247,7 +263,7 @@ namespace EInfrastructure.Core.Http
         public string GetString(string url)
         {
             var request = GetRequest(url);
-            var content = GetClient().Execute(request).Content;
+            var content = GetRestResponse(GetClient(), request).Content;
             AddLog(request, content);
             return content;
         }
@@ -357,7 +373,7 @@ namespace EInfrastructure.Core.Http
         public byte[] GetBytes(string url)
         {
             var request = GetRequest(url);
-            return GetClient().Execute(request).RawBytes;
+            return GetRestResponse(GetClient(), request).RawBytes;
         }
 
         /// <summary>
@@ -412,7 +428,7 @@ namespace EInfrastructure.Core.Http
         public async Task<string> GetStringAsync(string url)
         {
             var request = GetRequest(url);
-            var content = (await GetClient().ExecuteTaskAsync(request)).Content;
+            var content = (await GetRestResponseAsync(GetClient(), request)).Content;
             AddLog(request, content);
             return content;
         }
@@ -518,7 +534,7 @@ namespace EInfrastructure.Core.Http
         public async Task<byte[]> GetBytesAsync(string url)
         {
             var request = GetRequest(url);
-            return (await GetClient().ExecuteTaskAsync(request)).RawBytes;
+            return (await GetRestResponseAsync(GetClient(), request)).RawBytes;
         }
 
         /// <summary>
@@ -670,7 +686,7 @@ namespace EInfrastructure.Core.Http
             RequestBodyFormat requestBodyFormat = null)
         {
             var request = GetByPost(url, data, requestBodyFormat);
-            var content = GetClient().Execute(request).Content;
+            var content = GetRestResponse(GetClient(), request).Content;
             AddLog(request, content);
             return content;
         }
@@ -690,7 +706,7 @@ namespace EInfrastructure.Core.Http
             RequestBodyFormat requestBodyFormat = null)
         {
             var request = GetByPost(url, data, requestBodyFormat);
-            return GetClient().Execute(request).RawBytes;
+            return GetRestResponse(GetClient(), request).RawBytes;
         }
 
         #endregion
@@ -856,29 +872,31 @@ namespace EInfrastructure.Core.Http
             var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
                 new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());
-            return await GetClient().ExecuteTaskAsync(request);
+            return await GetRestResponseAsync(GetClient(), request);
         }
 
         #endregion
 
         #endregion
 
-        #region 设置Headers
+        #region Headers管理
+
+        #region 设置headers
 
         /// <summary>
         /// 设置headers
         /// </summary>
-        /// <param name="name">请求头名称</param>
+        /// <param name="key">请求头名称</param>
         /// <param name="value">请求头值</param>
         /// <param name="isOverload">是否覆盖 默认覆盖</param>
-        public void AddHeaders(string name, string value, bool isOverload = true)
+        public void AddHeader(string key, string value, bool isOverload = true)
         {
-            Headers = GetHeaders();
-            if (Headers.Any(x => x.Key == name))
+            InternalHeaders = GetHeaders();
+            if (InternalHeaders.Any(x => x.Key == key))
             {
                 if (isOverload)
                 {
-                    Headers.Remove(name);
+                    InternalHeaders.Remove(key);
                 }
                 else
                 {
@@ -886,14 +904,18 @@ namespace EInfrastructure.Core.Http
                 }
             }
 
-            Headers.Add(name, value);
+            InternalHeaders.Add(key, value);
         }
 
+        #endregion
+
+        #region 移除指定的Header
+
         /// <summary>
-        /// 移除Headers
+        /// 移除指定的Header
         /// </summary>
         /// <param name="name">请求头名称</param>
-        public void RemoveHeaders(string name)
+        public void RemoveHeader(string name)
         {
             var headers = GetHeaders();
             if (headers.Any(x => x.Key == name))
@@ -901,6 +923,84 @@ namespace EInfrastructure.Core.Http
                 headers.Remove(name);
             }
         }
+
+        #endregion
+
+        #region 清空Header
+
+        /// <summary>
+        /// 清空Header
+        /// </summary>
+        public void ClearHeaders()
+        {
+            InternalHeaders = new Dictionary<string, string>();
+            InternalCookies=new List<KeyValuePair<string, string>>();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Cookie管理
+
+        #region 添加Cookie
+
+        /// <summary>
+        /// 添加Cookie
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="value">值</param>
+        /// <param name="isOverload">是否覆盖 默认覆盖</param>
+        public void AddCookie(string key, string value, bool isOverload = true)
+        {
+            InternalCookies = GetCookies();
+            if (InternalCookies.Any(x => x.Key == key))
+            {
+                if (isOverload)
+                {
+                    InternalHeaders.Remove(key);
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            InternalHeaders.Add(key, value);
+        }
+
+        #endregion
+
+        #region 移除Cookie
+
+        /// <summary>
+        /// 移除Cookie
+        /// </summary>
+        /// <param name="key">键</param>
+        private void RemoveCookie(string key)
+        {
+            var cookies = GetCookies();
+            if (cookies.Any(x => x.Key == key))
+            {
+                cookies.Remove(cookies.FirstOrDefault(x => x.Key == key));
+            }
+        }
+
+        #endregion
+
+        #region 清空Cookie
+
+        /// <summary>
+        /// 清空Cookie
+        /// </summary>
+        public void ClearCookie()
+        {
+            InternalCookies = new List<KeyValuePair<string, string>>();
+            InternalHeaders = GetHeaders().Where(x => !x.Key.Equals("Cookie", StringComparison.CurrentCultureIgnoreCase))
+                .ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        #endregion
 
         #endregion
 
@@ -927,7 +1027,7 @@ namespace EInfrastructure.Core.Http
         public void Reset()
         {
             _files = new List<RequestMultDataParam>();
-            Headers = new Dictionary<string, string>();
+            InternalHeaders = new Dictionary<string, string>();
             Proxy = null;
             _requestBodyFormat = null;
         }
@@ -984,7 +1084,22 @@ namespace EInfrastructure.Core.Http
         /// <returns></returns>
         private Dictionary<string, string> GetHeaders()
         {
-            return Headers ?? new Dictionary<string, string>();
+            var headers = InternalHeaders ?? new Dictionary<string, string>();
+            return headers;
+        }
+
+        #endregion
+
+        #region 得到请求Cookie
+
+        /// <summary>
+        /// 得到请求Cookie
+        /// </summary>
+        /// <returns></returns>
+        private List<KeyValuePair<string, string>> GetCookies()
+        {
+            var cookies = InternalCookies ?? new List<KeyValuePair<string, string>>();
+            return cookies;
         }
 
         #endregion
@@ -1070,6 +1185,32 @@ namespace EInfrastructure.Core.Http
                 _logger.LogDebug(
                     $"url：{request.Resource}，method:{request.Method.ToString()}，timeOut：{request.Timeout}，Header：{header}，result：{content}");
             }
+        }
+
+        #endregion
+
+        #region 得到响应信息
+
+        /// <summary>
+        /// 得到响应信息
+        /// </summary>
+        /// <param name="restClient"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        private IRestResponse GetRestResponse(RestClient restClient, RestRequest request)
+        {
+            return restClient.Execute(request);
+        }
+
+        /// <summary>
+        /// 得到响应信息
+        /// </summary>
+        /// <param name="restClient"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        private Task<IRestResponse> GetRestResponseAsync(RestClient restClient, RestRequest request)
+        {
+            return restClient.ExecuteTaskAsync(request);
         }
 
         #endregion
