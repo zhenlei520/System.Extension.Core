@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using EInfrastructure.Core.Configuration.Configurations;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -14,6 +15,18 @@ namespace EInfrastructure.Core.Tools
         private const double EARTH_RADIUS = 6378137;
 
         #region 计算两点位置的距离，返回两点的距离，单位 米
+
+        /// <summary>
+        /// 计算两点位置的距离，返回两点的距离，单位 米
+        /// 该公式为GOOGLE提供，误差小于0.2米
+        /// </summary>
+        /// <param name="x">位置1</param>
+        /// <param name="y">位置2</param>
+        /// <returns></returns>
+        public static double GetDistance(Points<double, double> x, Points<double, double> y)
+        {
+            return GetDistance(x.Y, x.X, y.Y, y.X);
+        }
 
         /// <summary>
         /// 计算两点位置的距离，返回两点的距离，单位 米
