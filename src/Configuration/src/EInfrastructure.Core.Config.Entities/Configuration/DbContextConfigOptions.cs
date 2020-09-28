@@ -141,8 +141,7 @@ namespace EInfrastructure.Core.Config.Entities.Configuration
                 return this.ConnectionString;
             }
 
-            int i = 0;
-            i = ReadConnectionStringList.Count <= 1 ? 0 : new Random().Next(0, ReadConnectionStringList.Count);
+            var i = ReadConnectionStringList.Count <= 1 ? 0 : new Random().Next(0, ReadConnectionStringList.Count);
             return this.ReadConnectionStringList[i];
         }
 
