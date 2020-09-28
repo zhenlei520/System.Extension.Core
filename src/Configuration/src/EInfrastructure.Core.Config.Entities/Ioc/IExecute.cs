@@ -41,7 +41,7 @@ namespace EInfrastructure.Core.Config.Entities.Ioc
     /// </summary>
     /// <typeparam name="TDbContext"></typeparam>
     public interface IExecute<TDbContext> : IExecute
-        where TDbContext : IDbContext, IUnitOfWork
+        where TDbContext : IDbContext
     {
     }
 }

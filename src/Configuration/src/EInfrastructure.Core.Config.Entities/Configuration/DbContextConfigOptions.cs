@@ -34,7 +34,7 @@ namespace EInfrastructure.Core.Config.Entities.Configuration
                 throw new ArgumentNullException(nameof(connectionString));
             }
 
-            this.ReadConnectionStringList = new List<string>();
+            this.readConnectionStringList = new List<string>();
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace EInfrastructure.Core.Config.Entities.Configuration
 
             readConnectionStrings.ToList().ForEach(readConnectionString =>
             {
-                this.ReadConnectionStringList.Add(readConnectionString);
+                this.readConnectionStringList.Add(readConnectionString);
             });
         }
 
@@ -64,7 +64,8 @@ namespace EInfrastructure.Core.Config.Entities.Configuration
         /// </summary>
         /// <param name="connectionString">写库连接字符串</param>
         /// <param name="readConnectionStrings">从库连接配置</param>
-        public DbContextConfigOptions(string connectionString, List<DbContextConfigWeightOption> readConnectionStrings) :
+        public DbContextConfigOptions(string connectionString,
+            List<DbContextConfigWeightOption> readConnectionStrings) :
             this(
                 connectionString)
         {
@@ -78,7 +79,7 @@ namespace EInfrastructure.Core.Config.Entities.Configuration
             {
                 for (int i = 0; i < item.Weight; i++)
                 {
-                    this.ReadConnectionStringList.Add(item.ConnectionString);
+                    this.readConnectionStringList.Add(item.ConnectionString);
                 }
             });
         }
@@ -86,17 +87,47 @@ namespace EInfrastructure.Core.Config.Entities.Configuration
         /// <summary>
         /// 写库连接字符串
         /// </summary>
-        public string ConnectionString { get; private set; }
+        public string ConnectionString { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        private List<string> readConnectionStringList = null;
 
         /// <summary>
         /// 读库配置集合
         /// </summary>
-        private List<string> ReadConnectionStringList { get; set; }
+        private List<string> ReadConnectionStringList
+        {
+            get
+            {
+                if (readConnectionStringList == null)
+                {
+                    readConnectionStringList = new List<string>();
+                    ReadConnectionStrings.ForEach(item =>
+                    {
+                        if (item.Weight > 0)
+                        {
+                            for (int i = 0; i < item.Weight; i++)
+                            {
+                                readConnectionStringList.Add(item.ConnectionString);
+                            }
+                        }
+                        else
+                        {
+                            readConnectionStringList.Add(item.ConnectionString);
+                        }
+                    });
+                }
+
+                return readConnectionStringList;
+            }
+        }
 
         /// <summary>
         /// 读库连接字符串与权重
         /// </summary>
-        public List<DbContextConfigWeightOption> ReadConnectionStrings { get; private set; }
+        public List<DbContextConfigWeightOption> ReadConnectionStrings { get; set; }
 
         /// <summary>
         /// 得到连接字符串
@@ -110,7 +141,8 @@ namespace EInfrastructure.Core.Config.Entities.Configuration
                 return this.ConnectionString;
             }
 
-            var i = new Random().Next(0, ReadConnectionStringList.Count);
+            int i = 0;
+            i = ReadConnectionStringList.Count <= 1 ? 0 : new Random().Next(0, ReadConnectionStringList.Count);
             return this.ReadConnectionStringList[i];
         }
 
@@ -124,7 +156,6 @@ namespace EInfrastructure.Core.Config.Entities.Configuration
             /// </summary>
             public DbContextConfigWeightOption()
             {
-
             }
 
             /// <summary>
@@ -132,11 +163,12 @@ namespace EInfrastructure.Core.Config.Entities.Configuration
             /// </summary>
             /// <param name="connectionString"></param>
             /// <param name="weight"></param>
-            public DbContextConfigWeightOption(string connectionString, int weight):this()
+            public DbContextConfigWeightOption(string connectionString, int weight) : this()
             {
                 this.ConnectionString = connectionString;
                 this.Weight = weight;
             }
+
             /// <summary>
             /// 链接地址
             /// </summary>

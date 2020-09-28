@@ -9,7 +9,7 @@ namespace EInfrastructure.Core.Config.Entities.Ioc
     /// <summary>
     /// Used to generate Ids.
     /// </summary>
-    public interface IGuidGenerator : IDependency,IIdentify
+    public interface IGuidGenerator : IDependency, IIdentify
     {
         /// <summary>
         /// Creates a new <see cref="Guid"/>.

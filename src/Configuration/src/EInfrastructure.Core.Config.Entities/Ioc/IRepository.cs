@@ -105,12 +105,12 @@ namespace EInfrastructure.Core.Config.Entities.Ioc
     public interface IRepository<TEntity, T, TDbContext>
         where TEntity : IAggregateRoot<T>
         where T : IComparable
-        where TDbContext : IDbContext, IUnitOfWork
+        where TDbContext : IDbContext
     {
         /// <summary>
         /// 单元模式
         /// </summary>
-        IUnitOfWork<TDbContext> UnitOfWork { get; }
+        IUnitOfWork UnitOfWork { get; }
 
         /// <summary>
         /// 得到实现类唯一标示

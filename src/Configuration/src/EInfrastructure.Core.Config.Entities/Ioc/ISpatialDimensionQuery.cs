@@ -47,7 +47,7 @@ namespace EInfrastructure.Core.Config.Entities.Ioc
         : ISpatialDimensionQuery<TEntity, T>
         where TEntity : IEntity<T>
         where T : IComparable
-        where TDbContext : IDbContext, IUnitOfWork
+        where TDbContext : IDbContext
     {
     }
 
