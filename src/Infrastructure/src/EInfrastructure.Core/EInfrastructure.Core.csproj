@@ -13,7 +13,7 @@
         <PackageTags>EInfrastructure.Core EInfrastructure ECommon</PackageTags>
         <NeutralLanguage>zh-CN</NeutralLanguage>
         <PackageIcon>packageIcon.png</PackageIcon>
-        <PackageIconUrl/>
+        <PackageIconUrl />
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DocumentationFile>bin\Debug\EInfrastructure.Core.xml</DocumentationFile>
@@ -22,11 +22,12 @@
         <DocumentationFile>bin\Release\EInfrastructure.Core.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.0"/>
+        <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EInfrastructure.Core.Tools\EInfrastructure.Core.Tools.csproj"/>
+        <ProjectReference Include="..\..\..\Configuration\src\EInfrastructure.Core.Config.Entities\EInfrastructure.Core.Config.Entities.csproj" />
+        <ProjectReference Include="..\EInfrastructure.Core.Tools\EInfrastructure.Core.Tools.csproj" />
     </ItemGroup>
     <ItemGroup>
         <None Include="..\..\..\..\packageIcon.png">

@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using EInfrastructure.Core.Config.Entities.Data;
-using EInfrastructure.Core.Config.Entities.Ioc;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 
@@ -81,35 +79,6 @@ namespace EInfrastructure.Core.Tools
         public static List<T> ConcatNew<T>(this IEnumerable<T> t1, IEnumerable<T> t2)
         {
             return t1.Concat(t2).ToList();
-        }
-
-        #endregion
-
-        #region 两个集合计较
-
-        /// <summary>
-        /// 两个集合计较
-        /// </summary>
-        /// <param name="sourceList">源集合</param>
-        /// <param name="optList">新集合</param>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
-        /// <returns></returns>
-        public static ListCompare<T, TKey> CompareNew<T, TKey>(this List<T> sourceList, List<T> optList)
-            where T : IEntity<TKey> where TKey : struct
-        {
-            return new ListCompare<T, TKey>(sourceList, optList);
-        }
-
-        /// <summary>
-        /// 两个集合计较
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static ListCompare<T, string> CompareNew<T>(this List<T> sourceList, List<T> optList)
-            where T : IEntity<string>
-        {
-            return new ListCompare<T, string>(sourceList, optList);
         }
 
         #endregion
@@ -237,46 +206,6 @@ namespace EInfrastructure.Core.Tools
         #region 对list集合分页
 
         /// <summary>
-        /// 对list集合分页
-        /// </summary>
-        /// <param name="query"></param>
-        /// <param name="pageSize">页码</param>
-        /// <param name="pageIndex">页大小</param>
-        /// <param name="isTotal">是否计算总条数</param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static PageData<T> ListPager<T>(this ICollection<T> query, int pageSize, int pageIndex, bool isTotal)
-        {
-            PageData<T> list = new PageData<T>();
-
-            if (isTotal)
-            {
-                list.RowCount = query.Count();
-            }
-
-            if (pageIndex - 1 < 0)
-            {
-                throw new BusinessException("页码必须大于等于1", HttpStatus.Err.Id);
-            }
-
-            query = query.Skip((pageIndex - 1) * pageSize).ToList();
-            if (pageSize > 0)
-            {
-                list.Data = query.Take(pageSize).ToList();
-            }
-            else if (pageSize != -1)
-            {
-                throw new BusinessException("页大小须等于-1或者大于0", HttpStatus.Err.Id);
-            }
-            else
-            {
-                list.Data = query.ToList();
-            }
-
-            return list;
-        }
-
-        /// <summary>
         /// 对list集合分页执行某个方法
         /// </summary>
         /// <param name="query"></param>
@@ -356,6 +285,7 @@ namespace EInfrastructure.Core.Tools
             {
                 return default(T);
             }
+
             T res = list[0];
             list = list.Skip(1).ToList();
             return res;
@@ -462,75 +392,5 @@ namespace EInfrastructure.Core.Tools
         #endregion
 
         #endregion
-
-        /// <summary>
-        ///
-        /// </summary>
-        public class ListCompare<T, TKey> where T : IEntity<TKey>
-        {
-            /// <summary>
-            /// 初始化列表比较结果
-            /// </summary>
-            /// <param name="sourceList">原列表</param>
-            /// <param name="optList">新列表</param>
-            public ListCompare(List<T> sourceList, List<T> optList)
-            {
-                SourceList = sourceList ?? new List<T>();
-                OptList = optList ?? new List<T>();
-            }
-
-            /// <summary>
-            /// 原列表
-            /// </summary>
-            private IEnumerable<T> SourceList { get; }
-
-            /// <summary>
-            /// 新列表
-            /// </summary>
-            private IEnumerable<T> OptList { get; }
-
-            #region 创建列表
-
-            private List<T> _createList;
-
-            /// <summary>
-            /// 创建列表
-            /// </summary>
-            public List<T> CreateList => _createList ?? (_createList =
-                OptList.Where(x => !
-                        SourceList.Select(source => source.Id).ToList().Contains(x.Id))
-                    .ToList());
-
-            #endregion
-
-            #region 更新列表
-
-            private List<T> _updateList;
-
-            /// <summary>
-            /// 更新列表
-            /// </summary>
-            public List<T> UpdateList => _updateList ??
-                                         (_updateList = SourceList.Where(x =>
-                                                 OptList.Select(source => source.Id).ToList().Contains(x.Id))
-                                             .ToList());
-
-            #endregion
-
-            #region 删除列表
-
-            private List<T> _deleteList;
-
-            /// <summary>
-            /// 删除列表
-            /// </summary>
-            public List<T> DeleteList => _deleteList ??
-                                         (_deleteList =
-                                             SourceList.Where(x => !
-                                                     OptList.Select(source => source.Id).ToList().Contains(x.Id))
-                                                 .ToList());
-
-            #endregion
-        }
     }
 }

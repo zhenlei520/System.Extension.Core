@@ -34,6 +34,7 @@ namespace EInfrastructure.Core
             Serialize.Xml.StartUp.Run();
             Serialize.NewtonsoftJson.StartUp.Run();
             Tools.StartUp.Run();
+            Config.Entities.StartUp.Run();
         }
 
         #endregion

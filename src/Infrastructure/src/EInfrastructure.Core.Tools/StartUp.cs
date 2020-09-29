@@ -7,12 +7,10 @@ namespace EInfrastructure.Core.Tools
     /// </summary>
     public static class StartUp
     {
-
         private static bool _isStartUp;
 
         /// <summary>
         /// 启用配置
-        /// <param name="enableLog">默认不启用日志</param>
         /// </summary>
         public static void Run()
         {
@@ -20,7 +18,6 @@ namespace EInfrastructure.Core.Tools
             {
                 _isStartUp = true;
             }
-            Config.Entities.StartUp.Run();
         }
     }
 }

@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EInfrastructure.Core.Config.Entities.Extensions
+namespace EInfrastructure.Core.Tools.Expressions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="V"></typeparam>
@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         private IEqualityComparer<V> comparer;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keySelector"></param>
         /// <param name="comparer"></param>
@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keySelector"></param>
         public CommonEqualityComparer(Func<T, V> keySelector)
@@ -38,7 +38,7 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -49,7 +49,7 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -65,7 +65,7 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
     public static class DistinctExtensions
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="source"></param>
         /// <param name="keySelector"></param>
@@ -78,7 +78,7 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="source"></param>
         /// <param name="keySelector"></param>

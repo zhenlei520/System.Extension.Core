@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace EInfrastructure.Core.Config.Entities.Extensions
+namespace EInfrastructure.Core.Tools.Expressions
 {
     /// <summary>
     /// Extension methods for add And and Or with parameters rebinder

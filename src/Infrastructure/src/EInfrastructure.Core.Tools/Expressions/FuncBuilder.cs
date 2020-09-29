@@ -3,7 +3,7 @@
 
 using System;
 
-namespace EInfrastructure.Core.Config.Entities.Extensions
+namespace EInfrastructure.Core.Tools.Expressions
 {
     /// <summary>
     /// 委托扩展

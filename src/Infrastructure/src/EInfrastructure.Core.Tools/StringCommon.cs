@@ -8,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
-using EInfrastructure.Core.Config.Entities.Extensions;
+using EInfrastructure.Core.Tools.Expressions;
 using EInfrastructure.Core.Tools.Systems;
 
 namespace EInfrastructure.Core.Tools

@@ -14,9 +14,8 @@ namespace EInfrastructure.Core.Config.Entities
             if (!_isStartUp)
             {
                 _isStartUp = true;
+                EInfrastructure.Core.Configuration.StartUp.Run();
             }
-
-            EInfrastructure.Core.Configuration.StartUp.Run();
         }
     }
 }

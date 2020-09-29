@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace EInfrastructure.Core.Config.Entities.Extensions
+namespace EInfrastructure.Core.Tools.Expressions
 {
     internal class ConditionBuilder : ExpressionVisitor
     {

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace EInfrastructure.Core.Config.Entities.Extensions
+namespace EInfrastructure.Core.Tools.Expressions
 {
     /// <summary>
     /// 

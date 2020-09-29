@@ -26,6 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\src\EInfrastructure.Core.Tools\EInfrastructure.Core.Tools.csproj" />
     <ProjectReference Include="..\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj" />
   </ItemGroup>
 
