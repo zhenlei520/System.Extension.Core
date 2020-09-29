@@ -3,11 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Tools.Enumerations;
+using EInfrastructure.Core.Tools.Systems;
 
 namespace EInfrastructure.Core.Tools.Files
 {
@@ -143,7 +146,7 @@ namespace EInfrastructure.Core.Tools.Files
         }
 
         #endregion
-        
+
         #region 得到文件md5
 
         /// <summary>
@@ -163,7 +166,7 @@ namespace EInfrastructure.Core.Tools.Files
                 //计算MD5
                 hashAlgorithm.TransformBlock(buffer, 0, readLength, output, 0);
             }
-        
+
             //完成最后计算，必须调用(由于上一部循环已经完成所有运算，所以调用此方法时后面的两个参数都为0)
             hashAlgorithm.TransformFinalBlock(buffer, 0, 0);
             string md5 = BitConverter.ToString(hashAlgorithm.Hash);
@@ -172,11 +175,11 @@ namespace EInfrastructure.Core.Tools.Files
             md5 = md5.Replace("-", "");
             return md5;
         }
-        
+
         #endregion
-        
+
         #region 得到文件的Sha1
-        
+
         /// <summary>
         /// 得到文件的Sha1
         /// </summary>
@@ -187,9 +190,9 @@ namespace EInfrastructure.Core.Tools.Files
         {
             return GetSha(stream, new SHA1CryptoServiceProvider(), isUpper);
         }
-        
+
         #endregion
-        
+
         #region 得到文件的Sha256
 
         /// <summary>
@@ -202,11 +205,11 @@ namespace EInfrastructure.Core.Tools.Files
         {
             return GetSha(stream, new SHA256CryptoServiceProvider(), isUpper);
         }
-        
+
         #endregion
-        
+
         #region 得到文件的Sha384
-        
+
         /// <summary>
         /// 得到文件的Sha384
         /// </summary>
@@ -217,11 +220,11 @@ namespace EInfrastructure.Core.Tools.Files
         {
             return GetSha(stream, new SHA384CryptoServiceProvider(), isUpper);
         }
-        
+
         #endregion
-        
+
         #region 得到文件的Sha512
-        
+
         /// <summary>
         /// 得到文件的Sha512
         /// </summary>
@@ -232,11 +235,11 @@ namespace EInfrastructure.Core.Tools.Files
         {
             return GetSha(stream, new SHA512CryptoServiceProvider(), isUpper);
         }
-        
+
         #endregion
-        
+
         #region 得到sha系列加密信息
-        
+
         /// <summary>
         /// 得到sha系列加密信息
         /// </summary>
@@ -250,9 +253,9 @@ namespace EInfrastructure.Core.Tools.Files
             stream.Close();
             return SecurityCommon.GetSha(retval, hashAlgorithm, isUpper);
         }
-        
+
         #endregion
-        
+
         #region 得到文件信息
 
         /// <summary>
@@ -294,10 +297,10 @@ namespace EInfrastructure.Core.Tools.Files
             {
                 conditionCode = GetSha256(stream);
             }
-        
+
             return new EInfrastructure.Core.Tools.Files.FileInfo(fileName, conditionCode);
         }
-        
+
         #endregion
 
         #region 将文件转换成Base64格式
@@ -740,6 +743,45 @@ namespace EInfrastructure.Core.Tools.Files
 
         #endregion
 
+        #region 获取占用情况并杀死（仅windows适用）
+
+        /// <summary>
+        /// 获取占用情况并杀死（仅windows适用）
+        /// </summary>
+        /// <param name="file">要检查被那个进程占用的文件完整地址</param>
+        /// <returns></returns>
+        public static bool KillProcess(string file)
+        {
+            if (EnvironmentCommon.GetOs.IsWindows)
+            {
+                Process tool = new Process
+                {
+                    StartInfo =
+                    {
+                        FileName = "handle.exe",
+                        Arguments = file + " /accepteula",
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true
+                    }
+                };
+                tool.Start();
+                tool.WaitForExit();
+                string outputTool = tool.StandardOutput.ReadToEnd();
+
+                string matchPattern = @"(?<=\s+pid:\s+)\b(\d+)\b(?=\s+)";
+                foreach(Match match in Regex.Matches(outputTool, matchPattern))
+                {
+                    Process.GetProcessById(int.Parse(match.Value)).Kill();
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
+
         #endregion
 
         #region 文件夹
@@ -826,6 +868,23 @@ namespace EInfrastructure.Core.Tools.Files
         /// <param name="directory">要删除的目录路径和名称</param>
         /// <param name="recursive">是否递归删除子目录（默认递归删除）</param>
         public static void DeleteDirectory(string directory, bool recursive = true)
+        {
+            try
+            {
+                DeleteDirectoryExt(directory, recursive);
+            }
+            catch (IOException ex)
+            {
+
+            }
+        }
+
+        /// <summary>
+        /// 删除目录
+        /// </summary>
+        /// <param name="directory">要删除的目录路径和名称</param>
+        /// <param name="recursive">是否递归删除子目录（默认递归删除）</param>
+        private static void DeleteDirectoryExt(string directory, bool recursive = true)
         {
             if (directory.Length == 0) return;
             if (Directory.Exists(directory))
