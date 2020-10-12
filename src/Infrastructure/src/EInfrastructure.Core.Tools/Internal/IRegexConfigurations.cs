@@ -51,7 +51,6 @@ namespace EInfrastructure.Core.Tools.Internal
         {
             new KeyValuePair<RegexDefault, string>(RegexDefault.Email,
                 @"^([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$"),
-            new KeyValuePair<RegexDefault, string>(RegexDefault.Mobile, @"^(13|14|15|16|17|18|19)[0-9]{9}$"),
             new KeyValuePair<RegexDefault, string>(RegexDefault.Phone, @"^(\d{3,4}-?)?\d{7,8}$"),
             new KeyValuePair<RegexDefault, string>(RegexDefault.ZipCode, @"^\d{6}$"),
             new KeyValuePair<RegexDefault, string>(RegexDefault.Chinese, @"^[\u4e00-\u9fa5]"),
@@ -145,7 +144,6 @@ namespace EInfrastructure.Core.Tools.Internal
         {
             new KeyValuePair<RegexDefault, string>(RegexDefault.Email,
                 @"([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?"),
-            new KeyValuePair<RegexDefault, string>(RegexDefault.Mobile, @"(13|14|15|16|17|18|19)[0-9]{9}"),
             new KeyValuePair<RegexDefault, string>(RegexDefault.Phone, @"(\d{3,4}-?)?\d{7,8}"),
             new KeyValuePair<RegexDefault, string>(RegexDefault.ZipCode, @"\d{6}"),
             new KeyValuePair<RegexDefault, string>(RegexDefault.Chinese, @"[\u4e00-\u9fa5]"),

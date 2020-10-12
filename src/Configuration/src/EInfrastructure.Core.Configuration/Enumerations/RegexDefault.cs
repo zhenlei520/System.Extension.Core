@@ -16,11 +16,6 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         public static RegexDefault Email = new RegexDefault(1, "Email");
 
         /// <summary>
-        /// 手机号
-        /// </summary>
-        public static RegexDefault Mobile = new RegexDefault(2, "Mobile");
-
-        /// <summary>
         /// 固定电话
         /// </summary>
         public static RegexDefault Phone = new RegexDefault(3, "Phone");

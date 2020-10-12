@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Tools.Enumerations;
+using EInfrastructure.Core.Tools.Expressions;
 using EInfrastructure.Core.Tools.Internal;
 using EInfrastructure.Core.Tools.Systems;
 
@@ -62,13 +64,43 @@ namespace EInfrastructure.Core.Tools
         #region 是否为手机号
 
         /// <summary>
+        /// 是否为手机号(验证中国)
+        /// </summary>
+        /// <param name="str">待验证的手机号</param>
+        /// <returns></returns>
+        public static bool IsMobile(this string str)
+        {
+            return str.IsMobile(Nationality.China);
+        }
+
+        /// <summary>
         /// 是否为手机号
         /// </summary>
-        public static bool IsMobile(this string s)
+        /// <param name="str">待验证的手机号</param>
+        /// <param name="nationality">国家</param>
+        /// <returns></returns>
+        public static bool IsMobile(this string str, Nationality nationality)
         {
-            if (string.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(str))
                 return false;
-            return GetRegexConfigurations().GetRegex(RegexDefault.Mobile, RegexOptions.IgnoreCase).IsMatch(s);
+            Expression<Func<CommunicationOperator, bool>> condition = x => !x.MobileRegex.IsNullOrEmpty();
+            if (nationality != null)
+            {
+                condition = condition.And(x => x.Nationality == nationality.Id);
+            }
+
+            var regexList = CommunicationOperator.GetAll<CommunicationOperator>()
+                .Where(condition.Compile()).Select(x => x.MobileRegex).ToList();
+
+            foreach (var regex in regexList)
+            {
+                if (new Regex(regex, RegexOptions.IgnoreCase).IsMatch(str))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion
