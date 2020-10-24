@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
@@ -82,6 +84,37 @@ namespace EInfrastructure.Core.Tools
         }
 
         #endregion
+
+        #endregion
+
+        #region List对象转Table
+
+        /// <summary>
+        /// List对象转Table
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static DataTable ConvertToTable<T>(this ICollection<T> list) where T : class
+        {
+            DataTable table = DataTableCommon.CreateEmptyTable<T>();
+            Type entityType = typeof(T);
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(entityType);
+
+            foreach (T item in list)
+            {
+                DataRow row = table.NewRow();
+
+                foreach (PropertyDescriptor prop in properties)
+                {
+                    row[prop.Name] = prop.GetValue(item);
+                }
+
+                table.Rows.Add(row);
+            }
+
+            return table;
+        }
 
         #endregion
 
