@@ -11,11 +11,18 @@ namespace EInfrastructure.Core.UserAgentParse
     /// </summary>
     public class Browser
     {
+        /// <summary>
+        ///
+        /// </summary>
         public Browser()
         {
             this.Version = new Versions();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="version"></param>
         public Browser(string version)
         {
             this.Version = new Versions(version);
