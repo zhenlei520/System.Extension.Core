@@ -413,6 +413,10 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool Test(this string str, string regex, RegexOptions options)
         {
+            if (str.IsNullOrEmpty())
+            {
+                return false;
+            }
             return new Regex(regex, options).IsMatch(str);
         }
 
