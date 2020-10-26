@@ -25,70 +25,30 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// <summary>
         /// 中国移动
         /// </summary>
-        public static CommunicationOperator ChinaMobile = new CommunicationOperator(1, "中国移动",
-            EInfrastructure.Core.Configuration.Enumerations.Nationality.China,@"(^1(3[4-9]|4[7]|5[0-27-9]|7[28]|8[2-478]|9[58])\d{8}$)|(^1705\d{7}$)");
+        public static CommunicationOperator ChinaMobile = new CommunicationOperator(1, "中国移动");
 
         /// <summary>
         /// 中国联通
         /// </summary>
-        public static CommunicationOperator ChinaUnicom = new CommunicationOperator(2, "中国联通",
-            EInfrastructure.Core.Configuration.Enumerations.Nationality.China,@"(^1(3[0-2]|4[5]|5[56]|6[67]|7[156]|8[56])\d{8}$)|(^1709\d{7}$)");
+        public static CommunicationOperator ChinaUnicom = new CommunicationOperator(2, "中国联通");
 
         /// <summary>
         /// 中国电信
         /// </summary>
-        public static CommunicationOperator ChinaTelecom = new CommunicationOperator(3, "中国电信",
-            EInfrastructure.Core.Configuration.Enumerations.Nationality.China,@"^1((33|53|49|62|7[37]|8[019]|9[139])[0-9]|349|700)\d{7}$");
+        public static CommunicationOperator ChinaTelecom = new CommunicationOperator(3, "中国电信");
 
         /// <summary>
         /// 中国广播电视网络有限公司
         /// </summary>
-        public static CommunicationOperator ChinaBroadcastingNetwork = new CommunicationOperator(4, "中国广播电视网络有限公司",
-            EInfrastructure.Core.Configuration.Enumerations.Nationality.China);
+        public static CommunicationOperator ChinaBroadcastingNetwork = new CommunicationOperator(4, "中国广播电视网络有限公司");
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="id">通讯运营商id</param>
-        /// <param name="name">通讯运营商名称</param>
-        /// <param name="nationality">国家</param>
-        /// <param name="mobileRegex">手机号码规则</param>
-        /// <param name="phoneRegex">固话号码规则</param>
-        public CommunicationOperator(int id, string name,
-            Nationality nationality, string mobileRegex = "", string phoneRegex = "") : this(id, name, nationality.Id,
-            mobileRegex, phoneRegex)
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        public CommunicationOperator(int id, string name) : base(id, name)
         {
         }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="id">通讯运营商id</param>
-        /// <param name="name">通讯运营商名称</param>
-        /// <param name="nationality">国家</param>
-        /// <param name="mobileRegex">手机号码规则</param>
-        /// <param name="phoneRegex">固话号码规则</param>
-        public CommunicationOperator(int id, string name, int nationality, string mobileRegex,
-            string phoneRegex) : base(id, name)
-        {
-            this.Nationality = nationality;
-            this.MobileRegex = mobileRegex;
-            this.PhoneRegex = phoneRegex;
-        }
-
-        /// <summary>
-        /// 国家
-        /// </summary>
-        public int Nationality { get; set; }
-
-        /// <summary>
-        /// 手机号码规则
-        /// </summary>
-        public string MobileRegex { get; set; }
-
-        /// <summary>
-        /// 固话号码规则
-        /// </summary>
-        public string PhoneRegex { get; set; }
     }
 }

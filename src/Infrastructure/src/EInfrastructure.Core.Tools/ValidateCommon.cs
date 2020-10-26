@@ -22,6 +22,7 @@ namespace EInfrastructure.Core.Tools
     public static class ValidateCommon
     {
         private static IRegexConfigurations _regexConfigurations;
+        private static ICollection<IMobileRegexConfigurations> _mobileRegexConfigurations;
 
         /// <summary>
         ///
@@ -29,6 +30,7 @@ namespace EInfrastructure.Core.Tools
         static ValidateCommon()
         {
             _regexConfigurations = new RegexConfigurationsValidateDefault();
+            _mobileRegexConfigurations = new List<IMobileRegexConfigurations>();
         }
 
         #region 是否邮政编码
@@ -78,29 +80,34 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="str">待验证的手机号</param>
         /// <param name="nationality">国家</param>
+        /// <param name="communicationOperator">运营商类型（默认查询所有运营商）</param>
+        /// <param name="operatorType">运营商类型</param>
         /// <returns></returns>
-        public static bool IsMobile(this string str, Nationality nationality)
+        public static bool IsMobile(this string str, Nationality nationality,
+            CommunicationOperator communicationOperator = null, CommunicationOperatorType operatorType = null)
         {
             if (string.IsNullOrEmpty(str))
                 return false;
-            Expression<Func<CommunicationOperator, bool>> condition = x => !x.MobileRegex.IsNullOrEmpty();
+            Expression<Func<IMobileRegexConfigurations, bool>> condition = x => true;
+
             if (nationality != null)
             {
-                condition = condition.And(x => x.Nationality == nationality.Id);
+                condition = condition.And(x => x.GetNationality().Equals(nationality));
             }
 
-            var regexList = CommunicationOperator.GetAll<CommunicationOperator>()
-                .Where(condition.Compile()).Select(x => x.MobileRegex).ToList();
-
-            foreach (var regex in regexList)
+            if (communicationOperator != null)
             {
-                if (new Regex(regex, RegexOptions.IgnoreCase).IsMatch(str))
-                {
-                    return true;
-                }
+                condition = condition.And(x => x.GetCommunicationOperator().Equals(communicationOperator));
             }
 
-            return false;
+            if (operatorType != null)
+            {
+                condition = condition.And(x => x.GetCommunicationOperatorType().Equals(operatorType));
+            }
+
+            var regexList = _mobileRegexConfigurations.Where(condition.Compile()).ToList();
+
+            return regexList.Any(x => x.IsVerify(str, RegexOptions.Compiled));
         }
 
         #endregion
