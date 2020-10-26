@@ -1,4 +1,5 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
+// 中国电信天翼手机号码段有：133、149、153、173、177、180、181、189
 
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -25,7 +26,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditio
         /// <returns></returns>
         public CommunicationOperator GetCommunicationOperator()
         {
-            return CommunicationOperator.ChinaUnicom;
+            return CommunicationOperator.ChinaTelecom;
         }
 
         /// <summary>
@@ -44,8 +45,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditio
         /// <returns></returns>
         public Regex GetRegex(RegexOptions options)
         {
-            // return base.GetRegex(@"^1((33|53|49|7[37]|8[019]|9[139])[0-9]|349|700)\d{7}$", options);
-            return null;
+            return base.GetRegex(@"^1((33|49|53|7[37]|8[019]|9[139])[0-9])\d{7}$", options);
         }
 
         /// <summary>

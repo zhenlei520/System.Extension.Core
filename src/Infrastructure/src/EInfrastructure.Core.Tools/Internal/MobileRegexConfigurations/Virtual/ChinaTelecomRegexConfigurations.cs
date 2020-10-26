@@ -1,4 +1,5 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
+// 虚拟号段：162、1349、1700、1701、1702，
 
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -25,7 +26,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Virtual
         /// <returns></returns>
         public CommunicationOperator GetCommunicationOperator()
         {
-            return CommunicationOperator.ChinaUnicom;
+            return CommunicationOperator.ChinaTelecom;
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Virtual
         /// <returns></returns>
         public Regex GetRegex(RegexOptions options)
         {
-            return base.GetRegex(@"^1((33|53|49|62|7[37]|8[019]|9[139])[0-9]|349|700)\d{7}$", options);
+            return base.GetRegex(@"^1(62[0-9]|349|700|701|702)\d{7}$", options);
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Tools.Component;
 using EInfrastructure.Core.Tools.Enumerations;
 using EInfrastructure.Core.Tools.Expressions;
 using EInfrastructure.Core.Tools.Internal;
@@ -30,7 +31,7 @@ namespace EInfrastructure.Core.Tools
         static ValidateCommon()
         {
             _regexConfigurations = new RegexConfigurationsValidateDefault();
-            _mobileRegexConfigurations = new List<IMobileRegexConfigurations>();
+            _mobileRegexConfigurations = new ServiceProvider().GetServices<IMobileRegexConfigurations>().ToList();
         }
 
         #region 是否邮政编码
@@ -72,7 +73,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsMobile(this string str)
         {
-            return str.IsMobile(Nationality.China);
+            return str.IsMobile(Nationality.China, null, CommunicationOperatorType.Traditional);
         }
 
         /// <summary>
@@ -629,6 +630,20 @@ namespace EInfrastructure.Core.Tools
         public static IRegexConfigurations GetRegexConfigurations()
         {
             return _regexConfigurations;
+        }
+
+        #endregion
+
+        #region 刷新手机号验证
+
+        /// <summary>
+        /// 刷新手机号验证
+        /// </summary>
+        /// <param name="regexConfigurationses"></param>
+        public static void RefreshMobileRegexConfigurations(
+            ICollection<IMobileRegexConfigurations> regexConfigurationses)
+        {
+            ValidateCommon._mobileRegexConfigurations = regexConfigurationses ?? new List<IMobileRegexConfigurations>();
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
+// 移动手机号段：134、135、136、137、138、139、147、150、151、152、157、158、159、178、182、183、184、187、188、198
 
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -44,7 +45,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditio
         /// <returns></returns>
         public Regex GetRegex(RegexOptions options)
         {
-            return base.GetRegex(@"(^1(3[4-9]|4[7]|5[0-27-9]|7[28]|8[2-478]|9[58])\d{8}$", options);
+            return base.GetRegex(@"^1(3[5-9]|4[7]|5[0-27-9]|7[8]|8[2-478]|9[8])\d{8}$", options);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
+// 中国联通号段：130,131,132,155,156,166,176,185,186
 
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -44,7 +45,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditio
         /// <returns></returns>
         public Regex GetRegex(RegexOptions options)
         {
-            return base.GetRegex(@"(^1(3[0-2]|4[5]|5[56]|7[156]|8[56])\d{8}$)|(^1709\d{7}$)", options);
+            return base.GetRegex(@"^1(3[0-2]|4[5]|5[56]|7[6]|8[56])\d{8}$", options);
         }
 
         /// <summary>
