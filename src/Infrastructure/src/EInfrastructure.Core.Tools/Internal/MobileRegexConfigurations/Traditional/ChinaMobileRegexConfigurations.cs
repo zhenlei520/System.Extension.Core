@@ -3,10 +3,10 @@
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 
-namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations
+namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditional
 {
     /// <summary>
-    ///
+    /// 中国移动传统手机号校验
     /// </summary>
     public class ChinaMobileRegexConfigurations : BaseMobileRegexConfigurations, IMobileRegexConfigurations
     {
@@ -38,13 +38,13 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations
         }
 
         /// <summary>
-        ///
+        /// 得到正则
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
         public Regex GetRegex(RegexOptions options)
         {
-            return base.GetRegex(@"(^1(3[4-9]|4[7]|5[0-27-9]|7[28]|8[2-478]|9[58])\d{8}$)|(^1705\d{7}$)", options);
+            return base.GetRegex(@"(^1(3[4-9]|4[7]|5[0-27-9]|7[28]|8[2-478]|9[58])\d{8}$", options);
         }
 
         /// <summary>

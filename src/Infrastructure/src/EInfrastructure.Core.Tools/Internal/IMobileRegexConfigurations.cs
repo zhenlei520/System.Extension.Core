@@ -30,7 +30,7 @@ namespace EInfrastructure.Core.Tools.Internal
         CommunicationOperatorType GetCommunicationOperatorType();
 
         /// <summary>
-        ///
+        /// 得到正则
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
