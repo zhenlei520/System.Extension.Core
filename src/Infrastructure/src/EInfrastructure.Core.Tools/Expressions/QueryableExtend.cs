@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace EInfrastructure.Core.Tools.Expressions
 {
@@ -26,6 +28,67 @@ namespace EInfrastructure.Core.Tools.Expressions
         public static IQueryable<T> TopN<T>(this IQueryable<T> query, int topN)
         {
             return query.Take(topN);
+        }
+
+        #endregion
+
+
+        #region 根据指定属性名称对序列进行排序
+
+        /// <summary>
+        /// 根据指定属性名称对序列进行排序
+        /// </summary>
+        /// <typeparam name="T">source中的元素的类型</typeparam>
+        /// <param name="source">一个要排序的值序列</param>
+        /// <param name="property">属性名称</param>
+        /// <param name="descending">是否降序</param>
+        /// <returns></returns>
+        public static IQueryable<T> OrderBy<T>(this IQueryable<T> source, string property, bool descending)
+            where T : class
+        {
+            return source.OrderBy(new List<KeyValuePair<string, bool>>()
+            {
+                new KeyValuePair<string, bool>(property, descending)
+            });
+        }
+
+        /// <summary>
+        /// 根据指定属性名称对序列进行排序
+        /// </summary>
+        /// <typeparam name="T">source中的元素的类型</typeparam>
+        /// <param name="source">一个要排序的值序列</param>
+        /// <param name="sorts">排序条件，其中key为属性名称，value为是否降序（降序：true。升序：false）</param>
+        /// <returns></returns>
+        public static IQueryable<T> OrderBy<T>(this IQueryable<T> source, List<KeyValuePair<string, bool>> sorts)
+            where T : class
+        {
+            ParameterExpression parameter = Expression.Parameter(typeof(T), "x");
+            var index = 0;
+            sorts.ForEach(sort =>
+            {
+                PropertyInfo pi = typeof(T).GetProperty(sort.Key);
+                if (pi != null)
+                {
+                    index++;
+                    MemberExpression selector = Expression.MakeMemberAccess(parameter, pi);
+                    LambdaExpression le = Expression.Lambda(selector, parameter);
+                    string methodName;
+                    if (index == 1)
+                    {
+                        methodName = sort.Value ? "OrderByDescending" : "OrderBy";
+                    }
+                    else
+                    {
+                        methodName = sort.Value ? "ThenByDescending" : "ThenBy";
+                    }
+
+                    MethodCallExpression resultExp = Expression.Call(typeof(Queryable), methodName,
+                        new Type[] {typeof(T), pi.PropertyType}, source.Expression, le);
+                    source = source.Provider.CreateQuery<T>(resultExp);
+                }
+            });
+
+            return source;
         }
 
         #endregion

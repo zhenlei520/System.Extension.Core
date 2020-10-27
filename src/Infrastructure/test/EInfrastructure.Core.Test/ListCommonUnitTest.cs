@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EInfrastructure.Core.Tools.Expressions;
 using EInfrastructure.Core.Config.Entities.Ioc;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
@@ -194,12 +195,19 @@ namespace EInfrastructure.Core.Test
             {
                 new Person()
                 {
-                    Id=1,
+                    Id = 1,
+                    Scare = 1,
                     Name = "张三"
                 },
                 new Person()
                 {
-                    Id=2,
+                    Id = 1,
+                    Scare = 2,
+                    Name = "梨花"
+                },
+                new Person()
+                {
+                    Id = 2,
                     Name = "李四"
                 }
             };
@@ -207,16 +215,21 @@ namespace EInfrastructure.Core.Test
             {
                 new Person()
                 {
-                    Id=1,
+                    Id = 1,
                     Name = "张三2"
                 },
                 new Person()
                 {
-                    Id=3,
+                    Id = 3,
                     Name = "王五"
                 }
             };
-            var res = oldIdList.Compare<Person,int>(newIdList);
+            var list = oldIdList.OrderBy<Person>(new List<KeyValuePair<string, bool>>()
+            {
+                new KeyValuePair<string, bool>("Id", true),
+                new KeyValuePair<string, bool>("Scare",true)
+            }).ToList();
+            var res = oldIdList.Compare<Person, int>(newIdList);
         }
 
         [Serializable]
@@ -224,6 +237,11 @@ namespace EInfrastructure.Core.Test
         {
             public int Id { get; set; }
             public string Name { get; set; }
+
+            /// <summary>
+            /// 分数
+            /// </summary>
+            public int Scare { get; set; }
 
             public List<string> Tags
             {
