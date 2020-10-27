@@ -45,7 +45,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditio
         /// <returns></returns>
         public Regex GetRegex(RegexOptions options)
         {
-            return base.GetRegex(@"^1(3[5-9]|4[7]|5[0-27-9]|7[8]|8[2-478]|9[8])\d{8}$", options);
+            return base.GetRegex(@"(^1(3[5-9]|4[7]|5[0-27-9]|7[8]|8[2-478]|9[8])\d{8}$)|(^134[0-8]\d{7}$)", options);
         }
 
         /// <summary>
