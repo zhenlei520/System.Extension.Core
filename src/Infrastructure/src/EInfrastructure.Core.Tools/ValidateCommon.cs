@@ -69,13 +69,15 @@ namespace EInfrastructure.Core.Tools
         #region 是否为手机号
 
         /// <summary>
-        /// 是否为手机号(验证中国)
+        /// 是否为手机号(验证中国,三大运营商的传统手机号号段)
         /// </summary>
         /// <param name="str">待验证的手机号</param>
+        /// <param name="regexOptions">匹配方式，默认完全匹配(null)</param>
         /// <returns></returns>
-        public static bool IsMobile(this string str)
+        public static bool IsMobile(this string str, RegexOptions? regexOptions = null)
         {
-            return str.IsMobile(Nationality.China, (CommunicationOperator)null!, CommunicationOperatorType.Traditional);
+            return str.IsMobile(Nationality.China, (CommunicationOperator) null!,
+                CommunicationOperatorType.Traditional, regexOptions);
         }
 
         /// <summary>
@@ -85,9 +87,10 @@ namespace EInfrastructure.Core.Tools
         /// <param name="nationality">国家</param>
         /// <param name="communicationOperator">运营商类型（默认查询所有运营商）</param>
         /// <param name="operatorType">运营商类型</param>
+        /// <param name="regexOptions">匹配方式，默认完全匹配(null)</param>
         /// <returns></returns>
         public static bool IsMobile<T1, T2, T3>(this string str, T1 nationality,
-            T2 communicationOperator = null, T3 operatorType = null)
+            T2 communicationOperator = null, T3 operatorType = null, RegexOptions? regexOptions = null)
             where T1 : Nationality?
             where T2 : CommunicationOperator?
             where T3 : CommunicationOperatorType?
@@ -113,7 +116,12 @@ namespace EInfrastructure.Core.Tools
 
             var regexList = _mobileRegexConfigurations.Where(condition.Compile()).ToList();
 
-            return regexList.Any(x => x.IsVerify(str, RegexOptions.Compiled));
+            if (regexOptions == null)
+            {
+                regexOptions = RegexOptions.Compiled;
+            }
+
+            return regexList.Any(x => x.IsVerify(str, regexOptions.Value));
         }
 
         #endregion
