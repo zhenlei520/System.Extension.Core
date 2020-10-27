@@ -118,6 +118,21 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 获取list列表的值
+
+        /// <summary>
+        /// 获取list列表的值
+        /// </summary>
+        /// <param name="list"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static int GetListCount<T>(this IEnumerable<T> list)
+        {
+            return list?.Count() ?? 0;
+        }
+
+        #endregion
+
         #region List转String
 
         #region List转换为string
@@ -151,12 +166,14 @@ namespace EInfrastructure.Core.Tools
             bool isReplaceEmpty = true,
             bool isReplaceSpace = true) where T : struct
         {
-            if (str == null || str.ToList().Count == 0)
+            var enumerable = str as T[] ?? str.ToArray();
+            if (!enumerable.Any())
             {
                 return "";
             }
 
-            return ConvertListToString(str.Select(x => x.ToString()).ToList(), split, isReplaceEmpty, isReplaceSpace);
+            return ConvertListToString(enumerable.Select(x => x.ToString()).ToList(), split, isReplaceEmpty,
+                isReplaceSpace);
         }
 
         #endregion
@@ -190,12 +207,13 @@ namespace EInfrastructure.Core.Tools
             bool isReplaceEmpty = true,
             bool isReplaceSpace = true)
         {
-            if (str == null || !str.Any())
+            var enumerable = str as string[] ?? str.ToArray();
+            if (!enumerable.Any())
             {
                 return "";
             }
 
-            IEnumerable<string> tempList = str.ToList();
+            IEnumerable<string> tempList = enumerable.ToList();
             if (isReplaceEmpty)
             {
                 if (isReplaceSpace)
