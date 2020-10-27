@@ -17,6 +17,9 @@ namespace EInfrastructure.Core.Tools.Url
     /// </summary>
     public class UrlParameter
     {
+        /// <summary>
+        ///
+        /// </summary>
         public IDictionary<string, object> _params { get; protected set; }
 
         /// <summary>

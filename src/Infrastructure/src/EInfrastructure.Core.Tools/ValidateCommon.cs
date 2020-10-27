@@ -1,6 +1,8 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -73,7 +75,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsMobile(this string str)
         {
-            return str.IsMobile(Nationality.China, null, CommunicationOperatorType.Traditional);
+            return str.IsMobile(Nationality.China, (CommunicationOperator)null!, CommunicationOperatorType.Traditional);
         }
 
         /// <summary>
@@ -84,8 +86,11 @@ namespace EInfrastructure.Core.Tools
         /// <param name="communicationOperator">运营商类型（默认查询所有运营商）</param>
         /// <param name="operatorType">运营商类型</param>
         /// <returns></returns>
-        public static bool IsMobile(this string str, Nationality nationality,
-            CommunicationOperator communicationOperator = null, CommunicationOperatorType operatorType = null)
+        public static bool IsMobile<T1, T2, T3>(this string str, T1 nationality,
+            T2 communicationOperator = null, T3 operatorType = null)
+            where T1 : Nationality?
+            where T2 : CommunicationOperator?
+            where T3 : CommunicationOperatorType?
         {
             if (string.IsNullOrEmpty(str))
                 return false;
@@ -145,7 +150,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="str"></param>
         /// <param name="numericType">类型，当为null时指的是不限制大小写</param>
         /// <returns></returns>
-        public static bool IsNumber(this string str, NumericType numericType)
+        public static bool IsNumber(this string str, NumericType? numericType)
         {
             if (numericType == null)
             {

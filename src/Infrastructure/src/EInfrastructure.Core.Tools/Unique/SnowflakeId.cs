@@ -49,6 +49,10 @@ namespace EInfrastructure.Core.Tools.Unique
         ///
         /// </summary>
         private const int DatacenterIdShift = SequenceBits + WorkerIdBits;
+
+        /// <summary>
+        ///
+        /// </summary>
         public const int TimestampLeftShift = SequenceBits + WorkerIdBits + DatacenterIdBits;
 
         /// <summary>
@@ -168,6 +172,11 @@ namespace EInfrastructure.Core.Tools.Unique
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="lastTimestamp"></param>
+        /// <returns></returns>
         protected virtual long TilNextMillis(long lastTimestamp)
         {
             var timestamp = TimeGen();
@@ -175,6 +184,10 @@ namespace EInfrastructure.Core.Tools.Unique
             return timestamp;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
         protected virtual long TimeGen()
         {
             return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
