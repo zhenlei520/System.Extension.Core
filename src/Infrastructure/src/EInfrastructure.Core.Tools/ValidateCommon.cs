@@ -619,6 +619,16 @@ namespace EInfrastructure.Core.Tools
             return string.IsNullOrWhiteSpace(str);
         }
 
+        /// <summary>
+        /// Indicates whether the specified string is null or an
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T>list)
+        {
+            return list.GetListCount() == 0;
+        }
+
         #endregion
 
         #region 设置正则表达式配置驱动（不建议更换默认配置）

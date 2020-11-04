@@ -110,7 +110,7 @@ namespace EInfrastructure.Core.HelpCommon
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TKey"></typeparam>
         /// <returns></returns>
-        public static ListCompare<T, TKey> CompareNew<T, TKey>(this List<T> sourceList, List<T> optList)
+        public static ListCompare<T, TKey> Compare<T, TKey>(this List<T> sourceList, List<T> optList)
             where T : IEntity<TKey> where TKey : struct
         {
             return new ListCompare<T, TKey>(sourceList, optList);
@@ -119,12 +119,14 @@ namespace EInfrastructure.Core.HelpCommon
         /// <summary>
         /// 两个集合计较
         /// </summary>
+        /// <param name="sourceList">源集合</param>
+        /// <param name="optList">新集合</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static ListCompare<T, string> CompareNew<T>(this List<T> sourceList, List<T> optList)
-            where T : IEntity<string>
+        public static ListCompare<T> Compare<T>(this List<T> sourceList, List<T> optList)
+            where T : struct
         {
-            return new ListCompare<T, string>(sourceList, optList);
+            return new ListCompare<T>(sourceList, optList);
         }
 
         #endregion
@@ -173,8 +175,77 @@ namespace EInfrastructure.Core.HelpCommon
 
         #endregion
 
+        #region 比较集合
+
         /// <summary>
-        ///
+        /// 比较集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public class ListCompare<T> where T : struct
+        {
+            /// <summary>
+            /// 初始化列表比较结果
+            /// </summary>
+            /// <param name="sourceList">原列表</param>
+            /// <param name="optList">新列表</param>
+            public ListCompare(List<T> sourceList, List<T> optList)
+            {
+                SourceList = sourceList ?? new List<T>();
+                OptList = optList ?? new List<T>();
+            }
+
+            /// <summary>
+            /// 原列表
+            /// </summary>
+            private IEnumerable<T> SourceList { get; }
+
+            /// <summary>
+            /// 新列表
+            /// </summary>
+            private IEnumerable<T> OptList { get; }
+
+            #region 创建列表
+
+            private List<T> _createList;
+
+            /// <summary>
+            /// 创建列表
+            /// </summary>
+            public List<T> CreateList => _createList ?? (_createList =
+                OptList.ExceptNew(SourceList));
+
+            #endregion
+
+            #region 更新列表
+
+            private List<T> _updateList;
+
+            /// <summary>
+            /// 更新列表
+            /// </summary>
+            public List<T> UpdateList => _updateList ??
+                                         (_updateList = OptList.Where(opt =>
+                                                 SourceList.Any(source => source.Equals(opt)))
+                                             .ToList());
+
+            #endregion
+
+            #region 删除列表
+
+            private List<T> _deleteList;
+
+            /// <summary>
+            /// 删除列表
+            /// </summary>
+            public List<T> DeleteList => _deleteList ??
+                                         (_deleteList =
+                                             SourceList.ExceptNew(OptList));
+
+            #endregion
+        }
+
+        /// <summary>
+        /// 比较集合
         /// </summary>
         public class ListCompare<T, TKey> where T : IEntity<TKey>
         {
@@ -208,7 +279,7 @@ namespace EInfrastructure.Core.HelpCommon
             /// </summary>
             public List<T> CreateList => _createList ?? (_createList =
                 OptList.Where(x => !
-                        SourceList.Select(source => source.Id).ToList().Contains(x.Id))
+                        SourceList.Any(source => source.Id.Equals(x.Id)))
                     .ToList());
 
             #endregion
@@ -221,8 +292,8 @@ namespace EInfrastructure.Core.HelpCommon
             /// 更新列表
             /// </summary>
             public List<T> UpdateList => _updateList ??
-                                         (_updateList = SourceList.Where(x =>
-                                                 OptList.Select(source => source.Id).ToList().Contains(x.Id))
+                                         (_updateList = OptList.Where(opt =>
+                                                 SourceList.Any(source => source.Id.Equals(opt.Id)))
                                              .ToList());
 
             #endregion
@@ -236,11 +307,13 @@ namespace EInfrastructure.Core.HelpCommon
             /// </summary>
             public List<T> DeleteList => _deleteList ??
                                          (_deleteList =
-                                             SourceList.Where(x => !
-                                                     OptList.Select(source => source.Id).ToList().Contains(x.Id))
+                                             SourceList.Where(source => !
+                                                     OptList.Any(opt => opt.Id.Equals(source.Id)))
                                                  .ToList());
 
             #endregion
         }
+
+        #endregion
     }
 }

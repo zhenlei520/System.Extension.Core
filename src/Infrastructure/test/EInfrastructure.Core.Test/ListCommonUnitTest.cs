@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EInfrastructure.Core.Tools.Expressions;
+using EInfrastructure.Core.Config.Entities.Ioc;
 using EInfrastructure.Core.HelpCommon;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Test.Base;
@@ -171,10 +173,75 @@ namespace EInfrastructure.Core.Test
             Console.WriteLine(person.TagJson);
         }
 
-        [Serializable]
-        public class Person
+
+        [Fact]
+        public void Compare()
         {
+            List<int> oldIdList = new List<int>()
+            {
+                1, 2
+            };
+            List<int> newIdList = new List<int>()
+            {
+                1, 3
+            };
+            var res = oldIdList.Compare(newIdList);
+        }
+
+        [Fact]
+        public void Compare2()
+        {
+            List<Person> oldIdList = new List<Person>()
+            {
+                new Person()
+                {
+                    Id = 1,
+                    Scare = 1,
+                    Name = "张三"
+                },
+                new Person()
+                {
+                    Id = 1,
+                    Scare = 2,
+                    Name = "梨花"
+                },
+                new Person()
+                {
+                    Id = 2,
+                    Name = "李四"
+                }
+            };
+            List<Person> newIdList = new List<Person>()
+            {
+                new Person()
+                {
+                    Id = 1,
+                    Name = "张三2"
+                },
+                new Person()
+                {
+                    Id = 3,
+                    Name = "王五"
+                }
+            };
+            var list = oldIdList.OrderBy<Person>(new List<KeyValuePair<string, bool>>()
+            {
+                new KeyValuePair<string, bool>("Id", true),
+                new KeyValuePair<string, bool>("Scare",true)
+            }).ToList();
+            var res = oldIdList.Compare<Person, int>(newIdList);
+        }
+
+        [Serializable]
+        public class Person : IEntity<int>
+        {
+            public int Id { get; set; }
             public string Name { get; set; }
+
+            /// <summary>
+            /// 分数
+            /// </summary>
+            public int Scare { get; set; }
 
             public List<string> Tags
             {

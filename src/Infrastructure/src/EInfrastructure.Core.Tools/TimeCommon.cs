@@ -455,6 +455,109 @@ namespace EInfrastructure.Core.Tools
         #region 得到距离当前多远时间
 
         /// <summary>
+        /// 得到当前多远时间
+        /// </summary>
+        /// <param name="span">时间间隔</param>
+        /// <returns></returns>
+        public static string GetAccordingToCurrent(this TimeSpan span)
+        {
+            if (span == null)
+            {
+                throw new ArgumentNullException(nameof(span));
+            }
+
+            if (span.TotalMinutes < 1)
+            {
+                return "刚刚";
+            }
+
+            if (span.TotalSeconds < 60)
+            {
+                return "1分钟之前";
+            }
+
+            if (span.TotalMinutes < 60)
+            {
+                return Math.Ceiling(span.TotalMinutes) + "分钟之前";
+            }
+
+            if (span.TotalHours < 24)
+            {
+                return Math.Ceiling(span.TotalHours) + "小时之内";
+            }
+
+            if (span.TotalDays < 7)
+            {
+                return Math.Ceiling(span.TotalDays) + "天之内";
+            }
+
+            if (span.TotalDays < 30)
+            {
+                return Math.Ceiling(span.TotalDays / 7) + "周之内";
+            }
+
+            if (span.TotalDays < 180)
+            {
+                return Math.Ceiling(span.TotalDays / 30) + "月之内";
+            }
+
+            return Math.Ceiling(span.TotalDays / 360) + "年之内";
+        }
+
+        /// <summary>
+        /// 得到两个时间间隔差多远
+        /// </summary>
+        /// <param name="dateTime1">日期一(较大一点的时间)。</param>
+        /// <param name="dateTime2">日期二(较小一点的时间)。</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static string GetAccordingToCurrent(this DateTime dateTime1, DateTime dateTime2)
+        {
+            TimeSpan span = DateDiff(dateTime1, dateTime2);
+            if (span == null)
+            {
+                throw new ArgumentNullException(nameof(span));
+            }
+
+            if (span.TotalMinutes < 1)
+            {
+                return "刚刚";
+            }
+
+            if (span.TotalSeconds < 60)
+            {
+                return "1分钟之前";
+            }
+
+            if (span.TotalMinutes < 60)
+            {
+                return Math.Ceiling(span.TotalMinutes) + "分钟之前";
+            }
+
+            if (span.TotalHours < 24)
+            {
+                return Math.Ceiling(span.TotalHours) + "小时之内";
+            }
+
+            if (span.TotalDays < 7)
+            {
+                return Math.Ceiling(span.TotalDays) + "天之内";
+            }
+
+            if (span.TotalDays < 30)
+            {
+                return Math.Ceiling(span.TotalDays / 7) + "周之内";
+            }
+
+            if (span.TotalDays < 180)
+            {
+                return Math.Ceiling(span.TotalDays / 30) + "月之内";
+            }
+
+            return Math.Ceiling(span.TotalDays / 360) + "年之内";
+        }
+
+        /// <summary>
         /// 得到据当前多远时间
         /// </summary>
         /// <param name="date"></param>
