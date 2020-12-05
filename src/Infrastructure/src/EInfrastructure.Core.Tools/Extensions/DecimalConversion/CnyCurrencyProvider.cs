@@ -4,7 +4,7 @@
 using System;
 using EInfrastructure.Core.Configuration.Enumerations;
 
-namespace EInfrastructure.Core.Tools.DecimalConversion
+namespace EInfrastructure.Core.Tools.Extensions.DecimalConversion
 {
     /// <summary>
     ///

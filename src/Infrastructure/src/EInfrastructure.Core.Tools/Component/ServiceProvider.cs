@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.Tools.Component
         /// <param name="assblemyArray"></param>
         public ServiceProvider(Assembly[] assblemyArray = null)
         {
-            _assblemyArray = assblemyArray ?? AssemblyCommon.GetAssemblies();
+            _assblemyArray = assblemyArray ?? AssemblyCommon.GetLoadedAssemblies();
         }
 
         #region 得到服务

@@ -42,5 +42,13 @@ namespace EInfrastructure.Core.Test
             var s7 = StringCommon.IndexOf("123,1234,4323,2,3,2", ',', 4);
             var s9=StringCommon.LastIndexOf("123,12341,,4323,2", ',', 2);
         }
+
+        [Theory]
+        [InlineData("github挺好使的")]
+        [InlineData("wangzhenlei520@gmail.com")]
+        public void GetLength(string str)
+        {
+            int length = str.GetStrLength();
+        }
     }
 }

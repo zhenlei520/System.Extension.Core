@@ -289,6 +289,34 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 得到字符串长度（一个汉字占用两个字符）
+
+        /// <summary>
+        /// 得到字符串的字符长度（一个汉字占用两个字符）
+        /// </summary>
+        /// <param name="param">待校验的字符串</param>
+        /// <returns></returns>
+        public static int GetStrLength(this string param)
+        {
+            if (param.IsNullOrEmpty())
+            {
+                return 0;
+            }
+            System.Text.ASCIIEncoding ascii = new System.Text.ASCIIEncoding();
+            int tempLen = 0;
+            byte[] s = ascii.GetBytes(param);
+            foreach (var t in s)
+            {
+                if (t == 63)
+                    tempLen += 2;
+                else
+                    tempLen += 1;
+            }
+            return tempLen;
+        }
+
+        #endregion
+
         #region 返回数组原来的第一个元素的值,数组中移除第一个值
 
         /// <summary>

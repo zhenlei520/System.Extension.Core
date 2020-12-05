@@ -43,23 +43,43 @@ namespace EInfrastructure.Core.Tools.Systems
 
         #endregion
 
-        #region 得到当前应用的程序集
+        #region 得到已加载到当前域的程序集
 
-        private static Assembly[] _assemblys;
+        private static Assembly[] _loadedAssemblys;
 
         /// <summary>
-        /// 得到当前应用的程序集
+        /// 得到已加载到当前域的程序集
         /// </summary>
         /// <returns></returns>
-        public static Assembly[] GetAssemblies()
+        public static Assembly[] GetLoadedAssemblies()
         {
-            if (_assemblys == null)
+            if (_loadedAssemblys == null)
             {
-                _assemblys = AppDomain.CurrentDomain.GetAssemblies().ToArray();
+                _loadedAssemblys = AppDomain.CurrentDomain.GetAssemblies().ToArray();
             }
 
-            return _assemblys;
+            return _loadedAssemblys;
         }
+
+        #endregion
+
+        #region 得到当前项目的程序集
+
+        // private static Assembly[] _assemblys;
+        //
+        // /// <summary>
+        // /// 得到当前项目的程序集
+        // /// </summary>
+        // /// <returns></returns>
+        // public static Assembly[] GetAssemblies()
+        // {
+        //     if (_assemblys == null)
+        //     {
+        //         _assemblys = Assembly.GetEntryAssembly();
+        //     }
+        //
+        //     return _assemblys;
+        // }
 
         #endregion
 

@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.Infrastructure
         /// <summary>
         /// 得到默认的程序集
         /// </summary>
-        public static AssemblyProvider GetDefaultAssemblyProvider = new AssemblyProvider()
+        public static readonly AssemblyProvider GetDefaultAssemblyProvider = new AssemblyProvider()
         {
             AssemblySkipLoadingPattern = new List<string>(),
             LoadAppDomainAssemblies = true
@@ -300,8 +300,8 @@ namespace EInfrastructure.Core.Infrastructure
         /// <summary>
         /// Adds specifically configured assemblies.
         /// </summary>
-        /// <param name="addedAssemblyNames"></param>
-        /// <param name="assemblies"></param>
+        /// <param name="addedAssemblyNames">等待添加的应用程序集名称集合</param>
+        /// <param name="assemblies">当前应用程序集</param>
         protected virtual void AddConfiguredAssemblies(List<string> addedAssemblyNames, List<Assembly> assemblies)
         {
             foreach (var assemblyName in AssemblyNames??new List<string>())
