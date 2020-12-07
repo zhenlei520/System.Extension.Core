@@ -14,7 +14,7 @@ namespace EInfrastructure.Core.Tools.Internal
     /// <summary>
     /// 正则表达式配置
     /// </summary>
-    public interface IRegexConfigurations : ISingleInstance, IIdentify
+    public interface IRegexConfigurationsProvider : ISingleInstance, IIdentify
     {
         /// <summary>
         /// 得到正则表达式规则
@@ -42,7 +42,7 @@ namespace EInfrastructure.Core.Tools.Internal
     /// <summary>
     /// 验证正则表达式默认配置
     /// </summary>
-    public class RegexConfigurationsValidateDefault : IRegexConfigurations
+    public class RegexConfigurationsValidateDefaultProvider : IRegexConfigurationsProvider
     {
         /// <summary>
         /// 规则
@@ -135,7 +135,7 @@ namespace EInfrastructure.Core.Tools.Internal
     /// <summary>
     /// 正则表达式默认配置
     /// </summary>
-    public class RegexConfigurationsDefault : IRegexConfigurations
+    public class RegexConfigurationsDefault : IRegexConfigurationsProvider
     {
         /// <summary>
         /// 规则

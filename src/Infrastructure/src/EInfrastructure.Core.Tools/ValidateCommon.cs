@@ -24,16 +24,16 @@ namespace EInfrastructure.Core.Tools
     /// </summary>
     public static class ValidateCommon
     {
-        private static IRegexConfigurations _regexConfigurations;
-        private static ICollection<IMobileRegexConfigurations> _mobileRegexConfigurations;
+        private static IRegexConfigurationsProvider _regexConfigurations;
+        private static ICollection<IMobileRegexConfigurationsProvider> _mobileRegexConfigurations;
 
         /// <summary>
         ///
         /// </summary>
         static ValidateCommon()
         {
-            _regexConfigurations = new RegexConfigurationsValidateDefault();
-            _mobileRegexConfigurations = new ServiceProvider().GetServices<IMobileRegexConfigurations>().ToList();
+            _regexConfigurations = new RegexConfigurationsValidateDefaultProvider();
+            _mobileRegexConfigurations = ServiceProvider.GetServiceProvider().GetServices<IMobileRegexConfigurationsProvider>().ToList();
         }
 
         #region 是否邮政编码
@@ -97,7 +97,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (string.IsNullOrEmpty(str))
                 return false;
-            Expression<Func<IMobileRegexConfigurations, bool>> condition = x => true;
+            Expression<Func<IMobileRegexConfigurationsProvider, bool>> condition = x => true;
 
             if (nationality != null)
             {
@@ -637,7 +637,7 @@ namespace EInfrastructure.Core.Tools
         /// 设置正则表达式配置驱动（不建议更换默认配置）
         /// </summary>
         /// <param name="regexConfigurations"></param>
-        public static void SetRegexConfigurations(IRegexConfigurations regexConfigurations)
+        public static void SetRegexConfigurations(IRegexConfigurationsProvider regexConfigurations)
         {
             _regexConfigurations = regexConfigurations ?? throw new ArgumentNullException(nameof(regexConfigurations));
         }
@@ -650,7 +650,7 @@ namespace EInfrastructure.Core.Tools
         /// 得到正则表达式配置驱动
         /// </summary>
         /// <returns></returns>
-        public static IRegexConfigurations GetRegexConfigurations()
+        public static IRegexConfigurationsProvider GetRegexConfigurations()
         {
             return _regexConfigurations;
         }
@@ -664,9 +664,9 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="regexConfigurationses"></param>
         public static void RefreshMobileRegexConfigurations(
-            ICollection<IMobileRegexConfigurations> regexConfigurationses)
+            ICollection<IMobileRegexConfigurationsProvider> regexConfigurationses)
         {
-            ValidateCommon._mobileRegexConfigurations = regexConfigurationses ?? new List<IMobileRegexConfigurations>();
+            ValidateCommon._mobileRegexConfigurations = regexConfigurationses ?? new List<IMobileRegexConfigurationsProvider>();
         }
 
         #endregion

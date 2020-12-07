@@ -1,15 +1,15 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
-// 中国电信天翼手机号码段有：133、149、153、173、177、180、181、189
+// 号段：145、167、1704、1707、1708、1709、171、175、
 
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 
-namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditional
+namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Virtual
 {
     /// <summary>
-    /// 中国电信传统手机号校验
+    /// 中国联通虚拟手机号校验
     /// </summary>
-    public class ChinaTelecomRegexConfigurations: BaseMobileRegexConfigurations, IMobileRegexConfigurations
+    public class ChinaUnicomRegexConfigurationsProvider: BaseMobileRegexConfigurations, IMobileRegexConfigurationsProvider
     {
         /// <summary>
         /// 得到国家
@@ -26,7 +26,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditio
         /// <returns></returns>
         public CommunicationOperator GetCommunicationOperator()
         {
-            return CommunicationOperator.ChinaTelecom;
+            return CommunicationOperator.ChinaUnicom;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditio
         /// <returns></returns>
         public CommunicationOperatorType GetCommunicationOperatorType()
         {
-            return CommunicationOperatorType.Traditional;
+            return CommunicationOperatorType.Virtual;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditio
         /// <returns></returns>
         public Regex GetRegex(RegexOptions options)
         {
-            return base.GetRegex(@"^1((33|49|53|7[37]|8[019]|9[139])[0-9])\d{7}$", options);
+            return base.GetRegex(@"(^1(6[7]|71|75)\d{8}$)|(^17(04|07|08|09)\d{7}$)", options);
         }
 
         /// <summary>

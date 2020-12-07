@@ -14,6 +14,31 @@ namespace EInfrastructure.Core.Tools.Component
     public class ServiceProvider
     {
         /// <summary>
+        ///
+        /// </summary>
+        internal static ServiceProvider DefaultServiceProvider;
+
+        /// <summary>
+        ///
+        /// </summary>
+        internal static ServiceProvider _serviceProvider;
+
+        static ServiceProvider()
+        {
+            _serviceProvider = null;
+            DefaultServiceProvider = new ServiceProvider();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        internal static ServiceProvider GetServiceProvider()
+        {
+            return _serviceProvider ?? DefaultServiceProvider;
+        }
+
+        /// <summary>
         /// 程序集
         /// </summary>
         private readonly Assembly[] _assblemyArray;
@@ -25,6 +50,7 @@ namespace EInfrastructure.Core.Tools.Component
         public ServiceProvider(Assembly[] assblemyArray = null)
         {
             _assblemyArray = assblemyArray ?? AssemblyCommon.GetLoadedAssemblies();
+            _serviceProvider = this;
         }
 
         #region 得到服务

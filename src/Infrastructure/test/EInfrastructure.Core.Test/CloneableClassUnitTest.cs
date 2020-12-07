@@ -25,6 +25,7 @@ namespace EInfrastructure.Core.Test
             var newPerson2 = person.ShallowClone<Person>();
             Check.True(person.Name != newPerson.Name, "方法有误");
             Check.True(person.Name == newPerson2.Name, "方法有误");
+
         }
 
         /// <summary>

@@ -1,15 +1,15 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
-// 虚拟号段：162、1349、1700、1701、1702，
+// 移动手机号段：134、135、136、137、138、139、147、150、151、152、157、158、159、178、182、183、184、187、188、198
 
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 
-namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Virtual
+namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditional
 {
     /// <summary>
-    /// 中国电信虚拟手机号校验
+    /// 中国移动传统手机号校验
     /// </summary>
-    public class ChinaTelecomRegexConfigurations: BaseMobileRegexConfigurations, IMobileRegexConfigurations
+    public class ChinaMobileRegexConfigurationsProvider : BaseMobileRegexConfigurations, IMobileRegexConfigurationsProvider
     {
         /// <summary>
         /// 得到国家
@@ -26,7 +26,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Virtual
         /// <returns></returns>
         public CommunicationOperator GetCommunicationOperator()
         {
-            return CommunicationOperator.ChinaTelecom;
+            return CommunicationOperator.ChinaMobile;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Virtual
         /// <returns></returns>
         public CommunicationOperatorType GetCommunicationOperatorType()
         {
-            return CommunicationOperatorType.Virtual;
+            return CommunicationOperatorType.Traditional;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Virtual
         /// <returns></returns>
         public Regex GetRegex(RegexOptions options)
         {
-            return base.GetRegex(@"^1(62[0-9]|349|700|701|702)\d{7}$", options);
+            return base.GetRegex(@"(^1(3[5-9]|4[7]|5[0-27-9]|7[8]|8[2-478]|9[8])\d{8}$)|(^134[0-8]\d{7}$)", options);
         }
 
         /// <summary>

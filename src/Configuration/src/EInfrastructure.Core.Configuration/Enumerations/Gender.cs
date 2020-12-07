@@ -25,6 +25,10 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// </summary>
         public static Gender Girl = new Gender(3, "女");
 
+        public Gender()
+        {
+
+        }
         /// <summary>
         ///
         /// </summary>

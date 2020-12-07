@@ -17,7 +17,7 @@ namespace EInfrastructure.Core.UserAgentParse
     /// </summary>
     public partial class UserAgentBase
     {
-        internal readonly IRegexConfigurations _regexConfigurations;
+        internal readonly IRegexConfigurationsProvider _regexConfigurations;
 
         #region property
 

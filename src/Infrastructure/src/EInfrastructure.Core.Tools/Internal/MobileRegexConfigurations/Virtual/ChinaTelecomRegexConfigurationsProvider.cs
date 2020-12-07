@@ -1,15 +1,15 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
-// 中国联通号段：130,131,132,155,156,166,176,185,186
+// 虚拟号段：162、1349、1700、1701、1702，
 
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 
-namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditional
+namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Virtual
 {
     /// <summary>
-    /// 中国联通传统手机号校验
+    /// 中国电信虚拟手机号校验
     /// </summary>
-    public class ChinaUnicomRegexConfigurations: BaseMobileRegexConfigurations, IMobileRegexConfigurations
+    public class ChinaTelecomRegexConfigurationsProvider: BaseMobileRegexConfigurations, IMobileRegexConfigurationsProvider
     {
         /// <summary>
         /// 得到国家
@@ -26,7 +26,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditio
         /// <returns></returns>
         public CommunicationOperator GetCommunicationOperator()
         {
-            return CommunicationOperator.ChinaUnicom;
+            return CommunicationOperator.ChinaTelecom;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditio
         /// <returns></returns>
         public CommunicationOperatorType GetCommunicationOperatorType()
         {
-            return CommunicationOperatorType.Traditional;
+            return CommunicationOperatorType.Virtual;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditio
         /// <returns></returns>
         public Regex GetRegex(RegexOptions options)
         {
-            return base.GetRegex(@"^1(3[0-2]|4[5]|5[56]|7[6]|8[56])\d{8}$", options);
+            return base.GetRegex(@"^1(62[0-9]|349|700|701|702)\d{7}$", options);
         }
 
         /// <summary>

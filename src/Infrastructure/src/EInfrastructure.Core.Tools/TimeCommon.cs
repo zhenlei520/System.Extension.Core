@@ -8,7 +8,9 @@ using System.Globalization;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Tools.Component;
 using EInfrastructure.Core.Tools.Enumerations;
+using EInfrastructure.Core.Tools.Internal;
 using TimeType = EInfrastructure.Core.Tools.Enumerations.TimeType;
 
 namespace EInfrastructure.Core.Tools
@@ -18,10 +20,92 @@ namespace EInfrastructure.Core.Tools
     /// </summary>
     public static class TimeCommon
     {
+        #region 初始化
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
         static TimeCommon()
         {
-            ChinaDate();
+            InitChinaDate();
+            InitWeek();
+            _dateTimeProviders = ServiceProvider.GetServiceProvider().GetServices<IDateTimeProvider>();
+            _specifiedTimeAfterProviders =
+                ServiceProvider.GetServiceProvider().GetServices<ISpecifiedTimeAfterProvider>();
         }
+
+        #region 初始化中国节日
+
+        private static ChineseLunisolarCalendar _china;
+        private static Hashtable _gHoliday;
+        private static Hashtable _nHoliday;
+
+        /// <summary>
+        /// 初始化中国节日
+        /// </summary>
+        private static void InitChinaDate()
+        {
+            _china = new ChineseLunisolarCalendar();
+
+            //公历节日
+            _gHoliday = new Hashtable
+            {
+                {"0101", "元旦"},
+                {"0214", "情人节"},
+                {"0305", "雷锋日"},
+                {"0308", "妇女节"},
+                {"0312", "植树节"},
+                {"0315", "消费者权益日"},
+                {"0401", "愚人节"},
+                {"0501", "劳动节"},
+                {"0504", "青年节"},
+                {"0601", "儿童节"},
+                {"0701", "建党节"},
+                {"0801", "建军节"},
+                {"0910", "教师节"},
+                {"1001", "国庆节"},
+                {"1224", "平安夜"},
+                {"1225", "圣诞节"}
+            };
+
+            //农历节日
+            _nHoliday = new Hashtable
+            {
+                {"0101", "春节"},
+                {"0115", "元宵节"},
+                {"0505", "端午节"},
+                {"0815", "中秋节"},
+                {"0909", "重阳节"},
+                {"1208", "腊八节"}
+            };
+        }
+
+        #endregion
+
+        #region 初始化星期几
+
+        private static List<KeyValuePair<DayOfWeek, int>> _weekMaps;
+
+        /// <summary>
+        /// 初始化星期几
+        /// </summary>
+        private static void InitWeek()
+        {
+            _weekMaps = new List<KeyValuePair<DayOfWeek, int>>()
+            {
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Sunday, 1),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Monday, 2),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Tuesday, 3),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Wednesday, 4),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Thursday, 5),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Friday, 6),
+                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Saturday, 7)
+            };
+        }
+
+        #endregion
+
+        #endregion
 
         #region 格式化时间
 
@@ -318,6 +402,8 @@ namespace EInfrastructure.Core.Tools
 
         #region 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
 
+        private static IEnumerable<IDateTimeProvider> _dateTimeProviders;
+
         /// <summary>
         /// 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
         /// </summary>
@@ -326,128 +412,43 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static DateTime Get(this DateTime? dateTime, TimeType timeKey)
         {
-            DateTime dateNow = dateTime ?? DateTime.Now.Date; //当前时间
-            if (timeKey.Id == TimeType.StartYear.Id)
+            DateTime date = dateTime ?? DateTime.Now.Date; //当前时间
+
+            var provider = _dateTimeProviders.FirstOrDefault(x => x.Type.Equals(timeKey));
+
+            if (provider != null)
             {
-                return new DateTime(dateNow.Year, 1, 1); //本年年初
+                return provider.GetResult(date);
             }
 
-            if (timeKey.Id == TimeType.EndYear.Id)
-            {
-                return new DateTime(dateNow.Year, 12, 31); //本年年末
-            }
-
-            if (timeKey.Id == TimeType.StartQuarter.Id)
-            {
-                return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day); //本季度初;
-            }
-
-            if (timeKey.Id == TimeType.EndQuarter.Id)
-            {
-                return dateNow.AddMonths(0 - (dateNow.Month - 1) % 3).AddDays(1 - dateNow.Day).AddMonths(3)
-                    .AddDays(-1); //本季度末
-            }
-
-            if (timeKey.Id == TimeType.StartMonth.Id)
-            {
-                return dateNow.AddDays(1 - dateNow.Day); //本月月初
-            }
-
-            if (timeKey.Id == TimeType.EndMonth.Id)
-            {
-                return dateNow.AddDays(1 - dateNow.Day).AddMonths(1).AddDays(-1); //本月月末
-            }
-
-            if (timeKey.Id == TimeType.StartWeek.Id)
-            {
-                int count = dateNow.DayOfWeek - DayOfWeek.Monday;
-                if (count == -1) count = 6;
-                return new DateTime(dateNow.Year, dateNow.Month, dateNow.Day).AddDays(-count); //本周周一
-            }
-
-            if (timeKey.Id == TimeType.EndWeek.Id)
-            {
-                int count = dateNow.DayOfWeek - DayOfWeek.Sunday;
-                if (count != 0) count = 7 - count;
-
-                return new DateTime(dateNow.Year, dateNow.Month, dateNow.Day).AddDays(count); //本周周日
-            }
-
-            return dateNow;
+            throw new NotSupportedException(nameof(timeKey));
         }
 
         #endregion
 
-        #region 得到过期时间
+        #region 得到指定的时间后
+
+        private static IEnumerable<ISpecifiedTimeAfterProvider> _specifiedTimeAfterProviders;
 
         /// <summary>
-        /// 得到过期时间
+        /// 得到指定的时间后
         /// </summary>
+        /// <param name="dateTime">时间</param>
         /// <param name="timeType">时间类型</param>
-        /// <param name="duration">时长</param>
+        /// <param name="duration">时长，允许为负数,为正时：指定时间后持续时间，为负时：指定时间前持续时间</param>
         /// <returns></returns>
-        public static DateTimeOffset GetScheduleTime(DurationType timeType, int duration)
+        public static DateTimeOffset GetSpecifiedTimeAfter(this DateTime? dateTime, DurationType timeType, int duration)
         {
-            if (timeType.Equals(DurationType.MilliSecond))
+            DateTime date = dateTime ?? DateTime.Now.Date; //当前时间
+
+            var provider = _specifiedTimeAfterProviders.FirstOrDefault(x => x.Type.Equals(timeType));
+
+            if (provider != null)
             {
-                return DateTime.Now.AddMilliseconds(duration);
+                return provider.GetResult(date, duration);
             }
 
-            if (timeType.Equals(DurationType.Second))
-            {
-                return DateTime.Now.AddSeconds(duration);
-            }
-
-            if (timeType.Equals(DurationType.Minutes))
-            {
-                return DateTime.Now.AddMinutes(duration);
-            }
-
-            if (timeType.Equals(DurationType.Hour))
-            {
-                return DateTime.Now.AddHours(duration);
-            }
-
-            if (timeType.Equals(DurationType.Day))
-            {
-                return DateTime.Now.AddDays(duration);
-            }
-
-            if (timeType.Equals(DurationType.Weeks))
-            {
-                return DateTime.Now.AddDays(7 * duration);
-            }
-
-            if (timeType.Equals(DurationType.Month))
-            {
-                return DateTime.Now.AddMonths(7 * duration);
-            }
-
-            if (timeType.Equals(DurationType.Quarter))
-            {
-                return DateTime.Now.AddMonths(3 * duration);
-            }
-
-            if (timeType.Equals(DurationType.Year))
-            {
-                return DateTime.Now.AddYears(duration);
-            }
-
-            return DateTime.Now;
-        }
-
-        #endregion
-
-        #region 得到前N秒的时间
-
-        /// <summary>
-        /// 得到前N秒的时间
-        /// </summary>
-        /// <param name="time">时间(单位s)，默认300s</param>
-        /// <returns></returns>
-        public static DateTime FindASecondsAgo(int time = 300)
-        {
-            return DateTime.Now.AddSeconds(-time);
+            throw new NotSupportedException(nameof(timeType));
         }
 
         #endregion
@@ -621,10 +622,6 @@ namespace EInfrastructure.Core.Tools
 
         #region 农历信息获取
 
-        private static readonly ChineseLunisolarCalendar China = new ChineseLunisolarCalendar();
-        private static readonly Hashtable GHoliday = new Hashtable();
-        private static readonly Hashtable NHoliday = new Hashtable();
-
         private static readonly string[] Jq =
         {
             "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分",
@@ -637,38 +634,6 @@ namespace EInfrastructure.Core.Tools
             308563, 331033, 353350, 375494, 397447, 419210, 440795, 462224, 483532, 504758
         };
 
-        /// <summary>
-        /// 中国节日
-        /// </summary>
-        public static void ChinaDate()
-        {
-            //公历节日
-            GHoliday.Add("0101", "元旦");
-            GHoliday.Add("0214", "情人节");
-            GHoliday.Add("0305", "雷锋日");
-            GHoliday.Add("0308", "妇女节");
-            GHoliday.Add("0312", "植树节");
-            GHoliday.Add("0315", "消费者权益日");
-            GHoliday.Add("0401", "愚人节");
-            GHoliday.Add("0501", "劳动节");
-            GHoliday.Add("0504", "青年节");
-            GHoliday.Add("0601", "儿童节");
-            GHoliday.Add("0701", "建党节");
-            GHoliday.Add("0801", "建军节");
-            GHoliday.Add("0910", "教师节");
-            GHoliday.Add("1001", "国庆节");
-            GHoliday.Add("1224", "平安夜");
-            GHoliday.Add("1225", "圣诞节");
-
-            //农历节日
-            NHoliday.Add("0101", "春节");
-            NHoliday.Add("0115", "元宵节");
-            NHoliday.Add("0505", "端午节");
-            NHoliday.Add("0815", "中秋节");
-            NHoliday.Add("0909", "重阳节");
-            NHoliday.Add("1208", "腊八节");
-        }
-
         #endregion
 
         #region 阳历转阴历(农历)
@@ -680,11 +645,11 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static string ConvertToLunar(this DateTime dt)
         {
-            if (dt > China.MaxSupportedDateTime || dt < China.MinSupportedDateTime)
+            if (dt > _china.MaxSupportedDateTime || dt < _china.MinSupportedDateTime)
             {
                 //日期范围：1901 年 2 月 19 日 - 2101 年 1 月 28 日
                 throw new Exception(
-                    $"日期超出范围！必须在{China.MinSupportedDateTime:yyyy-MM-dd}到{China.MaxSupportedDateTime.ToString($"yyyy-MM-dd")}之间！");
+                    $"日期超出范围！必须在{_china.MinSupportedDateTime:yyyy-MM-dd}到{_china.MaxSupportedDateTime.ToString($"yyyy-MM-dd")}之间！");
             }
 
             string str = $"{GetYear(dt)} {GetMonth(dt)}{GetDay(dt)}";
@@ -720,13 +685,13 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static string GetYear(this DateTime dt)
         {
-            int yearIndex = China.GetSexagenaryYear(dt);
+            int yearIndex = _china.GetSexagenaryYear(dt);
             string yearTG = " 甲乙丙丁戊己庚辛壬癸";
             string yearDZ = " 子丑寅卯辰巳午未申酉戌亥";
             string yearSX = " 鼠牛虎兔龙蛇马羊猴鸡狗猪";
-            int year = China.GetYear(dt);
-            int yTg = China.GetCelestialStem(yearIndex);
-            int yDz = China.GetTerrestrialBranch(yearIndex);
+            int year = _china.GetYear(dt);
+            int yTg = _china.GetCelestialStem(yearIndex);
+            int yDz = _china.GetTerrestrialBranch(yearIndex);
 
             string str = string.Format("[{1}]{2}{3}{0}", year, yearSX[yDz], yearTG[yTg], yearDZ[yDz]);
             return str;
@@ -743,9 +708,9 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static string GetMonth(this DateTime dt)
         {
-            int year = China.GetYear(dt);
-            int iMonth = China.GetMonth(dt);
-            int leapMonth = China.GetLeapMonth(year);
+            int year = _china.GetYear(dt);
+            int iMonth = _china.GetMonth(dt);
+            int leapMonth = _china.GetLeapMonth(year);
             bool isLeapMonth = iMonth == leapMonth;
             if (leapMonth != 0 && iMonth >= leapMonth)
             {
@@ -781,7 +746,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static string GetDay(this DateTime dt)
         {
-            int iDay = China.GetDayOfMonth(dt);
+            int iDay = _china.GetDayOfMonth(dt);
             string szText1 = "初十廿三";
             string szText2 = "一二三四五六七八九十";
             string strDay;
@@ -842,7 +807,7 @@ namespace EInfrastructure.Core.Tools
         public static string GetHoliday(this DateTime dt)
         {
             string strReturn = "";
-            object g = GHoliday[dt.Month.ToString("00") + dt.Day.ToString("00")];
+            object g = _gHoliday[dt.Month.ToString("00") + dt.Day.ToString("00")];
             if (g != null)
             {
                 strReturn = g.ToString();
@@ -863,11 +828,11 @@ namespace EInfrastructure.Core.Tools
         public static string GetChinaHoliday(this DateTime dt)
         {
             string strReturn = "";
-            int year = China.GetYear(dt);
-            int iMonth = China.GetMonth(dt);
-            int leapMonth = China.GetLeapMonth(year);
-            int iDay = China.GetDayOfMonth(dt);
-            if (China.GetDayOfYear(dt) == China.GetDaysInYear(year))
+            int year = _china.GetYear(dt);
+            int iMonth = _china.GetMonth(dt);
+            int leapMonth = _china.GetLeapMonth(year);
+            int iDay = _china.GetDayOfMonth(dt);
+            if (_china.GetDayOfYear(dt) == _china.GetDaysInYear(year))
             {
                 strReturn = "除夕";
             }
@@ -878,7 +843,7 @@ namespace EInfrastructure.Core.Tools
                     iMonth--;
                 }
 
-                object n = NHoliday[iMonth.ToString("00") + iDay.ToString("00")];
+                object n = _nHoliday[iMonth.ToString("00") + iDay.ToString("00")];
                 if (n != null)
                 {
                     if (strReturn == "")
@@ -979,10 +944,10 @@ namespace EInfrastructure.Core.Tools
         /// <returns>农历的日期</returns>
         public static DateTime GetSunYearDate(this DateTime dt)
         {
-            int year = China.GetYear(dt);
-            int iMonth = China.GetMonth(dt);
-            int iDay = China.GetDayOfMonth(dt);
-            int leapMonth = China.GetLeapMonth(year);
+            int year = _china.GetYear(dt);
+            int iMonth = _china.GetMonth(dt);
+            int iDay = _china.GetDayOfMonth(dt);
+            int leapMonth = _china.GetLeapMonth(year);
             if (leapMonth != 0 && iMonth >= leapMonth)
             {
                 iMonth--;
@@ -1120,21 +1085,21 @@ namespace EInfrastructure.Core.Tools
         #region 根据日期获取当前星期几
 
         /// <summary>
+        /// 得到指定的日期是星期几
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static int GetDayOfWeek(this DateTime date)
+        {
+            return date.DayOfWeek.GetDayOfWeek();
+        }
+
+        /// <summary>
         /// 将星期几转成数字表示
         /// </summary>
-        public static int GetDayOfWeek(DayOfWeek dayOfWeek)
+        public static int GetDayOfWeek(this DayOfWeek dayOfWeek)
         {
-            List<KeyValuePair<DayOfWeek, int>> maps = new List<KeyValuePair<DayOfWeek, int>>()
-            {
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Sunday, 1),
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Monday, 2),
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Tuesday, 3),
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Wednesday, 4),
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Thursday, 5),
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Friday, 6),
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Saturday, 7)
-            };
-            return maps.Where(x => x.Key == dayOfWeek).Select(x => x.Value).FirstOrDefault();
+            return _weekMaps.Where(x => x.Key == dayOfWeek).Select(x => x.Value).FirstOrDefault();
         }
 
         #endregion

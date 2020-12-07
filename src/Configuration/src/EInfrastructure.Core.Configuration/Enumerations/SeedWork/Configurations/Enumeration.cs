@@ -25,6 +25,10 @@ namespace EInfrastructure.Core.Configuration.Enumerations.SeedWork.Configuration
         /// </summary>
         public T2 Name { get; private set; }
 
+        public Enumeration()
+        {
+
+        }
         /// <summary>
         ///
         /// </summary>
@@ -38,6 +42,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations.SeedWork.Configuration
 
         public override string ToString() => Name?.ToString() ?? "";
 
+        /// <summary>
+        /// 得到所有的
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static IEnumerable<T> GetAll<T>() where T : Enumeration<T1, T2>
         {
             var fields = typeof(T).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);

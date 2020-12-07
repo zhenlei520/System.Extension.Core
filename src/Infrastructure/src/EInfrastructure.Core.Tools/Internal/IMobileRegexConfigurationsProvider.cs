@@ -9,7 +9,7 @@ namespace EInfrastructure.Core.Tools.Internal
     /// <summary>
     /// 手机号校验配置
     /// </summary>
-    public interface IMobileRegexConfigurations : ISingleInstance, IIdentify
+    public interface IMobileRegexConfigurationsProvider : ISingleInstance, IIdentify
     {
         /// <summary>
         /// 得到国家

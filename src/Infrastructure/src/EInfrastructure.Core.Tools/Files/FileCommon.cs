@@ -704,6 +704,62 @@ namespace EInfrastructure.Core.Tools.Files
 
         #endregion
 
+        #region 删除指定目录下的文件(不包含文件夹)
+
+        /// <summary>
+        /// 删除指定目录下的文件(文件夹不删除)
+        /// </summary>
+        /// <param name="recursive">是否递归删除子目录文件（默认递归删除，若为false，则只删除指定目录下的文件）</param>
+        /// <param name="directoryPaths">指定目录的绝对路径集合</param>
+        public static void DeleteFileByDirectory(bool recursive, params string[] directoryPaths)
+        {
+            foreach (var directoryPath in directoryPaths)
+            {
+                DeleteFileByDirectory(directoryPath, recursive);
+            }
+        }
+
+        /// <summary>
+        /// 删除指定目录下的文件(文件夹不删除)
+        /// </summary>
+        /// <param name="directoryPaths">指定目录的绝对路径集合</param>
+        public static void DeleteFileByDirectory(params string[] directoryPaths)
+        {
+            foreach (var directoryPath in directoryPaths)
+            {
+                DeleteFileByDirectory(directoryPath, true);
+            }
+        }
+
+        /// <summary>
+        /// 删除指定目录下的文件(文件夹不删除)
+        /// </summary>
+        /// <param name="directoryPath">指定目录的绝对路径</param>
+        /// <param name="recursive">是否递归删除子目录文件（默认递归删除，若为false，则只删除指定目录下的文件）</param>
+        public static void DeleteFileByDirectory(string directoryPath, bool recursive)
+        {
+            if (IsExistDirectory(directoryPath))
+            {
+                //删除目录中所有的文件
+                string[] fileNames = GetFiles(directoryPath);
+                foreach (var fileName in fileNames)
+                {
+                    DeleteFile(fileName);
+                }
+
+                if (recursive)
+                {
+                    string[] directoryNames = GetDirectories(directoryPath);
+                    foreach (var directory in directoryNames)
+                    {
+                        DeleteFileByDirectory(directory, recursive);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
         #region 向文本文件写入内容
 
         /// <summary>
@@ -991,37 +1047,6 @@ namespace EInfrastructure.Core.Tools.Files
                 foreach (var directory in directoryNames)
                 {
                     DeleteDirectory(directory, true);
-                }
-            }
-        }
-
-        #endregion
-
-        #region 删除指定目录下的文件(不包含文件夹)
-
-        /// <summary>
-        /// 删除指定目录下的文件(文件夹不删除)
-        /// </summary>
-        /// <param name="directoryPath">指定目录的绝对路径</param>
-        /// <param name="recursive">是否递归删除子目录文件（默认递归删除，若为false，则只删除指定目录下的文件）</param>
-        public static void DeleteFile(string directoryPath, bool recursive = true)
-        {
-            if (IsExistDirectory(directoryPath))
-            {
-                //删除目录中所有的文件
-                string[] fileNames = GetFiles(directoryPath);
-                foreach (var fileName in fileNames)
-                {
-                    DeleteFile(fileName);
-                }
-
-                if (recursive)
-                {
-                    string[] directoryNames = GetDirectories(directoryPath);
-                    foreach (var directory in directoryNames)
-                    {
-                        DeleteFile(directory, recursive);
-                    }
                 }
             }
         }
