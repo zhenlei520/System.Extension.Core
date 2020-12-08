@@ -25,7 +25,7 @@ namespace EInfrastructure.Core.Test
         public void GetConstellationFromBirthday(string date)
         {
             Check.True(
-                (ConstellationCommon.GetConstellationFromBirthday(DateTime.Parse(date))?.Name ?? "") ==
+                (DateTime.Parse(date).GetConstellationFromBirthday()?.Name ?? "") ==
                 GetConstellation(date), "constellation is error");
         }
 

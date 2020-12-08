@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EInfrastructure.Core.Tools.Extensions.Enumerable
+namespace EInfrastructure.Core.Tools.Extension.Enumerable
 {
     /// <summary>
     /// Enumerable扩展

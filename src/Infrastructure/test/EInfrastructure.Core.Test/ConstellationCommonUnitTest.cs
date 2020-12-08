@@ -23,7 +23,7 @@ namespace EInfrastructure.Core.Test
         [InlineData("1993-04-17", "白羊座")]
         public void GetConstellationFromBirthday(string birthday, string result)
         {
-            Check.True((ConstellationCommon.GetConstellationFromBirthday(DateTime.Parse(birthday))?.Name??"") == result,
+            Check.True(((DateTime.Parse(birthday).GetConstellationFromBirthday())?.Name??"") == result,
                 "方法有误");
         }
 

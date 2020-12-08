@@ -4,7 +4,7 @@
 
 using System.Collections;
 
-namespace EInfrastructure.Core.Tools.Extensions.BloomFilter
+namespace EInfrastructure.Core.Tools.Extension.BloomFilter
 {
     /// <summary>
     ///

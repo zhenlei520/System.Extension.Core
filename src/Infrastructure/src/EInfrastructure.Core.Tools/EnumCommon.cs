@@ -63,7 +63,7 @@ namespace EInfrastructure.Core.Tools
             Dictionary<Enum, T> dics = new Dictionary<Enum, T>();
             foreach (Enum item in arrays)
             {
-                dics.Add(item, GetCustomerObj<T>(item));
+                dics.Add(item, item.GetCustomerObj<T>());
             }
 
             return dics;
@@ -184,7 +184,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns>枚举想的描述信息。</returns>
         public static string GetDescription(this Enum value)
         {
-            return GetCustomerObj<DescriptionAttribute>(value)?.Description;
+            return value.GetCustomerObj<DescriptionAttribute>()?.Description;
         }
 
         #endregion
@@ -219,17 +219,6 @@ namespace EInfrastructure.Core.Tools
             }
 
             return default;
-        }
-
-        /// <summary>
-        /// 得到自定义描述
-        /// </summary>
-        /// <param name="value"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static T GetCustomerObj<T>(this Enum value) where T : Attribute
-        {
-            return CustomAttributeCommon<T>.GetCustomAttribute(value.GetType(), value.ToString());
         }
 
         #endregion
