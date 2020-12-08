@@ -106,7 +106,7 @@ namespace EInfrastructure.Core.Infrastructure
         ///
         /// </summary>
         private string GetAssemblySkipLoadingPatternString =>
-            AssemblySkipLoadingPattern.Select(x => "^" + x).ToList().ConvertListToString('|');
+            AssemblySkipLoadingPattern.Select(x => "^" + x).ToList().ConvertToString('|');
 
         #endregion
 

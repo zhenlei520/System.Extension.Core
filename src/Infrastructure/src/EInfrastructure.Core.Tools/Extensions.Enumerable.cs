@@ -1,0 +1,325 @@
+﻿// Copyright (c) zhenlei520 All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Linq;
+using System.Linq.Expressions;
+using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
+
+namespace EInfrastructure.Core.Tools
+{
+    /// <summary>
+    /// Enumerable扩展
+    /// </summary>
+    public partial class Extensions
+    {
+        #region List<T>操作
+
+        #region List实体减法操作，从集合1中去除集合2的内容
+
+        /// <summary>
+        /// List实体减法操作
+        /// 从集合1中去除集合2的内容
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        /// <param name="t1">集合1（新集合）</param>
+        /// <param name="t2">集合2（旧集合）</param>
+        /// <returns>排除t1中包含t2的项</returns>
+        public static List<T> ExceptNew<T>(this IEnumerable<T> t1, IEnumerable<T> t2)
+        {
+            return t1.Except(t2).ToList();
+        }
+
+        #endregion
+
+        #region 获取t1与t2的相同项（交集）
+
+        /// <summary>
+        /// 获取t1与t2的相同项（交集）
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<T> IntersectNew<T>(this IEnumerable<T> t1, IEnumerable<T> t2)
+        {
+            return t1.Intersect(t2).ToList();
+        }
+
+        #endregion
+
+        #region 连接t1,t2集合，自动过滤相同项
+
+        /// <summary>
+        /// 连接t1,t2集合，自动过滤相同项
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<T> UnionNew<T>(this IEnumerable<T> t1, IEnumerable<T> t2)
+        {
+            return t1.Union(t2).ToList();
+        }
+
+        #endregion
+
+        #region 连接t1,t2集合，不会自动过滤相同项
+
+        /// <summary>
+        /// 连接t1,t2集合，不会自动过滤相同项
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<T> ConcatNew<T>(this IEnumerable<T> t1, IEnumerable<T> t2)
+        {
+            return t1.Concat(t2).ToList();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region List对象转Table
+
+        /// <summary>
+        /// List对象转Table
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static DataTable ConvertToTable<T>(this IEnumerable<T> list) where T : class
+        {
+            DataTable table = DataTableCommon.CreateEmptyTable<T>();
+            Type entityType = typeof(T);
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(entityType);
+
+            foreach (T item in list)
+            {
+                DataRow row = table.NewRow();
+
+                foreach (PropertyDescriptor prop in properties)
+                {
+                    row[prop.Name] = prop.GetValue(item);
+                }
+
+                table.Rows.Add(row);
+            }
+
+            return table;
+        }
+
+        #endregion
+
+        #region 获取list列表的值
+
+        /// <summary>
+        /// 获取list列表的值
+        /// </summary>
+        /// <param name="list"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static int GetListCount<T>(this IEnumerable<T> list)
+        {
+            return list?.Count() ?? 0;
+        }
+
+        #endregion
+
+        #region List转String
+
+        #region List转换为string
+
+        /// <summary>
+        /// List转换为string
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="str">待转换的list集合</param>
+        /// <param name="split">分割字符</param>
+        /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
+        /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
+        /// <returns></returns>
+        public static string ConvertToString<T>(this IEnumerable<T> str, char split = ',',
+            bool isReplaceEmpty = true,
+            bool isReplaceSpace = true) where T : struct
+        {
+            return str.ConvertToString(split + "", isReplaceEmpty, isReplaceSpace);
+        }
+
+        /// <summary>
+        /// List转换为string
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="str">待转换的list集合</param>
+        /// <param name="split">分割字符</param>
+        /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
+        /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
+        /// <returns></returns>
+        public static string ConvertToString<T>(this IEnumerable<T> str, string split = ",",
+            bool isReplaceEmpty = true,
+            bool isReplaceSpace = true) where T : struct
+        {
+            var enumerable = str as T[] ?? str.ToArray();
+            if (!enumerable.Any())
+            {
+                return "";
+            }
+
+            return ConvertToString(enumerable.Select(x => x.ToString()), split, isReplaceEmpty,
+                isReplaceSpace);
+        }
+
+        #endregion
+
+        #region List转换为string
+
+        /// <summary>
+        /// List转换为string
+        /// </summary>
+        /// <param name="str">待转换的list集合</param>
+        /// <param name="split">分割字符</param>
+        /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
+        /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
+        /// <returns></returns>
+        public static string ConvertToString(this IEnumerable<string> str, char split = ',',
+            bool isReplaceEmpty = true,
+            bool isReplaceSpace = true)
+        {
+            return str.ConvertToString(split + "", isReplaceEmpty, isReplaceSpace);
+        }
+
+        /// <summary>
+        /// List转换为string
+        /// </summary>
+        /// <param name="str">待转换的list集合</param>
+        /// <param name="split">分割字符</param>
+        /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
+        /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
+        /// <returns></returns>
+        public static string ConvertToString(this IEnumerable<string> str, string split = ",",
+            bool isReplaceEmpty = true,
+            bool isReplaceSpace = true)
+        {
+            var enumerable = str as string[] ?? str.ToArray();
+            if (!enumerable.Any())
+            {
+                return "";
+            }
+
+            IEnumerable<string> tempList = enumerable.ToList();
+            if (isReplaceEmpty)
+            {
+                if (isReplaceSpace)
+                {
+                    tempList = tempList.Select(x => x.Trim());
+                }
+
+                tempList = tempList.Where(x => !string.IsNullOrEmpty(x));
+            }
+
+            return string.Join(split + "", tempList);
+        }
+
+        #endregion
+
+        #region 字符串数组转String(简单转换)
+
+        /// <summary>
+        /// 字符串数组转String(简单转换)
+        /// </summary>
+        /// <param name="s">带转换的list集合</param>
+        /// <param name="c">分割字符</param>
+        /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
+        /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
+        /// <returns></returns>
+        public static string ConvertToString(this string[] s, char c = ',', bool isReplaceEmpty = true,
+            bool isReplaceSpace = true)
+        {
+            if (s == null || s.Length == 0)
+            {
+                return "";
+            }
+
+            return ConvertToString(s.ToList(), c, isReplaceEmpty, isReplaceSpace);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 对list集合分页
+
+        /// <summary>
+        /// 对list集合分页执行某个方法
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="action"></param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="pageIndex">当前页数（默认第一页）</param>
+        /// <param name="errCode">错误码</param>
+        /// <typeparam name="T"></typeparam>
+        public static void ListPager<T>(this IEnumerable<T> query, Action<List<T>> action, int pageSize = -1,
+            int pageIndex = 1, int? errCode = null)
+        {
+            if (pageSize <= 0 && pageSize != -1)
+            {
+                throw new BusinessException("页大小必须为正数", errCode ?? HttpStatus.Err.Id);
+            }
+
+            var totalCount = query.Count() * 1.0d;
+            int pageMax = 1;
+            if (pageSize != -1)
+            {
+                pageMax = Math.Ceiling(totalCount / pageSize).ConvertToInt(1);
+            }
+            else
+            {
+                pageSize = totalCount.ConvertToInt(0) * 1;
+            }
+
+            for (int index = pageIndex; index <= pageMax; index++)
+            {
+                action(query.Skip((index - 1) * pageSize).Take(pageSize).ToList());
+            }
+        }
+
+        /// <summary>
+        /// 添加linq查询扩展(仅在Debug下生效)
+        /// </summary>
+        /// <param name="enumerable"></param>
+        /// <param name="logName">日志名称</param>
+        /// <param name="logMethod">输出日志</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> LogLinq<T>(this IEnumerable<T> enumerable, string logName,
+            Func<T, string> logMethod)
+        {
+#if DEBUG
+            int count = 0;
+            foreach (var item in enumerable)
+            {
+                if (logMethod != null)
+                {
+                    Debug.WriteLine($"{logName}|item {count} = {logMethod(item)}");
+                }
+
+                count++;
+                yield return item;
+            }
+
+            Debug.WriteLine($"{logName}|count = {count}");
+#else
+            return enumerable;
+#endif
+        }
+
+        #endregion
+    }
+}

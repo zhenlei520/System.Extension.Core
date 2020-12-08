@@ -1104,27 +1104,5 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 根据身份证号码获取出生日期
-
-        /// <summary>
-        /// 根据身份证号码获取出生日期
-        /// </summary>
-        /// <param name="cardNo">身份证号码</param>
-        /// <returns></returns>
-        public static DateTime? GetBirthday(this string cardNo)
-        {
-            if (!cardNo.IsIdCard())
-            {
-                throw new BusinessException("请输入合法的身份证号码", HttpStatus.Err.Id);
-            }
-
-            string timeStr = cardNo.Length == 15
-                ? ("19" + cardNo.Substring(6, 2)) + "-" + cardNo.Substring(8, 2) + "-" +
-                  cardNo.Substring(10, 2)
-                : cardNo.Substring(6, 4) + "-" + cardNo.Substring(10, 2) + "-" + cardNo.Substring(12, 2);
-            return timeStr.ConvertToDateTime(null);
-        }
-
-        #endregion
     }
 }

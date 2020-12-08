@@ -70,7 +70,7 @@ namespace EInfrastructure.Core.Tools
                 return string.Empty;
             }
 
-            string regex = $"http://.+.(?:{exts.ConvertListToString('|')})";
+            string regex = $"http://.+.(?:{exts.ConvertToString('|')})";
             string str = "";
             Regex regObj = new Regex(regex,
                 RegexOptions.Compiled | RegexOptions.IgnoreCase);

@@ -111,7 +111,7 @@ namespace EInfrastructure.Core.Test
             {
                 1, 2, 3
             };
-            string str = idList.ConvertListToString(',');
+            string str = idList.ConvertToString(',');
 
             List<string> nameList = new List<string>
             {
@@ -119,9 +119,9 @@ namespace EInfrastructure.Core.Test
                 " ",
                 "小红"
             };
-            str = nameList.ConvertListToString(',', true, true);
+            str = nameList.ConvertToString(',', true, true);
             List<string> nameList2 = null;
-            str = nameList2.ConvertListToString(',', true, true);
+            str = nameList2.ConvertToString(',', true, true);
         }
 
         [Fact]

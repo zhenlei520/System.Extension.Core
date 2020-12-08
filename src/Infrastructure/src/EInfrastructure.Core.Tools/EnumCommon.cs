@@ -42,7 +42,7 @@ namespace EInfrastructure.Core.Tools
             Dictionary<int, string> dics = new Dictionary<int, string>();
             foreach (Enum value in arrays)
             {
-                dics.Add(Convert.ToInt32(value), GetDescription(value));
+                dics.Add(Convert.ToInt32(value), value.GetDescription());
             }
 
             return dics;
@@ -140,17 +140,6 @@ namespace EInfrastructure.Core.Tools
             return list;
         }
 
-        /// <summary>
-        /// 得到枚举字典自定义属性的集合
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        [Obsolete("此方法已过时，建议使用typeof(Enum).GetCustomerObjects()")]
-        public static List<T> GetCustomerObjects<T>(this Enum value) where T : Attribute
-        {
-            return GetCustomerObjects<T>(value.GetType());
-        }
-
         #endregion
 
         #region 返回枚举项的描述信息
@@ -163,7 +152,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns>枚举想的描述信息。</returns>
         public static string GetDescription(Type type, object member)
         {
-            return GetCustomerObj<DescriptionAttribute>(type,member)?.Description;
+            return GetCustomerObj<DescriptionAttribute>(type, member)?.Description;
         }
 
         /// <summary>
@@ -175,16 +164,6 @@ namespace EInfrastructure.Core.Tools
         public static string GetDescription<TEnum>(object member)
         {
             return GetDescription(TypeCommon.GetType<TEnum>(), member);
-        }
-
-        /// <summary>
-        /// 返回枚举项的描述信息。
-        /// </summary>
-        /// <param name="value">要获取描述信息的枚举项。</param>
-        /// <returns>枚举想的描述信息。</returns>
-        public static string GetDescription(this Enum value)
-        {
-            return value.GetCustomerObj<DescriptionAttribute>()?.Description;
         }
 
         #endregion
@@ -212,33 +191,14 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static T GetCustomerObj<T>(Type type, object member) where T : Attribute
         {
-            if (member.IsExist(type))
+            int? enumValue = member.ConvertToInt();
+            if (enumValue != null && enumValue.Value.IsExist(type))
             {
                 return CustomAttributeCommon<T>
                     .GetCustomAttribute(type, GetKey(type, member));
             }
 
             return default;
-        }
-
-        #endregion
-
-        #region 判断值是否在枚举类型中存在
-
-        /// <summary>
-        /// 判断值是否在枚举中存在
-        /// </summary>
-        /// <param name="enumValue">需要判断的参数</param>
-        /// <param name="enumType">枚举类型</param>
-        /// <returns></returns>
-        public static bool IsExist(this object enumValue, Type enumType)
-        {
-            if (enumValue == null)
-            {
-                return false;
-            }
-
-            return Enum.IsDefined(enumType, enumValue);
         }
 
         #endregion
@@ -251,7 +211,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="member">成员名或者枚举值，例如：Gender中有Boy=1,则传入Boy或者1可获得Gender.Boy</param>
         /// <typeparam name="TEnum">枚举类型</typeparam>
         /// <returns></returns>
-        public static TEnum Parse<TEnum>(object member)
+        public static TEnum Parse<TEnum>(object member) where TEnum : Enum
         {
             if (TryParse(member, out TEnum value))
             {
@@ -268,7 +228,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="value"></param>
         /// <typeparam name="TEnum">枚举类型</typeparam>
         /// <returns></returns>
-        public static bool TryParse<TEnum>(object member, out TEnum value)
+        public static bool TryParse<TEnum>(object member, out TEnum value) where TEnum : Enum
         {
             value = default;
             string memberStr = member.SafeString();
@@ -280,7 +240,13 @@ namespace EInfrastructure.Core.Tools
             }
 
             value = (TEnum) Enum.Parse(TypeCommon.GetType<TEnum>(), memberStr, true);
-            return value.IsExist(TypeCommon.GetType<TEnum>());
+            var enumValue = value.ConvertToInt(null);
+            if (enumValue == null)
+            {
+                return false;
+            }
+
+            return enumValue.Value.IsExist(TypeCommon.GetType<TEnum>());
         }
 
         #endregion
@@ -345,16 +311,10 @@ namespace EInfrastructure.Core.Tools
             if (type == null || member == null || !TypeCommon.IsEnum(type))
                 return null;
             string value = member.SafeString();
-            if (string.IsNullOrEmpty(value))
+            if (value.IsNullOrWhiteSpace())
                 return null;
             var val = (System.Enum.Parse(type, value, true));
-
-            if (val.IsExist(type))
-            {
-                return (int) val;
-            }
-
-            return null;
+            return val.ConvertToInt();
         }
 
         #endregion

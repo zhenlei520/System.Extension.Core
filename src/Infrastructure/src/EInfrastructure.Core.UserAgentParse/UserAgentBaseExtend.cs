@@ -347,7 +347,7 @@ namespace EInfrastructure.Core.UserAgentParse
         {
             var components = version.Split('.');
             string major = components.Shift();
-            return (major + '.' + components.ToList().ConvertListToString("")).ConvertToDecimal(0);
+            return (major + '.' + components.ToList().ConvertToString("")).ConvertToDecimal(0);
         }
 
         #endregion
