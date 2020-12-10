@@ -122,12 +122,12 @@ namespace EInfrastructure.Core.Tools
         /// 移除多条满足条件
         /// </summary>
         /// <param name="list"></param>
-        /// <param name="condtion">条件</param>
+        /// <param name="condition">条件</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static void RemoveRangeNew<T>(this List<T> list, Expression<Func<T, bool>> condtion)
+        public static void RemoveRangeNew<T>(this List<T> list, Expression<Func<T, bool>> condition)
         {
-            var items = list.Where(condtion.Compile()).ToList();
+            var items = list.Where(condition.Compile()).ToList();
             list.RemoveRangeNew(items);
         }
 

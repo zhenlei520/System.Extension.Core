@@ -19,7 +19,7 @@ namespace EInfrastructure.Core.Test
         public void GetFormatDate(string time, char separator, string result)
         {
             DateTime dateTime = time.ConvertToDateTime(default(DateTime));
-            Check.True(TimeCommon.GetFormatDate(dateTime, separator) == result, "检查错误");
+            Check.True(dateTime.GetFormatDate( separator) == result, "检查错误");
         }
 
         [Theory]
@@ -36,7 +36,7 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void GetRandomTime()
         {
-            DateTime dateTime = TimeCommon.GetRandomTime(DateTime.Now, DateTime.Now.AddDays(100));
+            DateTime dateTime = DateTime.Now.GetRandomTime( DateTime.Now.AddDays(100));
             var result = dateTime.FormatDate(FormatDateType.One);
         }
 
@@ -137,11 +137,11 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void UnixTimeStampToDateTime()
         {
-            var time = DateTime.Now.ToUnixTimestamp(TimestampType.Millisecond);
-            var time2 = DateTime.Now.ToUnixTimestamp(TimestampType.Second);
+            long time = DateTime.Now.ToUnixTimestamp(TimestampType.Millisecond);
+            long time2 = DateTime.Now.ToUnixTimestamp(TimestampType.Second);
 
-            var time3 = TimeCommon.UnixTimeStampToDateTime(time);
-            var time4 = TimeCommon.UnixTimeStampToDateTime(time2);
+            var time3 = Extensions.UnixTimeStampToDateTime(time);
+            var time4 = Extensions.UnixTimeStampToDateTime(time2);
         }
 
         [Theory]
@@ -173,10 +173,10 @@ namespace EInfrastructure.Core.Test
         [InlineData("2019-2-18")]
         public void Get(string time)
         {
-            var result = TimeCommon.Get(DateTime.Parse(time), TimeType.StartWeek);
-            result = TimeCommon.Get(DateTime.Parse(time), TimeType.EndWeek);
-            result = TimeCommon.Get(DateTime.Parse(time), TimeType.StartQuarter);
-            result = TimeCommon.Get(DateTime.Parse(time), TimeType.EndQuarter);
+            var result = Extensions.Get(DateTime.Parse(time), TimeType.StartWeek);
+            result = Extensions.Get(DateTime.Parse(time), TimeType.EndWeek);
+            result = Extensions.Get(DateTime.Parse(time), TimeType.StartQuarter);
+            result = Extensions.Get(DateTime.Parse(time), TimeType.EndQuarter);
         }
 
         /// <summary>

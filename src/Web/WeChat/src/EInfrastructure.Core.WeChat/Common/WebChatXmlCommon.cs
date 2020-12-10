@@ -37,7 +37,7 @@ namespace EInfrastructure.Core.WeChat.Common
         /// <summary>
         /// 消息创建时间 （整型）
         /// </summary>
-        public double CreateTime { get; private set; } = TimeCommon.ToUnixTimestamp(DateTime.UtcNow,TimestampType.Second);
+        public double CreateTime { get; private set; } = DateTime.UtcNow.ToUnixTimestamp(TimestampType.Second);
 
         /// <summary>
         /// 消息类型

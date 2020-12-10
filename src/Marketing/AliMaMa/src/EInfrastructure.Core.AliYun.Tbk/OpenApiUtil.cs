@@ -10,7 +10,7 @@ using EInfrastructure.Core.Tools;
 namespace EInfrastructure.Core.AliYun.Tbk
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class OpenApiUtil
     {
@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
                 {"method", method},
                 {"app_key", appKey},
                 {"sign_method", "md5"},
-                {"timestamp", TimeCommon.Format(DateTime.Now,"yyyy-MM-dd HH:mm:ss")},
+                {"timestamp", Extensions.Format(DateTime.Now,"yyyy-MM-dd HH:mm:ss")},
                 {"v", "2.0"},
                 {"format", "json"},
                 {"simplify", "true"}
@@ -31,7 +31,7 @@ namespace EInfrastructure.Core.AliYun.Tbk
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="parameters"></param>
         /// <param name="secret"></param>
