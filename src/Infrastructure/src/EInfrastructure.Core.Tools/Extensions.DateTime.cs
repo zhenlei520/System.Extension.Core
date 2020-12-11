@@ -118,45 +118,18 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 格式化时间
         /// </summary>
-        /// <param name="time"></param>
+        /// <param name="dateTime"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public static string Format(this DateTime? time, string format = "yyyy-MM-dd")
+        public static string Format(this DateTime? dateTime, string format = "yyyy-MM-dd")
         {
-            if (time != null &&
-                time != DateTime.MinValue && time != DateTime.MaxValue)
+            if (dateTime != null &&
+                dateTime != DateTime.MinValue && dateTime != DateTime.MaxValue)
             {
-                return time.Value.ToString(format);
+                return dateTime.Value.ToString(format);
             }
 
             return "";
-        }
-
-        #endregion
-
-        #region 将时间格式化成 年月日 的形式,如果时间为null，返回当前系统时间
-
-        /// <summary>
-        /// 将时间格式化成 年月日 的形式,如果时间为null，返回当前系统时间
-        /// </summary>
-        /// <param name="dateTime">年月日分隔符</param>
-        /// <param name="separator"></param>
-        /// <returns></returns>
-        public static string GetFormatDate(this DateTime dateTime, char separator)
-        {
-            string tem = $"yyyy{separator}MM{separator}dd";
-            return dateTime.ToString(tem);
-        }
-
-        /// <summary>
-        /// 将时间格式化成 年月日 的形式,如果时间为null，返回当前系统时间
-        /// </summary>
-        /// <param name="dateTime">年月日分隔符</param>
-        /// <param name="separator"></param>
-        /// <returns></returns>
-        public static string GetFormatDate(this DateTime? dateTime, char separator)
-        {
-            return dateTime?.GetFormatDate(separator);
         }
 
         #endregion
