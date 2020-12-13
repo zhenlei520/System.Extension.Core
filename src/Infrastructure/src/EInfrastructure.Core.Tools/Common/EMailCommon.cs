@@ -3,7 +3,7 @@
 
 using System.Net.Mail;
 
-namespace EInfrastructure.Core.Tools
+namespace EInfrastructure.Core.Tools.Common
 {
     /// <summary>
     /// 邮箱帮助类

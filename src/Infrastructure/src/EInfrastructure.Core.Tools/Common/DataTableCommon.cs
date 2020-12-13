@@ -7,7 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 
-namespace EInfrastructure.Core.Tools
+namespace EInfrastructure.Core.Tools.Common
 {
     /// <summary>
     ///
