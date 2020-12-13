@@ -10,6 +10,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Tools.Expressions;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -133,12 +134,12 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region List转String
+        #region IEnumerable转String
 
-        #region List转换为string
+        #region IEnumerable转换为string
 
         /// <summary>
-        /// List转换为string
+        /// IEnumerable转换为string
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="str">待转换的list集合</param>
@@ -154,7 +155,7 @@ namespace EInfrastructure.Core.Tools
         }
 
         /// <summary>
-        /// List转换为string
+        /// IEnumerable转换为string
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="str">待转换的list集合</param>
@@ -178,10 +179,10 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region List转换为string
+        #region IEnumerable转换为string
 
         /// <summary>
-        /// List转换为string
+        /// IEnumerable转换为string
         /// </summary>
         /// <param name="str">待转换的list集合</param>
         /// <param name="split">分割字符</param>
@@ -196,7 +197,7 @@ namespace EInfrastructure.Core.Tools
         }
 
         /// <summary>
-        /// List转换为string
+        /// IEnumerable转换为string
         /// </summary>
         /// <param name="str">待转换的list集合</param>
         /// <param name="split">分割字符</param>
@@ -254,10 +255,10 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 对list集合分页
+        #region 对IEnumerable集合分页执行某个方法
 
         /// <summary>
-        /// 对list集合分页执行某个方法
+        /// 对IEnumerable集合分页执行某个方法
         /// </summary>
         /// <param name="query"></param>
         /// <param name="action"></param>
@@ -273,7 +274,13 @@ namespace EInfrastructure.Core.Tools
                 throw new BusinessException("页大小必须为正数", errCode ?? HttpStatus.Err.Id);
             }
 
-            var totalCount = query.Count() * 1.0d;
+            if (query == null)
+            {
+                return;
+            }
+
+            var enumerable = query as T[] ?? query.ToArray();
+            var totalCount = enumerable.Count() * 1.0d;
             int pageMax = 1;
             if (pageSize != -1)
             {
@@ -286,9 +293,13 @@ namespace EInfrastructure.Core.Tools
 
             for (int index = pageIndex; index <= pageMax; index++)
             {
-                action(query.Skip((index - 1) * pageSize).Take(pageSize).ToList());
+                action(enumerable.Skip((index - 1) * pageSize).Take(pageSize).ToList());
             }
         }
+
+        #endregion
+
+        #region 添加linq查询扩展(仅在Debug下生效)
 
         /// <summary>
         /// 添加linq查询扩展(仅在Debug下生效)
@@ -318,6 +329,38 @@ namespace EInfrastructure.Core.Tools
 #else
             return enumerable;
 #endif
+        }
+
+        #endregion
+
+        #region 根据条件查询不同的数据
+
+        /// <summary>
+        /// 根据条件查询不同的数据
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="keySelector"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> Distinct<T, V>(this IEnumerable<T> source, Func<T, V> keySelector)
+        {
+            return source.Distinct(new CommonEqualityComparer<T, V>(keySelector));
+        }
+
+        /// <summary>
+        ///根据条件查询不同的数据
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="keySelector"></param>
+        /// <param name="comparer"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> Distinct<T, V>(this IEnumerable<T> source, Func<T, V> keySelector,
+            IEqualityComparer<V> comparer)
+        {
+            return source.Distinct(new CommonEqualityComparer<T, V>(keySelector, comparer));
         }
 
         #endregion

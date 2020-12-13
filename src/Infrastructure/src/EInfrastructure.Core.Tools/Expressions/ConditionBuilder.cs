@@ -8,10 +8,13 @@ using System.Reflection;
 
 namespace EInfrastructure.Core.Tools.Expressions
 {
+    /// <summary>
+    /// 条件表达式
+    /// </summary>
     internal class ConditionBuilder : ExpressionVisitor
     {
-        private List<object> m_arguments;
-        private Stack<string> m_conditionParts;
+        private List<object> _mArguments;
+        private Stack<string> _mConditionParts;
 
         public string Condition { get; private set; }
 
@@ -22,13 +25,13 @@ namespace EInfrastructure.Core.Tools.Expressions
             PartialEvaluator evaluator = new PartialEvaluator();
             Expression evaluatedExpression = evaluator.Eval(expression);
 
-            m_arguments = new List<object>();
-            m_conditionParts = new Stack<string>();
+            _mArguments = new List<object>();
+            _mConditionParts = new Stack<string>();
 
             Visit(evaluatedExpression);
 
-            Arguments = m_arguments.ToArray();
-            Condition = m_conditionParts.Count > 0 ? m_conditionParts.Pop() : null;
+            Arguments = _mArguments.ToArray();
+            Condition = _mConditionParts.Count > 0 ? _mConditionParts.Pop() : null;
         }
 
         protected override Expression VisitBinary(BinaryExpression b)
@@ -81,11 +84,11 @@ namespace EInfrastructure.Core.Tools.Expressions
             Visit(b.Left);
             Visit(b.Right);
 
-            string right = m_conditionParts.Pop();
-            string left = m_conditionParts.Pop();
+            string right = _mConditionParts.Pop();
+            string left = _mConditionParts.Pop();
 
-            string condition = String.Format("({0} {1} {2})", left, opr, right);
-            m_conditionParts.Push(condition);
+            string condition = $"({left} {opr} {right})";
+            _mConditionParts.Push(condition);
 
             return b;
         }
@@ -94,8 +97,8 @@ namespace EInfrastructure.Core.Tools.Expressions
         {
             if (c == null) return c;
 
-            m_arguments.Add(c.Value);
-            m_conditionParts.Push(String.Format("{{{0}}}", m_arguments.Count - 1));
+            _mArguments.Add(c.Value);
+            _mConditionParts.Push(String.Format("{{{0}}}", _mArguments.Count - 1));
 
             return c;
         }
@@ -107,7 +110,7 @@ namespace EInfrastructure.Core.Tools.Expressions
             PropertyInfo propertyInfo = m.Member as PropertyInfo;
             if (propertyInfo == null) return m;
 
-            m_conditionParts.Push(String.Format("[{0}]", propertyInfo.Name));
+            _mConditionParts.Push(String.Format("[{0}]", propertyInfo.Name));
 
             return m;
         }
@@ -137,9 +140,9 @@ namespace EInfrastructure.Core.Tools.Expressions
 
             Visit(m.Object);
             Visit(m.Arguments[0]);
-            string right = m_conditionParts.Pop();
-            string left = m_conditionParts.Pop();
-            m_conditionParts.Push(String.Format(format, left, right));
+            string right = _mConditionParts.Pop();
+            string left = _mConditionParts.Pop();
+            _mConditionParts.Push(String.Format(format, left, right));
 
             return m;
         }
