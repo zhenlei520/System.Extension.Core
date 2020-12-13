@@ -10,6 +10,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Tools.Common;
 using EInfrastructure.Core.Tools.Expressions;
 
 namespace EInfrastructure.Core.Tools

@@ -7,7 +7,7 @@ using System.IO;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
-using EInfrastructure.Core.Tools.Files;
+using EInfrastructure.Core.Tools.Common;
 using EInfrastructure.Core.UserAgentParse;
 using Xunit;
 

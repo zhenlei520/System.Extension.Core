@@ -9,6 +9,7 @@ using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Common;
 
 namespace EInfrastructure.Core.HelpCommon
 {

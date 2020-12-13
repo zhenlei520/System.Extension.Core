@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Logger;
 using EInfrastructure.Core.Tools;
-using EInfrastructure.Core.Tools.Files;
+using EInfrastructure.Core.Tools.Common;
 
 namespace EInfrastructure.Core.Infrastructure
 {

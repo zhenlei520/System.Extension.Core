@@ -15,28 +15,19 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditio
         /// 得到国家
         /// </summary>
         /// <returns></returns>
-        public Nationality GetNationality()
-        {
-            return Nationality.China;
-        }
+        public Nationality Nationality=>Nationality.China;
 
         /// <summary>
         /// 得到运营商
         /// </summary>
         /// <returns></returns>
-        public CommunicationOperator GetCommunicationOperator()
-        {
-            return CommunicationOperator.ChinaTelecom;
-        }
+        public CommunicationOperator CommunicationOperator=>CommunicationOperator.ChinaTelecom;
 
         /// <summary>
         /// 得到运营商类型
         /// </summary>
         /// <returns></returns>
-        public CommunicationOperatorType GetCommunicationOperatorType()
-        {
-            return CommunicationOperatorType.Traditional;
-        }
+        public CommunicationOperatorType CommunicationOperatorType=>CommunicationOperatorType.Traditional;
 
         /// <summary>
         /// 得到正则

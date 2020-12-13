@@ -3,6 +3,7 @@
 using System;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Common;
 using Xunit;
 
 namespace EInfrastructure.Core.Test

@@ -75,7 +75,6 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// </summary>
         public static Constellation Unknow = new Constellation(13, "未知");
 
-
         /// <summary>
         ///
         /// </summary>

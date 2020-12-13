@@ -5,7 +5,8 @@ using System;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Attributes;
-using EInfrastructure.Core.Tools.Systems;
+using EInfrastructure.Core.Tools.Common;
+using EInfrastructure.Core.Tools.Common.Systems;
 using Xunit;
 
 namespace EInfrastructure.Core.Test

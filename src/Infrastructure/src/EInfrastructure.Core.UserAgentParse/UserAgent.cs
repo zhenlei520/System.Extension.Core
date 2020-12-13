@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Tools;
-using EInfrastructure.Core.Tools.Systems;
+using EInfrastructure.Core.Tools.Common;
+using EInfrastructure.Core.Tools.Common.Systems;
 
 namespace EInfrastructure.Core.UserAgentParse
 {

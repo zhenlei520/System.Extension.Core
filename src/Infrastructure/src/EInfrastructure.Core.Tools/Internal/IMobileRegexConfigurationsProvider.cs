@@ -15,19 +15,19 @@ namespace EInfrastructure.Core.Tools.Internal
         /// 得到国家
         /// </summary>
         /// <returns></returns>
-        Nationality GetNationality();
+        Nationality Nationality { get; }
 
         /// <summary>
         /// 得到运营商
         /// </summary>
         /// <returns></returns>
-        CommunicationOperator GetCommunicationOperator();
+        CommunicationOperator CommunicationOperator { get; }
 
         /// <summary>
         /// 得到运营商类型
         /// </summary>
         /// <returns></returns>
-        CommunicationOperatorType GetCommunicationOperatorType();
+        CommunicationOperatorType CommunicationOperatorType { get; }
 
         /// <summary>
         /// 得到正则

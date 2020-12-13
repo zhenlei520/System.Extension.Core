@@ -14,6 +14,8 @@ namespace EInfrastructure.Core.Tools.Expressions
     /// </summary>
     public static class ExpressionBuilder
     {
+        #region Compose two expression and merge all in a new expression
+
         /// <summary>
         /// Compose two expression and merge all in a new expression
         /// </summary>
@@ -35,6 +37,10 @@ namespace EInfrastructure.Core.Tools.Expressions
             return Expression.Lambda<T>(merge(first.Body, secondBody), first.Parameters);
         }
 
+        #endregion
+
+        #region 并且
+
         /// <summary>
         /// And operator
         /// </summary>
@@ -51,6 +57,10 @@ namespace EInfrastructure.Core.Tools.Expressions
                 return first;
             return first.Compose(second, Expression.AndAlso);
         }
+
+        #endregion
+
+        #region 或者
 
         /// <summary>
         /// Or operator
@@ -69,6 +79,10 @@ namespace EInfrastructure.Core.Tools.Expressions
             return first.Compose(second, Expression.Or);
         }
 
+        #endregion
+
+        #region 根据指定属性名称对序列进行排序
+
         /// <summary>
         /// 根据指定属性名称对序列进行排序
         /// </summary>
@@ -85,6 +99,10 @@ namespace EInfrastructure.Core.Tools.Expressions
                 new KeyValuePair<string, bool>(property, descending)
             });
         }
+
+        #endregion
+
+        #region 根据指定属性名称对序列进行排序
 
         /// <summary>
         /// 根据指定属性名称对序列进行排序
@@ -125,5 +143,7 @@ namespace EInfrastructure.Core.Tools.Expressions
 
             return source;
         }
+
+        #endregion
     }
 }

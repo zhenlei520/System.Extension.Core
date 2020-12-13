@@ -6,6 +6,7 @@ using System.Threading;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Common;
 using EInfrastructure.Core.Tools.Enumerations;
 using Xunit;
 

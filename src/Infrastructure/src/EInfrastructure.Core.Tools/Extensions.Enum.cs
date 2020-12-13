@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using EInfrastructure.Core.Tools.Common;
 
 namespace EInfrastructure.Core.Tools
 {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using EInfrastructure.Core.Tools;
 using ICSharpCode.SharpZipLib.Zip;
-using FileCommon = EInfrastructure.Core.Tools.Files.FileCommon;
+using FileCommon = EInfrastructure.Core.Tools.Common.FileCommon;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
 {

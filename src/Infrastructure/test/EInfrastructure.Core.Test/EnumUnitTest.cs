@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Attributes;
+using EInfrastructure.Core.Tools.Common;
 using Xunit;
 
 namespace EInfrastructure.Core.Test

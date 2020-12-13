@@ -9,34 +9,26 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Virtual
     /// <summary>
     /// 中国移动虚拟手机号校验
     /// </summary>
-    public class ChinaMobileRegexConfigurationsProvider: BaseMobileRegexConfigurations, IMobileRegexConfigurationsProvider
+    public class ChinaMobileRegexConfigurationsProvider : BaseMobileRegexConfigurations,
+        IMobileRegexConfigurationsProvider
     {
         /// <summary>
         /// 得到国家
         /// </summary>
         /// <returns></returns>
-        public Nationality GetNationality()
-        {
-            return Nationality.China;
-        }
+        public Nationality Nationality => Nationality.China;
 
         /// <summary>
         /// 得到运营商
         /// </summary>
         /// <returns></returns>
-        public CommunicationOperator GetCommunicationOperator()
-        {
-            return CommunicationOperator.ChinaMobile;
-        }
+        public CommunicationOperator CommunicationOperator => CommunicationOperator.ChinaMobile;
 
         /// <summary>
         /// 得到运营商类型
         /// </summary>
         /// <returns></returns>
-        public CommunicationOperatorType GetCommunicationOperatorType()
-        {
-            return CommunicationOperatorType.Virtual;
-        }
+        public CommunicationOperatorType CommunicationOperatorType => CommunicationOperatorType.Virtual;
 
         /// <summary>
         /// 得到正则

@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Tools.Common;
 using EInfrastructure.Core.Tools.Component;
 using EInfrastructure.Core.Tools.Enumerations;
 using EInfrastructure.Core.Tools.Internal;
@@ -820,6 +821,37 @@ namespace EInfrastructure.Core.Tools
         public static int GetDayOfWeek(this DayOfWeek dayOfWeek)
         {
             return _weekMaps.Where(x => x.Key == dayOfWeek).Select(x => x.Value).FirstOrDefault();
+        }
+
+        #endregion
+
+        #region 根据日期得到星座信息
+
+        /// <summary>
+        /// 根据日期得到星座信息
+        /// </summary>
+        /// <param name="birthday">日期</param>
+        /// <returns></returns>
+        public static Constellation GetConstellationFromBirthday(this DateTime? birthday)
+        {
+            if (birthday == null)
+            {
+                return Constellation.Unknow;
+            }
+
+            return birthday.Value.GetConstellationFromBirthday();
+        }
+
+        /// <summary>
+        /// 根据日期得到星座信息
+        /// </summary>
+        /// <param name="birthday">日期</param>
+        /// <returns></returns>
+        public static Constellation GetConstellationFromBirthday(this DateTime birthday)
+        {
+            float fBirthDay = Convert.ToSingle(birthday.ToString("M.dd"));
+            return _constellationMaps.Where(x => fBirthDay >= x.MinTime && fBirthDay < x.MaxTime)
+                .Select(x => x.Key).FirstOrDefault();
         }
 
         #endregion
