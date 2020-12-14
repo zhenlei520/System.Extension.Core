@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 // 参考来源：https://sourceforge.net/projects/bloomfilternet/
 
-namespace EInfrastructure.Core.Tools.Extension.BloomFilter
+namespace EInfrastructure.Core.Tools.Common.BloomFilter
 {
 	internal static class MathUtils
 	{

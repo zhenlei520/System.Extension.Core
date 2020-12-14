@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Common;
-using EInfrastructure.Core.Tools.Tasks;
+using EInfrastructure.Core.Tools.Common.Tasks;
 using Xunit;
 
 namespace EInfrastructure.Core.Test

@@ -3,16 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Text.RegularExpressions;
-using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Tools.Common;
 using EInfrastructure.Core.Tools.Component;
-using EInfrastructure.Core.Tools.Enumerations;
-using EInfrastructure.Core.Tools.Expressions;
 using EInfrastructure.Core.Tools.Internal;
 
 namespace EInfrastructure.Core.Tools

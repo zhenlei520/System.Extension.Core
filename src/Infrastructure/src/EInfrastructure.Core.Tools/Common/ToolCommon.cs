@@ -77,37 +77,6 @@ namespace EInfrastructure.Core.Tools.Common
 
         #endregion
 
-        #region 字典转对象
-
-        /// <summary>
-        /// 字典类型转化为对象
-        /// </summary>
-        /// <param name="dic"></param>
-        /// <returns></returns>
-        public static T DicToObject<T>(Dictionary<string, object> dic) where T : new()
-        {
-            var md = new T();
-            CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
-            TextInfo textInfo = cultureInfo.TextInfo;
-            foreach (var d in dic)
-            {
-                var filed = textInfo.ToTitleCase(d.Key);
-                try
-                {
-                    var value = d.Value;
-                    md.GetType().GetProperty(filed)?.SetValue(md, value);
-                }
-                catch (Exception e)
-                {
-                    // ignored
-                }
-            }
-
-            return md;
-        }
-
-        #endregion
-
         #region 得到响应信息
 
         /// <summary>

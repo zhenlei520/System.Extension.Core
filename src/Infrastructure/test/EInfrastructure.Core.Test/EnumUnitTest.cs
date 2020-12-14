@@ -92,7 +92,7 @@ namespace EInfrastructure.Core.Test
             Check.True(res != null && (GenderEnum) res == GenderEnum.Boy, "参数错误");
 
             var str2 = GenderEnum.Boy.GetDescription();
-            var str = CustomAttributeCommon<DescriptionAttribute>.GetCustomAttribute(typeof(GenderEnum),
+            var str = typeof(GenderEnum).GetCustomAttribute<DescriptionAttribute>(
                 GenderEnum.Boy.ToString());
             var result = typeof(GenderEnum).ToEnumAndAttributes<ENameAttribute>();
             var result2 = typeof(User).ToEnumAndAttributes<ENameAttribute>();

@@ -3,7 +3,6 @@
 
 using System;
 using EInfrastructure.Core.Test.Base;
-using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Attributes;
 using EInfrastructure.Core.Tools.Common;
 using EInfrastructure.Core.Tools.Common.Systems;
@@ -25,7 +24,7 @@ namespace EInfrastructure.Core.Test
         {
             var version = Environment.Version;
             var runInfo = EnvironmentCommon.GetRun;
-            var str = CustomAttributeCommon<ENameAttribute, string>.GetCustomAttributeValue(
+            var str = CustomAttribute<ENameAttribute, string>.GetCustomAttributeValue(
                 typeof(EnvironmentCommon.RunInfo), x => x.Name,"UseMemory");
             // while (true)
             // {

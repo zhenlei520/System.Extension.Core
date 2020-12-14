@@ -73,7 +73,7 @@ namespace EInfrastructure.Core.Tools.Common
             using (FileStream fileStream =
                 new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
             {
-                return SecurityCommon.GetSha(fileStream, new SHA1CryptoServiceProvider());
+                return fileStream.GetSha(new SHA1CryptoServiceProvider());
             }
         }
 
@@ -96,7 +96,7 @@ namespace EInfrastructure.Core.Tools.Common
             using (FileStream fileStream =
                 new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
             {
-                return SecurityCommon.GetSha(fileStream, new SHA256CryptoServiceProvider());
+                return fileStream.GetSha(new SHA256CryptoServiceProvider());
             }
         }
 
@@ -119,7 +119,7 @@ namespace EInfrastructure.Core.Tools.Common
             using (FileStream fileStream =
                 new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
             {
-                return SecurityCommon.GetSha(fileStream, new SHA384CryptoServiceProvider());
+                return fileStream.GetSha(new SHA384CryptoServiceProvider());
             }
         }
 
@@ -142,7 +142,7 @@ namespace EInfrastructure.Core.Tools.Common
             using (FileStream fileStream =
                 new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
             {
-                return SecurityCommon.GetSha(fileStream, new SHA512CryptoServiceProvider());
+                return fileStream.GetSha(new SHA512CryptoServiceProvider());
             }
         }
 
@@ -252,7 +252,7 @@ namespace EInfrastructure.Core.Tools.Common
         {
             byte[] retval = hashAlgorithm.ComputeHash(stream);
             stream.Close();
-            return SecurityCommon.GetSha(retval, hashAlgorithm, isUpper);
+            return retval.GetSha(hashAlgorithm, isUpper);
         }
 
         #endregion
@@ -826,7 +826,7 @@ namespace EInfrastructure.Core.Tools.Common
                 string outputTool = tool.StandardOutput.ReadToEnd();
 
                 string matchPattern = @"(?<=\s+pid:\s+)\b(\d+)\b(?=\s+)";
-                foreach(Match match in Regex.Matches(outputTool, matchPattern))
+                foreach (Match match in Regex.Matches(outputTool, matchPattern))
                 {
                     Process.GetProcessById(int.Parse(match.Value)).Kill();
                 }
@@ -932,7 +932,6 @@ namespace EInfrastructure.Core.Tools.Common
             }
             catch (IOException ex)
             {
-
             }
         }
 

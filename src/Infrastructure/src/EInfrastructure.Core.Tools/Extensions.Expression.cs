@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using EInfrastructure.Core.Tools.Expressions;
 
-namespace EInfrastructure.Core.Tools.Expressions
+namespace EInfrastructure.Core.Tools
 {
     /// <summary>
-    /// Extension methods for add And and Or with parameters rebinder
+    /// Expression扩展
     /// </summary>
-    public static class ExpressionBuilder
+    public partial class Extensions
     {
         #region Compose two expression and merge all in a new expression
 
@@ -28,8 +29,7 @@ namespace EInfrastructure.Core.Tools.Expressions
             Func<Expression, Expression, Expression> merge)
         {
             // build parameter map (from parameters of second to parameters of first)
-            var map = first.Parameters.Select((f, i) => new {f, s = second.Parameters[i]})
-                .ToDictionary(p => p.s, p => p.f);
+            var map = Enumerable.ToDictionary(first.Parameters.Select((f, i) => new {f, s = second.Parameters[i]}), p => p.s, p => p.f);
 
             // replace parameters in the second lambda expression with parameters from the first
             var secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);

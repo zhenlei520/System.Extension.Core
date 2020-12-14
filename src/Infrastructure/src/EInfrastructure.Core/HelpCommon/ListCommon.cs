@@ -117,19 +117,6 @@ namespace EInfrastructure.Core.HelpCommon
             return new ListCompare<T, TKey>(sourceList, optList);
         }
 
-        /// <summary>
-        /// 两个集合计较
-        /// </summary>
-        /// <param name="sourceList">源集合</param>
-        /// <param name="optList">新集合</param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static ListCompare<T> Compare<T>(this List<T> sourceList, List<T> optList)
-            where T : struct
-        {
-            return new ListCompare<T>(sourceList, optList);
-        }
-
         #endregion
 
         #region 对list集合分页
@@ -177,73 +164,6 @@ namespace EInfrastructure.Core.HelpCommon
         #endregion
 
         #region 比较集合
-
-        /// <summary>
-        /// 比较集合
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public class ListCompare<T> where T : struct
-        {
-            /// <summary>
-            /// 初始化列表比较结果
-            /// </summary>
-            /// <param name="sourceList">原列表</param>
-            /// <param name="optList">新列表</param>
-            public ListCompare(List<T> sourceList, List<T> optList)
-            {
-                SourceList = sourceList ?? new List<T>();
-                OptList = optList ?? new List<T>();
-            }
-
-            /// <summary>
-            /// 原列表
-            /// </summary>
-            private IEnumerable<T> SourceList { get; }
-
-            /// <summary>
-            /// 新列表
-            /// </summary>
-            private IEnumerable<T> OptList { get; }
-
-            #region 创建列表
-
-            private List<T> _createList;
-
-            /// <summary>
-            /// 创建列表
-            /// </summary>
-            public List<T> CreateList => _createList ?? (_createList =
-                OptList.ExceptNew(SourceList));
-
-            #endregion
-
-            #region 更新列表
-
-            private List<T> _updateList;
-
-            /// <summary>
-            /// 更新列表
-            /// </summary>
-            public List<T> UpdateList => _updateList ??
-                                         (_updateList = OptList.Where(opt =>
-                                                 SourceList.Any(source => source.Equals(opt)))
-                                             .ToList());
-
-            #endregion
-
-            #region 删除列表
-
-            private List<T> _deleteList;
-
-            /// <summary>
-            /// 删除列表
-            /// </summary>
-            public List<T> DeleteList => _deleteList ??
-                                         (_deleteList =
-                                             SourceList.ExceptNew(OptList));
-
-            #endregion
-        }
 
         /// <summary>
         /// 比较集合

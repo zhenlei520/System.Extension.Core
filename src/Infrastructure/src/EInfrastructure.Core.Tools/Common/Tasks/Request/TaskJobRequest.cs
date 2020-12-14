@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.Tools.Tasks.Request
+namespace EInfrastructure.Core.Tools.Common.Tasks.Request
 {
     /// <summary>
     /// 线程任务

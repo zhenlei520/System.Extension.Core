@@ -37,17 +37,16 @@ namespace EInfrastructure.Core.Tools.Expressions
         /// <summary>
         /// Visit pattern method
         /// </summary>
-        /// <param name="p">A Parameter expression</param>
+        /// <param name="parameterExpression">A Parameter expression</param>
         /// <returns>New visited expression</returns>
-        protected override Expression VisitParameter(ParameterExpression p)
+        protected override Expression VisitParameter(ParameterExpression parameterExpression)
         {
-            ParameterExpression replacement;
-            if (map.TryGetValue(p, out replacement))
+            if (map.TryGetValue(parameterExpression, out var replacement))
             {
-                p = replacement;
+                parameterExpression = replacement;
             }
 
-            return base.VisitParameter(p);
+            return base.VisitParameter(parameterExpression);
         }
     }
 }

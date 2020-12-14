@@ -8,6 +8,7 @@ using System.ComponentModel;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Tools.Common.Systems;
+using EInfrastructure.Core.Tools.Configuration;
 
 namespace EInfrastructure.Core.Tools.Common
 {
@@ -134,7 +135,7 @@ namespace EInfrastructure.Core.Tools.Common
             List<T> list = new List<T>();
             foreach (Enum array in arrays)
             {
-                list.Add(CustomAttributeCommon<T>.GetCustomAttribute(type, nameof(array)));
+                list.Add(type.GetCustomAttribute<T>(nameof(array)));
             }
 
             return list;
@@ -194,8 +195,8 @@ namespace EInfrastructure.Core.Tools.Common
             int? enumValue = member.ConvertToInt();
             if (enumValue != null && enumValue.Value.IsExist(type))
             {
-                return CustomAttributeCommon<T>
-                    .GetCustomAttribute(type, GetKey(type, member));
+                return
+                       type.GetCustomAttribute<T>(GetKey(type, member));
             }
 
             return default;
@@ -271,7 +272,7 @@ namespace EInfrastructure.Core.Tools.Common
         /// <param name="member">成员名或者枚举值，例如：Gender中有Boy=1,则传入Boy或者1或者Gender.Boy可获得其Key</param>
         public static string GetKey(Type type, object member)
         {
-            if (type == null || member == null || !TypeCommon.IsEnum(type))
+            if (type == null || member == null || !type.IsEnum())
                 return string.Empty;
             if (member.IsInt())
             {
@@ -308,7 +309,7 @@ namespace EInfrastructure.Core.Tools.Common
         /// <param name="member">成员名或者枚举值，例如：Gender中有Boy=1,则传入Boy或者1或者Gender.Boy可获得其value</param>
         public static int? GetValue(Type type, object member)
         {
-            if (type == null || member == null || !TypeCommon.IsEnum(type))
+            if (type == null || member == null || !type.IsEnum())
                 return null;
             string value = member.SafeString();
             if (value.IsNullOrWhiteSpace())

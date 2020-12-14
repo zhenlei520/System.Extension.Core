@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using EInfrastructure.Core.Tools.Common;
+using EInfrastructure.Core.Tools.Common.Systems;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -23,7 +24,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static T GetCustomerObj<T>(this Enum value) where T : Attribute
         {
-            return CustomAttributeCommon<T>.GetCustomAttribute(value.GetType(), value.ToString());
+            return value.GetType().GetCustomAttribute<T>(value.ToString());
         }
 
         #endregion
@@ -37,22 +38,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns>枚举想的描述信息。</returns>
         public static string GetDescription(this Enum value)
         {
-            return value.GetCustomerObj<DescriptionAttribute>()?.Description;
-        }
-
-        #endregion
-
-        #region 得到枚举字典自定义属性的集合
-
-        /// <summary>
-        /// 得到枚举字典自定义属性的集合
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        [Obsolete("此方法已过时，建议使用typeof(Enum).GetCustomerObjects()")]
-        public static List<T> GetCustomerObjects<T>(this Enum value) where T : Attribute
-        {
-            return value.GetType().GetCustomerObjects<T>();
+            return value.GetCustomerObj<DescriptionAttribute>()?.Description.SafeString();
         }
 
         #endregion

@@ -7,9 +7,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EInfrastructure.Core.Tools.Tasks.Dto;
+using EInfrastructure.Core.Tools.Common.Tasks.Dto;
 
-namespace EInfrastructure.Core.Tools.Tasks
+namespace EInfrastructure.Core.Tools.Common.Tasks
 {
     /// <summary>
     /// 多线程任务 无法控制最大线程数

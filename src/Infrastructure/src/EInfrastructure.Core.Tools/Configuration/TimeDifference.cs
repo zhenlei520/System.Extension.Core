@@ -5,13 +5,13 @@ using System;
 using System.Diagnostics;
 using EInfrastructure.Core.Configuration.Enumerations;
 
-namespace EInfrastructure.Core.Tools.Common
+namespace EInfrastructure.Core.Tools.Configuration
 {
     /// <summary>
     /// 可计算方法总共耗时情况
     /// 调用获取其耗时方法会触发一次委托方法，不调用获取计算耗时的方法不会执行委托
     /// </summary>
-    public class TimeDifferenceCommon
+    public class TimeDifference
     {
         private readonly Action _action;
 
@@ -30,7 +30,7 @@ namespace EInfrastructure.Core.Tools.Common
         ///
         /// </summary>
         /// <param name="action">委托方法</param>
-        public TimeDifferenceCommon(Action action)
+        public TimeDifference(Action action)
         {
             _action = action;
         }

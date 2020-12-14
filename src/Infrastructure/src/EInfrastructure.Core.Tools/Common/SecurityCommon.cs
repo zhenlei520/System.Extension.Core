@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Tools.Common.Systems;
 
 namespace EInfrastructure.Core.Tools.Common
 {
@@ -20,13 +21,14 @@ namespace EInfrastructure.Core.Tools.Common
         /// <summary>
         /// AES加密
         /// </summary>
-        /// <param name="toEncrypt"></param>
+        /// <param name="str"></param>
         /// <param name="key"></param>
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
-        public static string AesEncrypt(string toEncrypt, string key, int? errCode = null)
+        [Obsolete("方法已过时，建议使用：str.AesEncrypt(key)")]
+        public static string AesEncrypt(string str, string key, int? errCode = null)
         {
-            if (string.IsNullOrWhiteSpace(toEncrypt))
+            if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
             if (key.Length != 32)
             {
@@ -35,7 +37,7 @@ namespace EInfrastructure.Core.Tools.Common
 
             // 256-AES key
             byte[] keyArray = Encoding.UTF8.GetBytes(key);
-            byte[] toEncryptArray = Encoding.UTF8.GetBytes(toEncrypt);
+            byte[] toEncryptArray = Encoding.UTF8.GetBytes(str);
 
             RijndaelManaged rDel = new RijndaelManaged
             {
@@ -47,7 +49,6 @@ namespace EInfrastructure.Core.Tools.Common
             ICryptoTransform cTransform = rDel.CreateEncryptor();
             byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
 
-
             return Convert.ToBase64String(resultArray, 0, resultArray.Length);
         }
 
@@ -58,13 +59,14 @@ namespace EInfrastructure.Core.Tools.Common
         /// <summary>
         /// AES解密
         /// </summary>
-        /// <param name="toDecrypt"></param>
+        /// <param name="str"></param>
         /// <param name="key"></param>
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
-        public static string Decrypt(string toDecrypt, string key, int? errCode = null)
+        [Obsolete("方法已过时，建议使用：str.AesDecrypt(key)")]
+        public static string AesDecrypt(string str, string key, int? errCode = null)
         {
-            if (string.IsNullOrWhiteSpace(toDecrypt))
+            if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
             if (key.Length != 32)
             {
@@ -75,7 +77,7 @@ namespace EInfrastructure.Core.Tools.Common
             {
                 // 256-AES key
                 byte[] keyArray = Encoding.UTF8.GetBytes(key);
-                byte[] toEncryptArray = Convert.FromBase64String(toDecrypt);
+                byte[] toEncryptArray = Convert.FromBase64String(str);
 
                 RijndaelManaged rDel = new RijndaelManaged
                 {
@@ -92,7 +94,7 @@ namespace EInfrastructure.Core.Tools.Common
             }
             catch
             {
-                return toDecrypt;
+                return str;
             }
         }
 
@@ -103,24 +105,26 @@ namespace EInfrastructure.Core.Tools.Common
         /// <summary>
         /// Md5加密，返回16位结果
         /// </summary>
-        /// <param name="input">待加密字符串</param>
+        /// <param name="str">待加密字符串</param>
         /// <param name="encoding">编码方式</param>
         /// <param name="isUpper">是否转大写</param>
-        public static string GetMd5HashBy16(string input, Encoding encoding = null, bool isUpper = true)
+        [Obsolete("方法已过时，建议使用：str.GetMd5HashBy16(key)")]
+        public static string GetMd5HashBy16(string str, Encoding encoding = null, bool isUpper = true)
         {
-            return GetMd5Hash(input, true, encoding, isUpper);
+            return GetMd5Hash(str, true, encoding, isUpper);
         }
 
         /// <summary>
         /// MD5加密(32位)
         /// </summary>
-        /// <param name="input">待加密字符串</param>
+        /// <param name="str">待加密字符串</param>
         /// <param name="encoding">编码方式</param>
         /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
-        public static string GetMd5Hash(string input, Encoding encoding = null, bool isUpper = true)
+        [Obsolete("方法已过时，建议使用：str.GetMd5Hash(key)")]
+        public static string GetMd5Hash(string str, Encoding encoding = null, bool isUpper = true)
         {
-            return GetMd5Hash(input, false, encoding, isUpper);
+            return GetMd5Hash(str, false, encoding, isUpper);
         }
 
         /// <summary>
@@ -184,18 +188,19 @@ namespace EInfrastructure.Core.Tools.Common
         /// <summary>
         /// 对字符串进行DES加密
         /// </summary>
-        /// <param name="sourceString">待加密的字符串</param>
+        /// <param name="str">待加密的字符串</param>
         /// <param name="key"></param>
         /// <param name="iv"></param>
         /// <returns>加密后的BASE64编码的字符串</returns>
-        public static string DesEncrypt(string sourceString, string key, string iv)
+        [Obsolete("方法已过时，建议使用：str.DesEncrypt(key,iv)")]
+        public static string DesEncrypt(string str, string key, string iv)
         {
             byte[] btKey = Encoding.Default.GetBytes(key);
             byte[] btIv = Encoding.Default.GetBytes(iv);
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
             using (MemoryStream ms = new MemoryStream())
             {
-                byte[] inData = Encoding.Default.GetBytes(sourceString);
+                byte[] inData = Encoding.Default.GetBytes(str);
                 using (CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(btKey, btIv), CryptoStreamMode.Write))
                 {
                     cs.Write(inData, 0, inData.Length);
@@ -209,18 +214,19 @@ namespace EInfrastructure.Core.Tools.Common
         /// <summary>
         /// 对DES加密后的字符串进行解密
         /// </summary>
-        /// <param name="encryptedString">待解密的字符串</param>
+        /// <param name="str">待解密的字符串</param>
         /// <param name="key"></param>
         /// <param name="iv"></param>
         /// <returns>解密后的字符串</returns>
-        public static string DesDecrypt(string encryptedString, string key, string iv)
+        [Obsolete("方法已过时，建议使用：str.DesDecrypt(key,iv)")]
+        public static string DesDecrypt(string str, string key, string iv)
         {
             byte[] btKey = Encoding.Default.GetBytes(key);
             byte[] btIv = Encoding.Default.GetBytes(iv);
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
             using (MemoryStream ms = new MemoryStream())
             {
-                byte[] inData = Convert.FromBase64String(encryptedString);
+                byte[] inData = Convert.FromBase64String(str);
                 using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(btKey, btIv), CryptoStreamMode.Write))
                 {
                     cs.Write(inData, 0, inData.Length);
@@ -243,12 +249,13 @@ namespace EInfrastructure.Core.Tools.Common
         /// <param name="str"></param>
         /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
+        [Obsolete("方法已过时，建议使用：str.Sha1(key)")]
         public static string Sha1(string str, bool isUpper = true)
         {
             var enc = new ASCIIEncoding(); //将mystr转换成byte[]
             using (var hashAlgorithm = new SHA1Managed())
             {
-                return GetSha(enc.GetBytes(str), hashAlgorithm, isUpper);
+                return enc.GetBytes(str).GetSha(hashAlgorithm, isUpper);
             }
         }
 
@@ -262,7 +269,7 @@ namespace EInfrastructure.Core.Tools.Common
         {
             using (var hashAlgorithm = new SHA1Managed())
             {
-                return GetSha(str.ConvertToByteArray(), hashAlgorithm, isUpper);
+                return str.ConvertToByteArray().GetSha(hashAlgorithm, isUpper);
             }
         }
 
@@ -276,7 +283,7 @@ namespace EInfrastructure.Core.Tools.Common
         {
             using (var hashAlgorithm = new SHA1Managed())
             {
-                return GetSha(str, hashAlgorithm, isUpper);
+                return str.GetSha(hashAlgorithm, isUpper);
             }
         }
 
@@ -290,12 +297,13 @@ namespace EInfrastructure.Core.Tools.Common
         /// <param name="str"></param>
         /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
+        [Obsolete("方法已过时，建议使用：str.Sha256(key)")]
         public static string Sha256(string str, bool isUpper = true)
         {
             var enc = new ASCIIEncoding(); //将mystr转换成byte[]
             using (var hashAlgorithm = new SHA256Managed())
             {
-                return GetSha(enc.GetBytes(str), hashAlgorithm, isUpper);
+                return enc.GetBytes(str).GetSha(hashAlgorithm, isUpper);
             }
         }
 
@@ -309,7 +317,7 @@ namespace EInfrastructure.Core.Tools.Common
         {
             using (var hashAlgorithm = new SHA256Managed())
             {
-                return GetSha(str.ConvertToByteArray(), hashAlgorithm, isUpper);
+                return str.ConvertToByteArray().GetSha(hashAlgorithm, isUpper);
             }
         }
 
@@ -323,7 +331,7 @@ namespace EInfrastructure.Core.Tools.Common
         {
             using (var hashAlgorithm = new SHA256Managed())
             {
-                return GetSha(str, hashAlgorithm, isUpper);
+                return str.GetSha(hashAlgorithm, isUpper);
             }
         }
 
@@ -337,12 +345,13 @@ namespace EInfrastructure.Core.Tools.Common
         /// <param name="str"></param>
         /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
+        [Obsolete("方法已过时，建议使用：str.Sha384(key)")]
         public static string Sha384(string str, bool isUpper = true)
         {
             var enc = new ASCIIEncoding(); //将mystr转换成byte[]
             using (var hashAlgorithm = new SHA384Managed())
             {
-                return GetSha(enc.GetBytes(str), hashAlgorithm, isUpper);
+                return enc.GetBytes(str).GetSha(hashAlgorithm, isUpper);
             }
         }
 
@@ -356,7 +365,7 @@ namespace EInfrastructure.Core.Tools.Common
         {
             using (var hashAlgorithm = new SHA384Managed())
             {
-                return GetSha(str.ConvertToByteArray(), hashAlgorithm, isUpper);
+                return str.ConvertToByteArray().GetSha(hashAlgorithm, isUpper);
             }
         }
 
@@ -370,7 +379,7 @@ namespace EInfrastructure.Core.Tools.Common
         {
             using (var hashAlgorithm = new SHA384Managed())
             {
-                return GetSha(str, hashAlgorithm, isUpper);
+                return str.GetSha(hashAlgorithm, isUpper);
             }
         }
 
@@ -384,12 +393,13 @@ namespace EInfrastructure.Core.Tools.Common
         /// <param name="str"></param>
         /// <param name="isUpper">是否转大写</param>
         /// <returns></returns>
+        [Obsolete("方法已过时，建议使用：str.Sha512(key)")]
         public static string Sha512(string str, bool isUpper = true)
         {
             var enc = new ASCIIEncoding(); //将mystr转换成byte[]
             using (var hashAlgorithm = new SHA512Managed())
             {
-                return GetSha(enc.GetBytes(str), hashAlgorithm, isUpper);
+                return enc.GetBytes(str).GetSha(hashAlgorithm, isUpper);
             }
         }
 
@@ -403,7 +413,7 @@ namespace EInfrastructure.Core.Tools.Common
         {
             using (var hashAlgorithm = new SHA512Managed())
             {
-                return GetSha(str.ConvertToByteArray(), hashAlgorithm, isUpper);
+                return str.ConvertToByteArray().GetSha(hashAlgorithm, isUpper);
             }
         }
 
@@ -417,50 +427,8 @@ namespace EInfrastructure.Core.Tools.Common
         {
             using (var hashAlgorithm = new SHA512Managed())
             {
-                return GetSha(str, hashAlgorithm, isUpper);
+                return str.GetSha(hashAlgorithm, isUpper);
             }
-        }
-
-        #endregion
-
-        #region 得到sha系列加密信息
-
-        /// <summary>
-        /// 得到sha系列加密信息
-        /// </summary>
-        /// <param name="retval"></param>
-        /// <param name="hashAlgorithm"></param>
-        /// <param name="isUpper">是否转大写</param>
-        /// <returns></returns>
-        public static string GetSha(byte[] retval, HashAlgorithm hashAlgorithm, bool isUpper)
-        {
-            var data = hashAlgorithm.ComputeHash(retval);
-            StringBuilder sc = new StringBuilder();
-            foreach (var t in data)
-            {
-                sc.Append(isUpper ? t.ToString("X2") : t.ToString("x2"));
-            }
-
-            return sc.ToString();
-        }
-
-        /// <summary>
-        /// 得到sha系列加密信息
-        /// </summary>
-        /// <param name="stream">文件流</param>
-        /// <param name="hashAlgorithm">加密方式</param>
-        /// <param name="isUpper">是否大写</param>
-        /// <returns></returns>
-        public static string GetSha(Stream stream, HashAlgorithm hashAlgorithm, bool isUpper = true)
-        {
-            if (stream == null)
-            {
-                throw new BusinessException("FileStream is Null", HttpStatus.Err.Id);
-            }
-
-            byte[] retval = hashAlgorithm.ComputeHash(stream);
-            stream.Close();
-            return GetSha(retval, hashAlgorithm, isUpper);
         }
 
         #endregion
@@ -474,15 +442,15 @@ namespace EInfrastructure.Core.Tools.Common
         /// <summary>
         /// HMacSha1加密
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="str"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static string HMacSha1(string text, string key)
+        [Obsolete("方法已过时，建议使用：str.HMacSha1(key)")]
+        public static string HMacSha1(string str, string key)
         {
-            key = key ?? "";
             var encoding = new ASCIIEncoding();
-            byte[] keyByte = encoding.GetBytes(key);
-            byte[] messageBytes = encoding.GetBytes(text);
+            byte[] keyByte = encoding.GetBytes(key.SafeString());
+            byte[] messageBytes = encoding.GetBytes(str);
             using (var hmacsha1 = new HMACSHA1(keyByte))
             {
                 byte[] hashmessage = hmacsha1.ComputeHash(messageBytes);
@@ -497,15 +465,15 @@ namespace EInfrastructure.Core.Tools.Common
         /// <summary>
         /// HMacSha256
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="str"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static string HMacSha256(string text, string key)
+        [Obsolete("方法已过时，建议使用：str.HMacSha256(key)")]
+        public static string HMacSha256(string str, string key)
         {
-            key = key ?? "";
             var encoding = new ASCIIEncoding();
-            byte[] keyByte = encoding.GetBytes(key);
-            byte[] messageBytes = encoding.GetBytes(text);
+            byte[] keyByte = encoding.GetBytes(key.SafeString());
+            byte[] messageBytes = encoding.GetBytes(str);
             using (var hmacsha256 = new HMACSHA256(keyByte))
             {
                 byte[] hashmessage = hmacsha256.ComputeHash(messageBytes);
@@ -520,15 +488,15 @@ namespace EInfrastructure.Core.Tools.Common
         /// <summary>
         /// HMacSha384
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="str"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static string HMacSha384(string text, string key)
+        [Obsolete("方法已过时，建议使用：str.HMacSha384(key)")]
+        public static string HMacSha384(string str, string key)
         {
-            key = key ?? "";
             var encoding = new ASCIIEncoding();
-            byte[] keyByte = encoding.GetBytes(key);
-            byte[] messageBytes = encoding.GetBytes(text);
+            byte[] keyByte = encoding.GetBytes(key.SafeString());
+            byte[] messageBytes = encoding.GetBytes(str);
             using (var hmacsha384 = new HMACSHA384(keyByte))
             {
                 byte[] hashmessage = hmacsha384.ComputeHash(messageBytes);
@@ -543,15 +511,15 @@ namespace EInfrastructure.Core.Tools.Common
         /// <summary>
         /// HMacSha512
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="str"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static string HMacSha512(string text, string key)
+        [Obsolete("方法已过时，建议使用：str.HMacSha512(key)")]
+        public static string HMacSha512(string str, string key)
         {
-            key = key ?? "";
             var encoding = new ASCIIEncoding();
-            byte[] keyByte = encoding.GetBytes(key);
-            byte[] messageBytes = encoding.GetBytes(text);
+            byte[] keyByte = encoding.GetBytes(key.SafeString());
+            byte[] messageBytes = encoding.GetBytes(str);
             using (var hmacsha512 = new HMACSHA512(keyByte))
             {
                 byte[] hashmessage = hmacsha512.ComputeHash(messageBytes);
@@ -563,24 +531,27 @@ namespace EInfrastructure.Core.Tools.Common
 
         #endregion
 
+        #region Js Aes 加解密
+
         #region JS Aes解密
 
         /// <summary>
         /// JS Aes解密
         /// </summary>
-        /// <param name="toDecrypt"></param>
+        /// <param name="str"></param>
         /// <param name="key"></param>
         /// <param name="iv"></param>
         /// <returns></returns>
-        public static string JsAesDecrypt(string toDecrypt, string key, string iv)
+        [Obsolete("方法已过时，建议使用：str.JsAesDecrypt(key,iv)")]
+        public static string JsAesDecrypt(string str, string key, string iv)
         {
             byte[] keyArray = Encoding.UTF8.GetBytes(key);
             byte[] ivArray = Encoding.UTF8.GetBytes(iv);
-            byte[] cipherText = HexToByteArray(toDecrypt);
+            byte[] cipherText = HexToByteArray(str);
             // Check arguments.
             if (cipherText == null || cipherText.Length <= 0)
             {
-                throw new ArgumentNullException("toDecrypt");
+                throw new ArgumentNullException("str");
             }
 
             if (key == null || key.Length <= 0)
@@ -641,6 +612,7 @@ namespace EInfrastructure.Core.Tools.Common
         /// <param name="key"></param>
         /// <param name="iv"></param>
         /// <returns></returns>
+        [Obsolete("方法已过时，建议使用：str.JsAesEncrypt(key,iv)")]
         public static string JsAesEncrypt(string plainText, string key, string iv)
         {
             byte[] keyArray = Encoding.UTF8.GetBytes(key);
@@ -696,6 +668,8 @@ namespace EInfrastructure.Core.Tools.Common
             string hex = BitConverter.ToString(ba);
             return hex.Replace("-", "");
         }
+
+        #endregion
 
         #endregion
     }

@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 
-namespace EInfrastructure.Core.Tools.Tasks.Request
+namespace EInfrastructure.Core.Tools.Common.Tasks.Request
 {
     /// <summary>
     /// 任务信息

@@ -13,27 +13,27 @@ namespace EInfrastructure.Core.Tools.Enumerations
         /// <summary>
         /// Md5
         /// </summary>
-        public static EncryptType Md5 = new EncryptType(0, "Md5");
+        public static readonly EncryptType Md5 = new EncryptType(1, "Md5");
 
         /// <summary>
         /// Sha1
         /// </summary>
-        public static EncryptType Sha1 = new EncryptType(1, "Sha1");
+        public static readonly EncryptType Sha1 = new EncryptType(2, "Sha1");
 
         /// <summary>
         /// Sha256
         /// </summary>
-        public static EncryptType Sha256 = new EncryptType(2, "Sha256");
+        public static readonly EncryptType Sha256 = new EncryptType(3, "Sha256");
 
         /// <summary>
         /// Sha384
         /// </summary>
-        public static EncryptType Sha384 = new EncryptType(3, "Sha384");
+        public static readonly EncryptType Sha384 = new EncryptType(4, "Sha384");
 
         /// <summary>
         /// Sha512
         /// </summary>
-        public static EncryptType Sha512 = new EncryptType(5, "Sha512");
+        public static readonly EncryptType Sha512 = new EncryptType(5, "Sha512");
 
         /// <summary>
         ///

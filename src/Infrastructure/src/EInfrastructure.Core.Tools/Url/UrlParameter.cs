@@ -128,7 +128,7 @@ namespace EInfrastructure.Core.Tools.Url
         public IDictionary<string, object> GetDictionary(bool isSort = true, bool isUrlEncode = false,
             Encoding encoding = null)
         {
-            var result = _params.ToDictionary(t => t.Key,
+            var result = Enumerable.ToDictionary(_params, t => t.Key,
                 t => GetEncodeValue(t.Value, isUrlEncode, encoding ?? Encoding.UTF8));
             if (isSort == false)
                 return result;

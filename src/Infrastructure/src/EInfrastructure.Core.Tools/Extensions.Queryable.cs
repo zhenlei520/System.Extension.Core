@@ -1,5 +1,4 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.Collections.Generic;
@@ -9,12 +8,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace EInfrastructure.Core.Tools.Expressions
+namespace EInfrastructure.Core.Tools
 {
     /// <summary>
-    /// Queryable扩展方法
+    /// Queryable扩展
     /// </summary>
-    public static class QueryableExtend
+    public partial class Extensions
     {
         #region 返回IQueryable<T>前几条数据
 
@@ -40,7 +39,7 @@ namespace EInfrastructure.Core.Tools.Expressions
         /// <typeparam name="T">source中的元素的类型</typeparam>
         /// <param name="source">一个要排序的值序列</param>
         /// <param name="property">属性名称</param>
-        /// <param name="descending">是否降序</param>
+        /// <param name="descending">是否降序，降序true、升序：false</param>
         /// <returns></returns>
         public static IQueryable<T> OrderBy<T>(this IQueryable<T> source, string property, bool descending)
             where T : class

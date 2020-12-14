@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace EInfrastructure.Core.Tools.Extension.BloomFilter
+namespace EInfrastructure.Core.Tools.Common.BloomFilter
 {
     /// <summary>
     /// Implementation of a Bloom-filter, as described here:

@@ -16,14 +16,6 @@ namespace EInfrastructure.Core.Tools.Url
         /// <summary>
         ///
         /// </summary>
-        /// <param name="url">完整的url地址</param>
-        public Url(string url) : this(url, null)
-        {
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
         /// <param name="host">域</param>
         /// <param name="url">完整的url地址</param>
         /// <param name="isUseHttps"></param>
@@ -36,7 +28,7 @@ namespace EInfrastructure.Core.Tools.Url
         /// </summary>
         /// <param name="url">完整的url地址</param>
         /// <param name="isUseHttps">是否是https，默认自动识别</param>
-        public Url(string url, bool? isUseHttps)
+        public Url(string url, bool? isUseHttps = null)
         {
             if (string.IsNullOrEmpty(url))
                 throw new BusinessException("url is not empty", HttpStatus.Err.Id);

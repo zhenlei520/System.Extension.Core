@@ -7,6 +7,7 @@ using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Common;
+using EInfrastructure.Core.Tools.Configuration;
 using EInfrastructure.Core.Tools.Enumerations;
 using Xunit;
 
@@ -186,7 +187,7 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void GetTotalTime()
         {
-            var str = new TimeDifferenceCommon(() =>
+            var str = new TimeDifference(() =>
             {
                 for (int i = 0; i < 1000; i++)
                 {

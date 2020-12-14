@@ -7,10 +7,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EInfrastructure.Core.Tools.Tasks.Request;
-using EInfrastructure.Core.Tools.Unique;
+using EInfrastructure.Core.Tools.Common.Tasks.Request;
+using EInfrastructure.Core.Tools.Common.Unique;
 
-namespace EInfrastructure.Core.Tools.Tasks
+namespace EInfrastructure.Core.Tools.Common.Tasks
 {
     /// <summary>
     /// 线程池

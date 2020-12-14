@@ -114,27 +114,6 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 格式化时间
-
-        /// <summary>
-        /// 格式化时间
-        /// </summary>
-        /// <param name="dateTime"></param>
-        /// <param name="format"></param>
-        /// <returns></returns>
-        public static string Format(this DateTime? dateTime, string format = "yyyy-MM-dd")
-        {
-            if (dateTime != null &&
-                dateTime != DateTime.MinValue && dateTime != DateTime.MaxValue)
-            {
-                return dateTime.Value.ToString(format);
-            }
-
-            return "";
-        }
-
-        #endregion
-
         #region 获得两个日期的间隔
 
         /// <summary>

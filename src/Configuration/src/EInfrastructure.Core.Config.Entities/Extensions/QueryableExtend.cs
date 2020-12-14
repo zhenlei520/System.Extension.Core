@@ -3,7 +3,7 @@
 
 using System.Linq;
 using EInfrastructure.Core.Config.Entities.Data;
-using EInfrastructure.Core.Tools.Expressions;
+using EInfrastructure.Core.Tools;
 
 namespace EInfrastructure.Core.Config.Entities.Extensions
 {
@@ -37,6 +37,5 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         }
 
         #endregion
-
     }
 }

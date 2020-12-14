@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Tools.Common;
@@ -296,6 +295,68 @@ namespace EInfrastructure.Core.Tools
             {
                 action(enumerable.Skip((index - 1) * pageSize).Take(pageSize).ToList());
             }
+        }
+
+        #endregion
+
+        #region IEnumerable转Dictionary类型
+        /// <summary>
+        /// IEnumerable转Dictionary类型
+        /// </summary>
+        /// <typeparam name="TElement"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keyGetter">Key键</param>
+        /// <param name="valueGetter">Key值</param>
+        /// <returns></returns>
+        public static Dictionary<TKey, TValue> ToDictionary<TElement, TKey, TValue>(
+            this IEnumerable<TElement> source,
+            Func<TElement, TKey> keyGetter,
+            Func<TElement, TValue> valueGetter)
+        {
+            Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
+            foreach (var e in source)
+            {
+                var key = keyGetter(e);
+                if (dict.ContainsKey(key))
+                {
+                    continue;
+                }
+
+                dict.Add(key, valueGetter(e));
+            }
+            return dict;
+        }
+        #endregion
+
+        #region 返回安全的集合
+
+        /// <summary>
+        /// 返回安全的集合
+        /// </summary>
+        /// <param name="param"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<T> SafeList<T>(this IEnumerable<T> param)
+        {
+            return ObjectCommon.SafeObject(param != null,
+                () => ValueTuple.Create(param?.ToList(), new List<T>()));
+        }
+
+        #endregion
+
+        #region 返回安全的集合数组
+
+        /// <summary>
+        /// 返回安全的集合数组
+        /// </summary>
+        /// <param name="param"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T[] SafeArray<T>(this IEnumerable<T> param)
+        {
+            return SafeList(param).ToArray();
         }
 
         #endregion

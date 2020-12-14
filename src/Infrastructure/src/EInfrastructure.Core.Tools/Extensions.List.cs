@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using EInfrastructure.Core.Tools.Configuration;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -65,6 +66,23 @@ namespace EInfrastructure.Core.Tools
         {
             list.AddRange(item);
             return list;
+        }
+
+        #endregion
+
+        #region 两个集合计较
+
+        /// <summary>
+        /// 两个集合计较
+        /// </summary>
+        /// <param name="sourceList">源集合</param>
+        /// <param name="optList">新集合</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static ListCompare<T> Compare<T>(this List<T> sourceList, List<T> optList)
+            where T : struct
+        {
+            return new ListCompare<T>(sourceList, optList);
         }
 
         #endregion

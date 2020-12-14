@@ -3,7 +3,7 @@
 
 using System;
 
-namespace EInfrastructure.Core.Tools.Tasks.Dto
+namespace EInfrastructure.Core.Tools.Common.Tasks.Dto
 {
     /// <summary>
     /// 任务

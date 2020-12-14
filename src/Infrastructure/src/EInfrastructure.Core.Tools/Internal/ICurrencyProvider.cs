@@ -3,7 +3,7 @@
 
 using EInfrastructure.Core.Configuration.Enumerations;
 
-namespace EInfrastructure.Core.Tools.Extension.DecimalConversion
+namespace EInfrastructure.Core.Tools.Internal
 {
     /// <summary>
     ///

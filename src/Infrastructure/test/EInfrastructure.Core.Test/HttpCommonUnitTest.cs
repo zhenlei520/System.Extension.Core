@@ -6,7 +6,6 @@ using System.IO;
 using EInfrastructure.Core.Http;
 using EInfrastructure.Core.Http.Params;
 using EInfrastructure.Core.Test.Base;
-using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Common;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

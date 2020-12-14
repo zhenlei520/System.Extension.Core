@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Reflection;
 
 namespace EInfrastructure.Core.Tools.Common
 {
@@ -29,20 +28,6 @@ namespace EInfrastructure.Core.Tools.Common
         public static Type GetType(Type type)
         {
             return Nullable.GetUnderlyingType(type) ?? type;
-        }
-
-        #endregion
-
-        #region 判断是否枚举
-
-        /// <summary>
-        /// 判断是否枚举
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static bool IsEnum(Type type)
-        {
-            return type.GetTypeInfo().IsEnum;
         }
 
         #endregion

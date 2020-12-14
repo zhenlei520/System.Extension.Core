@@ -3,7 +3,7 @@
 
 using System;
 
-namespace EInfrastructure.Core.Tools.Unique
+namespace EInfrastructure.Core.Tools.Common.Unique
 {
     /// <summary>
     /// 雪花id

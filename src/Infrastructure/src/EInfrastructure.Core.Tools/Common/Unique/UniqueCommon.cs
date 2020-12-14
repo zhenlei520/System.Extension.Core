@@ -5,7 +5,7 @@ using System;
 using System.Security.Cryptography;
 using EInfrastructure.Core.Tools.Enumerations;
 
-namespace EInfrastructure.Core.Tools.Unique
+namespace EInfrastructure.Core.Tools.Common.Unique
 {
     /// <summary>
     /// 唯一方法实现

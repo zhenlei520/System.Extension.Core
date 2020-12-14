@@ -34,49 +34,5 @@ namespace EInfrastructure.Core.Tools.Common.Systems
         }
 
         #endregion
-
-        #region 返回安全的集合
-
-        /// <summary>
-        /// 返回安全的集合
-        /// </summary>
-        /// <param name="param"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static List<T> SafeList<T>(this ICollection<T> param)
-        {
-            return ObjectCommon.SafeObject(param != null,
-                () => ValueTuple.Create(param?.ToList(), new List<T>()));
-        }
-
-        #endregion
-
-        #region 返回安全的集合数组
-
-        /// <summary>
-        /// 返回安全的集合数组
-        /// </summary>
-        /// <param name="param"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static T[] SafeArray<T>(this ICollection<T> param)
-        {
-            return SafeList(param).ToArray();
-        }
-
-        #endregion
-
-        #region 安全获取值，当值为null时，不会抛出异常
-
-        /// <summary>
-        /// 安全获取值，当值为null时，不会抛出异常
-        /// </summary>
-        /// <param name="value">可空值</param>
-        public static T SafeValue<T>(this T? value) where T : struct
-        {
-            return value ?? default(T);
-        }
-
-        #endregion
     }
 }

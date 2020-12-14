@@ -13,7 +13,6 @@ using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Tools.Common;
 using EInfrastructure.Core.Tools.Common.Systems;
 using EInfrastructure.Core.Tools.Enumerations;
-using EInfrastructure.Core.Tools.Expressions;
 using EInfrastructure.Core.Tools.Internal;
 
 namespace EInfrastructure.Core.Tools
@@ -381,6 +380,283 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 加密管理
+
+        #region Aes加解密
+
+        #region Aes加密
+
+        /// <summary>
+        /// Aes加密
+        /// </summary>
+        /// <param name="str">待加密字符串</param>
+        /// <param name="key">aes秘钥（32位）</param>
+        /// <param name="errCode"></param>
+        /// <returns></returns>
+        public static string AesEncrypt(this string str, string key, int? errCode = null)
+        {
+            return SecurityCommon.AesEncrypt(str, key, errCode);
+        }
+
+        #endregion
+
+        #region Aes解密
+
+        /// <summary>
+        /// AES解密
+        /// </summary>
+        /// <param name="str">待解密字符串</param>
+        /// <param name="key">aes秘钥（32位）</param>
+        /// <param name="errCode">错误码</param>
+        /// <returns></returns>
+        public static string AesDecrypt(string str, string key, int? errCode = null)
+        {
+            return SecurityCommon.AesDecrypt(str, key, errCode);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Md5加密
+
+        #region Md5加密，返回16位结果
+
+        /// <summary>
+        /// Md5加密，返回16位结果
+        /// </summary>
+        /// <param name="str">待加密字符串</param>
+        /// <param name="encoding">编码方式</param>
+        /// <param name="isUpper">是否转大写</param>
+        public static string GetMd5HashBy16(this string str, Encoding encoding = null, bool isUpper = true)
+        {
+            return SecurityCommon.GetMd5HashBy16(str, encoding, isUpper);
+        }
+
+        #endregion
+
+        #region MD5加密(32位)
+
+        /// <summary>
+        /// MD5加密(32位)
+        /// </summary>
+        /// <param name="str">待加密字符串</param>
+        /// <param name="encoding">编码方式</param>
+        /// <param name="isUpper">是否转大写</param>
+        /// <returns></returns>
+        public static string GetMd5Hash(this string str, Encoding encoding = null, bool isUpper = true)
+        {
+            return SecurityCommon.GetMd5Hash(str, encoding, isUpper);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Des加密
+
+        #region 对字符串进行DES加密
+
+        /// <summary>
+        /// 对字符串进行DES加密
+        /// </summary>
+        /// <param name="str">待加密的字符串</param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
+        /// <returns>加密后的BASE64编码的字符串</returns>
+        public static string DesEncrypt(this string str, string key, string iv)
+        {
+            return SecurityCommon.DesEncrypt(str, key, iv);
+        }
+
+        #endregion
+
+        #region 对DES加密后的字符串进行解密
+
+        /// <summary>
+        /// 对DES加密后的字符串进行解密
+        /// </summary>
+        /// <param name="str">待解密的字符串</param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
+        /// <returns>解密后的字符串</returns>
+        public static string DesDecrypt(string str, string key, string iv)
+        {
+            return SecurityCommon.DesDecrypt(str, key, iv);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Sha系列加密
+
+        #region Sha1加密
+
+        /// <summary>
+        /// Sha1
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
+        /// <returns></returns>
+        public static string Sha1(this string str, bool isUpper = true)
+        {
+            return SecurityCommon.Sha1(str, isUpper);
+        }
+
+        #endregion
+
+        #region Sha256加密
+
+        /// <summary>
+        /// Sha256
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
+        /// <returns></returns>
+        public static string Sha256(this string str, bool isUpper = true)
+        {
+            return SecurityCommon.Sha256(str, isUpper);
+        }
+
+        #endregion
+
+        #region Sha384加密
+
+        /// <summary>
+        /// Sha384
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
+        /// <returns></returns>
+        public static string Sha384(this string str, bool isUpper = true)
+        {
+            return SecurityCommon.Sha384(str, isUpper);
+        }
+
+        #endregion
+
+        #region Sha512加密
+
+        /// <summary>
+        /// Sha512加密
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="isUpper">是否转大写</param>
+        /// <returns></returns>
+        public static string Sha512(this string str, bool isUpper = true)
+        {
+            return SecurityCommon.Sha512(str, isUpper);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Js Aes 加解密
+
+        #region JS Aes解密
+
+        /// <summary>
+        /// JS Aes解密
+        /// </summary>
+        /// <param name="str">待加密字符串</param>
+        /// <param name="key">秘钥</param>
+        /// <param name="iv">偏移量</param>
+        /// <returns></returns>
+        public static string JsAesDecrypt(this string str, string key, string iv)
+        {
+            return SecurityCommon.JsAesDecrypt(str, key, iv);
+        }
+
+        #endregion
+
+        #region JS Aes 加密
+
+        /// <summary>
+        /// JsAesEncrypt
+        /// </summary>
+        /// <param name="str">待解密字符串</param>
+        /// <param name="key">秘钥</param>
+        /// <param name="iv">偏移量</param>
+        /// <returns></returns>
+        public static string JsAesEncrypt(this string str, string key, string iv)
+        {
+            return SecurityCommon.JsAesEncrypt(str, key, iv);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region HMACSHA加密
+
+        #region HMacSha1加密
+
+        /// <summary>
+        /// HMacSha1加密
+        /// </summary>
+        /// <param name="str">待加密字符串</param>
+        /// <param name="key">盐</param>
+        /// <returns></returns>
+        public static string HMacSha1(this string str, string key)
+        {
+            return SecurityCommon.HMacSha1(str, key);
+        }
+
+        #endregion
+
+        #region HMacSha256
+
+        /// <summary>
+        /// HMacSha256
+        /// </summary>
+        /// <param name="str">待加密字符串</param>
+        /// <param name="key">盐</param>
+        /// <returns></returns>
+        public static string HMacSha256(string str, string key)
+        {
+            return SecurityCommon.HMacSha256(str, key);
+        }
+
+        #endregion
+
+        #region HMacSha384
+
+        /// <summary>
+        /// HMacSha384
+        /// </summary>
+        /// <param name="str">待加密字符串</param>
+        /// <param name="key">盐</param>
+        /// <returns></returns>
+        public static string HMacSha384(string str, string key)
+        {
+            return SecurityCommon.HMacSha384(str, key);
+        }
+
+        #endregion
+
+        #region HMacSha512
+
+        /// <summary>
+        /// HMacSha512
+        /// </summary>
+        /// <param name="str">待加密字符串</param>
+        /// <param name="key">盐</param>
+        /// <returns></returns>
+        public static string HMacSha512(string str, string key)
+        {
+            return SecurityCommon.HMacSha512(str, key);
+        }
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region 验证
+
         #region 判断正则表达式是否匹配
 
         /// <summary>
@@ -427,6 +703,7 @@ namespace EInfrastructure.Core.Tools
                 return ObjectCommon.SafeObject<Constellation>(!cardNo.IsNullOrWhiteSpace(),
                     () => (cardNo.GetBirthday().GetConstellationFromBirthday(), Constellation.Unknow));
             }
+
             return Constellation.Unknow;
         }
 
@@ -844,6 +1121,8 @@ namespace EInfrastructure.Core.Tools
         {
             return list.GetListCount() == 0;
         }
+
+        #endregion
 
         #endregion
     }

@@ -50,7 +50,7 @@ namespace EInfrastructure.Core.Tools.Common
         /// <returns>得到短参数的值（有四个，任选其一即可）</returns>
         public static string[] GetShortParam(string param, string key, int number = 6)
         {
-            string hex = SecurityCommon.GetMd5Hash(key.SafeString() + param);
+            string hex = (key.SafeString() + param).GetMd5Hash();
 
             string[] resUrl = new string[4];
             for (int i = 0; i < hex.Length/8; i++)

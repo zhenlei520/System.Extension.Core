@@ -6,7 +6,7 @@ using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Tools.Component;
-using EInfrastructure.Core.Tools.Extension.DecimalConversion;
+using EInfrastructure.Core.Tools.Internal;
 
 namespace EInfrastructure.Core.Tools
 {

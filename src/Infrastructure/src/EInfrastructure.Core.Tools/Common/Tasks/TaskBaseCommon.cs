@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EInfrastructure.Core.Tools.Tasks.Request;
+using EInfrastructure.Core.Tools.Common.Tasks.Request;
 
-namespace EInfrastructure.Core.Tools.Tasks
+namespace EInfrastructure.Core.Tools.Common.Tasks
 {
     /// <summary>
     /// 基础类
