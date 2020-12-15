@@ -219,7 +219,7 @@ namespace EInfrastructure.Core.Tools
         {
             DateTime date = dateTime ?? DateTime.Now.Date; //当前时间
 
-            var provider = _dateTimeProviders.FirstOrDefault(x => x.Type.Equals(timeKey));
+            var provider = _dateTimeProviders.Where(x => x.Type.Equals(timeKey)).OrderByDescending(x=>x.GetWeights()).FirstOrDefault();
 
             if (provider != null)
             {
@@ -244,7 +244,7 @@ namespace EInfrastructure.Core.Tools
         {
             DateTime date = dateTime ?? DateTime.Now.Date; //当前时间
 
-            var provider = _specifiedTimeAfterProviders.FirstOrDefault(x => x.Type.Equals(timeType));
+            var provider = _specifiedTimeAfterProviders.Where(x => x.Type.Equals(timeType)).OrderByDescending(x=>x.GetWeights()).FirstOrDefault();
 
             if (provider != null)
             {

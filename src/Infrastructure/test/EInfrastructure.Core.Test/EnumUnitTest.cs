@@ -86,7 +86,7 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void ToEnumAndAttributes()
         {
-            var res = EnumCommon.ToEnumAndAttributes<ENameAttribute>(typeof(GenderEnum))
+            var res = typeof(GenderEnum).ToEnumAndAttributes<ENameAttribute>()
                 .Where(x => x.Value.Name.Contains("男"))
                 .Select(x => x.Key).FirstOrDefault();
             Check.True(res != null && (GenderEnum) res == GenderEnum.Boy, "参数错误");

@@ -32,7 +32,7 @@ namespace EInfrastructure.Core.Tools
 
             IEnumerable<ICurrencyProvider> list =
                 new ServiceProvider().GetServices<ICurrencyProvider>();
-            var provider = list.FirstOrDefault(x => x.GetCurrencyType.Equals(currencyType));
+            var provider = list.Where(x => x.GetCurrencyType.Equals(currencyType)).OrderByDescending(x=>x.GetWeights()).FirstOrDefault();
             if (provider == null)
             {
                 throw new BusinessException("暂不支持当前货币转换");

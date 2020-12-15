@@ -875,7 +875,7 @@ namespace EInfrastructure.Core.Tools
                 condition = condition.And(x => x.CommunicationOperatorType.Equals(operatorType));
             }
 
-            var regexList = _mobileRegexConfigurations.Where(condition.Compile()).ToList();
+            var regexList = _mobileRegexConfigurations.Where(condition.Compile()).OrderByDescending(x=>x.GetWeights()).ToList();
 
             if (regexOptions == null)
             {
