@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using EInfrastructure.Core.Configuration.Enumerations.Common;
+using EInfrastructure.Core.Configuration.Internal.Common;
 
 namespace EInfrastructure.Core.Configuration.Enumerations.SeedWork.Configurations
 {

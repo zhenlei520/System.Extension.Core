@@ -1,7 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace EInfrastructure.Core.Configuration.Enumerations.Common
+namespace EInfrastructure.Core.Configuration.Internal.Common
 {
     /// <summary>
     /// 唯一方法实现

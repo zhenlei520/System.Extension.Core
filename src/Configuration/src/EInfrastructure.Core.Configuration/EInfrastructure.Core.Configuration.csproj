@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Internal" />
     <Folder Include="Ioc\Plugs\Sms\Dto\VoiceSms" />
   </ItemGroup>
 

@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.Config.Entities.Data
+namespace EInfrastructure.Core.Configuration.Configurations
 {
     /// <summary>
     /// 分页数据集合

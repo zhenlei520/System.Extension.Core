@@ -7,7 +7,7 @@
     {
         /// <summary>
         /// X
-        /// 精度
+        /// 经度
         /// </summary>
         public T1 X { get; set; }
 
