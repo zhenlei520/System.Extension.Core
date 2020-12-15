@@ -1,6 +1,9 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 
 using System;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -139,6 +142,316 @@ namespace EInfrastructure.Core.Tools
         {
             ChangeResult<DateTime>(ref parameter1, ref parameter2);
         }
+        #endregion
+
+        #region 文件类型转换
+
+        #region 转换为Byte数组
+
+        #region Stream转换为Byte数组
+
+        /// <summary>
+        /// Stream转换为Byte数组
+        /// </summary>
+        /// <param name="stream">Stream</param>
+        /// <returns></returns>
+        public static byte[] ConvertToByteArray(this Stream stream)
+        {
+            return stream.ConvertToByteArrayAsync(true).Result;
+        }
+
+        /// <summary>
+        /// 流转换为字节流
+        /// </summary>
+        /// <param name="stream">流</param>
+        public static async Task<byte[]> ConvertToByteArrayAsync(Stream stream)
+        {
+            return await stream.ConvertToByteArrayAsync(false);
+        }
+
+        /// <summary>
+        /// 流转换为字节流
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="isSync"></param>
+        /// <returns></returns>
+        private static async Task<byte[]> ConvertToByteArrayAsync(this Stream stream, bool isSync)
+        {
+            if (stream == null || !stream.CanRead)
+            {
+                return new byte[] { };
+            }
+
+            if (!stream.CanSeek)
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+            }
+
+            var bytes = new byte[stream.Length];
+            if (isSync)
+            {
+                stream.Read(bytes, 0, bytes.Length);
+            }
+            else
+            {
+                await stream.ReadAsync(bytes, 0, bytes.Length);
+            }
+
+            stream.Seek(0, SeekOrigin.Begin);
+            return bytes;
+        }
+
+        #endregion
+
+        #region String转换为Byte数组
+
+        /// <summary>
+        /// String转换为Byte数组
+        /// </summary>
+        /// <param name="para">待转换参数</param>
+        /// <returns></returns>
+        public static byte[] ConvertToByteArray(this string para)
+        {
+            return para.ConvertToByteArray(Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// String转换为Byte数组
+        /// </summary>
+        /// <param name="para">待转换参数</param>
+        /// <param name="encoding">编码格式</param>
+        /// <returns></returns>
+        public static byte[] ConvertToByteArray(this string para, Encoding encoding)
+        {
+            if (string.IsNullOrWhiteSpace(para))
+                return new byte[] { };
+            return encoding.GetBytes(para);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 转换为Stream
+
+        #region 将 byte[] 转成 Stream
+
+        /// <summary>
+        /// 将 byte[] 转成 Stream
+        /// </summary>
+        /// <param name="bytes">byte数组</param>
+        /// <returns></returns>
+        public static Stream ConvertToStream(this byte[] bytes)
+        {
+            Stream stream = new MemoryStream(bytes);
+            return stream;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 转换为String
+
+        #region 文件流转字符串
+
+        #region 复制流并转换成字符串
+
+        /// <summary>
+        /// 复制流并转换成字符串
+        /// </summary>
+        /// <param name="stream">流</param>
+        public static async Task<string> CopyToStringAsync(this Stream stream)
+        {
+            return await CopyToStringAsync(stream, Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// 复制流并转换成字符串
+        /// </summary>
+        /// <param name="stream">流</param>
+        /// <param name="encoding">字符编码</param>
+        public static async Task<string> CopyToStringAsync(this Stream stream, Encoding encoding)
+        {
+            if (stream == null)
+                return string.Empty;
+            if (stream.CanRead == false)
+                return string.Empty;
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var reader = new StreamReader(memoryStream, encoding))
+                {
+                    if (stream.CanSeek)
+                        stream.Seek(0, SeekOrigin.Begin);
+                    await stream.CopyToAsync(memoryStream);
+                    if (memoryStream.CanSeek)
+                        memoryStream.Seek(0, SeekOrigin.Begin);
+                    var result = await reader.ReadToEndAsync();
+                    if (stream.CanSeek)
+                        stream.Seek(0, SeekOrigin.Begin);
+                    return result;
+                }
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 文件流转字符串
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <returns></returns>
+        public static string ConvertToString(this Stream stream)
+        {
+            return stream.ConvertToString(Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// 文件流转字符串
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <param name="encoding">编码格式</param>
+        /// <param name="bufferSize">缓冲区大小</param>
+        /// <param name="isCloseStream">是否自动释放文件</param>
+        /// <returns></returns>
+        public static string ConvertToString(this Stream stream, Encoding encoding, int bufferSize = 1024 * 2,
+            bool isCloseStream = true)
+        {
+            return stream.ConvertToStringAsync(encoding, true, bufferSize, isCloseStream).Result;
+        }
+
+        /// <summary>
+        /// 文件流转字符串
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <returns></returns>
+        public static async Task<string> ConvertToStringAsync(this Stream stream)
+        {
+            return await stream.ConvertToStringAsync(Encoding.UTF8, false);
+        }
+
+        /// <summary>
+        /// 文件流转字符串
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <param name="encoding">编码格式</param>
+        /// <param name="bufferSize">缓冲区大小</param>
+        /// <param name="isCloseStream">是否自动释放文件</param>
+        /// <returns></returns>
+        public static async Task<string> ConvertToStringAsync(this Stream stream, Encoding encoding,
+            int bufferSize = 1024 * 2,
+            bool isCloseStream = true)
+        {
+            return await stream.ConvertToStringAsync(encoding, false, bufferSize, isCloseStream);
+        }
+
+        /// <summary>
+        /// 文件流转字符串
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <param name="encoding">编码格式</param>
+        /// <param name="isSync">是否同步</param>
+        /// <param name="bufferSize">缓冲区大小</param>
+        /// <param name="isCloseStream">是否自动释放文件</param>
+        /// <returns></returns>
+        private static async Task<string> ConvertToStringAsync(this Stream stream, Encoding encoding, bool isSync,
+            int bufferSize = 1024 * 2,
+            bool isCloseStream = true)
+        {
+            if (stream == null || encoding == null || stream.CanRead == false)
+                return string.Empty;
+            using (var reader = new StreamReader(stream, encoding, true, bufferSize, !isCloseStream))
+            {
+                if (stream.CanSeek)
+                    stream.Seek(0, SeekOrigin.Begin);
+                var result = isSync ? reader.ReadToEnd() : await reader.ReadToEndAsync();
+                if (stream.CanSeek)
+                    stream.Seek(0, SeekOrigin.Begin);
+                return result;
+            }
+        }
+
+        #endregion
+
+        #region byte数组转换为string
+
+        /// <summary>
+        /// byte数组转换为string
+        /// </summary>
+        /// <param name="bytes">byte数组</param>
+        /// <returns></returns>
+        public static string ConvertToString(this byte[] bytes)
+        {
+            return ConvertToString(bytes, Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// byte数组转换为string
+        /// </summary>
+        /// <param name="bytes">byte数组</param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
+        public static string ConvertToString(this byte[] bytes, Encoding encoding)
+        {
+            return encoding.GetString(bytes);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region base64字符串转byte数组
+
+        /// <summary>
+        /// 文件base64转byte数组
+        /// </summary>
+        /// <param name="base64">文件base64</param>
+        /// <returns></returns>
+        public static byte[] ConvertToByte(this string base64)
+        {
+            return Convert.FromBase64String(base64);
+        }
+
+        #endregion
+
+        #region byte数组转换为base64
+
+        /// <summary>
+        /// byte数组转换为base64
+        /// </summary>
+        /// <param name="param">byte数组</param>
+        /// <returns></returns>
+        public static string ConvertToBase64(this byte[] param)
+        {
+            return Convert.ToBase64String(param);
+        }
+
+        #endregion
+
+        #region 文件流转换为base64
+
+        /// <summary>
+        /// 文件流转换为base64
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <returns></returns>
+        public static string ConvertToBase64(this Stream stream)
+        {
+            return ConvertToBase64(stream.ConvertToByteArray());
+        }
+
+        /// <summary>
+        /// 文件流转换为base64
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <returns></returns>
+        public static async Task<string> ConvertToBase64Async(this Stream stream)
+        {
+            return ConvertToBase64(await stream.ConvertToByteArrayAsync(false));
+        }
+
+        #endregion
+
         #endregion
     }
 }
