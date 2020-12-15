@@ -58,7 +58,7 @@ namespace EInfrastructure.Core.Tools
         /// <typeparam name="T">执行后，参数1为较小者，参数2为较大者</typeparam>
         public static void ChangeResult<T>(ref T parameter1, ref T parameter2) where T : IComparable
         {
-            if (parameter2.CompareTo(parameter1) == -1)
+            if (parameter2.LessThan(parameter1))
             {
                 var temp = parameter2;
                 parameter2 = parameter1;

@@ -62,24 +62,13 @@ namespace EInfrastructure.Core.Tools
         #region 补足位数
 
         /// <summary>
-        /// 指定字符串的固定长度，如果字符串小于固定长度，则在number前补足位数
+        /// 指定字符串的固定长度，如果字符串小于固定长度，则在字符串的前面补足零，可设置的固定长度最大为9位
         /// </summary>
         /// <param name="number">原数字</param>
         /// <param name="limitedLength">固定几位长度</param>
         /// <returns></returns>
-        public static string RepairZero(this int number, int limitedLength)
-        {
-            //补足0的字符串
-            string temp = "";
-
-            //补足0
-            for (int i = 0; i < limitedLength - number.ToString().Length; i++)
-            {
-                temp += "0";
-            }
-
-            return temp + number;
-        }
+        public static string RepairZero(this int number, int limitedLength) =>
+            number.ToString().RepairZero(limitedLength);
 
         #endregion
     }

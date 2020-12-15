@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -40,6 +41,22 @@ namespace EInfrastructure.Core.Tools
 
             return provider.ConvertToCurrency(param);
         }
+
+        #endregion
+
+        #region Abs(返回数字的绝对值)
+
+        /// <summary>
+        /// 返回数字的绝对值
+        /// </summary>
+        /// <param name="param">值</param>
+        public static decimal Abs(this decimal param) => Math.Abs(param);
+
+        /// <summary>
+        /// 返回数字的绝对值
+        /// </summary>
+        /// <param name="param">值</param>
+        public static IEnumerable<decimal> Abs(this IEnumerable<decimal> param) => param.Select(x => x.Abs());
 
         #endregion
     }

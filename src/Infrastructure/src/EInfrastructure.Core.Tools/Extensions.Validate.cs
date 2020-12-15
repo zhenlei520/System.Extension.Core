@@ -225,6 +225,158 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 判断值是否在指定范围内
+
+        /// <summary>
+        /// 判断值是否在指定范围内
+        /// </summary>
+        /// <param name="value">值</param>
+        /// <param name="minValue">最小值</param>
+        /// <param name="maxValue">最大值</param>
+        public static bool InRange<T>(this T value, T minValue, T maxValue) where T : IComparable
+        {
+            return value.GreaterThanOrEqualTo(minValue) && value.LessThanOrEqualTo(maxValue);
+        }
+
+        #endregion
+
+        #region 参数1大于参数2
+
+        /// <summary>
+        /// 参数1大于参数2
+        /// </summary>
+        /// <param name="param1">参数1</param>
+        /// <param name="param2">参数2</param>
+        public static bool GreaterThan<T>(this T param1, T param2) where T : IComparable
+        {
+            return param1.CompareTo(param2) == 1;
+        }
+
+        /// <summary>
+        /// 参数1大于等于参数2
+        /// </summary>
+        /// <param name="param1">参数1</param>
+        /// <param name="param2">参数2</param>
+        public static bool GreaterThanOrEqualTo<T>(this T param1, T param2) where T : IComparable
+        {
+            return param1.CompareTo(param2) == 0 || param1.CompareTo(param2) == 1;
+        }
+
+        #endregion
+
+        #region 参数1小于等于参数2
+
+        /// <summary>
+        /// 参数1小于参数2
+        /// </summary>
+        /// <param name="param1">参数1</param>
+        /// <param name="param2">参数2</param>
+        public static bool LessThan<T>(this T param1, T param2) where T : IComparable
+        {
+            return param1.CompareTo(param2) == -1;
+        }
+
+        /// <summary>
+        /// 参数1小于等于参数2
+        /// </summary>
+        /// <param name="param1">参数1</param>
+        /// <param name="param2">参数2</param>
+        public static bool LessThanOrEqualTo<T>(this T param1, T param2) where T : IComparable
+        {
+            return param1.CompareTo(param2) == 0 || param1.CompareTo(param2) == -1;
+        }
+
+        #endregion
+
+        #region IsEven(是否偶数)
+
+        /// <summary>
+        /// 是否偶数
+        /// </summary>
+        /// <param name="value">值</param>
+        public static bool IsEven(this int value) => value % 2 == 0;
+
+        /// <summary>
+        /// 是否偶数
+        /// </summary>
+        /// <param name="value">值</param>
+        public static bool IsEven(this long value) => value % 2 == 0;
+
+        #endregion
+
+        #region IsOdd(是否奇数)
+
+        /// <summary>
+        /// 是否奇数
+        /// </summary>
+        /// <param name="value">值</param>
+        public static bool IsOdd(this int value) => value % 2 != 0;
+
+        /// <summary>
+        /// 是否奇数
+        /// </summary>
+        /// <param name="value">值</param>
+        public static bool IsOdd(this long value) => value % 2 != 0;
+
+        #endregion
+
+        #region IsPrime(是否质数)
+
+        /// <summary>
+        /// 是否质数（素数），一个质数（或素数）是具有两个不同约束的自然数：1和它本身
+        /// </summary>
+        /// <param name="value">值</param>
+        public static bool IsPrime(this int value)
+        {
+            return value.ConvertToLong().IsPrime();
+        }
+        /// <summary>
+        /// 是否质数（素数），一个质数（或素数）是具有两个不同约束的自然数：1和它本身
+        /// </summary>
+        /// <param name="value">值</param>
+        public static bool IsPrime(this int? value)
+        {
+            return value.ConvertToLong().IsPrime();
+        }
+
+        /// <summary>
+        /// 是否质数（素数），一个质数（或素数）是具有两个不同约束的自然数：1和它本身
+        /// </summary>
+        /// <param name="value">值</param>
+        public static bool IsPrime(this long value)
+        {
+            if ((value & 1) == 0)
+            {
+                if (value == 2)
+                    return true;
+                return false;
+            }
+
+            for (long i = 3; (i * i) <= value; i += 2)
+            {
+                if ((value % i) == 0)
+                    return false;
+            }
+
+            return value != 1;
+        }
+
+        /// <summary>
+        /// 是否质数（素数），一个质数（或素数）是具有两个不同约束的自然数：1和它本身
+        /// </summary>
+        /// <param name="value">值</param>
+        public static bool IsPrime(this long? value)
+        {
+            if (value == null)
+            {
+                return false;
+            }
+
+            return IsPrime(value.Value);
+        }
+
+        #endregion
+
         #region 刷新手机号验证
 
         /// <summary>

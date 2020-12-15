@@ -310,6 +310,17 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 补足位数
+
+        /// <summary>
+        /// 补足位数，指定字符串的固定长度，如果字符串小于固定长度，则在字符串的前面补足零，可设置的固定长度最大为9位
+        /// </summary>
+        /// <param name="text">原始字符串</param>
+        /// <param name="limitedLength">字符串的固定长度</param>
+        public static string RepairZero(this string text, int limitedLength) => text.PadLeft(limitedLength, '0');
+
+        #endregion
+
         #region 加密管理
 
         #region Aes加解密
