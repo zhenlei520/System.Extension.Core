@@ -22,7 +22,6 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static T GetCustomAttribute<T>(this Type sourceType, string name) where T : Attribute
         {
-            // 获取枚举常数名称。
             if (!string.IsNullOrEmpty(name))
             {
                 // 获取枚举字段。

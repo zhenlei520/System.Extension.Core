@@ -2,18 +2,19 @@
 
 using System;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Tools.Internal.SpecifiedTimeAfter
 {
     /// <summary>
     /// 天
     /// </summary>
-    public class DayProvider:ISpecifiedTimeAfterProvider
+    public class DayProvider : IdentifyDefault, ISpecifiedTimeAfterProvider
     {
         /// <summary>
         /// 类型
         /// </summary>
-        public DurationType Type=>DurationType.Day;
+        public DurationType Type => DurationType.Day;
 
         /// <summary>
         /// 得到duration天后

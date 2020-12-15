@@ -3,12 +3,12 @@
 
 using EInfrastructure.Core.Configuration.Ioc;
 
-namespace EInfrastructure.Core.Tools.Common.Randoms.Interface
+namespace EInfrastructure.Core.Tools.Internal
 {
     /// <summary>
     /// 随机数字生成器
     /// </summary>
-    public interface IRandomNumberGenerator : ISingleInstance
+    public interface IRandomNumberGeneratorProvider : ISingleInstance, IIdentify
     {
         /// <summary>
         /// 生成随机数字

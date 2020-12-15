@@ -2,18 +2,19 @@
 
 using System;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Tools.Internal.SpecifiedTimeAfter
 {
     /// <summary>
     /// 秒
     /// </summary>
-    public class SecondProvider:ISpecifiedTimeAfterProvider
+    public class SecondProvider : IdentifyDefault, ISpecifiedTimeAfterProvider
     {
         /// <summary>
         /// 类型
         /// </summary>
-        public DurationType Type=>DurationType.Second;
+        public DurationType Type => DurationType.Second;
 
         /// <summary>
         /// 得到duration秒后

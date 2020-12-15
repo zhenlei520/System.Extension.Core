@@ -7,11 +7,13 @@
     {
         /// <summary>
         /// X
+        /// 精度
         /// </summary>
         public T1 X { get; set; }
 
         /// <summary>
         /// Y
+        /// 纬度
         /// </summary>
         public T2 Y { get; set; }
     }

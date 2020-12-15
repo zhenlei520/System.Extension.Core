@@ -7,26 +7,14 @@ using EInfrastructure.Core.Configuration.Configurations;
 namespace EInfrastructure.Core.Tools.Common
 {
     /// <summary>
-    /// 距离帮助类
+    /// 地理空间帮助类
     /// </summary>
-    public class DistanceCommon
+    public class GeometryCommon
     {
         //地球半径，单位米
         private const double EARTH_RADIUS = 6378137;
 
         #region 计算两点位置的距离，返回两点的距离，单位 米
-
-        /// <summary>
-        /// 计算两点位置的距离，返回两点的距离，单位 米
-        /// 该公式为GOOGLE提供，误差小于0.2米
-        /// </summary>
-        /// <param name="x">位置1</param>
-        /// <param name="y">位置2</param>
-        /// <returns></returns>
-        public static double GetDistance(Points<double, double> x, Points<double, double> y)
-        {
-            return GetDistance(x.Y, x.X, y.Y, y.X);
-        }
 
         /// <summary>
         /// 计算两点位置的距离，返回两点的距离，单位 米
@@ -40,11 +28,11 @@ namespace EInfrastructure.Core.Tools.Common
         public static double GetDistance(double lat1, double lng1, double lat2, double lng2)
         {
             double radLat1 = Rad(lat1);
-            double radLng1 = Rad(lng1);
+            double radLong1 = Rad(lng1);
             double radLat2 = Rad(lat2);
-            double radLng2 = Rad(lng2);
+            double radLong2 = Rad(lng2);
             double a = radLat1 - radLat2;
-            double b = radLng1 - radLng2;
+            double b = radLong1 - radLong2;
             double result =
                 2 * Math.Asin(Math.Sqrt(Math.Pow(Math.Sin(a / 2), 2) +
                                         Math.Cos(radLat1) * Math.Cos(radLat2) * Math.Pow(Math.Sin(b / 2), 2))) *

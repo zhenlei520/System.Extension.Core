@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 
 using System;
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Tools.Enumerations;
 
 namespace EInfrastructure.Core.Tools.Internal.DateTimes
@@ -8,7 +9,7 @@ namespace EInfrastructure.Core.Tools.Internal.DateTimes
     /// <summary>
     /// 本年初
     /// </summary>
-    public class StartYearProvider : IDateTimeProvider
+    public class StartYearProvider : IdentifyDefault, IDateTimeProvider
     {
         /// <summary>
         /// 类型

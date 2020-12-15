@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 
@@ -187,6 +188,31 @@ namespace EInfrastructure.Core.Tools.Common
 
             DateTime dt = GetLunarNewYearDate(year);
             return dt.AddDays(num1 + day - 1);
+        }
+
+        #endregion
+
+        #region 根据出生年份得到生肖信息
+
+        /// <summary>
+        /// 根据出生年份得到生肖信息
+        /// </summary>
+        /// <param name="year">年</param>
+        /// <returns></returns>
+        public static Animal GetAnimal(int year)
+        {
+            if (year < 1582 || year > 2099)
+            {
+                return null;
+            }
+
+            var index = (year - 3) % 12;
+            if (index == 0)
+            {
+                index = 12;
+            }
+
+            return Animal.GetAll<Animal>().FirstOrDefault(x => x.Id == index);
         }
 
         #endregion

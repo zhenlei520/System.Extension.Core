@@ -12,31 +12,6 @@ namespace EInfrastructure.Core.Tools
     /// </summary>
     public partial class Extensions
     {
-        #region 得到生肖信息
-
-        /// <summary>
-        /// 得到生肖信息
-        /// </summary>
-        /// <param name="year">年</param>
-        /// <returns></returns>
-        public static Animal GetAnimal(this int year)
-        {
-            if (year < 1582 || year > 2099)
-            {
-                return null;
-            }
-
-            var index = (year - 3) % 12;
-            if (index == 0)
-            {
-                index = 12;
-            }
-
-            return Animal.GetAll<Animal>().FirstOrDefault(x => x.Id == index);
-        }
-
-        #endregion
-
         #region 判断param的值是否在枚举中
 
         /// <summary>
@@ -88,10 +63,11 @@ namespace EInfrastructure.Core.Tools
         #region 补足位数
 
         /// <summary>
-        /// 指定字符串的固定长度，如果字符串小于固定长度，
+        /// 指定字符串的固定长度，如果字符串小于固定长度，则在number前补足位数
         /// </summary>
         /// <param name="number">原数字</param>
         /// <param name="limitedLength">固定几位长度</param>
+        /// <returns></returns>
         public static string RepairZero(this int number, int limitedLength)
         {
             //补足0的字符串

@@ -9,7 +9,7 @@ using System.Reflection;
 namespace EInfrastructure.Core.Tools.Common
 {
     /// <summary>
-    /// 拷贝
+    /// 深拷贝（还存在问题）
     /// </summary>
     internal class CloneableCommon<TSource, TOpt>
         where TSource : class, new()
@@ -23,11 +23,6 @@ namespace EInfrastructure.Core.Tools.Common
         /// <summary>
         ///
         /// </summary>
-        private static Func<TSource, TOpt> _cache = null;
-
-        /// <summary>
-        ///
-        /// </summary>
         private static ParameterExpression _inputParameterExpression;
 
         /// <summary>
@@ -36,13 +31,10 @@ namespace EInfrastructure.Core.Tools.Common
         /// <returns>目标实体</returns>
         private static TOpt GetFunc(TSource instance)
         {
-            if (_cache != null)
-                return _cache(instance);
             MemberInitExpression memberInitExpression = GetMemberInitExp(instance);
             Expression<Func<TSource, TOpt>> lambda =
                 Expression.Lambda<Func<TSource, TOpt>>(memberInitExpression, _inputParameterExpression);
-            _cache = lambda.Compile();
-            return _cache(instance);
+            return lambda.Compile().Invoke(instance);
         }
 
         /// <summary>
@@ -51,7 +43,7 @@ namespace EInfrastructure.Core.Tools.Common
         /// <returns></returns>
         private static string GetFullName()
         {
-            return (typeof(TSource).FullName?.Replace(".", "") ?? "");
+            return typeof(TSource).FullName?.Replace(".", "") ?? "";
         }
 
         /// <summary>

@@ -2,18 +2,19 @@
 
 using System;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Tools.Internal.SpecifiedTimeAfter
 {
     /// <summary>
     /// 小时
     /// </summary>
-    public class HourProvider:ISpecifiedTimeAfterProvider
+    public class HourProvider :IdentifyDefault,  ISpecifiedTimeAfterProvider
     {
         /// <summary>
         /// 类型
         /// </summary>
-        public DurationType Type=>DurationType.Hour;
+        public DurationType Type => DurationType.Hour;
 
         /// <summary>
         /// 得到duration小时后

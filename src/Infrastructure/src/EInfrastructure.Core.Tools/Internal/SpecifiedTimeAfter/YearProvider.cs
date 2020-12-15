@@ -2,18 +2,19 @@
 
 using System;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Tools.Internal.SpecifiedTimeAfter
 {
     /// <summary>
     /// 年
     /// </summary>
-    public class YearProvider:ISpecifiedTimeAfterProvider
+    public class YearProvider : IdentifyDefault, ISpecifiedTimeAfterProvider
     {
         /// <summary>
         /// 类型
         /// </summary>
-        public DurationType Type=>DurationType.Year;
+        public DurationType Type => DurationType.Year;
 
         /// <summary>
         /// 得到duration秒后

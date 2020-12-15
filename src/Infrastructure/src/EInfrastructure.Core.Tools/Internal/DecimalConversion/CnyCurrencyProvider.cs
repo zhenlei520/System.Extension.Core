@@ -3,13 +3,14 @@
 
 using System;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Tools.Internal.DecimalConversion
 {
     /// <summary>
     ///
     /// </summary>
-    internal class CnyCurrencyProvider : ICurrencyProvider
+    internal class CnyCurrencyProvider : IdentifyDefault, ICurrencyProvider
     {
         /// <summary>
         /// 数值类型转货币

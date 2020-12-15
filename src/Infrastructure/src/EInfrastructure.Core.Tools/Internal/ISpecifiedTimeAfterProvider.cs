@@ -2,13 +2,14 @@
 
 using System;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Tools.Internal
 {
     /// <summary>
     /// 得到指定时间后
     /// </summary>
-    public interface ISpecifiedTimeAfterProvider
+    public interface ISpecifiedTimeAfterProvider : ISingleInstance, IIdentify
     {
         /// <summary>
         /// 时间类型

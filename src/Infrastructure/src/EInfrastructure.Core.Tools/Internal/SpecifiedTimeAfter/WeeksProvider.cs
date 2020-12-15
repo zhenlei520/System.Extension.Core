@@ -2,13 +2,14 @@
 
 using System;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Tools.Internal.SpecifiedTimeAfter
 {
     /// <summary>
     /// 周
     /// </summary>
-    public class WeeksProvider : ISpecifiedTimeAfterProvider
+    public class WeeksProvider : IdentifyDefault, ISpecifiedTimeAfterProvider
     {
         /// <summary>
         /// 类型

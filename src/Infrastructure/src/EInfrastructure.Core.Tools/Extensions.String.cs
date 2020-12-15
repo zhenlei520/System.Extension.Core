@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Tools.Common;
@@ -22,75 +23,7 @@ namespace EInfrastructure.Core.Tools
     /// </summary>
     public partial class Extensions
     {
-        #region 根据身份证号码获取出生日期
 
-        /// <summary>
-        /// 根据身份证号码获取出生日期
-        /// </summary>
-        /// <param name="cardNo">身份证号码</param>
-        /// <param name="func"></param>
-        /// <returns></returns>
-        public static DateTime? GetBirthday(this string cardNo, Func<DateTime?> func = null)
-        {
-            if (!cardNo.IsIdCard())
-            {
-                throw new BusinessException("请输入合法的身份证号码", HttpStatus.Err.Id);
-            }
-
-            string timeStr = cardNo.Length == 15
-                ? ("19" + cardNo.Substring(6, 2)) + "-" + cardNo.Substring(8, 2) + "-" +
-                  cardNo.Substring(10, 2)
-                : cardNo.Substring(6, 4) + "-" + cardNo.Substring(10, 2) + "-" + cardNo.Substring(12, 2);
-            return timeStr.ConvertToDateTime(func?.Invoke());
-        }
-
-        #endregion
-
-        #region 得到生肖信息
-
-        /// <summary>
-        /// 根据身份证号得到生肖信息 如果身份证号码错误，则返回Null
-        /// </summary>
-        /// <param name="cardNo">身份证号码</param>
-        /// <returns></returns>
-        public static Animal GetAnimal(this string cardNo)
-        {
-            if (!cardNo.IsIdCard())
-            {
-                return null;
-            }
-
-            var birthday = cardNo.GetBirthday();
-            return birthday != null ? GetAnimal(birthday.Value.Year) : null;
-        }
-
-        #endregion
-
-        #region 根据身份证号码获取性别
-
-        /// <summary>
-        /// 根据身份证号码获取性别
-        /// </summary>
-        /// <param name="cardNo">身份证号码</param>
-        /// <param name="action">查询性别失败转换，默认为未知</param>
-        /// <returns></returns>
-        public static Gender GetGender(this string cardNo, Func<Gender> action = null)
-        {
-            if (!cardNo.IsIdCard())
-            {
-                return action?.Invoke() ?? Gender.Unknow;
-            }
-
-            int? gender = (cardNo.Length == 15 ? cardNo.Substring(14, 1) : cardNo.Substring(16, 1)).ConvertToInt(null);
-            if (gender == null)
-            {
-                return action?.Invoke() ?? Gender.Unknow;
-            }
-
-            return gender % 2 == 0 ? Gender.Girl : Gender.Boy;
-        }
-
-        #endregion
 
         #region 大小写转换
 
@@ -653,6 +586,127 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region url编码与解码
+
+        #region 得到url地址
+
+        /// <summary>
+        /// 得到url地址
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string GetUrl(this string str)
+        {
+            string regexStr = "[a-zA-z]+://[^\\s]*";
+            Regex reg = new Regex(regexStr, RegexOptions.Multiline);
+            MatchCollection matchs = reg.Matches(str);
+            foreach (Match item in matchs)
+            {
+                if (item.Success)
+                {
+                    return item.Value;
+                }
+            }
+
+            throw new BusinessException("无效的链接", HttpStatus.Err.Id);
+        }
+
+        #endregion
+
+        #region Url编码
+
+        /// <summary>
+        /// Url编码
+        /// </summary>
+        /// <param name="target">待加密字符串</param>
+        /// <returns></returns>
+        public static string UrlEncode(this string target)
+        {
+            return HttpUtility.UrlEncode(target);
+        }
+
+        /// <summary>
+        /// Url编码
+        /// </summary>
+        /// <param name="target">待加密字符串</param>
+        /// <param name="encoding">编码类型</param>
+        /// <returns></returns>
+        public static string UrlEncode(this string target, Encoding encoding)
+        {
+            return HttpUtility.UrlEncode(target, encoding);
+        }
+
+        #endregion
+
+        #region Url解码
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="target">待解密字符串</param>
+        /// <returns></returns>
+        public static string UrlDecode(this string target)
+        {
+            return HttpUtility.UrlDecode(target);
+        }
+
+        /// <summary>
+        /// Url解码
+        /// </summary>
+        /// <param name="target">待解密字符串</param>
+        /// <param name="encoding">编码类型</param>
+        /// <returns></returns>
+        public static string UrlDecode(this string target, Encoding encoding)
+        {
+            return HttpUtility.UrlDecode(target, encoding);
+        }
+
+        #endregion
+
+        #region Html属性编码
+
+        /// <summary>
+        /// Html属性编码
+        /// </summary>
+        /// <param name="target">待加密字符串</param>
+        /// <returns></returns>
+        public static string AttributeEncode(this string target)
+        {
+            return HttpUtility.HtmlAttributeEncode(target);
+        }
+
+        #endregion
+
+        #region Html编码
+
+        /// <summary>
+        /// Html编码
+        /// </summary>
+        /// <param name="target">待加密字符串</param>
+        /// <returns></returns>
+        public static string HtmlEncode(this string target)
+        {
+            return HttpUtility.HtmlEncode(target);
+        }
+
+        #endregion
+
+        #region Html解码
+
+        /// <summary>
+        /// Html解码
+        /// </summary>
+        /// <param name="target">待解密字符串</param>
+        /// <returns></returns>
+        public static string HtmlDecode(this string target)
+        {
+            return HttpUtility.HtmlDecode(target);
+        }
+
+        #endregion
+
+        #endregion
+
         #endregion
 
         #region 验证
@@ -685,26 +739,6 @@ namespace EInfrastructure.Core.Tools
             }
 
             return new Regex(regex, options).IsMatch(str);
-        }
-
-        #endregion
-
-        #region 根据身份证号码得到星座信息
-
-        /// <summary>
-        /// 根据身份证号码得到星座信息
-        /// </summary>
-        /// <param name="cardNo">身份证号码</param>
-        /// <returns></returns>
-        public static Constellation GetConstellation(this string cardNo)
-        {
-            if (cardNo.IsIdCard())
-            {
-                return ObjectCommon.SafeObject<Constellation>(!cardNo.IsNullOrWhiteSpace(),
-                    () => (cardNo.GetBirthday().GetConstellationFromBirthday(), Constellation.Unknow));
-            }
-
-            return Constellation.Unknow;
         }
 
         #endregion

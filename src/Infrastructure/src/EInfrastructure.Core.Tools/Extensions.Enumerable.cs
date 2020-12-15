@@ -251,6 +251,25 @@ namespace EInfrastructure.Core.Tools
             return ConvertToString(s.ToList(), c, isReplaceEmpty, isReplaceSpace);
         }
 
+        /// <summary>
+        /// 字符串数组转String(简单转换)
+        /// </summary>
+        /// <param name="s">带转换的list集合</param>
+        /// <param name="c">分割字符</param>
+        /// <param name="isReplaceEmpty">是否移除Null或者空字符串</param>
+        /// <param name="isReplaceSpace">是否去除空格(仅当为string有效)</param>
+        /// <returns></returns>
+        public static string ConvertToString(this string[] s, string c = ",", bool isReplaceEmpty = true,
+            bool isReplaceSpace = true)
+        {
+            if (s == null || s.Length == 0)
+            {
+                return "";
+            }
+
+            return ConvertToString(s.ToList(), c, isReplaceEmpty, isReplaceSpace);
+        }
+
         #endregion
 
         #endregion
@@ -337,7 +356,7 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="param"></param>
         /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <returns>如果param不为空，则返回param，否则返回空集合</returns>
         public static List<T> SafeList<T>(this IEnumerable<T> param)
         {
             return ObjectCommon.SafeObject(param != null,
@@ -357,6 +376,38 @@ namespace EInfrastructure.Core.Tools
         public static T[] SafeArray<T>(this IEnumerable<T> param)
         {
             return SafeList(param).ToArray();
+        }
+
+        #endregion
+
+        #region 根据条件查询不同的数据
+
+        /// <summary>
+        /// 根据条件查询不同的数据
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="keySelector"></param>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TOpt"></typeparam>
+        /// <returns></returns>
+        public static IEnumerable<TSource> Distinct<TSource, TOpt>(this IEnumerable<TSource> source, Func<TSource, TOpt> keySelector)
+        {
+            return source.Distinct(new CommonEqualityComparer<TSource, TOpt>(keySelector));
+        }
+
+        /// <summary>
+        ///根据条件查询不同的数据
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="keySelector"></param>
+        /// <param name="comparer"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> Distinct<T, V>(this IEnumerable<T> source, Func<T, V> keySelector,
+            IEqualityComparer<V> comparer)
+        {
+            return source.Distinct(new CommonEqualityComparer<T, V>(keySelector, comparer));
         }
 
         #endregion
@@ -391,38 +442,6 @@ namespace EInfrastructure.Core.Tools
 #else
             return enumerable;
 #endif
-        }
-
-        #endregion
-
-        #region 根据条件查询不同的数据
-
-        /// <summary>
-        /// 根据条件查询不同的数据
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="keySelector"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="V"></typeparam>
-        /// <returns></returns>
-        public static IEnumerable<T> Distinct<T, V>(this IEnumerable<T> source, Func<T, V> keySelector)
-        {
-            return source.Distinct(new CommonEqualityComparer<T, V>(keySelector));
-        }
-
-        /// <summary>
-        ///根据条件查询不同的数据
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="keySelector"></param>
-        /// <param name="comparer"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="V"></typeparam>
-        /// <returns></returns>
-        public static IEnumerable<T> Distinct<T, V>(this IEnumerable<T> source, Func<T, V> keySelector,
-            IEqualityComparer<V> comparer)
-        {
-            return source.Distinct(new CommonEqualityComparer<T, V>(keySelector, comparer));
         }
 
         #endregion

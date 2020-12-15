@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 
 using System;
+using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Tools.Enumerations;
 
 namespace EInfrastructure.Core.Tools.Internal.DateTimes
@@ -8,12 +9,12 @@ namespace EInfrastructure.Core.Tools.Internal.DateTimes
     /// <summary>
     /// 本季初
     /// </summary>
-    public class StartQuarterProvider:IDateTimeProvider
+    public class StartQuarterProvider : IdentifyDefault, IDateTimeProvider
     {
         /// <summary>
         /// 类型
         /// </summary>
-        public TimeType Type =>TimeType.StartQuarter;
+        public TimeType Type => TimeType.StartQuarter;
 
         /// <summary>
         /// 本季初

@@ -87,6 +87,26 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 转为队列
+
+        /// <summary>
+        /// 转为队列
+        /// </summary>
+        /// <param name="list"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static Queue<T> ConvertToQueue<T>(this List<T> list)
+        {
+            Queue<T> queues = new Queue<T>();
+            list.ForEach(item =>
+            {
+                queues.Enqueue(item);
+            });
+            return queues;
+        }
+
+        #endregion
+
         #region 移除
 
         /// <summary>

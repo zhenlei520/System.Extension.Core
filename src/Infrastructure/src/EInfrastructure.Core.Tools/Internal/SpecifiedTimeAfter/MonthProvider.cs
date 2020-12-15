@@ -2,18 +2,19 @@
 
 using System;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Tools.Internal.SpecifiedTimeAfter
 {
     /// <summary>
     /// 月
     /// </summary>
-    public class MonthProvider:ISpecifiedTimeAfterProvider
+    public class MonthProvider : IdentifyDefault, ISpecifiedTimeAfterProvider
     {
         /// <summary>
         /// 类型
         /// </summary>
-        public DurationType Type=>DurationType.Month;
+        public DurationType Type => DurationType.Month;
 
         /// <summary>
         /// 得到duration月后

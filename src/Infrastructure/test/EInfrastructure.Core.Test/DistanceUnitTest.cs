@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.Test
         [InlineData(34.780589d, 113.796848d, 34.784607d, 113.695997d)]
         public void GetDistance(double lat1, double lng1, double lat2, double lng2)
         {
-            var result = DistanceCommon.GetDistance(lat1, lng1, lat2, lng2);
+            var result = GeometryCommon.GetDistance(lat1, lng1, lat2, lng2);
         }
 
         [Theory]

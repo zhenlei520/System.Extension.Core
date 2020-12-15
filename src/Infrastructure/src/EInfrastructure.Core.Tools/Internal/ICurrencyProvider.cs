@@ -2,13 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Tools.Internal
 {
     /// <summary>
     ///
     /// </summary>
-    internal interface ICurrencyProvider
+    internal interface ICurrencyProvider: ISingleInstance, IIdentify
     {
         /// <summary>
         /// 数值类型转货币

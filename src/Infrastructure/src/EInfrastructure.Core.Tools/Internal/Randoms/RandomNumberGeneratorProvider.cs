@@ -3,14 +3,14 @@
 
 using System;
 using System.Text;
-using EInfrastructure.Core.Tools.Common.Randoms.Interface;
+using EInfrastructure.Core.Configuration.Ioc;
 
-namespace EInfrastructure.Core.Tools.Common.Randoms
+namespace EInfrastructure.Core.Tools.Internal.Randoms
 {
     /// <summary>
     /// 随机数字生成器
     /// </summary>
-    public class RandomNumberGenerator : IRandomNumberGenerator
+    public class RandomNumberGeneratorProvider : IdentifyDefault, IRandomNumberGeneratorProvider
     {
         /// <summary>
         /// 随机数
@@ -20,7 +20,7 @@ namespace EInfrastructure.Core.Tools.Common.Randoms
         /// <summary>
         /// 初始化随机数字生成器
         /// </summary>
-        public RandomNumberGenerator()
+        public RandomNumberGeneratorProvider()
         {
             Random = new Random();
         }

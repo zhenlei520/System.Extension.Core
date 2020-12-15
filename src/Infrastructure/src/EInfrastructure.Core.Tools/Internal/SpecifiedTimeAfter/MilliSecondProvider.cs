@@ -2,18 +2,19 @@
 
 using System;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Ioc;
 
 namespace EInfrastructure.Core.Tools.Internal.SpecifiedTimeAfter
 {
     /// <summary>
     /// 毫秒
     /// </summary>
-    public class MilliSecondProvider:ISpecifiedTimeAfterProvider
+    public class MilliSecondProvider : IdentifyDefault, ISpecifiedTimeAfterProvider
     {
         /// <summary>
         /// 类型
         /// </summary>
-        public DurationType Type=>DurationType.MilliSecond;
+        public DurationType Type => DurationType.MilliSecond;
 
         /// <summary>
         /// 得到duration毫秒后

@@ -9,25 +9,26 @@ namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Traditio
     /// <summary>
     /// 中国联通传统手机号校验
     /// </summary>
-    public class ChinaUnicomRegexConfigurationsProvider: BaseMobileRegexConfigurations, IMobileRegexConfigurationsProvider
+    public class ChinaUnicomRegexConfigurationsProvider : BaseMobileRegexConfigurations,
+        IMobileRegexConfigurationsProvider
     {
         /// <summary>
         /// 得到国家
         /// </summary>
         /// <returns></returns>
-        public Nationality Nationality=>Nationality.China;
+        public Nationality Nationality => Nationality.China;
 
         /// <summary>
         /// 得到运营商
         /// </summary>
         /// <returns></returns>
-        public CommunicationOperator CommunicationOperator=>CommunicationOperator.ChinaUnicom;
+        public CommunicationOperator CommunicationOperator => CommunicationOperator.ChinaUnicom;
 
         /// <summary>
         /// 得到运营商类型
         /// </summary>
         /// <returns></returns>
-        public CommunicationOperatorType CommunicationOperatorType=> CommunicationOperatorType.Traditional;
+        public CommunicationOperatorType CommunicationOperatorType => CommunicationOperatorType.Traditional;
 
         /// <summary>
         /// 得到正则
