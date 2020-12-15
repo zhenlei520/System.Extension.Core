@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
-using EInfrastructure.Core.Tools.Common.Systems;
 
 namespace EInfrastructure.Core.Tools.Common
 {

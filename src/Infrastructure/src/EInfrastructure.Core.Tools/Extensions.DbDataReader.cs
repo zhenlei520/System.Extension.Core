@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Reflection;
-using EInfrastructure.Core.Tools.Common;
 
 namespace EInfrastructure.Core.Tools
 {

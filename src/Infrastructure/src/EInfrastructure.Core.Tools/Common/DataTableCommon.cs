@@ -1,11 +1,8 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Linq;
-using System.Reflection;
 
 namespace EInfrastructure.Core.Tools.Common
 {

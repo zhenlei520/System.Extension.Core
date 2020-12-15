@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using EInfrastructure.Core.Tools.Common.Systems;
 
 namespace EInfrastructure.Core.Tools
 {

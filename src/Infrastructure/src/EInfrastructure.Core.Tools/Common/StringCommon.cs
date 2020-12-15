@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using EInfrastructure.Core.Tools.Common.Systems;
 
 namespace EInfrastructure.Core.Tools.Common
 {

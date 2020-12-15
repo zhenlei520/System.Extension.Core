@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using EInfrastructure.Core.Configuration.Enumerations;
 
 namespace EInfrastructure.Core.Tools
 {

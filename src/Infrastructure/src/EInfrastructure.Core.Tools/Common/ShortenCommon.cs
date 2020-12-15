@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using EInfrastructure.Core.Tools.Common.Systems;
 
 namespace EInfrastructure.Core.Tools.Common
 {

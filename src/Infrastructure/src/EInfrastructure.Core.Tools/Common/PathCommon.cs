@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using EInfrastructure.Core.Tools.Common.Systems;
 
 namespace EInfrastructure.Core.Tools.Common
 {
