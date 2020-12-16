@@ -2,10 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
+using EInfrastructure.Core.Tools.Configuration;
+using EInfrastructure.Core.Tools.Enumerations;
 
 namespace EInfrastructure.Core.Tools.Common
 {
@@ -213,6 +217,51 @@ namespace EInfrastructure.Core.Tools.Common
             }
 
             return Animal.GetAll<Animal>().FirstOrDefault(x => x.Id == index);
+        }
+
+        #endregion
+
+        #region 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
+
+        /// <summary>
+        /// 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
+        /// </summary>
+        /// <param name="timeKey">时间Key</param>
+        /// <param name="dateTime">指定时间，默认当前时间</param>
+        /// <returns></returns>
+        public static DateTime Get(TimeType timeKey, DateTime? dateTime = null)
+        {
+            return (dateTime ?? DateTime.Now).Get(timeKey);
+        }
+
+        #endregion
+
+        #region 得到耗时时间
+
+        /// <summary>
+        /// 得到耗时时间
+        /// </summary>
+        /// <param name="action">委托方法</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static TimeElapsed GetElapsedTime<T>(Action action)
+        {
+            return new TimeElapsed(action);
+        }
+
+        /// <summary>
+        /// 得到耗时时间
+        /// </summary>
+        /// <param name="func">委托方法</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static KeyValuePair<T, TimeElapsed> GetElapsedTime<T>(Func<T> func)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            T res = func.Invoke();
+            stopwatch.Stop();
+            return new KeyValuePair<T, TimeElapsed>(res, new TimeElapsed(stopwatch.ElapsedTicks));
         }
 
         #endregion

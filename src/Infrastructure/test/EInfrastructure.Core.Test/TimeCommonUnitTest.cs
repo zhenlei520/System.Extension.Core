@@ -187,7 +187,7 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void GetTotalTime()
         {
-            var str = new TimeDifference(() =>
+            var str = new TimeElapsed(() =>
             {
                 for (int i = 0; i < 1000; i++)
                 {

@@ -212,18 +212,16 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
         /// </summary>
-        /// <param name="timeKey">时间Key</param>
         /// <param name="dateTime">指定时间</param>
+        /// <param name="timeKey">时间Key</param>
         /// <returns></returns>
-        public static DateTime Get(this DateTime? dateTime, TimeType timeKey)
+        public static DateTime Get(this DateTime dateTime, TimeType timeKey)
         {
-            DateTime date = dateTime ?? DateTime.Now.Date; //当前时间
-
             var provider = _dateTimeProviders.Where(x => x.Type.Equals(timeKey)).OrderByDescending(x=>x.GetWeights()).FirstOrDefault();
 
             if (provider != null)
             {
-                return provider.GetResult(date);
+                return provider.GetResult(dateTime);
             }
 
             throw new NotSupportedException(nameof(timeKey));

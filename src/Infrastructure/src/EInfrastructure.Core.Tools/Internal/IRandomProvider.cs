@@ -87,6 +87,13 @@ namespace EInfrastructure.Core.Tools.Internal
         TEnum GenerateEnum<TEnum>();
 
         /// <summary>
+        /// 随机得到数组中的一个
+        /// </summary>
+        /// <typeparam name="T">数组的类型</typeparam>
+        /// <param name="arr">数组集合</param>
+        T GetRandom<T>(T[] arr);
+
+        /// <summary>
         /// 对一个数组进行随机排序
         /// </summary>
         /// <typeparam name="T">数组的类型</typeparam>

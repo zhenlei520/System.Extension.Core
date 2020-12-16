@@ -71,5 +71,50 @@ namespace EInfrastructure.Core.Tools
             number.ToString().RepairZero(limitedLength);
 
         #endregion
+
+        #region 校验
+
+        #region IsEven(是否偶数)
+
+        /// <summary>
+        /// 是否偶数
+        /// </summary>
+        /// <param name="value">值</param>
+        public static bool IsEven(this int value) => value % 2 == 0;
+        #endregion
+
+        #region IsOdd(是否奇数)
+
+        /// <summary>
+        /// 是否奇数
+        /// </summary>
+        /// <param name="value">值</param>
+        public static bool IsOdd(this int value) => value % 2 != 0;
+
+        #endregion
+
+        #region IsPrime(是否质数)
+
+        /// <summary>
+        /// 是否质数（素数），一个质数（或素数）是具有两个不同约束的自然数：1和它本身
+        /// </summary>
+        /// <param name="value">值</param>
+        public static bool IsPrime(this int value)
+        {
+            return value.ConvertToLong().IsPrime();
+        }
+
+        /// <summary>
+        /// 是否质数（素数），一个质数（或素数）是具有两个不同约束的自然数：1和它本身
+        /// </summary>
+        /// <param name="value">值</param>
+        public static bool IsPrime(this int? value)
+        {
+            return value.ConvertToLong().IsPrime();
+        }
+
+        #endregion
+
+        #endregion
     }
 }

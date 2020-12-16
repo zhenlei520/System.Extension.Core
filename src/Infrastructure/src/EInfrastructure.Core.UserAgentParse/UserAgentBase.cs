@@ -1859,7 +1859,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
                 if (Os.Name == "Android")
                 {
-                    switch (Browser.Version.ToString().ConvertStrToList<string>().Take(3).ConvertToString('.'))
+                    switch (Browser.Version.ToString().ConvertStrToList<string>(',').Take(3).ConvertToString('.'))
                     {
                         case "16.0.912":
                             Browser.Channel = "Beta";
@@ -1874,7 +1874,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 }
                 else
                 {
-                    switch (Browser.Version.ToString().ConvertStrToList<string>().Take(3).ConvertToString("."))
+                    switch (Browser.Version.ToString().ConvertStrToList<string>(',').Take(3).ConvertToString("."))
                     {
                         case "0.2.149":
                         case "0.3.154":

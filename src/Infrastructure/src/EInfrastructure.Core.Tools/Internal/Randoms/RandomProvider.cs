@@ -210,6 +210,23 @@ namespace EInfrastructure.Core.Tools.Internal.Randoms
 
         #endregion
 
+        #region 随机得到数组中的一个
+
+        /// <summary>
+        /// 随机得到数组中的一个
+        /// </summary>
+        /// <typeparam name="T">数组的类型</typeparam>
+        /// <param name="arr">数组集合</param>
+        public T GetRandom<T>(T[] arr)
+        {
+            if (arr == null || !arr.Any())
+                return default;
+            var r = new Random();
+            return arr[r.Next(arr.Length)];
+        }
+
+        #endregion
+
         #region 对一个数组进行随机排序
 
         /// <summary>
