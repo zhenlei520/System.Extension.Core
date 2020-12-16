@@ -95,10 +95,11 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
+        /// <param name="tableName">表名</param>
         /// <returns></returns>
-        public static DataTable ConvertToTable<T>(this IEnumerable<T> list) where T : class
+        public static DataTable ConvertToDataTable<T>(this IEnumerable<T> list, string tableName = null) where T : class
         {
-            DataTable table = DataTableCommon.CreateEmptyTable<T>();
+            DataTable table = DataTableCommon.CreateEmptyTable<T>(tableName);
             Type entityType = typeof(T);
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(entityType);
 

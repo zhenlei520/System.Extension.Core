@@ -16,12 +16,15 @@ namespace EInfrastructure.Core.Tools.Common
         /// <summary>
         /// 创建空表记录
         /// </summary>
+        /// <param name="tableName">表名，默认为空（如果为空，则以当前类名为表名）</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static DataTable CreateEmptyTable<T>() where T : class
+        public static DataTable CreateEmptyTable<T>(string tableName="") where T : class
         {
             Type entityType = typeof(T);
-            DataTable table = new DataTable(entityType.Name);
+            string name = ObjectCommon.SafeObject(tableName.IsNullOrEmpty(),
+                () => ValueTuple.Create(entityType.Name, tableName));
+            DataTable table = new DataTable(name);
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(entityType);
 
             foreach (PropertyDescriptor prop in properties)

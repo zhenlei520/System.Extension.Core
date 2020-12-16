@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Tools.Component;
 using EInfrastructure.Core.Tools.Internal;
 
@@ -233,9 +234,31 @@ namespace EInfrastructure.Core.Tools
         /// <param name="value">值</param>
         /// <param name="minValue">最小值</param>
         /// <param name="maxValue">最大值</param>
-        public static bool InRange<T>(this T value, T minValue, T maxValue) where T : IComparable
+        /// <param name="rangeMode">区间模式，如果为null，则视为开区间</param>
+        public static bool InRange<T>(this T value, T minValue, T maxValue, RangeMode rangeMode = null)
+            where T : IComparable
         {
-            return value.GreaterThanOrEqualTo(minValue) && value.LessThanOrEqualTo(maxValue);
+            if (rangeMode == null || rangeMode.Equals(RangeMode.Open))
+            {
+                return value.GreaterThanOrEqualTo(minValue) && value.LessThanOrEqualTo(maxValue);
+            }
+
+            if (rangeMode.Equals(RangeMode.Close))
+            {
+                return value.GreaterThan(minValue) && value.LessThan(maxValue);
+            }
+
+            if (rangeMode.Equals(RangeMode.OpenClose))
+            {
+                return value.GreaterThanOrEqualTo(minValue) && value.LessThan(maxValue);
+            }
+
+            if (rangeMode.Equals(RangeMode.CloseOpen))
+            {
+                return value.GreaterThan(minValue) && value.LessThanOrEqualTo(maxValue);
+            }
+
+            throw new NotImplementedException("不支持的区间模式");
         }
 
         #endregion
@@ -330,6 +353,7 @@ namespace EInfrastructure.Core.Tools
         {
             return value.ConvertToLong().IsPrime();
         }
+
         /// <summary>
         /// 是否质数（素数），一个质数（或素数）是具有两个不同约束的自然数：1和它本身
         /// </summary>
