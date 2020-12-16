@@ -4,14 +4,16 @@
   &lt;Assembly Path="C:\Users\wangz\.nuget\packages\qiniu\7.3.1.1\lib\Net40\Qiniu.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\wangz\.nuget\packages\sharedmemory\2.2.3\lib\netstandard2.1\SharedMemory.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7b6da7df_002D72b2_002D4e4d_002Da318_002D4248b80f8352/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ConvertToShort #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7b6da7df_002D72b2_002D4e4d_002Da318_002D4248b80f8352/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ConvertToShort #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TypeUnitTest.ConvertToShort&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TimeCommonUnitTest.SecondToMinute&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9718b02b_002D7db1_002D4853_002Da533_002Dc393ef557b87/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ConvertToShort" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9718b02b_002D7db1_002D4853_002Da533_002Dc393ef557b87/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ConvertToShort" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TypeUnitTest.ConvertToShort&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TimeCommonUnitTest.SecondToMinute&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

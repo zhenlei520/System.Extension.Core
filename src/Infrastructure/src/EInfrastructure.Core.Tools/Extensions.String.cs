@@ -141,6 +141,25 @@ namespace EInfrastructure.Core.Tools
         /// <param name="splitStr">要分割的字符,默认以,分割</param>
         /// <param name="isReplaceSpace">是否移除空格</param>
         /// <returns></returns>
+        public static List<T> ConvertStrToList<T>(this string str, string splitStr = ",", bool isReplaceSpace = true)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return new List<T>();
+            }
+
+            string[] strArray = str.Split(new[] {splitStr},
+                isReplaceSpace ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None);
+            return strArray.ChangeType<T>().ToList();
+        }
+
+        /// <summary>
+        /// 字符串转化为泛型集合
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <param name="splitStr">要分割的字符,默认以,分割</param>
+        /// <param name="isReplaceSpace">是否移除空格</param>
+        /// <returns></returns>
         public static List<T> ConvertStrToList<T>(this string str, char splitStr = ',', bool isReplaceSpace = true)
         {
             if (string.IsNullOrEmpty(str))
@@ -148,14 +167,9 @@ namespace EInfrastructure.Core.Tools
                 return new List<T>();
             }
 
-            string[] strArray = str.Split(splitStr);
-            Expression<Func<string, bool>> condition = x => true;
-            if (isReplaceSpace)
-            {
-                condition = condition.And(x => !string.IsNullOrEmpty(x));
-            }
-
-            return strArray.Where(condition.Compile()).ChangeType<T>().ToList();
+            string[] strArray = str.Split(new[] {splitStr},
+                isReplaceSpace ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None);
+            return strArray.ChangeType<T>().ToList();
         }
 
         #endregion
@@ -318,6 +332,81 @@ namespace EInfrastructure.Core.Tools
         /// <param name="text">原始字符串</param>
         /// <param name="limitedLength">字符串的固定长度</param>
         public static string RepairZero(this string text, int limitedLength) => text.PadLeft(limitedLength, '0');
+
+        #endregion
+
+        #region 半角与全角互转
+
+        #region 半角转全角
+
+        /// <summary>
+        /// 半角转全角
+        /// </summary>
+        /// <param name="str">待转换的字符串</param>
+        /// <returns></returns>
+        public static string ConvertToSbc(this string str)
+        {
+            char[] c = str.ToCharArray();
+            for (int i = 0; i < c.Length; i++)
+            {
+                c[i] = c[i].ConvertToSbc();
+            }
+
+            return new string(c);
+        }
+
+        #endregion
+
+        #region 全角转换为半角字符
+
+        /// <summary>
+        /// 全角转换为半角字符
+        /// </summary>
+        /// <param name="str">待转换的字符串</param>
+        public static string ConvertToDbc(this string str)
+        {
+            char[] c = str.ToCharArray();
+            for (int i = 0; i < c.Length; i++)
+            {
+                c[i] = c[i].ConvertToDbc();
+            }
+
+            return new string(c);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 提取字符串中所有数字
+
+        /// <summary>
+        /// 提取字符串中所有数字
+        /// </summary>
+        /// <param name="str">待提取的字符串</param>
+        /// <returns></returns>
+        public static string ExtractNumbers(this string str) => str.Where(char.IsDigit).ConvertToString();
+
+        #endregion
+
+        #region 提取字符串中所有字母
+
+        /// <summary>
+        /// 提取字符串中所有字母
+        /// </summary>
+        /// <param name="value">值</param>
+        public static string ExtractLetters(this string value) =>
+            value.Where(x => !x.IsChinese() && char.IsLetter(x)).ConvertToString();
+
+        #endregion
+
+        #region 提取字符串中所有汉字
+
+        /// <summary>
+        /// 提取字符串中所有汉字
+        /// </summary>
+        /// <param name="value">值</param>
+        public static string ExtractChinese(this string value) => value.Where(x => x.IsChinese()).ConvertToString();
 
         #endregion
 
@@ -886,7 +975,8 @@ namespace EInfrastructure.Core.Tools
                 condition = condition.And(x => x.CommunicationOperatorType.Equals(operatorType));
             }
 
-            var regexList = _mobileRegexConfigurations.Where(condition.Compile()).OrderByDescending(x=>x.GetWeights()).ToList();
+            var regexList = _mobileRegexConfigurations.Where(condition.Compile()).OrderByDescending(x => x.GetWeights())
+                .ToList();
 
             if (regexOptions == null)
             {

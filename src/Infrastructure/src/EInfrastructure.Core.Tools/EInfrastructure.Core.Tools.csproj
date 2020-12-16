@@ -110,6 +110,9 @@
     <Compile Update="Extensions.Validate.cs">
       <DependentUpon>Extensions.cs</DependentUpon>
     </Compile>
+    <Compile Update="Extensions.Char.cs">
+      <DependentUpon>Extensions.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

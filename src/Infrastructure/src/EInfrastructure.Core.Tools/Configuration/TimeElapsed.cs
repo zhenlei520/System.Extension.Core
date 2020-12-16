@@ -11,7 +11,7 @@ namespace EInfrastructure.Core.Tools.Configuration
     /// 可计算方法总共耗时情况
     /// 调用获取其耗时方法会触发一次委托方法，不调用获取计算耗时的方法不会执行委托
     /// </summary>
-    public class TimeDifference
+    public class TimeElapsed
     {
         private readonly Action _action;
 
@@ -30,9 +30,18 @@ namespace EInfrastructure.Core.Tools.Configuration
         ///
         /// </summary>
         /// <param name="action">委托方法</param>
-        public TimeDifference(Action action)
+        public TimeElapsed(Action action)
         {
             _action = action;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="ticks">刻度</param>
+        public TimeElapsed(long ticks)
+        {
+            this._ticks = ticks;
         }
 
         /// <summary>
