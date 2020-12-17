@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
@@ -446,6 +447,42 @@ namespace EInfrastructure.Core.Tools.Common
         }
 
         #endregion
+
+        #endregion
+
+        #region 将Csv读入DataTable
+
+        /// <summary>
+        /// 将Csv读入DataTable
+        /// </summary>
+        /// <param name="filePath">csv文件路径</param>
+        /// <param name="n">表示第n行是字段title,第n+1行是记录开始</param>
+        /// <param name="dataTable"></param>
+        public static DataTable ConvertCsvToDataTable(string filePath, int n, DataTable dataTable)
+        {
+            StreamReader reader = new StreamReader(filePath, System.Text.Encoding.UTF8, false);
+            int i = 0, m = 0;
+            reader.Peek();
+            while (reader.Peek() > 0)
+            {
+                m = m + 1;
+                string str = reader.ReadLine().SafeString();
+                if (m >= n + 1)
+                {
+                    string[] split = str.Split(',');
+
+                    System.Data.DataRow dr = dataTable.NewRow();
+                    for (i = 0; i < split.Length; i++)
+                    {
+                        dr[i] = split[i];
+                    }
+
+                    dataTable.Rows.Add(dr);
+                }
+            }
+
+            return dataTable;
+        }
 
         #endregion
 

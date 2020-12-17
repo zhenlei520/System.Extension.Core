@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Tools.Common;
@@ -116,6 +118,51 @@ namespace EInfrastructure.Core.Tools
             }
 
             return table;
+        }
+
+        #endregion
+
+        #region list 生成 CSV
+
+        /// <summary>
+        /// list 生成 CSV（等待测试）
+        /// </summary>
+        /// <param name="list">列表</param>
+        /// <param name="csvPath">csv文件路径</param>
+        /// <param name="tableName">默认表名</param>
+        public static void DataTableToCsv<T>(this IEnumerable<T> list, string csvPath,string tableName) where T : class
+        {
+            if (null == list)
+                return;
+
+            StringBuilder csvText = new StringBuilder();
+            StringBuilder csvrowText = new StringBuilder();
+
+            Type entityType = typeof(T);
+            string name = ObjectCommon.SafeObject(tableName.IsNullOrEmpty(),
+                () => ValueTuple.Create(entityType.Name, tableName));
+            DataTable table = new DataTable(name);
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(entityType);
+
+            foreach (PropertyDescriptor prop in properties)
+            {
+                csvrowText.Append(",");
+                csvrowText.Append(prop.Name);
+            }
+            foreach (T item in list)
+            {
+                csvrowText = new StringBuilder();
+
+                foreach (PropertyDescriptor prop in properties)
+                {
+                    csvrowText.Append(",");
+                    csvrowText.Append(prop.GetValue(item)?.ToString().SafeString()??"");
+                }
+
+                csvText.AppendLine(csvrowText.ToString().Substring(1));
+            }
+
+            File.WriteAllText(csvPath, csvText.ToString(), Encoding.Default);
         }
 
         #endregion
