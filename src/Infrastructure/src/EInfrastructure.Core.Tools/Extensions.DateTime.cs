@@ -217,7 +217,8 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static DateTime Get(this DateTime dateTime, TimeType timeKey)
         {
-            var provider = _dateTimeProviders.Where(x => x.Type.Equals(timeKey)).OrderByDescending(x=>x.GetWeights()).FirstOrDefault();
+            var provider = _dateTimeProviders.Where(x => x.Type.Equals(timeKey)).OrderByDescending(x => x.GetWeights())
+                .FirstOrDefault();
 
             if (provider != null)
             {
@@ -242,14 +243,42 @@ namespace EInfrastructure.Core.Tools
         {
             DateTime date = dateTime ?? DateTime.Now.Date; //当前时间
 
-            var provider = _specifiedTimeAfterProviders.Where(x => x.Type.Equals(timeType)).OrderByDescending(x=>x.GetWeights()).FirstOrDefault();
+            var provider = _specifiedTimeAfterProviders.Where(x => x.Type.Equals(timeType))
+                .OrderByDescending(x => x.GetWeights()).FirstOrDefault();
 
             if (provider != null)
             {
-                return provider.GetResult(date, duration);
+                var res = provider.GetResult(date, duration);
+                return res.ConvertToDateTimeOffset();
             }
 
             throw new NotSupportedException(nameof(timeType));
+        }
+
+        #endregion
+
+        #region 转换为DateTimeOffset
+
+        /// <summary>
+        /// 转换为DateTimeOffset
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static DateTimeOffset ConvertToDateTimeOffset(this DateTime dateTime)
+        {
+            return dateTime.ToUniversalTime() <= DateTimeOffset.MinValue.UtcDateTime
+                ? DateTimeOffset.MinValue
+                : new DateTimeOffset(dateTime);
+        }
+
+        /// <summary>
+        /// 转换为DateTimeOffset
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static DateTimeOffset ConvertToDateTimeOffset(this DateTime? dateTime)
+        {
+            return (dateTime ?? DateTime.Now).ConvertToDateTimeOffset();
         }
 
         #endregion
@@ -628,7 +657,8 @@ namespace EInfrastructure.Core.Tools
         /// <param name="dateTime">阴历日期</param>
         public static DateTime GetLunarYearDate(this DateTime dateTime)
         {
-            return TimeCommon.GetLunarYearDate(dateTime.Year, dateTime.Month, dateTime.Day, DateTime.IsLeapYear(dateTime.Year));
+            return TimeCommon.GetLunarYearDate(dateTime.Year, dateTime.Month, dateTime.Day,
+                DateTime.IsLeapYear(dateTime.Year));
         }
 
         #endregion
