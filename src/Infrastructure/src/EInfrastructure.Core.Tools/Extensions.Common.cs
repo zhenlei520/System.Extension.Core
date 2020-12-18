@@ -178,18 +178,18 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="stream">Stream</param>
         /// <returns></returns>
-        public static byte[] ConvertToByteArray(this Stream stream)
+        public static byte[] ConvertToByteArrayByStream(this Stream stream)
         {
-            return stream.ConvertToByteArrayAsync(true).Result;
+            return stream.ConvertToByteArrayAsyncByStream(true).Result;
         }
 
         /// <summary>
         /// 流转换为字节流
         /// </summary>
         /// <param name="stream">流</param>
-        public static async Task<byte[]> ConvertToByteArrayAsync(Stream stream)
+        public static async Task<byte[]> ConvertToByteArrayAsyncByStream(Stream stream)
         {
-            return await stream.ConvertToByteArrayAsync(false);
+            return await stream.ConvertToByteArrayAsyncByStream(false);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="stream"></param>
         /// <param name="isSync"></param>
         /// <returns></returns>
-        private static async Task<byte[]> ConvertToByteArrayAsync(this Stream stream, bool isSync)
+        private static async Task<byte[]> ConvertToByteArrayAsyncByStream(this Stream stream, bool isSync)
         {
             if (stream == null || !stream.CanRead)
             {
@@ -226,32 +226,7 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region String转换为Byte数组
 
-        /// <summary>
-        /// String转换为Byte数组
-        /// </summary>
-        /// <param name="para">待转换参数</param>
-        /// <returns></returns>
-        public static byte[] ConvertToByteArray(this string para)
-        {
-            return para.ConvertToByteArray(Encoding.UTF8);
-        }
-
-        /// <summary>
-        /// String转换为Byte数组
-        /// </summary>
-        /// <param name="para">待转换参数</param>
-        /// <param name="encoding">编码格式</param>
-        /// <returns></returns>
-        public static byte[] ConvertToByteArray(this string para, Encoding encoding)
-        {
-            if (string.IsNullOrWhiteSpace(para))
-                return new byte[] { };
-            return encoding.GetBytes(para);
-        }
-
-        #endregion
 
         #endregion
 
@@ -423,16 +398,16 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region base64字符串转byte数组
+        #region Base64算法加密
 
         /// <summary>
-        /// 文件base64转byte数组
+        /// Base64算法加密
         /// </summary>
-        /// <param name="base64">文件base64</param>
+        /// <param name="str">字符串</param>
         /// <returns></returns>
-        public static byte[] ConvertToByte(this string base64)
+        public static byte[] ConvertToBase64ByteArray(this string str)
         {
-            return Convert.FromBase64String(base64);
+            return Convert.FromBase64String(str);
         }
 
         #endregion
@@ -447,6 +422,17 @@ namespace EInfrastructure.Core.Tools
         public static string ConvertToBase64(this byte[] param)
         {
             return Convert.ToBase64String(param);
+        }
+
+        /// <summary>
+        /// byte数组转换为base64
+        /// </summary>
+        /// <param name="inArray"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        public static string ConvertToBase64(this byte[] inArray, int offset)
+        {
+            return Convert.ToBase64String(inArray, offset,inArray.Length);
         }
 
         #endregion
@@ -470,7 +456,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static async Task<string> ConvertToBase64Async(this Stream stream)
         {
-            return ConvertToBase64(await stream.ConvertToByteArrayAsync(false));
+            return ConvertToBase64(await stream.ConvertToByteArrayAsyncByStream(false));
         }
 
         #endregion

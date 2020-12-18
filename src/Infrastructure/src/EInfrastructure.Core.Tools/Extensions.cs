@@ -22,6 +22,7 @@ namespace EInfrastructure.Core.Tools
             InitWeek();
             InitDateTimeProvider();
             InitValidate();
+            InitSecurity();
         }
 
         #region 初始化星座

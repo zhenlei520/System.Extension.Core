@@ -15,6 +15,7 @@ namespace EInfrastructure.Core.Configuration.Enumerations.SeedWork
         {
 
         }
+
         /// <summary>
         ///
         /// </summary>

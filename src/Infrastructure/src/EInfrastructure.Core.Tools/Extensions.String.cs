@@ -12,8 +12,10 @@ using System.Web;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Tools.Common;
+using EInfrastructure.Core.Tools.Configuration;
 using EInfrastructure.Core.Tools.Enumerations;
 using EInfrastructure.Core.Tools.Internal;
+using EInfrastructure.Core.Tools.Internal.Security;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -22,6 +24,24 @@ namespace EInfrastructure.Core.Tools
     /// </summary>
     public partial class Extensions
     {
+        #region MyRegion
+
+        private static IEnumerable<ISecurityProvider> _securityProviders;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public static void InitSecurity()
+        {
+            _securityProviders = new List<ISecurityProvider>()
+            {
+                new AesProvider(),
+                new DesProvider()
+            };
+        }
+
+        #endregion
+
         #region 大小写转换
 
         #region 全部转换为大小写
@@ -410,6 +430,33 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region String转换为Byte数组
+
+        /// <summary>
+        /// String转换为Byte数组
+        /// </summary>
+        /// <param name="para">待转换参数</param>
+        /// <returns></returns>
+        public static byte[] ConvertToByteArray(this string para)
+        {
+            return para.ConvertToByteArray(Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// String转换为Byte数组
+        /// </summary>
+        /// <param name="para">待转换参数</param>
+        /// <param name="encoding">编码格式</param>
+        /// <returns></returns>
+        public static byte[] ConvertToByteArray(this string para, Encoding encoding)
+        {
+            if (string.IsNullOrWhiteSpace(para))
+                return new byte[] { };
+            return encoding.GetBytes(para);
+        }
+
+        #endregion
+
         #region 加密管理
 
         #region Aes加解密
@@ -421,11 +468,11 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="str">待加密字符串</param>
         /// <param name="key">aes秘钥（32位）</param>
-        /// <param name="errCode"></param>
         /// <returns></returns>
-        public static string AesEncrypt(this string str, string key, int? errCode = null)
+        public static string AesEncrypt(this string str, string key)
         {
-            return SecurityCommon.AesEncrypt(str, key, errCode);
+            var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.Aes));
+            return provider?.Encrypt(str, new EncryptInfos(key, "", Encoding.UTF8))??throw new NotImplementedException("Unsupported encryption methods");
         }
 
         #endregion
@@ -437,11 +484,87 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="str">待解密字符串</param>
         /// <param name="key">aes秘钥（32位）</param>
-        /// <param name="errCode">错误码</param>
         /// <returns></returns>
-        public static string AesDecrypt(string str, string key, int? errCode = null)
+        public static string AesDecrypt(this string str, string key)
         {
-            return SecurityCommon.AesDecrypt(str, key, errCode);
+            var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.Aes));
+            return provider?.Decrypt(str, new EncryptInfos(key, "", Encoding.UTF8))??throw new NotImplementedException("Unsupported decryption methods");
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Des加密
+
+        #region 对字符串进行DES加密
+
+        /// <summary>
+        /// 对字符串进行DES加密
+        /// </summary>
+        /// <param name="str">待加密的字符串</param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
+        /// <returns>加密后的BASE64编码的字符串</returns>
+        public static string DesEncrypt(this string str, string key, string iv)
+        {
+            var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.Des));
+            return provider?.Encrypt(str, new EncryptInfos(key, iv, Encoding.UTF8))??throw new NotImplementedException("Unsupported encryption methods");
+        }
+
+        #endregion
+
+        #region 对DES加密后的字符串进行解密
+
+        /// <summary>
+        /// 对DES加密后的字符串进行解密
+        /// </summary>
+        /// <param name="str">待解密的字符串</param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
+        /// <returns>解密后的字符串</returns>
+        public static string DesDecrypt(this string str, string key, string iv)
+        {
+            var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.Des));
+            return provider?.Decrypt(str, new EncryptInfos(key, iv, Encoding.UTF8))??throw new NotImplementedException("Unsupported decryption methods");
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Js Aes 加解密
+
+        #region JS Aes 加密
+
+        /// <summary>
+        /// JsAesEncrypt
+        /// </summary>
+        /// <param name="str">待解密字符串</param>
+        /// <param name="key">秘钥</param>
+        /// <param name="iv">偏移量</param>
+        /// <returns></returns>
+        public static string JsAesEncrypt(this string str, string key, string iv)
+        {
+            var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.JsAes));
+            return provider?.Encrypt(str, new EncryptInfos(key, iv, Encoding.UTF8))??throw new NotImplementedException("Unsupported encryption methods");
+        }
+
+        #endregion
+
+        #region JS Aes解密
+
+        /// <summary>
+        /// JS Aes解密
+        /// </summary>
+        /// <param name="str">待加密字符串</param>
+        /// <param name="key">秘钥</param>
+        /// <param name="iv">偏移量</param>
+        /// <returns></returns>
+        public static string JsAesDecrypt(this string str, string key, string iv)
+        {
+            var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.JsAes));
+            return provider?.Decrypt(str, new EncryptInfos(key, iv, Encoding.UTF8))??throw new NotImplementedException("Unsupported encryption methods");
         }
 
         #endregion
@@ -477,42 +600,6 @@ namespace EInfrastructure.Core.Tools
         public static string GetMd5Hash(this string str, Encoding encoding = null, bool isUpper = true)
         {
             return SecurityCommon.GetMd5Hash(str, encoding, isUpper);
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Des加密
-
-        #region 对字符串进行DES加密
-
-        /// <summary>
-        /// 对字符串进行DES加密
-        /// </summary>
-        /// <param name="str">待加密的字符串</param>
-        /// <param name="key"></param>
-        /// <param name="iv"></param>
-        /// <returns>加密后的BASE64编码的字符串</returns>
-        public static string DesEncrypt(this string str, string key, string iv)
-        {
-            return SecurityCommon.DesEncrypt(str, key, iv);
-        }
-
-        #endregion
-
-        #region 对DES加密后的字符串进行解密
-
-        /// <summary>
-        /// 对DES加密后的字符串进行解密
-        /// </summary>
-        /// <param name="str">待解密的字符串</param>
-        /// <param name="key"></param>
-        /// <param name="iv"></param>
-        /// <returns>解密后的字符串</returns>
-        public static string DesDecrypt(string str, string key, string iv)
-        {
-            return SecurityCommon.DesDecrypt(str, key, iv);
         }
 
         #endregion
@@ -577,42 +664,6 @@ namespace EInfrastructure.Core.Tools
         public static string Sha512(this string str, bool isUpper = true)
         {
             return SecurityCommon.Sha512(str, isUpper);
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Js Aes 加解密
-
-        #region JS Aes解密
-
-        /// <summary>
-        /// JS Aes解密
-        /// </summary>
-        /// <param name="str">待加密字符串</param>
-        /// <param name="key">秘钥</param>
-        /// <param name="iv">偏移量</param>
-        /// <returns></returns>
-        public static string JsAesDecrypt(this string str, string key, string iv)
-        {
-            return SecurityCommon.JsAesDecrypt(str, key, iv);
-        }
-
-        #endregion
-
-        #region JS Aes 加密
-
-        /// <summary>
-        /// JsAesEncrypt
-        /// </summary>
-        /// <param name="str">待解密字符串</param>
-        /// <param name="key">秘钥</param>
-        /// <param name="iv">偏移量</param>
-        /// <returns></returns>
-        public static string JsAesEncrypt(this string str, string key, string iv)
-        {
-            return SecurityCommon.JsAesEncrypt(str, key, iv);
         }
 
         #endregion
