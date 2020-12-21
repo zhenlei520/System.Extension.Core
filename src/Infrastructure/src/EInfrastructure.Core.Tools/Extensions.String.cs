@@ -928,6 +928,28 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 清空小数点后0
+
+        /// <summary>
+        /// 保留两位小数并对其四舍五入，如果最后的两位小数为*.00则去除小数位，否则保留两位小数
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string ClearDecimal(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return "0";
+            str = float.Parse(str).ToString("0.00");
+            if (Int32.Parse(str.Substring(str.IndexOf(".", StringComparison.Ordinal) + 1)) == 0)
+            {
+                return str.Substring(0, str.IndexOf(".", StringComparison.Ordinal));
+            }
+
+            return str;
+        }
+
+        #endregion
+
         #region 验证
 
         #region 判断正则表达式是否匹配

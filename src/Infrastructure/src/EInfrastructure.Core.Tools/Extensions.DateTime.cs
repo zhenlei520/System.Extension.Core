@@ -212,6 +212,17 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
         /// </summary>
+        /// <param name="dateTime">指定时间，如果为null，则默认当前时间</param>
+        /// <param name="timeKey">时间Key</param>
+        /// <returns></returns>
+        public static DateTime Get(this DateTime? dateTime, TimeType timeKey)
+        {
+            return (dateTime ?? DateTime.Now).Get(timeKey);
+        }
+
+        /// <summary>
+        /// 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
+        /// </summary>
         /// <param name="dateTime">指定时间</param>
         /// <param name="timeKey">时间Key</param>
         /// <returns></returns>

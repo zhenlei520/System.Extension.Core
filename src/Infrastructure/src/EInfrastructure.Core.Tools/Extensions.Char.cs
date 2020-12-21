@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Configuration.Exception;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -86,6 +87,68 @@ namespace EInfrastructure.Core.Tools
             if (bytes.Length == 1)
                 return bytes[0];
             return bytes[0] * 0x100 + bytes[1] - 0x10000;
+        }
+
+        #endregion
+
+        #region 加密显示以*表示
+
+        /// <summary>
+        /// 加密显示以*表示
+        /// </summary>
+        /// <param name="number">显示N位*,-1默认显示6位</param>
+        /// <param name="symbol">特殊符号，默认为*</param>
+        /// <param name="errCode">错误码</param>
+        /// <returns></returns>
+        public static string GetContentByEncryption(this char? symbol, int number = 6,
+            int? errCode = null)
+        {
+            if (symbol == null)
+            {
+                symbol = '*';
+            }
+
+            string result = ""; //结果
+            if (number < 0)
+            {
+                throw new BusinessException("number必须为正整数", HttpStatus.Err.Id);
+            }
+
+            for (int i = 0; i < number; i++)
+            {
+                result += symbol;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 加密显示以*表示
+        /// </summary>
+        /// <param name="symbol">特殊符号，默认为*</param>
+        /// <param name="number">显示N次*,-1默认显示6位</param>
+        /// <param name="errCode">错误码</param>
+        /// <returns></returns>
+        public static string GetContentByEncryption(this string symbol, int number = 6,
+            int? errCode = null)
+        {
+            if (string.IsNullOrEmpty(symbol))
+            {
+                symbol = "*";
+            }
+
+            string result = ""; //结果
+            if (number < 0)
+            {
+                throw new BusinessException("number必须为正整数", HttpStatus.Err.Id);
+            }
+
+            for (int i = 0; i < number; i++)
+            {
+                result += symbol;
+            }
+
+            return result;
         }
 
         #endregion
