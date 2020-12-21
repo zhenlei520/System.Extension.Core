@@ -75,5 +75,34 @@ namespace EInfrastructure.Core.Tools
         }
 
         #endregion
+
+        #region 将byte[]数组保存成文件
+
+        /// <summary>
+        /// 将byte[]数组保存成文件
+        /// </summary>
+        /// <param name="byteArray">byte[]数组</param>
+        /// <param name="localFilePath">保存至硬盘的文件路径</param>
+        /// <returns></returns>
+        public static bool SaveByteToFile(this byte[] byteArray, string localFilePath)
+        {
+            bool result;
+            try
+            {
+                using (FileStream fs = new FileStream(localFilePath, FileMode.OpenOrCreate, FileAccess.Write))
+                {
+                    fs.Write(byteArray, 0, byteArray.Length);
+                    result = true;
+                }
+            }
+            catch
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }
