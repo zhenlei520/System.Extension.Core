@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.Tools
     /// </summary>
     public partial class Extensions
     {
-        #region MyRegion
+        #region 初始化加密
 
         private static IEnumerable<ISecurityProvider> _securityProviders;
 
@@ -36,7 +36,8 @@ namespace EInfrastructure.Core.Tools
             _securityProviders = new List<ISecurityProvider>()
             {
                 new AesProvider(),
-                new DesProvider()
+                new DesProvider(),
+                new JsAesProvider()
             };
         }
 
@@ -228,6 +229,38 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 得到第number次出现character的位置下标
+
+        /// <summary>
+        /// 得到第number次出现str的位置下标
+        /// </summary>
+        /// <param name="parameter">待匹配字符串</param>
+        /// <param name="str">匹配的字符串</param>
+        /// <param name="number">得到第number次（默认第1次）</param>
+        /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
+        /// <returns></returns>
+        public static int IndexOf(this string parameter, string str, int number = 1, int defaultIndexof = -1)
+        {
+            if (string.IsNullOrEmpty(parameter) || number <= 0)
+            {
+                return defaultIndexof;
+            }
+
+            int index = 0;
+            int count = 1; //第1次匹配
+            while (count < number)
+            {
+                var tempIndex = (parameter.IndexOf(str, StringComparison.Ordinal));
+                index += tempIndex;
+                parameter = parameter.Substring(tempIndex + 1);
+                count++;
+            }
+
+            return index + parameter.IndexOf(str, StringComparison.Ordinal) + number - 1;
+        }
+
+        #endregion
+
         #region 得到倒数第number次出现character的位置下标
 
         /// <summary>
@@ -242,6 +275,25 @@ namespace EInfrastructure.Core.Tools
         public static int LastIndexOf(this string parameter, char character, int number = 1, int defaultIndexof = -1)
         {
             return IndexOf(parameter, character, parameter.Split(character).Length - number, defaultIndexof);
+        }
+
+        #endregion
+
+        #region 得到倒数第number次出现str的位置下标
+
+        /// <summary>
+        /// 得到倒数第number次出现str的位置下标
+        /// </summary>
+        /// <param name="parameter">待匹配字符串</param>
+        /// <param name="str">匹配的字符串</param>
+        /// <param name="number">倒数第n次出现（默认倒数第1次）</param>
+        /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
+        /// <returns></returns>
+        // ReSharper disable once InconsistentNaming
+        public static int LastIndexOf(this string parameter, string str, int number = 1, int defaultIndexof = -1)
+        {
+            var array = parameter.Split(str, false);
+            return IndexOf(parameter, str, array.Length - number, defaultIndexof);
         }
 
         #endregion
@@ -457,6 +509,24 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region MyRegion
+
+        /// <summary>
+        /// 分割
+        /// </summary>
+        /// <param name="str">待分割的字符串</param>
+        /// <param name="splitString">分割符</param>
+        /// <param name="isReplaceEmpty">是否移除空格，默认移除</param>
+        /// <returns></returns>
+        public static string[] Split(this string str, string splitString,bool isReplaceEmpty=true)
+        {
+            StringSplitOptions stringSplitOptions =
+                isReplaceEmpty ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None;
+            return str.SafeString().Split(new[] {splitString}, stringSplitOptions);
+        }
+
+        #endregion
+
         #region 加密管理
 
         #region Aes加解密
@@ -472,7 +542,8 @@ namespace EInfrastructure.Core.Tools
         public static string AesEncrypt(this string str, string key)
         {
             var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.Aes));
-            return provider?.Encrypt(str, new EncryptInfos(key, "", Encoding.UTF8))??throw new NotImplementedException("Unsupported encryption methods");
+            return provider?.Encrypt(str, new EncryptInfos(key, "", Encoding.UTF8)) ??
+                   throw new NotImplementedException("Unsupported encryption methods");
         }
 
         #endregion
@@ -488,7 +559,8 @@ namespace EInfrastructure.Core.Tools
         public static string AesDecrypt(this string str, string key)
         {
             var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.Aes));
-            return provider?.Decrypt(str, new EncryptInfos(key, "", Encoding.UTF8))??throw new NotImplementedException("Unsupported decryption methods");
+            return provider?.Decrypt(str, new EncryptInfos(key, "", Encoding.UTF8)) ??
+                   throw new NotImplementedException("Unsupported decryption methods");
         }
 
         #endregion
@@ -509,7 +581,8 @@ namespace EInfrastructure.Core.Tools
         public static string DesEncrypt(this string str, string key, string iv)
         {
             var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.Des));
-            return provider?.Encrypt(str, new EncryptInfos(key, iv, Encoding.UTF8))??throw new NotImplementedException("Unsupported encryption methods");
+            return provider?.Encrypt(str, new EncryptInfos(key, iv, Encoding.UTF8)) ??
+                   throw new NotImplementedException("Unsupported encryption methods");
         }
 
         #endregion
@@ -526,7 +599,8 @@ namespace EInfrastructure.Core.Tools
         public static string DesDecrypt(this string str, string key, string iv)
         {
             var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.Des));
-            return provider?.Decrypt(str, new EncryptInfos(key, iv, Encoding.UTF8))??throw new NotImplementedException("Unsupported decryption methods");
+            return provider?.Decrypt(str, new EncryptInfos(key, iv, Encoding.UTF8)) ??
+                   throw new NotImplementedException("Unsupported decryption methods");
         }
 
         #endregion
@@ -547,7 +621,8 @@ namespace EInfrastructure.Core.Tools
         public static string JsAesEncrypt(this string str, string key, string iv)
         {
             var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.JsAes));
-            return provider?.Encrypt(str, new EncryptInfos(key, iv, Encoding.UTF8))??throw new NotImplementedException("Unsupported encryption methods");
+            return provider?.Encrypt(str, new EncryptInfos(key, iv, Encoding.UTF8)) ??
+                   throw new NotImplementedException("Unsupported encryption methods");
         }
 
         #endregion
@@ -564,7 +639,8 @@ namespace EInfrastructure.Core.Tools
         public static string JsAesDecrypt(this string str, string key, string iv)
         {
             var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.JsAes));
-            return provider?.Decrypt(str, new EncryptInfos(key, iv, Encoding.UTF8))??throw new NotImplementedException("Unsupported encryption methods");
+            return provider?.Decrypt(str, new EncryptInfos(key, iv, Encoding.UTF8)) ??
+                   throw new NotImplementedException("Unsupported encryption methods");
         }
 
         #endregion
