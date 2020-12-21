@@ -147,7 +147,7 @@ namespace EInfrastructure.Core.Tools.Common
         public static string DecodeBase64(string param, Encoding encoding)
         {
             string decode = "";
-            byte[] bytes = Convert.FromBase64String(param);
+            byte[] bytes = param.ConvertToBase64ByteArray();
             try
             {
                 decode = encoding.GetString(bytes);

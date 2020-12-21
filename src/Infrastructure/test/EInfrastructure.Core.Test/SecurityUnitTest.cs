@@ -87,7 +87,7 @@ namespace EInfrastructure.Core.Test
             CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(), CryptoStreamMode.Write);
             cs.Write(inputByteArray, 0, inputByteArray.Length);
             cs.FlushFinalBlock();
-            var result = Convert.ToBase64String(ms.ToArray());
+            var result= ms.ToArray().ConvertToBase64();
             return result;
         }
     }

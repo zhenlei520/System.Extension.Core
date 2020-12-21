@@ -76,7 +76,7 @@ namespace EInfrastructure.Core.Tools.Common
             {
                 // 256-AES key
                 byte[] keyArray = Encoding.UTF8.GetBytes(key);
-                byte[] toEncryptArray = Convert.FromBase64String(str);
+                byte[] toEncryptArray = str.ConvertToBase64ByteArray();
 
                 RijndaelManaged rDel = new RijndaelManaged
                 {
@@ -206,7 +206,7 @@ namespace EInfrastructure.Core.Tools.Common
                     cs.FlushFinalBlock();
                 }
 
-                return Convert.ToBase64String(ms.ToArray());
+                return (ms.ToArray()).ConvertToBase64();
             }
         }
 
@@ -225,7 +225,7 @@ namespace EInfrastructure.Core.Tools.Common
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
             using (MemoryStream ms = new MemoryStream())
             {
-                byte[] inData = Convert.FromBase64String(str);
+                byte[] inData = str.ConvertToBase64ByteArray();
                 using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(btKey, btIv), CryptoStreamMode.Write))
                 {
                     cs.Write(inData, 0, inData.Length);
@@ -453,7 +453,7 @@ namespace EInfrastructure.Core.Tools.Common
             using (var hmacsha1 = new HMACSHA1(keyByte))
             {
                 byte[] hashmessage = hmacsha1.ComputeHash(messageBytes);
-                return Convert.ToBase64String(hashmessage);
+                return hashmessage.ConvertToBase64();
             }
         }
 
@@ -476,7 +476,7 @@ namespace EInfrastructure.Core.Tools.Common
             using (var hmacsha256 = new HMACSHA256(keyByte))
             {
                 byte[] hashmessage = hmacsha256.ComputeHash(messageBytes);
-                return Convert.ToBase64String(hashmessage);
+                return hashmessage.ConvertToBase64();
             }
         }
 
@@ -499,7 +499,7 @@ namespace EInfrastructure.Core.Tools.Common
             using (var hmacsha384 = new HMACSHA384(keyByte))
             {
                 byte[] hashmessage = hmacsha384.ComputeHash(messageBytes);
-                return Convert.ToBase64String(hashmessage);
+                return hashmessage.ConvertToBase64();
             }
         }
 
@@ -522,7 +522,7 @@ namespace EInfrastructure.Core.Tools.Common
             using (var hmacsha512 = new HMACSHA512(keyByte))
             {
                 byte[] hashmessage = hmacsha512.ComputeHash(messageBytes);
-                return Convert.ToBase64String(hashmessage);
+                return hashmessage.ConvertToBase64();
             }
         }
 

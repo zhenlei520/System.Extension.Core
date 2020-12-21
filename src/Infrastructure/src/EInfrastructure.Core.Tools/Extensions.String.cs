@@ -912,6 +912,20 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region Base64算法加密
+
+        /// <summary>
+        /// Base64算法加密
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <returns></returns>
+        public static byte[] ConvertToBase64ByteArray(this string str)
+        {
+            return Convert.FromBase64String(str);
+        }
+
+        #endregion
+
         #endregion
 
         #region 验证
