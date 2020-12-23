@@ -45,6 +45,17 @@ namespace EInfrastructure.Core.Tools.Internal.Randoms
 
         #endregion
 
+        #region 生成一个0.0到1.0的随机小数
+
+        /// <summary>
+        /// 生成一个0.0到1.0的随机小数
+        /// </summary>
+        public double GenerateDouble()
+        {
+            return this.Random.NextDouble();
+        }
+        #endregion
+
         #region 生成指定位数的随机数字
 
         /// <summary>

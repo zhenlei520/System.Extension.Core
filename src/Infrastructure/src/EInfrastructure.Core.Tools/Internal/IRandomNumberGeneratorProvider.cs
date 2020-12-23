@@ -19,6 +19,11 @@ namespace EInfrastructure.Core.Tools.Internal
         int Generate(int min, int max, bool isHighPerformance = false);
 
         /// <summary>
+        /// 生成一个0.0到1.0的随机小数
+        /// </summary>
+        double GenerateDouble();
+
+        /// <summary>
         /// 生成指定位数的随机数字
         /// </summary>
         /// <param name="num">长度</param>
