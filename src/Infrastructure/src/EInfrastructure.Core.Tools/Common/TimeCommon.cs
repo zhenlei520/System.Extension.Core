@@ -43,94 +43,68 @@ namespace EInfrastructure.Core.Tools.Common
 
         #endregion
 
+        #region 是否闰年
+
+        /// <summary>
+        /// 是否闰年
+        /// </summary>
+        /// <param name="year">年</param>
+        /// <returns></returns>
+        public static bool IsLeapYear(int year)
+        {
+            return DateTime.IsLeapYear(year);
+        }
+
+        #endregion
+
         #region 返回某年某月最后一天
 
         /// <summary>
         /// 返回某年某月最后一天
+        /// 月份不能为0，可以超过12也可以低于0，如14月，即year+1，month：2
         /// </summary>
         /// <param name="year">年份</param>
         /// <param name="month">月份</param>
         /// <returns>日</returns>
         public static int GetMonthLastDate(int year, int month)
         {
-            DateTime lastDay = new DateTime(year, month, new GregorianCalendar().GetDaysInMonth(year, month));
+            CheckDateTime(year, month);
+            DateTime lastDay = new DateTime(year, month, GlobalConfigurations.Calendar.GetDaysInMonth(year, month));
             int day = lastDay.Day;
             return day;
         }
 
         #endregion
 
-        #region 返回每月的第一天和最后一天
+        #region 得到指定月份的第一天
 
         /// <summary>
-        /// 返回每月的第一天和最后一天
+        /// 得到指定月份的第一天
         /// </summary>
-        /// <param name="year"></param>
-        /// <param name="month"></param>
-        /// <param name="firstDay"></param>
-        /// <param name="lastDay"></param>
-        public static void ReturnDateFormat(int year, int month, out string firstDay, out string lastDay)
+        /// <param name="year">年</param>
+        /// <param name="month">月</param>
+        /// <returns></returns>
+        public static DateTime GetSpecifyMonthFirstDay(int year, int month)
         {
-            year = year + month / 12;
-            if (month != 12)
-            {
-                month = month % 12;
-                month = Math.Abs(month);
-            }
+            CheckDateTime(year, month);
+            return new DateTime(year, month, 1);
+        }
 
-            switch (month)
-            {
-                case 1:
-                    firstDay = DateTime.Now.ToString(year + "-0" + month + "-01");
-                    lastDay = DateTime.Now.ToString(year + "-0" + month + "-31");
-                    break;
-                case 2:
-                    firstDay = DateTime.Now.ToString(year + "-0" + month + "-01");
-                    lastDay = DateTime.IsLeapYear(year)
-                        ? DateTime.Now.ToString(year + "-0" + month + "-29")
-                        : DateTime.Now.ToString(year + "-0" + month + "-28");
-                    break;
-                case 3:
-                    firstDay = DateTime.Now.ToString(year + "-0" + month + "-01");
-                    lastDay = DateTime.Now.ToString("yyyy-0" + month + "-31");
-                    break;
-                case 4:
-                    firstDay = DateTime.Now.ToString(year + "-0" + month + "-01");
-                    lastDay = DateTime.Now.ToString(year + "-0" + month + "-30");
-                    break;
-                case 5:
-                    firstDay = DateTime.Now.ToString(year + "-0" + month + "-01");
-                    lastDay = DateTime.Now.ToString(year + "-0" + month + "-31");
-                    break;
-                case 6:
-                    firstDay = DateTime.Now.ToString(year + "-0" + month + "-01");
-                    lastDay = DateTime.Now.ToString(year + "-0" + month + "-30");
-                    break;
-                case 7:
-                    firstDay = DateTime.Now.ToString(year + "-0" + month + "-01");
-                    lastDay = DateTime.Now.ToString(year + "-0" + month + "-31");
-                    break;
-                case 8:
-                    firstDay = DateTime.Now.ToString(year + "-0" + month + "-01");
-                    lastDay = DateTime.Now.ToString(year + "-0" + month + "-31");
-                    break;
-                case 9:
-                    firstDay = DateTime.Now.ToString(year + "-0" + month + "-01");
-                    lastDay = DateTime.Now.ToString(year + "-0" + month + "-30");
-                    break;
-                case 10:
-                    firstDay = DateTime.Now.ToString(year + "-" + month + "-01");
-                    lastDay = DateTime.Now.ToString(year + "-" + month + "-31");
-                    break;
-                case 11:
-                    firstDay = DateTime.Now.ToString(year + "-" + month + "-01");
-                    lastDay = DateTime.Now.ToString(year + "-" + month + "-30");
-                    break;
-                default:
-                    firstDay = DateTime.Now.ToString(year + "-" + month + "-01");
-                    lastDay = DateTime.Now.ToString(year + "-" + month + "-31");
-                    break;
-            }
+        #endregion
+
+        #region 得到指定月份的最后一天
+
+        /// <summary>
+        /// 得到指定月份的最后一天
+        /// </summary>
+        /// <param name="year">年</param>
+        /// <param name="month">月</param>
+        /// <returns></returns>
+        public static DateTime GetSpecifyMonthLastDay(int year, int month)
+        {
+            CheckDateTime(year, month);
+            var lastDay = GetMonthLastDate(year, month);
+            return new DateTime(year, month, lastDay);
         }
 
         #endregion
@@ -141,7 +115,7 @@ namespace EInfrastructure.Core.Tools.Common
         /// 获取指定年份春节当日（正月初一）的阳历日期
         /// </summary>
         /// <param name="year">指定的年份</param>
-        private static DateTime GetLunarNewYearDate(int year)
+        public static DateTime GetLunarNewYearDate(int year)
         {
             DateTime dt = new DateTime(year, 1, 1);
             int cnYear = Extensions.Calendar.GetYear(dt);
@@ -195,10 +169,27 @@ namespace EInfrastructure.Core.Tools.Common
 
         #endregion
 
+        #region 得到日期
+
+        /// <summary>
+        /// 得到日期
+        /// </summary>
+        /// <param name="year">年</param>
+        /// <param name="month">月</param>
+        /// <param name="day">日</param>
+        /// <returns></returns>
+        public static DateTime Get(int year, int month, int day)
+        {
+            return new DateTime(year, month, day);
+        }
+
+        #endregion
+
         #region 根据出生年份得到生肖信息
 
         /// <summary>
         /// 根据出生年份得到生肖信息
+        /// 超过2099年低于1582年的为null
         /// </summary>
         /// <param name="year">年</param>
         /// <returns></returns>
@@ -247,6 +238,27 @@ namespace EInfrastructure.Core.Tools.Common
             stopwatch.Stop();
             return new KeyValuePair<T, TimeElapsed>(res, new TimeElapsed(stopwatch.ElapsedTicks));
         }
+
+        #endregion
+
+        #region private methods
+
+        #region 检查时间，月份必须在1-12之间
+
+        /// <summary>
+        /// 检查时间，月份必须在1-12之间
+        /// </summary>
+        /// <param name="year">年</param>
+        /// <param name="month">月</param>
+        private static void CheckDateTime(int year, int month)
+        {
+            if (month < 1 || month > 12)
+            {
+                throw new NotSupportedException("The month must be from January to December till now");
+            }
+        }
+
+        #endregion
 
         #endregion
     }

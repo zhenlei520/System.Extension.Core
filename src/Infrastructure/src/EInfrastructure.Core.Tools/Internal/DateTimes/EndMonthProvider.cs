@@ -23,7 +23,8 @@ namespace EInfrastructure.Core.Tools.Internal.DateTimes
         /// <returns></returns>
         public DateTime GetResult(DateTime date)
         {
-            return date.AddDays(1 - date.Day).AddMonths(1).AddDays(-1);
+            var lastDay=GlobalConfigurations.Calendar.GetDaysInMonth(date.Year,date.Month);
+            return new DateTime(date.Year, date.Month, lastDay);
         }
     }
 }

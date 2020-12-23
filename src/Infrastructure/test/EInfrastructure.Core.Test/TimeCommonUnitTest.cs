@@ -9,6 +9,7 @@ using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Common;
 using EInfrastructure.Core.Tools.Configuration;
 using EInfrastructure.Core.Tools.Enumerations;
+using EInfrastructure.Core.Tools.Internal.DateTimes;
 using Xunit;
 
 namespace EInfrastructure.Core.Test
@@ -45,12 +46,12 @@ namespace EInfrastructure.Core.Test
         [Theory]
         [InlineData(2019, 1, "2019-01-01", "2019-01-31")]
         [InlineData(2019, 2, "2019-02-01", "2019-02-28")]
-        [InlineData(2019, 12, "2019-12-01", "2019-12-28")]
-        [InlineData(2019, -14, "2018-02-01", "2018-02-29")]
+        [InlineData(2019, 12, "2019-12-01", "2019-12-31")]
         [InlineData(2000, 2, "2000-02-01", "2000-02-29")]
         public void ReturnDateFormat(int year, int month, string firstDay, string lastDay)
         {
-            TimeCommon.ReturnDateFormat(year, month, out string firstDay2, out string lastDay2);
+            string firstDay2 = TimeCommon.GetSpecifyMonthFirstDay(year, month).FormatDate(FormatDateType.Zero);
+            string lastDay2 = TimeCommon.GetSpecifyMonthLastDay(year, month).FormatDate(FormatDateType.Zero);
             Check.True(firstDay == firstDay2, "方法有误");
             Check.True(lastDay == lastDay2, "方法有误");
         }
@@ -187,6 +188,9 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void GetTotalTime()
         {
+            var re=TimeCommon.GetSpecifyMonthFirstDay(2020, 12);
+            var re2=TimeCommon.GetSpecifyMonthLastDay(2020, 1);
+            var re3=TimeCommon.GetSpecifyMonthLastDay(2020, 2);
             var str = new TimeElapsed(() =>
             {
                 for (int i = 0; i < 1000; i++)

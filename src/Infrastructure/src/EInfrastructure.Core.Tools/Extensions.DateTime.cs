@@ -669,7 +669,7 @@ namespace EInfrastructure.Core.Tools
         public static DateTime GetLunarYearDate(this DateTime dateTime)
         {
             return TimeCommon.GetLunarYearDate(dateTime.Year, dateTime.Month, dateTime.Day,
-                DateTime.IsLeapYear(dateTime.Year));
+                TimeCommon.IsLeapYear(dateTime.Year));
         }
 
         #endregion
