@@ -122,6 +122,9 @@
     <Compile Update="Extensions.Object.cs">
       <DependentUpon>Extensions.cs</DependentUpon>
     </Compile>
+    <Compile Update="Extensions.Double.cs">
+      <DependentUpon>Extensions.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

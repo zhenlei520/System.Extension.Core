@@ -21,10 +21,10 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 转换为货币
         /// </summary>
-        /// <param name="param">带转换的金额</param>
+        /// <param name="dec">带转换的金额</param>
         /// <param name="currencyType">货币类型，默认人民币</param>
         /// <returns></returns>
-        public static string ConvertToCurrency(this decimal param, CurrencyType currencyType = null)
+        public static string ConvertToCurrency(this decimal dec, CurrencyType currencyType = null)
         {
             if (currencyType == null)
             {
@@ -33,13 +33,14 @@ namespace EInfrastructure.Core.Tools
 
             IEnumerable<ICurrencyProvider> list =
                 new ServiceProvider().GetServices<ICurrencyProvider>();
-            var provider = list.Where(x => x.GetCurrencyType.Equals(currencyType)).OrderByDescending(x=>x.GetWeights()).FirstOrDefault();
+            var provider = list.Where(x => x.GetCurrencyType.Equals(currencyType))
+                .OrderByDescending(x => x.GetWeights()).FirstOrDefault();
             if (provider == null)
             {
                 throw new BusinessException("暂不支持当前货币转换");
             }
 
-            return provider.ConvertToCurrency(param);
+            return provider.ConvertToCurrency(dec);
         }
 
         #endregion
@@ -49,14 +50,32 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 返回数字的绝对值
         /// </summary>
-        /// <param name="param">值</param>
-        public static decimal Abs(this decimal param) => Math.Abs(param);
+        /// <param name="dec">值</param>
+        public static decimal Abs(this decimal dec) => Math.Abs(dec);
 
         /// <summary>
         /// 返回数字的绝对值
         /// </summary>
-        /// <param name="param">值</param>
-        public static IEnumerable<decimal> Abs(this IEnumerable<decimal> param) => param.Select(x => x.Abs());
+        /// <param name="dec">值</param>
+        public static IEnumerable<decimal> Abs(this IEnumerable<decimal> dec) => dec.Select(x => x.Abs());
+
+        #endregion
+
+        #region 保留指定位数(默认四舍五入)
+
+        /// <summary>
+        /// 保留指定位数(默认四舍五入)
+        /// </summary>
+        /// <param name="dec">值</param>
+        /// <param name="num">保留位数</param>
+        /// <param name="midpointRounding">默认正常的四舍五入</param>
+        /// <returns></returns>
+        public static string ToFixed(this decimal dec, int num,
+            MidpointRounding midpointRounding = MidpointRounding.AwayFromZero)
+        {
+            dec = Math.Round(dec, num, midpointRounding);
+            return dec.ToString("0." + "".RepairZero(num));
+        }
 
         #endregion
     }
