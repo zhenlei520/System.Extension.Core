@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -52,6 +53,69 @@ namespace EInfrastructure.Core.Tools
             return rows.ConvertRowsToList<T>();
         }
 
+        #endregion
+
+        #region Datatable转换为Json
+        /// <summary>
+        /// Datatable转换为Json
+        /// </summary>
+        /// <param name="dataTable">Datatable对象</param>
+        /// <returns>Json字符串</returns>
+        public static string ConvertToJson(this DataTable dataTable)
+        {
+            StringBuilder jsonString = new StringBuilder();
+            jsonString.Append("[");
+            DataRowCollection drc = dataTable.Rows;
+            for (int i = 0; i < drc.Count; i++)
+            {
+                jsonString.Append("{");
+                for (int j = 0; j < dataTable.Columns.Count; j++)
+                {
+                    string strKey = dataTable.Columns[j].ColumnName;
+                    string strValue = drc[i][j].ToString();
+                    Type type = dataTable.Columns[j].DataType;
+                    jsonString.Append("\"" + strKey + "\":");
+                    strValue = StringFormat(strValue, type);
+                    if (j < dataTable.Columns.Count - 1)
+                    {
+                        jsonString.Append(strValue + ",");
+                    }
+                    else
+                    {
+                        jsonString.Append(strValue);
+                    }
+                }
+                jsonString.Append("},");
+            }
+            jsonString.Remove(jsonString.Length - 1, 1);
+            jsonString.Append("]");
+            return jsonString.ToString();
+        }
+
+        /// <summary>
+        /// 格式化字符型、日期型、布尔型
+        /// </summary>
+        private static string StringFormat(string str, Type type)
+        {
+            if (type == typeof(string))
+            {
+                str = str.FormatEscapes();
+                str = "\"" + str + "\"";
+            }
+            else if (type == typeof(DateTime))
+            {
+                str = "\"" + str + "\"";
+            }
+            else if (type == typeof(bool))
+            {
+                str = str.ToLower();
+            }
+            else if (type != typeof(string) && string.IsNullOrEmpty(str))
+            {
+                str = "\"" + str + "\"";
+            }
+            return str;
+        }
         #endregion
 
         #region 检查DataTable 是否有数据行

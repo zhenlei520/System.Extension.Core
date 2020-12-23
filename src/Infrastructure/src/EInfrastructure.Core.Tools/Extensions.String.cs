@@ -1051,6 +1051,56 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 格式化转义符
+
+        /// <summary>
+        /// 格式化转义符
+        /// </summary>
+        /// <param name="str">待格式化字符串</param>
+        /// <returns></returns>
+        public static string FormatEscapes(this string str)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < str.Length; i++)
+            {
+                char c = str.ToCharArray()[i];
+                switch (c)
+                {
+                    case '\"':
+                        sb.Append("\\\"");
+                        break;
+                    case '\\':
+                        sb.Append("\\\\");
+                        break;
+                    case '/':
+                        sb.Append("\\/");
+                        break;
+                    case '\b':
+                        sb.Append("\\b");
+                        break;
+                    case '\f':
+                        sb.Append("\\f");
+                        break;
+                    case '\n':
+                        sb.Append("\\n");
+                        break;
+                    case '\r':
+                        sb.Append("\\r");
+                        break;
+                    case '\t':
+                        sb.Append("\\t");
+                        break;
+                    default:
+                        sb.Append(c);
+                        break;
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        #endregion
+
         #region 验证
 
         #region 判断正则表达式是否匹配
@@ -1425,6 +1475,76 @@ namespace EInfrastructure.Core.Tools
         {
             return GetRegexConfigurations().GetRegex(RegexDefault.Ip).IsMatch(str);
         }
+
+        #endregion
+
+        #region 是否内网ip
+
+        /// <summary>
+        /// 判断IP地址是否为内网IP地址
+        /// </summary>
+        /// <param name="ip">IP地址字符串</param>
+        /// <returns></returns>
+        public static bool IsInnerIp(this string ip)
+        {
+            var ipList = ip.Split('.');
+            if (ipList.Length != 4 || ipList.Any(x => !x.IsNumber()))
+            {
+                return false;
+            }
+
+            long ipNum = GetIpNum(ip);
+
+            long aBegin = GetIpNum("10.0.0.0");
+            long aEnd = GetIpNum("10.255.255.255");
+
+            long bBegin = GetIpNum("172.16.0.0");
+            long bEnd = GetIpNum("172.31.255.255");
+
+            long cBegin = GetIpNum("192.168.0.0");
+            long cEnd = GetIpNum("192.168.255.255");
+            var isInnerIp = IsInner(ipNum, aBegin, aEnd) || IsInner(ipNum, bBegin, bEnd) ||
+                            IsInner(ipNum, cBegin, cEnd) ||
+                            ip.Equals("127.0.0.1");
+            return isInnerIp;
+        }
+
+        #region 把IP地址转换为Long型数字
+
+        /// <summary>
+        /// 把IP地址转换为Long型数字
+        /// </summary>
+        /// <param name="ipAddress">IP地址字符串</param>
+        /// <returns></returns>
+        private static long GetIpNum(string ipAddress)
+        {
+            string[] ip = ipAddress.Split('.');
+            long a = int.Parse(ip[0]);
+            long b = int.Parse(ip[1]);
+            long c = int.Parse(ip[2]);
+            long d = int.Parse(ip[3]);
+
+            long ipNum = a * 256 * 256 * 256 + b * 256 * 256 + c * 256 + d;
+            return ipNum;
+        }
+
+        #endregion
+
+        #region 判断用户IP地址转换为Long型后是否在内网IP地址所在范围
+
+        /// <summary>
+        /// 判断用户IP地址转换为Long型后是否在内网IP地址所在范围
+        /// </summary>
+        /// <param name="userIp">用户ip</param>
+        /// <param name="begin">开始</param>
+        /// <param name="end">结束</param>
+        /// <returns></returns>
+        private static bool IsInner(long userIp, long begin, long end)
+        {
+            return userIp >= begin && (userIp <= end);
+        }
+
+        #endregion
 
         #endregion
 

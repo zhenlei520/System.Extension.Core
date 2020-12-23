@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Reflection;
+using System.Text;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -58,6 +59,48 @@ namespace EInfrastructure.Core.Tools
 
                 return list;
             }
+        }
+
+        #endregion
+
+        #region DataReader转换为Json
+
+        /// <summary>
+        /// DataReader转换为Json
+        /// </summary>
+        /// <param name="dataReader">DataReader对象</param>
+        /// <returns>Json字符串</returns>
+        public static string ConvertToJson(this DbDataReader dataReader)
+        {
+            StringBuilder jsonString = new StringBuilder();
+            jsonString.Append("[");
+            while (dataReader.Read())
+            {
+                jsonString.Append("{");
+                for (int i = 0; i < dataReader.FieldCount; i++)
+                {
+                    Type type = dataReader.GetFieldType(i);
+                    string strKey = dataReader.GetName(i);
+                    string strValue = dataReader[i].ToString();
+                    jsonString.Append("\"" + strKey + "\":");
+                    strValue = StringFormat(strValue, type);
+                    if (i < dataReader.FieldCount - 1)
+                    {
+                        jsonString.Append(strValue + ",");
+                    }
+                    else
+                    {
+                        jsonString.Append(strValue);
+                    }
+                }
+
+                jsonString.Append("},");
+            }
+
+            dataReader.Close();
+            jsonString.Remove(jsonString.Length - 1, 1);
+            jsonString.Append("]");
+            return jsonString.ToString();
         }
 
         #endregion

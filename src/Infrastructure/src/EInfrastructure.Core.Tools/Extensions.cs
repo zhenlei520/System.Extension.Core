@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.Tools
         static Extensions()
         {
             InitConstellationData();
-            InitChinaDate();
+            InitDate();
             InitDateTimeProvider();
             InitValidate();
             InitSecurity();
