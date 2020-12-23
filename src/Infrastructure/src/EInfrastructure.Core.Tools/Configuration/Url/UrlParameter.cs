@@ -9,7 +9,7 @@ using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using Newtonsoft.Json;
 
-namespace EInfrastructure.Core.Tools.Url
+namespace EInfrastructure.Core.Tools.Configuration.Url
 {
     /// <summary>
     /// Url参数

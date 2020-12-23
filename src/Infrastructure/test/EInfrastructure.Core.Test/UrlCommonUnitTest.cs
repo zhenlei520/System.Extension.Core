@@ -3,7 +3,7 @@
 
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools.Common;
-using EInfrastructure.Core.Tools.Url;
+using EInfrastructure.Core.Tools.Configuration.Url;
 using Xunit;
 
 namespace EInfrastructure.Core.Test

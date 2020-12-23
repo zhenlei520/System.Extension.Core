@@ -6,7 +6,7 @@ using System.Text;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 
-namespace EInfrastructure.Core.Tools.Url
+namespace EInfrastructure.Core.Tools.Configuration.Url
 {
     /// <summary>
     /// url地址
