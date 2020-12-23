@@ -509,6 +509,31 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 得到指定下标的字符串
+
+        /// <summary>
+        /// 得到指定下标的字符串
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public static string GetSafeString(this string[] array, int index)
+        {
+            if (index < 0)
+            {
+                throw new NotSupportedException("Unsupported subscript");
+            }
+
+            if (array.IsNull() || array.Length < index - 1)
+            {
+                return string.Empty;
+            }
+
+            return array[index].SafeString();
+        }
+
+        #endregion
+
         #region 分割
 
         /// <summary>
@@ -518,7 +543,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="splitString">分割符</param>
         /// <param name="isReplaceEmpty">是否移除空格，默认移除</param>
         /// <returns></returns>
-        public static string[] Split(this string str, string splitString,bool isReplaceEmpty=true)
+        public static string[] Split(this string str, string splitString, bool isReplaceEmpty = true)
         {
             StringSplitOptions stringSplitOptions =
                 isReplaceEmpty ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None;

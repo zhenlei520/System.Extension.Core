@@ -18,8 +18,7 @@ namespace EInfrastructure.Core.Tools.Url
         /// </summary>
         /// <param name="host">域</param>
         /// <param name="url">完整的url地址</param>
-        /// <param name="isUseHttps"></param>
-        public Url(string host, string url, bool? isUseHttps = null) : this(GetFullPath(host, url), isUseHttps)
+        public Url(string host, string url) : this(GetFullPath(host, url))
         {
         }
 
@@ -27,22 +26,25 @@ namespace EInfrastructure.Core.Tools.Url
         ///
         /// </summary>
         /// <param name="url">完整的url地址</param>
-        /// <param name="isUseHttps">是否是https，默认自动识别</param>
-        public Url(string url, bool? isUseHttps = null)
+        public Url(string url)
         {
-            if (string.IsNullOrEmpty(url))
+            if (url.IsNullOrWhiteSpace())
                 throw new BusinessException("url is not empty", HttpStatus.Err.Id);
+            if (!url.StartsWith("http://") && !url.StartsWith("https://"))
+            {
+                throw new Exception("Please enter the correct url");
+            }
+
             var uri = new Uri(url);
             Host = uri.Host;
             Scheme = uri.Scheme.ToLowers();
-            IsHttps = isUseHttps ?? Scheme.Equals("https", StringComparison.CurrentCultureIgnoreCase);
+            IsHttps = Scheme.Equals("https", StringComparison.CurrentCultureIgnoreCase);
             PathAndQuery = uri.PathAndQuery;
-            Path = PathAndQuery.Split('?')[0].Trim();
-            RequestUrl = url.Split('?')[0].Trim();
-            RequestUrl = FormatUrl(RequestUrl, IsHttps);
+            Path = PathAndQuery.Split('?').GetSafeString(0).Trim();
+            RequestUrl = url.Split('?').GetSafeString(0).Trim();
             if (url.Split('?').Length > 1)
             {
-                UrlParameter = new UrlParameter(url.Split('?')[1].Trim());
+                UrlParameter = new UrlParameter(url.Split('?').GetSafeString(1).Trim());
             }
             else
             {
