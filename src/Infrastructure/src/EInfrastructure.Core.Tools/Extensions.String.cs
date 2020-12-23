@@ -509,7 +509,7 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region MyRegion
+        #region 分割
 
         /// <summary>
         /// 分割

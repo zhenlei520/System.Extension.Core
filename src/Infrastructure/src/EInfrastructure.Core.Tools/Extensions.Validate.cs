@@ -41,7 +41,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsDouble(this object expression)
         {
-            return expression.ConvertToDouble() != null;
+            return expression.ConvertToDouble() .IsNull()==false;
         }
 
         #endregion
@@ -55,7 +55,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsDecimal(this object expression)
         {
-            return expression.ConvertToDecimal() != null;
+            return expression.ConvertToDecimal() .IsNull()==false;
         }
 
         #endregion
@@ -69,7 +69,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsLong(this object expression)
         {
-            return expression.ConvertToLong() != null;
+            return expression.ConvertToLong() .IsNull()==false;
         }
 
         #endregion
@@ -83,7 +83,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsInt(this object expression)
         {
-            return expression.ConvertToInt() != null;
+            return expression.ConvertToInt() .IsNull()==false;
         }
 
         #endregion
@@ -97,7 +97,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsShort(this object expression)
         {
-            return expression.ConvertToShort() != null;
+            return expression.ConvertToShort() .IsNull()==false;
         }
 
         #endregion
@@ -111,7 +111,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsGuid(this object expression)
         {
-            return expression.ConvertToGuid() != null;
+            return expression.ConvertToGuid() .IsNull()==false;
         }
 
         #endregion
@@ -125,7 +125,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsChar(this object expression)
         {
-            return expression.ConvertToChar() != null;
+            return expression.ConvertToChar() .IsNull()==false;
         }
 
         #endregion
@@ -139,7 +139,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsFloat(this object expression)
         {
-            return expression.ConvertToFloat() != null;
+            return expression.ConvertToFloat() .IsNull()==false;
         }
 
         #endregion
@@ -153,7 +153,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsDateTime(this object expression)
         {
-            return expression.ConvertToDateTime() != null;
+            return expression.ConvertToDateTime() .IsNull()==false;
         }
 
         #endregion
@@ -167,7 +167,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsByte(this object expression)
         {
-            return expression.ConvertToByte() != null;
+            return expression.ConvertToByte().IsNull()==false;
         }
 
         #endregion
@@ -181,7 +181,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsSByte(this object expression)
         {
-            return expression.ConvertToSByte() != null;
+            return expression.ConvertToSByte().IsNull()==false;
         }
 
         #endregion
@@ -195,7 +195,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsBool(this object expression)
         {
-            return expression.ConvertToBool() != null;
+            return expression.ConvertToBool().IsNull()==false;
         }
 
         #endregion
@@ -310,7 +310,6 @@ namespace EInfrastructure.Core.Tools
         }
 
         #endregion
-
 
         #region 刷新手机号验证
 

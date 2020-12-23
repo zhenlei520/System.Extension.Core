@@ -140,5 +140,11 @@ namespace EInfrastructure.Core.Tools
             ChangeResult<DateTime>(ref parameter1, ref parameter2);
         }
         #endregion
+
+        #region private methods
+
+
+
+        #endregion
     }
 }

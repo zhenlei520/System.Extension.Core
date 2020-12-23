@@ -10,9 +10,14 @@ namespace EInfrastructure.Core.Tools
     internal class GlobalConfigurations
     {
         /// <summary>
-        ///
+        /// 国际日历
         /// </summary>
         public static GregorianCalendar Calendar;
+
+        /// <summary>
+        /// 中国日历
+        /// </summary>
+        internal static ChineseLunisolarCalendar ChineseCalendar;
 
         /// <summary>
         ///
@@ -20,6 +25,7 @@ namespace EInfrastructure.Core.Tools
         static GlobalConfigurations()
         {
             Calendar = new GregorianCalendar();
+            ChineseCalendar = new ChineseLunisolarCalendar();
         }
     }
 }

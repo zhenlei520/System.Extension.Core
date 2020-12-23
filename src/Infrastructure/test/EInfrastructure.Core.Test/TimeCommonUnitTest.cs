@@ -9,7 +9,6 @@ using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Common;
 using EInfrastructure.Core.Tools.Configuration;
 using EInfrastructure.Core.Tools.Enumerations;
-using EInfrastructure.Core.Tools.Internal.DateTimes;
 using Xunit;
 
 namespace EInfrastructure.Core.Test
@@ -157,17 +156,6 @@ namespace EInfrastructure.Core.Test
         }
 
         [Theory]
-        [InlineData("2019-07-29", "星期一")]
-        public void GetDayName2(string date, string dateStr)
-        {
-            var time = DateTime.Parse(date).GetDayName(new[]
-            {
-                "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"
-            });
-            Check.True(time == dateStr, "方法异常");
-        }
-
-        [Theory]
         [InlineData("2019-12-9")]
         [InlineData("2019-12-14")]
         [InlineData("2019-12-15")]
@@ -188,9 +176,7 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void GetTotalTime()
         {
-            var re=TimeCommon.GetSpecifyMonthFirstDay(2020, 12);
-            var re2=TimeCommon.GetSpecifyMonthLastDay(2020, 1);
-            var re3=TimeCommon.GetSpecifyMonthLastDay(2020, 2);
+            Assert.True( DateTime.Parse("2020-11-26").GetHoliday()=="感恩节");
             var str = new TimeElapsed(() =>
             {
                 for (int i = 0; i < 1000; i++)

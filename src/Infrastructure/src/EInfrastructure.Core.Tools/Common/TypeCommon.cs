@@ -31,5 +31,19 @@ namespace EInfrastructure.Core.Tools.Common
         }
 
         #endregion
+
+        #region 得到完整的FullName
+
+        /// <summary>
+        /// 得到完整的FullName
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static string GetFullName(Type type)
+        {
+            return type.FullName.SafeString();
+        }
+
+        #endregion
     }
 }

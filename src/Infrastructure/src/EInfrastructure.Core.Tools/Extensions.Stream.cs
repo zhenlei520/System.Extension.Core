@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="stream">Stream</param>
         /// <returns></returns>
-        public static byte[] ConvertToByteArrayByStream(this Stream stream)
+        public static byte[] ConvertToByteArray(this Stream stream)
         {
             return stream.ConvertToByteArrayAsyncByStream(true).ConfigureAwait(false).GetAwaiter().GetResult();
         }
@@ -27,7 +28,7 @@ namespace EInfrastructure.Core.Tools
         /// 流转换为字节流
         /// </summary>
         /// <param name="stream">流</param>
-        public static async Task<byte[]> ConvertToByteArrayAsyncByStream(this Stream stream)
+        public static async Task<byte[]> ConvertToByteArrayAsync(this Stream stream)
         {
             return await stream.ConvertToByteArrayAsyncByStream(false);
         }
@@ -218,6 +219,100 @@ namespace EInfrastructure.Core.Tools
         public static async Task<string> ConvertToBase64Async(this Stream stream)
         {
             return ConvertToBase64(await stream.ConvertToByteArrayAsyncByStream(false));
+        }
+
+        #endregion
+
+        #region 得到哈希值
+
+        #region md5加密得到哈希值
+
+        /// <summary>
+        /// md5加密得到哈希值
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <param name="isUpper">是否大写，默认大写</param>
+        /// <returns></returns>
+        public static string GetHashByMd5(this Stream stream, bool isUpper = true)
+        {
+            return stream.GetSha(new MD5CryptoServiceProvider(), isUpper);
+        }
+
+        #endregion
+
+        #region Sha1加密得到哈希值
+
+        /// <summary>
+        /// Sha1加密得到哈希值
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <param name="isUpper">是否大写</param>
+        /// <returns></returns>
+        public static string GetHashBySha1(this Stream stream, bool isUpper = true)
+        {
+            return stream.GetSha(new SHA1CryptoServiceProvider(), isUpper);
+        }
+
+        #endregion
+
+        #region Sha256加密得到哈希值
+
+        /// <summary>
+        /// Sha256加密得到哈希值
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <param name="isUpper">是否大写，默认大写</param>
+        /// <returns></returns>
+        public static string GetHashBySha256(this Stream stream, bool isUpper = true)
+        {
+            return stream.GetSha(new SHA256CryptoServiceProvider(), isUpper);
+        }
+
+        #endregion
+
+        #region Sha384加密得到哈希值
+
+        /// <summary>
+        /// Sha384加密得到哈希值
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <param name="isUpper">是否大写，默认大写</param>
+        /// <returns></returns>
+        public static string GetHashBySha384(this Stream stream, bool isUpper = true)
+        {
+            return stream.GetSha(new SHA384CryptoServiceProvider(), isUpper);
+        }
+
+        #endregion
+
+        #region Sha512加密得到哈希值
+
+        /// <summary>
+        /// Sha512加密得到哈希值
+        /// </summary>
+        /// <param name="stream">文件流</param>
+        /// <param name="isUpper">是否大写，默认大写</param>
+        /// <returns></returns>
+        public static string GetHashBySha512(this Stream stream, bool isUpper = true)
+        {
+            return stream.GetSha(new SHA512CryptoServiceProvider(), isUpper);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 将流转换为内存流
+
+        /// <summary>
+        /// 将流转换为内存流
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public static MemoryStream ConvertToMemoryStream(this Stream stream)
+        {
+            stream.Position = 0;
+            return new MemoryStream(stream.ConvertToByteArray());
         }
 
         #endregion

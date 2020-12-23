@@ -19,7 +19,6 @@ namespace EInfrastructure.Core.Tools
         {
             InitConstellationData();
             InitChinaDate();
-            InitWeek();
             InitDateTimeProvider();
             InitValidate();
             InitSecurity();

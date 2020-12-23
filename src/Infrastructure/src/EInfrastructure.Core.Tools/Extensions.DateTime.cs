@@ -10,6 +10,7 @@ using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Tools.Common;
 using EInfrastructure.Core.Tools.Component;
+using EInfrastructure.Core.Tools.Configuration;
 using EInfrastructure.Core.Tools.Enumerations;
 using EInfrastructure.Core.Tools.Internal;
 
@@ -27,6 +28,7 @@ namespace EInfrastructure.Core.Tools
         private static ChineseLunisolarCalendar _china;
         private static Hashtable _gHoliday;
         private static Hashtable _nHoliday;
+        private static List<WeekHolidayStruct> _weekHolidayStructs;
 
         /// <summary>
         /// 初始化中国节日
@@ -39,19 +41,50 @@ namespace EInfrastructure.Core.Tools
             _gHoliday = new Hashtable
             {
                 {"0101", "元旦"},
+                {"0202", "世界湿地日"},
+                {"0210", "国际气象节"},
                 {"0214", "情人节"},
+                {"0301", "国际海豹日"},
                 {"0305", "雷锋日"},
                 {"0308", "妇女节"},
-                {"0312", "植树节"},
+                {"0312", "植树节 孙中山逝世纪念日"},
+                {"0314", "国际警察日"},
                 {"0315", "消费者权益日"},
+                {"0317", "中国国医节 国际航海日"},
+                {"0321", "世界森林日 消除种族歧视国际日 世界儿歌日"},
+                {"0322", "世界水日"},
+                {"0324", "世界防治结核病日"},
                 {"0401", "愚人节"},
+                {"0405", "清明节"},
+                {"0407", "世界卫生日"},
+                {"0422", "世界地球日"},
                 {"0501", "劳动节"},
                 {"0504", "青年节"},
+                {"0508", "世界红十字日"},
+                {"0512", "国际护士节"},
+                {"0531", "世界无烟日"},
                 {"0601", "儿童节"},
-                {"0701", "建党节"},
+                {"0605", "世界环境保护日"},
+                {"0626", "国际禁毒日"},
+                {"0701", "建党节 香港回归纪念 世界建筑日"},
+                {"0711", "世界人口日"},
                 {"0801", "建军节"},
+                {"0808", "中国男子节 父亲节"},
+                {"0815", "抗日战争胜利纪念"},
+                {"0909", "逝世纪念"},
                 {"0910", "教师节"},
+                {"0918", "九·一八事变纪念日"},
+                {"0920", "国际爱牙日"},
+                {"0921", "国际和平日"},
+                {"0927", "世界旅游日"},
+                {"0928", "孔子诞辰"},
                 {"1001", "国庆节"},
+                {"1024", "联合国日"},
+                {"1110", "世界青年节"},
+                {"1112", "孙中山诞辰纪念"},
+                {"1201", "世界艾滋病日"},
+                {"1203", "世界残疾人日"},
+                {"1220", "澳门回归纪念"},
                 {"1224", "平安夜"},
                 {"1225", "圣诞节"}
             };
@@ -62,32 +95,24 @@ namespace EInfrastructure.Core.Tools
                 {"0101", "春节"},
                 {"0115", "元宵节"},
                 {"0505", "端午节"},
+                {"0707", "七夕情人节"},
+                {"0715", "中元节"},
                 {"0815", "中秋节"},
                 {"0909", "重阳节"},
-                {"1208", "腊八节"}
+                {"1208", "腊八节"},
+                {"1223", "北方小年(扫房)"},
+                {"1224", "南方小年(掸尘)"},
             };
-        }
 
-        #endregion
-
-        #region 初始化星期几
-
-        private static List<KeyValuePair<DayOfWeek, int>> _weekMaps;
-
-        /// <summary>
-        /// 初始化星期几
-        /// </summary>
-        private static void InitWeek()
-        {
-            _weekMaps = new List<KeyValuePair<DayOfWeek, int>>()
+            _weekHolidayStructs = new List<WeekHolidayStruct>()
             {
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Sunday, 1),
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Monday, 2),
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Tuesday, 3),
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Wednesday, 4),
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Thursday, 5),
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Friday, 6),
-                new KeyValuePair<DayOfWeek, int>(DayOfWeek.Saturday, 7)
+                new WeekHolidayStruct(5, 2, 7, "母亲节"),
+                new WeekHolidayStruct(5, 3, 7, "全国助残日"),
+                new WeekHolidayStruct(6, 3, 7, "父亲节"),
+                new WeekHolidayStruct(9, 4, 7, "国际聋人节"),
+                new WeekHolidayStruct(10, 1, 1, "国际住房日"),
+                new WeekHolidayStruct(10, 2, 3, "国际减轻自然灾害日"),
+                new WeekHolidayStruct(11, 4, 4, "感恩节")
             };
         }
 
@@ -107,7 +132,6 @@ namespace EInfrastructure.Core.Tools
             _dateTimeProviders = ServiceProvider.GetServiceProvider().GetServices<IDateTimeProvider>();
             _specifiedTimeAfterProviders =
                 ServiceProvider.GetServiceProvider().GetServices<ISpecifiedTimeAfterProvider>();
-            Calendar = new ChineseLunisolarCalendar();
         }
 
         #endregion
@@ -311,14 +335,9 @@ namespace EInfrastructure.Core.Tools
                 throw new ArgumentNullException(nameof(span));
             }
 
-            if (span.TotalMinutes < 1)
-            {
-                return "刚刚";
-            }
-
             if (span.TotalSeconds < 60)
             {
-                return "1分钟之前";
+                return "刚刚";
             }
 
             if (span.TotalMinutes < 60)
@@ -352,47 +371,11 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 得到据当前多远时间
         /// </summary>
-        /// <param name="date"></param>
+        /// <param name="date">较小一点的时间</param>
         /// <returns></returns>
         public static string GetAccordingToCurrent(this DateTime date)
         {
-            TimeSpan span = DateTime.Now - date;
-            if (span.TotalMinutes < 1)
-            {
-                return "刚刚";
-            }
-
-            if (span.TotalSeconds < 60)
-            {
-                return "1分钟之前";
-            }
-
-            if (span.TotalMinutes < 60)
-            {
-                return Math.Ceiling(span.TotalMinutes) + "分钟之前";
-            }
-
-            if (span.TotalHours < 24)
-            {
-                return Math.Ceiling(span.TotalHours) + "小时之内";
-            }
-
-            if (span.TotalDays < 7)
-            {
-                return Math.Ceiling(span.TotalDays) + "天之内";
-            }
-
-            if (span.TotalDays < 30)
-            {
-                return Math.Ceiling(span.TotalDays / 7) + "周之内";
-            }
-
-            if (span.TotalDays < 180)
-            {
-                return Math.Ceiling(span.TotalDays / 30) + "月之内";
-            }
-
-            return Math.Ceiling(span.TotalDays / 360) + "年之内";
+            return DateTime.Now.GetAccordingToCurrent(date);
         }
 
         /// <summary>
@@ -588,10 +571,10 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 获取公历(阴历)节日
+        #region 获取公历(阳历)节日
 
         /// <summary>
-        /// 获取公历(阴历)节日
+        /// 获取公历(阳历)节日
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
@@ -603,16 +586,28 @@ namespace EInfrastructure.Core.Tools
             {
                 strReturn = g.ToString();
             }
+            else
+            {
+                var indexOfMonth = dateTime.GetWeekIndexOfMonth();
+                var dayOfWeek = dateTime.GetDayOfWeek(Nationality.China);
+
+                var weekHolidayStruct = _weekHolidayStructs.FirstOrDefault(x =>
+                    x.Month == dateTime.Month && x.WeekAtMonth == indexOfMonth && x.WeekDay == dayOfWeek);
+                if (weekHolidayStruct != null)
+                {
+                    return weekHolidayStruct.HolidayName;
+                }
+            }
 
             return strReturn;
         }
 
         #endregion
 
-        #region 获取农历节日
+        #region 获取农历（阴历）节日
 
         /// <summary>
-        /// 获取农历节日
+        /// 获取农历（阴历）节日
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
@@ -654,11 +649,6 @@ namespace EInfrastructure.Core.Tools
         #endregion
 
         #region 阴历-阳历-转换
-
-        /// <summary>
-        ///
-        /// </summary>
-        internal static ChineseLunisolarCalendar Calendar;
 
         #region 阴历转阳历
 
@@ -742,23 +732,28 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 获取当前是周几
+        #region 得到dateTime是当月的第几周
 
         /// <summary>
-        /// 获取当前是周几
+        /// 得到dateTime是当月的第几周，如果习惯周一到周日为一周，则nationality传Nationality.China
         /// </summary>
-        /// <param name="date"></param>
-        /// <param name="days"></param>
+        /// <param name="dateTime">时间</param>
+        /// <param name="nationality">国家，默认为美国</param>
         /// <returns></returns>
-        public static string GetDayName(this DateTime date,
-            string[] days)
+        public static int GetWeekIndexOfMonth(this DateTime dateTime, Nationality nationality = null)
         {
-            if (days == null || days.Length != 7)
+            if (nationality == null)
             {
-                return "";
+                nationality = Nationality.Usa;
             }
 
-            return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
+            int i = dateTime.GetDayOfWeek(Nationality.China);
+            if (nationality.Equals(Nationality.China))
+            {
+                return (dateTime.Date.Day + i - 2) / 7 + 1;
+            }
+
+            return (dateTime.Date.Day + i - 1) / 7;
         }
 
         #endregion
@@ -768,50 +763,63 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 获取当前是周几
         /// </summary>
-        /// <param name="date"></param>
+        /// <param name="dateTime"></param>
         /// <returns></returns>
-        public static Week GetDayName(this DateTime date)
+        public static Week GetDayName(this DateTime dateTime)
         {
+            var dayOfWeek = dateTime.GetDayOfWeek(Nationality.China);
             return Week.GetAll<Week>()
-                .FirstOrDefault(x => x.Id == Convert.ToInt32(date.DayOfWeek.ToString("d")));
+                .FirstOrDefault(x => x.Id == dayOfWeek);
         }
 
         #endregion
 
-        #region 获取当前是周几
+        #region 根据日期得到序号，支持国家
 
         /// <summary>
-        /// 获取当前是周几
+        /// 根据日期得到序号，支持国家
+        /// 目前除中国外，周一是1，周日是7
+        /// 其他国家为：周日是0，周六是7
         /// </summary>
-        /// <param name="date"></param>
-        /// <param name="days">从周日到周六</param>
+        /// <param name="dateTime">时间</param>
+        /// <param name="nationality">国家，默认英国等</param>
         /// <returns></returns>
-        public static Enum GetDayName(this DateTime date,
-            Enum[] days)
+        public static int GetDayOfWeek(this DateTime dateTime, Nationality nationality = null)
         {
-            return days[Convert.ToInt32(date.DayOfWeek.ToString("d"))];
-        }
-
-        #endregion
-
-        #region 根据日期获取当前星期几
-
-        /// <summary>
-        /// 得到指定的日期是星期几
-        /// </summary>
-        /// <param name="date"></param>
-        /// <returns></returns>
-        public static int GetDayOfWeek(this DateTime date)
-        {
-            return date.DayOfWeek.GetDayOfWeek();
+            return dateTime.DayOfWeek.GetDayOfWeek(nationality);
         }
 
         /// <summary>
-        /// 将星期几转成数字表示
+        /// 根据DayOfWeek得到序号，支持国家
+        /// 目前除中国外，周一是1，周日是7
+        /// 其他国家为：周日是0，周六是7
         /// </summary>
-        public static int GetDayOfWeek(this DayOfWeek dayOfWeek)
+        /// <param name="dayOfWeek"></param>
+        /// <param name="nationality">国家,默认是美国</param>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
+        public static int GetDayOfWeek(this DayOfWeek dayOfWeek, Nationality nationality = null)
         {
-            return _weekMaps.Where(x => x.Key == dayOfWeek).Select(x => x.Value).FirstOrDefault();
+            if (nationality == null)
+            {
+                nationality = Nationality.Usa;
+            }
+
+            int? num = dayOfWeek.ToString("d").ConvertToInt();
+            if (num == null)
+            {
+                throw new NotSupportedException(nameof(dayOfWeek));
+            }
+
+            if (nationality.Equals(Nationality.China))
+            {
+                if (num == 0)
+                {
+                    return 7;
+                }
+            }
+
+            return num.Value;
         }
 
         #endregion

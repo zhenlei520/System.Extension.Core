@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Configuration.Exception;
@@ -118,18 +117,18 @@ namespace EInfrastructure.Core.Tools.Common
         public static DateTime GetLunarNewYearDate(int year)
         {
             DateTime dt = new DateTime(year, 1, 1);
-            int cnYear = Extensions.Calendar.GetYear(dt);
-            int cnMonth = Extensions.Calendar.GetMonth(dt);
+            int cnYear = GlobalConfigurations.ChineseCalendar.GetYear(dt);
+            int cnMonth = GlobalConfigurations.ChineseCalendar.GetMonth(dt);
 
             int num1 = 0;
-            int num2 = Extensions.Calendar.IsLeapYear(cnYear) ? 13 : 12;
+            int num2 = GlobalConfigurations.ChineseCalendar.IsLeapYear(cnYear) ? 13 : 12;
 
             while (num2 >= cnMonth)
             {
-                num1 += Extensions.Calendar.GetDaysInMonth(cnYear, num2--);
+                num1 += GlobalConfigurations.ChineseCalendar.GetDaysInMonth(cnYear, num2--);
             }
 
-            num1 = num1 - Extensions.Calendar.GetDayOfMonth(dt) + 1;
+            num1 = num1 - GlobalConfigurations.ChineseCalendar.GetDayOfMonth(dt) + 1;
             return dt.AddDays(num1);
         }
 
@@ -147,11 +146,11 @@ namespace EInfrastructure.Core.Tools.Common
             if (month < 1 || month > 12)
                 throw new BusinessException("表示月份的数字必须在1～12之间", HttpStatus.Err.Id);
 
-            if (day < 1 || day > Extensions.Calendar.GetDaysInMonth(year, month))
+            if (day < 1 || day > GlobalConfigurations.ChineseCalendar.GetDaysInMonth(year, month))
                 throw new BusinessException("农历日期输入有误", HttpStatus.Err.Id);
 
             int num1 = 0, num2 = 0;
-            int leapMonth = Extensions.Calendar.GetLeapMonth(year);
+            int leapMonth = GlobalConfigurations.ChineseCalendar.GetLeapMonth(year);
 
             if (((leapMonth == month + 1) && isLeapMonth) || (leapMonth > 0 && leapMonth <= month))
                 num2 = month;
@@ -160,7 +159,7 @@ namespace EInfrastructure.Core.Tools.Common
 
             while (num2 > 0)
             {
-                num1 += Extensions.Calendar.GetDaysInMonth(year, num2--);
+                num1 += GlobalConfigurations.ChineseCalendar.GetDaysInMonth(year, num2--);
             }
 
             DateTime dt = GetLunarNewYearDate(year);

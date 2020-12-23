@@ -35,7 +35,7 @@ namespace EInfrastructure.Core.Tools
                     PropertyInfo prop = obj.GetType().GetProperty(column.ColumnName);
                     try
                     {
-                        if (prop != null && prop.CanWrite)
+                        if (!prop.IsNull() && prop.CanWrite)
                         {
                             object value = row[column.ColumnName];
                             prop.SetValue(obj, value, null);
