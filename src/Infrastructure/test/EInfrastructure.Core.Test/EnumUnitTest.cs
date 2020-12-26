@@ -95,7 +95,6 @@ namespace EInfrastructure.Core.Test
             var str = typeof(GenderEnum).GetCustomAttribute<DescriptionAttribute>(
                 GenderEnum.Boy.ToString());
             var result = typeof(GenderEnum).ToEnumAndAttributes<ENameAttribute>();
-            var result2 = typeof(User).ToEnumAndAttributes<ENameAttribute>();
         }
 
         /// <summary>
@@ -134,6 +133,14 @@ namespace EInfrastructure.Core.Test
         public void GetValue(object member)
         {
             var gender = EnumCommon.GetValue<GenderEnum>(member);
+        }
+
+        [Fact]
+        public void GetValue2()
+        {
+            // var str = CustomAttributeCommon.GetCustomAttribute<DescriptionAttribute, string>(
+            //     GenderEnum.Boy.GetType(), x => x.Description, "Boy");
+            var str2 = GenderEnum.Boy.GetDescription();
         }
     }
 

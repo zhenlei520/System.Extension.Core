@@ -11,6 +11,11 @@ namespace EInfrastructure.Core.Test
     /// </summary>
     public class StringCommonUnitTest : BaseUnitTest
     {
+        #region 加密隐藏信息
+
+        /// <summary>
+        /// 加密隐藏信息
+        /// </summary>
         [Fact]
         public void EncryptStr()
         {
@@ -20,6 +25,27 @@ namespace EInfrastructure.Core.Test
             var str4 = StringCommon.HideMobile("037-6793777");
             var str5 = StringCommon.HideMobile("6793777");
         }
+
+        #endregion
+
+        #region 进制转换
+
+        /// <summary>
+        /// 进制转换
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="res"></param>
+        [Theory]
+        [InlineData("10", 10, 2, "1010")]
+        [InlineData("12", 8, 10, "10")]
+        public void ConvertBinary(string str, int from, int to, string res)
+        {
+            Assert.True(res == str.ConvertBinary(from, to));
+        }
+
+        #endregion
 
         [Fact]
         public void DistinctStringArray()

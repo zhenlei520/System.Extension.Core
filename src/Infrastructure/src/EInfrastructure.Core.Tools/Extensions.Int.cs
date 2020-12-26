@@ -81,6 +81,7 @@ namespace EInfrastructure.Core.Tools
         /// </summary>
         /// <param name="value">值</param>
         public static bool IsEven(this int value) => value % 2 == 0;
+
         #endregion
 
         #region IsOdd(是否奇数)

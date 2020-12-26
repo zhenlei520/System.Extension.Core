@@ -876,6 +876,55 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 判断是同一年
+
+        /// <summary>
+        /// 判断是同一年
+        /// </summary>
+        /// <param name="dateTime">时间1</param>
+        /// <param name="dateTime2">时间2</param>
+        /// <returns></returns>
+        public static bool IsInSameYear(this DateTime dateTime, DateTime dateTime2)
+        {
+            return dateTime.Year == dateTime2.Year;
+        }
+
+        #endregion
+
+        #region 判断是同一年的同一月
+
+        /// <summary>
+        /// 判断是同一年的同一月
+        /// </summary>
+        /// <param name="dateTime">时间1</param>
+        /// <param name="dateTime2">时间2</param>
+        /// <returns></returns>
+        public static bool IsInSameMonth(this DateTime dateTime, DateTime dateTime2)
+        {
+            return dateTime.Year == dateTime2.Year && dateTime.Month == dateTime2.Month;
+        }
+
+        #endregion
+
+        #region 判断是同一年的同一月的同一周
+
+        /// <summary>
+        /// 判断是同一年的同一月的同一周
+        /// 目前除中国外，周一是1，周日是7
+        /// 其他国家为：周日是0，周六是7
+        /// </summary>
+        /// <param name="dateTime">时间1</param>
+        /// <param name="dateTime2">时间2</param>
+        /// <param name="nationality">国家,默认是美国</param>
+        /// <returns></returns>
+        public static bool IsInSameWeek(this DateTime dateTime, DateTime dateTime2, Nationality nationality = null)
+        {
+            return dateTime.AddDays(-(int) dateTime.GetDayOfWeek(nationality)).Date ==
+                   dateTime2.AddDays(-(int) dateTime2.GetDayOfWeek(nationality)).Date;
+        }
+
+        #endregion
+
         #region 根据日期得到星座信息
 
         /// <summary>

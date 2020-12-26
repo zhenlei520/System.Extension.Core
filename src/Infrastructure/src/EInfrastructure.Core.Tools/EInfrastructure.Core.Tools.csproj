@@ -128,6 +128,9 @@
     <Compile Update="Extensions.DataSet.cs">
       <DependentUpon>Extensions.cs</DependentUpon>
     </Compile>
+    <Compile Update="Extensions.Float.cs">
+      <DependentUpon>Extensions.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

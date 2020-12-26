@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using EInfrastructure.Core.Tools.Common;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -35,7 +36,9 @@ namespace EInfrastructure.Core.Tools
         /// <returns>枚举想的描述信息。</returns>
         public static string GetDescription(this Enum value)
         {
-            return value.GetCustomerObj<DescriptionAttribute>()?.Description.SafeString();
+            return CustomAttributeCommon.GetCustomAttribute<DescriptionAttribute, string>(
+                value.GetType(), x => x.Description, value.ToString());
+            // return value.GetCustomerObj<DescriptionAttribute>()?.Description.SafeString();
         }
 
         #endregion

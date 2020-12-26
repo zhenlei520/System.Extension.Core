@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.Test
         {
             var version = Environment.Version;
             var runInfo = EnvironmentCommon.GetRun;
-            var str = CustomAttribute<ENameAttribute, string>.GetCustomAttributeValue(
+            var str = CustomAttributeCommon.GetCustomAttribute<ENameAttribute, string>(
                 typeof(EnvironmentCommon.RunInfo), x => x.Name,"UseMemory");
             // while (true)
             // {

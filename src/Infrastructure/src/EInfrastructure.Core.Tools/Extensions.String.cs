@@ -1101,6 +1101,31 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 转换进制
+
+        /// <summary>
+        /// 转换进制
+        /// 进制只支持2、8、10、16
+        /// </summary>
+        /// <param name="str">待转换的参数</param>
+        /// <param name="from">源进制</param>
+        /// <param name="to">目标禁止</param>
+        /// <returns></returns>
+        public static string ConvertBinary(this string str, int from, int to)
+        {
+            if ((from != 2 && from != 8 && from != 10 && from != 16) ||
+                (to != 2 && to != 8 && to != 10 && to != 16))
+            {
+                throw new NotSupportedException(
+                    "Source base and target base only support binary, octal, decimal and hexadecimal");
+            }
+
+            int intValue = Convert.ToInt32(str, from); //先转成10进制
+            return Convert.ToString(intValue, to);
+        }
+
+        #endregion
+
         #region 验证
 
         #region 判断正则表达式是否匹配

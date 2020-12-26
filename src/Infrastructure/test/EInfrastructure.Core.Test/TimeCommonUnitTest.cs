@@ -38,6 +38,8 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void GetRandomTime()
         {
+            var s=DateTime.Parse("2020-12-26").IsInSameWeek(DateTime.Parse("2020-12-20"),Nationality.China);
+            var s2 =DateTime.Parse("2020-12-21").IsInSameWeek(DateTime.Parse("2020-12-27"),Nationality.China);
             DateTime dateTime = DateTime.Now.GetRandomTime( DateTime.Now.AddDays(100));
             var result = dateTime.FormatDate(FormatDateType.One);
         }
