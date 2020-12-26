@@ -60,6 +60,13 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void LastIndexOf()
         {
+            var str = "helloworld";
+            var from = "llo";
+            var to = "rl";
+            var res = str.SubstringFrom(from,false);
+            var res2 = str.SubstringFrom(from,true);
+            var res3 = str.SubstringTo(to,true);
+
             var s3 = "123,1234,".IndexOf(',', 2, 3);
             var s = "123,1234,4323,2".LastIndexOf(',', 2);
             var s5 = "123,1234,4323,2,4".LastIndexOf(',', 4);

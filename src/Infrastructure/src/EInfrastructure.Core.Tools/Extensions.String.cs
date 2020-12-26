@@ -482,6 +482,71 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 截断最大长度的字符串
+
+        /// <summary>
+        /// 截断最大长度的字符串
+        /// </summary>
+        /// <param name="param">原始字符串</param>
+        /// <param name="maxLength">最大长度</param>
+        public static string Truncate(this string param, int maxLength)
+        {
+            if (param.IsNullOrWhiteSpace() || maxLength == 0)
+                return string.Empty;
+            if (param.Length <= maxLength)
+                return param;
+            return param.Substring(0, maxLength);
+        }
+
+        #endregion
+
+        #region 截断字符串扩展
+
+        /// <summary>
+        /// 截断字符串。子字符串从指定字符串之后开始
+        /// 例如：text：helloworld，from：llo
+        /// 结果：world
+        /// </summary>
+        /// <param name="text">字符串</param>
+        /// <param name="from">开始字符串</param>
+        /// <param name="isContainerTo">是否包含开始字符串，默认不包含</param>
+        /// <param name="stringComparison">匹配方式，默认忽略大小写</param>
+        public static string SubstringFrom(this string text, string from,
+            bool isContainerTo = false,
+            StringComparison stringComparison = StringComparison.OrdinalIgnoreCase)
+        {
+            if (text.IsNullOrWhiteSpace() || from.IsNullOrWhiteSpace())
+            {
+                return text;
+            }
+
+            var index = isContainerTo
+                ? text.IndexOf(from, stringComparison)
+                : text.IndexOf(from, stringComparison) + from.Length;
+            return index < 0 ? string.Empty : text.Substring(index);
+        }
+
+        /// <summary>
+        /// 截断字符串。子字符串从0开始到指定字符串之前
+        /// </summary>
+        /// <param name="text">字符串</param>
+        /// <param name="to">结尾字符串</param>
+        /// <param name="isContainerTo">是否包含结尾字符串</param>
+        /// <param name="stringComparison">匹配方式，默认忽略大小写</param>
+        public static string SubstringTo(this string text, string to,
+            bool isContainerTo = false,
+            StringComparison stringComparison = StringComparison.OrdinalIgnoreCase)
+        {
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
+            var index = isContainerTo == false
+                ? text.IndexOf(to, stringComparison)
+                : text.IndexOf(to, stringComparison) + to.Length;
+            return index < 0 ? string.Empty : text.Substring(0, index);
+        }
+
+        #endregion
+
         #region String转换为Byte数组
 
         /// <summary>
@@ -1126,6 +1191,208 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 获取字数
+
+        #region 获取总英文字母数
+
+        /// <summary>
+        /// 获取总英文字母数
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static int TotalLetters(this string str) =>
+            str.IsNullOrWhiteSpace() ? 0 : str.ToCharArray().Count(char.IsLetter);
+
+        #endregion
+
+        #region 获取总大写英文字母数
+
+        /// <summary>
+        /// 获取总大写英文字母数
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static int TotalUpperLetters(this string str) => str.IsNullOrWhiteSpace()
+            ? 0
+            : str.ToCharArray().Count(x => char.IsLetter(x) && char.IsUpper(x));
+
+        #endregion
+
+        #region 获取总小写英文字母数
+
+        /// <summary>
+        /// 获取总小写英文字母数
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static int TotalLowerLetters(this string str) => str.IsNullOrWhiteSpace()
+            ? 0
+            : str.ToCharArray().Count(x => char.IsLetter(x) && char.IsLower(x));
+
+        #endregion
+
+        #region 获取总数字字数
+
+        /// <summary>
+        /// 获取总数字字数
+        /// 十进制数字，就是 '0 '.. '9 '
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static int TotalDigits(this string str) =>
+            str.IsNullOrWhiteSpace() ? 0 : str.ToCharArray().Count(char.IsDigit);
+
+        #endregion
+
+        #region 获取总数字字数
+
+        /// <summary>
+        /// 获取总数字字数
+        ///  判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static int TotalNumber(this string str) =>
+            str.IsNullOrWhiteSpace() ? 0 : str.ToCharArray().Count(char.IsNumber);
+
+        #endregion
+
+        #endregion
+
+        #region 匹配信息
+
+        #region 仅返回英文字母
+
+        /// <summary>
+        /// 仅返回英文字母
+        /// </summary>
+        /// <param name="text">字符串</param>
+        public static string OnlyLetters(this string text) => OnlyLetters(text, null);
+
+        /// <summary>
+        /// 仅返回英文字母(排除例外字符)
+        /// </summary>
+        /// <param name="text">字符串</param>
+        /// <param name="exceptions">例外字符</param>
+        public static string OnlyLetters(this string text, params char[] exceptions)
+        {
+            var res = new StringBuilder();
+            foreach (var c in text)
+            {
+                if (char.IsLetter(c) || (exceptions != null && exceptions.Contains(c)))
+                    res.Append(c);
+            }
+
+            return res.ToString();
+        }
+
+        #endregion
+
+        #region 仅返回大写英文字母
+
+        /// <summary>
+        /// 仅返回大写英文字母
+        /// </summary>
+        /// <param name="text">字符串</param>
+        public static string OnlyUpperLetters(this string text) => OnlyUpperLetters(text, null);
+
+        /// <summary>
+        /// 仅返回大写英文字母(排除例外字符)
+        /// </summary>
+        /// <param name="text">字符串</param>
+        /// <param name="exceptions">例外字符</param>
+        public static string OnlyUpperLetters(this string text, params char[] exceptions)
+        {
+            var res = new StringBuilder();
+            foreach (var c in text)
+            {
+                if ((char.IsLetter(c) && char.IsUpper(c)) || (exceptions != null && exceptions.Contains(c)))
+                    res.Append(c);
+            }
+
+            return res.ToString();
+        }
+
+        #endregion
+
+        #region 仅返回小写英文字母
+
+        /// <summary>
+        /// 仅返回小写英文字母
+        /// </summary>
+        /// <param name="text">字符串</param>
+        public static string OnlyLowerLetters(this string text) => OnlyLowerLetters(text, null);
+
+        /// <summary>
+        /// 仅返回小写英文字母(排除例外字符)
+        /// </summary>
+        /// <param name="text">字符串</param>
+        /// <param name="exceptions">例外字符</param>
+        public static string OnlyLowerLetters(this string text, params char[] exceptions)
+        {
+            var res = new StringBuilder();
+            foreach (var c in text)
+            {
+                if ((char.IsLetter(c) && char.IsLower(c)) || (exceptions != null && exceptions.Contains(c)))
+                    res.Append(c);
+            }
+
+            return res.ToString();
+        }
+
+        #endregion
+
+        #region 仅返回数字
+
+        /// <summary>
+        /// 仅返回数字
+        /// </summary>
+        /// <param name="text">字符串</param>
+        public static string OnlyDigits(this string text) => OnlyDigits(text, null);
+
+        /// <summary>
+        /// 仅返回数字(排除例外字符)
+        /// </summary>
+        /// <param name="text">字符串</param>
+        /// <param name="exceptions">例外字符</param>
+        public static string OnlyDigits(this string text, params char[] exceptions)
+        {
+            var res = new StringBuilder();
+            foreach (var c in text)
+            {
+                if (char.IsDigit(c) || (exceptions != null && exceptions.Contains(c)))
+                    res.Append(c);
+            }
+
+            return res.ToString();
+        }
+
+        #endregion
+
+        #region 仅返回数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+
+        /// <summary>
+        /// 仅返回数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+        /// </summary>
+        /// <param name="text">字符串</param>
+        public static string OnlyNumber(this string text) => OnlyNumber(text, null);
+
+        /// <summary>
+        /// 仅返回数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。) (排除例外字符)
+        /// </summary>
+        /// <param name="text">字符串</param>
+        /// <param name="exceptions">例外字符</param>
+        public static string OnlyNumber(this string text, params char[] exceptions)
+        {
+            var res = new StringBuilder();
+            foreach (var c in text)
+            {
+                if (char.IsNumber(c) || (exceptions != null && exceptions.Contains(c)))
+                    res.Append(c);
+            }
+
+            return res.ToString();
+        }
+
+        #endregion
+
+        #endregion
+
         #region 验证
 
         #region 判断正则表达式是否匹配
@@ -1609,6 +1876,215 @@ namespace EInfrastructure.Core.Tools
 
             return regex.Match(str).Success && regex.Matches(str).Count == str.SafeString().Length;
         }
+
+        #endregion
+
+        #region 判断是否包含英文字母、数字
+
+        #region 判断是否全部为英文字母
+
+        /// <summary>
+        /// 判断是否全部为英文字母
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static bool ContainsOnlyLetters(this string str) => str.All(char.IsLetter);
+
+        #endregion
+
+        #region 包含 是否包含英文字母
+
+        /// <summary>
+        /// 包含 是否包含英文字母
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static bool ContainsLetters(this string str) => str.Any(char.IsDigit);
+
+        #endregion
+
+        #region 判断是否包含英文字母
+
+        /// <summary>
+        /// 判断是否包含英文字母
+        /// </summary>
+        /// <param name="text">字符串</param>
+        public static bool IncludeLetters(this string text) => text.IncludeLetters(1);
+
+        #endregion
+
+        #region 是否包含最小数量为minCount的英文字母
+
+        /// <summary>
+        /// 是否包含最小数量为minCount的英文字母
+        /// </summary>
+        /// <param name="text">字符串</param>
+        /// <param name="minCount">最小数量</param>
+        public static bool IncludeLetters(this string text, int minCount) => text.TotalLetters() >= minCount;
+
+        #endregion
+
+        #region 判断是否全部为大写英文字母
+
+        /// <summary>
+        /// 判断是否全部为大写英文字母
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static bool ContainsOnlyUpperLetters(this string str) => str.All(x=>char.IsLetter(x)&&char.IsUpper(x));
+
+        #endregion
+
+        #region 包含 是否包含大写英文字母
+
+        /// <summary>
+        /// 包含 是否包含大写英文字母
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static bool ContainsUpperLetters(this string str) => str.Any(x=>char.IsDigit(x)&&char.IsUpper(x));
+
+        #endregion
+
+        #region 判断是否包含大写英文字母
+
+        /// <summary>
+        /// 判断是否包含大写英文字母
+        /// </summary>
+        /// <param name="text">字符串</param>
+        public static bool IncludeUpperLetters(this string text) => text.IncludeUpperLetters(1);
+
+        #endregion
+
+        #region 是否包含指定数量的大写英文字母
+
+        /// <summary>
+        /// 是否包含指定数量的大写英文字母
+        /// </summary>
+        /// <param name="text">字符串</param>
+        /// <param name="minCount">最小数量</param>
+        public static bool IncludeUpperLetters(this string text, int minCount) => text.TotalUpperLetters() >= minCount;
+
+        #endregion
+
+        #region 判断是否全部为小写英文字母
+
+        /// <summary>
+        /// 判断是否全部为小写英文字母
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static bool ContainsOnlyLowerLetters(this string str) => str.All(x=>char.IsLetter(x)&&char.IsLower(x));
+
+        #endregion
+
+        #region 包含 是否包含小写英文字母
+
+        /// <summary>
+        /// 包含 是否包含小写英文字母
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static bool ContainsLowerLetters(this string str) => str.Any(x => char.IsDigit(x) && char.IsLower(x));
+
+        #endregion
+
+        #region 判断是否包含小写英文字母
+
+        /// <summary>
+        /// 判断是否包含小写英文字母
+        /// </summary>
+        /// <param name="text">字符串</param>
+        public static bool IncludeLowerLetters(this string text) => text.IncludeLowerLetters(1);
+
+        #endregion
+
+        #region 是否包含指定最小数量的小写英文字母
+
+        /// <summary>
+        /// 是否包含指定最小数量的小写英文字母
+        /// </summary>
+        /// <param name="text">字符串</param>
+        /// <param name="minCount">最小数量</param>
+        public static bool IncludeLowerLetters(this string text, int minCount) => text.TotalLowerLetters() >= minCount;
+
+        #endregion
+
+        #region 判断是否全部为数字
+
+        /// <summary>
+        /// 判断是否全部为数字
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static bool ContainsOnlyDigits(this string str) => str.All(char.IsDigit);
+
+        #endregion
+
+        #region 包含 是否包含数字
+
+        /// <summary>
+        /// 包含 是否包含数字
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static bool ContainsDigits(this string str) => str.Any(char.IsDigit);
+
+        #endregion
+
+        #region 是否包含数字
+
+        /// <summary>
+        /// 是否包含数字
+        /// </summary>
+        /// <param name="text">字符串</param>
+        public static bool IncludeDigits(this string text) => text.IncludeDigits(1);
+
+        #endregion
+
+        #region 是否包含指定最小数量的数字
+
+        /// <summary>
+        /// 是否包含指定最小数量的数字
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <param name="minCount">最小数量</param>
+        public static bool IncludeDigits(this string str, int minCount) => str.TotalDigits() >= minCount;
+
+        #endregion
+
+        #region 判断是否全部为数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+
+        /// <summary>
+        /// 判断是否全部为数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static bool ContainsOnlyNumber(this string str) => str.All(char.IsNumber);
+
+        #endregion
+
+        #region 包含 是否包含数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+
+        /// <summary>
+        /// 包含 是否包含数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static bool ContainsNumber(this string str) => str.Any(char.IsNumber);
+
+        #endregion
+
+        #region 是否包含数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+
+        /// <summary>
+        /// 是否包含数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+        /// </summary>
+        /// <param name="text">字符串</param>
+        public static bool IncludeNumber(this string text) => text.IncludeNumber(1);
+
+        #endregion
+
+        #region 是否包含指定最小数量的数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+
+        /// <summary>
+        /// 是否包含指定最小数量的数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <param name="minCount">最小数量</param>
+        public static bool IncludeNumber(this string str, int minCount) => str.TotalNumber() >= minCount;
+
+        #endregion
 
         #endregion
 
