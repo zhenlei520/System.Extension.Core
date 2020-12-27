@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Common;
 using EInfrastructure.Core.Tools.Internal;
-using EInfrastructure.Core.Tools.Systems;
 using Newtonsoft.Json;
 
 namespace EInfrastructure.Core.UserAgentParse
@@ -17,7 +17,7 @@ namespace EInfrastructure.Core.UserAgentParse
     /// </summary>
     public partial class UserAgentBase
     {
-        internal readonly IRegexConfigurations _regexConfigurations;
+        internal readonly IRegexConfigurationsProvider _regexConfigurations;
 
         #region property
 
@@ -60,6 +60,9 @@ namespace EInfrastructure.Core.UserAgentParse
             };
             Engine = new Engine();
             Features = new List<string>();
+            IsOpera = false;
+            IsMozilla = false;
+            IsWebKit = false;
         }
 
         /// <summary>
@@ -82,6 +85,22 @@ namespace EInfrastructure.Core.UserAgentParse
         public UserAgentBase(string userAgent, bool useFeatures = false, bool activeXObject = false) : this(useFeatures,
             activeXObject)
         {
+            if (userAgent.Test(@"PostmanRuntime/\d*.\d*.\d*"))
+            {
+                this.Device.DeviceType = DeviceType.Pc;
+                this.CamouFlage = true;
+                this.Engine.Name = "Postman";
+                var mc = userAgent.Match((@"PostmanRuntime/(\d*.\d*.\d*)"),
+                    RegexOptions.IgnoreCase);
+                var version = mc[0].Value[1];
+                if (!version.IsNullOrEmpty())
+                {
+                    this.Engine.Version = new Versions(version);
+                }
+
+                return;
+            }
+
             CheckUserAgent(userAgent, _osNameList.ToArray(), (mc, regex) => { Os.Name = regex; });
             CheckUserAgent(userAgent, "SunOS", mc => { Os.Name = "Solaris"; });
             CheckUserAgent(userAgent, "Linux", mc =>
@@ -274,7 +293,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
 
                     Os.Version =
-                        new Versions(GetMatchResult(new Regex("Windows Phone ([0-9.]*)").Matches(userAgent),1));
+                        new Versions(GetMatchResult(new Regex("Windows Phone ([0-9.]*)").Matches(userAgent), 1));
                     Os.Details = "2";
                     Device.DeviceType = DeviceType.Mobile;
                 });
@@ -1840,7 +1859,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
                 if (Os.Name == "Android")
                 {
-                    switch (Browser.Version.ToString().ConvertStrToList<string>().Take(3).ConvertListToString('.'))
+                    switch (Browser.Version.ToString().ConvertStrToList<string>(',').Take(3).ConvertToString('.'))
                     {
                         case "16.0.912":
                             Browser.Channel = "Beta";
@@ -1855,7 +1874,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 }
                 else
                 {
-                    switch (Browser.Version.ToString().ConvertStrToList<string>().Take(3).ConvertListToString("."))
+                    switch (Browser.Version.ToString().ConvertStrToList<string>(',').Take(3).ConvertToString("."))
                     {
                         case "0.2.149":
                         case "0.3.154":

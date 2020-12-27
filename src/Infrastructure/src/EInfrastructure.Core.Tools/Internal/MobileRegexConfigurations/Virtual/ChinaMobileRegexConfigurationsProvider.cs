@@ -1,0 +1,54 @@
+﻿// Copyright (c) zhenlei520 All rights reserved.
+// 号段：165、1703、1705、1706、172、
+
+using System.Text.RegularExpressions;
+using EInfrastructure.Core.Configuration.Enumerations;
+
+namespace EInfrastructure.Core.Tools.Internal.MobileRegexConfigurations.Virtual
+{
+    /// <summary>
+    /// 中国移动虚拟手机号校验
+    /// </summary>
+    public class ChinaMobileRegexConfigurationsProvider : BaseMobileRegexConfigurations,
+        IMobileRegexConfigurationsProvider
+    {
+        /// <summary>
+        /// 得到国家
+        /// </summary>
+        /// <returns></returns>
+        public Nationality Nationality => Nationality.China;
+
+        /// <summary>
+        /// 得到运营商
+        /// </summary>
+        /// <returns></returns>
+        public CommunicationOperator CommunicationOperator => CommunicationOperator.ChinaMobile;
+
+        /// <summary>
+        /// 得到运营商类型
+        /// </summary>
+        /// <returns></returns>
+        public CommunicationOperatorType CommunicationOperatorType => CommunicationOperatorType.Virtual;
+
+        /// <summary>
+        /// 得到正则
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public Regex GetRegex(RegexOptions options)
+        {
+            return base.GetRegex(@"^165\d{8}$|(^17(03|05|06)\d{7}$|^172\d{8}$", options);
+        }
+
+        /// <summary>
+        /// 是否通过验证
+        /// </summary>
+        /// <param name="str">待验证的字符串</param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public bool IsVerify(string str, RegexOptions options)
+        {
+            return this.GetRegex(options).IsMatch(str);
+        }
+    }
+}

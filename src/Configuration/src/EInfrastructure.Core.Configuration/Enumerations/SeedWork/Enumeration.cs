@@ -11,6 +11,11 @@ namespace EInfrastructure.Core.Configuration.Enumerations.SeedWork
     /// </summary>
     public abstract class Enumeration : Enumeration<int, string>
     {
+        public Enumeration()
+        {
+
+        }
+
         /// <summary>
         ///
         /// </summary>

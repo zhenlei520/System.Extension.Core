@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Attributes;
+using EInfrastructure.Core.Tools.Common;
 using Xunit;
 
 namespace EInfrastructure.Core.Test
@@ -85,16 +86,15 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void ToEnumAndAttributes()
         {
-            var res = EnumCommon.ToEnumAndAttributes<ENameAttribute>(typeof(GenderEnum))
+            var res = typeof(GenderEnum).ToEnumAndAttributes<ENameAttribute>()
                 .Where(x => x.Value.Name.Contains("男"))
                 .Select(x => x.Key).FirstOrDefault();
             Check.True(res != null && (GenderEnum) res == GenderEnum.Boy, "参数错误");
 
             var str2 = GenderEnum.Boy.GetDescription();
-            var str = CustomAttributeCommon<DescriptionAttribute>.GetCustomAttribute(typeof(GenderEnum),
+            var str = typeof(GenderEnum).GetCustomAttribute<DescriptionAttribute>(
                 GenderEnum.Boy.ToString());
             var result = typeof(GenderEnum).ToEnumAndAttributes<ENameAttribute>();
-            var result2 = typeof(User).ToEnumAndAttributes<ENameAttribute>();
         }
 
         /// <summary>
@@ -133,6 +133,14 @@ namespace EInfrastructure.Core.Test
         public void GetValue(object member)
         {
             var gender = EnumCommon.GetValue<GenderEnum>(member);
+        }
+
+        [Fact]
+        public void GetValue2()
+        {
+            // var str = CustomAttributeCommon.GetCustomAttribute<DescriptionAttribute, string>(
+            //     GenderEnum.Boy.GetType(), x => x.Description, "Boy");
+            var str2 = GenderEnum.Boy.GetDescription();
         }
     }
 

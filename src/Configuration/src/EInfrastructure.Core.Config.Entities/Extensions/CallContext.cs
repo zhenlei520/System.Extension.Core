@@ -14,7 +14,7 @@ namespace EInfrastructure.Core.Config.Entities.Extensions
         /// <summary>
         ///
         /// </summary>
-        private static ConcurrentDictionary<string, AsyncLocal<object>> State =
+        private static readonly ConcurrentDictionary<string, AsyncLocal<object>> State =
             new ConcurrentDictionary<string, AsyncLocal<object>>();
 
         /// <summary>

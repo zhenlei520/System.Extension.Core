@@ -133,7 +133,7 @@ namespace EInfrastructure.Core.WeChat.Common
             string valueTeam = "jsapi_ticket=" + ticket + "&noncestr=" + nonceStr + "&timestamp=" + timestamp +
                                "&url=" + url;
 
-            config.Signature = SecurityCommon.Sha1(valueTeam).ToLower();
+            config.Signature = valueTeam.Sha1().ToLower();
 
             return config;
         }

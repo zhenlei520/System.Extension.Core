@@ -7,7 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Config.Entities.Configuration;
-using EInfrastructure.Core.Config.Entities.Data;
+using EInfrastructure.Core.Configuration.Configurations;
 
 namespace EInfrastructure.Core.Config.Entities.Ioc
 {

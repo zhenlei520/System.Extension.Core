@@ -7,7 +7,7 @@ using System.IO;
 using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
-using EInfrastructure.Core.Tools.Files;
+using EInfrastructure.Core.Tools.Common;
 using EInfrastructure.Core.UserAgentParse;
 using Xunit;
 
@@ -41,6 +41,7 @@ namespace EInfrastructure.Core.Test
         // [InlineData("Mozilla/5.0 (Linux; U; Android 4.4.4; zh-cn; ?? Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 OppoBrowser/3.3.2 Mobile Safari/537.36")]
         // [InlineData("Mozilla/5.0 (Linux; U; Android 4.4.4; zh-cn; M463C Build/KTU84P) AppleWebKit/533.1 (KHTML, like Gecko)Version/4.0 MQQBrowser/5.4 TBS/025491 Mobile Safari/533.1 MicroMessenger/6.3.15.49_r8aff805.760 NetType/WIFI Language/zh_CN")]
         [InlineData("Mozilla/5.0 (Linux; U; Android 8.1.0zh-cn; JSN-AL00a Build/HONORJSN-AL00a) AppleWebKit/537.36 (KHTML, like Gecko)Version/4.0 Chrome/57.0.2987.132 MQQBrowser/8.1 Mobile Safari/537.36")]
+        [InlineData("PostmanRuntime/7.26.5")]
         public void GetUserAgent(string userAgent)
         {
             start:

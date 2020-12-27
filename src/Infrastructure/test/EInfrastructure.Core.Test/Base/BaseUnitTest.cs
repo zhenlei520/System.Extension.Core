@@ -3,8 +3,7 @@
 
 
 using System;
-using EInfrastructure.Core.HelpCommon.Randoms;
-using EInfrastructure.Core.HelpCommon.Randoms.Interface;
+using EInfrastructure.Core.Tools.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
 using Xunit.Sdk;
@@ -28,7 +27,7 @@ namespace EInfrastructure.Core.Test.Base
         protected void GetServiceProvider()
         {
             var services = new ServiceCollection();
-            services.AddSingleton<IRandomBuilder, RandomCommon>();
+            services.AddSingleton<IRandomProvider, IRandomProvider>();
             services.AddSingleton<ITestOutputHelper, TestOutputHelper>();
             provider = services.BuildServiceProvider();
         }

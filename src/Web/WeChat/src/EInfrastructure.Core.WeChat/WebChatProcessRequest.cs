@@ -271,7 +271,7 @@ namespace EInfrastructure.Core.WeChat
             Array.Sort(arrTmp);
             string tmpStr = string.Join("", arrTmp);
 
-            tmpStr = SecurityCommon.Sha1(tmpStr);
+            tmpStr = tmpStr.Sha1();
             tmpStr = tmpStr.ToLower();
             if (tmpStr == signature)
             {

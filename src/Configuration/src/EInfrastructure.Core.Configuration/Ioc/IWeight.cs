@@ -15,4 +15,19 @@ namespace EInfrastructure.Core.Configuration.Ioc
         /// <returns></returns>
         int GetWeights();
     }
+
+    /// <summary>
+    /// 权重默认配置
+    /// </summary>
+    public class WeightDefault : IWeight
+    {
+        /// <summary>
+        /// 系统包默认权重都为99
+        /// </summary>
+        /// <returns></returns>
+        public int GetWeights()
+        {
+            return 99;
+        }
+    }
 }

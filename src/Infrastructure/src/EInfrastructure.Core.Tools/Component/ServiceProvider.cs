@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using EInfrastructure.Core.Tools.Systems;
+using EInfrastructure.Core.Tools.Common.Systems;
 
 namespace EInfrastructure.Core.Tools.Component
 {
@@ -13,6 +13,31 @@ namespace EInfrastructure.Core.Tools.Component
     /// </summary>
     public class ServiceProvider
     {
+        /// <summary>
+        ///
+        /// </summary>
+        internal static ServiceProvider DefaultServiceProvider;
+
+        /// <summary>
+        ///
+        /// </summary>
+        internal static ServiceProvider _serviceProvider;
+
+        static ServiceProvider()
+        {
+            _serviceProvider = null;
+            DefaultServiceProvider = new ServiceProvider();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        internal static ServiceProvider GetServiceProvider()
+        {
+            return _serviceProvider ?? DefaultServiceProvider;
+        }
+
         /// <summary>
         /// 程序集
         /// </summary>
@@ -24,7 +49,8 @@ namespace EInfrastructure.Core.Tools.Component
         /// <param name="assblemyArray"></param>
         public ServiceProvider(Assembly[] assblemyArray = null)
         {
-            _assblemyArray = assblemyArray ?? AssemblyCommon.GetAssemblies();
+            _assblemyArray = assblemyArray ?? AssemblyCommon.GetLoadedAssemblies();
+            _serviceProvider = this;
         }
 
         #region 得到服务

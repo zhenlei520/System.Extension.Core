@@ -1,11 +1,15 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Common;
+using EInfrastructure.Core.Tools.Configuration;
 using EInfrastructure.Core.Tools.Enumerations;
 using Xunit;
 
@@ -19,7 +23,7 @@ namespace EInfrastructure.Core.Test
         public void GetFormatDate(string time, char separator, string result)
         {
             DateTime dateTime = time.ConvertToDateTime(default(DateTime));
-            Check.True(TimeCommon.GetFormatDate(dateTime, separator) == result, "检查错误");
+            // Check.True(dateTime.GetFormatDate( separator) == result, "检查错误");
         }
 
         [Theory]
@@ -36,19 +40,21 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void GetRandomTime()
         {
-            DateTime dateTime = TimeCommon.GetRandomTime(DateTime.Now, DateTime.Now.AddDays(100));
+            var s = DateTime.Parse("2020-12-26").IsInSameWeek(DateTime.Parse("2020-12-20"), Nationality.China);
+            var s2 = DateTime.Parse("2020-12-21").IsInSameWeek(DateTime.Parse("2020-12-27"), Nationality.China);
+            DateTime dateTime = DateTime.Now.GetRandomTime(DateTime.Now.AddDays(100));
             var result = dateTime.FormatDate(FormatDateType.One);
         }
 
         [Theory]
         [InlineData(2019, 1, "2019-01-01", "2019-01-31")]
         [InlineData(2019, 2, "2019-02-01", "2019-02-28")]
-        [InlineData(2019, 12, "2019-12-01", "2019-12-28")]
-        [InlineData(2019, -14, "2018-02-01", "2018-02-29")]
+        [InlineData(2019, 12, "2019-12-01", "2019-12-31")]
         [InlineData(2000, 2, "2000-02-01", "2000-02-29")]
         public void ReturnDateFormat(int year, int month, string firstDay, string lastDay)
         {
-            TimeCommon.ReturnDateFormat(year, month, out string firstDay2, out string lastDay2);
+            string firstDay2 = TimeCommon.GetSpecifyMonthFirstDay(year, month).FormatDate(FormatDateType.Zero);
+            string lastDay2 = TimeCommon.GetSpecifyMonthLastDay(year, month).FormatDate(FormatDateType.Zero);
             Check.True(firstDay == firstDay2, "方法有误");
             Check.True(lastDay == lastDay2, "方法有误");
         }
@@ -137,11 +143,11 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void UnixTimeStampToDateTime()
         {
-            var time = DateTime.Now.ToUnixTimestamp(TimestampType.Millisecond);
-            var time2 = DateTime.Now.ToUnixTimestamp(TimestampType.Second);
+            long time = DateTime.Now.ToUnixTimestamp(TimestampType.Millisecond);
+            long time2 = DateTime.Now.ToUnixTimestamp(TimestampType.Second);
 
-            var time3 = TimeCommon.UnixTimeStampToDateTime(time);
-            var time4 = TimeCommon.UnixTimeStampToDateTime(time2);
+            var time3 = Extensions.UnixTimeStampToDateTime(time);
+            var time4 = Extensions.UnixTimeStampToDateTime(time2);
         }
 
         [Theory]
@@ -154,17 +160,6 @@ namespace EInfrastructure.Core.Test
         }
 
         [Theory]
-        [InlineData("2019-07-29", "星期一")]
-        public void GetDayName2(string date, string dateStr)
-        {
-            var time = DateTime.Parse(date).GetDayName(new[]
-            {
-                "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"
-            });
-            Check.True(time == dateStr, "方法异常");
-        }
-
-        [Theory]
         [InlineData("2019-12-9")]
         [InlineData("2019-12-14")]
         [InlineData("2019-12-15")]
@@ -173,10 +168,10 @@ namespace EInfrastructure.Core.Test
         [InlineData("2019-2-18")]
         public void Get(string time)
         {
-            var result = TimeCommon.Get(DateTime.Parse(time), TimeType.StartWeek);
-            result = TimeCommon.Get(DateTime.Parse(time), TimeType.EndWeek);
-            result = TimeCommon.Get(DateTime.Parse(time), TimeType.StartQuarter);
-            result = TimeCommon.Get(DateTime.Parse(time), TimeType.EndQuarter);
+            var result = Extensions.Get(DateTime.Parse(time), TimeType.StartWeek);
+            result = Extensions.Get(DateTime.Parse(time), TimeType.EndWeek);
+            result = Extensions.Get(DateTime.Parse(time), TimeType.StartQuarter);
+            result = Extensions.Get(DateTime.Parse(time), TimeType.EndQuarter);
         }
 
         /// <summary>
@@ -185,14 +180,48 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void GetTotalTime()
         {
-            var str = new TimeDifferenceCommon(() =>
+            var list = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("Sex", "男"),
+                new KeyValuePair<string, object>("Id", "1"),
+                new KeyValuePair<string, object>("Card", "411323123"),
+                new KeyValuePair<string, object>("CreateTime", DateTime.Now.FormatDate(FormatDateType.Zero))
+            };
+            var s = list.ConvertToObject();
+            var b = new NewtonsoftJsonProvider().Serializer(s);
+
+            var user=new Dictionary<string, object>(list).ConvertToObject<UserDto>();
+            var user2=new Dictionary<string, object>(list).ConvertToObject();
+
+            var res = DateTime.Parse("2020-12-27").IntervalWeek(DateTime.Parse("2020-12-19"));
+
+            Assert.True(DateTime.Parse("2020-11-26").GetHoliday() == "感恩节");
+            var str = new TimeElapsed(() =>
             {
                 for (int i = 0; i < 1000; i++)
                 {
                     Console.WriteLine($"i：{i}");
                 }
+
                 Thread.Sleep(1000);
             }).ToString();
         }
+
+        [Theory]
+        [InlineData("2020-12-27", "2020-12-21", true, 0)]
+        [InlineData("2020-12-27", "2020-12-21", false, 1)]
+        public void IntervalWeek(string date1, string date2, bool isChina, int duration)
+        {
+            Nationality nationality = isChina ? Nationality.China : Nationality.Usa;
+            Assert.True(DateTime.Parse(date1).IntervalWeek(DateTime.Parse(date2), nationality) == duration);
+        }
+    }
+
+    public class UserDto
+    {
+        public string Sex { get; set; }
+        public string Id { get; set; }
+        public string Card { get; set; }
+        public string CreateTime { get; set; }
     }
 }

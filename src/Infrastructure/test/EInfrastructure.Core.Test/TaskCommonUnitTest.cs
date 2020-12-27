@@ -5,8 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
-using EInfrastructure.Core.Tools.Tasks;
-using EInfrastructure.Core.Tools.Tasks.Dto;
+using EInfrastructure.Core.Tools.Common.Tasks;
+using EInfrastructure.Core.Tools.Common.Tasks.Dto;
 using Xunit;
 
 namespace EInfrastructure.Core.Test

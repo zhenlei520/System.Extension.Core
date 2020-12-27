@@ -66,6 +66,41 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         public static FormatDateType Ten = new FormatDateType(11, "yyyy-MM-dd HH:mm:ss.fff");
 
         /// <summary>
+        /// HH:mm
+        /// </summary>
+        public static FormatDateType Eleven=new FormatDateType(12,"HH:mm");
+
+        /// <summary>
+        /// yyyyMMdd
+        /// </summary>
+        public static FormatDateType Twelve=new FormatDateType(13,"yyyyMMdd");
+
+        /// <summary>
+        /// HH:mm:ss
+        /// </summary>
+        public static FormatDateType Thirteen=new FormatDateType(14,"HH:mm:ss");
+
+        /// <summary>
+        /// yyyyMMddHHmmss
+        /// </summary>
+        public static FormatDateType Fourteen=new FormatDateType(15,"yyyyMMddHHmmss");
+
+        /// <summary>
+        /// yyyy-MM-dd HH:mm:ss fff
+        /// </summary>
+        public static FormatDateType Fifteen=new FormatDateType(16,"yyyy-MM-dd HH:mm:ss fff");
+
+        /// <summary>
+        /// yyyyMMddHHmmssfff
+        /// </summary>
+        public static FormatDateType Sixteen=new FormatDateType(17,"yyyyMMddHHmmssfff");
+
+        /// <summary>
+        /// yyyy-MM-dd HH:mm
+        /// </summary>
+        public static FormatDateType Seventeen=new FormatDateType(18,"yyyy-MM-dd HH:mm");
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="id"></param>

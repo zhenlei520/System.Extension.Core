@@ -1,7 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 
 using EInfrastructure.Core.Test.Base;
-using EInfrastructure.Core.Tools.Files;
+using EInfrastructure.Core.Tools.Common;
 using Xunit;
 
 namespace EInfrastructure.Core.Test

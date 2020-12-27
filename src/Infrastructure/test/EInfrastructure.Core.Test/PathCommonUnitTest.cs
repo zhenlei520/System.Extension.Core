@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Test.Base;
-using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Common;
 using Xunit;
 
 namespace EInfrastructure.Core.Test

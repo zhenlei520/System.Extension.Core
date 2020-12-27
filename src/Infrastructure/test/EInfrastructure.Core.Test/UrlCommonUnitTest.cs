@@ -2,7 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using EInfrastructure.Core.Test.Base;
-using EInfrastructure.Core.Tools.Url;
+using EInfrastructure.Core.Tools.Common;
+using EInfrastructure.Core.Tools.Configuration.Url;
 using Xunit;
 
 namespace EInfrastructure.Core.Test
@@ -25,7 +26,7 @@ namespace EInfrastructure.Core.Test
             var url3=new Url("http://bflove.cn", "home?id=2");
             var url4=new Url("http://bflove.cn/", "/home?id=2");
             var url5=new Url("http://bflove.cn/", "home?id=2");
-            var uri = new Url(url, true);
+            var uri = new Url(UrlCommon.CompletionUrl(url));
             var res = uri.GetFullQueryPath(isContainerScheme:true);
         }
     }

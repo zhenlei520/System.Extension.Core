@@ -8,7 +8,7 @@ using EInfrastructure.Core.Configuration.Exception;
 namespace EInfrastructure.Core.Tools
 {
     /// <summary>
-    /// 校验方法
+    /// 断言
     /// </summary>
     public static class Check
     {

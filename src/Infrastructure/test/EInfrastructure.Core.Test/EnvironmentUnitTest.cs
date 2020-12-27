@@ -3,9 +3,9 @@
 
 using System;
 using EInfrastructure.Core.Test.Base;
-using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Attributes;
-using EInfrastructure.Core.Tools.Systems;
+using EInfrastructure.Core.Tools.Common;
+using EInfrastructure.Core.Tools.Common.Systems;
 using Xunit;
 
 namespace EInfrastructure.Core.Test
@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.Test
         {
             var version = Environment.Version;
             var runInfo = EnvironmentCommon.GetRun;
-            var str = CustomAttributeCommon<ENameAttribute, string>.GetCustomAttributeValue(
+            var str = CustomAttributeCommon.GetCustomAttribute<ENameAttribute, string>(
                 typeof(EnvironmentCommon.RunInfo), x => x.Name,"UseMemory");
             // while (true)
             // {

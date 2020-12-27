@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using EInfrastructure.Core.Tools;
-using EInfrastructure.Core.Tools.Systems;
+using EInfrastructure.Core.Tools.Common;
 
 namespace EInfrastructure.Core.UserAgentParse
 {
@@ -347,7 +347,7 @@ namespace EInfrastructure.Core.UserAgentParse
         {
             var components = version.Split('.');
             string major = components.Shift();
-            return (major + '.' + components.ToList().ConvertListToString("")).ConvertToDecimal(0);
+            return (major + '.' + components.ToList().ConvertToString("")).ConvertToDecimal(0);
         }
 
         #endregion

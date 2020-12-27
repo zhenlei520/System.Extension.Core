@@ -42,7 +42,7 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// <summary>
         /// 周日
         /// </summary>
-        public static Week Sunday = new Week(0, "周日");
+        public static Week Sunday = new Week(7, "周日");
 
         /// <summary>
         ///

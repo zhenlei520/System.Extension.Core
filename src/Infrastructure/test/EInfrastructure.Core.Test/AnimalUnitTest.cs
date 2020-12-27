@@ -4,6 +4,7 @@
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
 using EInfrastructure.Core.Tools;
+using EInfrastructure.Core.Tools.Common;
 using Xunit;
 
 namespace EInfrastructure.Core.Test
@@ -19,13 +20,14 @@ namespace EInfrastructure.Core.Test
         /// Get into Chinese zodiac
         /// </summary>
         /// <param name="year"></param>
+        /// <param name="animal"></param>
         [Theory]
         [InlineData(1993, "鸡")]
         [InlineData(1998, "虎")]
         [InlineData(2008, "鼠")]
         public void GetAnimal(int year, string animal)
         {
-            Check.True((year.GetAnimalFromBirthday()?.Name??"") == animal, "animal is error");
+            Check.True((TimeCommon.GetAnimal(year)?.Name ?? "") == animal, "animal is error");
         }
 
         #endregion
@@ -38,8 +40,8 @@ namespace EInfrastructure.Core.Test
         public void GetAnimalEnumFromBirthday(int year, int animal)
         {
             Check.True(
-                year.GetAnimalFromBirthday() ==
-                Animal.GetAll<Animal>().FirstOrDefault(x => x.Id == animal), "方法异常");
+                TimeCommon.GetAnimal(year).Equals(
+                    Animal.GetAll<Animal>().FirstOrDefault(x => x.Id == animal)), "方法异常");
         }
     }
 }

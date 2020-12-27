@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using EInfrastructure.Core.Configuration.Ioc;
 using EInfrastructure.Core.Configuration.Ioc.Plugs.Logger;
 using EInfrastructure.Core.Tools;
-using EInfrastructure.Core.Tools.Files;
+using EInfrastructure.Core.Tools.Common;
 
 namespace EInfrastructure.Core.Infrastructure
 {
@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.Infrastructure
         /// <summary>
         /// 得到默认的程序集
         /// </summary>
-        public static AssemblyProvider GetDefaultAssemblyProvider = new AssemblyProvider()
+        public static readonly AssemblyProvider GetDefaultAssemblyProvider = new AssemblyProvider()
         {
             AssemblySkipLoadingPattern = new List<string>(),
             LoadAppDomainAssemblies = true
@@ -106,7 +106,7 @@ namespace EInfrastructure.Core.Infrastructure
         ///
         /// </summary>
         private string GetAssemblySkipLoadingPatternString =>
-            AssemblySkipLoadingPattern.Select(x => "^" + x).ToList().ConvertListToString('|');
+            AssemblySkipLoadingPattern.Select(x => "^" + x).ToList().ConvertToString('|');
 
         #endregion
 
@@ -300,8 +300,8 @@ namespace EInfrastructure.Core.Infrastructure
         /// <summary>
         /// Adds specifically configured assemblies.
         /// </summary>
-        /// <param name="addedAssemblyNames"></param>
-        /// <param name="assemblies"></param>
+        /// <param name="addedAssemblyNames">等待添加的应用程序集名称集合</param>
+        /// <param name="assemblies">当前应用程序集</param>
         protected virtual void AddConfiguredAssemblies(List<string> addedAssemblyNames, List<Assembly> assemblies)
         {
             foreach (var assemblyName in AssemblyNames??new List<string>())

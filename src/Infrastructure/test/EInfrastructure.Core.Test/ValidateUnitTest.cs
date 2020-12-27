@@ -29,6 +29,17 @@ namespace EInfrastructure.Core.Test
 
         [Theory]
         [InlineData("13653777777", true)]
+        [InlineData("13419854154", true)]
+        [InlineData("13499854154", false)]
+        [InlineData("17953777777", false)]
+        [InlineData("17553777777", false)]
+        [InlineData("17043777777", false)]
+        [InlineData("18953777777", true)]
+        [InlineData("19853777777", true)]
+        [InlineData("19553777777", false)]
+        [InlineData("17013777777", false)]
+        [InlineData("16213777777", false)]
+        [InlineData("16513777777", false)]
         public void IsMobile(string param, bool result)
         {
             Check.True(param.IsMobile() == result, "方法异常");
