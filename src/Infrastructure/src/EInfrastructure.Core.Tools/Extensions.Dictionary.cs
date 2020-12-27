@@ -3,8 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Threading;
+using System.Linq;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -18,20 +17,32 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 字典类型转化为对象
         /// </summary>
-        /// <param name="dic"></param>
+        /// <param name="dic">字典</param>
         /// <returns></returns>
-        public static T DicToObject<T>(this Dictionary<string, object> dic) where T : new()
+        public static object ConvertToObject(this IDictionary<string, object> dic)
+        {
+            return dic.ConvertToKeyValuePairs().ConvertToObject();
+        }
+
+        /// <summary>
+        /// 字典类型转化为对象
+        /// </summary>
+        /// <param name="dic">字典</param>
+        /// <returns></returns>
+        public static T ConvertToObject<T>(this IDictionary<string, object> dic) where T : new()
         {
             var md = new T();
-            CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
-            TextInfo textInfo = cultureInfo.TextInfo;
             foreach (var d in dic)
             {
-                var filed = textInfo.ToTitleCase(d.Key);
                 try
                 {
                     var value = d.Value;
-                    md.GetType().GetProperty(filed)?.SetValue(md, value);
+                    var property=md.GetType().GetProperty(d.Key);
+                    if (property != null && property.CanWrite)
+                    {
+                        property.SetValue(md, value);
+                    }
+
                 }
                 catch (Exception e)
                 {
@@ -40,6 +51,25 @@ namespace EInfrastructure.Core.Tools
             }
 
             return md;
+        }
+
+        #endregion
+
+        #region 字典类型转换为KeyValuePair集合
+
+        /// <summary>
+        /// 字典类型转换为KeyValuePair集合
+        /// </summary>
+        /// <param name="dic">字典</param>
+        /// <returns></returns>
+        public static List<KeyValuePair<string, object>> ConvertToKeyValuePairs(this IDictionary<string, object> dic)
+        {
+            if (dic.IsNullOrDbNull())
+            {
+                return new List<KeyValuePair<string, object>>();
+            }
+
+            return dic.Select(x => new KeyValuePair<string, object>(x.Key, x.Value)).ToList();
         }
 
         #endregion

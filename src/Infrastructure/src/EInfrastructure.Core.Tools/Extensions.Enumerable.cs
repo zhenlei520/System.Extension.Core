@@ -130,7 +130,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="list">列表</param>
         /// <param name="csvPath">csv文件路径</param>
         /// <param name="tableName">默认表名</param>
-        public static void DataTableToCsv<T>(this IEnumerable<T> list, string csvPath,string tableName) where T : class
+        public static void DataTableToCsv<T>(this IEnumerable<T> list, string csvPath, string tableName) where T : class
         {
             if (null == list)
                 return;
@@ -149,6 +149,7 @@ namespace EInfrastructure.Core.Tools
                 csvrowText.Append(",");
                 csvrowText.Append(prop.Name);
             }
+
             foreach (T item in list)
             {
                 csvrowText = new StringBuilder();
@@ -156,7 +157,7 @@ namespace EInfrastructure.Core.Tools
                 foreach (PropertyDescriptor prop in properties)
                 {
                     csvrowText.Append(",");
-                    csvrowText.Append(prop.GetValue(item)?.ToString().SafeString()??"");
+                    csvrowText.Append(prop.GetValue(item)?.ToString().SafeString() ?? "");
                 }
 
                 csvText.AppendLine(csvrowText.ToString().Substring(1));
@@ -367,6 +368,7 @@ namespace EInfrastructure.Core.Tools
         #endregion
 
         #region IEnumerable转Dictionary类型
+
         /// <summary>
         /// IEnumerable转Dictionary类型
         /// </summary>
@@ -393,8 +395,10 @@ namespace EInfrastructure.Core.Tools
 
                 dict.Add(key, valueGetter(e));
             }
+
             return dict;
         }
+
         #endregion
 
         #region 返回安全的集合
@@ -438,7 +442,8 @@ namespace EInfrastructure.Core.Tools
         /// <typeparam name="TSource"></typeparam>
         /// <typeparam name="TOpt"></typeparam>
         /// <returns></returns>
-        public static IEnumerable<TSource> Distinct<TSource, TOpt>(this IEnumerable<TSource> source, Func<TSource, TOpt> keySelector)
+        public static IEnumerable<TSource> Distinct<TSource, TOpt>(this IEnumerable<TSource> source,
+            Func<TSource, TOpt> keySelector)
         {
             return source.Distinct(new CommonEqualityComparer<TSource, TOpt>(keySelector));
         }

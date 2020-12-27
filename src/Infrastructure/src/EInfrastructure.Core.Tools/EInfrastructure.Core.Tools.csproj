@@ -29,6 +29,9 @@
   <ItemGroup>
     <ProjectReference Include="..\EInfrastructure.Core.Http\EInfrastructure.Core.Http.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\..\..\packageIcon.png">
@@ -129,6 +132,9 @@
       <DependentUpon>Extensions.cs</DependentUpon>
     </Compile>
     <Compile Update="Extensions.Float.cs">
+      <DependentUpon>Extensions.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Extensions.Dynamic.cs">
       <DependentUpon>Extensions.cs</DependentUpon>
     </Compile>
   </ItemGroup>

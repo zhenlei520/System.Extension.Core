@@ -41,7 +41,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsDouble(this object expression)
         {
-            return expression.ConvertToDouble() .IsNull()==false;
+            return expression.ConvertToDouble().IsNull() == false;
         }
 
         #endregion
@@ -55,7 +55,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsDecimal(this object expression)
         {
-            return expression.ConvertToDecimal() .IsNull()==false;
+            return expression.ConvertToDecimal().IsNull() == false;
         }
 
         #endregion
@@ -69,7 +69,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsLong(this object expression)
         {
-            return expression.ConvertToLong() .IsNull()==false;
+            return expression.ConvertToLong().IsNull() == false;
         }
 
         #endregion
@@ -83,7 +83,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsInt(this object expression)
         {
-            return expression.ConvertToInt() .IsNull()==false;
+            return expression.ConvertToInt().IsNull() == false;
         }
 
         #endregion
@@ -97,7 +97,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsShort(this object expression)
         {
-            return expression.ConvertToShort() .IsNull()==false;
+            return expression.ConvertToShort().IsNull() == false;
         }
 
         #endregion
@@ -111,7 +111,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsGuid(this object expression)
         {
-            return expression.ConvertToGuid() .IsNull()==false;
+            return expression.ConvertToGuid().IsNull() == false;
         }
 
         #endregion
@@ -125,7 +125,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsChar(this object expression)
         {
-            return expression.ConvertToChar() .IsNull()==false;
+            return expression.ConvertToChar().IsNull() == false;
         }
 
         #endregion
@@ -139,7 +139,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsFloat(this object expression)
         {
-            return expression.ConvertToFloat() .IsNull()==false;
+            return expression.ConvertToFloat().IsNull() == false;
         }
 
         #endregion
@@ -153,7 +153,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsDateTime(this object expression)
         {
-            return expression.ConvertToDateTime() .IsNull()==false;
+            return expression.ConvertToDateTime().IsNull() == false;
         }
 
         #endregion
@@ -167,7 +167,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsByte(this object expression)
         {
-            return expression.ConvertToByte().IsNull()==false;
+            return expression.ConvertToByte().IsNull() == false;
         }
 
         #endregion
@@ -181,7 +181,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsSByte(this object expression)
         {
-            return expression.ConvertToSByte().IsNull()==false;
+            return expression.ConvertToSByte().IsNull() == false;
         }
 
         #endregion
@@ -195,7 +195,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static bool IsBool(this object expression)
         {
-            return expression.ConvertToBool().IsNull()==false;
+            return expression.ConvertToBool().IsNull() == false;
         }
 
         #endregion
@@ -308,6 +308,62 @@ namespace EInfrastructure.Core.Tools
         {
             return param1.CompareTo(param2) == 0 || param1.CompareTo(param2) == -1;
         }
+
+        #endregion
+
+        #region 判断是否在/不在指定列表内
+
+        /// <summary>
+        /// 是否在指定列表内
+        /// </summary>
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <param name="source">数据源</param>
+        /// <param name="list">列表</param>
+        public static bool IsIn<T>(this T source, params T[] list) where T : IComparable =>
+            list.Any(t => t.CompareTo(source) == 0);
+
+        /// <summary>
+        /// 判断不在指定列表内
+        /// </summary>
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <param name="source">数据源</param>
+        /// <param name="list">列表</param>
+        public static bool IsNotIn<T>(this T source, params T[] list) where T : IComparable =>
+            list.All(t => t.CompareTo(source) != 0);
+
+        /// <summary>
+        /// 是否在指定列表内
+        /// </summary>
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <param name="source">数据源</param>
+        /// <param name="list">列表</param>
+        public static bool IsIn<T>(this T source, IEnumerable<T> list) where T : IComparable =>
+            list.Any(t => t.CompareTo(source) == 0);
+
+        /// <summary>
+        /// 判断不在指定列表内
+        /// </summary>
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <param name="source">数据源</param>
+        /// <param name="list">列表</param>
+        public static bool IsNotIn<T>(this T source, IEnumerable<T> list) where T : IComparable =>
+            list.All(t => t.CompareTo(source) != 0);
+
+        /// <summary>
+        /// 是否在指定列表内
+        /// </summary>
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <param name="source">数据源</param>
+        /// <param name="list">列表</param>
+        public static bool IsIn<T>(this T source, HashSet<T> list) where T : IComparable => list.Contains(source);
+
+        /// <summary>
+        /// 判断不在指定列表内
+        /// </summary>
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <param name="source">数据源</param>
+        /// <param name="list">列表</param>
+        public static bool IsNotIn<T>(this T source, HashSet<T> list) where T : IComparable => !list.Contains(source);
 
         #endregion
 
