@@ -1,6 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 
 using System;
+using System.Linq;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -139,6 +140,23 @@ namespace EInfrastructure.Core.Tools
         {
             ChangeResult<DateTime>(ref parameter1, ref parameter2);
         }
+        #endregion
+
+        #region ForEach循环
+
+        /// <summary>
+        /// ForEach循环
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="action"></param>
+        public static void ForEach<T>(this T[] collection, Action<T> action)
+        {
+            collection.ToList().ForEach(item =>
+            {
+                action?.Invoke(item);
+            });
+        }
+
         #endregion
     }
 }
