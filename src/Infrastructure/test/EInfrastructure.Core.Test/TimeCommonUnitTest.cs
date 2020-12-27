@@ -38,9 +38,9 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void GetRandomTime()
         {
-            var s=DateTime.Parse("2020-12-26").IsInSameWeek(DateTime.Parse("2020-12-20"),Nationality.China);
-            var s2 =DateTime.Parse("2020-12-21").IsInSameWeek(DateTime.Parse("2020-12-27"),Nationality.China);
-            DateTime dateTime = DateTime.Now.GetRandomTime( DateTime.Now.AddDays(100));
+            var s = DateTime.Parse("2020-12-26").IsInSameWeek(DateTime.Parse("2020-12-20"), Nationality.China);
+            var s2 = DateTime.Parse("2020-12-21").IsInSameWeek(DateTime.Parse("2020-12-27"), Nationality.China);
+            DateTime dateTime = DateTime.Now.GetRandomTime(DateTime.Now.AddDays(100));
             var result = dateTime.FormatDate(FormatDateType.One);
         }
 
@@ -178,15 +178,27 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void GetTotalTime()
         {
-            Assert.True( DateTime.Parse("2020-11-26").GetHoliday()=="感恩节");
+            var res = DateTime.Parse("2020-12-27").IntervalWeek(DateTime.Parse("2020-12-19"));
+
+            Assert.True(DateTime.Parse("2020-11-26").GetHoliday() == "感恩节");
             var str = new TimeElapsed(() =>
             {
                 for (int i = 0; i < 1000; i++)
                 {
                     Console.WriteLine($"i：{i}");
                 }
+
                 Thread.Sleep(1000);
             }).ToString();
+        }
+
+        [Theory]
+        [InlineData("2020-12-27", "2020-12-21", true, 0)]
+        [InlineData("2020-12-27", "2020-12-21", false, 1)]
+        public void IntervalWeek(string date1, string date2, bool isChina, int duration)
+        {
+            Nationality nationality = isChina ? Nationality.China : Nationality.Usa;
+            Assert.True(DateTime.Parse(date1).IntervalWeek(DateTime.Parse(date2), nationality) == duration);
         }
     }
 }

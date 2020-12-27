@@ -1228,10 +1228,10 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 获取总数字字数
+        #region 获取十进制数字字数
 
         /// <summary>
-        /// 获取总数字字数
+        /// 获取十进制数字字数
         /// 十进制数字，就是 '0 '.. '9 '
         /// </summary>
         /// <param name="str">字符串</param>
@@ -1240,15 +1240,51 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 获取总数字字数
+        #region 获取总数字字符字数
 
         /// <summary>
-        /// 获取总数字字数
+        /// 获取总数字字符字数
         ///  判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。
         /// </summary>
         /// <param name="str">字符串</param>
         public static int TotalNumber(this string str) =>
             str.IsNullOrWhiteSpace() ? 0 : str.ToCharArray().Count(char.IsNumber);
+
+        #endregion
+
+        #region 获取标点符号字数
+
+        /// <summary>
+        /// 获取标点符号字数
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <returns></returns>
+        public static int TotalPunctuation(this string str) =>
+            str.IsNullOrWhiteSpace() ? 0 : str.ToCharArray().Count(char.IsPunctuation);
+
+        #endregion
+
+        #region 获取分隔符号字数
+
+        /// <summary>
+        /// 获取分隔符号字数
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <returns></returns>
+        public static int TotalSeparator(this string str) =>
+            str.IsNullOrWhiteSpace() ? 0 : str.ToCharArray().Count(char.IsSeparator);
+
+        #endregion
+
+        #region 获取符号字符字数
+
+        /// <summary>
+        /// 获取符号字符字数
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <returns></returns>
+        public static int TotalSymbol(this string str) =>
+            str.IsNullOrWhiteSpace() ? 0 : str.ToCharArray().Count(char.IsSymbol);
 
         #endregion
 
@@ -1879,6 +1915,50 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 是否在指定列表内
+
+        /// <summary>
+        /// 是否在指定列表内（默认忽略大小写）
+        /// </summary>
+        /// <param name="source">数据源</param>
+        /// <param name="list">列表</param>
+        public static bool IsIn(this string source, params string[] list) =>
+            source.IsIn(StringComparison.OrdinalIgnoreCase, list);
+
+        /// <summary>
+        /// 是否在指定列表内
+        /// </summary>
+        /// <param name="source">数据源</param>
+        /// <param name="list">列表</param>
+        /// <param name="stringComparison">匹配方式，默认忽略大小写</param>
+        public static bool IsIn(this string source,
+            StringComparison stringComparison, params string[] list) =>
+            list.Any(x => string.Equals(source, x, stringComparison));
+
+        #endregion
+
+        #region 判断不在指定列表内
+
+        /// <summary>
+        /// 判断不在指定列表内（默认忽略大小写）
+        /// </summary>
+        /// <param name="source">数据源</param>
+        /// <param name="list">列表</param>
+        public static bool IsNotIn(this string source, params string[] list) =>
+            source.IsNotIn(StringComparison.OrdinalIgnoreCase, list);
+
+        /// <summary>
+        /// 判断不在指定列表内
+        /// </summary>
+        /// <param name="source">数据源</param>
+        /// <param name="list">列表</param>
+        /// <param name="stringComparison">匹配方式，默认忽略大小写</param>
+        public static bool IsNotIn(this string source,
+            StringComparison stringComparison, params string[] list) =>
+            !source.IsIn(stringComparison,list);
+
+        #endregion
+
         #region 判断是否包含英文字母、数字
 
         #region 判断是否全部为英文字母
@@ -1928,7 +2008,8 @@ namespace EInfrastructure.Core.Tools
         /// 判断是否全部为大写英文字母
         /// </summary>
         /// <param name="str">字符串</param>
-        public static bool ContainsOnlyUpperLetters(this string str) => str.All(x=>char.IsLetter(x)&&char.IsUpper(x));
+        public static bool ContainsOnlyUpperLetters(this string str) =>
+            str.All(x => char.IsLetter(x) && char.IsUpper(x));
 
         #endregion
 
@@ -1938,7 +2019,7 @@ namespace EInfrastructure.Core.Tools
         /// 包含 是否包含大写英文字母
         /// </summary>
         /// <param name="str">字符串</param>
-        public static bool ContainsUpperLetters(this string str) => str.Any(x=>char.IsDigit(x)&&char.IsUpper(x));
+        public static bool ContainsUpperLetters(this string str) => str.Any(x => char.IsDigit(x) && char.IsUpper(x));
 
         #endregion
 
@@ -1969,7 +2050,8 @@ namespace EInfrastructure.Core.Tools
         /// 判断是否全部为小写英文字母
         /// </summary>
         /// <param name="str">字符串</param>
-        public static bool ContainsOnlyLowerLetters(this string str) => str.All(x=>char.IsLetter(x)&&char.IsLower(x));
+        public static bool ContainsOnlyLowerLetters(this string str) =>
+            str.All(x => char.IsLetter(x) && char.IsLower(x));
 
         #endregion
 
@@ -2007,37 +2089,37 @@ namespace EInfrastructure.Core.Tools
         #region 判断是否全部为数字
 
         /// <summary>
-        /// 判断是否全部为数字
+        /// 判断是否全部为十进制数字字符
         /// </summary>
         /// <param name="str">字符串</param>
         public static bool ContainsOnlyDigits(this string str) => str.All(char.IsDigit);
 
         #endregion
 
-        #region 包含 是否包含数字
+        #region 包含 是否包含十进制数字字符
 
         /// <summary>
-        /// 包含 是否包含数字
+        /// 包含 是否包含十进制数字字符
         /// </summary>
         /// <param name="str">字符串</param>
         public static bool ContainsDigits(this string str) => str.Any(char.IsDigit);
 
         #endregion
 
-        #region 是否包含数字
+        #region 是否包含十进制数字字符
 
         /// <summary>
-        /// 是否包含数字
+        /// 是否包含十进制数字字符
         /// </summary>
         /// <param name="text">字符串</param>
         public static bool IncludeDigits(this string text) => text.IncludeDigits(1);
 
         #endregion
 
-        #region 是否包含指定最小数量的数字
+        #region 是否包含指定最小数量的十进制数字字符
 
         /// <summary>
-        /// 是否包含指定最小数量的数字
+        /// 是否包含指定最小数量的十进制数字字符
         /// </summary>
         /// <param name="str">字符串</param>
         /// <param name="minCount">最小数量</param>
@@ -2045,44 +2127,95 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 判断是否全部为数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+        #region 判断是否全部为数字字符(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
 
         /// <summary>
-        /// 判断是否全部为数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+        /// 判断是否全部为数字字符(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
         /// </summary>
         /// <param name="str">字符串</param>
         public static bool ContainsOnlyNumber(this string str) => str.All(char.IsNumber);
 
         #endregion
 
-        #region 包含 是否包含数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+        #region 包含 是否包含数字字符(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
 
         /// <summary>
-        /// 包含 是否包含数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+        /// 包含 是否包含数字字符(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
         /// </summary>
         /// <param name="str">字符串</param>
         public static bool ContainsNumber(this string str) => str.Any(char.IsNumber);
 
         #endregion
 
-        #region 是否包含数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+        #region 是否包含数字字符(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
 
         /// <summary>
-        /// 是否包含数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+        /// 是否包含数字字符(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
         /// </summary>
         /// <param name="text">字符串</param>
         public static bool IncludeNumber(this string text) => text.IncludeNumber(1);
 
         #endregion
 
-        #region 是否包含指定最小数量的数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+        #region 是否包含指定最小数量的数字字符(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
 
         /// <summary>
-        /// 是否包含指定最小数量的数字(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
+        /// 是否包含指定最小数量的数字字符(判断的是数字类别，包括十进制数字 '0 '.. '9 '，还有用字母表示的数字，如表示罗马数字5的字母 'V '，还有表示其他数字的字符，如表示“1/2”的字符。)
         /// </summary>
         /// <param name="str">字符串</param>
         /// <param name="minCount">最小数量</param>
         public static bool IncludeNumber(this string str, int minCount) => str.TotalNumber() >= minCount;
+
+        #endregion
+
+        #region 是否包含标点符号
+
+        /// <summary>
+        /// 是否包含标点符号
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static bool IncludePunctuation(this string str) => str.IncludePunctuation(1);
+
+        /// <summary>
+        /// 是否包含至少minCount个标点符号
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <param name="minCount">最小数量</param>
+        public static bool IncludePunctuation(this string str, int minCount) => str.TotalPunctuation() >= minCount;
+
+        #endregion
+
+        #region 是否包含分隔符号
+
+        /// <summary>
+        /// 是否包含分隔符号
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static bool IncludeSeparator(this string str) => str.IncludeSeparator(1);
+
+        /// <summary>
+        /// 是否包含至少minCount个分隔符号
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <param name="minCount">最小数量</param>
+        public static bool IncludeSeparator(this string str, int minCount) => str.TotalSeparator() >= minCount;
+
+        #endregion
+
+        #region 是否包含符号字符
+
+        /// <summary>
+        /// 是否包含符号字符
+        /// </summary>
+        /// <param name="str">字符串</param>
+        public static bool IncludeSymbol(this string str) => str.IncludeSymbol(1);
+
+        /// <summary>
+        /// 是否包含至少minCount个符号字符
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <param name="minCount">最小数量</param>
+        public static bool IncludeSymbol(this string str, int minCount) => str.TotalSymbol() >= minCount;
 
         #endregion
 
