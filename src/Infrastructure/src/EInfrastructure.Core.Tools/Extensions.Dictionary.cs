@@ -77,7 +77,7 @@ namespace EInfrastructure.Core.Tools
         #region 得到安全的Dictionary类型
 
         /// <summary>
-        /// 如果不存在则添加，否则跳过
+        /// 得到安全的Dictionary类型
         /// </summary>
         /// <param name="dictionary">字典类型</param>
         /// <typeparam name="TKey">键类型</typeparam>
