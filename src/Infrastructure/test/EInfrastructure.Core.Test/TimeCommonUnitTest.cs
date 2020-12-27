@@ -1,9 +1,11 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using EInfrastructure.Core.Configuration.Enumerations;
+using EInfrastructure.Core.Serialize.NewtonsoftJson;
 using EInfrastructure.Core.Test.Base;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Common;
@@ -178,6 +180,19 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void GetTotalTime()
         {
+            var list = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("Sex", "男"),
+                new KeyValuePair<string, object>("Id", "1"),
+                new KeyValuePair<string, object>("Card", "411323123"),
+                new KeyValuePair<string, object>("CreateTime", DateTime.Now.FormatDate(FormatDateType.Zero))
+            };
+            var s = list.ConvertToObject();
+            var b = new NewtonsoftJsonProvider().Serializer(s);
+
+            var user=new Dictionary<string, object>(list).ConvertToObject<UserDto>();
+            var user2=new Dictionary<string, object>(list).ConvertToObject();
+
             var res = DateTime.Parse("2020-12-27").IntervalWeek(DateTime.Parse("2020-12-19"));
 
             Assert.True(DateTime.Parse("2020-11-26").GetHoliday() == "感恩节");
@@ -200,5 +215,13 @@ namespace EInfrastructure.Core.Test
             Nationality nationality = isChina ? Nationality.China : Nationality.Usa;
             Assert.True(DateTime.Parse(date1).IntervalWeek(DateTime.Parse(date2), nationality) == duration);
         }
+    }
+
+    public class UserDto
+    {
+        public string Sex { get; set; }
+        public string Id { get; set; }
+        public string Card { get; set; }
+        public string CreateTime { get; set; }
     }
 }
