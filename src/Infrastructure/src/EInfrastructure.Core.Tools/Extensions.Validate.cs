@@ -367,6 +367,50 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 是否Null
+
+        /// <summary>
+        /// 是否Null
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static bool IsNull(this object obj)
+        {
+            return obj == null;
+        }
+
+        /// <summary>
+        /// 是否null或者DBNull
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static bool IsNullOrDbNull(this object obj)
+        {
+            return obj == null || obj is DBNull;
+        }
+
+        /// <summary>
+        /// 是否为Null或者空或者DbNull
+        /// </summary>
+        /// <param name="value">待验证的对象</param>
+        /// <returns></returns>
+        public static bool IsNullOrEmptyOrDbNull(this object value)
+        {
+            return value.IsNullOrDbNull() || value.ToString().IsNullOrEmpty();
+        }
+
+        /// <summary>
+        /// 是否为Null或者空以字符串或者DbNull
+        /// </summary>
+        /// <param name="value">待验证的对象</param>
+        /// <returns></returns>
+        public static bool IsNullOrWhiteSpaceOrDbNull(this object value)
+        {
+            return value.IsNullOrDbNull() || value.ToString().IsNullOrWhiteSpace();
+        }
+
+        #endregion
+
         #region 刷新手机号验证
 
         /// <summary>

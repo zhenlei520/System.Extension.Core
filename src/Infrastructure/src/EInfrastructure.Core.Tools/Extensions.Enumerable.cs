@@ -168,10 +168,10 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 获取list列表的值
+        #region 获取list列表的数量
 
         /// <summary>
-        /// 获取list列表的值
+        /// 获取list列表的数量
         /// </summary>
         /// <param name="list"></param>
         /// <typeparam name="T"></typeparam>
@@ -367,10 +367,10 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region IEnumerable转Dictionary类型
+        #region IEnumerable转Dictionary类型，如果key存在会跳过
 
         /// <summary>
-        /// IEnumerable转Dictionary类型
+        /// IEnumerable转Dictionary类型，如果key存在会跳过
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
         /// <typeparam name="TKey"></typeparam>
@@ -461,6 +461,20 @@ namespace EInfrastructure.Core.Tools
             IEqualityComparer<V> comparer)
         {
             return source.Distinct(new CommonEqualityComparer<T, V>(keySelector, comparer));
+        }
+
+        #endregion
+
+        #region 验证列表是否是null或者空
+
+        /// <summary>
+        /// 验证列表是否是null或者空
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> list)
+        {
+            return list.GetListCount() == 0;
         }
 
         #endregion

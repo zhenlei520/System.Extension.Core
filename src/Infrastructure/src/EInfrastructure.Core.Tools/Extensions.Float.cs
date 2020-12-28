@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -10,6 +12,22 @@ namespace EInfrastructure.Core.Tools
     /// </summary>
     public partial class Extensions
     {
+        #region Abs(返回数字的绝对值)
+
+        /// <summary>
+        /// 返回数字的绝对值
+        /// </summary>
+        /// <param name="dec">值</param>
+        public static float Abs(this float dec) => Math.Abs(dec);
+
+        /// <summary>
+        /// 返回数字的绝对值
+        /// </summary>
+        /// <param name="dec">值</param>
+        public static IEnumerable<float> Abs(this IEnumerable<float> dec) => dec.Select(x => x.Abs());
+
+        #endregion
+
         #region 保留指定位数(默认四舍五入)
 
         /// <summary>

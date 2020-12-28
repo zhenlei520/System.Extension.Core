@@ -47,10 +47,10 @@ namespace EInfrastructure.Core.Tools
 
         #region 全部转换为大小写
 
-        #region 转为大写
+        #region 转为大写(去除Null的情况)
 
         /// <summary>
-        /// 转为大写
+        /// 转为大写(去除Null的情况)
         /// </summary>
         /// <param name="parameter">需要转换的参数</param>
         /// <returns></returns>
@@ -66,10 +66,10 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 转为小写
+        #region 转为小写(去除Null的情况)
 
         /// <summary>
-        /// 转为小写
+        /// 转为小写(去除Null的情况)
         /// </summary>
         /// <param name="parameter">需要转换的参数</param>
         /// <returns></returns>
@@ -340,28 +340,6 @@ namespace EInfrastructure.Core.Tools
             }
 
             return str;
-        }
-
-        #endregion
-
-        #region 判断字符串是否全部相等
-
-        /// <summary>
-        /// 判断字符串是否全部相等
-        /// </summary>
-        /// <param name="str">待验证的字符串</param>
-        /// <returns></returns>
-        public static bool IsEqualNumber(this string str)
-        {
-            for (int i = 0; i < str.Length - 1; i++)
-            {
-                if (str[i] != str[i + 1])
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         #endregion
@@ -1166,6 +1144,47 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 字符串增加前缀
+
+        /// <summary>
+        /// 字符串增加前缀
+        /// </summary>
+        /// <param name="original">原字符串</param>
+        /// <param name="prefix">前缀</param>
+        /// <param name="isRefEmpty">源字符串为空时是否返回空字符串</param>
+        public static string AddPrefix(this string original, string prefix, bool isRefEmpty = true)
+        {
+            if (original.IsNullOrWhiteSpace() && isRefEmpty)
+            {
+                return "";
+            }
+
+            return string.Concat(prefix, original);
+        }
+
+        #endregion
+
+        #region 字符串增加后缀
+
+        /// <summary>
+        /// 字符串增加后缀
+        /// </summary>
+        /// <param name="original">原字符串</param>
+        /// <param name="suffix">后缀</param>
+        /// <param name="isRefEmpty">源字符串为空时是否返回空</param>
+        /// <returns></returns>
+        public static string AddSuffix(this string original, string suffix, bool isRefEmpty = true)
+        {
+            if (original.IsNullOrWhiteSpace() && isRefEmpty)
+            {
+                return "";
+            }
+
+            return string.Concat(original, suffix);
+        }
+
+        #endregion
+
         #region 转换进制
 
         /// <summary>
@@ -1430,6 +1449,28 @@ namespace EInfrastructure.Core.Tools
         #endregion
 
         #region 验证
+
+        #region 判断字符串是否全部相等
+
+        /// <summary>
+        /// 判断字符串是否全部相等
+        /// </summary>
+        /// <param name="str">待验证的字符串</param>
+        /// <returns></returns>
+        public static bool IsEqualNumber(this string str)
+        {
+            for (int i = 0; i < str.Length - 1; i++)
+            {
+                if (str[i] != str[i + 1])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        #endregion
 
         #region 判断正则表达式是否匹配
 
@@ -2241,16 +2282,6 @@ namespace EInfrastructure.Core.Tools
         public static bool IsNullOrWhiteSpace(this string str)
         {
             return string.IsNullOrWhiteSpace(str);
-        }
-
-        /// <summary>
-        /// Indicates whether the specified string is null or an
-        /// </summary>
-        /// <param name="list"></param>
-        /// <returns></returns>
-        public static bool IsNullOrEmpty<T>(this IEnumerable<T> list)
-        {
-            return list.GetListCount() == 0;
         }
 
         #endregion

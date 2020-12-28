@@ -31,29 +31,5 @@ namespace EInfrastructure.Core.Tools
         }
 
         #endregion
-
-        #region 是否Null
-
-        /// <summary>
-        /// 是否Null
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static bool IsNull(this object obj)
-        {
-            return obj == null;
-        }
-
-        /// <summary>
-        /// 是否null或者DBNull
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static bool IsNullOrDbNull(this object obj)
-        {
-            return obj == null || obj is DBNull;
-        }
-
-        #endregion
     }
 }
