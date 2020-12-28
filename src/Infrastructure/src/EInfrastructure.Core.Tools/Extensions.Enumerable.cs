@@ -216,7 +216,7 @@ namespace EInfrastructure.Core.Tools
             bool isReplaceEmpty = true,
             bool isReplaceSpace = true) where T : struct
         {
-            var enumerable = str as T[] ?? str.ToArray();
+            var enumerable = str.SafeList();
             if (!enumerable.Any())
             {
                 return "";
@@ -257,24 +257,23 @@ namespace EInfrastructure.Core.Tools
             bool isReplaceEmpty = true,
             bool isReplaceSpace = true)
         {
-            var enumerable = str as string[] ?? str.ToArray();
+            IEnumerable<string> enumerable = str.SafeList();
             if (!enumerable.Any())
             {
                 return "";
             }
 
-            IEnumerable<string> tempList = enumerable.ToList();
             if (isReplaceEmpty)
             {
                 if (isReplaceSpace)
                 {
-                    tempList = tempList.Select(x => x.Trim());
+                    enumerable = enumerable.Select(x => x.Trim());
                 }
 
-                tempList = tempList.Where(x => !string.IsNullOrEmpty(x));
+                enumerable = enumerable.Where(x => !string.IsNullOrEmpty(x));
             }
 
-            return string.Join(split + "", tempList);
+            return string.Join(split + "", enumerable);
         }
 
         #endregion
@@ -292,12 +291,7 @@ namespace EInfrastructure.Core.Tools
         public static string ConvertToString(this string[] s, char c = ',', bool isReplaceEmpty = true,
             bool isReplaceSpace = true)
         {
-            if (s == null || s.Length == 0)
-            {
-                return "";
-            }
-
-            return ConvertToString(s.ToList(), c, isReplaceEmpty, isReplaceSpace);
+            return s.SafeList().ConvertToString( c, isReplaceEmpty, isReplaceSpace);
         }
 
         /// <summary>
@@ -311,12 +305,7 @@ namespace EInfrastructure.Core.Tools
         public static string ConvertToString(this string[] s, string c = ",", bool isReplaceEmpty = true,
             bool isReplaceSpace = true)
         {
-            if (s == null || s.Length == 0)
-            {
-                return "";
-            }
-
-            return ConvertToString(s.ToList(), c, isReplaceEmpty, isReplaceSpace);
+            return s.SafeList().ConvertToString( c, isReplaceEmpty, isReplaceSpace);
         }
 
         #endregion
