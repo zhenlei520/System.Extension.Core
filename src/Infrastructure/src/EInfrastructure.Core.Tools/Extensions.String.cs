@@ -58,7 +58,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (string.IsNullOrEmpty(parameter))
             {
-                return "";
+                return string.Empty;
             }
 
             return parameter.ToUpper();
@@ -77,7 +77,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (string.IsNullOrEmpty(parameter))
             {
-                return "";
+                return string.Empty;
             }
 
             return parameter.ToLower();
@@ -162,9 +162,9 @@ namespace EInfrastructure.Core.Tools
         /// <param name="splitStr">要分割的字符,默认以,分割</param>
         /// <param name="isReplaceSpace">是否移除空格</param>
         /// <returns></returns>
-        public static List<T> ConvertStrToList<T>(this string str, string splitStr = ",", bool isReplaceSpace = true)
+        public static List<T> ConvertToList<T>(this string str, string splitStr = ",", bool isReplaceSpace = true)
         {
-            if (string.IsNullOrEmpty(str))
+            if (str.IsNullOrWhiteSpace())
             {
                 return new List<T>();
             }
@@ -181,9 +181,9 @@ namespace EInfrastructure.Core.Tools
         /// <param name="splitStr">要分割的字符,默认以,分割</param>
         /// <param name="isReplaceSpace">是否移除空格</param>
         /// <returns></returns>
-        public static List<T> ConvertStrToList<T>(this string str, char splitStr = ',', bool isReplaceSpace = true)
+        public static List<T> ConvertToList<T>(this string str, char splitStr = ',', bool isReplaceSpace = true)
         {
-            if (string.IsNullOrEmpty(str))
+            if (str.IsNullOrWhiteSpace())
             {
                 return new List<T>();
             }
@@ -314,10 +314,10 @@ namespace EInfrastructure.Core.Tools
         {
             if (param.IsNullOrWhiteSpace())
             {
-                return "";
+                return string.Empty;
             }
 
-            string str = "";
+            string str = string.Empty;
             if (index > param.Length - 1)
             {
                 return param;
@@ -610,7 +610,7 @@ namespace EInfrastructure.Core.Tools
         public static string AesEncrypt(this string str, string key)
         {
             var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.Aes));
-            return provider?.Encrypt(str, new EncryptInfos(key, "", Encoding.UTF8)) ??
+            return provider?.Encrypt(str, new EncryptInfos(key, string.Empty, Encoding.UTF8)) ??
                    throw new NotImplementedException("Unsupported encryption methods");
         }
 
@@ -627,7 +627,7 @@ namespace EInfrastructure.Core.Tools
         public static string AesDecrypt(this string str, string key)
         {
             var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.Aes));
-            return provider?.Decrypt(str, new EncryptInfos(key, "", Encoding.UTF8)) ??
+            return provider?.Decrypt(str, new EncryptInfos(key, string.Empty, Encoding.UTF8)) ??
                    throw new NotImplementedException("Unsupported decryption methods");
         }
 
@@ -1016,7 +1016,7 @@ namespace EInfrastructure.Core.Tools
             }
 
             byte[] bts = Encoding.Unicode.GetBytes(str);
-            string r = "";
+            string r = string.Empty;
             for (int i = 0; i < bts.Length; i += 2)
                 r += "\\u" + bts[i + 1].ToString("x").PadLeft(2, '0') + bts[i].ToString("x").PadLeft(2, '0');
             return r;
@@ -1038,7 +1038,7 @@ namespace EInfrastructure.Core.Tools
                 return str;
             }
 
-            string r = "";
+            string r = string.Empty;
             MatchCollection mc = Regex.Matches(str, @"\\u([\w]{2})([\w]{2})",
                 RegexOptions.Compiled | RegexOptions.IgnoreCase);
             byte[] bts = new byte[2];
@@ -1156,7 +1156,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (original.IsNullOrWhiteSpace() && isRefEmpty)
             {
-                return "";
+                return string.Empty;
             }
 
             return string.Concat(prefix, original);
@@ -1177,7 +1177,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (original.IsNullOrWhiteSpace() && isRefEmpty)
             {
-                return "";
+                return string.Empty;
             }
 
             return string.Concat(original, suffix);

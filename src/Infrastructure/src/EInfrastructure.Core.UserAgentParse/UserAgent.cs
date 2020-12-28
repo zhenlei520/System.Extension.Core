@@ -53,7 +53,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     if (!string.IsNullOrEmpty(uaData.Device.Name) &&
                         uaData.Device.Name.IndexOf(GetMatchResult(mc, 0), StringComparison.Ordinal) >= 0)
                     {
-                        uaData.Device.Name = uaData.Device.Name.ReplaceRegex(GetMatchResult(mc, 1), "");
+                        uaData.Device.Name = uaData.Device.Name.ReplaceRegex(GetMatchResult(mc, 1), string.Empty);
                     }
                 }
 
@@ -153,7 +153,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     {
                         // 美图手机名字冒充小米 比如 meitu m4 mizhi
                         uaData.Device.Manufacturer = GetMatchResult(tempMc, 1);
-                        uaData.Device.Name = "";
+                        uaData.Device.Name = string.Empty;
                     }
                     // 若匹配出的 match[2]没空格 会出现很多例如 mizi mizhi miha 但也会出现mi3 minote之类 特殊处理下
                     else if (GetMatchResult(mc, 2).Length > 0 && !GetMatchResult(mc, 2).Test(@"\s"))
@@ -178,7 +178,7 @@ namespace EInfrastructure.Core.UserAgentParse
                         if (!string.IsNullOrEmpty(GetMatchResult(mc, 2)) && GetMatchResult(mc, 2).Length > 0)
                         {
                             string[] temp = mc[0].Value;
-                            temp[2] = GetMatchResult(mc, 2).ReplaceRegex(@"\s", "");
+                            temp[2] = GetMatchResult(mc, 2).ReplaceRegex(@"\s", string.Empty);
                             mc[0] = new KeyValuePair<string, string[]>(mc[0].Key, temp);
 
                             uaData.Device.Name =
@@ -251,7 +251,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     // 20150xxx2014501
                     else if ((mc = uaData.Device.Name.Match(@"\d{6}", RegexOptions.IgnoreCase)).Count > 0)
                     {
-                        uaData.Device.Name = "";
+                        uaData.Device.Name = string.Empty;
                     }
                     else if ((mc = uaData.Device.Name.Match(@"redmi", RegexOptions.IgnoreCase)).Count > 0)
                     {
@@ -319,7 +319,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     uaData.Device.Name = GetMatchResult(mc, 1);
                     // 首先剔除 viv-  vivo-  bbg- 等打头的内容
                     uaData.Device.Name = uaData.Device.Name.ReplaceRegex(@"(viv[\s-_]|vivo[\s-_]|bbg[\s-_])",
-                        RegexOptions.IgnoreCase, "");
+                        RegexOptions.IgnoreCase, string.Empty);
                     // 解决移动联通等不同发行版导致的机型不同问题
                     // 特征：[A-Z][0-9]+[A-Z] 例如  X5F X5L X5M X5iL 都应该是 X5
                     if ((mc = uaData.Device.Name.Match(@"([a-z]+[0-9]+)i?[a-z]?[\s-_]?", RegexOptions.IgnoreCase))
@@ -444,7 +444,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     }
                     else
                     {
-                        uaData.Device.Name = tmpModel + "";
+                        uaData.Device.Name = tmpModel + string.Empty;
                     }
                 }
                 else if ((mc = UA.Match(@"M463C|M35\d", RegexOptions.IgnoreCase)).Count > 0)
@@ -523,7 +523,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     }
                     else
                     {
-                        uaData.Device.Name = GetMatchResult(mc, 1) + "";
+                        uaData.Device.Name = GetMatchResult(mc, 1) + string.Empty;
                     }
                 }
                 // eton
@@ -661,7 +661,7 @@ namespace EInfrastructure.Core.UserAgentParse
                     }
                     catch (Exception e)
                     {
-                        uaData.Device.Name = "";
+                        uaData.Device.Name = string.Empty;
                     }
 
                     // 针对三星、华为做去重的特殊处理
@@ -1020,7 +1020,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 }
                 else
                 {
-                    uaData.Os.Alias = "";
+                    uaData.Os.Alias = string.Empty;
                     uaData.Os.Version = new Versions();
                 }
             }

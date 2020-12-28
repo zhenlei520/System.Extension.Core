@@ -78,7 +78,7 @@ namespace EInfrastructure.Core.Test
         public void ParallelExecute()
         {
             DateTime startTime = DateTime.Now;
-            List<string> studentList = "小李,小王,小红".ConvertStrToList<string>(',');
+            List<string> studentList = "小李,小王,小红".ConvertToList<string>(',');
             List<JobItem> jobItems = studentList.Select(x => new JobItem(x)).ToList();
             var list = TaskCommon.ParallelExecute(item =>
             {

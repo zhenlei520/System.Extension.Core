@@ -16,18 +16,57 @@ namespace EInfrastructure.Core.Tools.Common
         /// 返回安全的结果
         /// </summary>
         /// <param name="state">状态</param>
-        /// <param name="func">委托方法，返回值1:原值，返回值2：默认值</param>
+        /// <param name="successRes">成功默认值</param>
+        /// <param name="errorRes">失败默认值</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T SafeObject<T>(bool state, Func<ValueTuple<T, T>> func)
+        public static T SafeObject<T>(bool state, T successRes, T errorRes)
         {
-            var result = func.Invoke();
+            return SafeObject<T>(state, () => successRes, () => errorRes);
+        }
+
+        /// <summary>
+        /// 返回安全的结果
+        /// </summary>
+        /// <param name="state">状态</param>
+        /// <param name="successRes">成功默认值</param>
+        /// <param name="errorFunc">失败回调</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T SafeObject<T>(bool state, T successRes, Func<T> errorFunc)
+        {
+            return SafeObject<T>(state, () => successRes, errorFunc);
+        }
+
+        /// <summary>
+        /// 返回安全的结果
+        /// </summary>
+        /// <param name="state">状态</param>
+        /// <param name="successFunc">成功回调</param>
+        /// <param name="errorRes">失败默认值</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T SafeObject<T>(bool state, Func<T> successFunc, T errorRes)
+        {
+            return SafeObject<T>(state, successFunc, () => errorRes);
+        }
+
+        /// <summary>
+        /// 返回安全的结果
+        /// </summary>
+        /// <param name="state">状态</param>
+        /// <param name="successFun">成功回调</param>
+        /// <param name="errorFun">失败回调</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T SafeObject<T>(bool state, Func<T> successFun, Func<T> errorFun)
+        {
             if (state)
             {
-                return result.Item1;
+                return successFun.Invoke();
             }
 
-            return result.Item2;
+            return errorFun.Invoke();
         }
 
         #endregion

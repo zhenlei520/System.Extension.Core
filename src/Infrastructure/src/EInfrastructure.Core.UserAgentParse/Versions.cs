@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.UserAgentParse
         /// <param name="version"></param>
         public Versions(string version) : this()
         {
-            var versionList = version.ConvertStrToList<string>('.');
+            var versionList = version.ConvertToList<string>('.');
             this.Major = (versionList.Count > 0 ? versionList[0] : "").ConvertToInt();
             this.Second = (versionList.Count > 1 ? versionList[1] : "").ConvertToInt();
             this.Third = (versionList.Count > 2 ? versionList[2] : "").ConvertToInt();

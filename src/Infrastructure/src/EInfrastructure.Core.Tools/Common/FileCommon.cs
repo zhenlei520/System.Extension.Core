@@ -68,7 +68,7 @@ namespace EInfrastructure.Core.Tools.Common
         {
             if (!File.Exists(localFilePath))
             {
-                return "";
+                return string.Empty;
             }
 
             using (FileStream fileStream =
@@ -91,7 +91,7 @@ namespace EInfrastructure.Core.Tools.Common
         {
             if (!File.Exists(localFilePath))
             {
-                return "";
+                return string.Empty;
             }
 
             using (FileStream fileStream =
@@ -114,7 +114,7 @@ namespace EInfrastructure.Core.Tools.Common
         {
             if (!File.Exists(localFilePath))
             {
-                return "";
+                return string.Empty;
             }
 
             using (FileStream fileStream =
@@ -137,7 +137,7 @@ namespace EInfrastructure.Core.Tools.Common
         {
             if (!File.Exists(localFilePath))
             {
-                return "";
+                return string.Empty;
             }
 
             using (FileStream fileStream =
@@ -174,7 +174,7 @@ namespace EInfrastructure.Core.Tools.Common
             string md5 = BitConverter.ToString(hashAlgorithm.Hash);
             hashAlgorithm.Clear();
             stream.Close();
-            md5 = md5.Replace("-", "");
+            md5 = md5.Replace("-", string.Empty);
             return md5;
         }
 
@@ -271,7 +271,7 @@ namespace EInfrastructure.Core.Tools.Common
             string fileName,
             EncryptType encryptType = null)
         {
-            string conditionCode = "";
+            string conditionCode = string.Empty;
             if (encryptType != null)
             {
                 if (encryptType.Id == EncryptType.Md5.Id)
@@ -335,7 +335,7 @@ namespace EInfrastructure.Core.Tools.Common
         /// <returns></returns>
         private static async Task<string> FileToBase64Async(string filePath, bool isSync)
         {
-            string result = "";
+            string result = string.Empty;
             try
             {
                 if (!File.Exists(filePath))
@@ -352,7 +352,7 @@ namespace EInfrastructure.Core.Tools.Common
             }
             catch
             {
-                result = "";
+                result = string.Empty;
             }
 
             return result;
@@ -509,7 +509,7 @@ namespace EInfrastructure.Core.Tools.Common
             }
             catch
             {
-                result = "";
+                result = string.Empty;
             }
 
             return result;

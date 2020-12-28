@@ -51,7 +51,7 @@ namespace EInfrastructure.Core.UserAgentParse
             {
                 Stock = true,
                 Hidden = false,
-                Channel = ""
+                Channel = string.Empty
             };
             Device = new Devices()
             {
@@ -110,7 +110,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 {
                     Os.Name = "CentOS";
                     CheckUserAgent(userAgent, @"CentOS\/[0-9\.\-]+el([0-9_]+)",
-                        mc3 => { Os.Version = new Versions(GetVersionResult(mc3).ReplaceRegex("_", "")); });
+                        mc3 => { Os.Version = new Versions(GetVersionResult(mc3).ReplaceRegex("_", string.Empty)); });
                 });
 
                 CheckUserAgent(userAgent, "Fedora", mc2 =>
@@ -337,8 +337,8 @@ namespace EInfrastructure.Core.UserAgentParse
 
                     if (manufacturer == "Microsoft" && model == "XDeviceEmulator")
                     {
-                        Device.Manufacturer = "";
-                        Device.Name = "";
+                        Device.Manufacturer = string.Empty;
+                        Device.Name = string.Empty;
                         Device.DeviceType = DeviceType.Emulator;
                         Device.Identified = true;
                     }
@@ -421,7 +421,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 if (!string.IsNullOrEmpty(Device.Name) && Device.Name.Length > 7 &&
                     Device.Name.Substring(0, 7) == "Android")
                 {
-                    Device.Name = "";
+                    Device.Name = string.Empty;
                 }
 
                 if (!string.IsNullOrEmpty(Device.Name))
@@ -547,7 +547,7 @@ namespace EInfrastructure.Core.UserAgentParse
                         Os.Details = "2";
                     }
 
-                    if (Os.Version >= 10 + "")
+                    if (Os.Version >= 10 + string.Empty)
                     {
                         Os.Name = "BlackBerry";
                     }
@@ -677,7 +677,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
                 if (CheckUserAgent(userAgent, "SymbianOS/9.1") && !CheckUserAgent(userAgent, "Series60"))
                 {
-                    Os.Version = new Versions(3.0 + "");
+                    Os.Version = new Versions(3.0 + string.Empty);
                 }
 
                 CheckUserAgent(userAgent, @"Series60\/([0-9.]*)",
@@ -960,7 +960,7 @@ namespace EInfrastructure.Core.UserAgentParse
             /* Kindle */
             if (CheckUserAgent(userAgent, "Kindle") && !CheckUserAgent(userAgent, "Fire"))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
 
                 Device.Manufacturer = "Amazon";
                 Device.Name = "Kindle";
@@ -992,7 +992,7 @@ namespace EInfrastructure.Core.UserAgentParse
             /* Bookeen */
             CheckUserAgent(userAgent, @"bookeen\/cybook", mc2 =>
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = "Bookeen";
                 Device.Name = "Cybook";
                 Device.DeviceType = DeviceType.Reader;
@@ -1005,7 +1005,7 @@ namespace EInfrastructure.Core.UserAgentParse
             /* Sony Reader */
             CheckUserAgent(userAgent, "EBRD1101", mc2 =>
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
 
                 Device.Manufacturer = "Sony";
                 Device.Name = "Reader";
@@ -1016,7 +1016,7 @@ namespace EInfrastructure.Core.UserAgentParse
             /* iRiver */
             CheckUserAgent(userAgent, "Iriver ;", mc2 =>
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
 
                 Device.Manufacturer = "iRiver";
                 Device.Name = "Story";
@@ -1041,7 +1041,7 @@ namespace EInfrastructure.Core.UserAgentParse
              */
             if (CheckUserAgent(userAgent, "Nintendo Wii"))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = "Nintendo";
                 Device.Name = "Wii";
                 Device.DeviceType = DeviceType.Gaming;
@@ -1050,7 +1050,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
             if (CheckUserAgent(userAgent, "Nintendo DSi"))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = "Nintendo";
                 Device.Name = "DSi";
                 Device.DeviceType = DeviceType.Gaming;
@@ -1059,7 +1059,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
             if (CheckUserAgent(userAgent, "Nintendo 3DS"))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
 
                 Device.Manufacturer = "Nintendo";
                 Device.Name = "3DS";
@@ -1073,7 +1073,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
             if (CheckUserAgent(userAgent, "PlayStation Portable"))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = "Sony";
                 Device.Name = "Playstation Portable";
                 Device.DeviceType = DeviceType.Gaming;
@@ -1082,7 +1082,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
             if (CheckUserAgent(userAgent, "PlayStation Vita"))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 CheckUserAgent(userAgent, "PlayStation Vita ([0-9.]*)",
                     mc2 => { Os.Version = GetVersion(mc2); });
                 Device.Manufacturer = "Sony";
@@ -1093,7 +1093,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
             if (CheckUserAgent(userAgent, "PlayStation 3", RegexOptions.IgnoreCase))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 CheckUserAgent(userAgent, "PLAYSTATION 3;? ([0-9.]*)",
                     mc2 => { Os.Version = GetVersion(mc2); });
                 Device.Manufacturer = "Sony";
@@ -1109,7 +1109,7 @@ namespace EInfrastructure.Core.UserAgentParse
              */
             if (CheckUserAgent(userAgent, "Viera"))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = "Panasonic";
                 Device.Name = "Smart Viera";
                 Device.DeviceType = DeviceType.Television;
@@ -1125,7 +1125,7 @@ namespace EInfrastructure.Core.UserAgentParse
              */
             if (CheckUserAgent(userAgent, "AQUOSBrowser") || CheckUserAgent(userAgent, "AQUOS-AS"))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = GloableConfigurations.StringsSharp;
                 Device.Name = "Aquos TV";
                 Device.DeviceType = DeviceType.Television;
@@ -1140,7 +1140,7 @@ namespace EInfrastructure.Core.UserAgentParse
              */
             if (CheckUserAgent(userAgent, "SMART-TV"))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = GloableConfigurations.StringsSamsung;
                 Device.Name = "Smart TV";
                 Device.DeviceType = DeviceType.Television;
@@ -1163,7 +1163,7 @@ namespace EInfrastructure.Core.UserAgentParse
             */
             if (CheckUserAgent(userAgent, "SonyDTV|SonyBDP|SonyCEBrowser"))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = "Sony";
                 Device.Name = "Internet TV";
                 Device.DeviceType = DeviceType.Television;
@@ -1182,7 +1182,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
             if (CheckUserAgent(userAgent, @"NETTV\\"))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = "Philips";
                 Device.Name = "Net TV";
                 Device.DeviceType = DeviceType.Television;
@@ -1201,7 +1201,7 @@ namespace EInfrastructure.Core.UserAgentParse
              */
             CheckUserAgent(userAgent, @"LG NetCast\.(?:TV|Media)-([0-9]*)", mc2 =>
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = GloableConfigurations.StringsLg;
                 Device.Name = "NetCast TV " + GetMatchResult(mc2, 1);
                 Device.DeviceType = DeviceType.Television;
@@ -1209,7 +1209,7 @@ namespace EInfrastructure.Core.UserAgentParse
             });
             CheckUserAgent(userAgent, @"LGSmartTV", mc2 =>
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = GloableConfigurations.StringsLg;
                 Device.Name = "Smart TV";
                 Device.DeviceType = DeviceType.Television;
@@ -1226,7 +1226,7 @@ namespace EInfrastructure.Core.UserAgentParse
             */
             if (CheckUserAgent(userAgent, @"Toshiba_?TP\\") || CheckUserAgent(userAgent, @"TSBNetTV\\"))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = "Toshiba";
                 Device.Name = "Smart TV";
                 Device.DeviceType = DeviceType.Television;
@@ -1236,7 +1236,7 @@ namespace EInfrastructure.Core.UserAgentParse
             /* MachBlue XT */
             CheckUserAgent(userAgent, @"mbxtWebKit\/([0-9.]*)", mc2 =>
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Name = "MachBlue XT";
                 Browser.Version = GetVersion(mc2);
                 Browser.Detail = "2";
@@ -1246,12 +1246,12 @@ namespace EInfrastructure.Core.UserAgentParse
             /* ADB */
             CheckUserAgent(userAgent, @"mbxtWebKit\/([0-9.]*)", mc2 =>
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = "ADB";
                 Device.Name =
                     (GetMatchResult(mc2, 1) != "Unknown"
-                        ? GetMatchResult(mc2, 1).SafeString(false).ReplaceRegex("ADB", "") + " "
-                        : "") +
+                        ? GetMatchResult(mc2, 1).SafeString(false).ReplaceRegex("ADB", string.Empty) + " "
+                        : string.Empty) +
                     "IPTV receiver";
                 Device.DeviceType = DeviceType.Television;
                 Device.Identified = true;
@@ -1260,7 +1260,7 @@ namespace EInfrastructure.Core.UserAgentParse
             /* MStar */
             if (CheckUserAgent(userAgent, "Mstar;OWB"))
             {
-                Os.Name = "";
+                Os.Name = string.Empty;
                 Device.Manufacturer = "MStar";
                 Device.Name = "PVR";
                 Device.DeviceType = DeviceType.Television;
@@ -1859,7 +1859,7 @@ namespace EInfrastructure.Core.UserAgentParse
 
                 if (Os.Name == "Android")
                 {
-                    switch (Browser.Version.ToString().ConvertStrToList<string>(',').Take(3).ConvertToString('.'))
+                    switch (Browser.Version.ToString().ConvertToList<string>(',').Take(3).ConvertToString('.'))
                     {
                         case "16.0.912":
                             Browser.Channel = "Beta";
@@ -1874,7 +1874,7 @@ namespace EInfrastructure.Core.UserAgentParse
                 }
                 else
                 {
-                    switch (Browser.Version.ToString().ConvertStrToList<string>(',').Take(3).ConvertToString("."))
+                    switch (Browser.Version.ToString().ConvertToList<string>(',').Take(3).ConvertToString("."))
                     {
                         case "0.2.149":
                         case "0.3.154":

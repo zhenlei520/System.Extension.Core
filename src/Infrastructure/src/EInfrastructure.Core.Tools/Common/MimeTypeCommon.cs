@@ -1,7 +1,6 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using EInfrastructure.Core.Configuration.Enumerations;
@@ -611,7 +610,7 @@ namespace EInfrastructure.Core.Tools.Common
             }
 
             string mime = Mappings.Where(x => x.Ext == extension).Select(x => x.MimeType).FirstOrDefault();
-            return ObjectCommon.SafeObject(!mime.IsNullOrWhiteSpace(), () => ValueTuple.Create(mime, defaultMime));
+            return ObjectCommon.SafeObject(!mime.IsNullOrWhiteSpace(), () => mime, () => defaultMime);
         }
 
         #endregion

@@ -139,8 +139,7 @@ namespace EInfrastructure.Core.Tools
             StringBuilder csvrowText = new StringBuilder();
 
             Type entityType = typeof(T);
-            string name = ObjectCommon.SafeObject(tableName.IsNullOrEmpty(),
-                () => ValueTuple.Create(entityType.Name, tableName));
+            string name = ObjectCommon.SafeObject(tableName.IsNullOrEmpty(),entityType.Name, tableName);
             DataTable table = new DataTable(name);
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(entityType);
 
@@ -291,7 +290,7 @@ namespace EInfrastructure.Core.Tools
         public static string ConvertToString(this string[] s, char c = ',', bool isReplaceEmpty = true,
             bool isReplaceSpace = true)
         {
-            return s.SafeList().ConvertToString( c, isReplaceEmpty, isReplaceSpace);
+            return s.SafeList().ConvertToString(c, isReplaceEmpty, isReplaceSpace);
         }
 
         /// <summary>
@@ -305,7 +304,7 @@ namespace EInfrastructure.Core.Tools
         public static string ConvertToString(this string[] s, string c = ",", bool isReplaceEmpty = true,
             bool isReplaceSpace = true)
         {
-            return s.SafeList().ConvertToString( c, isReplaceEmpty, isReplaceSpace);
+            return s.SafeList().ConvertToString(c, isReplaceEmpty, isReplaceSpace);
         }
 
         #endregion
@@ -400,8 +399,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns>如果param不为空，则返回param，否则返回空集合</returns>
         public static List<T> SafeList<T>(this IEnumerable<T> param)
         {
-            return ObjectCommon.SafeObject(param != null,
-                () => ValueTuple.Create(param?.ToList(), new List<T>()));
+            return ObjectCommon.SafeObject(param != null, () => param.ToList(), () => new List<T>());
         }
 
         #endregion
@@ -416,7 +414,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static T[] SafeArray<T>(this IEnumerable<T> param)
         {
-            return SafeList(param).ToArray();
+            return ObjectCommon.SafeObject(!param.IsNullOrDbNull(),()=>param.ToArray(),()=>new T[0]);
         }
 
         #endregion
