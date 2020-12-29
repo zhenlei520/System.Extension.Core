@@ -27,5 +27,17 @@ namespace EInfrastructure.Core.Tools.Internal.DateTimes
             if (count == -1) count = 6;
             return new DateTime(date.Year, date.Month, date.Day).AddDays(-count);
         }
+
+        /// <summary>
+        /// 得到结果
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public DateTimeOffset GetResult(DateTimeOffset date)
+        {
+            int count = date.DayOfWeek - DayOfWeek.Monday;
+            if (count == -1) count = 6;
+            return new DateTime(date.Year, date.Month, date.Day).AddDays(-count);
+        }
     }
 }

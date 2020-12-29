@@ -4,38 +4,9 @@
   &lt;Assembly Path="C:\Users\wangz\.nuget\packages\qiniu\7.3.1.1\lib\Net40\Qiniu.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\wangz\.nuget\packages\sharedmemory\2.2.3\lib\netstandard2.1\SharedMemory.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=17af9d07_002D6002_002D4ba7_002D9b20_002D9fb0ecbf9ad3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetDescriptionDictionary" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.EnumUnitTest.GetDescriptionDictionary&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7e3b2ab3_002Dbce4_002D4ad7_002D9814_002D43d712ffa135/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="EncryptStr" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.StringCommonUnitTest.EncryptStr&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.StringCommonUnitTest.ConvertBinary&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.EnumUnitTest.Parse&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.EnumUnitTest.GetDescriptionDictionary2&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.EnumUnitTest.GetDescriptionDictionary&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.EnumUnitTest.GetValue2&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.EnumUnitTest.ToEnumAndAttributes&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TimeCommonUnitTest.IntervalWeek&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TimeCommonUnitTest.GetTotalTime&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.ExtensionsUnitTest.ToUnixTimestamp&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TypeUnitTest.ConvertToBool&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a2a9393a_002D886b_002D4220_002Da213_002D9b2dfc83fabc/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ToEnumAndAttributes" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.EnumUnitTest.ToEnumAndAttributes&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TimeCommonUnitTest.GetRandomTime&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.StringCommonUnitTest.LastIndexOf&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TimeCommonUnitTest.IntervalWeek&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.ExtensionsUnitTest.UnixTimeStampToDateTime&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.ExtensionsUnitTest.ToUnixTimestamp&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.ExtensionsUnitTest&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.TypeUnitTest.ConvertToBool&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
+	
+	
+	
 	
 	
 	

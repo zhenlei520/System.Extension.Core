@@ -25,5 +25,15 @@ namespace EInfrastructure.Core.Tools.Internal.DateTimes
         {
             return date.AddDays(1 - date.Day); //本月月初
         }
+
+        /// <summary>
+        /// 得到结果
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public DateTimeOffset GetResult(DateTimeOffset date)
+        {
+            return date.AddDays(1 - date.Day); //本月月初
+        }
     }
 }

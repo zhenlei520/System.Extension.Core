@@ -16,7 +16,7 @@ namespace EInfrastructure.Core.Test
     /// </summary>
     public class ExtensionsUnitTest : BaseUnitTest
     {
-         #region 保留指定位数(默认四舍五入)
+        #region 保留指定位数(默认四舍五入)
 
         /// <summary>
         /// 保留指定位数(默认四舍五入)
@@ -47,7 +47,7 @@ namespace EInfrastructure.Core.Test
             };
             var obj = list.ConvertToObject();
             var jsonProvider = new NewtonsoftJsonProvider();
-            Assert.True(jsonProvider.Serializer( obj) == jsonProvider.Serializer(new
+            Assert.True(jsonProvider.Serializer(obj) == jsonProvider.Serializer(new
             {
                 Id = 1007,
                 Name = "张三"
@@ -287,7 +287,7 @@ namespace EInfrastructure.Core.Test
         {
             var date = DateTime.Parse("2020-12-29 09:58:50");
             Assert.True(date.ToUnixTimestamp(TimestampType.Second) == 1609207130);
-            date=DateTime.Parse("2020-12-30 09:58:50");
+            date = DateTime.Parse("2020-12-30 09:58:50");
             Assert.True(date.ToUnixTimestamp(TimestampType.Millisecond) == 1609293530000);
         }
 
@@ -302,8 +302,8 @@ namespace EInfrastructure.Core.Test
         public void UnixTimeStampToDateTime()
         {
             var date = DateTime.Parse("2020-12-29 09:58:50");
-            Assert.True(1609207130L.UnixTimeStampToDateTime() ==date );
-            date=DateTime.Parse("2020-12-30 09:58:50");
+            Assert.True(1609207130L.UnixTimeStampToDateTime() == date);
+            date = DateTime.Parse("2020-12-30 09:58:50");
             Assert.True(1609293530000L.UnixTimeStampToDateTime() == date);
         }
 
@@ -426,6 +426,262 @@ namespace EInfrastructure.Core.Test
             Assert.True(user.IsIn(list4));
             user = new Configurations.UserDto() {Id = 3, Name = "张三", Sex = 0, Age = 18};
             Assert.False(user.IsIn(list4));
+        }
+
+        #endregion
+
+        #region 对可空类型进行判断转换，转换后类型为object
+
+        /// <summary>
+        /// 对可空类型进行判断转换，转换后类型为object
+        /// </summary>
+        [Fact]
+        public void ConvertToSpecifyType()
+        {
+            var str = "123";
+            var str2 = (int) str.ConvertToSpecifyType(typeof(int));
+            Assert.True(str2 == 123);
+        }
+
+        #endregion
+
+        #region 更改源参数类型（适用于简单的类型转换，序列化反序列化不适用）
+
+        /// <summary>
+        /// 更改源参数类型（适用于简单的类型转换，序列化反序列化不适用）
+        /// </summary>
+        [Fact]
+        public void ChangeType()
+        {
+            var str = "123";
+            var x = str.ChangeType<int>();
+            Assert.True(x == 123);
+
+            var list = new List<string>() {"12", "23"};
+            Assert.True(new NewtonsoftJsonProvider().Serializer(list.ChangeType<int>()) == "[12,23]");
+        }
+
+        #endregion
+
+        #region obj转Guid
+
+        /// <summary>
+        /// obj转Guid
+        /// </summary>
+        [Fact]
+        public void ConvertToGuid()
+        {
+            var guid = "db4ba62e-2e08-4bdd-8520-ad2ef836ae2f".ConvertToGuid();
+            Assert.True(guid == Guid.Parse("db4ba62e-2e08-4bdd-8520-ad2ef836ae2f"));
+
+            guid = "".ConvertToGuid();
+            Assert.True(guid == null);
+
+            var guid2 = "".ConvertToGuid(Guid.Empty);
+            Assert.True(guid2 == Guid.Empty);
+        }
+
+        #endregion
+
+        #region obj转Short
+
+        /// <summary>
+        /// obj转Short
+        /// </summary>
+        [Fact]
+        public void ConvertToShort()
+        {
+            var s = "db4ba62e-2e08-4bdd-8520-ad2ef836ae2f".ConvertToShort();
+            Assert.True(s == null);
+
+            s = "1".ConvertToShort();
+            Assert.True(s == 1);
+
+            var s2 = "s".ConvertToShort(0);
+            Assert.True(s2 == 0);
+        }
+
+        #endregion
+
+        #region obj转long
+
+        /// <summary>
+        /// obj转long
+        /// </summary>
+        [Fact]
+        public void ConvertToLong()
+        {
+            var s = "db4ba62e-2e08-4bdd-8520-ad2ef836ae2f".ConvertToLong();
+            Assert.True(s == null);
+
+            s = "12342".ConvertToLong();
+            Assert.True(s == 12342);
+
+            var s2 = "ad2ef836ae2f".ConvertToShort(0);
+            Assert.True(s2 == 0);
+        }
+
+        #endregion
+
+        #region obj转decimal
+
+        /// <summary>
+        /// obj转decimal
+        /// </summary>
+        [Fact]
+        public void ConvertToDecimal()
+        {
+            var s = "db4ba62e-2e08-4bdd-8520-ad2ef836ae2f".ConvertToDecimal();
+            Assert.True(s == null);
+
+            s = "12342".ConvertToDecimal();
+            Assert.True(s == 12342);
+
+            decimal s2 = "ad2ef836ae2f".ConvertToDecimal(1.0m);
+            Assert.True(s2 == 1.0m);
+        }
+
+        #endregion
+
+        #region obj转double
+
+        /// <summary>
+        /// obj转double
+        /// </summary>
+        [Fact]
+        public void ConvertToDouble()
+        {
+            var s = "db4ba62e-2e08-4bdd-8520-ad2ef836ae2f".ConvertToDouble();
+            Assert.True(s == null);
+
+            s = "12342".ConvertToDouble();
+            Assert.True(s == 12342);
+
+            double s2 = "ad2ef836ae2f".ConvertToDouble(1.0d);
+            Assert.True(s2 == 1.0d);
+        }
+
+        #endregion
+
+        #region obj转float
+
+        /// <summary>
+        /// obj转float
+        /// </summary>
+        [Fact]
+        public void ConvertToFloat()
+        {
+            var s = "db4ba62e-2e08-4bdd-8520-ad2ef836ae2f".ConvertToFloat();
+            Assert.True(s == null);
+
+            s = "12342".ConvertToFloat();
+            Assert.True(s == 12342);
+
+            double s2 = "ad2ef836ae2f".ConvertToFloat(1.0f);
+            Assert.True(s2 == 1.0f);
+        }
+
+        #endregion
+
+        #region obj转datetime
+
+        /// <summary>
+        /// obj转datetime
+        /// </summary>
+        [Fact]
+        public void ConvertToDateTime()
+        {
+            var s = "db4ba62e-2e08-4bdd-8520-ad2ef836ae2f".ConvertToDateTime();
+            Assert.True(s == null);
+
+            s = "2020-12-12".ConvertToDateTime();
+            Assert.True(s == DateTime.Parse("2020-12-12"));
+
+            DateTime s2 = "ad2ef836ae2f".ConvertToDateTime(DateTime.Parse("2020-12-12"));
+            Assert.True(s2 == DateTime.Parse("2020-12-12"));
+        }
+
+        #endregion
+
+        #region obj转byte
+
+        /// <summary>
+        /// obj转byte
+        /// </summary>
+        [Fact]
+        public void ConvertToByte()
+        {
+            var s = 'c'.ConvertToByte();
+            Assert.True(s == null); //转换失败，结果为默认值null
+
+            byte? s2 = 2.ConvertToByte();
+            Assert.True(s2 == 2); //转换成功，结果为2
+
+
+            byte? s3 = "".ConvertToByte(2);
+            Assert.True(s3 == 2); //转换成功，结果为自定义默认值2
+        }
+
+        #endregion
+
+        #region obj转sbyte
+
+        /// <summary>
+        /// obj转sbyte
+        /// </summary>
+        [Fact]
+        public void ConvertToSByte()
+        {
+            var s = 'c'.ConvertToSByte();
+            Assert.True(s == null); //转换失败，结果为默认值null
+
+            sbyte? s2 = 2.ConvertToSByte();
+            Assert.True(s2 == 2); //转换成功，结果为2
+
+
+            sbyte? s3 = "".ConvertToSByte(2);
+            Assert.True(s3 == 2); //转换成功，结果为自定义默认值2
+        }
+
+        #endregion
+
+        #region obj转bool（其中0、不、否、失败、no、fail、lose、false为false，1、是、ok、yes、success、pass、true、成功为true，判断不区分大小写）
+
+        /// <summary>
+        /// obj转bool（其中0、不、否、失败、no、fail、lose、false为false，1、是、ok、yes、success、pass、true、成功为true，判断不区分大小写）
+        /// </summary>
+        [Fact]
+        public void ConvertToBool()
+        {
+            var s = "是".ConvertToBool();
+            Assert.True(s == true); //转换成功
+
+            var s2 = "".ConvertToBool();
+            Assert.True(s2 == null); //转换失败，结果为默认值null
+
+            var s3 = 0.ConvertToBool();
+            Assert.False(s3.Value); //转换成功，结果为false
+
+            var s4 = 2.ConvertToBool(false);
+            Assert.True(s4 == false); //转换失败，结果为默认值false
+        }
+
+        #endregion
+
+        #region 返回数字的绝对值
+
+        /// <summary>
+        /// 返回数字的绝对值
+        /// </summary>
+        [Fact]
+        public void Abs()
+        {
+            Assert.True((-1.5).Abs() == 1.5);
+            Assert.True((-1).Abs() == 1);
+
+            var list = new List<int>() {1, 2, -100};
+
+            Assert.True(new NewtonsoftJsonProvider().Serializer(list.Abs()) == "[1,2,100]");
         }
 
         #endregion

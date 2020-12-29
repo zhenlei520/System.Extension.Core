@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EInfrastructure.Core.Tools
@@ -33,6 +34,22 @@ namespace EInfrastructure.Core.Tools
         {
             return Enum.IsDefined(type, enumValue);
         }
+
+        #endregion
+
+        #region Abs(返回数字的绝对值)
+
+        /// <summary>
+        /// 返回数字的绝对值
+        /// </summary>
+        /// <param name="param">值</param>
+        public static int Abs(this int param) => Math.Abs(param);
+
+        /// <summary>
+        /// 返回数字的绝对值
+        /// </summary>
+        /// <param name="param">值</param>
+        public static IEnumerable<int> Abs(this IEnumerable<int> param) => param.Select(x => x.Abs());
 
         #endregion
 

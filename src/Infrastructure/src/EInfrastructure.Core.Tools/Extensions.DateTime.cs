@@ -313,6 +313,17 @@ namespace EInfrastructure.Core.Tools
             return dateTime1 - dateTime2;
         }
 
+        /// <summary>
+        /// 获得两个日期的间隔
+        /// </summary>
+        /// <param name="dateTime1">日期一(较大一点的时间)。</param>
+        /// <param name="dateTime2">日期二(较小一点的时间)。</param>
+        /// <returns>日期间隔TimeSpan。</returns>
+        public static TimeSpan DateDiff(this DateTimeOffset dateTime1, DateTimeOffset dateTime2)
+        {
+            return dateTime1 - dateTime2;
+        }
+
         #endregion
 
         #region 格式化日期时间
@@ -324,6 +335,22 @@ namespace EInfrastructure.Core.Tools
         /// <param name="dateMode">显示模式</param>
         /// <returns>0-9种模式的日期</returns>
         public static string FormatDate(this DateTime dateTime, FormatDateType dateMode = null)
+        {
+            if (dateMode == null)
+            {
+                dateMode = FormatDateType.One;
+            }
+
+            return dateTime.ToString(dateMode.Name);
+        }
+
+        /// <summary>
+        /// 格式化日期时间
+        /// </summary>
+        /// <param name="dateTime">日期时间</param>
+        /// <param name="dateMode">显示模式</param>
+        /// <returns>0-9种模式的日期</returns>
+        public static string FormatDate(this DateTimeOffset dateTime, FormatDateType dateMode = null)
         {
             if (dateMode == null)
             {
@@ -391,6 +418,60 @@ namespace EInfrastructure.Core.Tools
             return minTime.AddSeconds(i);
         }
 
+        /// <summary>
+        /// 得到随机日期
+        /// </summary>
+        /// <param name="time1">起始日期</param>
+        /// <param name="time2">结束日期</param>
+        /// <returns>间隔日期之间的 随机日期</returns>
+        public static DateTimeOffset GetRandomTime(this DateTimeOffset time1, DateTimeOffset time2)
+        {
+            Random random = new Random();
+            DateTimeOffset minTime;
+
+            var ts = new TimeSpan(time1.Ticks - time2.Ticks);
+
+            // 获取两个时间相隔的秒数
+            double dTotalSecontds = ts.TotalSeconds;
+            int iTotalSecontds;
+
+            if (dTotalSecontds > int.MaxValue)
+            {
+                iTotalSecontds = int.MaxValue;
+            }
+            else if (dTotalSecontds < int.MinValue)
+            {
+                iTotalSecontds = int.MinValue;
+            }
+            else
+            {
+                iTotalSecontds = (int) dTotalSecontds;
+            }
+
+
+            if (iTotalSecontds > 0)
+            {
+                minTime = time2;
+            }
+            else if (iTotalSecontds < 0)
+            {
+                minTime = time1;
+            }
+            else
+            {
+                return time1;
+            }
+
+            int maxValue = iTotalSecontds;
+
+            if (iTotalSecontds <= int.MinValue)
+                maxValue = int.MinValue + 1;
+
+            int i = random.Next(Math.Abs(maxValue));
+
+            return minTime.AddSeconds(i);
+        }
+
         #endregion
 
         #region 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
@@ -409,10 +490,40 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
         /// </summary>
+        /// <param name="dateTime">指定时间，如果为null，则默认当前时间</param>
+        /// <param name="timeKey">时间Key</param>
+        /// <returns></returns>
+        public static DateTimeOffset Get(this DateTimeOffset? dateTime, TimeType timeKey)
+        {
+            return (dateTime ?? DateTimeOffset.Now).Get(timeKey);
+        }
+
+        /// <summary>
+        /// 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
+        /// </summary>
         /// <param name="dateTime">指定时间</param>
         /// <param name="timeKey">时间Key</param>
         /// <returns></returns>
         public static DateTime Get(this DateTime dateTime, TimeType timeKey)
+        {
+            var provider = _dateTimeProviders.Where(x => x.Type.Equals(timeKey)).OrderByDescending(x => x.GetWeights())
+                .FirstOrDefault();
+
+            if (provider != null)
+            {
+                return provider.GetResult(dateTime);
+            }
+
+            throw new NotSupportedException(nameof(timeKey));
+        }
+
+        /// <summary>
+        /// 得到月初/月末/本周一/本周日/本季初/本季末/年初/年末时间
+        /// </summary>
+        /// <param name="dateTime">指定时间</param>
+        /// <param name="timeKey">时间Key</param>
+        /// <returns></returns>
+        public static DateTimeOffset Get(this DateTimeOffset dateTime, TimeType timeKey)
         {
             var provider = _dateTimeProviders.Where(x => x.Type.Equals(timeKey)).OrderByDescending(x => x.GetWeights())
                 .FirstOrDefault();
@@ -436,17 +547,60 @@ namespace EInfrastructure.Core.Tools
         /// <param name="timeType">时间类型</param>
         /// <param name="duration">时长，允许为负数,为正时：指定时间后持续时间，为负时：指定时间前持续时间</param>
         /// <returns></returns>
-        public static DateTimeOffset GetSpecifiedTimeAfter(this DateTime? dateTime, DurationType timeType, int duration)
+        public static DateTime GetSpecifiedTimeAfter(this DateTime dateTime, DurationType timeType, int duration)
         {
-            DateTime date = dateTime ?? DateTime.Now.Date; //当前时间
-
             var provider = _specifiedTimeAfterProviders.Where(x => x.Type.Equals(timeType))
                 .OrderByDescending(x => x.GetWeights()).FirstOrDefault();
-
             if (provider != null)
             {
-                var res = provider.GetResult(date, duration);
-                return res.ConvertToDateTimeOffset();
+                var res = provider.GetResult(dateTime, duration);
+                return res;
+            }
+
+            throw new NotSupportedException(nameof(timeType));
+        }
+
+        /// <summary>
+        /// 得到指定的时间后
+        /// </summary>
+        /// <param name="dateTime">时间</param>
+        /// <param name="timeType">时间类型</param>
+        /// <param name="duration">时长，允许为负数,为正时：指定时间后持续时间，为负时：指定时间前持续时间</param>
+        /// <returns></returns>
+        public static DateTime GetSpecifiedTimeAfter(this DateTime? dateTime, DurationType timeType, int duration)
+        {
+            return (dateTime ?? DateTime.Now).GetSpecifiedTimeAfter(timeType, duration);
+        }
+
+        /// <summary>
+        /// 得到指定的时间后
+        /// </summary>
+        /// <param name="dateTimeOffset">时间</param>
+        /// <param name="timeType">时间类型</param>
+        /// <param name="duration">时长，允许为负数,为正时：指定时间后持续时间，为负时：指定时间前持续时间</param>
+        /// <returns></returns>
+        public static DateTimeOffset GetSpecifiedTimeAfter(this DateTimeOffset? dateTimeOffset, DurationType timeType,
+            int duration)
+        {
+            return (dateTimeOffset ?? DateTimeOffset.Now).GetSpecifiedTimeAfter(timeType, duration);
+        }
+
+        /// <summary>
+        /// 得到指定的时间后
+        /// </summary>
+        /// <param name="dateTimeOffset">时间</param>
+        /// <param name="timeType">时间类型</param>
+        /// <param name="duration">时长，允许为负数,为正时：指定时间后持续时间，为负时：指定时间前持续时间</param>
+        /// <returns></returns>
+        public static DateTimeOffset GetSpecifiedTimeAfter(this DateTimeOffset dateTimeOffset, DurationType timeType,
+            int duration)
+        {
+            var provider = _specifiedTimeAfterProviders.Where(x => x.Type.Equals(timeType))
+                .OrderByDescending(x => x.GetWeights()).FirstOrDefault();
+            if (provider != null)
+            {
+                var res = provider.GetResult(dateTimeOffset, duration);
+                return res;
             }
 
             throw new NotSupportedException(nameof(timeType));
@@ -476,6 +630,30 @@ namespace EInfrastructure.Core.Tools
         public static DateTimeOffset ConvertToDateTimeOffset(this DateTime? dateTime)
         {
             return (dateTime ?? DateTime.Now).ConvertToDateTimeOffset();
+        }
+
+        /// <summary>
+        /// 转换为DateTimeOffset
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="defaultDateTimeOffset">默认值</param>
+        /// <returns></returns>
+        public static DateTimeOffset ConvertToDateTimeOffset(this DateTime? dateTime,
+            DateTimeOffset defaultDateTimeOffset)
+        {
+            return dateTime ?? defaultDateTimeOffset;
+        }
+
+        /// <summary>
+        /// 转换为DateTimeOffset
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="defaultDateTimeOffset">默认值</param>
+        /// <returns></returns>
+        public static DateTimeOffset? ConvertToDateTimeOffset(this DateTime? dateTime,
+            DateTimeOffset? defaultDateTimeOffset)
+        {
+            return dateTime ?? defaultDateTimeOffset;
         }
 
         #endregion
@@ -531,6 +709,54 @@ namespace EInfrastructure.Core.Tools
         }
 
         /// <summary>
+        /// 得到两个时间间隔差多远
+        /// </summary>
+        /// <param name="dateTime1">日期一(较大一点的时间)。</param>
+        /// <param name="dateTime2">日期二(较小一点的时间)。</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static string GetAccordingToCurrent(this DateTimeOffset dateTime1, DateTimeOffset dateTime2)
+        {
+            TimeSpan span = DateDiff(dateTime1, dateTime2);
+            if (span == null)
+            {
+                throw new ArgumentNullException(nameof(span));
+            }
+
+            if (span.TotalSeconds < 60)
+            {
+                return "刚刚";
+            }
+
+            if (span.TotalMinutes < 60)
+            {
+                return Math.Ceiling(span.TotalMinutes) + "分钟之前";
+            }
+
+            if (span.TotalHours < 24)
+            {
+                return Math.Ceiling(span.TotalHours) + "小时之内";
+            }
+
+            if (span.TotalDays < 7)
+            {
+                return Math.Ceiling(span.TotalDays) + "天之内";
+            }
+
+            if (span.TotalDays < 30)
+            {
+                return Math.Ceiling(span.TotalDays / 7) + "周之内";
+            }
+
+            if (span.TotalDays < 180)
+            {
+                return Math.Ceiling(span.TotalDays / 30) + "月之内";
+            }
+
+            return Math.Ceiling(span.TotalDays / 360) + "年之内";
+        }
+
+        /// <summary>
         /// 得到据当前多远时间
         /// </summary>
         /// <param name="date">较小一点的时间</param>
@@ -543,6 +769,16 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 得到据当前多远时间
         /// </summary>
+        /// <param name="date">较小一点的时间</param>
+        /// <returns></returns>
+        public static string GetAccordingToCurrent(this DateTimeOffset date)
+        {
+            return DateTimeOffset.Now.GetAccordingToCurrent(date);
+        }
+
+        /// <summary>
+        /// 得到据当前多远时间
+        /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
         public static string GetAccordingToCurrent(this DateTime? date)
@@ -550,6 +786,18 @@ namespace EInfrastructure.Core.Tools
             if (date == null)
                 return "未知";
             return GetAccordingToCurrent((DateTime) date);
+        }
+
+        /// <summary>
+        /// 得到据当前多远时间
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static string GetAccordingToCurrent(this DateTimeOffset? date)
+        {
+            if (date == null)
+                return "未知";
+            return GetAccordingToCurrent((DateTimeOffset) date);
         }
 
         #endregion
@@ -610,6 +858,16 @@ namespace EInfrastructure.Core.Tools
             return str;
         }
 
+        /// <summary>
+        /// 阳历转阴历(农历)
+        /// </summary>
+        /// <param name="dateTimeOffset">待转换的日期</param>
+        /// <returns></returns>
+        public static string ConvertToLunar(this DateTimeOffset dateTimeOffset)
+        {
+            return dateTimeOffset.DateTime.ConvertToLunar();
+        }
+
         #endregion
 
         #region 获取农历年份
@@ -631,6 +889,16 @@ namespace EInfrastructure.Core.Tools
 
             string str = string.Format("[{1}]{2}{3}{0}", year, yearSX[yDz], yearTG[yTg], yearDZ[yDz]);
             return str;
+        }
+
+        /// <summary>
+        /// 获取农历年份
+        /// </summary>
+        /// <param name="dateTimeOffset"></param>
+        /// <returns></returns>
+        public static string GetYear(this DateTimeOffset dateTimeOffset)
+        {
+            return dateTimeOffset.DateTime.GetYear();
         }
 
         #endregion
@@ -671,6 +939,16 @@ namespace EInfrastructure.Core.Tools
             return strMonth + "月";
         }
 
+        /// <summary>
+        /// 获取农历月份
+        /// </summary>
+        /// <param name="dateTimeOffset"></param>
+        /// <returns></returns>
+        public static string GetMonth(this DateTimeOffset dateTimeOffset)
+        {
+            return dateTimeOffset.DateTime.GetMonth();
+        }
+
         #endregion
 
         #region 获取农历日期
@@ -703,6 +981,16 @@ namespace EInfrastructure.Core.Tools
             return strDay;
         }
 
+        /// <summary>
+        /// 获取农历日期
+        /// </summary>
+        /// <param name="dateTimeOffset"></param>
+        /// <returns></returns>
+        public static string GetDay(this DateTimeOffset dateTimeOffset)
+        {
+            return dateTimeOffset.DateTime.GetDay();
+        }
+
         #endregion
 
         #region 获取节气
@@ -729,6 +1017,16 @@ namespace EInfrastructure.Core.Tools
             }
 
             return strReturn;
+        }
+
+        /// <summary>
+        /// 获取节气
+        /// </summary>
+        /// <param name="dateTimeOffset"></param>
+        /// <returns></returns>
+        public static string GetSolarTerm(this DateTimeOffset dateTimeOffset)
+        {
+            return dateTimeOffset.DateTime.GetSolarTerm();
         }
 
         #endregion
@@ -762,6 +1060,16 @@ namespace EInfrastructure.Core.Tools
             }
 
             return strReturn;
+        }
+
+        /// <summary>
+        /// 获取公历(阳历)节日
+        /// </summary>
+        /// <param name="dateTimeOffset"></param>
+        /// <returns></returns>
+        public static string GetHoliday(this DateTimeOffset dateTimeOffset)
+        {
+            return dateTimeOffset.DateTime.GetHoliday();
         }
 
         #endregion
@@ -808,6 +1116,16 @@ namespace EInfrastructure.Core.Tools
             return strReturn;
         }
 
+        /// <summary>
+        /// 获取农历（阴历）节日
+        /// </summary>
+        /// <param name="dateTimeOffset"></param>
+        /// <returns></returns>
+        public static string GetChinaHoliday(this DateTimeOffset dateTimeOffset)
+        {
+            return dateTimeOffset.DateTime.GetChinaHoliday();
+        }
+
         #endregion
 
         #region 阴历-阳历-转换
@@ -822,6 +1140,15 @@ namespace EInfrastructure.Core.Tools
         {
             return TimeCommon.GetLunarYearDate(dateTime.Year, dateTime.Month, dateTime.Day,
                 TimeCommon.IsLeapYear(dateTime.Year));
+        }
+
+        /// <summary>
+        /// 阴历转阳历
+        /// </summary>
+        /// <param name="dateTimeOffset">阴历日期</param>
+        public static DateTime GetLunarYearDate(this DateTimeOffset dateTimeOffset)
+        {
+            return dateTimeOffset.DateTime.GetLunarYearDate();
         }
 
         #endregion
@@ -858,6 +1185,16 @@ namespace EInfrastructure.Core.Tools
             return dtNew;
         }
 
+        /// <summary>
+        /// 阳历转为阴历
+        /// </summary>
+        /// <param name="dateTimeOffset">公历日期</param>
+        /// <returns>农历的日期</returns>
+        public static DateTime GetSunYearDate(this DateTimeOffset dateTimeOffset)
+        {
+            return dateTimeOffset.DateTime.GetSunYearDate();
+        }
+
         #endregion
 
         #endregion
@@ -892,6 +1229,19 @@ namespace EInfrastructure.Core.Tools
             throw new BusinessException("不支持的类型", HttpStatus.Err.Id);
         }
 
+        /// <summary>
+        /// 生成时间戳
+        /// </summary>
+        /// <param name="target">待转换的时间</param>
+        /// <param name="timestampType">时间戳类型：10位或者13位</param>
+        /// <param name="dateTimeKind"></param>
+        /// <returns></returns>
+        public static long ToUnixTimestamp(this DateTimeOffset target, TimestampType timestampType,
+            DateTimeKind dateTimeKind = DateTimeKind.Utc)
+        {
+            return target.DateTime.ToUnixTimestamp(timestampType, dateTimeKind);
+        }
+
         #endregion
 
         #region 得到dateTime是当月的第几周
@@ -918,6 +1268,17 @@ namespace EInfrastructure.Core.Tools
             return (dateTime.Date.Day + i - 1) / 7;
         }
 
+        /// <summary>
+        /// 得到dateTime是当月的第几周，如果习惯周一到周日为一周，则nationality传Nationality.China
+        /// </summary>
+        /// <param name="dateTimeOffset">时间</param>
+        /// <param name="nationality">国家，默认为美国</param>
+        /// <returns></returns>
+        public static int GetWeekIndexOfMonth(this DateTimeOffset dateTimeOffset, Nationality nationality = null)
+        {
+            return dateTimeOffset.DateTime.GetWeekIndexOfMonth(nationality);
+        }
+
         #endregion
 
         #region 获取当前是周几(中国时间)
@@ -932,6 +1293,16 @@ namespace EInfrastructure.Core.Tools
             var dayOfWeek = dateTime.GetDayOfWeek(Nationality.China);
             return Week.GetAll<Week>()
                 .FirstOrDefault(x => x.Id == dayOfWeek);
+        }
+
+        /// <summary>
+        /// 获取当前是周几(中国时间)
+        /// </summary>
+        /// <param name="dateTimeOffset"></param>
+        /// <returns></returns>
+        public static Week GetDayName(this DateTimeOffset dateTimeOffset)
+        {
+            return dateTimeOffset.DateTime.GetDayName();
         }
 
         #endregion
@@ -949,6 +1320,19 @@ namespace EInfrastructure.Core.Tools
         public static int GetDayOfWeek(this DateTime dateTime, Nationality nationality = null)
         {
             return dateTime.DayOfWeek.GetDayOfWeek(nationality);
+        }
+
+        /// <summary>
+        /// 根据日期得到序号，支持国家
+        /// 目前除中国外，周一是1，周日是7
+        /// 其他国家为：周日是0，周六是7
+        /// </summary>
+        /// <param name="dateTimeOffset">时间</param>
+        /// <param name="nationality">国家，默认英国等</param>
+        /// <returns></returns>
+        public static int GetDayOfWeek(this DateTimeOffset dateTimeOffset, Nationality nationality = null)
+        {
+            return dateTimeOffset.DateTime.GetDayOfWeek(nationality);
         }
 
         /// <summary>
@@ -999,6 +1383,17 @@ namespace EInfrastructure.Core.Tools
             return dateTime.Year == dateTime2.Year;
         }
 
+        /// <summary>
+        /// 判断是同一年
+        /// </summary>
+        /// <param name="dateTimeOffset1">时间1</param>
+        /// <param name="dateTimeOffset2">时间2</param>
+        /// <returns></returns>
+        public static bool IsInSameYear(this DateTimeOffset dateTimeOffset1, DateTimeOffset dateTimeOffset2)
+        {
+            return dateTimeOffset1.Year == dateTimeOffset2.Year;
+        }
+
         #endregion
 
         #region 判断是同一年的同一月
@@ -1012,6 +1407,17 @@ namespace EInfrastructure.Core.Tools
         public static bool IsInSameMonth(this DateTime dateTime, DateTime dateTime2)
         {
             return dateTime.Year == dateTime2.Year && dateTime.Month == dateTime2.Month;
+        }
+
+        /// <summary>
+        /// 判断是同一年的同一月
+        /// </summary>
+        /// <param name="dateTimeOffset1">时间1</param>
+        /// <param name="dateTimeOffset2">时间2</param>
+        /// <returns></returns>
+        public static bool IsInSameMonth(this DateTimeOffset dateTimeOffset1, DateTimeOffset dateTimeOffset2)
+        {
+            return dateTimeOffset1.Year == dateTimeOffset2.Year && dateTimeOffset1.Month == dateTimeOffset2.Month;
         }
 
         #endregion
@@ -1033,6 +1439,22 @@ namespace EInfrastructure.Core.Tools
                    dateTime2.AddDays(-(int) dateTime2.GetDayOfWeek(nationality)).Date;
         }
 
+        /// <summary>
+        /// 判断是同一年的同一月的同一周
+        /// 目前除中国外，周一是1，周日是7
+        /// 其他国家为：周日是0，周六是7
+        /// </summary>
+        /// <param name="dateTimeOffset1">时间1</param>
+        /// <param name="dateTimeOffset2">时间2</param>
+        /// <param name="nationality">国家,默认是美国</param>
+        /// <returns></returns>
+        public static bool IsInSameWeek(this DateTimeOffset dateTimeOffset1, DateTimeOffset dateTimeOffset2,
+            Nationality nationality = null)
+        {
+            return dateTimeOffset1.AddDays(-(int) dateTimeOffset1.GetDayOfWeek(nationality)).Date ==
+                   dateTimeOffset2.AddDays(-(int) dateTimeOffset2.GetDayOfWeek(nationality)).Date;
+        }
+
         #endregion
 
         #region 得到间隔周数
@@ -1050,6 +1472,24 @@ namespace EInfrastructure.Core.Tools
         {
             var intervalWeek = Math.Abs((dateTime.AddDays(-(int) dateTime.GetDayOfWeek(nationality)).Date -
                                          dateTime2.AddDays(-(int) dateTime2.GetDayOfWeek(nationality))).TotalDays / 7);
+            return intervalWeek.ConvertToInt(0);
+        }
+
+        /// <summary>
+        /// 得到间隔周数
+        /// 目前除中国外，周一是1，周日是7
+        /// 其他国家为：周日是0，周六是7
+        /// </summary>
+        /// <param name="dateTimeOffset1">时间1</param>
+        /// <param name="dateTimeOffset2">时间2</param>
+        /// <param name="nationality">国家,默认是美国</param>
+        /// <returns></returns>
+        public static int IntervalWeek(this DateTimeOffset dateTimeOffset1, DateTimeOffset dateTimeOffset2,
+            Nationality nationality = null)
+        {
+            var intervalWeek = Math.Abs(
+                (dateTimeOffset1.AddDays(-(int) dateTimeOffset1.GetDayOfWeek(nationality)).Date -
+                 dateTimeOffset2.AddDays(-(int) dateTimeOffset2.GetDayOfWeek(nationality))).TotalDays / 7);
             return intervalWeek.ConvertToInt(0);
         }
 
@@ -1075,11 +1515,38 @@ namespace EInfrastructure.Core.Tools
         /// <summary>
         /// 根据日期得到星座信息
         /// </summary>
+        /// <param name="dateTimeOffset">日期</param>
+        /// <returns></returns>
+        public static Constellation GetConstellationFromBirthday(this DateTimeOffset? dateTimeOffset)
+        {
+            if (dateTimeOffset == null)
+            {
+                return Constellation.Unknow;
+            }
+
+            return dateTimeOffset.Value.GetConstellationFromBirthday();
+        }
+
+        /// <summary>
+        /// 根据日期得到星座信息
+        /// </summary>
         /// <param name="birthday">日期</param>
         /// <returns></returns>
         public static Constellation GetConstellationFromBirthday(this DateTime birthday)
         {
             float fBirthDay = Convert.ToSingle(birthday.ToString("M.dd"));
+            return _constellationMaps.Where(x => fBirthDay >= x.MinTime && fBirthDay < x.MaxTime)
+                .Select(x => x.Key).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// 根据日期得到星座信息
+        /// </summary>
+        /// <param name="dateTimeOffset">日期</param>
+        /// <returns></returns>
+        public static Constellation GetConstellationFromBirthday(this DateTimeOffset dateTimeOffset)
+        {
+            float fBirthDay = Convert.ToSingle(dateTimeOffset.ToString("M.dd"));
             return _constellationMaps.Where(x => fBirthDay >= x.MinTime && fBirthDay < x.MaxTime)
                 .Select(x => x.Key).FirstOrDefault();
         }

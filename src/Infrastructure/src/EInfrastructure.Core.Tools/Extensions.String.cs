@@ -229,6 +229,7 @@ namespace EInfrastructure.Core.Tools
             {
                 return -1;
             }
+
             return index + index2 + number - 1;
         }
 
@@ -285,7 +286,8 @@ namespace EInfrastructure.Core.Tools
         /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
         /// <returns></returns>
         // ReSharper disable once InconsistentNaming
-        public static int LastIndexOfNumber(this string parameter, char character, int number = 1, int defaultIndexof = -1)
+        public static int LastIndexOfNumber(this string parameter, char character, int number = 1,
+            int defaultIndexof = -1)
         {
             return IndexOfNumber(parameter, character, parameter.Split(character).Length - number, defaultIndexof);
         }
@@ -1174,7 +1176,7 @@ namespace EInfrastructure.Core.Tools
                 return string.Empty;
             }
 
-            return string.Concat(prefix, original);
+            return string.Concat(prefix, original ?? string.Empty);
         }
 
         #endregion
@@ -1195,7 +1197,7 @@ namespace EInfrastructure.Core.Tools
                 return string.Empty;
             }
 
-            return string.Concat(original, suffix);
+            return string.Concat(original ?? string.Empty, suffix);
         }
 
         #endregion

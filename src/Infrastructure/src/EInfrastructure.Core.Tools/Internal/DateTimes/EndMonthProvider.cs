@@ -23,8 +23,20 @@ namespace EInfrastructure.Core.Tools.Internal.DateTimes
         /// <returns></returns>
         public DateTime GetResult(DateTime date)
         {
-            var lastDay=GlobalConfigurations.Calendar.GetDaysInMonth(date.Year,date.Month);
+            var lastDay = GlobalConfigurations.Calendar.GetDaysInMonth(date.Year, date.Month);
             return new DateTime(date.Year, date.Month, lastDay);
+        }
+
+        /// <summary>
+        /// 得到结果
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public DateTimeOffset GetResult(DateTimeOffset date)
+        {
+            var lastDay = GlobalConfigurations.Calendar.GetDaysInMonth(date.Year, date.Month);
+            DateTime dateTime = new DateTime(date.Year, date.Month, lastDay);
+            return new DateTimeOffset(dateTime, date.Offset);
         }
     }
 }
