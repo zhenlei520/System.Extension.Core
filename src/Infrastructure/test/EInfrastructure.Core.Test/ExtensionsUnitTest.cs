@@ -334,5 +334,100 @@ namespace EInfrastructure.Core.Test
         }
 
         #endregion
+
+        #region 参数1大于参数2
+
+        /// <summary>
+        /// 参数1大于参数2
+        /// </summary>
+        [Fact]
+        public void GreaterThan()
+        {
+            Assert.True(2.GreaterThan(1));
+            Assert.False(2.GreaterThan(2));
+            Assert.False(2.GreaterThan(3));
+        }
+
+        #endregion
+
+        #region 参数1大于参数2
+
+        /// <summary>
+        /// 参数1大于参数2
+        /// </summary>
+        [Fact]
+        public void GreaterThanOrEqualTo()
+        {
+            Assert.True(2.GreaterThanOrEqualTo(1));
+            Assert.True(2.GreaterThanOrEqualTo(2));
+            Assert.False(2.GreaterThanOrEqualTo(3));
+        }
+
+        #endregion
+
+        #region 参数1小于等于参数2
+
+        /// <summary>
+        /// 参数1小于等于参数2
+        /// </summary>
+        [Fact]
+        public void LessThan()
+        {
+            Assert.False(2.LessThan(1));
+            Assert.False(2.LessThan(2));
+            Assert.True(2.LessThan(3));
+        }
+
+        #endregion
+
+        #region 参数1大于参数2
+
+        /// <summary>
+        /// 参数1大于参数2
+        /// </summary>
+        [Fact]
+        public void LessThanOrEqualTo()
+        {
+            Assert.False(2.LessThanOrEqualTo(1));
+            Assert.True(2.LessThanOrEqualTo(2));
+            Assert.True(2.LessThanOrEqualTo(3));
+        }
+
+        #endregion
+
+        #region 判断是否在/不在指定列表内
+
+        /// <summary>
+        /// 判断是否在/不在指定列表内
+        /// </summary>
+        [Fact]
+        public void IsIn()
+        {
+            List<int> list = new List<int>() {1, 2, 3};
+            Assert.True(1.IsIn(list));
+            Assert.False(10.IsIn(list));
+
+            int[] list2 = new[] {1, 2, 3};
+            Assert.True(1.IsIn(list2));
+            Assert.False(10.IsIn(list2));
+
+            List<string> list3 = new List<string>() {"1", "2", "3"};
+            Assert.True("1".IsIn(list3));
+            Assert.False("10".IsIn(list3));
+
+            List<Configurations.UserDto> list4 = new List<Configurations.UserDto>()
+            {
+                new Configurations.UserDto() {Id = 1, Name = "张三", Sex = 0, Age = 18},
+                new Configurations.UserDto() {Id = 2, Name = "张三", Sex = 0, Age = 28}
+            };
+            var user = new Configurations.UserDto() {Id = 1, Name = "张三", Sex = 0, Age = 18};
+            Assert.True(user.IsIn(list4));
+            user = new Configurations.UserDto() {Id = 1, Name = "张三2", Sex = 0, Age = 18};
+            Assert.True(user.IsIn(list4));
+            user = new Configurations.UserDto() {Id = 3, Name = "张三", Sex = 0, Age = 18};
+            Assert.False(user.IsIn(list4));
+        }
+
+        #endregion
     }
 }
