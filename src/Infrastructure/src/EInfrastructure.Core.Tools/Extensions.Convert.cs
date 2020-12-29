@@ -558,11 +558,14 @@ namespace EInfrastructure.Core.Tools
             {"no", false},
             {"fail", false},
             {"lose", false},
+            {"false", false},
             {"1", true},
             {"是", true},
             {"ok", true},
             {"yes", true},
             {"success", true},
+            {"pass", true},
+            {"true", true},
             {"成功", true}
         };
 
@@ -605,8 +608,8 @@ namespace EInfrastructure.Core.Tools
             if (obj != null)
             {
                 string objStr = obj.ToString();
-                var res = _boolMap.FirstOrDefault(x => x.Key == objStr);
-                if (res.Key == objStr)
+                var res = _boolMap.FirstOrDefault(x => x.Key.Equals(objStr, StringComparison.CurrentCultureIgnoreCase));
+                if (res.Key.Equals(objStr,StringComparison.CurrentCultureIgnoreCase))
                 {
                     return res.Value;
                 }
