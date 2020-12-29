@@ -272,7 +272,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="param2">参数2</param>
         public static bool GreaterThan<T>(this T param1, T param2) where T : IComparable
         {
-            return param1.CompareTo(param2) == 1;
+            return param1.CompareTo(param2) > 0;
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="param2">参数2</param>
         public static bool GreaterThanOrEqualTo<T>(this T param1, T param2) where T : IComparable
         {
-            return param1.CompareTo(param2) == 0 || param1.CompareTo(param2) == 1;
+            return param1.CompareTo(param2) == 0 || param1.CompareTo(param2) > 0;
         }
 
         #endregion
@@ -296,7 +296,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="param2">参数2</param>
         public static bool LessThan<T>(this T param1, T param2) where T : IComparable
         {
-            return param1.CompareTo(param2) == -1;
+            return param1.CompareTo(param2) < 0;
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="param2">参数2</param>
         public static bool LessThanOrEqualTo<T>(this T param1, T param2) where T : IComparable
         {
-            return param1.CompareTo(param2) == 0 || param1.CompareTo(param2) == -1;
+            return param1.CompareTo(param2) == 0 || param1.CompareTo(param2) < 0;
         }
 
         #endregion
