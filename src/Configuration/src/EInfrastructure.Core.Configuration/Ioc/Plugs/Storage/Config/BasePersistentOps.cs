@@ -16,8 +16,8 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
         public BasePersistentOps()
         {
             Zone = null;
-            Bucket = "";
-            Host = "";
+            Bucket = string.Empty;
+            Host = string.Empty;
             IsUseHttps = null;
             UseCdnDomains = null;
             MaxRetryTimes = null;

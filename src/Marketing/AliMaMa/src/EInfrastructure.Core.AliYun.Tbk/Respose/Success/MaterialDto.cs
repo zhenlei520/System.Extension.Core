@@ -19,13 +19,13 @@ namespace EInfrastructure.Core.AliYun.Tbk.Respose.Success
         public long Total { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [JsonProperty(PropertyName = "result_list")]
         public List<Item> List { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public class Item
         {
@@ -183,7 +183,7 @@ namespace EInfrastructure.Core.AliYun.Tbk.Respose.Success
                     }
                     catch
                     {
-                        return "";
+                        return string.Empty;
                     }
                 }
             }

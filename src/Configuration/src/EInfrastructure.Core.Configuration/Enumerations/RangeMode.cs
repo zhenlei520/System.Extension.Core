@@ -6,7 +6,7 @@ using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
 namespace EInfrastructure.Core.Configuration.Enumerations
 {
     /// <summary>
-    /// 取件模式
+    /// 区间模式
     /// </summary>
     public class RangeMode : Enumeration
     {
@@ -28,7 +28,7 @@ namespace EInfrastructure.Core.Configuration.Enumerations
         /// <summary>
         /// 左闭右开
         /// </summary>
-        public static RangeMode CloseOpen = new RangeMode(4, "CLoseOpen");
+        public static RangeMode CloseOpen = new RangeMode(4, "CloseOpen");
 
         /// <summary>
         ///

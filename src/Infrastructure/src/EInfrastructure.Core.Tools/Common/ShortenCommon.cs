@@ -35,7 +35,19 @@ namespace EInfrastructure.Core.Tools.Common
         /// <returns>得到短参数的值（有四个，任选其一即可）</returns>
         public static string[] GetShortParam(string param, int number = 6)
         {
-            return _shortenProviders.GetShortParam(param, ShortKey, number);
+            return GetShortParam(param, ShortKey, number);
+        }
+
+        /// <summary>
+        /// 得到短参数信息
+        /// </summary>
+        /// <param name="param">参数</param>
+        /// <param name="shortKey">md5盐（默认）</param>
+        /// <param name="number">生成短连接的长度</param>
+        /// <returns>得到短参数的值（有四个，任选其一即可）</returns>
+        public static string[] GetShortParam(string param, string shortKey,int number = 6)
+        {
+            return _shortenProviders.GetShortParam(param, shortKey, number);
         }
 
         #endregion

@@ -1,6 +1,6 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 
-using System;
+using EInfrastructure.Core.Tools.Common;
 
 namespace EInfrastructure.Core.Tools
 {
@@ -18,40 +18,11 @@ namespace EInfrastructure.Core.Tools
         /// <param name="isReplaceSpace">是否移除空格（默认移除）</param>
         public static string SafeString(this object param, bool isReplaceSpace = true)
         {
-            return Common.ObjectCommon.SafeObject(!param.IsNullOrDbNull(),
-                () =>
-                {
-                    if (isReplaceSpace)
-                    {
-                        return ValueTuple.Create(param?.ToString().Trim(), string.Empty);
-                    }
-
-                    return ValueTuple.Create(param?.ToString(), string.Empty);
-                });
-        }
-
-        #endregion
-
-        #region 是否Null
-
-        /// <summary>
-        /// 是否Null
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static bool IsNull(this object obj)
-        {
-            return obj == null;
-        }
-
-        /// <summary>
-        /// 是否null或者DBNull
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static bool IsNullOrDbNull(this object obj)
-        {
-            return obj == null || obj is DBNull;
+            return ObjectCommon.SafeObject(!param.IsNullOrDbNull(), () =>
+            {
+                var res = param.ToString();
+                return isReplaceSpace ? res.Trim() : res;
+            }, () => string.Empty);
         }
 
         #endregion

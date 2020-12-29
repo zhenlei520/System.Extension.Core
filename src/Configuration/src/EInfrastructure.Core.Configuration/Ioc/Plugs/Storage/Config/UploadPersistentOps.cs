@@ -21,7 +21,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Config
             ExpireInSeconds = 3600;
             FileType = null;
             DetectMime = FsizeMin;
-            MimeLimit = "";
+            MimeLimit = string.Empty;
             FsizeMin = null;
             FsizeLimit = null;
             ProgressAction = null;

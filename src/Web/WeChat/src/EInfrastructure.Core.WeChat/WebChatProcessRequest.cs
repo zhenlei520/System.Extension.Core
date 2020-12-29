@@ -147,7 +147,7 @@ namespace EInfrastructure.Core.WeChat
                 return chatAuthConfig.EchoString;
             }
 
-            return "";
+            return string.Empty;
         }
 
         #endregion
@@ -182,7 +182,7 @@ namespace EInfrastructure.Core.WeChat
                 loginResult.Success = !string.IsNullOrEmpty(wxUserInfo.Openid) &&
                                       !string.IsNullOrEmpty(wxUserInfo.Unionid);
 
-                loginResult.Error = "";
+                loginResult.Error = string.Empty;
                 loginResult.OpenId = wxUserInfo.Openid;
                 loginResult.Unionid = wxUserInfo.Unionid;
                 loginResult.AppId = config.AppId;
@@ -230,7 +230,7 @@ namespace EInfrastructure.Core.WeChat
                 {
                     string getUserInfoResponse = WebChatJsSdkCommon.RestClient
                         .Execute(new RestRequest("sns/userinfo?access_token=" + getAccessTokenResult.AccessToken +
-                                                 "&openid=" + loginResult.OpenId + "")).Content;
+                                                 "&openid=" + loginResult.OpenId + string.Empty)).Content;
 
 
                     WxUserInfo wxUserInfo = JsonConvert.DeserializeObject<WxUserInfo>(getUserInfoResponse);
@@ -269,7 +269,7 @@ namespace EInfrastructure.Core.WeChat
             string[] arrTmp = {token, timestamp, nonce};
 
             Array.Sort(arrTmp);
-            string tmpStr = string.Join("", arrTmp);
+            string tmpStr = string.Join(string.Empty, arrTmp);
 
             tmpStr = tmpStr.Sha1();
             tmpStr = tmpStr.ToLower();

@@ -22,8 +22,7 @@ namespace EInfrastructure.Core.Tools.Common
         public static DataTable CreateEmptyTable<T>(string tableName="") where T : class
         {
             Type entityType = typeof(T);
-            string name = ObjectCommon.SafeObject(tableName.IsNullOrEmpty(),
-                () => ValueTuple.Create(entityType.Name, tableName));
+            string name = ObjectCommon.SafeObject(tableName.IsNullOrEmpty(),()=>entityType.Name,()=>tableName);
             DataTable table = new DataTable(name);
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(entityType);
 

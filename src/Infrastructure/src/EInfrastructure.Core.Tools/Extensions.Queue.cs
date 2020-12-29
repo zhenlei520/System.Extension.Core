@@ -18,7 +18,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="queues"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static List<T> ConvertToList<T>(Queue<T> queues)
+        public static List<T> ConvertToList<T>(this Queue<T> queues)
         {
             List<T> list = new List<T>();
             while (queues.Count > 0)

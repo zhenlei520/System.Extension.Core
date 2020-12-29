@@ -40,7 +40,7 @@ namespace EInfrastructure.Core.Configuration.Enumerations.SeedWork.Configuration
             Name = name;
         }
 
-        public override string ToString() => Name?.ToString() ?? "";
+        public override string ToString() => Name?.ToString() ?? string.Empty;
 
         /// <summary>
         /// 得到所有的

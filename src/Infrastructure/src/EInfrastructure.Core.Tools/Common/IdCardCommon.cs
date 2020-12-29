@@ -94,7 +94,7 @@ namespace EInfrastructure.Core.Tools.Common
             if (cardNo.IsIdCard())
             {
                 return ObjectCommon.SafeObject<Constellation>(!cardNo.IsNullOrWhiteSpace(),
-                    () => (GetBirthday(cardNo).GetConstellationFromBirthday(), Constellation.Unknow));
+                    () => GetBirthday(cardNo).GetConstellationFromBirthday(), () => Constellation.Unknow);
             }
 
             return Constellation.Unknow;

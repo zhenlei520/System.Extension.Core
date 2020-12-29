@@ -47,10 +47,10 @@ namespace EInfrastructure.Core.Tools
 
         #region 全部转换为大小写
 
-        #region 转为大写
+        #region 转为大写(去除Null的情况)
 
         /// <summary>
-        /// 转为大写
+        /// 转为大写(去除Null的情况)
         /// </summary>
         /// <param name="parameter">需要转换的参数</param>
         /// <returns></returns>
@@ -58,7 +58,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (string.IsNullOrEmpty(parameter))
             {
-                return "";
+                return string.Empty;
             }
 
             return parameter.ToUpper();
@@ -66,10 +66,10 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 转为小写
+        #region 转为小写(去除Null的情况)
 
         /// <summary>
-        /// 转为小写
+        /// 转为小写(去除Null的情况)
         /// </summary>
         /// <param name="parameter">需要转换的参数</param>
         /// <returns></returns>
@@ -77,7 +77,7 @@ namespace EInfrastructure.Core.Tools
         {
             if (string.IsNullOrEmpty(parameter))
             {
-                return "";
+                return string.Empty;
             }
 
             return parameter.ToLower();
@@ -162,9 +162,9 @@ namespace EInfrastructure.Core.Tools
         /// <param name="splitStr">要分割的字符,默认以,分割</param>
         /// <param name="isReplaceSpace">是否移除空格</param>
         /// <returns></returns>
-        public static List<T> ConvertStrToList<T>(this string str, string splitStr = ",", bool isReplaceSpace = true)
+        public static List<T> ConvertToList<T>(this string str, string splitStr = ",", bool isReplaceSpace = true)
         {
-            if (string.IsNullOrEmpty(str))
+            if (str.IsNullOrWhiteSpace())
             {
                 return new List<T>();
             }
@@ -181,9 +181,9 @@ namespace EInfrastructure.Core.Tools
         /// <param name="splitStr">要分割的字符,默认以,分割</param>
         /// <param name="isReplaceSpace">是否移除空格</param>
         /// <returns></returns>
-        public static List<T> ConvertStrToList<T>(this string str, char splitStr = ',', bool isReplaceSpace = true)
+        public static List<T> ConvertToList<T>(this string str, char splitStr = ',', bool isReplaceSpace = true)
         {
-            if (string.IsNullOrEmpty(str))
+            if (str.IsNullOrWhiteSpace())
             {
                 return new List<T>();
             }
@@ -207,7 +207,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="number">得到第number次（默认第1次）</param>
         /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
         /// <returns></returns>
-        public static int IndexOf(this string parameter, char character, int number = 1, int defaultIndexof = -1)
+        public static int IndexOfNumber(this string parameter, char character, int number = 1, int defaultIndexof = -1)
         {
             if (string.IsNullOrEmpty(parameter) || number <= 0)
             {
@@ -218,13 +218,18 @@ namespace EInfrastructure.Core.Tools
             int count = 1; //第1次匹配
             while (count < number)
             {
-                var tempIndex = (parameter.IndexOf(character));
+                var tempIndex = parameter.IndexOf(character);
                 index += tempIndex;
                 parameter = parameter.Substring(tempIndex + 1);
                 count++;
             }
 
-            return index + parameter.IndexOf(character) + number - 1;
+            var index2 = parameter.IndexOf(character);
+            if (index2 == -1)
+            {
+                return -1;
+            }
+            return index + index2 + number - 1;
         }
 
         #endregion
@@ -237,9 +242,11 @@ namespace EInfrastructure.Core.Tools
         /// <param name="parameter">待匹配字符串</param>
         /// <param name="str">匹配的字符串</param>
         /// <param name="number">得到第number次（默认第1次）</param>
+        /// <param name="comparisonType">默认StringComparison.CurrentCulture</param>
         /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
         /// <returns></returns>
-        public static int IndexOf(this string parameter, string str, int number = 1, int defaultIndexof = -1)
+        public static int IndexOfNumber(this string parameter, string str, int number = 1,
+            StringComparison comparisonType = StringComparison.CurrentCulture, int defaultIndexof = -1)
         {
             if (string.IsNullOrEmpty(parameter) || number <= 0)
             {
@@ -250,13 +257,19 @@ namespace EInfrastructure.Core.Tools
             int count = 1; //第1次匹配
             while (count < number)
             {
-                var tempIndex = (parameter.IndexOf(str, StringComparison.Ordinal));
+                var tempIndex = (parameter.IndexOf(str, comparisonType));
                 index += tempIndex;
                 parameter = parameter.Substring(tempIndex + 1);
                 count++;
             }
 
-            return index + parameter.IndexOf(str, StringComparison.Ordinal) + number - 1;
+            var index2 = parameter.IndexOf(str, comparisonType);
+            if (index2 == -1)
+            {
+                return -1;
+            }
+
+            return index + index2 + number - 1;
         }
 
         #endregion
@@ -272,9 +285,9 @@ namespace EInfrastructure.Core.Tools
         /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
         /// <returns></returns>
         // ReSharper disable once InconsistentNaming
-        public static int LastIndexOf(this string parameter, char character, int number = 1, int defaultIndexof = -1)
+        public static int LastIndexOfNumber(this string parameter, char character, int number = 1, int defaultIndexof = -1)
         {
-            return IndexOf(parameter, character, parameter.Split(character).Length - number, defaultIndexof);
+            return IndexOfNumber(parameter, character, parameter.Split(character).Length - number, defaultIndexof);
         }
 
         #endregion
@@ -287,13 +300,15 @@ namespace EInfrastructure.Core.Tools
         /// <param name="parameter">待匹配字符串</param>
         /// <param name="str">匹配的字符串</param>
         /// <param name="number">倒数第n次出现（默认倒数第1次）</param>
+        /// <param name="comparisonType">默认StringComparison.CurrentCulture</param>
         /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
         /// <returns></returns>
         // ReSharper disable once InconsistentNaming
-        public static int LastIndexOf(this string parameter, string str, int number = 1, int defaultIndexof = -1)
+        public static int LastIndexOfNumber(this string parameter, string str, int number = 1,
+            StringComparison comparisonType = StringComparison.CurrentCulture, int defaultIndexof = -1)
         {
             var array = parameter.Split(str, false);
-            return IndexOf(parameter, str, array.Length - number, defaultIndexof);
+            return IndexOfNumber(parameter, str, array.Length - number, comparisonType, defaultIndexof);
         }
 
         #endregion
@@ -314,10 +329,10 @@ namespace EInfrastructure.Core.Tools
         {
             if (param.IsNullOrWhiteSpace())
             {
-                return "";
+                return string.Empty;
             }
 
-            string str = "";
+            string str = string.Empty;
             if (index > param.Length - 1)
             {
                 return param;
@@ -340,28 +355,6 @@ namespace EInfrastructure.Core.Tools
             }
 
             return str;
-        }
-
-        #endregion
-
-        #region 判断字符串是否全部相等
-
-        /// <summary>
-        /// 判断字符串是否全部相等
-        /// </summary>
-        /// <param name="str">待验证的字符串</param>
-        /// <returns></returns>
-        public static bool IsEqualNumber(this string str)
-        {
-            for (int i = 0; i < str.Length - 1; i++)
-            {
-                if (str[i] != str[i + 1])
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         #endregion
@@ -632,7 +625,7 @@ namespace EInfrastructure.Core.Tools
         public static string AesEncrypt(this string str, string key)
         {
             var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.Aes));
-            return provider?.Encrypt(str, new EncryptInfos(key, "", Encoding.UTF8)) ??
+            return provider?.Encrypt(str, new EncryptInfos(key, string.Empty, Encoding.UTF8)) ??
                    throw new NotImplementedException("Unsupported encryption methods");
         }
 
@@ -649,7 +642,7 @@ namespace EInfrastructure.Core.Tools
         public static string AesDecrypt(this string str, string key)
         {
             var provider = _securityProviders.FirstOrDefault(x => x.Type.Equals(SecurityType.Aes));
-            return provider?.Decrypt(str, new EncryptInfos(key, "", Encoding.UTF8)) ??
+            return provider?.Decrypt(str, new EncryptInfos(key, string.Empty, Encoding.UTF8)) ??
                    throw new NotImplementedException("Unsupported decryption methods");
         }
 
@@ -1038,7 +1031,7 @@ namespace EInfrastructure.Core.Tools
             }
 
             byte[] bts = Encoding.Unicode.GetBytes(str);
-            string r = "";
+            string r = string.Empty;
             for (int i = 0; i < bts.Length; i += 2)
                 r += "\\u" + bts[i + 1].ToString("x").PadLeft(2, '0') + bts[i].ToString("x").PadLeft(2, '0');
             return r;
@@ -1060,7 +1053,7 @@ namespace EInfrastructure.Core.Tools
                 return str;
             }
 
-            string r = "";
+            string r = string.Empty;
             MatchCollection mc = Regex.Matches(str, @"\\u([\w]{2})([\w]{2})",
                 RegexOptions.Compiled | RegexOptions.IgnoreCase);
             byte[] bts = new byte[2];
@@ -1162,6 +1155,47 @@ namespace EInfrastructure.Core.Tools
             }
 
             return sb.ToString();
+        }
+
+        #endregion
+
+        #region 字符串增加前缀
+
+        /// <summary>
+        /// 字符串增加前缀
+        /// </summary>
+        /// <param name="original">原字符串</param>
+        /// <param name="prefix">前缀</param>
+        /// <param name="isRefEmpty">源字符串为空时是否返回空字符串</param>
+        public static string AddPrefix(this string original, string prefix, bool isRefEmpty = true)
+        {
+            if (original.IsNullOrWhiteSpace() && isRefEmpty)
+            {
+                return string.Empty;
+            }
+
+            return string.Concat(prefix, original);
+        }
+
+        #endregion
+
+        #region 字符串增加后缀
+
+        /// <summary>
+        /// 字符串增加后缀
+        /// </summary>
+        /// <param name="original">原字符串</param>
+        /// <param name="suffix">后缀</param>
+        /// <param name="isRefEmpty">源字符串为空时是否返回空</param>
+        /// <returns></returns>
+        public static string AddSuffix(this string original, string suffix, bool isRefEmpty = true)
+        {
+            if (original.IsNullOrWhiteSpace() && isRefEmpty)
+            {
+                return string.Empty;
+            }
+
+            return string.Concat(original, suffix);
         }
 
         #endregion
@@ -1430,6 +1464,28 @@ namespace EInfrastructure.Core.Tools
         #endregion
 
         #region 验证
+
+        #region 判断字符串是否全部相等
+
+        /// <summary>
+        /// 判断字符串是否全部相等
+        /// </summary>
+        /// <param name="str">待验证的字符串</param>
+        /// <returns></returns>
+        public static bool IsEqualNumber(this string str)
+        {
+            for (int i = 0; i < str.Length - 1; i++)
+            {
+                if (str[i] != str[i + 1])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        #endregion
 
         #region 判断正则表达式是否匹配
 
@@ -1955,7 +2011,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="stringComparison">匹配方式，默认忽略大小写</param>
         public static bool IsNotIn(this string source,
             StringComparison stringComparison, params string[] list) =>
-            !source.IsIn(stringComparison,list);
+            !source.IsIn(stringComparison, list);
 
         #endregion
 
@@ -2241,16 +2297,6 @@ namespace EInfrastructure.Core.Tools
         public static bool IsNullOrWhiteSpace(this string str)
         {
             return string.IsNullOrWhiteSpace(str);
-        }
-
-        /// <summary>
-        /// Indicates whether the specified string is null or an
-        /// </summary>
-        /// <param name="list"></param>
-        /// <returns></returns>
-        public static bool IsNullOrEmpty<T>(this IEnumerable<T> list)
-        {
-            return list.GetListCount() == 0;
         }
 
         #endregion

@@ -139,8 +139,7 @@ namespace EInfrastructure.Core.Tools
             StringBuilder csvrowText = new StringBuilder();
 
             Type entityType = typeof(T);
-            string name = ObjectCommon.SafeObject(tableName.IsNullOrEmpty(),
-                () => ValueTuple.Create(entityType.Name, tableName));
+            string name = ObjectCommon.SafeObject(tableName.IsNullOrEmpty(),entityType.Name, tableName);
             DataTable table = new DataTable(name);
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(entityType);
 
@@ -168,10 +167,10 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region 获取list列表的值
+        #region 获取list列表的数量
 
         /// <summary>
-        /// 获取list列表的值
+        /// 获取list列表的数量
         /// </summary>
         /// <param name="list"></param>
         /// <typeparam name="T"></typeparam>
@@ -216,7 +215,7 @@ namespace EInfrastructure.Core.Tools
             bool isReplaceEmpty = true,
             bool isReplaceSpace = true) where T : struct
         {
-            var enumerable = str as T[] ?? str.ToArray();
+            var enumerable = str.SafeList();
             if (!enumerable.Any())
             {
                 return "";
@@ -257,24 +256,23 @@ namespace EInfrastructure.Core.Tools
             bool isReplaceEmpty = true,
             bool isReplaceSpace = true)
         {
-            var enumerable = str as string[] ?? str.ToArray();
+            IEnumerable<string> enumerable = str.SafeList();
             if (!enumerable.Any())
             {
                 return "";
             }
 
-            IEnumerable<string> tempList = enumerable.ToList();
             if (isReplaceEmpty)
             {
                 if (isReplaceSpace)
                 {
-                    tempList = tempList.Select(x => x.Trim());
+                    enumerable = enumerable.Select(x => x.Trim());
                 }
 
-                tempList = tempList.Where(x => !string.IsNullOrEmpty(x));
+                enumerable = enumerable.Where(x => !string.IsNullOrEmpty(x));
             }
 
-            return string.Join(split + "", tempList);
+            return string.Join(split + "", enumerable);
         }
 
         #endregion
@@ -292,12 +290,7 @@ namespace EInfrastructure.Core.Tools
         public static string ConvertToString(this string[] s, char c = ',', bool isReplaceEmpty = true,
             bool isReplaceSpace = true)
         {
-            if (s == null || s.Length == 0)
-            {
-                return "";
-            }
-
-            return ConvertToString(s.ToList(), c, isReplaceEmpty, isReplaceSpace);
+            return s.SafeList().ConvertToString(c, isReplaceEmpty, isReplaceSpace);
         }
 
         /// <summary>
@@ -311,12 +304,7 @@ namespace EInfrastructure.Core.Tools
         public static string ConvertToString(this string[] s, string c = ",", bool isReplaceEmpty = true,
             bool isReplaceSpace = true)
         {
-            if (s == null || s.Length == 0)
-            {
-                return "";
-            }
-
-            return ConvertToString(s.ToList(), c, isReplaceEmpty, isReplaceSpace);
+            return s.SafeList().ConvertToString(c, isReplaceEmpty, isReplaceSpace);
         }
 
         #endregion
@@ -367,10 +355,10 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region IEnumerable转Dictionary类型
+        #region IEnumerable转Dictionary类型，如果key存在会跳过
 
         /// <summary>
-        /// IEnumerable转Dictionary类型
+        /// IEnumerable转Dictionary类型，如果key存在会跳过
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
         /// <typeparam name="TKey"></typeparam>
@@ -411,8 +399,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns>如果param不为空，则返回param，否则返回空集合</returns>
         public static List<T> SafeList<T>(this IEnumerable<T> param)
         {
-            return ObjectCommon.SafeObject(param != null,
-                () => ValueTuple.Create(param?.ToList(), new List<T>()));
+            return ObjectCommon.SafeObject(param != null, () => param.ToList(), () => new List<T>());
         }
 
         #endregion
@@ -427,7 +414,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static T[] SafeArray<T>(this IEnumerable<T> param)
         {
-            return SafeList(param).ToArray();
+            return ObjectCommon.SafeObject(!param.IsNullOrDbNull(),()=>param.ToArray(),()=>new T[0]);
         }
 
         #endregion
@@ -461,6 +448,20 @@ namespace EInfrastructure.Core.Tools
             IEqualityComparer<V> comparer)
         {
             return source.Distinct(new CommonEqualityComparer<T, V>(keySelector, comparer));
+        }
+
+        #endregion
+
+        #region 验证列表是否是null或者空
+
+        /// <summary>
+        /// 验证列表是否是null或者空
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> list)
+        {
+            return list.GetListCount() == 0;
         }
 
         #endregion

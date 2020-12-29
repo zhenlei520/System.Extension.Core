@@ -158,7 +158,7 @@ namespace EInfrastructure.Core.Tools.Common
         {
             return (startIndex == null
                 ? BitConverter.ToString(signed)
-                : BitConverter.ToString(signed, (int) startIndex, length ?? default(int))).Replace("-", "");
+                : BitConverter.ToString(signed, (int) startIndex, length ?? default(int))).Replace("-", string.Empty);
         }
 
         /// <summary>
@@ -665,7 +665,7 @@ namespace EInfrastructure.Core.Tools.Common
         private static string ByteArrayToHex(byte[] ba)
         {
             string hex = BitConverter.ToString(ba);
-            return hex.Replace("-", "");
+            return hex.Replace("-", string.Empty);
         }
 
         #endregion

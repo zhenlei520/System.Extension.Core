@@ -1,7 +1,6 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.IO;
 
 namespace EInfrastructure.Core.Tools.Common
@@ -21,8 +20,7 @@ namespace EInfrastructure.Core.Tools.Common
         public static string GetExtension(string path)
         {
             string res = GetExt(path.SafeString().Split('?')[0]);
-            return ObjectCommon.SafeObject(!string.IsNullOrEmpty(res),
-                () => ValueTuple.Create(res, GetExt(path)));
+            return ObjectCommon.SafeObject(!string.IsNullOrEmpty(res),res,GetExt(path));
         }
 
         /// <summary>

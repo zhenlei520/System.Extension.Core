@@ -71,7 +71,7 @@ namespace EInfrastructure.Core.Tools.Common
             }
 
             string regex = $"http://.+.(?:{exts.ConvertToString('|')})";
-            string str = "";
+            string str = string.Empty;
             Regex regObj = new Regex(regex,
                 RegexOptions.Compiled | RegexOptions.IgnoreCase);
             foreach (Match matchItem in regObj.Matches(imgStr))
