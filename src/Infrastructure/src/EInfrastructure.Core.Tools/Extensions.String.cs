@@ -207,7 +207,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="number">得到第number次（默认第1次）</param>
         /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
         /// <returns></returns>
-        public static int IndexOf(this string parameter, char character, int number = 1, int defaultIndexof = -1)
+        public static int IndexOfNumber(this string parameter, char character, int number = 1, int defaultIndexof = -1)
         {
             if (string.IsNullOrEmpty(parameter) || number <= 0)
             {
@@ -218,13 +218,18 @@ namespace EInfrastructure.Core.Tools
             int count = 1; //第1次匹配
             while (count < number)
             {
-                var tempIndex = (parameter.IndexOf(character));
+                var tempIndex = parameter.IndexOf(character);
                 index += tempIndex;
                 parameter = parameter.Substring(tempIndex + 1);
                 count++;
             }
 
-            return index + parameter.IndexOf(character) + number - 1;
+            var index2 = parameter.IndexOf(character);
+            if (index2 == -1)
+            {
+                return -1;
+            }
+            return index + index2 + number - 1;
         }
 
         #endregion
@@ -237,9 +242,11 @@ namespace EInfrastructure.Core.Tools
         /// <param name="parameter">待匹配字符串</param>
         /// <param name="str">匹配的字符串</param>
         /// <param name="number">得到第number次（默认第1次）</param>
+        /// <param name="comparisonType">默认StringComparison.CurrentCulture</param>
         /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
         /// <returns></returns>
-        public static int IndexOf(this string parameter, string str, int number = 1, int defaultIndexof = -1)
+        public static int IndexOfNumber(this string parameter, string str, int number = 1,
+            StringComparison comparisonType = StringComparison.CurrentCulture, int defaultIndexof = -1)
         {
             if (string.IsNullOrEmpty(parameter) || number <= 0)
             {
@@ -250,13 +257,19 @@ namespace EInfrastructure.Core.Tools
             int count = 1; //第1次匹配
             while (count < number)
             {
-                var tempIndex = (parameter.IndexOf(str, StringComparison.Ordinal));
+                var tempIndex = (parameter.IndexOf(str, comparisonType));
                 index += tempIndex;
                 parameter = parameter.Substring(tempIndex + 1);
                 count++;
             }
 
-            return index + parameter.IndexOf(str, StringComparison.Ordinal) + number - 1;
+            var index2 = parameter.IndexOf(str, comparisonType);
+            if (index2 == -1)
+            {
+                return -1;
+            }
+
+            return index + index2 + number - 1;
         }
 
         #endregion
@@ -272,9 +285,9 @@ namespace EInfrastructure.Core.Tools
         /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
         /// <returns></returns>
         // ReSharper disable once InconsistentNaming
-        public static int LastIndexOf(this string parameter, char character, int number = 1, int defaultIndexof = -1)
+        public static int LastIndexOfNumber(this string parameter, char character, int number = 1, int defaultIndexof = -1)
         {
-            return IndexOf(parameter, character, parameter.Split(character).Length - number, defaultIndexof);
+            return IndexOfNumber(parameter, character, parameter.Split(character).Length - number, defaultIndexof);
         }
 
         #endregion
@@ -287,13 +300,15 @@ namespace EInfrastructure.Core.Tools
         /// <param name="parameter">待匹配字符串</param>
         /// <param name="str">匹配的字符串</param>
         /// <param name="number">倒数第n次出现（默认倒数第1次）</param>
+        /// <param name="comparisonType">默认StringComparison.CurrentCulture</param>
         /// <param name="defaultIndexof">默认下标-1（未匹配到）</param>
         /// <returns></returns>
         // ReSharper disable once InconsistentNaming
-        public static int LastIndexOf(this string parameter, string str, int number = 1, int defaultIndexof = -1)
+        public static int LastIndexOfNumber(this string parameter, string str, int number = 1,
+            StringComparison comparisonType = StringComparison.CurrentCulture, int defaultIndexof = -1)
         {
             var array = parameter.Split(str, false);
-            return IndexOf(parameter, str, array.Length - number, defaultIndexof);
+            return IndexOfNumber(parameter, str, array.Length - number, comparisonType, defaultIndexof);
         }
 
         #endregion
@@ -1996,7 +2011,7 @@ namespace EInfrastructure.Core.Tools
         /// <param name="stringComparison">匹配方式，默认忽略大小写</param>
         public static bool IsNotIn(this string source,
             StringComparison stringComparison, params string[] list) =>
-            !source.IsIn(stringComparison,list);
+            !source.IsIn(stringComparison, list);
 
         #endregion
 
