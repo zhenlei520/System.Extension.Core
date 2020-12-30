@@ -466,6 +466,64 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
+        #region 键值对集合转化为对象
+
+        /// <summary>
+        /// 键值对集合转化为对象
+        /// </summary>
+        /// <param name="keyValuePairs">键值对集合</param>
+        /// <returns></returns>
+        public static T ConvertToObject<T>(this IEnumerable<KeyValuePair<string, object>> keyValuePairs) where T : new()
+        {
+            if (keyValuePairs.IsNull())
+            {
+                return default(T);
+            }
+            var md = new T();
+            foreach (var d in keyValuePairs)
+            {
+                try
+                {
+                    var value = d.Value;
+                    var property=md.GetType().GetProperty(d.Key);
+                    if (property != null && property.CanWrite)
+                    {
+                        var res=Convert.ChangeType(value, property.PropertyType);
+                        property.SetValue(md, res);
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    // ignored
+                }
+            }
+
+            return md;
+        }
+
+        #endregion
+
+        #region 创建动态对象
+
+        /// <summary>
+        /// 创建动态对象
+        /// </summary>
+        /// <param name="keyValuePairs"></param>
+        /// <returns></returns>
+        public static object ConvertToObject(this IEnumerable<KeyValuePair<string, object>> keyValuePairs)
+        {
+            dynamic obj = new System.Dynamic.ExpandoObject();
+            foreach (KeyValuePair<string, object> item in keyValuePairs)
+            {
+                ((IDictionary<string, object>)obj).Add(item.Key, item.Value);
+            }
+
+            return obj;
+        }
+
+        #endregion
+
         #region 添加linq查询扩展(仅在Debug下生效)
 
         /// <summary>

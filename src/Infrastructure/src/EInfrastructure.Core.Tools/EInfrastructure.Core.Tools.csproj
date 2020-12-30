@@ -134,9 +134,6 @@
     <Compile Update="Extensions.Float.cs">
       <DependentUpon>Extensions.cs</DependentUpon>
     </Compile>
-    <Compile Update="Extensions.Dynamic.cs">
-      <DependentUpon>Extensions.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
 
 </Project>

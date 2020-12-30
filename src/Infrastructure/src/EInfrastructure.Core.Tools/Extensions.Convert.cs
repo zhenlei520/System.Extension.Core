@@ -382,10 +382,10 @@ namespace EInfrastructure.Core.Tools
 
         #endregion
 
-        #region obj转datetime
+        #region obj转datetime(默认生成的为Utc时间)
 
         /// <summary>
-        /// obj转datetime
+        /// obj转datetime(默认生成的为Utc时间)
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="defaultVal">默认值</param>
@@ -402,7 +402,7 @@ namespace EInfrastructure.Core.Tools
         }
 
         /// <summary>
-        /// obj转Int
+        /// obj转dateTime
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="defaultVal">默认值</param>
@@ -422,6 +422,53 @@ namespace EInfrastructure.Core.Tools
         {
             if (obj != null)
                 if (DateTime.TryParse(obj.ToString(), out var result))
+                    return result;
+            return func.Invoke();
+        }
+
+        #endregion
+
+
+        #region obj转DateTimeOffset
+
+        /// <summary>
+        /// obj转DateTimeOffset
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="defaultVal">默认值</param>
+        /// <returns></returns>
+        public static DateTimeOffset ConvertToDateTimeOffset(this object obj, DateTimeOffset defaultVal)
+        {
+            var result = obj.ConvertToDateTimeOffset(() => defaultVal);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
+            return defaultVal;
+        }
+
+        /// <summary>
+        /// obj转DateTimeOffset
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="defaultVal">默认值</param>
+        /// <returns></returns>
+        public static DateTimeOffset? ConvertToDateTimeOffset(this object obj, DateTimeOffset? defaultVal = null)
+        {
+            return obj.ConvertToDateTimeOffset(() => defaultVal);
+        }
+
+        /// <summary>
+        /// obj转DateTimeOffset
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="func">默认值</param>
+        /// <returns></returns>
+        private static DateTimeOffset? ConvertToDateTimeOffset(this object obj, Func<DateTimeOffset?> func)
+        {
+            if (obj != null)
+                if (DateTimeOffset.TryParse(obj.ToString(), out var result))
                     return result;
             return func.Invoke();
         }
@@ -558,11 +605,14 @@ namespace EInfrastructure.Core.Tools
             {"no", false},
             {"fail", false},
             {"lose", false},
+            {"false", false},
             {"1", true},
             {"是", true},
             {"ok", true},
             {"yes", true},
             {"success", true},
+            {"pass", true},
+            {"true", true},
             {"成功", true}
         };
 
@@ -605,8 +655,8 @@ namespace EInfrastructure.Core.Tools
             if (obj != null)
             {
                 string objStr = obj.ToString();
-                var res = _boolMap.FirstOrDefault(x => x.Key == objStr);
-                if (res.Key == objStr)
+                var res = _boolMap.FirstOrDefault(x => x.Key.Equals(objStr, StringComparison.CurrentCultureIgnoreCase));
+                if (res.Key != null && res.Key.Equals(objStr, StringComparison.CurrentCultureIgnoreCase))
                 {
                     return res.Value;
                 }

@@ -12,49 +12,6 @@ namespace EInfrastructure.Core.Tools
     /// </summary>
     public partial class Extensions
     {
-        #region 字典转对象
-
-        /// <summary>
-        /// 字典类型转化为对象
-        /// </summary>
-        /// <param name="dic">字典</param>
-        /// <returns></returns>
-        public static object ConvertToObject(this IDictionary<string, object> dic)
-        {
-            return dic.ConvertToKeyValuePairs().ConvertToObject();
-        }
-
-        /// <summary>
-        /// 字典类型转化为对象
-        /// </summary>
-        /// <param name="dic">字典</param>
-        /// <returns></returns>
-        public static T ConvertToObject<T>(this IDictionary<string, object> dic) where T : new()
-        {
-            var md = new T();
-            foreach (var d in dic)
-            {
-                try
-                {
-                    var value = d.Value;
-                    var property=md.GetType().GetProperty(d.Key);
-                    if (property != null && property.CanWrite)
-                    {
-                        property.SetValue(md, value);
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    // ignored
-                }
-            }
-
-            return md;
-        }
-
-        #endregion
-
         #region 字典类型转换为KeyValuePair集合
 
         /// <summary>

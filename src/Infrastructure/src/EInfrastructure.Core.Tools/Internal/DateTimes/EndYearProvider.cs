@@ -25,5 +25,16 @@ namespace EInfrastructure.Core.Tools.Internal.DateTimes
         {
             return new DateTime(date.Year, 12, 31); //本年年末
         }
+
+        /// <summary>
+        /// 得到结果
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public DateTimeOffset GetResult(DateTimeOffset date)
+        {
+            var dateTime =  new DateTime(date.Year, 12, 31); //本年年末
+            return new DateTimeOffset(dateTime, date.Offset);
+        }
     }
 }

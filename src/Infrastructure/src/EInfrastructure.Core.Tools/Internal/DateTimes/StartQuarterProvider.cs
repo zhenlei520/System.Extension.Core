@@ -25,5 +25,15 @@ namespace EInfrastructure.Core.Tools.Internal.DateTimes
         {
             return date.AddMonths(0 - (date.Month - 1) % 3).AddDays(1 - date.Day);
         }
+
+        /// <summary>
+        /// 得到结果
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public DateTimeOffset GetResult(DateTimeOffset date)
+        {
+            return date.AddMonths(0 - (date.Month - 1) % 3).AddDays(1 - date.Day);
+        }
     }
 }

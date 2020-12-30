@@ -22,5 +22,12 @@ namespace EInfrastructure.Core.Tools.Internal
         /// <param name="date"></param>
         /// <returns></returns>
         DateTime GetResult(DateTime date);
+
+        /// <summary>
+        /// 得到结果
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        DateTimeOffset GetResult(DateTimeOffset date);
     }
 }
