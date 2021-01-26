@@ -35,4 +35,8 @@
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Property\OsProperty.cs" />
+    <Compile Remove="Property\OsVersionProperty.cs" />
+  </ItemGroup>
 </Project>

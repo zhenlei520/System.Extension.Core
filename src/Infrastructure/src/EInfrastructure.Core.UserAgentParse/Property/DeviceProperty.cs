@@ -153,17 +153,17 @@ namespace EInfrastructure.Core.UserAgentParse.Property
         /// <summary>
         /// 正则表达式和除什么之外模糊匹配
         /// </summary>
-        internal static DeviceMatchType RegexAndExceptVague = new DeviceMatchType(5, "RegexAndExceptVague");
+        internal static DeviceMatchType RegexAndExceptVague = new DeviceMatchType(6, "RegexAndExceptVague");
 
         /// <summary>
         /// 模糊匹配和正则表达式
         /// </summary>
-        internal static DeviceMatchType VagueAndRegex = new DeviceMatchType(5, "模糊匹配和正则表达式");
+        internal static DeviceMatchType VagueAndRegex = new DeviceMatchType(7, "模糊匹配和正则表达式");
 
         /// <summary>
         /// 模糊匹配和正则表达式以及排除模糊匹配和排除正则表达式
         /// </summary>
-        internal static DeviceMatchType All = new DeviceMatchType(6, "All");
+        internal static DeviceMatchType All = new DeviceMatchType(8, "All");
 
         /// <summary>
         ///

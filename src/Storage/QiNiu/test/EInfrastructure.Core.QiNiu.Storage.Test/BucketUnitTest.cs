@@ -32,7 +32,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         [Fact]
         public void GetBucketList()
         {
-            var bucketList = _bucketProvider.GetBucketList(new GetBucketParam("te","",1));
+            var bucketList = _bucketProvider.GetBucketList(new GetBucketParam("","",1));
         }
 
         #endregion
@@ -108,7 +108,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Test
         #region 设置空间权限
 
         [Theory]
-        [InlineData("test", 0)]
+        [InlineData("test", 1)]
         public void SetPermiss(string bucket, int permiss)
         {
             var ret = _bucketProvider.SetPermiss(new SetPermissParam(Permiss.FromValue<Permiss>(permiss),

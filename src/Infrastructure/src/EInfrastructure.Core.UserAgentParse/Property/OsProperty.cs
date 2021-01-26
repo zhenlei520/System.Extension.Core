@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Text.RegularExpressions;
-using EInfrastructure.Core.Configuration.Enumerations.SeedWork;
 
 namespace EInfrastructure.Core.UserAgentParse.Property
 {
@@ -16,7 +15,7 @@ namespace EInfrastructure.Core.UserAgentParse.Property
         /// </summary>
         /// <param name="osState">状态</param>
         /// <param name="value">值</param>
-        protected OsProperty(OsMatchType osState, string value)
+        protected OsProperty(DeviceMatchType osState, string value)
         {
             this.Keys = null;
             this.ExceptRegexs = null;
@@ -31,7 +30,7 @@ namespace EInfrastructure.Core.UserAgentParse.Property
         /// </summary>
         /// <param name="keys">Key名称，&&</param>
         /// <param name="value">值</param>
-        public OsProperty(string[] keys, string value) : this(OsMatchType.Vague, value)
+        public OsProperty(string[] keys, string value) : this(DeviceMatchType.Vague, value)
         {
             this.Keys = keys;
         }
@@ -43,7 +42,7 @@ namespace EInfrastructure.Core.UserAgentParse.Property
         /// <param name="exceptKeys">除哪些key什么之外</param>
         /// <param name="value">值</param>
         public OsProperty(string[] keys, string[] exceptKeys, string value) : this(
-            OsMatchType.VagueAndExceptVague,
+            DeviceMatchType.VagueAndExceptVague,
             value)
         {
             this.Keys = keys;
@@ -55,7 +54,7 @@ namespace EInfrastructure.Core.UserAgentParse.Property
         /// </summary>
         /// <param name="regexs">Key名称，&&</param>
         /// <param name="value">值</param>
-        public OsProperty(Regex[] regexs, string value) : this(OsMatchType.Regex, value)
+        public OsProperty(Regex[] regexs, string value) : this(DeviceMatchType.Regex, value)
         {
             this.Regexs = regexs;
         }
@@ -67,7 +66,7 @@ namespace EInfrastructure.Core.UserAgentParse.Property
         /// <param name="exceptRegexs"></param>
         /// <param name="value">值</param>
         public OsProperty(Regex[] regexs, Regex[] exceptRegexs, string value) : this(
-            OsMatchType.RegexAndExceptRegex,
+            DeviceMatchType.RegexAndExceptRegex,
             value)
         {
             this.Regexs = regexs;
@@ -80,7 +79,7 @@ namespace EInfrastructure.Core.UserAgentParse.Property
         /// <param name="keys">Key名称，&&</param>
         /// <param name="regexs">Key名称，&&</param>
         /// <param name="value">值</param>
-        public OsProperty(string[] keys, Regex[] regexs, string value) : this(OsMatchType.VagueAndRegex,
+        public OsProperty(string[] keys, Regex[] regexs, string value) : this(DeviceMatchType.VagueAndRegex,
             value)
         {
             this.Regexs = regexs;
@@ -96,7 +95,7 @@ namespace EInfrastructure.Core.UserAgentParse.Property
         /// <param name="exceptRegexs"></param>
         /// <param name="value">值</param>
         public OsProperty(string[] keys, string[] exceptKeys, Regex[] regexs, Regex[] exceptRegexs, string value) :
-            this(OsMatchType.All,
+            this(DeviceMatchType.All,
                 value)
         {
             this.Keys = keys;
@@ -115,7 +114,7 @@ namespace EInfrastructure.Core.UserAgentParse.Property
         /// <param name="value">值</param>
         /// <param name="osState">状态</param>
         public OsProperty(string[] keys, string[] exceptKeys, Regex[] regexs, Regex[] exceptRegexs, string value,
-            OsMatchType osState) : this(osState,
+            DeviceMatchType osState) : this(osState,
             value)
         {
             this.Keys = keys;
@@ -151,7 +150,7 @@ namespace EInfrastructure.Core.UserAgentParse.Property
         /// <summary>
         /// 状态
         /// </summary>
-        public OsMatchType OsState { get; }
+        public DeviceMatchType OsState { get; }
 
         /// <summary>
         /// 值
@@ -162,60 +161,5 @@ namespace EInfrastructure.Core.UserAgentParse.Property
         /// os版本规则
         /// </summary>
         public OsVersionProperty OsVersionRules { get; set; }
-    }
-
-    /// <summary>
-    /// 状态
-    /// </summary>
-    internal class OsMatchType : Enumeration
-    {
-        /// <summary>
-        /// 模糊匹配
-        /// </summary>
-        public static OsMatchType Vague = new OsMatchType(1, "模糊匹配");
-
-        /// <summary>
-        /// 正则表达式
-        /// </summary>
-        public static OsMatchType Regex = new OsMatchType(2, "正则表达式");
-
-        /// <summary>
-        /// 模糊匹配和除什么之外的模糊匹配
-        /// </summary>
-        public static OsMatchType VagueAndExceptVague = new OsMatchType(3, "VagueAndExceptVague");
-
-        /// <summary>
-        /// 正则表达式和除什么之外正则表达式匹配
-        /// </summary>
-        public static OsMatchType RegexAndExceptRegex = new OsMatchType(4, "RegexAndExceptRegex");
-
-        /// <summary>
-        /// 模糊匹配和除什么之外的正则表达式匹配
-        /// </summary>
-        public static OsMatchType VagueAndExceptRegex = new OsMatchType(5, "VagueAndExceptRegex");
-
-        /// <summary>
-        /// 正则表达式和除什么之外模糊匹配
-        /// </summary>
-        public static OsMatchType RegexAndExceptVague = new OsMatchType(5, "RegexAndExceptVague");
-
-        /// <summary>
-        /// 模糊匹配和正则表达式
-        /// </summary>
-        public static OsMatchType VagueAndRegex = new OsMatchType(5, "模糊匹配和正则表达式");
-
-        /// <summary>
-        /// 模糊匹配和正则表达式以及排除模糊匹配和排除正则表达式
-        /// </summary>
-        public static OsMatchType All = new OsMatchType(6, "All");
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        public OsMatchType(int id, string name) : base(id, name)
-        {
-        }
     }
 }
