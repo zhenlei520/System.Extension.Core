@@ -17,6 +17,7 @@ namespace EInfrastructure.Core.QiNiu.Storage.Validator.Storage
         public GetVisitUrlParamValidator()
         {
             RuleFor(x => x.Key).Must(x => !string.IsNullOrEmpty(x)).WithMessage("请输入文件key");
+            RuleFor(x => x.Expire).GreaterThan(0).WithMessage("过期时间必须大于0");
         }
     }
 }

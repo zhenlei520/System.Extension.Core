@@ -22,6 +22,7 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
             Key = key;
             Permiss = permiss;
             PersistentOps = persistentOps ?? new BasePersistentOps();
+            Expire = 3600;
         }
 
         /// <summary>
@@ -56,7 +57,8 @@ namespace EInfrastructure.Core.Configuration.Ioc.Plugs.Storage.Params.Storage
         public BasePersistentOps PersistentOps { get; }
 
         /// <summary>
-        /// 过期时间 默认为妙（s）
+        /// 过期时间 单位：秒（s）
+        /// 默认3600s
         /// </summary>
         public int Expire { get; set; }
     }
