@@ -1015,26 +1015,9 @@ namespace EInfrastructure.Core.Tools
         /// <param name="symbol">特殊符号，默认为*</param>
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
-        public static string GetContentByEncryption(this char? symbol, int number = 6,
-            int? errCode = null)
+        public static string GetContentByEncryption(this char? symbol, int number = 6,int? errCode = null)
         {
-            if (symbol == null)
-            {
-                symbol = '*';
-            }
-
-            string result = ""; //结果
-            if (number < 0)
-            {
-                throw new BusinessException("number必须为正整数", HttpStatus.Err.Id);
-            }
-
-            for (int i = 0; i < number; i++)
-            {
-                result += symbol;
-            }
-
-            return result;
+             return GetContentByEncryption(symbol, number, errCode);
         }
 
         /// <summary>
@@ -1044,26 +1027,24 @@ namespace EInfrastructure.Core.Tools
         /// <param name="number">显示N次*,-1默认显示6位</param>
         /// <param name="errCode">错误码</param>
         /// <returns></returns>
-        public static string GetContentByEncryption(this string symbol, int number = 6,
-            int? errCode = null)
+        public static string GetContentByEncryption(this string symbol, int number = 6,int? errCode = null)
         {
             if (string.IsNullOrEmpty(symbol))
             {
                 symbol = "*";
             }
 
-            string result = ""; //结果
             if (number < 0)
             {
                 throw new BusinessException("number必须为正整数", HttpStatus.Err.Id);
             }
-
+            StringBuilder result = new StringBuilder();
             for (int i = 0; i < number; i++)
             {
-                result += symbol;
+                result.Append(symbol);
             }
 
-            return result;
+            return result.ToString();
         }
 
         #endregion
@@ -1079,16 +1060,18 @@ namespace EInfrastructure.Core.Tools
         /// <returns>Unicode编码的的字符串</returns>
         public static string ConvertStringToUnicode(this string str)
         {
-            if (string.IsNullOrEmpty(str))
+             if (string.IsNullOrEmpty(str))
             {
                 return str;
             }
 
             byte[] bts = Encoding.Unicode.GetBytes(str);
-            string r = "";
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < bts.Length; i += 2)
-                r += "\\u" + bts[i + 1].ToString("x").PadLeft(2, '0') + bts[i].ToString("x").PadLeft(2, '0');
-            return r;
+            {
+                sb.Append($"\\u{bts[i + 1].ToString("x").PadLeft(2, '0')}{bts[i].ToString("x").PadLeft(2, '0')}");
+            }
+            return sb.ToString();
         }
 
         #endregion
@@ -1107,18 +1090,18 @@ namespace EInfrastructure.Core.Tools
                 return str;
             }
 
-            string r = "";
             MatchCollection mc = Regex.Matches(str, @"\\u([\w]{2})([\w]{2})",
                 RegexOptions.Compiled | RegexOptions.IgnoreCase);
             byte[] bts = new byte[2];
+            StringBuilder stringBuilder = new StringBuilder();
             foreach (Match m in mc)
             {
                 bts[0] = (byte) int.Parse(m.Groups[2].Value, NumberStyles.HexNumber);
                 bts[1] = (byte) int.Parse(m.Groups[1].Value, NumberStyles.HexNumber);
-                r += Encoding.Unicode.GetString(bts);
+                stringBuilder.Append(Encoding.Unicode.GetString(bts));
             }
 
-            return r;
+            return stringBuilder.ToString();
         }
 
         #endregion
