@@ -3,18 +3,19 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\wangz\.nuget\packages\qiniu\7.3.1.1\lib\Net40\Qiniu.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=25a419ab_002D5ae6_002D4fa5_002Db4ea_002D0318fb36e641/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetUserAgent" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.UserAgentCommon.GetUserAgent&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.UserAgentCommon.Test&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.GetBucketList&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.SetPermiss&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::449887C8-6A8A-4B85-AD48-E9C588A1E01E::.NETCoreApp,Version=v3.0::EInfrastructure.Core.QiNiu.Storage.Test.BucketUnitTest.ClearTag&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5556eef4_002D4dc4_002D4f52_002D9201_002Ded54cc03c988/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAnimalEnumFromBirthday" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.AnimalUnitTest.GetAnimalEnumFromBirthday&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::1D961BB4-2FD7-4572-8D35-F66FC90CE311::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Redis.Test.RedisConfigValidatorUnitTest.StringGet&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d4ca57d0_002D7bce_002D4ac6_002D8689_002D43e7247e8455/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetFullUrl" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::E987F188-7D71-4E9C-82A5-FE2AD0556F64::.NETCoreApp,Version=v3.0::EInfrastructure.Core.Test.UrlCommonUnitTest.GetFullUrl&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
+	
+	
+	
 	
 	
 	

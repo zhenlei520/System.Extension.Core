@@ -36,6 +36,7 @@ namespace EInfrastructure.Core.Test
         [Fact]
         public void GetRandomTime()
         {
+            var str=TimeCommon.GetMonthLastDate(2020, 2);
             DateTime dateTime = TimeCommon.GetRandomTime(DateTime.Now, DateTime.Now.AddDays(100));
             var result = dateTime.FormatDate(FormatDateType.One);
         }
