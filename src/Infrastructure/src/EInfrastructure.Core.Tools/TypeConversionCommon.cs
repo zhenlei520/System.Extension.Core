@@ -1036,7 +1036,7 @@ namespace EInfrastructure.Core.Tools
 
             if (number < 0)
             {
-                throw new BusinessException("number必须为正整数", 201);
+                throw new BusinessException("number必须为正整数", HttpStatus.Err.Id);
             }
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < number; i++)
