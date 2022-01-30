@@ -7,7 +7,7 @@ on:
 jobs:
   packeg-build:
     name: packeg build and push
-runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
     
     - name: Get version
