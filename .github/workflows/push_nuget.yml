@@ -1,13 +1,14 @@
-name: Package Push Nuget
+name: publish to nuget
+
 on:
   push:
     tags:
     - '*' 
 
 jobs:
-  packeg-build:
-    name: packeg build and push
-runs-on: ubuntu-latest
+  nupkgJob:
+    name: System.Extension.Core
+    runs-on: ubuntu-latest
     steps:
     
     - name: Get version
@@ -39,4 +40,3 @@ runs-on: ubuntu-latest
         dotnet nuget push *.snupkg -k ${{ secrets.GITHUBSECRET }}  -s https://nuget.pkg.github.com/wolfoftotem/index.json
         dotnet nuget push *.nupkg -k ${{ secrets.NUGET }} -s https://api.nuget.org/v3/index.json
         dotnet nuget push *.snupkg -k ${{ secrets.NUGET }} -s https://api.nuget.org/v3/index.json
-        
