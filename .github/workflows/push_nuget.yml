@@ -11,13 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-    - name: Get version
-      id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-
-    - name: version
-      run: echo ${{ steps.get_version.outputs.VERSION }}
-      
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
@@ -31,7 +24,7 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Pack
-      run: dotnet pack --configuration Release -p:IncludeSymbols=true /p:Version=${{ steps.get_version.outputs.VERSION }} --output nupkgs
+      run: dotnet pack --configuration Release -p:IncludeSymbols=true --output nupkgs
 
     - name: Push to Nuget nupkg
       run: |
