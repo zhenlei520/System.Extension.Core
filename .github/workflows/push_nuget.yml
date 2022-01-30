@@ -2,13 +2,12 @@ name: publish to nuget
 
 on:
   push:
-    tags:
-    - '*' 
+    branches: [ release/features-2.0 ]
 
 jobs:
   nupkgJob:
     name: System.Extension.Core
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     
     - uses: actions/checkout@v2
