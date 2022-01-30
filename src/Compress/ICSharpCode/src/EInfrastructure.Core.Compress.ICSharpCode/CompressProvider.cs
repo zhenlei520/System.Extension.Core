@@ -37,22 +37,22 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <param name="zipDirectory">压缩包保存目录,默认与源文件在同一目录</param>
         /// <param name="zipName">压缩文件名称，默认与源文件名称一致</param>
         /// <param name="overWrite">是否覆盖</param>
-        /// <param name="isEncrypt">是否加密</param>
         /// <param name="password">密码</param>
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
         /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
-        public string CompressSingle(string sourceFilePath, string zipDirectory = "", string zipName = "",
+        public string CompressSingle(
+            string sourceFilePath,
+            string zipDirectory = "",
+            string zipName = "",
             bool overWrite = true,
-            bool isEncrypt = false,
             string password = "", int compressionLevel = 5, int blockSize = 2048,
             CompressType compressType = null)
         {
             return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressSingle(sourceFilePath,
                 zipDirectory, zipName,
-                overWrite,
-                isEncrypt, password, compressionLevel, blockSize);
+                overWrite, password, compressionLevel, blockSize);
         }
 
         #endregion
@@ -63,24 +63,29 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// 压缩多个文件
         /// </summary>
         /// <param name="sourceFileList">多文件指定路径</param>
-        /// <param name="zipDirectory">压缩包保存目录,默认与源文件在同一目录</param>
+        /// <param name="zipDirectory">压缩包保存目录</param>
         /// <param name="zipName">压缩文件名称(不能为空)</param>
         /// <param name="overWrite">是否覆盖</param>
-        /// <param name="isEncrypt">是否加密</param>
         /// <param name="password">密码</param>
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="zipMaxFile">压缩包内最多文件数量(-1不限)</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
         /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
-        public string[] CompressMulti(string[] sourceFileList, string zipDirectory, string zipName,
-            bool overWrite = true, bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048,
+        public string[] CompressMulti(
+            string[] sourceFileList,
+            string zipDirectory,
+            string zipName,
+            bool overWrite = true,
+            string password = "",
+            int compressionLevel = 5,
+            int zipMaxFile = -1,
+            int blockSize = 2048,
             CompressType compressType = null)
         {
-            return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressMulti(sourceFileList,
-                zipDirectory, zipName,
-                overWrite, isEncrypt, password, compressionLevel, zipMaxFile, blockSize);
+            return CompressFactory.GetProvider(compressType ?? CompressType.Zip)
+                .CompressMulti(sourceFileList, zipDirectory, zipName, overWrite, password, compressionLevel, zipMaxFile,
+                    blockSize);
         }
 
         #endregion
@@ -96,22 +101,28 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <param name="searchPattern">要与 path 中的文件名匹配的搜索字符串。此参数可以包含有效文本路径和通配符（* 和 ?）的组合（请参见“备注”），但不支持正则表达式。</param>
         /// <param name="searchOption">默认当前文件夹下 TopDirectoryOnly，若查询包含所有子目录为AllDirectories</param>
         /// <param name="overWrite">是否覆盖</param>
-        /// <param name="isEncrypt">是否加密</param>
         /// <param name="password">密码</param>
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="zipMaxFile">压缩包内最多文件数量(-1不限)</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
         /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
-        public string[] CompressCatalogAndFiltrate(string sourceFilePath, string zipDirectory, string zipName,
+        public string[] CompressCatalogAndFiltrate(
+            string sourceFilePath,
+            string zipDirectory,
+            string zipName,
             string searchPattern = "*.*",
-            SearchOption searchOption = SearchOption.AllDirectories, bool overWrite = true, bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, int zipMaxFile = -1, int blockSize = 2048,
+            SearchOption searchOption = SearchOption.AllDirectories,
+            bool overWrite = true,
+            string password = "",
+            int compressionLevel = 5,
+            int zipMaxFile = -1,
+            int blockSize = 2048,
             CompressType compressType = null)
         {
             return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressCatalogAndFiltrate(
                 sourceFilePath, zipDirectory,
-                zipName, searchPattern, searchOption, overWrite, isEncrypt, password, compressionLevel, zipMaxFile,
+                zipName, searchPattern, searchOption, overWrite, password, compressionLevel, zipMaxFile,
                 blockSize);
         }
 
@@ -127,18 +138,23 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <param name="zipName">压缩文件名称</param>
         /// <param name="isRecursive">是否递归（默认递归）</param>
         /// <param name="overWrite">是否覆盖</param>
-        /// <param name="isEncrypt">是否加密</param>
         /// <param name="password">密码</param>
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="compressType">压缩方式（默认zip）</param>
         /// <returns></returns>
-        public string CompressCatalog(string sourceFilePath, string zipDirectory, string zipName,
-            bool isRecursive = true, bool overWrite = true, bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, CompressType compressType = null)
+        public string CompressCatalog(
+            string sourceFilePath,
+            string zipDirectory,
+            string zipName,
+            bool isRecursive = true,
+            bool overWrite = true,
+            string password = "",
+            int compressionLevel = 5,
+            CompressType compressType = null)
         {
             return CompressFactory.GetProvider(compressType ?? CompressType.Zip).CompressCatalog(sourceFilePath,
                 zipDirectory, zipName,
-                isRecursive, overWrite, isEncrypt, password, compressionLevel);
+                isRecursive, overWrite, password, compressionLevel);
         }
 
         #endregion
@@ -153,7 +169,11 @@ namespace EInfrastructure.Core.Compress.ICSharpCode
         /// <param name="password">密码</param>
         /// <param name="overWrite">是否覆盖</param>
         /// <param name="compressType">压缩方式（默认zip）</param>
-        public void DeCompress(string zipFile, string targetDirectory, string password = "", bool overWrite = true,
+        public void DeCompress(
+            string zipFile,
+            string targetDirectory,
+            string password = "",
+            bool overWrite = true,
             CompressType compressType = null)
         {
             CompressFactory.GetProvider(compressType ?? CompressType.Zip)

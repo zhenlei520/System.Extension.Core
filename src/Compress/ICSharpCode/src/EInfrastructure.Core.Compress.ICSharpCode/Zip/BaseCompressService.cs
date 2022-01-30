@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using EInfrastructure.Core.Configuration.Exception;
 using EInfrastructure.Core.Tools;
-using ICSharpCode.SharpZipLib.Checksum;
 using ICSharpCode.SharpZipLib.Zip;
 
 namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
@@ -86,8 +85,6 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
                 strDirectory += Path.DirectorySeparatorChar;
             }
 
-            Crc32 crc = new Crc32();
-
             string[] filenames = Directory.GetFileSystemEntries(strDirectory);
             var index = 0;
             foreach (string file in filenames) // 遍历所有的文件和目录
@@ -106,7 +103,7 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
                 }
                 else // 否则直接压缩文件
                 {
-                    Compress(crc, file, stream);
+                    Compress(file, stream);
                 }
 
                 index++;
@@ -125,16 +122,19 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
         /// <param name="overWrite">是否覆盖</param>
         /// <param name="fileZipPath">压缩包地址</param>
         /// <param name="sourceFile">源文件地址</param>
-        /// <param name="isEncrypt">是否加密</param>
         /// <param name="password">密码</param>
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
         /// <exception cref="Exception"></exception>
-        protected void CreateZipFile(bool overWrite, string fileZipPath, string sourceFile,
-            bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, int blockSize = 2048)
+        protected void CreateZipFile(
+            bool overWrite,
+            string fileZipPath,
+            string sourceFile,
+            string password = "",
+            int compressionLevel = 5,
+            int blockSize = 2048)
         {
-            CreateZipFile(overWrite, fileZipPath, new[] {sourceFile}, isEncrypt, password, compressionLevel, blockSize);
+            CreateZipFile(overWrite, fileZipPath, new[] {sourceFile}, password, compressionLevel, blockSize);
         }
 
         /// <summary>
@@ -143,19 +143,22 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
         /// <param name="overWrite">是否覆盖</param>
         /// <param name="fileZipPath">压缩包地址</param>
         /// <param name="sourceFileList">源文件地址列表</param>
-        /// <param name="isEncrypt">是否加密</param>
         /// <param name="password">密码</param>
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
         /// <exception cref="Exception"></exception>
-        protected void CreateZipFile(bool overWrite, string fileZipPath, string[] sourceFileList,
-            bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, int blockSize = 2048)
+        protected void CreateZipFile(
+            bool overWrite,
+            string fileZipPath,
+            string[] sourceFileList,
+            string password = "",
+            int compressionLevel = 5,
+            int blockSize = 2048)
         {
             CheckFile(fileZipPath, overWrite,
                 () =>
                 {
-                    CreateZipFile(fileZipPath, sourceFileList, isEncrypt, password, compressionLevel, blockSize);
+                    CreateZipFile(fileZipPath, sourceFileList, password, compressionLevel, blockSize);
                 });
         }
 
@@ -240,61 +243,31 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
         /// </summary>
         /// <param name="fileZipPath">压缩包地址</param>
         /// <param name="sourceFileList">源文件地址列表</param>
-        /// <param name="isEncrypt">是否加密</param>
         /// <param name="password">密码</param>
         /// <param name="compressionLevel">压缩等级（0 无 - 9 最高，默认 5）</param>
         /// <param name="blockSize">缓存大小（每次写入文件大小，默认 2048）</param>
         /// <exception cref="Exception"></exception>
-        private void CreateZipFile(string fileZipPath, string[] sourceFileList, bool isEncrypt = false,
-            string password = "", int compressionLevel = 5, int blockSize = 2048)
+        private void CreateZipFile(
+            string fileZipPath,
+            string[] sourceFileList,
+            string password = "",
+            int compressionLevel = 5,
+            int blockSize = 2048)
         {
             using (FileStream zipFile = File.Create(fileZipPath))
             {
                 Encoding encoding = Encoding.UTF8;
-                ZipConstants.DefaultCodePage = encoding.CodePage;
+                ZipStrings.CodePage = encoding.CodePage;
                 using (ZipOutputStream zipStream = new ZipOutputStream(zipFile))
                 {
-                    sourceFileList.ToList().ForEach(filePath =>
+                    zipStream.SetLevel(compressionLevel); //设置压缩级别
+                    if (!password.IsNullOrEmpty())
                     {
-                        using (var fileStream = new FileStream(filePath,
-                            FileMode.Open, FileAccess.Read))
-                        {
-                            string fileName = new FileInfo(filePath).Name;
+                        //压缩文件加密
+                        zipStream.Password = password;
+                    }
 
-                            ZipEntry zipEntry = new ZipEntry(fileName);
-
-                            if (isEncrypt)
-                            {
-                                //压缩文件加密
-                                zipStream.Password = password;
-                            }
-
-                            zipStream.PutNextEntry(zipEntry);
-
-                            //设置压缩级别
-                            zipStream.SetLevel(compressionLevel);
-
-                            //缓存大小
-                            byte[] buffer = new byte[blockSize];
-
-                            int sizeRead = 0;
-
-                            try
-                            {
-                                do
-                                {
-                                    sizeRead = fileStream.Read(buffer, 0, buffer.Length);
-                                    zipStream.Write(buffer, 0, sizeRead);
-                                } while (sizeRead > 0);
-                            }
-                            catch (Exception ex)
-                            {
-                                throw ex;
-                            }
-
-                            fileStream.Close();
-                        }
-                    });
+                    sourceFileList.ToList().ForEach(filePath => { Compress(filePath, zipStream, blockSize); });
 
                     zipStream.Finish();
                     zipStream.Close();
@@ -306,34 +279,35 @@ namespace EInfrastructure.Core.Compress.ICSharpCode.Zip
 
         #endregion
 
-        #region 压缩文件(大文件)
+        #region 压缩文件
 
         /// <summary>
-        /// 压缩文件(大文件)
+        /// 压缩文件
         /// </summary>
-        /// <param name="crc"></param>
         /// <param name="sourceFile">文件地址</param>
         /// <param name="stream">文件流</param>
-        private void Compress(Crc32 crc, string sourceFile, ZipOutputStream stream)
+        /// <param name="blockSize">缓存大小（每次写入文件大小，默认 4048）</param>
+        private void Compress(string sourceFile, ZipOutputStream stream, int blockSize = 4048)
         {
             //打开压缩文件
             using (FileStream fs = File.OpenRead(sourceFile))
             {
-                byte[] buffer = new byte[fs.Length];
-                fs.Read(buffer, 0, buffer.Length);
-
-                string fileName = new FileInfo(sourceFile).Name;
-                ZipEntry entry = new ZipEntry(fileName) {DateTime = DateTime.Now, Size = fs.Length};
-
-                fs.Close();
-
-                crc.Reset();
-                crc.Update(buffer);
-
-                entry.Crc = crc.Value;
+                byte[] buffer = new byte[blockSize];
+                string fileName = Path.GetFileName(sourceFile);
+                ZipEntry entry = new ZipEntry(fileName)
+                {
+                    DateTime = DateTime.Now
+                };
                 stream.PutNextEntry(entry);
 
-                stream.Write(buffer, 0, buffer.Length);
+                int sourceBytes;
+                do
+                {
+                    sourceBytes = fs.Read(buffer, 0, buffer.Length);
+                    stream.Write(buffer, 0, sourceBytes);
+                } while (sourceBytes > 0);
+
+                fs.Close();
             }
         }
 
