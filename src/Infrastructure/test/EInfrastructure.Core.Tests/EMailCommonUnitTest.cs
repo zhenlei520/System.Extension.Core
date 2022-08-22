@@ -12,7 +12,7 @@ namespace EInfrastructure.Core.Tests
         [InlineData("wangzhenlei520@gmail.com", "github挺好使的", "不错，挺好用的")]
         public void SendEmail(string toEmail, string title, string body)
         {
-            EMailCommon.SendEmail(toEmail, title, body, "", "", "", "成功");
+            EMailCommon.SendEmail(toEmail, title, body, "test@163.com", "", "", "成功");
         }
     }
 }

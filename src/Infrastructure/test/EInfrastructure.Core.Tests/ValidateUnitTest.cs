@@ -1,5 +1,6 @@
 // Copyright (c) zhenlei520 All rights reserved.
 
+using System;
 using EInfrastructure.Core.Tests.Base;
 using EInfrastructure.Core.Tools;
 using EInfrastructure.Core.Tools.Enumerations;
@@ -45,14 +46,12 @@ namespace EInfrastructure.Core.Tests
 
         [Theory]
         [InlineData("123asd", false)]
-        [InlineData("+123", true)]
-        [InlineData("123", true)]
+        [InlineData("+123", false)]
+        [InlineData("123", false)]
         [InlineData("++123", false)]
         [InlineData("+-123", false)]
         [InlineData("-123", true)]
         [InlineData("--123", false)]
-        [InlineData("asd12", false)]
-        [InlineData("asd", false)]
         public void IsNumber(string param, bool result)
         {
             Check.True(param.IsNumber(NumericType.Minus) == result, "方法异常");

@@ -15,6 +15,7 @@ namespace EInfrastructure.Core.Tests
     /// </summary>
     public class EnumUnitTest
     {
+
         #region Check is Exist
 
         /// <summary>
@@ -78,23 +79,22 @@ namespace EInfrastructure.Core.Tests
 
         #endregion
 
-
         /// <summary>
         /// GetList
         /// </summary>
         [Fact]
         public void ToEnumAndAttributes()
         {
-            var res = EnumCommon.ToEnumAndAttributes<ENameAttribute>(typeof(GenderEnum))
+            var res = typeof(GenderEnum).ToEnumAndAttributes<ENameAttribute>()
                 .Where(x => x.Value.Name.Contains("男"))
                 .Select(x => x.Key).FirstOrDefault();
-            Check.True(res != null && (GenderEnum) res == GenderEnum.Boy, "参数错误");
+            Check.True(res != null && (GenderEnum)res == GenderEnum.Boy, "参数错误");
 
             var str2 = GenderEnum.Boy.GetDescription();
             var str = CustomAttributeCommon<DescriptionAttribute>.GetCustomAttribute(typeof(GenderEnum),
                 GenderEnum.Boy.ToString());
             var result = typeof(GenderEnum).ToEnumAndAttributes<ENameAttribute>();
-            var result2 = typeof(User).ToEnumAndAttributes<ENameAttribute>();
+            Assert.Equal(2, result.Count);
         }
 
         /// <summary>
@@ -103,7 +103,6 @@ namespace EInfrastructure.Core.Tests
         [Theory]
         [InlineData("Boy")]
         [InlineData("1")]
-        [InlineData("3")]
         public void Parse(string member)
         {
             var gender = EnumCommon.Parse<GenderEnum>(member);
@@ -151,8 +150,10 @@ namespace EInfrastructure.Core.Tests
 
     public class User
     {
-        [EName("姓名")] public string Name { get; set; }
+        [EName("姓名")]
+        public string Name { get; set; }
 
-        [EName("性别")] public bool Gender { get; set; }
+        [EName("性别")]
+        public bool Gender { get; set; }
     }
 }

@@ -14,23 +14,22 @@ namespace EInfrastructure.Core.Tests
     public class TimeCommonUnitTest : BaseUnitTest
     {
         [Theory]
-        [InlineData("2019-07-29 14:00", '-', "2019-07-29")]
-        [InlineData("", '/', null)]
+        [InlineData("2019-07-29 14:00", '/', "2019/07/29")]
+        [InlineData("", '/', "0001/01/01")]
         public void GetFormatDate(string time, char separator, string result)
         {
-            DateTime dateTime = time.ConvertToDateTime(default(DateTime));
-            Check.True(TimeCommon.GetFormatDate(dateTime, separator) == result, "检查错误");
+            DateTime dateTime = time.ConvertToDateTime(default);
+            Check.True(dateTime.GetFormatDate(separator) == result, "检查错误");
         }
 
         [Theory]
         [InlineData(70, 2, true)]
         [InlineData(70, 1, false)]
-        [InlineData(70, 2, false)]
-        public void SecondToMinute(int second, int min, bool isCelling)
+        public void SecondToMinute(int second, int result, bool isCelling)
         {
             Check.True(
                 TimeCommon.SecondToMinute(second, isCelling ? RectificationType.Celling : RectificationType.Floor) ==
-                min, "转换有误");
+                result, "转换有误");
         }
 
         [Fact]
@@ -44,8 +43,11 @@ namespace EInfrastructure.Core.Tests
         [Theory]
         [InlineData(2019, 1, "2019-01-01", "2019-01-31")]
         [InlineData(2019, 2, "2019-02-01", "2019-02-28")]
-        [InlineData(2019, 12, "2019-12-01", "2019-12-28")]
-        [InlineData(2019, -14, "2018-02-01", "2018-02-29")]
+        [InlineData(2019, 12, "2019-12-01", "2019-12-31")]
+        [InlineData(2019, 14, "2020-02-01", "2020-02-29")]
+        [InlineData(2019, 36, "2022-12-01", "2022-12-31")]
+        [InlineData(2019, -24, "2017-12-01", "2017-12-31")]
+        [InlineData(2019, -14, "2018-02-01", "2018-02-28")]
         [InlineData(2000, 2, "2000-02-01", "2000-02-29")]
         public void ReturnDateFormat(int year, int month, string firstDay, string lastDay)
         {
@@ -95,7 +97,7 @@ namespace EInfrastructure.Core.Tests
         }
 
         [Theory]
-        [InlineData("2019-01-01", "元宵")]
+        [InlineData("2019-01-01", "元旦")]
         [InlineData("2019-10-01", "国庆节")]
         public void GetHoliday(string dateTime, string dateTime2)
         {
@@ -149,9 +151,9 @@ namespace EInfrastructure.Core.Tests
         [InlineData("2019-07-29", 1)]
         public void GetDayName(string date, int dateStr)
         {
-            var weekName = Week.GetAll<Week>().Where(x => x.Id == dateStr).Select(x => x.Name);
+            var weekName = Week.FromValue<Week>(dateStr).Name;
             Week time = DateTime.Parse(date).GetDayName();
-            Check.True(time == weekName, "方法异常");
+            Check.True(time.Name == weekName, "方法异常");
         }
 
         [Theory]

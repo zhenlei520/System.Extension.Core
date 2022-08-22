@@ -16,7 +16,7 @@ namespace EInfrastructure.Core.Tests
         private readonly IRandomBuilder _randomBuilder;
         public RandomUnitTest() : base()
         {
-            _randomBuilder = provider.GetService<IRandomBuilder>();
+            _randomBuilder = Provider.GetService<IRandomBuilder>();
         }
 
         /// <summary>

@@ -34,8 +34,8 @@ namespace EInfrastructure.Core.Tests
                     Name = "小明花"
                 }
             };
-            var persons = personList.Add(personList2);
-            persons = personList.Add(personList2, true);
+            var persons = personList.Add(personList2, true);
+            Assert.Equal(2, persons.Count);
         }
 
         [Fact]
@@ -139,7 +139,13 @@ namespace EInfrastructure.Core.Tests
             var pageData = personList.ListPager(1, 1, true);
 
             personList.ListPager(
-                newpersonList => { newpersonList.ForEach(person => { Console.WriteLine("一起上Github看源码吧"); }); }, 1, 1);
+                newpersonList =>
+                {
+                    newpersonList.ForEach(person =>
+                    {
+                        Console.WriteLine("一起上Github看源码吧");
+                    });
+                }, 1, 1);
         }
 
         [Fact]
@@ -148,7 +154,7 @@ namespace EInfrastructure.Core.Tests
             Person person = new Person()
             {
                 Name = "小明",
-                Tags = new List<string> {"帅哥"}
+                Tags = new List<string> { "帅哥" }
             };
             person.Tags = person.Tags.AddNew("聪明");
             Console.WriteLine(person.TagJson);
@@ -160,7 +166,7 @@ namespace EInfrastructure.Core.Tests
             Person person = new Person
             {
                 Name = "小明",
-                Tags = new List<string> {"帅哥"}
+                Tags = new List<string> { "帅哥" }
             };
             person.Tags = person.Tags.AddNewMult(new List<string>
             {
@@ -178,11 +184,11 @@ namespace EInfrastructure.Core.Tests
 
             public List<string> Tags
             {
-                get => (List<string>) new NewtonsoftJsonProvider().Deserialize(TagJson, typeof(List<string>));
+                get => (List<string>)new NewtonsoftJsonProvider().Deserialize(TagJson, typeof(List<string>));
                 set => TagJson = new NewtonsoftJsonProvider().Serializer(value);
             }
 
-            public string TagJson { get; private set; }
+            public string TagJson { get; private set; } = "[]";
         }
     }
 }

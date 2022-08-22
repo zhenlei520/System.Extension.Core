@@ -14,11 +14,9 @@ namespace EInfrastructure.Core.Tests
         [Fact]
         public void DeepClone()
         {
-            var item = new AssemblyProvider().GetAssemblies();
             Person person = new Person
             {
                 Name = "小明",
-                Gender = Gender.Boy
             };
             var newPerson = person.DeepClone(person);
             newPerson.Name = "小明哥";
@@ -34,8 +32,6 @@ namespace EInfrastructure.Core.Tests
         public class Person : CloneableClass
         {
             public string Name { get; set; }
-
-            public Gender Gender { get; set; }
         }
     }
 }

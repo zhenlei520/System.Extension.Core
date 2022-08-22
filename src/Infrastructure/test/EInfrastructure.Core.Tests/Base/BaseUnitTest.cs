@@ -16,21 +16,14 @@ namespace EInfrastructure.Core.Tests.Base
     /// </summary>
     public class BaseUnitTest
     {
-        protected IServiceProvider provider;
+        protected IServiceProvider Provider;
 
-        public BaseUnitTest()
-        {
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        protected void GetServiceProvider()
+        protected BaseUnitTest()
         {
             var services = new ServiceCollection();
             services.AddSingleton<IRandomBuilder, RandomCommon>();
             services.AddSingleton<ITestOutputHelper, TestOutputHelper>();
-            provider = services.BuildServiceProvider();
+            Provider = services.BuildServiceProvider();
         }
     }
 }
