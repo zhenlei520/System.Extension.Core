@@ -47,7 +47,7 @@ namespace EInfrastructure.Core.AliYun.DaYu
         public SmsProvider(AliSmsConfig smsConfig, ICollection<IJsonProvider> jsonProviders) : base(smsConfig)
         {
             _jsonProvider = InjectionSelectionCommon.GetImplement(jsonProviders);
-            ValidationCommon.Check(smsConfig, "请完善阿里云短信配置信息", HttpStatus.Err.Name);
+            smsConfig.Check("请完善阿里云短信配置信息", HttpStatus.Err.Name);
         }
 
         #region 得到实现类唯一标示

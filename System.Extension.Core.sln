@@ -87,15 +87,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AliMaMa", "AliMaMa", "{BE0A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.AliYun.Tbk", "src\Marketing\AliMaMa\src\EInfrastructure.Core.AliYun.Tbk\EInfrastructure.Core.AliYun.Tbk.csproj", "{A899C7D2-A798-4B3F-A416-ACA36F366CE2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Test", "src\Infrastructure\test\EInfrastructure.Core.Test\EInfrastructure.Core.Test.csproj", "{E987F188-7D71-4E9C-82A5-FE2AD0556F64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Tests", "src\Infrastructure\test\EInfrastructure.Core.Tests\EInfrastructure.Core.Tests.csproj", "{E987F188-7D71-4E9C-82A5-FE2AD0556F64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Redis.Test", "src\Cache\Redis\test\EInfrastructure.Core.Redis.Test\EInfrastructure.Core.Redis.Test.csproj", "{1D961BB4-2FD7-4572-8D35-F66FC90CE311}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Redis.Tests", "src\Cache\Redis\test\EInfrastructure.Core.Redis.Tests\EInfrastructure.Core.Redis.Tests.csproj", "{1D961BB4-2FD7-4572-8D35-F66FC90CE311}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.MySql.Test", "src\Database\MySql\test\EInfrastructure.Core.MySql.Test\EInfrastructure.Core.MySql.Test.csproj", "{D01BC295-9B32-4D57-A06F-2FEE3E11F57D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Validation.AspNetCore", "src\Tools\Validation\src\EInfrastructure.Core.Validation.AspNetCore\EInfrastructure.Core.Validation.AspNetCore.csproj", "{84B7937B-5979-4C5D-8A8E-92C1F4E9BF01}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.QiNiu.Storage.Test", "src\Storage\QiNiu\test\EInfrastructure.Core.QiNiu.Storage.Test\EInfrastructure.Core.QiNiu.Storage.Test.csproj", "{449887C8-6A8A-4B85-AD48-E9C588A1E01E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.QiNiu.Storage.Tests", "src\Storage\QiNiu\test\EInfrastructure.Core.QiNiu.Storage.Tests\EInfrastructure.Core.QiNiu.Storage.Tests.csproj", "{449887C8-6A8A-4B85-AD48-E9C588A1E01E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{42EEC740-C17B-4407-9E7C-92EB37E6A166}"
 EndProject
@@ -109,7 +109,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Tools"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basic", "Basic", "{24632C62-A403-4004-A8D2-DEE348E2917B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.AliYun.DaYu.Test", "src\Sms\AliDaYu\tests\EInfrastructure.Core.AliYun.DaYu.Test\EInfrastructure.Core.AliYun.DaYu.Test.csproj", "{1B62590C-A547-4158-BCD8-A836802205CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.AliYun.DaYu.Tests", "src\Sms\AliDaYu\tests\EInfrastructure.Core.AliYun.DaYu.Tests\EInfrastructure.Core.AliYun.DaYu.Tests.csproj", "{1B62590C-A547-4158-BCD8-A836802205CD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Http", "src\Infrastructure\src\EInfrastructure.Core.Http\EInfrastructure.Core.Http.csproj", "{153E7CE5-1E55-4CD6-B19F-9CB846A2FE1A}"
 EndProject
@@ -117,7 +117,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Serial
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Config.SerializeExtensions", "src\Serialize\src\EInfrastructure.Core.Config.SerializeExtensions\EInfrastructure.Core.Config.SerializeExtensions.csproj", "{671680E3-3A9A-4765-9E7B-A38A10111B5C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Config.SerializeExtensions.Test", "src\Serialize\src\EInfrastructure.Core.Config.SerializeExtensions.Test\EInfrastructure.Core.Config.SerializeExtensions.Test.csproj", "{B38A1390-DEF5-47D4-A522-C086E384D1B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Config.SerializeExtensions.Tests", "src\Serialize\src\EInfrastructure.Core.Config.SerializeExtensions.Tests\EInfrastructure.Core.Config.SerializeExtensions.Tests.csproj", "{B38A1390-DEF5-47D4-A522-C086E384D1B7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInfrastructure.Core.Configuration", "src\Configuration\src\EInfrastructure.Core.Configuration\EInfrastructure.Core.Configuration.csproj", "{40B8382D-68CA-4CC3-BC01-B8F40882877E}"
 EndProject
@@ -127,7 +127,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ALiYun", "ALiYun", "{9E2BB6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Aliyun.Storage", "src\Storage\ALiYun\src\EInfrastructure.Core.Aliyun.Storage\EInfrastructure.Core.Aliyun.Storage.csproj", "{378FD72F-F319-479E-B6B4-3BD9CE9E5342}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Aliyun.Storage.Test", "src\Storage\ALiYun\test\EInfrastructure.Core.Aliyun.Storage.Test\EInfrastructure.Core.Aliyun.Storage.Test.csproj", "{F53FB607-ACED-4B94-A1A3-593BC282C8E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Aliyun.Storage.Tests", "src\Storage\ALiYun\test\EInfrastructure.Core.Aliyun.Storage.Tests\EInfrastructure.Core.Aliyun.Storage.Tests.csproj", "{F53FB607-ACED-4B94-A1A3-593BC282C8E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInfrastructure.Core.Win32", "src\Infrastructure\src\EInfrastructure.Core.Win32\EInfrastructure.Core.Win32.csproj", "{C545AD47-331F-4C72-B994-11154262ECF0}"
 EndProject

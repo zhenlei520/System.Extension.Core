@@ -64,7 +64,6 @@ namespace EInfrastructure.Core.AliYun.DaYu
 
         #endregion
 
-
         #region private methods
 
         /// <summary>
