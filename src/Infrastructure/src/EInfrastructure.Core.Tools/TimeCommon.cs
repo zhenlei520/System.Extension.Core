@@ -81,7 +81,7 @@ namespace EInfrastructure.Core.Tools
         /// <returns></returns>
         public static int SecondToMinute(int second, RectificationType rectificationType)
         {
-            decimal mm = (decimal) second / 60;
+            decimal mm = (decimal)second / 60;
             if (rectificationType.Id == RectificationType.Celling.Id)
             {
                 return Convert.ToInt32(Math.Ceiling(mm));
@@ -212,7 +212,7 @@ namespace EInfrastructure.Core.Tools
             }
             else
             {
-                iTotalSecontds = (int) dTotalSecontds;
+                iTotalSecontds = (int)dTotalSecontds;
             }
 
 
@@ -257,6 +257,12 @@ namespace EInfrastructure.Core.Tools
             {
                 month = month % 12;
                 month = Math.Abs(month);
+
+                if (month == 0) month = 12;
+            }
+            else
+            {
+                year = year - 1;
             }
 
             switch (month)
@@ -509,7 +515,8 @@ namespace EInfrastructure.Core.Tools
         {
             if (date == null)
                 return "未知";
-            return GetAccordingToCurrent((DateTime) date);
+
+            return GetAccordingToCurrent((DateTime)date);
         }
 
         #endregion
@@ -947,13 +954,13 @@ namespace EInfrastructure.Core.Tools
             if (timestampType.Id == TimestampType.Millisecond.Id)
             {
                 return (TimeZoneInfo.ConvertTimeToUtc(target).Ticks - TimeZoneInfo
-                           .ConvertTimeToUtc(new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind)).Ticks) /
-                       10000; //除10000调整为13位
+                        .ConvertTimeToUtc(new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind)).Ticks) /
+                    10000; //除10000调整为13位
             }
 
             if (timestampType.Id == TimestampType.Second.Id)
             {
-                return (long) (TimeZoneInfo.ConvertTimeToUtc(target) - new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind))
+                return (long)(TimeZoneInfo.ConvertTimeToUtc(target) - new DateTime(1970, 1, 1, 0, 0, 0, dateTimeKind))
                     .TotalSeconds;
             }
 
@@ -1052,11 +1059,12 @@ namespace EInfrastructure.Core.Tools
 
             string timeStr = cardNo.Length == 15
                 ? ("19" + cardNo.Substring(6, 2)) + "-" + cardNo.Substring(8, 2) + "-" +
-                  cardNo.Substring(10, 2)
+                cardNo.Substring(10, 2)
                 : cardNo.Substring(6, 4) + "-" + cardNo.Substring(10, 2) + "-" + cardNo.Substring(12, 2);
             return timeStr.ConvertToDateTime(null);
         }
 
         #endregion
+
     }
 }
