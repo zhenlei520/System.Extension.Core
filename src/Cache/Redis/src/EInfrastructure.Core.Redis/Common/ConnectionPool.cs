@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
@@ -71,9 +71,7 @@ namespace EInfrastructure.Core.Redis.Common
                 if (conn != null)
                 {
                     conn.Pool = this;
-                    var ips = Dns.GetHostAddresses(_ip);
-                    if (ips.Length == 0) throw new Exception($"无法解析“{_ip}”");
-                    conn.Client = new RedisClient(new IPEndPoint(ips[0], _port));
+                    conn.Client = new RedisClient(_ip, _port);
                     conn.Client.Connected += Connected;
                 }
             }
