@@ -24,7 +24,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Tests.Base
             var services = new ServiceCollection();
             services.AddAliYunStorage(() =>
             {
-                return new ALiYunStorageConfig("LTAI4G3eSHefUdzXT2BdaKVo", "h88AYXo49Xp89ir418fgtavpMzoy7m");
+                return new ALiYunStorageConfig("LTA14G3eSHefUdzXT2BdaKVO", "h88AYxo49Xp89Ir418fgtavpMzoy7m");
             });
             services.AddLogging(loggingBuilder =>
             {

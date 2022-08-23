@@ -21,9 +21,9 @@ namespace EInfrastructure.Core.Redis.Tests.Base
         {
             _redisCacheService = new RedisCacheProvider(new RedisConfig()
             {
-                Ip = "",
-                Port = 36378,
-                DataBase = 3,
+                Ip = "localhost",
+                Port = 6379,
+                DataBase = 1,
                 Prefix = "",
                 Password = "",
                 PoolSize = 1,

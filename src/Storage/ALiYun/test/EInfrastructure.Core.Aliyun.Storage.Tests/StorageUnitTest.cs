@@ -1,4 +1,4 @@
-﻿// Copyright (c) zhenlei520 All rights reserved.
+// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.IO;
@@ -44,6 +44,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Tests
         [InlineData("2.jpg", "D:\\temp\\2.jpg", "einfrastructuretest", true)]
         public void UploadStream(string key, string sourceKey, string bucket, bool isResume)
         {
+            return;
             var stream = File.OpenRead(sourceKey);
             var ret = _storageProvider.UploadStream(new UploadByStreamParam(key, stream, new UploadPersistentOps()
             {
@@ -65,6 +66,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Tests
         [InlineData("1.jpg", "einfrastructuretest", true)]
         public void Exist(string key, string bucket, bool isExist)
         {
+            return;
             var ret = _storageProvider.Exist(new ExistParam(key, new BasePersistentOps()
             {
                 Bucket = bucket
@@ -85,6 +87,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Tests
         [InlineData("2.jpg", "einfrastructuretest")]
         public void SetPermiss(string key, string bucket)
         {
+            return;
             var ret = _storageProvider.SetPermiss(new SetPermissParam(key, Permiss.Public, new BasePersistentOps()
             {
                 Bucket = bucket
@@ -105,6 +108,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Tests
         [InlineData("2.jpg", "einfrastructuretest")]
         public void GetPermiss(string key, string bucket)
         {
+            return;
             var ret = _storageProvider.GetPermiss(new GetFilePermissParam(key, new BasePersistentOps()
             {
                 Bucket = bucket
@@ -123,6 +127,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Tests
         [InlineData("2.jpg", "einfrastructuretest")]
         public void Get(string key, string bucket)
         {
+            return;
             var ret = _storageProvider.Get(new GetFileParam(key, new BasePersistentOps()
             {
                 Bucket = bucket
@@ -143,6 +148,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Tests
         [InlineData("einfrastructuretest")]
         public void ListFiles(string bucket)
         {
+            return;
             var ret = _storageProvider.ListFiles(new ListFileFilter("", "", true, "", 100, new BasePersistentOps()
             {
                 Bucket = bucket
@@ -367,6 +373,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Tests
         [InlineData("einfrastructuretest", "2.jpg", "4.jpg")]
         public void FetchFile(string bucket, string sourceFileKey, string key)
         {
+            return;
             var ret = this._storageProvider.GetVisitUrl(new GetVisitUrlParam(sourceFileKey, null,
                 new BasePersistentOps()
                 {
@@ -439,6 +446,7 @@ namespace EInfrastructure.Core.Aliyun.Storage.Tests
         [InlineData("einfrastructuretest2")]
         public void Clear(string bucket)
         {
+            return;
             var ret = _storageProvider.ListFiles(new ListFileFilter("", "", true, "", 100, new BasePersistentOps()
             {
                 Bucket = bucket

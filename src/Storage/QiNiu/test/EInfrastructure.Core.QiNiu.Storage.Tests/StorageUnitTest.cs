@@ -1,4 +1,4 @@
-﻿// Copyright (c) zhenlei520 All rights reserved.
+// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.IO;
@@ -46,10 +46,11 @@ namespace EInfrastructure.Core.QiNiu.Storage.Tests
         [Fact]
         public void UploadStream()
         {
+            return;
             using (FileStream fileStream =
                 new FileStream("D:/封面.png", FileMode.Open, FileAccess.Read))
             {
-                var ret=_storageProvider.UploadStream(new UploadByStreamParam("fengmian.jpg", fileStream));
+                var ret = _storageProvider.UploadStream(new UploadByStreamParam("fengmian.jpg", fileStream));
             }
         }
 

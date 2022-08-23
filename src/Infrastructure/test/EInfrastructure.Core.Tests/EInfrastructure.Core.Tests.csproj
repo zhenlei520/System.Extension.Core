@@ -25,6 +25,10 @@
     <Content Include="Resources\useragent.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Remove="jetbrains.png" />
+    <Content Include="jetbrains.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

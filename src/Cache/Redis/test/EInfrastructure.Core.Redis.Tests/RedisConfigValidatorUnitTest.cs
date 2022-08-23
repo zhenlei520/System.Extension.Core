@@ -53,7 +53,7 @@ namespace EInfrastructure.Core.Redis.Tests
             {
                 dics.Add(key.Split(',')[i], new Dictionary<string, string>()
                 {
-                    {hashKey.Split(',')[i], value.Split(',')[i]}
+                    { hashKey.Split(',')[i], value.Split(',')[i] }
                 });
             }
 
@@ -63,27 +63,24 @@ namespace EInfrastructure.Core.Redis.Tests
         [Fact]
         public void GetOverTimeKey()
         {
-            var list=_redisCacheService.SortedSetRangeByRankAndOverTime(1000);
+            var list = _redisCacheService.SortedSetRangeByRankAndOverTime(1000);
         }
 
         [Fact]
         public void ClearOverTimeHashCache()
         {
-            Check.True(_redisCacheService.ClearOverTimeHashKey(1000),"方法异常");
+            Check.True(_redisCacheService.ClearOverTimeHashKey(1000), "方法异常");
         }
 
-       /// <summary>
-       ///
-       /// </summary>
-       /// <param name="key"></param>
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="key"></param>
         [Theory]
         [InlineData("key3")]
         public void StringGet(string key)
-       {
-           while (true)
-           {
-               var test=_redisCacheService.StringGet(key);
-           }
-       }
+        {
+            _ = _redisCacheService.StringGet(key);
+        }
     }
 }

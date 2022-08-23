@@ -248,7 +248,7 @@ namespace EInfrastructure.Core.Tests
                     {"Cookie", ""}
                 }
             };
-            var file = new FileInfo("D:/jetbrains.png");
+            var file = new FileInfo("jetbrains.png");
             var array = file.OpenRead().ConvertToByteArray();
             client.AddFile(new RequestMultDataParam("image", file.Name, array, "image/png"));
             var res = client.GetStringByPost($"aidemo", new
@@ -270,7 +270,7 @@ namespace EInfrastructure.Core.Tests
                     {"Cookie", ""}
                 }
             };
-            var file = new FileInfo("D:/jetbrains.png");
+            var file = new FileInfo("jetbrains.png");
             var array = file.OpenRead().ConvertToByteArray();
             client.AddFile(new RequestMultDataParam("image", file.Name, array, "image/png"));
             var res = client.GetJsonByPost<ResponseDto>($"aidemo", new

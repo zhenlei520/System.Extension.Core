@@ -29,7 +29,7 @@ namespace EInfrastructure.Core.Tests
         {
             int index = 0;
             TaskPool<string> taskCommon = null;
-            taskCommon = new TaskPool<string>(200, (name) =>
+            taskCommon = new TaskPool<string>(10, (name) =>
             {
                 lock (index + "")
                 {
@@ -44,10 +44,10 @@ namespace EInfrastructure.Core.Tests
             }, () =>
             {
                 Console.WriteLine("线程已销毁");
-            }, 300);
+            }, 50);
 
             List<Users> userses = new List<Users>();
-            for (var i = 0; i < 9999; i++)
+            for (var i = 0; i < 50; i++)
             {
                 userses.Add(new Users()
                 {
@@ -66,7 +66,7 @@ namespace EInfrastructure.Core.Tests
             {
                 // Thread.Sleep(10000);
                 // Thread.Yield();
-                Thread.Sleep(100);
+                Thread.Sleep(50);
             }
         }
 
