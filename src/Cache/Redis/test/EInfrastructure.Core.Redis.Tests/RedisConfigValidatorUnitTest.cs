@@ -1,6 +1,7 @@
 // Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using EInfrastructure.Core.Redis.Tests.Base;
 using EInfrastructure.Core.Tools;
@@ -80,7 +81,7 @@ namespace EInfrastructure.Core.Redis.Tests
         [InlineData("key3")]
         public void StringGet(string key)
         {
-            _ = _redisCacheService.StringGet(key);
+            _ = _redisCacheService.StringGet(key + Guid.NewGuid());
         }
     }
 }

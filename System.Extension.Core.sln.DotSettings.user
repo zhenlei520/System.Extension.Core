@@ -3,21 +3,20 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\wangz\.nuget\packages\qiniu\7.3.1.1\lib\Net40\Qiniu.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	
-	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8ac0c932_002Df29f_002D4171_002D8efa_002D9ad58ff8a81a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=fab6feeb_002Df9be_002D4b27_002Da19a_002D8e80e469400e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;And&gt;&#xD;
-      &lt;Project Location="D:\GS\Owner\System.Extension.Core\main\src\Sms\AliDaYu\tests\EInfrastructure.Core.AliYun.DaYu.Tests" Presentation="&amp;lt;Sms&amp;gt;\&amp;lt;AliDaYu&amp;gt;\&amp;lt;EInfrastructure.Core.AliYun.DaYu.Tests&amp;gt;" /&gt;&#xD;
+      &lt;Project Location="E:\Gs\Own\System.Extension.Core\main" Presentation="&amp;lt;Storage&amp;gt;" /&gt;&#xD;
       &lt;TargetFrameworkId&gt;.NETCoreApp,Version=v2.1&lt;/TargetFrameworkId&gt;&#xD;
     &lt;/And&gt;&#xD;
-    &lt;Project Location="D:\GS\Owner\System.Extension.Core\main\src\Storage\QiNiu\test\EInfrastructure.Core.QiNiu.Storage.Tests" Presentation="&amp;lt;Storage&amp;gt;\&amp;lt;QiNiu&amp;gt;\&amp;lt;EInfrastructure.Core.QiNiu.Storage.Tests&amp;gt;" /&gt;&#xD;
     &lt;TestAncestor&gt;&#xD;
-      &lt;TestId&gt;xUnit::1D961BB4-2FD7-4572-8D35-F66FC90CE311::.NETCoreApp,Version=v2.1::EInfrastructure.Core.Redis.Tests.RedisConfigValidatorUnitTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::B38A1390-DEF5-47D4-A522-C086E384D1B7::.NETCoreApp,Version=v2.1::EInfrastructure.Core.Config.SerializeExtensions.Tests.JsonUnitTest&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
-    &lt;Project Location="D:\GS\Owner\System.Extension.Core\main\src\Infrastructure\test\EInfrastructure.Core.Tests" Presentation="&amp;lt;Infrastructure&amp;gt;\&amp;lt;EInfrastructure.Core.Tests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	
+	
+	
 	
 	
 	

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -27,11 +27,12 @@ namespace EInfrastructure.Core.Tests
         [Fact]
         public void Test3()
         {
+            var obj = new { };
             int index = 0;
             TaskPool<string> taskCommon = null;
             taskCommon = new TaskPool<string>(10, (name) =>
             {
-                lock (index + "")
+                lock (obj)
                 {
                     index++;
                     Console.WriteLine("我的名字是：" + name + "，线程id：" + Task.CurrentId + "，任务index：" +
