@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -693,7 +693,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public long ListRightPush<T>(string key, T value)
         {
-            return QuickHelperBase.RPush(key, new string[1] {ConvertJson<T>(value)});
+            return QuickHelperBase.RPush(key, new string[1] { ConvertJson<T>(value) });
         }
 
         #region 出队
@@ -730,7 +730,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public long ListLeftPush<T>(string key, T value)
         {
-            return QuickHelperBase.LPush(key, new string[1] {ConvertJson<T>(value)});
+            return QuickHelperBase.LPush(key, new string[1] { ConvertJson<T>(value) });
         }
 
         #region 出栈
@@ -813,7 +813,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public Task<long> ListRightPushAsync<T>(string key, T value)
         {
-            return QuickHelperBase.RPushAsync(key, new[] {ConvertJson(value)});
+            return QuickHelperBase.RPushAsync(key, new[] { ConvertJson(value) });
         }
 
         #region 出队
@@ -850,7 +850,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public Task<long> ListLeftPushAsync<T>(string key, T value)
         {
-            return QuickHelperBase.LPushAsync(key, new string[1] {ConvertJson<T>(value)});
+            return QuickHelperBase.LPushAsync(key, new string[1] { ConvertJson<T>(value) });
         }
 
         #region 出栈
@@ -922,7 +922,7 @@ namespace EInfrastructure.Core.Redis
         /// <returns></returns>
         public bool SortedSetRemove<T>(string key, T value)
         {
-            return QuickHelperBase.ZRem(key, new string[1] {ConvertJson<T>(value)}) > 0;
+            return QuickHelperBase.ZRem(key, new string[1] { ConvertJson<T>(value) }) > 0;
         }
 
         /// <summary>
@@ -966,7 +966,8 @@ namespace EInfrastructure.Core.Redis
             {
                 for (int i = 0; i < item.Item2.Length; i += 2)
                 {
-                    result.Add((item.Item1.Replace(_prefix, ""), item.Item2[i].ToString(),
+                    string key = _prefix.IsNullOrWhiteSpace() ? item.Item1 : item.Item1.Replace(_prefix, "");
+                    result.Add((_prefix, item.Item2[i].ToString(),
                         item.Item2[i].ToString().Replace("~_~", "！").Split('！')[0],
                         item.Item2[i].ToString().Replace("~_~", "！").Split('！')[1]));
                 }
@@ -1265,7 +1266,7 @@ namespace EInfrastructure.Core.Redis
             Type t = typeof(T);
             if (string.Equals(t.Name, "string", StringComparison.OrdinalIgnoreCase))
             {
-                return (T) Convert.ChangeType(value, typeof(T));
+                return (T)Convert.ChangeType(value, typeof(T));
             }
 
             return _jsonProvider.Deserialize<T>(value);
