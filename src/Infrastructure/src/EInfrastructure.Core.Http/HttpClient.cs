@@ -412,7 +412,7 @@ namespace EInfrastructure.Core.Http
         public async Task<string> GetStringAsync(string url)
         {
             var request = GetRequest(url);
-            var content = (await GetClient().ExecuteTaskAsync(request)).Content;
+            var content = (await GetClient().ExecuteAsync(request)).Content;
             AddLog(request, content);
             return content;
         }
@@ -518,7 +518,7 @@ namespace EInfrastructure.Core.Http
         public async Task<byte[]> GetBytesAsync(string url)
         {
             var request = GetRequest(url);
-            return (await GetClient().ExecuteTaskAsync(request)).RawBytes;
+            return (await GetClient().ExecuteAsync(request)).RawBytes;
         }
 
         /// <summary>
@@ -571,7 +571,7 @@ namespace EInfrastructure.Core.Http
         private RestRequest GetRequest(string url)
         {
             return GetProvider(RequestType.Get)
-                .GetRequest(Method.GET, url, new RequestBody(null), GetHeaders(), GetTimeOut());
+                .GetRequest(Method.GET, url, new Provider.RequestBody(null), GetHeaders(), GetTimeOut());
         }
 
         /// <summary>
@@ -835,7 +835,7 @@ namespace EInfrastructure.Core.Http
                 ? _xmlProvider.Serializer(data)
                 : data;
             var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
-                new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
+                new Provider.RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());
             return request;
         }
@@ -854,9 +854,9 @@ namespace EInfrastructure.Core.Http
                 ? _xmlProvider.Serializer(data)
                 : _jsonProvider.Serializer((data ?? new { }));
             var request = GetProvider(RequestType.Post).GetRequest(Method.POST, url,
-                new RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
+                new Provider.RequestBody(body, GetRequestBody(requestBodyFormat), _files, _jsonProvider, _xmlProvider),
                 GetHeaders(), GetTimeOut());
-            return await GetClient().ExecuteTaskAsync(request);
+            return await GetClient().ExecuteAsync(request);
         }
 
         #endregion
