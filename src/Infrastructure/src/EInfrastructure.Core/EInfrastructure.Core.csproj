@@ -28,7 +28,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.22" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EInfrastructure.Core.Tools\EInfrastructure.Core.Tools.csproj" />
